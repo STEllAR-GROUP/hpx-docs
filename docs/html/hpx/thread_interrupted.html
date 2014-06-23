@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct thread_interrupted</title>
 <link rel="stylesheet" href="../src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.0">
 <link rel="home" href="../index.html" title="HPX 0.9.9">
 <link rel="up" href="../header/hpx/exception_hpp.html" title="Header &lt;hpx/exception.hpp&gt;">
 <link rel="prev" href="exception.html" title="Class exception">
@@ -25,67 +25,44 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../header/hpx/exception_hpp.html" title="Header &lt;hpx/exception.hpp&gt;">hpx/exception.hpp</a>&gt;
 
 </span>
-<span class="keyword">struct</span> <a class="link" href="thread_interrupted.html" title="Struct thread_interrupted">thread_interrupted</a> <span class="special">{</span>
+<span class="keyword">struct</span> <a class="link" href="thread_interrupted.html" title="Struct thread_interrupted">thread_interrupted</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">exception</span> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp47623344"></a><h2>Description</h2>
-<p>   The \a hpx::thread_interrupted type is the exception type used by HPX to
-   interrupt a running thread.
-
-   A running thread can be interrupted by invoking the interrupt() member
-   function of the corresponding hpx::thread object. When the interrupted
-   thread next executes one of the specified interruption points (or if it
-   is currently blocked whilst executing one) with interruption enabled,
-   then a hpx::thread_interrupted exception will be thrown in the interrupted
-   thread. If not caught, this will cause the execution of the interrupted
-   thread to terminate. As with any other exception, the stack will be
-   unwound, and destructors for objects of automatic storage duration will
-   be executed.
-
-   If a thread wishes to avoid being interrupted, it can create an instance
-   of \a hpx::this_thread::disable_interruption. Objects of this class disable
-   interruption for the thread that created them on construction, and
-   restore the interruption state to whatever it was before on destruction.
-
-   @code 
-void f()
-{
-    // interruption enabled here
-    {
-        hpx::this_thread::disable_interruption di;
-        // interruption disabled
-        {
-            hpx::this_thread::disable_interruption di2;
-            // interruption still disabled
-        } // di2 destroyed, interruption state restored
-        // interruption still disabled
-    } // di destroyed, interruption state restored
-    // interruption now enabled
-}
-     The effects of an instance of \a hpx::this_thread::disable_interruption can be
-   temporarily reversed by constructing an instance of
-   \a hpx::this_thread::restore_interruption, passing in the
-   \a hpx::this_thread::disable_interruption object in question. This will restore
-   the interruption state to what it was when the \a hpx::this_thread::disable_interruption
-   object was constructed, and then disable interruption again when the
-   \a hpx::this_thread::restore_interruption object is destroyed.
-
-   @code 
-void g()
-{
-    // interruption enabled here
-    {
-        hpx::this_thread::disable_interruption di;
-        // interruption disabled
-        {
-            hpx::this_thread::restore_interruption ri(di);
-            // interruption now enabled
-        } // ri destroyed, interruption disable again
-    } // di destroyed, interruption state restored
-    // interruption now enabled
-}
-     At any point, the interruption state for the current thread can be
-   queried by calling \a hpx::this_thread::interruption_enabled().   </p>
+<a name="idm140199852238976"></a><h2>Description</h2>
+<p>The <span class="emphasis"><em><a class="link" href="thread_interrupted.html" title="Struct thread_interrupted">hpx::thread_interrupted</a></em></span> type is the exception type used by HPX to interrupt a running thread.</p>
+<p>A running thread can be interrupted by invoking the interrupt() member function of the corresponding hpx::thread object. When the interrupted thread next executes one of the specified interruption points (or if it is currently blocked whilst executing one) with interruption enabled, then a <a class="link" href="thread_interrupted.html" title="Struct thread_interrupted">hpx::thread_interrupted</a> exception will be thrown in the interrupted thread. If not caught, this will cause the execution of the interrupted thread to terminate. As with any other exception, the stack will be unwound, and destructors for objects of automatic storage duration will be executed.</p>
+<p>If a thread wishes to avoid being interrupted, it can create an instance of <span class="emphasis"><em>hpx::this_thread::disable_interruption</em></span>. Objects of this class disable interruption for the thread that created them on construction, and restore the interruption state to whatever it was before on destruction.</p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="comment">// interruption enabled here</span>
+    <span class="special">{</span>
+        <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">disable_interruption</span> <span class="identifier">di</span><span class="special">;</span>
+        <span class="comment">// interruption disabled</span>
+        <span class="special">{</span>
+            <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">disable_interruption</span> <span class="identifier">di2</span><span class="special">;</span>
+            <span class="comment">// interruption still disabled</span>
+        <span class="special">}</span> <span class="comment">// di2 destroyed, interruption state restored</span>
+        <span class="comment">// interruption still disabled</span>
+    <span class="special">}</span> <span class="comment">// di destroyed, interruption state restored</span>
+    <span class="comment">// interruption now enabled</span>
+<span class="special">}</span>
+</pre>
+<p>The effects of an instance of <span class="emphasis"><em>hpx::this_thread::disable_interruption</em></span> can be temporarily reversed by constructing an instance of <span class="emphasis"><em>hpx::this_thread::restore_interruption</em></span>, passing in the <span class="emphasis"><em>hpx::this_thread::disable_interruption</em></span> object in question. This will restore the interruption state to what it was when the <span class="emphasis"><em>hpx::this_thread::disable_interruption</em></span> object was constructed, and then disable interruption again when the <span class="emphasis"><em>hpx::this_thread::restore_interruption</em></span> object is destroyed.</p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">g</span><span class="special">(</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="comment">// interruption enabled here</span>
+    <span class="special">{</span>
+        <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">disable_interruption</span> <span class="identifier">di</span><span class="special">;</span>
+        <span class="comment">// interruption disabled</span>
+        <span class="special">{</span>
+            <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">restore_interruption</span> <span class="identifier">ri</span><span class="special">(</span><span class="identifier">di</span><span class="special">)</span><span class="special">;</span>
+            <span class="comment">// interruption now enabled</span>
+        <span class="special">}</span> <span class="comment">// ri destroyed, interruption disable again</span>
+    <span class="special">}</span> <span class="comment">// di destroyed, interruption state restored</span>
+    <span class="comment">// interruption now enabled</span>
+<span class="special">}</span>
+</pre>
+<p>At any point, the interruption state for the current thread can be queried by calling <span class="emphasis"><em>hpx::this_thread::interruption_enabled()</em></span>. </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

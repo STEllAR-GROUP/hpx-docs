@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Built-in Default Configuration Settings</title>
 <link rel="stylesheet" href="../../../../src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../../index.html" title="HPX 0.9.9">
 <link rel="up" href="../configuration.html" title="Configure HPX Applications">
 <link rel="prev" href="ini_format.html" title="The HPX INI File Format">
@@ -1478,10 +1478,13 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
             Command Line Options</a>.
           </p>
 <pre class="programlisting">[hpx.commandline]
+aliasing = ${HPX_COMMANDLINE_ALIASING:1}
+allow_unknown = ${HPX_COMMANDLINE_ALLOW_UNKNOWN:0}
+
+[hpx.commandline.aliases]
 -a = --hpx:agas
 -c = --hpx:console
 -h = --hpx:help
---help = --hpx:help
 -I = --hpx:ini
 -l = --hpx:localities
 -p = --hpx:app-config
@@ -1489,7 +1492,6 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 -r = --hpx:run-agas-server
 -t = --hpx:threads
 -v = --hpx:version
---version = --hpx:version
 -w = --hpx:worker
 -x = --hpx:hpx
 -0 = --hpx:node=0
@@ -1525,7 +1527,33 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-a</code>
+                      <code class="computeroutput">hpx.commandline.aliasing</code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Enable command line aliases as defined in the section <code class="computeroutput">hpx.commandline.aliases</code>
+                      (see below). Defaults to <code class="computeroutput">1</code>.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput">hpx.commandline.allow_unknown</code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Allow for unknown command line options to be passed through
+                      to <code class="computeroutput">hpx_main()</code>. Defaults to <code class="computeroutput">0</code>.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput">hpx.commandline.aliases.-a</code>
                     </p>
                   </td>
 <td>
@@ -1537,7 +1565,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-c</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-c</code>
                     </p>
                   </td>
 <td>
@@ -1549,7 +1577,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-h</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-h</code>
                     </p>
                   </td>
 <td>
@@ -1561,7 +1589,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.--help</code>
+                      <code class="computeroutput">hpx.commandline.aliases.--help</code>
                     </p>
                   </td>
 <td>
@@ -1573,7 +1601,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-I</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-I</code>
                     </p>
                   </td>
 <td>
@@ -1585,7 +1613,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-l</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-l</code>
                     </p>
                   </td>
 <td>
@@ -1597,7 +1625,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-p</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-p</code>
                     </p>
                   </td>
 <td>
@@ -1609,7 +1637,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-q</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-q</code>
                     </p>
                   </td>
 <td>
@@ -1621,7 +1649,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-r</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-r</code>
                     </p>
                   </td>
 <td>
@@ -1633,7 +1661,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-t</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-t</code>
                     </p>
                   </td>
 <td>
@@ -1645,7 +1673,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-v</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-v</code>
                     </p>
                   </td>
 <td>
@@ -1657,7 +1685,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.--version</code>
+                      <code class="computeroutput">hpx.commandline.aliases.--version</code>
                     </p>
                   </td>
 <td>
@@ -1669,7 +1697,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-w</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-w</code>
                     </p>
                   </td>
 <td>
@@ -1681,7 +1709,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-x</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-x</code>
                     </p>
                   </td>
 <td>
@@ -1693,7 +1721,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-0</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-0</code>
                     </p>
                   </td>
 <td>
@@ -1705,7 +1733,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-1</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-1</code>
                     </p>
                   </td>
 <td>
@@ -1717,7 +1745,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-2</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-2</code>
                     </p>
                   </td>
 <td>
@@ -1729,7 +1757,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-3</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-3</code>
                     </p>
                   </td>
 <td>
@@ -1741,7 +1769,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-4</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-4</code>
                     </p>
                   </td>
 <td>
@@ -1753,7 +1781,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-5</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-5</code>
                     </p>
                   </td>
 <td>
@@ -1765,7 +1793,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-6</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-6</code>
                     </p>
                   </td>
 <td>
@@ -1777,7 +1805,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-7</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-7</code>
                     </p>
                   </td>
 <td>
@@ -1789,7 +1817,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-8</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-8</code>
                     </p>
                   </td>
 <td>
@@ -1801,7 +1829,7 @@ local_cache_size_per_thread = ${HPX_AGAS_LOCAL_CACHE_SIZE_PER_THREAD:&lt;hpx_ini
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput">hpx.commandline.-9</code>
+                      <code class="computeroutput">hpx.commandline.aliases.-9</code>
                     </p>
                   </td>
 <td>

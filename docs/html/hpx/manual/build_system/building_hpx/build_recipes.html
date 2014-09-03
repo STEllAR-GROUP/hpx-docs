@@ -1,0 +1,650 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Build recipes</title>
+<link rel="stylesheet" href="../../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../../index.html" title="HPX 0.9.9">
+<link rel="up" href="../building_hpx.html" title="Building HPX">
+<link rel="prev" href="doc_tools.html" title="Setting up the HPX Documentation Tool Chain">
+<link rel="next" href="../using_hpx.html" title="Building Projects using HPX">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="440" height="104" src="../../../../images/hpx_0_9_9_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="doc_tools.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../building_hpx.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../using_hpx.html"><img src="../../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="hpx.manual.build_system.building_hpx.build_recipes"></a><a class="link" href="build_recipes.html" title="Build recipes">Build
+          recipes</a>
+</h5></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.unix_installation">How
+            to Install <span class="emphasis"><em>HPX</em></span> on Unix Variants</a></span></dt>
+<dt><span class="section"><a href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.macos_installation">How
+            to Install <span class="emphasis"><em>HPX</em></span> on OS X (Mac)</a></span></dt>
+<dt><span class="section"><a href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.windows_installation">How
+            to Install <span class="emphasis"><em>HPX</em></span> on Windows</a></span></dt>
+<dt><span class="section"><a href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.bgq_installation">How
+            to Install <span class="emphasis"><em>HPX</em></span> on BlueGene/Q</a></span></dt>
+<dt><span class="section"><a href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation">How
+            to Install <span class="emphasis"><em>HPX</em></span> on the Xeon Phi</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="hpx.manual.build_system.building_hpx.build_recipes.unix_installation"></a><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.unix_installation" title="How to Install HPX on Unix Variants">How
+            to Install <span class="emphasis"><em>HPX</em></span> on Unix Variants</a>
+</h6></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                  Create a build directory. <span class="emphasis"><em>HPX</em></span> requires an
+                  out-of-tree build. This means you will be unable to run CMake in
+                  the <span class="emphasis"><em>HPX</em></span> source tree.
+                </li></ul></div>
+<pre class="programlisting">cd hpx
+mkdir my_hpx_build
+cd my_hpx_build
+</pre>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                  Invoke CMake from your build directory, pointing the CMake driver
+                  to the root of your <span class="emphasis"><em>HPX</em></span> source tree.
+                </li></ul></div>
+<pre class="programlisting">cmake -DBOOST_ROOT=/root/of/boost/installation \
+      -DHWLOC_ROOT=/root/of/hwloc/installation
+      [other CMake variable definitions] \
+      /path/to/source/tree
+</pre>
+<div class="blockquote"><blockquote class="blockquote"><p>
+                for instance:
+              </p></blockquote></div>
+<pre class="programlisting">cmake -DBOOST_ROOT=~/packages/boost -DHWLOC_ROOT=/packages/hwloc -DCMAKE_INSTALL_PREFIX=~/packages/hpx ~/downloads/hpx_0.9.9
+</pre>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                  Invoke GNU make. If you are on a machine with multiple cores, add
+                  the -jN flag to your make invocation, where N is the number of
+                  parallel processes <span class="emphasis"><em>HPX</em></span> gets compiled with.
+                </li></ul></div>
+<pre class="programlisting">gmake -j4
+</pre>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+                Compiling and linking <span class="emphasis"><em>HPX</em></span> needs a considerable
+                amount of memory. It is advisable that approximately 2 GB of memory
+                per parallel process is available.
+              </p></td></tr>
+</table></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+                Many Linux distributions use <code class="computeroutput">make</code> as an alias for <code class="computeroutput">gmake</code>
+              </p></td></tr>
+</table></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                  To complete the build and install <span class="emphasis"><em>HPX</em></span>:
+                </li></ul></div>
+<pre class="programlisting">gmake install
+</pre>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+                These commands will build and install the essential core components
+                of <span class="emphasis"><em>HPX</em></span> only. In order to build and run the tests,
+                please invoke:
+              </p>
+<pre class="programlisting">gmake tests
+</pre>
+<p>
+                and in order to build (and install) all examples invoke:
+              </p>
+<pre class="programlisting">cmake -DHPX_BUILD_EXAMPLES=On .
+gmake examples
+gmake install
+</pre>
+</td></tr>
+</table></div>
+<p>
+              For more detailed information about using <a href="http://www.cmake.org" target="_top">CMake</a>
+              please refer its documentation and also the section <a class="link" href="../building_hpx.html" title="Building HPX">Building
+              <span class="emphasis"><em>HPX</em></span> with CMake</a>. Please pay special attention
+              to the section about HPX_MALLOC as this is crucial for getting decent
+              performance.
+            </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation"></a><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.macos_installation" title="How to Install HPX on OS X (Mac)">How
+            to Install <span class="emphasis"><em>HPX</em></span> on OS X (Mac)</a>
+</h6></div></div></div>
+<p>
+              This section describes how to build<span class="emphasis"><em>HPX</em></span> for OS
+              X (Mac) (with recent versions of Clang, libc++, and Boost).
+            </p>
+<p>
+              The standard system compiler on OS X is too old to build HPX. You will
+              have to install a newer compiler manually, either Clang or GCC. Below
+              we describe two possibilities:
+            </p>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.h0"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.install_a_recent_version_of_llvm"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.macos_installation.install_a_recent_version_of_llvm">Install
+              a recent version of LLVM and Clang</a>
+            </h7><pre class="programlisting">In order to build <span class="emphasis"><em>HPX</em></span> you will need a fairly recent version of Clang
+(at least version 3.2 of Clang and LLVM). For more instructions please see
+[link http://clang.llvm.org/get_started.html here].
+
+If you're using Homebrew, `brew install llvm --with-clang` will do the trick
+and install 3.2 into `/usr/local/bin`.
+
+In the guide below, I assume you're either using Clang 3.2 as installed by
+Homebrew into /usr/local/bin, or that the following symlinks are created and
+visible in your $PATH:
+</pre>
+<pre class="programlisting">ln -s /path/to/build-llvm/Release/bin/clang++ clang++-3.3
+ln -s /path/to/build-llvm/Release/bin/clang clang-3.3
+</pre>
+<p>
+              (Replace <code class="computeroutput">/path/to</code> here with an absolute path of your liking.)
+            </p>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.h1"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.visit_http_libcxx_llvm_org_to_ge"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.macos_installation.visit_http_libcxx_llvm_org_to_ge">Visit
+              http://libcxx.llvm.org/ to get the latest version of the "libc++"
+              C++ standard library</a>
+            </h7><pre class="programlisting">You need to use the trunk version; what's currently bundled with XCode or
+OS X aren't quite there yet. You can follow the steps in
+http://libcxx.llvm.org/ if you choose, but here's briefly how it can be built:
+</pre>
+<pre class="programlisting">cd /path/to
+git clone http://llvm.org/git/libcxx.git
+cd libcxx/lib
+CXX=clang++-3.3 CC=clang-3.3 TRIPLE=-apple- ./buildit
+</pre>
+<p>
+              or alternatively:
+            </p>
+<pre class="programlisting">CXX=/usr/local/bin/clang++ CC=/usr/local/bin/clang TRIPLE=-apple- \
+    ./buildit
+</pre>
+<p>
+              The library is then found in <code class="computeroutput">/path/to/libcxx/include</code> and
+              <code class="computeroutput">/path/to/libcxx/lib</code>, respectively
+            </p>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.h2"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.build_and_install_a_recent_versi"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.macos_installation.build_and_install_a_recent_versi">Build
+              (and install) a recent version of Boost, using Clang and libc++</a>
+            </h7><pre class="programlisting">To build Boost with Clang and make it link to libc++ as standard library,
+you'll need to set up either of the following in your `~/user-config.jam`
+file:
+</pre>
+<pre class="programlisting"># user-config.jam (put this file into your home directory)
+# ...
+
+# Clang 3.2
+using clang
+    : 3.2
+    : "/usr/local/bin/clang++"
+    : &lt;cxxflags&gt;"-std=c++11 -stdlib=libc++ -fcolor-diagnostics -isystem /path/to/libcxx/include"
+      &lt;linkflags&gt;"-stdlib=libc++ -L/path/to/libcxx/lib"
+    ;
+
+# Clang trunk ("3.3" for convenience)
+using clang
+    : 3.3
+    : "clang++-3.3"
+    : &lt;cxxflags&gt;"-std=c++11 -stdlib=libc++ -fcolor-diagnostics -isystem /path/to/libcxx/include"
+      &lt;linkflags&gt;"-stdlib=libc++ -L/path/to/libcxx/lib"
+    ;
+</pre>
+<p>
+              (Again, remember to replace <code class="computeroutput">/path/to</code> with whatever you
+              used earlier.)
+            </p>
+<pre class="programlisting">You can then use as build command either:
+</pre>
+<pre class="programlisting">b2 --build-dir=/tmp/build-boost --layout=versioned toolset=clang-3.2 install -j4
+</pre>
+<p>
+              or
+            </p>
+<pre class="programlisting">b2 --build-dir=/tmp/build-boost --layout=versioned toolset=clang-3.3 install -j4
+</pre>
+<p>
+              we verifed this using Boost V1.53. If you use a different version,
+              just remember to replace <code class="computeroutput">/usr/local/include/boost-1_53</code>
+              with whatever include prefix you had in your installation.
+            </p>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.h3"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.build_hpx_finally"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.macos_installation.build_hpx_finally">Build
+              HPX, finally</a>
+            </h7><pre class="programlisting">cd /path/to
+git clone https://github.com/STEllAR-GROUP/hpx.git
+mkdir build-hpx &amp;&amp; cd build-hpx
+</pre>
+<p>
+              To build with Clang 3.2, execute:
+            </p>
+<pre class="programlisting">cmake ../hpx \
+    -DCMAKE_CXX_COMPILER=/usr/local/bin/clang++ \
+    -DCMAKE_C_COMPILER=/usr/local/bin/clang-3.3 \
+    -DBOOST_INCLUDE_DIR=/usr/local/include/boost-1_53 \
+    -DBOOST_LIBRARY_DIR=/usr/local/lib \
+    -DBOOST_SUFFIX=-clang-darwin32-mt-1_53 \
+    -DCMAKE_CXX_FLAGS="-isystem /path/to/libcxx/include" \
+    -DLINK_FLAGS="-L /path/to/libcxx/lib"
+make
+</pre>
+<p>
+              To build with Clang 3.3 (trunk), execute:
+            </p>
+<pre class="programlisting">cmake ../hpx \
+    -DCMAKE_CXX_COMPILER=clang++-3.3 \
+    -DCMAKE_C_COMPILER=clang-3.3 \
+    -DBOOST_INCLUDE_DIR=/usr/local/include/boost-1_53 \
+    -DBOOST_LIBRARY_DIR=/usr/local/lib \
+    -DBOOST_SUFFIX=-clang-darwin33-mt-1_53 \
+    -DCMAKE_CXX_FLAGS="-isystem /path/to/libcxx/include" \
+    -DLINK_FLAGS="-L /path/to/libcxx/lib"
+make
+</pre>
+<p>
+              For more detailed information about using <a href="http://www.cmake.org" target="_top">CMake</a>
+              please refer its documentation and to the section <a class="link" href="../building_hpx.html" title="Building HPX">Building
+              <span class="emphasis"><em>HPX</em></span> with CMake</a> for. Please pay special
+              attention to the section about HPX_MALLOC as this is crucial for getting
+              decent performance.
+            </p>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.h4"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.macos_installation.alternative_installation_method_"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.macos_installation.alternative_installation_method_">Alternative
+              Installation method of HPX on OS X (Mac)</a>
+            </h7><p>
+              Alternatively, you can install a recent version of gcc as well as all
+              required libraries via MacPorts:
+            </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+                  Install <a href="http://www.macports.org/" target="_top">MacPorts</a>
+                </li>
+<li class="listitem">
+<p class="simpara">
+                  Install CMake, gcc 4.8, and hwloc:
+                </p>
+<pre class="programlisting">sudo port install gcc48
+sudo port install hwloc
+</pre>
+<p class="simpara">
+                  You may also want:
+                </p>
+<pre class="programlisting">sudo port install cmake
+sudo port install git-core
+</pre>
+</li>
+<li class="listitem">
+<p class="simpara">
+                  Make this version of gcc your default compiler:
+                </p>
+<pre class="programlisting">sudo port install gcc_select
+sudo port select gcc mp-gcc48
+</pre>
+</li>
+<li class="listitem">
+<p class="simpara">
+                  Build Boost manually (the Boost package of MacPorts is built with
+                  Clang, and unfortunately doesn't work with a GCC-build version
+                  of HPX):
+                </p>
+<pre class="programlisting">wget http://sourceforge.net/projects/boost/files/boost/1.54.0/boost_1_54_0.tar.bz2
+tar xjf boost_1_54_0.tar.bz2
+pushd boost_1_54_0
+export BOOST_ROOT=$HOME/boost_1_54_0
+./bootstrap.sh --prefix=$BOOST_DIR
+./b2 -j8
+./b2 -j8 install
+export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$BOOST_ROOT/lib
+popd
+</pre>
+</li>
+<li class="listitem">
+<p class="simpara">
+                  Build HPX:
+                </p>
+<pre class="programlisting">git clone https://github.com/STEllAR-GROUP/hpx.git
+mkdir hpx-build
+pushd hpx-build
+export HPX_ROOT=$HOME/hpx
+cmake -DCMAKE_C_COMPILER=gcc \
+    -DCMAKE_CXX_COMPILER=g++ \
+    -DCMAKE_FORTRAN_COMPILER=gfortran \
+    -DCMAKE_C_FLAGS="-Wno-unused-local-typedefs" \
+    -DCMAKE_CXX_FLAGS="-Wno-unused-local-typedefs" \
+    -DBOOST_ROOT=$BOOST_ROOT \
+    -DHWLOC_ROOT=/opt/local \
+    -DCMAKE_INSTALL_PREFIX=$HOME/hpx \
+         $(pwd)/../hpx
+make -j8
+make -j8 install
+export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$HPX_ROOT/lib/hpx
+popd
+</pre>
+</li>
+<li class="listitem">
+                  Note that you need to set <code class="computeroutput">BOOST_ROOT</code>, <code class="computeroutput">HPX_ROOT</code>,
+                  and <code class="computeroutput">DYLD_LIBRARY_PATH</code> (for both <code class="computeroutput">BOOST_ROOT</code>
+                  and <code class="computeroutput">HPX_ROOT</code>) every time you configure, build, or
+                  run an HPX application.
+                </li>
+<li class="listitem">
+                  If you want to use HPX with MPI, you need to enable the MPI parcelport,
+                  and also specify the location of the MPI wrapper scripts. This
+                  can be done e.g. with the following command:
+                </li>
+</ol></div>
+<pre class="programlisting">cmake -DHPX_PARCELPORT_MPI=ON \
+     -DCMAKE_C_COMPILER=gcc \
+     -DCMAKE_CXX_COMPILER=g++ \
+     -DCMAKE_FORTRAN_COMPILER=gfortran \
+     -DMPI_C_COMPILER=openmpicc \
+     -DMPI_CXX_COMPILER=openmpic++ \
+     -DMPI_FORTRAN_COMPILER=openmpif90 \
+     -DCMAKE_C_FLAGS="-Wno-unused-local-typedefs" \
+     -DCMAKE_CXX_FLAGS="-Wno-unused-local-typedefs" \
+     -DBOOST_ROOT=$BOOST_DIR \
+     -DHWLOC_ROOT=/opt/local \
+     -DCMAKE_INSTALL_PREFIX=$HOME/hpx
+         $(pwd)/../hpx
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="hpx.manual.build_system.building_hpx.build_recipes.windows_installation"></a><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.windows_installation" title="How to Install HPX on Windows">How
+            to Install <span class="emphasis"><em>HPX</em></span> on Windows</a>
+</h6></div></div></div>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.windows_installation.h0"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.windows_installation.installation_of_required_prerequ"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.windows_installation.installation_of_required_prerequ">Installation
+              of Required Prerequisites</a>
+            </h7><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                  Download the Boost c++ libraries from <a href="http://www.boost.org/users/download/" target="_top">Boost
+                  Downloads</a>
+                </li>
+<li class="listitem">
+                  Install the boost library as explained in the section <a class="link" href="../prerequisites/boost_installation.html" title="Installing Boost Libraries">Installing
+                  Boost Libraries</a>
+                </li>
+<li class="listitem">
+                  Download the latest version of <a href="http://www.cmake.org" target="_top">CMake</a>
+                  binaries, which are located under the platform section of the downloads
+                  page at <a href="http://www.cmake.org/cmake/resources/software.html" target="_top">CMake
+                  Downloads</a>.
+                </li>
+<li class="listitem">
+                  Download the latest version of <span class="emphasis"><em>HPX</em></span> from the
+                  <a href="http://stellar-group.org" target="_top">STE||AR</a> website:
+                  <a href="http://stellar-group.org/downloads/" target="_top"><span class="emphasis"><em>HPX</em></span>
+                  Downloads</a>
+                </li>
+</ul></div>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.windows_installation.h1"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.windows_installation.installation_of_the_hpx_library"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.windows_installation.installation_of_the_hpx_library">Installation
+              of the <span class="emphasis"><em>HPX</em></span> Library</a>
+            </h7><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                  Create a build folder. <span class="emphasis"><em>HPX</em></span> requires an out-of-tree-build.
+                  This means that you will be unable to run CMake in the <span class="emphasis"><em>HPX</em></span>
+                  source folder.
+                </li>
+<li class="listitem">
+                  Open up the CMake GUI. In the input box labelled "Where is
+                  the source code:", enter the full path to the source folder.
+                  The source directory is one where the sources were checked out.
+                  CMakeLists.txt files in the source directory as well as the subdirectories
+                  describe the build to CMake. In addition to this, there are CMake
+                  scripts (usually ending in .cmake) stored in a special CMake directory.
+                  CMake does not alter any file in the source directory and doesn't
+                  add new ones either. In the input box labelled "Where to build
+                  the binaries:", enter the full path to the build folder you
+                  created before. The build directory is one where all compiler outputs
+                  are stored, which includes object files and final executables.
+                </li>
+<li class="listitem">
+                  Add CMake variable definitions (if any) by clicking the "Add
+                  Entry" button. There are two required variables you need to
+                  define: <code class="computeroutput"><span class="identifier">BOOST_ROOT</span></code>
+                  and <code class="computeroutput"><span class="identifier">HWLOC_ROOT</span></code>.
+                  These (PATH) variables need to be set to point to the root folder
+                  of your <a href="http://www.boost.org/" target="_top">Boost</a> and <a href="http://www.open-mpi.org/projects/hwloc/" target="_top">Portable Hardware
+                  Locality (HWLOC)</a> installations. It is recommended to set
+                  the variable <code class="computeroutput"><span class="identifier">CMAKE_INSTALL_PREFIX</span></code>
+                  as well. This determines where the HPX libraries will be built
+                  and installed. If this (PATH) variable is set, it has to refer
+                  to the directory where the built <span class="emphasis"><em>HPX</em></span> files
+                  should be installed to.
+                </li>
+<li class="listitem">
+                  Press the "Configure" button. A window will pop up asking
+                  you which compilers to use. Select the Visual Studio 10 (64Bit)
+                  compiler (it usually is the default if available). The Visual Studio
+                  2012 (64Bit) and Visual Studio 2013 (64Bit) compilers are supported
+                  as well. Note that while it is possible to build HPX for x86, we
+                  don't recommend doing so as 32 bit runs are severely restricted
+                  by a 32 bit Windows system limitation affecting the number of HPX
+                  threads you can create.
+                </li>
+<li class="listitem">
+                  Press "Configure" again. Repeat this step until the "Generate"
+                  button becomes clickable (and until no variable definitions are
+                  marked red anymore).
+                </li>
+<li class="listitem">
+                  Press "Generate".
+                </li>
+<li class="listitem">
+                  Open up the build folder, and double-click hpx.sln.
+                </li>
+<li class="listitem">
+                  Build the INSTALL target.
+                </li>
+</ul></div>
+<p>
+              For more detailed information about using <a href="http://www.cmake.org" target="_top">CMake</a>
+              please refer its documentation and also the section <a class="link" href="../building_hpx.html" title="Building HPX">Building
+              <span class="emphasis"><em>HPX</em></span> with CMake</a>.
+            </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="hpx.manual.build_system.building_hpx.build_recipes.bgq_installation"></a><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.bgq_installation" title="How to Install HPX on BlueGene/Q">How
+            to Install <span class="emphasis"><em>HPX</em></span> on BlueGene/Q</a>
+</h6></div></div></div>
+<p>
+              So far we only support BGClang for compiling <span class="emphasis"><em>HPX</em></span>
+              on the BlueGene/Q.
+            </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                  Check if BGClang is available on your installation. If not obtain
+                  and install a copy from the <code class="computeroutput">BGClang trac page &lt;https://trac.alcf.anl.gov/projects/llvm-bgq&gt;</code>_
+                </li>
+<li class="listitem">
+                  Build (and install) a recent version of <a href="http://www.open-mpi.org/software/hwloc/v1.7/" target="_top">hwloc
+                  Downloads</a> With the following commands:
+                </li>
+</ul></div>
+<pre class="programlisting">./configure \
+  --host=powerpc64-bgq-linux \
+  --prefix=$HOME/install/hwloc \
+  --disable-shared \
+  --enable-static \
+  CPPFLAGS='-I/bgsys/drivers/ppcfloor -I/bgsys/drivers/ppcfloor/spi/include/kernel/cnk/'
+make
+make install
+</pre>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                  Build (and install) a recent version of Boost, using BGClang::
+                  To build Boost with BGClang, you'll need to set up the following
+                  in your Boost <code class="computeroutput">~/user-config.jam</code> file:
+                </li></ul></div>
+<pre class="programlisting"># user-config.jam (put this file into your home directory)
+using clang
+  :
+  : bgclang++11
+  :
+  ;
+</pre>
+<p>
+              You can then use this as your build command:
+            </p>
+<pre class="programlisting">./bootstrap.sh
+./b2 --build-dir=/tmp/build-boost --layout=versioned toolset=clang -j12
+</pre>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                  Clone the master <span class="emphasis"><em>HPX</em></span> git repository (or a
+                  stable tag):
+                </li></ul></div>
+<pre class="programlisting">git clone git://github.com/STEllAR-GROUP/hpx.git
+</pre>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                  Generate the <span class="emphasis"><em>HPX</em></span> buildfiles using cmake:
+                </li></ul></div>
+<pre class="programlisting">cmake -DHPX_PLATFORM=BlueGeneQ \
+        -CMAKE_TOOLCHAIN_FILE=/path/to/hpx/cmake/toolchains/BGQ.cmake \
+        -DCMAKE_CXX_COMPILER=bgclang++11 \
+        -DMPI_CXX_COMPILER=mpiclang++11 \
+        -DHWLOC_ROOT=/path/to/hwloc/installation \
+        -DBOOST_ROOT=/path/to/boost \
+        -DHPX_MALLOC=system \
+        /path/to/hpx
+</pre>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                  To complete the build and install <span class="emphasis"><em>HPX</em></span>:
+                </li></ul></div>
+<pre class="programlisting">make -j24
+make install
+</pre>
+<pre class="programlisting">This will build and install the essential core components of <span class="emphasis"><em>HPX</em></span> only. Use:
+</pre>
+<pre class="programlisting">make -j24 examples
+make -j24 install
+</pre>
+<pre class="programlisting">to build and install the examples.
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation"></a><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation" title="How to Install HPX on the Xeon Phi">How
+            to Install <span class="emphasis"><em>HPX</em></span> on the Xeon Phi</a>
+</h6></div></div></div>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation.h0"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation.installation_of_the_boost_librar"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation.installation_of_the_boost_librar">Installation
+              of the Boost Libraries</a>
+            </h7><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                  Download <a href="http://www.boost.org/users/download/" target="_top">Boost
+                  Downloads</a> for Linux and unpack the retreived tarball.
+                </li>
+<li class="listitem">
+<p class="simpara">
+                  Adapt your ~/user-config.jam to contain the following lines:
+                </p>
+<pre class="programlisting"><span class="special">##</span> <span class="identifier">Toolset</span> <span class="identifier">to</span> <span class="identifier">be</span> <span class="identifier">used</span> <span class="keyword">for</span> <span class="identifier">compiling</span> <span class="keyword">for</span> <span class="identifier">the</span> <span class="identifier">host</span>
+<span class="keyword">using</span> <span class="identifier">intel</span>
+    <span class="special">:</span> <span class="identifier">host</span>
+    <span class="special">:</span>
+    <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">cxxflags</span><span class="special">&gt;</span><span class="string">"-std=c++0x"</span>
+    <span class="special">;</span>
+
+<span class="special">##</span> <span class="identifier">Toolset</span> <span class="identifier">to</span> <span class="identifier">be</span> <span class="identifier">used</span> <span class="keyword">for</span> <span class="identifier">compiling</span> <span class="keyword">for</span> <span class="identifier">the</span> <span class="identifier">Xeon</span> <span class="identifier">Phi</span>
+<span class="keyword">using</span> <span class="identifier">intel</span>
+    <span class="special">:</span> <span class="identifier">mic</span>
+    <span class="special">:</span>
+    <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">cxxflags</span><span class="special">&gt;</span><span class="string">"-std=c++0x -mmic"</span>
+      <span class="special">&lt;</span><span class="identifier">linkflags</span><span class="special">&gt;</span><span class="string">"-std=c++0x -mmic"</span>
+    <span class="special">;</span>
+</pre>
+</li>
+<li class="listitem">
+<p class="simpara">
+                  Change to the directory you unpacked boost in (from now on referred
+                  to as $BOOST_ROOT) and execute the following commands:
+                </p>
+<pre class="programlisting">./bootstrap.sh
+./b2 toolset=intel-mic -j&lt;N&gt;
+</pre>
+<p class="simpara">
+                  You should now have all the required boost libraries.
+                </p>
+</li>
+</ul></div>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation.h1"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation.installation_of_the_hwloc_librar"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation.installation_of_the_hwloc_librar">Installation
+              of the hwloc Library</a>
+            </h7><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                  Download <a href="http://www.open-mpi.org/software/hwloc/v1.7/" target="_top">hwloc
+                  Downloads</a>, unpack the retreived tarball and change to the
+                  newly created directory
+                </li>
+<li class="listitem">
+<p class="simpara">
+                  Run the configure-make-install procedure as follows:
+                </p>
+<pre class="programlisting">CC=icc CFLAGS=-mmic CXX=icpc CXXFLAGS=-mmic LDFLAGS=-mmic ./configure --host=k1om --prefix=$HWLOC_ROOT
+make
+make install
+</pre>
+<p class="simpara">
+                  You now have a working hwloc installation in $HWLOC_ROOT.
+                </p>
+</li>
+</ul></div>
+<h7><a name="hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation.h2"></a>
+              <span class="phrase"><a name="hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation.building_hpx"></a></span><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation.building_hpx">Building
+              <span class="emphasis"><em>HPX</em></span></a>
+            </h7><p>
+              After all the prerequistes have been succesfully installed, we can
+              now start building and installing <span class="emphasis"><em>HPX</em></span>. The build
+              procedure is almost the same as for <a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.unix_installation" title="How to Install HPX on Unix Variants">How
+              to Install <span class="emphasis"><em>HPX</em></span> on Unix Variants</a> with the
+              sole difference that you have to enable the Xeon Phi in the CMake Build
+              system. This is achieved by invoking CMake in the following way:
+            </p>
+<pre class="programlisting">cmake                                             \
+    -CMAKE_TOOLCHAIN_FILE=/path/to/hpx/cmake/toolchains/XeonPhi.cmake \
+    -DBOOST_ROOT=$BOOST_ROOT                      \
+    -DHWLOC_ROOT=$HWLOC_ROOT                      \
+    /path/to/hpx
+</pre>
+<p>
+              For more detailed information about using <a href="http://www.cmake.org" target="_top">CMake</a>
+              please refer its documentation and to the section <a class="link" href="../building_hpx.html" title="Building HPX">Building
+              <span class="emphasis"><em>HPX</em></span> with CMake</a>. Please pay special attention
+              to the section about HPX_MALLOC as this is crucial for getting decent
+              performance on the Xeon Phi.
+            </p>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2014 The
+      STE||AR Group, Louisiana State University<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="doc_tools.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../building_hpx.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../using_hpx.html"><img src="../../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

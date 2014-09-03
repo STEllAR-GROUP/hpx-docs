@@ -1,0 +1,215 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Using HPX with CMake based projects</title>
+<link rel="stylesheet" href="../../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../../index.html" title="HPX 0.9.9">
+<link rel="up" href="../using_hpx.html" title="Building Projects using HPX">
+<link rel="prev" href="pkgconfig.html" title="Using HPX with pkg-config">
+<link rel="next" href="../../testing.html" title="Testing HPX">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="440" height="104" src="../../../../images/hpx_0_9_9_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="pkgconfig.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../using_hpx.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../testing.html"><img src="../../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="hpx.manual.build_system.using_hpx.using_hpx_cmake"></a><a class="link" href="using_hpx_cmake.html" title="Using HPX with CMake based projects">Using
+          HPX with CMake based projects</a>
+</h5></div></div></div>
+<p>
+            In Addition to the pkg-config support discussed on the previous pages,
+            <span class="emphasis"><em>HPX</em></span> comes with full CMake support. In order to integrate
+            <span class="emphasis"><em>HPX</em></span> into your existing, or new CMakeLists.txt you
+            can leverage the <a href="http://www.cmake.org/cmake/help/v2.8.11/cmake.html#command:find_package" target="_top">find_package</a>
+            command integrated into CMake. Following is a Hello World component example
+            using CMake.
+          </p>
+<p>
+            Let's revisit what we have. We have three files which compose our example
+            application:
+          </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">hello_world_component</span><span class="special">.</span><span class="identifier">hpp</span></code>
+              </li>
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">hello_world_component</span><span class="special">.</span><span class="identifier">cpp</span></code>
+              </li>
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">hello_world_client</span><span class="special">.</span><span class="identifier">hpp</span></code>
+              </li>
+</ul></div>
+<p>
+            The basic structure to include <span class="emphasis"><em>HPX</em></span> into your CMakeLists.txt
+            is shown here:
+          </p>
+<pre class="programlisting"># Require a recent version of cmake
+cmake_minimum_required(VERSION 2.8.4 FATAL_ERROR)
+
+# This project is C++ based.
+project(your_app CXX)
+
+# Instruct cmake to find the <span class="emphasis"><em>HPX</em></span> settings
+find_package(HPX)
+</pre>
+<p>
+            In order to have CMake find HPX, it needs to be told. The easiest is
+            to add the HPX_DIR cmake variable pointing to the directory containing
+            the HPXConfig.cmake script which gets picked up by cmake and sets up
+            all the necessary macros needed to use HPX in your project. Pass it on
+            the command line while invoking cmake (where <code class="literal">$HPX_LOCATION</code>
+            is the build directory or <code class="literal">CMAKE_INSTALL_PREFIX</code> you
+            used while building <span class="emphasis"><em>HPX</em></span>):
+          </p>
+<pre class="programlisting">cmake -DHPX_DIR=$HPX_LOCATION/lib/cmake/hpx ...
+</pre>
+<p>
+            Alternatively, if you wish to require <span class="emphasis"><em>HPX</em></span> for your
+            project, replace the <code class="computeroutput">find_package(HPX)</code> line with <code class="computeroutput">find_package(HPX
+            REQUIRED)</code>.
+          </p>
+<p>
+            You can check if HPX was succesfully found with the <code class="computeroutput">HPX_FOUND</code>
+            CMake variable.
+          </p>
+<p>
+            The simplst way to add the <span class="emphasis"><em>HPX</em></span> component is to use
+            the <code class="computeroutput">add_hpx_component</code> macro and add it to the <code class="computeroutput">CMakeLists.txt</code>
+            file:
+          </p>
+<pre class="programlisting"># build your application using HPX
+add_hpx_component(hello_world_component
+    SOURCES hello_world_component.cpp
+    HEADERS hello_world_component.hpp
+    COMPONENT_DEPENDENCIES iostreams)
+</pre>
+<p>
+            The available options to <code class="computeroutput">add_hpx_component</code> are:
+          </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                <code class="computeroutput">SOURCES</code>: The source files for that component
+              </li>
+<li class="listitem">
+                <code class="computeroutput">HEADERS</code>: The header files for that component
+              </li>
+<li class="listitem">
+                <code class="computeroutput">DEPENDENCIES</code>: Other libraries or targets this component
+                depends on
+              </li>
+<li class="listitem">
+                <code class="computeroutput">COMPONENT_DEPENDENCIES</code>: The components this component
+                depends on
+              </li>
+<li class="listitem">
+                <code class="computeroutput">PLUGIN</code>: Treat this component as a plugin-able library
+              </li>
+<li class="listitem">
+                <code class="computeroutput">COMPILE_FLAGS</code>: Additional compiler flags
+              </li>
+<li class="listitem">
+                <code class="computeroutput">LINK_FLAGS</code>: Additional linker flags
+              </li>
+<li class="listitem">
+                <code class="computeroutput">FOLDER</code>: Add the headers and source files to this Source
+                Group folder
+              </li>
+<li class="listitem">
+                <code class="computeroutput">EXCLUDE_FROM_ALL</code>: Do not build this component as part
+                of the <code class="computeroutput">all</code> target
+              </li>
+</ul></div>
+<p>
+            After adding the component, the way you add the executable is as follows:
+          </p>
+<pre class="programlisting"># build your application using HPX
+add_hpx_executable(hello_world
+    ESSENTIAL
+    SOURCES hello_world_client.cpp
+    COMPONENT_DEPENDENCIES hello_world_component)
+</pre>
+<p>
+            When you configure your application, all you need to do is set the HPX_DIR
+            variable to point to the installation of <span class="emphasis"><em>HPX</em></span>!
+          </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              All library targets built with <span class="emphasis"><em>HPX</em></span> are exported
+              and readily available to be used as arguments to <a href="http://www.cmake.org/cmake/help/v2.8.11/cmake.html#command:target_link_libraries" target="_top"><code class="computeroutput">target_link_libraries</code></a>
+              in your targets. The HPX include directories are available with the
+              <code class="literal">HPX_INCLUDE_DIRS</code> CMake variable
+            </p></td></tr>
+</table></div>
+<h6>
+<a name="hpx.manual.build_system.using_hpx.using_hpx_cmake.h0"></a>
+            <span class="phrase"><a name="hpx.manual.build_system.using_hpx.using_hpx_cmake.cmake_integrate_hpx"></a></span><a class="link" href="using_hpx_cmake.html#hpx.manual.build_system.using_hpx.using_hpx_cmake.cmake_integrate_hpx">CMake
+            macros to integrate HPX into existing Applications</a>
+          </h6>
+<p>
+            In addition to the <code class="computeroutput">add_hpx_component</code> and <code class="computeroutput">add_hpx_executable</code>
+            you can use the <code class="computeroutput">hpx_setup_target</code> macro to have an already
+            exisiting target to be used with the HPX libraries.
+          </p>
+<pre class="programlisting">hpx_setup_target(target)
+</pre>
+<p>
+            Optional Parameters are:
+          </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                <code class="computeroutput">EXPORT</code>: Adds it to the CMake export list HPXTargets
+              </li>
+<li class="listitem">
+                <code class="computeroutput">INSTALL</code>: Generates a install rule for the target
+              </li>
+<li class="listitem">
+                <code class="computeroutput">PLUGIN</code>: Treat this component as a plugin-able library
+              </li>
+<li class="listitem">
+                <code class="computeroutput">TYPE</code>: The type can be: EXECUTABLE, LIBRARY or COMPONENT
+              </li>
+<li class="listitem">
+                <code class="computeroutput">DEPENDENCIES</code>: Other libraries or targets this component
+                depends on
+              </li>
+<li class="listitem">
+                <code class="computeroutput">COMPONENT_DEPENDENCIES</code>: The components this component
+                depends on
+              </li>
+<li class="listitem">
+                <code class="computeroutput">COMPILE_FLAGS</code>: Additional compiler flags
+              </li>
+<li class="listitem">
+                <code class="computeroutput">LINK_FLAGS</code>: Additional linker flags
+              </li>
+</ul></div>
+<p>
+            If you do not use CMake, you can still build against <span class="emphasis"><em>HPX</em></span>
+            but you should refer to the section on <a class="link" href="pkgconfig.html#hpx.manual.build_system.using_hpx.pkgconfig.comps" title="How to Build HPX Components with pkg-config">How
+            to Build <span class="emphasis"><em>HPX</em></span> Components with pkg-config</a>.
+          </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2014 The
+      STE||AR Group, Louisiana State University<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="pkgconfig.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../using_hpx.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../testing.html"><img src="../../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

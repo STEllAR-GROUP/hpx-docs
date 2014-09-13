@@ -1,0 +1,264 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Extended Facilities for Futures</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 0.9.9">
+<link rel="up" href="../lcos.html" title="Using LCOs">
+<link rel="prev" href="../lcos.html" title="Using LCOs">
+<link rel="next" href="../parallel.html" title="High Level Parallel Facilities">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="440" height="104" src="../../../images/hpx_0_9_9_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../lcos.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../lcos.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../parallel.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="hpx.manual.lcos.extend_futures"></a><a class="link" href="extend_futures.html" title="Extended Facilities for Futures">Extended Facilities
+        for Futures</a>
+</h4></div></div></div>
+<p>
+          Concurrency is about both decomposing and composing the program from the
+          parts that work well individually and together. It is in the composition
+          of connected and multicore components where today's C++ libraries are still
+          lacking.
+        </p>
+<p>
+          The functionality of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">future</span></code>
+          offers a partial solution. It allows for the separation of the initiation
+          of an operation and the act of waiting for its result; however the act
+          of waiting is synchronous. In communication-intensive code this act of
+          waiting can be unpredictable, inefficient and simply frustrating. The example
+          below illustrates a possible synchronous wait using futures.
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">future</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">std</span><span class="special">;</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">f</span> <span class="special">=</span> <span class="identifier">async</span><span class="special">([]()</span> <span class="special">{</span> <span class="keyword">return</span> <span class="number">123</span><span class="special">;</span> <span class="special">});</span>
+    <span class="keyword">int</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">f</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span> <span class="comment">// might block</span>
+<span class="special">}</span>
+</pre>
+<p>
+          For this reason, <span class="emphasis"><em>HPX</em></span> implements a set of extensions
+          to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">future</span></code> (as proposed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4107.html" target="_top">N4107</a>).
+          This proposal introduces the following key asynchronous operations to
+          <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span></code>, <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">shared_future</span></code>,
+          and <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span></code>, which enhance and enrich these
+          facilities.
+        </p>
+<div class="table">
+<a name="hpx.manual.lcos.extend_futures.facilities_extending_std_future"></a><p class="title"><b>Table&#160;16.&#160;Facilities extending std::future</b></p>
+<div class="table-contents"><table class="table" summary="Facilities extending std::future">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Facility
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Description
+                  </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">::</span><span class="identifier">then</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    In asynchronous programming, it is very common for one asynchronous
+                    operation, on completion, to invoke a second operation and pass
+                    data to it. The current C++ standard does not allow one to register
+                    a continuation to a future. With <code class="computeroutput"><span class="identifier">then</span></code>,
+                    instead of waiting for the result, a continuation is "attached"
+                    to the asynchronous operation, which is invoked when the result
+                    is ready. Continuations registered using the then function will
+                    help to avoid blocking waits or wasting threads on polling, greatly
+                    improving the responsiveness and scalability of an application.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    unwrap constructor for <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    In some scenarios, you might want to create a future that returns
+                    another future, resulting in nested futures. Although it is possible
+                    to write code to unwrap the outer future and retrieve the nested
+                    future and its result, such code is not easy to write because
+                    you must handle exceptions and it may cause a blocking call.
+                    Unwrapping can allow us to mitigate this problem by doing an
+                    asynchronous call to unwrap the outermost future.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">::</span><span class="identifier">is_ready</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    There are often situations where a <code class="computeroutput"><span class="identifier">get</span><span class="special">()</span></code> call on a future may not be
+                    a blocking call, or is only a blocking call under certain circumstances.
+                    This function gives the ability to test for early completion
+                    and allows us to avoid associating a continuation, which needs
+                    to be scheduled with some non-trivial overhead and near-certain
+                    loss of cache efficiency.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">make_ready_future</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Some functions may know the value at the point of construction.
+                    In these cases the value is immediately available, but needs
+                    to be returned as a future. By using <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">make_ready_future</span></code>
+                    a future can be created which holds a pre-computed result in
+                    its shared state. In the current standard it is non-trivial to
+                    create a future directly from a value. First a promise must be
+                    created, then the promise is set, and lastly the future is retrieved
+                    from the promise. This can now be done with one operation.
+                  </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+          The standard also omits the ability to compose multiple futures. This is
+          a common pattern that is ubiquitous in other asynchronous frameworks and
+          is absolutely necessary in order to make C++ a powerful asynchronous programming
+          language. Not including these functions is synonymous to Boolean algebra
+          without AND/OR.
+        </p>
+<div class="table">
+<a name="hpx.manual.lcos.extend_futures.facilities_for_composing_hpx_fut"></a><p class="title"><b>Table&#160;17.&#160;Facilities for Composing hpx::futures</b></p>
+<div class="table-contents"><table class="table" summary="Facilities for Composing hpx::futures">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Facility
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Description
+                  </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput">hpx::when_any</code>,
+                    <code class="computeroutput">hpx::when_any_n</code>,<br>
+                    <code class="computeroutput">hpx::wait_any</code>,
+                    <code class="computeroutput">hpx::wait_any_n</code>,<br>
+                    <code class="computeroutput">hpx::when_any_swapped</code>,
+                    <code class="computeroutput">hpx::when_any_swapped_n</code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Asynchronously wait for at least one of multiple future or shared_future
+                    objects to finish.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../../when_all_idp20576512.html" title="Function template when_all">hpx::when_all</a></code>,
+                    <code class="computeroutput"><a class="link" href="../../when_all_n.html" title="Function template when_all_n">hpx::when_all_n</a></code>,<br>
+                    <code class="computeroutput"><a class="link" href="../../wait_all_idp20524192.html" title="Function template wait_all">hpx::wait_all</a></code>,
+                    <code class="computeroutput"><a class="link" href="../../wait_all_n.html" title="Function template wait_all_n">hpx::wait_all_n</a></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Asynchronously waits for all future and shared_future objects
+                    to finish.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput">hpx::when_some</code>,
+                    <code class="computeroutput">hpx::when_some_n</code>,
+                    <code class="computeroutput">hpx::wait_some</code>,
+                    <code class="computeroutput">hpx::wait_some_n</code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Asynchronously waits for multiple future and shared_future objects
+                    to finish.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput">hpx::when_each</code>,
+                    <code class="computeroutput">hpx::when_each_n</code>,<br>
+                    <code class="computeroutput">hpx::wait_each</code>,
+                    <code class="computeroutput">hpx::wait_each_n</code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Asynchronously waits for multiple future and shared_future objects
+                    to finish and call a function for each of the future objects
+                    as soon as it becomes ready.
+                  </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break">
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2014 The
+      STE||AR Group, Louisiana State University<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../lcos.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../lcos.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../parallel.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

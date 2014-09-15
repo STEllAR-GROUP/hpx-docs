@@ -31,8 +31,6 @@
           an Action with a Continuation but without any Synchronization</a></span></dt>
 <dt><span class="section"><a href="action_invocation/apply_continue.html">Applying
           an Action with a Continuation and with Synchronization</a></span></dt>
-<dt><span class="section"><a href="action_invocation/compare.html">Comparing
-          Actions with C++ Functions</a></span></dt>
 </dl></div>
 <p>
           The process of invoking a global function (or a member function of an object)
@@ -45,12 +43,35 @@
           all of which are described in the following sections.
         </p>
 <p>
-          <span class="emphasis"><em>HPX</em></span> allows the user to apply actions with a syntax
-          similar to the C++ standard. In fact, all action types have an overloaded
-          function operator allowing to synchronously apply the action. Further,
-          <span class="emphasis"><em>HPX</em></span> implements <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span></code>,
-          which semantically works similar to the way <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">async</span></code>
-          works for plain C++ function.
+          Generally, <span class="emphasis"><em>HPX</em></span> actions are very similar to 'normal'
+          C++ functions except that actions can be invoked remotely. The <a class="link" href="action_invocation.html#applying_actions.action_invocation.the_api" title="Figure&#160;4.&#160;Overview of the main API exposed by HPX">figure</a>
+          below shows an overview of the main API exposed by HPX. This shows the
+          function invocation syntax as defined by the C++ language (dark gray),
+          the additional invocation syntax as provided through C++ Standard Library
+          features (medium gray), and the extensions added by <span class="emphasis"><em>HPX</em></span>
+          (light gray). Where: <code class="computeroutput"><span class="identifier">f</span></code>:
+          function to invoke; <code class="computeroutput"><span class="identifier">p</span><span class="special">...</span></code>:
+          (optional) arguments; <code class="computeroutput"><span class="identifier">R</span></code>:
+          return type of <code class="computeroutput"><span class="identifier">f</span></code>; <code class="computeroutput"><span class="identifier">action</span></code>: action type defined by <code class="computeroutput"><a class="link" href="../../../HPX_DEFINE_PLAIN_ACTION.html" title="Macro HPX_DEFINE_PLAIN_ACTION">HPX_DEFINE_PLAIN_ACTION</a></code>
+          or <code class="computeroutput"><a class="link" href="../../../HPX_DEFINE_COMPONENT_ACTION.html" title="Macro HPX_DEFINE_COMPONENT_ACTION">HPX_DEFINE_COMPONENT_ACTION</a></code>
+          encapsulating <code class="computeroutput"><span class="identifier">f</span></code>; <code class="computeroutput"><span class="identifier">a</span></code>: an instance of the type <code class="computeroutput"><span class="identifier">action</span></code>; <code class="computeroutput"><span class="identifier">id</span></code>:
+          the global address the action is applied to.
+        </p>
+<p>
+          </p>
+<div class="figure">
+<a name="applying_actions.action_invocation.the_api"></a><p class="title"><b>Figure&#160;4.&#160;Overview of the main API exposed
+          by HPX</b></p>
+<div class="figure-contents"><span class="inlinemediaobject"><img src="../../.././images/hpx_the_api.png" alt="Overview of the main API exposed by HPX"></span></div>
+</div>
+<p><br class="figure-break">
+        </p>
+<p>
+          This figure shows that <span class="emphasis"><em>HPX</em></span> allows the user to apply
+          actions with a syntax similar to the C++ standard. In fact, all action
+          types have an overloaded function operator allowing to synchronously apply
+          the action. Further, <span class="emphasis"><em>HPX</em></span> implements <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span></code>, which semantically works similar
+          to the way <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">async</span></code> works for plain C++ function.
         </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -74,11 +95,15 @@
           and <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async_continue</span></code>, both of which refine
           and extend the standard C++ facilities.
         </p>
+<p>
+          The different ways to invoke a function in <span class="emphasis"><em>HPX</em></span> will
+          be explained in more detail in the following sections
+        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
 <td align="right"><div class="copyright-footer">Copyright &#169; 2011-2014 The
-      STE||AR Group, Louisiana State University<p>
+      STE||AR Group (http://stellar-group.org)<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
         or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)

@@ -4,13 +4,13 @@
 <title>Class task_region_handle</title>
 <link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="HPX 0.9.9">
+<link rel="home" href="../../../index.html" title="HPX 0.9.10">
 <link rel="up" href="../../../header/hpx/parallel/task_region_hpp.html" title="Header &lt;hpx/parallel/task_region.hpp&gt;">
 <link rel="prev" href="task_canceled_exception.html" title="Class task_canceled_exception">
 <link rel="next" href="task_region.html" title="Function template task_region">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="440" height="104" src="../../../images/hpx_0_9_9_draft.png"></td></tr></table>
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="488" height="126" src="../../../images/hpx_0_9_10_draft.png"></td></tr></table>
 <hr>
 <div class="spirit-nav">
 <a accesskey="p" href="task_canceled_exception.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/task_region_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="task_region.html"><img src="../../../images/next.png" alt="Next"></a>
@@ -28,12 +28,12 @@
 <span class="keyword">class</span> <a class="link" href="task_region_handle.html" title="Class task_region_handle">task_region_handle</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
 
-  <span class="comment">// <a class="link" href="task_region_handle.html#idp22529392-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="task_region_handle.html#idp22529792-bb"><span class="identifier">run</span></a><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="task_region_handle.html#idp22540928-bb"><span class="identifier">wait</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="task_region_handle.html#idp22823120-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="task_region_handle.html#idp22823520-bb"><span class="identifier">run</span></a><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="task_region_handle.html#idp22834656-bb"><span class="identifier">wait</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp59409056"></a><h2>Description</h2>
+<a name="idp60583168"></a><h2>Description</h2>
 <p>   The class task_region_handle defines an interface for forking and
    joining parallel tasks. The \a task_region and \a task_region_final
    function templates create an object of type task_region_handle and
@@ -63,11 +63,11 @@
    @code 
  Example: task_region([&amp;](auto&amp; tr) { tr.run([&amp;] { tr.run([] { f(); }); // Error: tr is not active task_region([&amp;](auto&amp; tr) { // Nested task region tr.run(f); // OK: inner tr is active /// ... }); }); /// ... });  </p>
 <div class="refsect2">
-<a name="idp59413888"></a><h3>
-<a name="idp22529392-bb"></a><code class="computeroutput">task_region_handle</code> public member functions</h3>
+<a name="idp60588000"></a><h3>
+<a name="idp22823120-bb"></a><code class="computeroutput">task_region_handle</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp22529792-bb"></a><span class="identifier">run</span><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp22823520-bb"></a><span class="identifier">run</span><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
 <p>Causes the expression f() to be invoked asynchronously. The invocation of f is permitted to run on an unspecified thread in an unordered fashion relative to the sequence of operations following the call to run(f) (the continuation), or indeterminately sequenced within the same thread as the continuation.</p>
 <p>The call to <span class="emphasis"><em>run</em></span> synchronizes with the invocation of f. The completion of f() synchronizes with the next invocation of wait on the same <code class="computeroutput"><a class="link" href="task_region_handle.html" title="Class task_region_handle">task_region_handle</a></code> or completion of the nearest enclosing task region (i.e., the task_region or task_region_final that created this <code class="computeroutput"><a class="link" href="task_region_handle.html" title="Class task_region_handle">task_region_handle</a></code>).</p>
 <p>Requires: F shall be MoveConstructible. The expression, (void)f(), shall be well-formed.</p>
@@ -95,7 +95,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp22540928-bb"></a><span class="identifier">wait</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp22834656-bb"></a><span class="identifier">wait</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>       Blocks until the tasks spawned using this task_region_handle have
        finished.
 

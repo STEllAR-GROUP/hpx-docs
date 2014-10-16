@@ -79,6 +79,19 @@ APP_OPTIONS=
           and may prevent PBS from accepting the script.
         </p>
 <p>
+          On newer PBS versions the PBS command syntax might be different. For instance,
+          the PBS script above would look like:
+        </p>
+<pre class="programlisting">#!/bin/bash
+#
+#PBS -l select=2:ncpus=4
+
+APP_PATH=~/packages/hpx/bin/hello_world
+APP_OPTIONS=
+
+<a href="http://www.clusterresources.com/torquedocs21/commands/pbsdsh.shtml" target="_top">pbsdsh</a> -u $APP_PATH $APP_OPTIONS <a class="link" href="../../manual/init/commandline.html" title="HPX Command Line Options">--hpx:nodes</a>=`cat $PBS_NODEFILE`
+</pre>
+<p>
           <code class="literal">APP_PATH</code> and <code class="literal">APP_OPTIONS</code> are shell
           variables that respectively specify the correct path to the executable
           (<code class="literal">hello_world</code> in this case) and the command line options.

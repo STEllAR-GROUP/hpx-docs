@@ -112,8 +112,10 @@ Amount made: 34.0096
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">hpx_main</span><span class="special">(</span><span class="identifier">variables_map</span> <span class="special">&amp;</span> <span class="identifier">vm</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="special">{</span>
-        <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">dataflow</span><span class="special">;</span>
-        <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">dataflow_base</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">shared_future</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">make_ready_future</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">local</span><span class="special">::</span><span class="identifier">dataflow</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">unwrapped</span><span class="special">;</span>
         <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">naming</span><span class="special">::</span><span class="identifier">id_type</span> <span class="identifier">here</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">();</span>
 
         <span class="keyword">double</span> <span class="identifier">init_principal</span><span class="special">=</span><span class="identifier">vm</span><span class="special">[</span><span class="string">"principal"</span><span class="special">].</span><span class="identifier">as</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;();</span> <span class="comment">//Initial principal</span>
@@ -139,18 +141,18 @@ Amount made: 34.0096
         <span class="comment">//</span>
         <span class="comment">// Please note the similarity with the code below!</span>
 
-        <span class="identifier">dataflow_base</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">principal</span> <span class="special">=</span> <span class="identifier">dataflow</span><span class="special">&lt;</span><span class="identifier">identity_action</span><span class="special">&gt;(</span><span class="identifier">here</span><span class="special">,</span> <span class="identifier">init_principal</span><span class="special">);</span>
-        <span class="identifier">dataflow_base</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">rate</span> <span class="special">=</span> <span class="identifier">dataflow</span><span class="special">&lt;</span><span class="identifier">identity_action</span><span class="special">&gt;(</span><span class="identifier">here</span><span class="special">,</span> <span class="identifier">init_rate</span><span class="special">);</span>
+        <span class="identifier">shared_future</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">principal</span> <span class="special">=</span> <span class="identifier">make_ready_future</span><span class="special">(</span><span class="identifier">init_principal</span><span class="special">);</span>
+        <span class="identifier">shared_future</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">rate</span> <span class="special">=</span> <span class="identifier">make_ready_future</span><span class="special">(</span><span class="identifier">init_rate</span><span class="special">);</span>
 
         <span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">t</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
         <span class="special">{</span>
-            <span class="identifier">dataflow_base</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">interest</span> <span class="special">=</span> <span class="identifier">dataflow</span><span class="special">&lt;</span><span class="identifier">calc_action</span><span class="special">&gt;(</span><span class="identifier">here</span><span class="special">,</span> <span class="identifier">principal</span><span class="special">,</span> <span class="identifier">rate</span><span class="special">);</span>
-            <span class="identifier">principal</span> <span class="special">=</span> <span class="identifier">dataflow</span><span class="special">&lt;</span><span class="identifier">add_action</span><span class="special">&gt;(</span><span class="identifier">here</span><span class="special">,</span> <span class="identifier">principal</span><span class="special">,</span> <span class="identifier">interest</span><span class="special">);</span>
+            <span class="identifier">shared_future</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">interest</span> <span class="special">=</span> <span class="identifier">dataflow</span><span class="special">(</span><span class="identifier">unwrapped</span><span class="special">(</span><span class="identifier">calc</span><span class="special">),</span> <span class="identifier">principal</span><span class="special">,</span> <span class="identifier">rate</span><span class="special">);</span>
+            <span class="identifier">principal</span> <span class="special">=</span> <span class="identifier">dataflow</span><span class="special">(</span><span class="identifier">unwrapped</span><span class="special">(</span><span class="identifier">add</span><span class="special">),</span> <span class="identifier">principal</span><span class="special">,</span> <span class="identifier">interest</span><span class="special">);</span>
         <span class="special">}</span>
 
         <span class="comment">// wait for the dataflow execution graph to be finished calculating our</span>
         <span class="comment">// overall interest</span>
-        <span class="keyword">double</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">principal</span><span class="special">.</span><span class="identifier">get_future</span><span class="special">().</span><span class="identifier">get</span><span class="special">();</span>
+        <span class="keyword">double</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">principal</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>
 
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Final amount: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">result</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Amount made: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">result</span><span class="special">-</span><span class="identifier">init_principal</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -167,15 +169,9 @@ Amount made: 34.0096
           and <code class="computeroutput"><span class="identifier">i_rate</span></code> to an action
           called <code class="computeroutput"><span class="identifier">identity_action</span></code>:
         </p>
-<pre class="programlisting"><span class="comment">// This is a helper function allowing to encapsulate the initial values into a</span>
-<span class="comment">// dataflow object</span>
-<span class="keyword">double</span> <span class="identifier">identity</span><span class="special">(</span><span class="keyword">double</span> <span class="identifier">initial_value</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="keyword">return</span> <span class="identifier">initial_value</span><span class="special">;</span>
-<span class="special">}</span>
-
-<span class="identifier">HPX_PLAIN_ACTION</span><span class="special">(</span><span class="identifier">identity</span><span class="special">,</span> <span class="identifier">identity_action</span><span class="special">);</span>
-</pre>
+<p>
+          [interest_id_action]
+        </p>
 <p>
           In this way <code class="computeroutput">hpx::lcos::dataflow_base</code><code class="computeroutput"><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">principal</span></code>
           and <code class="computeroutput"><span class="identifier">rate</span></code> will be initialized
@@ -200,11 +196,6 @@ Amount made: 34.0096
 <span class="special">{</span>
     <span class="keyword">return</span> <span class="identifier">principal</span> <span class="special">+</span> <span class="identifier">interest</span><span class="special">;</span>
 <span class="special">}</span>
-
-<span class="comment">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="comment">// Action Declarations</span>
-<span class="identifier">HPX_PLAIN_DIRECT_ACTION</span><span class="special">(</span><span class="identifier">calc</span><span class="special">,</span> <span class="identifier">calc_action</span><span class="special">);</span>
-<span class="identifier">HPX_PLAIN_ACTION</span><span class="special">(</span><span class="identifier">add</span><span class="special">,</span> <span class="identifier">add_action</span><span class="special">);</span>
 </pre>
 <p>
           After the dataflow dependencies have been defined in hpx_main, we see the

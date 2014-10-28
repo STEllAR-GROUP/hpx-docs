@@ -55,7 +55,7 @@ namespace hpx { namespace actions
         typedef hpx::util::tuple<> arguments_type;
         typedef action<
             components::server::plain_function<Derived>,
-            remote_result_type, arguments_type, Derived
+            result_type, arguments_type, Derived
         > base_type;
 
         // Only localities are valid targets for a plain action
@@ -79,7 +79,7 @@ namespace hpx { namespace actions
                             << ").";
                 F();      // call the function, ignoring the return value
             }
-            catch (hpx::thread_interrupted const&) {
+            catch (hpx::thread_interrupted const&) { //-V565
                 /* swallow this exception */
             }
             catch (hpx::exception const& e) {
@@ -114,7 +114,7 @@ namespace hpx { namespace actions
         /// instantiate the \a plain_base_result_action0 type. This is used by
         /// the \a applier in case no continuation has been supplied.
         template <typename Arguments>
-        static HPX_STD_FUNCTION<threads::thread_function_type>
+        static threads::thread_function_type
         construct_thread_function(naming::address::address_type lva,
             Arguments && /*args*/)
         {
@@ -123,7 +123,7 @@ namespace hpx { namespace actions
             threads::thread_state_enum (*f)(threads::thread_state_ex_enum) =
                 &Derived::template thread_function<threads::thread_state_ex_enum>;
 
-            return Derived::decorate_action(f, lva);
+            return traits::action_decorate_function<Derived>::call(lva, f);
         }
 
         /// \brief This static \a construct_thread_function allows to construct
@@ -131,13 +131,13 @@ namespace hpx { namespace actions
         /// instantiate the \a base_result_action0 type. This is used by the \a
         /// applier in case a continuation has been supplied
         template <typename Arguments>
-        static HPX_STD_FUNCTION<threads::thread_function_type>
+        static threads::thread_function_type
         construct_thread_function(continuation_type& cont,
             naming::address::address_type lva, Arguments && args)
         {
-            return Derived::decorate_action(
+            return traits::action_decorate_function<Derived>::call(lva,
                 base_type::construct_continuation_thread_function(
-                    cont, F, std::forward<Arguments>(args)), lva);
+                    cont, F, std::forward<Arguments>(args)));
         }
 
         // direct execution
@@ -172,7 +172,7 @@ namespace hpx { namespace actions
 
     template <typename Result, Result (*F)(), typename Derived>
     struct make_action<Result (*)(), F, Derived, boost::mpl::false_>
-      : plain_result_action0<Result, F, Derived> 
+      : plain_result_action0<Result, F, Derived>
     {
         typedef plain_result_action0<Result, F, Derived> type;
     };
@@ -217,13 +217,13 @@ namespace hpx { namespace actions
             Derived>
     {
     public:
-        typedef util::unused_type result_type;
+        typedef void result_type;
         typedef util::unused_type remote_result_type;
 
         typedef hpx::util::tuple<> arguments_type;
         typedef action<
             components::server::plain_function<Derived>,
-            remote_result_type, arguments_type, Derived
+            result_type, arguments_type, Derived
         > base_type;
 
         // Only localities are valid targets for a plain action
@@ -247,7 +247,7 @@ namespace hpx { namespace actions
                             << ").";
                 F();      // call the function, ignoring the return value
             }
-            catch (hpx::thread_interrupted const&) {
+            catch (hpx::thread_interrupted const&) { //-V565
                 /* swallow this exception */
             }
             catch (hpx::exception const& e) {
@@ -281,7 +281,7 @@ namespace hpx { namespace actions
         /// instantiate the base_action0 type. This is used by the \a applier in
         /// case no continuation has been supplied.
         template <typename Arguments>
-        static HPX_STD_FUNCTION<threads::thread_function_type>
+        static threads::thread_function_type
         construct_thread_function(naming::address::address_type lva,
             Arguments && /*args*/)
         {
@@ -290,7 +290,7 @@ namespace hpx { namespace actions
             threads::thread_state_enum (*f)(threads::thread_state_ex_enum) =
                 &Derived::template thread_function<threads::thread_state_ex_enum>;
 
-            return Derived::decorate_action(f, lva);
+            return traits::action_decorate_function<Derived>::call(lva, f);
         }
 
         /// \brief This static \a construct_thread_function allows to construct
@@ -298,13 +298,13 @@ namespace hpx { namespace actions
         /// instantiate the base_action0 type. This is used by the \a applier in
         /// case a continuation has been supplied
         template <typename Arguments>
-        static HPX_STD_FUNCTION<threads::thread_function_type>
+        static threads::thread_function_type
         construct_thread_function(continuation_type& cont,
             naming::address::address_type lva, Arguments && args)
         {
-            return Derived::decorate_action(
+            return traits::action_decorate_function<Derived>::call(lva,
                 base_type::construct_continuation_thread_function_void(
-                    cont, F, std::forward<Arguments>(args)), lva);
+                    cont, F, std::forward<Arguments>(args)));
         }
 
         // direct execution
@@ -338,7 +338,7 @@ namespace hpx { namespace actions
 
     template <void (*F)(), typename Derived>
     struct make_action<void (*)(), F, Derived, boost::mpl::false_>
-      : plain_action0<F, Derived> 
+      : plain_action0<F, Derived>
     {
         typedef plain_action0<F, Derived> type;
     };
@@ -446,7 +446,7 @@ namespace hpx { namespace traits
 ///       // which are needed for proper serialization and initialization support
 ///       // enabling the remote invocation of the function `app::some_global_function`.
 ///       //
-///       // The second argument used has to be the same as used for the 
+///       // The second argument used has to be the same as used for the
 ///       // HPX_DEFINE_PLAIN_ACTION above.
 ///       HPX_REGISTER_PLAIN_ACTION(app::some_global_action, some_global_action);
 /// \endcode
@@ -463,7 +463,7 @@ namespace hpx { namespace traits
 /// \brief Registers an existing template-free function as a plain action with HPX
 ///
 /// The macro \a HPX_REGISTER_PLAIN_ACTION can be used to register an existing
-/// template-free function as a plain action. It relies on a separately defined 
+/// template-free function as a plain action. It relies on a separately defined
 /// action type named \a action_type.
 ///
 /// The parameter \p action_type is the name of the action type to register
@@ -484,7 +484,7 @@ namespace hpx { namespace traits
 ///           template <typename T>
 ///           struct some_global_action
 ///             : hpx::actions::make_action<
-///                     void (*)(T), &some_global_function<T>, 
+///                     void (*)(T), &some_global_function<T>,
 ///                     some_global_action<T> >
 ///           {};
 ///       }
@@ -525,7 +525,7 @@ namespace hpx { namespace traits
 ///       // which are needed for proper serialization and initialization support
 ///       // enabling the remote invocation of the function `app::some_global_function`.
 ///       //
-///       // The second argument used has to be the same as used for the 
+///       // The second argument used has to be the same as used for the
 ///       // HPX_DEFINE_PLAIN_ACTION above.
 ///       HPX_REGISTER_PLAIN_ACTION(app::some_global_action, some_global_action);
 /// \endcode
@@ -577,12 +577,12 @@ namespace hpx { namespace traits
 /// \note The macro \a HPX_PLAIN_ACTION has to be used at global namespace even
 /// if the wrapped function is located in some other namespace. The newly
 /// defined action type is placed into the global namespace as well.
-/// 
+///
 /// \note The macro \a HPX_PLAIN_ACTION can be used with 1, 2, or 3 arguments.
-/// The second and third arguments are optional. The default value for the 
-/// second argument (the typename of the defined action) is derived from the 
+/// The second and third arguments are optional. The default value for the
+/// second argument (the typename of the defined action) is derived from the
 /// name of the function (as passed as the first argument) by appending '_action'.
-/// The second argument can be omitted only if the first argument with an 
+/// The second argument can be omitted only if the first argument with an
 /// appended suffix '_action' resolves to a valid, unqualified C++ type name.
 /// The default value for the third argument is \a hpx::components::factory_check.
 ///
@@ -594,6 +594,10 @@ namespace hpx { namespace traits
 
 #define HPX_PLAIN_DIRECT_ACTION(...)                                          \
     HPX_PLAIN_DIRECT_ACTION_(__VA_ARGS__)                                     \
+/**/
+
+#define HPX_REGISTER_PLAIN_ACTION_DYNAMIC(...)                                \
+    HPX_REGISTER_PLAIN_ACTION_DYNAMIC_(__VA_ARGS__)                           \
 /**/
 
 /// \endcond

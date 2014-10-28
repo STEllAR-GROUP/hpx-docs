@@ -1,12 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  Copyright (c) 2007-2012 Hartmut Kaiser
+//  Copyright (c) 2007-2014 Hartmut Kaiser
 //  Copyright (c) 2011 Bryce Adelstein-Lelbach
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ///////////////////////////////////////////////////////////////////////////////
 
-// Including 'hpx/hpx_main.hpp' instead of the usual 'hpx/hpx_init.hpp' enables 
+// Including 'hpx/hpx_main.hpp' instead of the usual 'hpx/hpx_init.hpp' enables
 // to use the plain C-main below as the direct main HPX entry point.
 #include <hpx/hpx_main.hpp>
 #include <hpx/include/lcos.hpp>
@@ -47,7 +47,7 @@ std::size_t hello_world_worker(std::size_t desired)
         char const* msg = "hello world from OS-thread %1% on locality %2%";
 
         hpx::cout << (boost::format(msg) % desired % hpx::get_locality_id())
-                  << hpx::endl;
+                  << std::endl << hpx::flush;
 
         return desired;
     }
@@ -89,7 +89,7 @@ void hello_world_foreman()
         // Each iteration, we create a task for each element in the set of
         // OS-threads that have not said "Hello world". Each of these tasks
         // is encapsulated in a future.
-        std::vector<hpx::lcos::unique_future<std::size_t> > futures;
+        std::vector<hpx::lcos::future<std::size_t> > futures;
         futures.reserve(attendance.size());
 
         BOOST_FOREACH(std::size_t worker, attendance)
@@ -108,14 +108,14 @@ void hello_world_foreman()
         // return value of the future. hpx::lcos::wait doesn't return until
         // all the futures in the vector have returned.
         hpx::lcos::local::spinlock mtx;
-        hpx::lcos::wait(futures,
-            [&](std::size_t, std::size_t t) {
+        hpx::lcos::wait_each(futures,
+            hpx::util::unwrapped([&](std::size_t t) {
                 if (std::size_t(-1) != t)
                 {
                     hpx::lcos::local::spinlock::scoped_lock lk(mtx);
                     attendance.erase(t);
                 }
-            });
+            }));
     }
 }
 //]
@@ -128,7 +128,7 @@ HPX_PLAIN_ACTION(hello_world_foreman, hello_world_foreman_action);
 
 ///////////////////////////////////////////////////////////////////////////////
 //[hello_world_hpx_main
-//` Here is the main entry point. By using the include 'hpx/hpx_main.hpp' HPX 
+//` Here is the main entry point. By using the include 'hpx/hpx_main.hpp' HPX
 //` will invoke the plain old C-main() as its first HPX thread.
 int main()
 {
@@ -137,7 +137,7 @@ int main()
         hpx::find_all_localities();
 
     // Reserve storage space for futures, one for each locality.
-    std::vector<hpx::lcos::unique_future<void> > futures;
+    std::vector<hpx::lcos::future<void> > futures;
     futures.reserve(localities.size());
 
     BOOST_FOREACH(hpx::naming::id_type const& node, localities)

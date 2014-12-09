@@ -101,8 +101,8 @@ hello world from OS-thread 0 on locality 0
         <span class="identifier">futures</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">&lt;</span><span class="identifier">action_type</span><span class="special">&gt;(</span><span class="identifier">node</span><span class="special">));</span>
     <span class="special">}</span>
 
-    <span class="comment">// The non-callback version of hpx::lcos::wait takes a single parameter,</span>
-    <span class="comment">// a future of vectors to wait on. hpx::wait_all only returns when</span>
+    <span class="comment">// The non-callback version of hpx::lcos::wait_all takes a single parameter,</span>
+    <span class="comment">// a vector of futures to wait on. hpx::wait_all only returns when</span>
     <span class="comment">// all of the futures have finished.</span>
     <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">wait_all</span><span class="special">(</span><span class="identifier">futures</span><span class="special">);</span>
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
@@ -111,17 +111,17 @@ hello world from OS-thread 0 on locality 0
 <p>
           In this excerpt of the code we again see the use of futures. This time
           the futures are stored in a vector so that they can easily be accessed.
-          <code class="computeroutput">hpx::lcos::wait</code><code class="computeroutput"><span class="special">()</span></code> is a family of functions that wait on
+          <code class="computeroutput">hpx::lcos::wait_all</code><code class="computeroutput"><span class="special">()</span></code> is a family of functions that wait on
           for an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code>
           of futures to become ready. In this piece of code, we are using the synchronous
-          version of <code class="computeroutput">hpx::lcos::wait</code><code class="computeroutput"><span class="special">()</span></code>, which takes one argument (the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code>
+          version of <code class="computeroutput">hpx::lcos::wait_all</code><code class="computeroutput"><span class="special">()</span></code>, which takes one argument (the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code>
           of futures to wait on). This function will not return until all the futures
           in the vector have been executed.
         </p>
 <p>
           In the <a class="link" href="fibonacci.html" title="Fibonacci">Fibonacci Example</a>,
           we used <code class="computeroutput"><a class="link" href="../../find_here.html" title="Function find_here">hpx::find_here</a></code><code class="computeroutput"><span class="special">()</span></code> to specified the target' of our actions.
-          Here, we instead use <code class="computeroutput"><a class="link" href="../../find_all_local_idp21617376.html" title="Function find_all_localities">hpx::find_all_localities</a></code><code class="computeroutput"><span class="special">()</span></code>, which returns an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code> containing the identifiers of all
+          Here, we instead use <code class="computeroutput"><a class="link" href="../../find_all_local_idp21662928.html" title="Function find_all_localities">hpx::find_all_localities</a></code><code class="computeroutput"><span class="special">()</span></code>, which returns an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code> containing the identifiers of all
           the machines in the system, including the one that we are on.
         </p>
 <p>
@@ -179,10 +179,10 @@ hello world from OS-thread 0 on locality 0
         <span class="special">}</span>
 
         <span class="comment">// Wait for all of the futures to finish. The callback version of the</span>
-        <span class="comment">// hpx::lcos::wait function takes two arguments: a vector of futures,</span>
+        <span class="comment">// hpx::lcos::wait_each function takes two arguments: a vector of futures,</span>
         <span class="comment">// and a binary callback.  The callback takes two arguments; the first</span>
         <span class="comment">// is the index of the future in the vector, and the second is the</span>
-        <span class="comment">// return value of the future. hpx::lcos::wait doesn't return until</span>
+        <span class="comment">// return value of the future. hpx::lcos::wait_each doesn't return until</span>
         <span class="comment">// all the futures in the vector have returned.</span>
         <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">local</span><span class="special">::</span><span class="identifier">spinlock</span> <span class="identifier">mtx</span><span class="special">;</span>
         <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">wait_each</span><span class="special">(</span><span class="identifier">futures</span><span class="special">,</span>
@@ -197,11 +197,11 @@ hello world from OS-thread 0 on locality 0
 <span class="special">}</span>
 </pre>
 <p>
-          Now, before we discuss <code class="computeroutput"><span class="identifier">hello_world_foreman</span><span class="special">()</span></code>, let's talk about the <code class="computeroutput">hpx::lcos::wait</code><code class="computeroutput"><span class="special">()</span></code> function. <code class="computeroutput">hpx::lcos::wait</code><code class="computeroutput"><span class="special">()</span></code> provides a way to make sure that all
-          of the futures have finished being calculated without having to call <code class="computeroutput">hpx::lcos::future::get</code><code class="computeroutput"><span class="special">()</span></code> for each one. The version of <code class="computeroutput">hpx::lcos::wait</code><code class="computeroutput"><span class="special">()</span></code>
-          used here performs an non-blocking wait, which acts on an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code>.
+          Now, before we discuss <code class="computeroutput"><span class="identifier">hello_world_foreman</span><span class="special">()</span></code>, let's talk about the <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> function. <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> provides a way to make sure that all
+          of the futures have finished being calculated without having to call <code class="computeroutput">hpx::lcos::future::get</code><code class="computeroutput"><span class="special">()</span></code> for each one. The version of <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> used here performs a non-blocking wait,
+          which acts on an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code>.
           It queries the state of the futures, waiting for them to finish. Whenever
-          a future becomes marked as ready, <code class="computeroutput">hpx::lcos::wait</code><code class="computeroutput"><span class="special">()</span></code> invokes a callback function provided
+          a future becomes marked as ready, <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> invokes a callback function provided
           by the user, supplying the callback function with the index of the future
           in the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code>
           and the result of the future.
@@ -210,8 +210,8 @@ hello world from OS-thread 0 on locality 0
           In <code class="computeroutput"><span class="identifier">hello_world_foreman</span><span class="special">()</span></code>, an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">set</span><span class="special">&lt;&gt;</span></code> called <code class="computeroutput"><span class="identifier">attendance</span></code>
           keeps track of which OS-threads have printed out the hello world message.
           When the OS-thread prints out the statement, the future is marked as ready,
-          and <code class="computeroutput">hpx::lcos::wait</code><code class="computeroutput"><span class="special">()</span></code> invokes the callback function, in this
-          case a C+11 lambda. This lambda erases the OS-threads id from the set
+          and <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> invokes the callback function, in this
+          case a C++11 lambda. This lambda erases the OS-threads id from the set
           <code class="computeroutput"><span class="identifier">attendance</span></code>, thus letting
           <code class="computeroutput"><span class="identifier">hello_world_foreman</span><span class="special">()</span></code>
           know which OS-threads still need to print out hello world. However, if
@@ -223,7 +223,7 @@ hello world from OS-thread 0 on locality 0
 <p>
           Finally, let us look at <code class="computeroutput"><span class="identifier">hello_world_worker</span><span class="special">()</span></code>. Here, <code class="computeroutput"><span class="identifier">hello_world_worker</span><span class="special">()</span></code> checks to see if it is on the target
           OS-thread. If it is executing on the correct OS-thread, it prints out the
-          hello world message and returns the OS-thread id to <code class="computeroutput">hpx::lcos::wait</code><code class="computeroutput"><span class="special">()</span></code> in <code class="computeroutput"><span class="identifier">hello_world_foreman</span><span class="special">()</span></code>. If it is not executing on the correct
+          hello world message and returns the OS-thread id to <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> in <code class="computeroutput"><span class="identifier">hello_world_foreman</span><span class="special">()</span></code>. If it is not executing on the correct
           OS-thread, it returns a value of -1, which causes <code class="computeroutput"><span class="identifier">hello_world_foreman</span><span class="special">()</span></code> to leave the OS-thread id in <code class="computeroutput"><span class="identifier">attendance</span></code>.
         </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">hello_world_worker</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">desired</span><span class="special">)</span>

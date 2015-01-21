@@ -124,7 +124,8 @@ os_threads = 1
 localities = 1
 program_name =
 cmd_line =
-lock_detection = 0
+lock_detection = ${HPX_LOCK_DETECTION:0}
+throw_on_held_lock = ${HPX_THROW_ON_HELD_LOCK:1}
 minimal_deadlock_detection = &lt;debug&gt;
 
 [hpx.stacks]
@@ -279,6 +280,21 @@ use_guard_pages = ${HPX_USE_GUARD_PAGES:1}
                       <span class="emphasis"><em>HPX</em></span> thread is suspended. This setting
                       is applicable only if <code class="computeroutput"><span class="identifier">HPX_VERIFY_LOCKS</span></code>
                       is set during configuration in CMake.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">throw_on_held_lock</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      This setting causes an exception if during lock detection at
+                      least one lock is being held while a <span class="emphasis"><em>HPX</em></span>
+                      thread is suspended. This setting is applicable only if <code class="computeroutput"><span class="identifier">HPX_VERIFY_LOCKS</span></code> is set during
+                      configuration in CMake. This setting has no effect if <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">lock_detection</span><span class="special">=</span><span class="number">0</span></code>
                     </p>
                   </td>
 </tr>

@@ -389,6 +389,13 @@ namespace hpx { namespace lcos
             typename detail::reduce_result<Action>::type
             action_result;
 
+        if (ids.empty())
+        {
+            return hpx::make_exceptional_future<action_result>(
+                HPX_GET_EXCEPTION(bad_parameter, "hpx::lcos::reduce",
+                    "empty list of targets for reduce operation"));
+        }
+
         return
             hpx::async_colocated<reduce_impl_action>(
                 ids[0]

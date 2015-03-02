@@ -121,12 +121,12 @@ hello world from OS-thread 0 on locality 0
 <p>
           In the <a class="link" href="fibonacci.html" title="Fibonacci">Fibonacci Example</a>,
           we used <code class="computeroutput"><a class="link" href="../../find_here.html" title="Function find_here">hpx::find_here</a></code><code class="computeroutput"><span class="special">()</span></code> to specified the target' of our actions.
-          Here, we instead use <code class="computeroutput"><a class="link" href="../../find_all_local_idp22770304.html" title="Function find_all_localities">hpx::find_all_localities</a></code><code class="computeroutput"><span class="special">()</span></code>, which returns an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code> containing the identifiers of all
+          Here, we instead use <code class="computeroutput"><a class="link" href="../../find_all_local_idp22842320.html" title="Function find_all_localities">hpx::find_all_localities</a></code><code class="computeroutput"><span class="special">()</span></code>, which returns an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code> containing the identifiers of all
           the machines in the system, including the one that we are on.
         </p>
 <p>
           As in the <a class="link" href="fibonacci.html" title="Fibonacci">Fibonacci Example</a>
-          our futures are set using <code class="computeroutput">hpx::lcos::async</code><code class="computeroutput"><span class="special">&lt;&gt;()</span></code>. The <code class="computeroutput"><span class="identifier">hello_world_foreman_action</span></code>
+          our futures are set using <code class="computeroutput">hpx::async</code><code class="computeroutput"><span class="special">&lt;&gt;()</span></code>. The <code class="computeroutput"><span class="identifier">hello_world_foreman_action</span></code>
           is declared here:
         </p>
 <pre class="programlisting"><span class="comment">// Define the boilerplate code necessary for the function 'hello_world_foreman'</span>
@@ -199,7 +199,8 @@ hello world from OS-thread 0 on locality 0
 </pre>
 <p>
           Now, before we discuss <code class="computeroutput"><span class="identifier">hello_world_foreman</span><span class="special">()</span></code>, let's talk about the <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> function. <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> provides a way to make sure that all
-          of the futures have finished being calculated without having to call <code class="computeroutput">hpx::lcos::future::get</code><code class="computeroutput"><span class="special">()</span></code> for each one. The version of <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> used here performs a non-blocking wait,
+          of the futures have finished being calculated without having to call <code class="computeroutput">hpx::future::get</code><code class="computeroutput"><span class="special">()</span></code>
+          for each one. The version of <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> used here performs a non-blocking wait,
           which acts on an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code>.
           It queries the state of the futures, waiting for them to finish. Whenever
           a future becomes marked as ready, <code class="computeroutput">hpx::lcos::wait_each</code><code class="computeroutput"><span class="special">()</span></code> invokes a callback function provided

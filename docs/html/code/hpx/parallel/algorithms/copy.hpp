@@ -344,21 +344,26 @@ namespace hpx { namespace parallel { HPX_INLINE_NAMESPACE(v1)
                 Iter dest, F && f)
             {
                 typedef hpx::util::zip_iterator<FwdIter, char*> zip_iterator;
+                typedef detail::algorithm_result<ExPolicy, FwdIter> result;
                 typedef typename std::iterator_traits<FwdIter>::difference_type
                     difference_type;
+                typedef typename detail::algorithm_result<ExPolicy, Iter>::type
+                    result_type;
+
+                if (first == last)
+                    return result::get(std::move(dest));
 
                 difference_type count = std::distance(first, last);
+
+
                 boost::shared_array<char> flags(new char[count]);
                 std::size_t init = 0;
-
-                using hpx::util::get;
-                using hpx::util::make_zip_iterator;
 
                 typedef util::scan_partitioner<ExPolicy, Iter, std::size_t>
                     scan_partitioner_type;
                 return scan_partitioner_type::call(
                     policy,
-                    make_zip_iterator(first, flags.get()),
+                    hpx::util::make_zip_iterator(first, flags.get()),
                     count,
                     init,
                     // Flag the elements to be copied
@@ -369,6 +374,7 @@ namespace hpx { namespace parallel { HPX_INLINE_NAMESPACE(v1)
                         util::loop_n(part_begin, part_size,
                             [&f, &curr](zip_iterator d) mutable
                             {
+                                using hpx::util::get;
                                 get<1>(*d) = (f(get<0>(*d)) != 0) ? 1 : 0;
                                 curr += get<1>(*d);
                             });
@@ -384,6 +390,7 @@ namespace hpx { namespace parallel { HPX_INLINE_NAMESPACE(v1)
                     // Copy the elements into dest in parallel
                     [=](std::vector<hpx::shared_future<std::size_t> >&& r,
                         std::vector<std::size_t> const& chunk_sizes) mutable
+                            -> result_type
                     {
                         HPX_ASSERT(!r.empty());
                         std::size_t last_index = r[r.size()-1].get();

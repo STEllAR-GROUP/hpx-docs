@@ -499,29 +499,47 @@ stepper_server::space stepper_server::do_work(std::size_t local_np,
         space const& current = U_[t % 2];
         space& next = U_[(t + 1) % 2];
 
-        next[0] = dataflow(
-                hpx::launch::async, &stepper_server::heat_part,
-                receive_left(t), current[0], current[1]
-            );
-
-        // send to left if not last
-        if (t != nt-1) send_left(t + 1, next[0]);
-
-        for (std::size_t i = 1; i != local_np-1; ++i)
+        // handle special case (one partition per locality) in a special way
+        if (local_np == 1)
         {
-            next[i] = dataflow(
+            next[0] = dataflow(
                     hpx::launch::async, &stepper_server::heat_part,
-                    current[i-1], current[i], current[i+1]
+                    receive_left(t), current[0], receive_right(t)
                 );
+
+            // send to left and right if not last time step
+            if (t != nt-1)
+            {
+                send_left(t + 1, next[0]);
+                send_right(t + 1, next[0]);
+            }
         }
+        else
+        {
+            next[0] = dataflow(
+                    hpx::launch::async, &stepper_server::heat_part,
+                    receive_left(t), current[0], current[1]
+                );
 
-        next[local_np-1] = dataflow(
-                hpx::launch::async, &stepper_server::heat_part,
-                current[local_np-2], current[local_np-1], receive_right(t)
-            );
+            // send to left if not last time step
+            if (t != nt-1) send_left(t + 1, next[0]);
 
-        // send to right if not last
-        if (t != nt-1) send_right(t + 1, next[local_np-1]);
+            for (std::size_t i = 1; i != local_np-1; ++i)
+            {
+                next[i] = dataflow(
+                        hpx::launch::async, &stepper_server::heat_part,
+                        current[i-1], current[i], current[i+1]
+                    );
+            }
+
+            next[local_np-1] = dataflow(
+                    hpx::launch::async, &stepper_server::heat_part,
+                    current[local_np-2], current[local_np-1], receive_right(t)
+                );
+
+            // send to right if not last time step
+            if (t != nt-1) send_right(t + 1, next[local_np-1]);
+        }
     }
 
     return U_[nt % 2];

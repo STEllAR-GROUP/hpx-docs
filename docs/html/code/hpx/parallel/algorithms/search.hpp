@@ -241,15 +241,7 @@ namespace hpx {namespace parallel { HPX_INLINE_NAMESPACE(v1)
     /// \param op           Refers to the binary predicate which returns true if the
     ///                     elements should be treated as equal. the signature of
     ///                     the function should be equivalent to
-    ///                     \code
-    ///                     bool pred(const Type1 &a, const Type2 &b);
-    ///                     \endcode \n
-    ///                     The signature does not need to have const &, but
-    ///                     the function must not modify the objects passed to
-    ///                     it. The types \a Type1 and \a Type2 must be such
-    ///                     that objects of types \a InIter1 and \a InIter2 can
-    ///                     be dereferenced and then implicitly converted to
-    ///                     \a Type1 and \a Type2 respectively
+    ///                     \code bool pred(const Type1 &a, const Type2 &b); \endcode
     ///
     /// The comparison operations in the parallel \a search algorithm invoked
     /// with an execution policy object of type \a sequential_execution_policy
@@ -515,15 +507,7 @@ namespace hpx {namespace parallel { HPX_INLINE_NAMESPACE(v1)
     /// \param op           Refers to the binary predicate which returns true if the
     ///                     elements should be treated as equal. the signature of
     ///                     the function should be equivalent to
-    ///                     \code
-    ///                     bool pred(const Type1 &a, const Type2 &b);
-    ///                     \endcode \n
-    ///                     The signature does not need to have const &, but
-    ///                     the function must not modify the objects passed to
-    ///                     it. The types \a Type1 and \a Type2 must be such
-    ///                     that objects of types \a InIter1 and \a InIter2 can
-    ///                     be dereferenced and then implicitly converted to
-    ///                     \a Type1 and \a Type2 respectively
+    ///                     \code bool pred(const Type1 &a, const Type2 &b); \endcode
     ///
     /// The comparison operations in the parallel \a search_n algorithm invoked
     /// with an execution policy object of type \a sequential_execution_policy

@@ -776,7 +776,7 @@ namespace hpx { namespace lcos
                 ids[0]
               , Action()
               , ids
-              , std::size_t(0)
+              , 0
               , typename boost::is_same<void, action_result>::type()
               , vs...
             );

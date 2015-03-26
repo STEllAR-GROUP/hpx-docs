@@ -28,12 +28,12 @@
 <span class="keyword">class</span> <a class="link" href="task_region_handle.html" title="Class task_region_handle">task_region_handle</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
 
-  <span class="comment">// <a class="link" href="task_region_handle.html#idp26940320-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="task_region_handle.html#idp26940880-bb"><span class="identifier">run</span></a><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="task_region_handle.html#idp26951904-bb"><span class="identifier">wait</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="task_region_handle.html#idp26942224-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="task_region_handle.html#idp26942784-bb"><span class="identifier">run</span></a><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="task_region_handle.html#idp26953808-bb"><span class="identifier">wait</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp33828432"></a><h2>Description</h2>
+<a name="idp34809360"></a><h2>Description</h2>
 <p>   The class task_region_handle defines an interface for forking and
    joining parallel tasks. The \a task_region and \a task_region_final
    function templates create an object of type task_region_handle and
@@ -63,11 +63,11 @@
    @code 
  Example: task_region([&amp;](auto&amp; tr) { tr.run([&amp;] { tr.run([] { f(); }); // Error: tr is not active task_region([&amp;](auto&amp; tr) { // Nested task region tr.run(f); // OK: inner tr is active /// ... }); }); /// ... });  </p>
 <div class="refsect2">
-<a name="idp33833264"></a><h3>
-<a name="idp26940320-bb"></a><code class="computeroutput">task_region_handle</code> public member functions</h3>
+<a name="idp34814192"></a><h3>
+<a name="idp26942224-bb"></a><code class="computeroutput">task_region_handle</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp26940880-bb"></a><span class="identifier">run</span><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp26942784-bb"></a><span class="identifier">run</span><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
 <p>Causes the expression f() to be invoked asynchronously. The invocation of f is permitted to run on an unspecified thread in an unordered fashion relative to the sequence of operations following the call to run(f) (the continuation), or indeterminately sequenced within the same thread as the continuation.</p>
 <p>The call to <span class="emphasis"><em>run</em></span> synchronizes with the invocation of f. The completion of f() synchronizes with the next invocation of wait on the same <code class="computeroutput"><a class="link" href="task_region_handle.html" title="Class task_region_handle">task_region_handle</a></code> or completion of the nearest enclosing task region (i.e., the task_region or task_region_final that created this <code class="computeroutput"><a class="link" href="task_region_handle.html" title="Class task_region_handle">task_region_handle</a></code>).</p>
 <p>Requires: F shall be MoveConstructible. The expression, (void)f(), shall be well-formed.</p>
@@ -95,7 +95,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp26951904-bb"></a><span class="identifier">wait</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp26953808-bb"></a><span class="identifier">wait</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>       Blocks until the tasks spawned using this task_region_handle have
        finished.
 

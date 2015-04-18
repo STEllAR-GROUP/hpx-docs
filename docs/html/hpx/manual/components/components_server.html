@@ -1,0 +1,111 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Defining Components</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 0.9.11">
+<link rel="up" href="../components.html" title="Writing Components">
+<link rel="prev" href="../components.html" title="Writing Components">
+<link rel="next" href="components_client.html" title="Defining Client Side Representation Classes">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="460" height="106" src="../../../images/hpx_0_9_11_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../components.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../components.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="components_client.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="hpx.manual.components.components_server"></a><a class="link" href="components_server.html" title="Defining Components">Defining Components</a>
+</h4></div></div></div>
+<p>
+          In order for a C++ class type to be managed remotely in <span class="emphasis"><em>HPX</em></span>,
+          the type must be derived from the <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">simple_component_base</span></code>
+          template type. We call such C++ class types 'components'.
+        </p>
+<p>
+          Note that the component type itself is passed as a template argument to
+          the base class.
+        </p>
+<pre class="programlisting"><span class="comment">// header file some_component.hpp</span>
+
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">components</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">namespace</span> <span class="identifier">app</span>
+<span class="special">{</span>
+    <span class="comment">// Define a new component type 'some_component'</span>
+    <span class="keyword">struct</span> <span class="identifier">some_component</span>
+      <span class="special">:</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">simple_component_base</span><span class="special">&lt;</span><span class="identifier">some_component</span><span class="special">&gt;</span>
+    <span class="special">{</span>
+        <span class="comment">// This member function is has to be invoked remotely</span>
+        <span class="keyword">int</span> <span class="identifier">some_member_function</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">);</span>
+        <span class="special">}</span>
+
+        <span class="comment">// This will define the action type 'some_member_action' which</span>
+        <span class="comment">// represents the member function 'some_member_function' of the</span>
+        <span class="comment">// obect type 'some_component'.</span>
+        <code class="computeroutput"><a class="link" href="../../../HPX_DEFINE_COMPONENT_ACTION.html" title="Macro HPX_DEFINE_COMPONENT_ACTION">HPX_DEFINE_COMPONENT_ACTION</a></code><span class="special">(</span><span class="identifier">some_component</span><span class="special">,</span> <span class="identifier">some_member_function</span><span class="special">,</span> <span class="identifier">some_member_action</span><span class="special">);</span>
+    <span class="special">};</span>
+<span class="special">}</span>
+
+<span class="comment">// This will generate the necessary boiler-plate code for the action allowing</span>
+<span class="comment">// it to be invoked remotely. This declaration macro has to be placed in the</span>
+<span class="comment">// header file defining the component itself.</span>
+<span class="comment">//</span>
+<span class="comment">// Note: The second arguments to the macro below have to be systemwide-unique</span>
+<span class="comment">//       C++ identifiers</span>
+<span class="comment">//</span>
+<code class="computeroutput"><a class="link" href="../../../HPX_REGISTER_ACTION_DECLARATION.html" title="Macro HPX_REGISTER_ACTION_DECLARATION">HPX_REGISTER_ACTION_DECLARATION</a></code><span class="special">(</span><span class="identifier">app</span><span class="special">::</span><span class="identifier">some_component</span><span class="special">::</span><span class="identifier">some_member_action</span><span class="special">,</span> <span class="identifier">some_component_some_action</span><span class="special">);</span>
+</pre>
+<p>
+          There is more boiler plate code which has to be placed into a source file
+          in order for the component to be usable. Every component type requires
+          to have macros placed into its source file, one for each component type
+          and one macro for each of the actions defined by the component type.
+        </p>
+<p>
+          For instance:
+        </p>
+<pre class="programlisting"><span class="comment">// source file some_component.cpp</span>
+
+<span class="preprocessor">#include</span> <span class="string">"some_component.hpp"</span>
+
+<span class="comment">// The following code generates all necessary boiler plate to enable the</span>
+<span class="comment">// remote creation of 'app::some_component' instances with 'hpx::new_&lt;&gt;()'</span>
+<span class="comment">//</span>
+<span class="keyword">using</span> <span class="identifier">some_component</span> <span class="special">=</span> <span class="identifier">app</span><span class="special">::</span><span class="identifier">some_component</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">component_type</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">simple_component</span><span class="special">&lt;</span><span class="identifier">some_component</span><span class="special">&gt;;</span>
+
+<span class="comment">// Please note that the second argument to this macro must be a</span>
+<span class="comment">// (system-wide) unique C++-style identifier (without any namespaces)</span>
+<span class="comment">//</span>
+<code class="computeroutput"><a class="link" href="../../../HPX_REGISTER_COMPONENT.html" title="Macro HPX_REGISTER_COMPONENT">HPX_REGISTER_COMPONENT</a></code><span class="special">(</span><span class="identifier">component_type</span><span class="special">,</span> <span class="identifier">some_component</span><span class="special">);</span>
+
+<span class="comment">// The parameters for this macro have to be the same as used in the corresponding</span>
+<span class="comment">// HPX_REGISTER_ACTION_DECLARATION() macro invocation in the corresponding</span>
+<span class="comment">// header file.</span>
+<span class="comment">//</span>
+<span class="comment">// Please note that the second argument to this macro must be a</span>
+<span class="comment">// (system-wide) unique C++-style identifier (without any namespaces)</span>
+<span class="comment">//</span>
+<code class="computeroutput"><a class="link" href="../../../HPX_REGISTER_ACTION.html" title="Macro HPX_REGISTER_ACTION">HPX_REGISTER_ACTION</a></code><span class="special">(</span><span class="identifier">app</span><span class="special">::</span><span class="identifier">some_component</span><span class="special">::</span><span class="identifier">some_member_action</span><span class="special">,</span> <span class="identifier">some_component_some_action</span><span class="special">);</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2015 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../components.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../components.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="components_client.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

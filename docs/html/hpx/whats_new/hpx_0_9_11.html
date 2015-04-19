@@ -38,10 +38,38 @@
           </li>
 <li class="listitem">
             The API for creating instance of components has been consolidated. All
-            component instances should be created using the <code class="computeroutput"><a class="link" href="../new_idp27107616.html" title="Function template new_">hpx::new_</a></code> only. It allows
-            to instantiate both, single component instances and multiple component
-            instances. The placement of the created components can be controlled
-            by special distribution policies.
+            component instances should be created using the <code class="computeroutput"><a class="link" href="../new_idp27200144.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code>
+            only. It allows to instantiate both, single component instances and multiple
+            component instances. The placement of the created components can be controlled
+            by special distribution policies. Please see the corresponding documentation
+            outlining the use of <code class="computeroutput"><a class="link" href="../new_idp27200144.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code>.
+          </li>
+<li class="listitem">
+            Introduced four new distribution policies which can be used with many
+            API functions which traditionally expected to be used with a locality
+            id. The new distribution policies are:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <code class="computeroutput"><a class="link" href="../components/default_distri_idp27155888.html" title="Struct default_distribution_policy">hpx::default_distribution_policy</a></code>
+                  which tries to place multiple component instances as evenly as
+                  possible.
+                </li>
+<li class="listitem">
+                  <code class="computeroutput"><a class="link" href="../components/colocating_dis_idp27093088.html" title="Struct colocating_distribution_policy">hpx::colocating_distribution_policy</a></code>
+                  which will refer to the locality where a given component instance
+                  is currently placed.
+                </li>
+<li class="listitem">
+                  <code class="computeroutput"><a class="link" href="../components/binpacking_dis_idp27060016.html" title="Struct binpacking_distribution_policy">hpx::binpacking_distribution_policy</a></code>
+                  which will place multiple component instances as evenly as possible
+                  based on any performance counter.
+                </li>
+<li class="listitem">
+                  <code class="computeroutput">hpx::target_distribution_policy</code>
+                  which allows to represent a given locality in the context of a
+                  distribution policy.
+                </li>
+</ul></div>
           </li>
 </ul></div>
 <h5>
@@ -56,10 +84,28 @@
             instead. The old macro will be removed in the next release.
           </li>
 <li class="listitem">
+            The obsolete distributing_factory and binpacking_factory components have
+            been removed. The corresponding functionality is now provided by the
+            <code class="computeroutput"><a class="link" href="../new_idp27200144.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code> API function.
+          </li>
+<li class="listitem">
             The API function <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_colocated</span></code>
-            has been removed. Please use the consolidated API <code class="computeroutput"><a class="link" href="../new_idp27107616.html" title="Function template new_">hpx::new_</a></code> in conjunction
-            with the new <code class="computeroutput"><a class="link" href="../components/colocating_dis_idp27000608.html" title="Struct colocating_distribution_policy">hpx::colocating_distribution_policy</a></code>
-            instead.
+            has been deprecated. Please use the consolidated API <code class="computeroutput"><a class="link" href="../new_idp27200144.html" title="Function template new_">hpx::new_</a></code> in conjunction
+            with the new <code class="computeroutput"><a class="link" href="../components/colocating_dis_idp27093088.html" title="Struct colocating_distribution_policy">hpx::colocating_distribution_policy</a></code>
+            instead. The old API function will still be available for at least one
+            release of <span class="emphasis"><em>HPX</em></span> if the configuration variable <code class="computeroutput"><span class="identifier">HPX_WITH_COLOCATED_BACKWARDS_COMPATIBILITY</span></code>
+            is enabled.
+          </li>
+<li class="listitem">
+            The obsolete remote_object component has been removed.
+          </li>
+<li class="listitem">
+            Replaced the use of Boost.Serialization with our own solution. While
+            the new version is mostly compatible with Boost.Serialization, this change
+            requires some minor code modifications in user code. For more information,
+            please see the corresponding <a href="https://mail.cct.lsu.edu/mailman/private/hpx-users/2015-April/000558.html" target="_top">announcement</a>
+            on the <a href="email:hpx-users@stellar.cct.lsu.edu" target="_top">hpx-users@stellar.cct.lsu.edu</a>
+            mailing list.
           </li>
 </ul></div>
 <h5>
@@ -72,11 +118,100 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1459" target="_top">#1459</a> - Make cmake configure step fail explicitly if compiler version
+            is not supported
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1456" target="_top">#1456</a> - Consolidating <code class="computeroutput"><span class="identifier">new_</span><span class="special">&lt;&gt;()</span></code>
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1454" target="_top">#1454</a> - Removed harmful std::moves from return statements
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1453" target="_top">#1453</a> - Use range-based for-loop instead of Boost.Foreach
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1452" target="_top">#1452</a> - C++ feature tests
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1451" target="_top">#1451</a> - When serializing, pass archive flags to traits::get_type_size
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1450" target="_top">#1450</a> - traits:get_type_size needs archive flags to enable zero_copy
+            optimizations
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1449" target="_top">#1449</a> - "couldn't create performance counter" - AGAS
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1448" target="_top">#1448</a> - Replace distributing factories with <code class="computeroutput"><span class="identifier">new_</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">[]&gt;(...)</span></code>
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1447" target="_top">#1447</a> - Removing obsolete remote_object component
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1446" target="_top">#1446</a> - Hpx serialization
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1445" target="_top">#1445</a> - Replacing travis with circleci
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1443" target="_top">#1443</a> - Always stripping HPX command line arguments before executing
+            start function
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1442" target="_top">#1442</a> - Adding --hpx:bind=none to disable thread affinities
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1439" target="_top">#1439</a> - Libraries get linked in multiple times, RPATH is not properly
+            set
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1438" target="_top">#1438</a> - Removed superfluous typedefs
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1437" target="_top">#1437</a> - <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">init</span><span class="special">()</span></code>
+            should strip HPX-related flags from argv
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1436" target="_top">#1436</a> - Add strong scaling option to htts
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1435" target="_top">#1435</a> - Adding async_cb, async_continue_cb, and async_colocated_cb
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1434" target="_top">#1434</a> - Added missing install rule, removed some dead CMake code
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1433" target="_top">#1433</a> - Add GitExternal and SubProject cmake scripts from eyescale/cmake
+            repo
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1432" target="_top">#1432</a> - Add command line flag to disable thread pinning
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1431" target="_top">#1431</a> - Fix #1423
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1429" target="_top">#1429</a> - Configure setting <code class="computeroutput"><span class="identifier">HPX_HAVE_PARCELPORT_MPI</span></code>
+            is ignored
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1427" target="_top">#1427</a> - Adding stencil_iterator and transform_iterator
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1426" target="_top">#1426</a> - Fixes #1419
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1425" target="_top">#1425</a> - During serialization memory allocation should honour allocator
             chunk size
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1424" target="_top">#1424</a> - chunk allocation during serialization does not use memory
+            pool/allocator chunk size
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1423" target="_top">#1423</a> - Remove <code class="computeroutput"><span class="identifier">HPX_STD_UNIQUE_PTR</span></code>
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1422" target="_top">#1422</a> - hpx:threads=all allocates too many os threads

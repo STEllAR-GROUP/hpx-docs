@@ -25,6 +25,65 @@
           If the component to create has a defined client side representation type,
           then this can be used, otherwise use the server type.
         </p>
+<p>
+          The following examples assume that <code class="computeroutput"><span class="identifier">component_type</span></code>
+          is the type of the server side implementation of the component to create.
+          All additional arguments (see <code class="computeroutput"><span class="special">,</span>
+          <span class="special">...</span></code> notation below) are passed through
+          to the corresponding constructor calls of those objects.
+        </p>
+<pre class="programlisting"><span class="comment">// create one instance on the given locality</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span> <span class="identifier">here</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">();</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span><span class="special">&gt;</span> <span class="identifier">f</span> <span class="special">=</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_</span><span class="special">&lt;</span><span class="identifier">component_type</span><span class="special">&gt;(</span><span class="identifier">here</span><span class="special">,</span> <span class="special">...);</span>
+
+<span class="comment">// create one instance using the given distribution</span>
+<span class="comment">// policy (here: hpx::colocating_distribution_policy)</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span> <span class="identifier">here</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">();</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span><span class="special">&gt;</span> <span class="identifier">f</span> <span class="special">=</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_</span><span class="special">&lt;</span><span class="identifier">component_type</span><span class="special">&gt;(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">colocated</span><span class="special">(</span><span class="identifier">here</span><span class="special">),</span> <span class="special">...);</span>
+
+
+<span class="comment">// create multiple instances on the given locality</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span> <span class="identifier">here</span> <span class="special">=</span> <span class="identifier">find_here</span><span class="special">();</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span><span class="special">&gt;&gt;</span> <span class="identifier">f</span> <span class="special">=</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_</span><span class="special">&lt;</span><span class="identifier">component_type</span><span class="special">[]&gt;(</span><span class="identifier">here</span><span class="special">,</span> <span class="identifier">num</span><span class="special">,</span> <span class="special">...);</span>
+
+<span class="comment">// create multiple instances using the given distribution</span>
+<span class="comment">// policy (here: hpx::binpacking_distribution_policy)</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span><span class="special">&gt;&gt;</span> <span class="identifier">f</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_</span><span class="special">&lt;</span><span class="identifier">component_type</span><span class="special">[]&gt;(</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">binpacking</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_all_localities</span><span class="special">()),</span> <span class="identifier">num</span><span class="special">,</span> <span class="special">...);</span>
+</pre>
+<p>
+          The examples below demonstrate the use of the same API functions for creating
+          client side representation objects (instead of just plain ids). These examples
+          assume that <code class="computeroutput"><span class="identifier">client_type</span></code>
+          is the type of the client side representation of the component type to
+          create. As above, all additional arguments (see <code class="computeroutput"><span class="special">,</span>
+          <span class="special">...</span></code> notation below) are passed through
+          to the corresponding constructor calls of the server side implementation
+          objects corresponding to the <code class="computeroutput"><span class="identifier">client_type</span></code>.
+        </p>
+<pre class="programlisting"><span class="comment">// create one instance on the given locality</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span> <span class="identifier">here</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">();</span>
+<span class="identifier">client_type</span> <span class="identifier">c</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_</span><span class="special">&lt;</span><span class="identifier">client_type</span><span class="special">&gt;(</span><span class="identifier">here</span><span class="special">,</span> <span class="special">...);</span>
+
+<span class="comment">// create one instance using the given distribution</span>
+<span class="comment">// policy (here: hpx::colocating_distribution_policy)</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span> <span class="identifier">here</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">();</span>
+<span class="identifier">client_type</span> <span class="identifier">c</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_</span><span class="special">&lt;</span><span class="identifier">client_type</span><span class="special">&gt;(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">colocated</span><span class="special">(</span><span class="identifier">here</span><span class="special">),</span> <span class="special">...);</span>
+
+
+<span class="comment">// create multiple instances on the given locality</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span> <span class="identifier">here</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">();</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">client_type</span><span class="special">&gt;&gt;</span> <span class="identifier">f</span> <span class="special">=</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_</span><span class="special">&lt;</span><span class="identifier">client_type</span><span class="special">[]&gt;(</span><span class="identifier">here</span><span class="special">,</span> <span class="identifier">num</span><span class="special">,</span> <span class="special">...);</span>
+
+<span class="comment">// create multiple instances using the given distribution</span>
+<span class="comment">// policy (here: hpx::binpacking_distribution_policy)</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">client_type</span><span class="special">&gt;&gt;</span> <span class="identifier">f</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_</span><span class="special">&lt;</span><span class="identifier">client_type</span><span class="special">[]&gt;(</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">binpacking</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_all_localities</span><span class="special">()),</span> <span class="identifier">num</span><span class="special">,</span> <span class="special">...);</span>
+</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

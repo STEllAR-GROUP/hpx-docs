@@ -20,12 +20,23 @@
 <a name="hpx.manual.components.components_client"></a><a class="link" href="components_client.html" title="Defining Client Side Representation Classes">Defining Client
         Side Representation Classes</a>
 </h4></div></div></div>
+<p>
+          Often it is very convenient to define a separate type for a component which
+          can be used on the client side (from where the component is instantiated
+          and used). This step might seem as unnecessary duplicating code, however
+          it significantly increases the type safety of the code.
+        </p>
+<p>
+          A possible implementation of such a client side representation for the
+          component described in the previous section could look like:
+        </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">components</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">namespace</span> <span class="identifier">app</span>
 <span class="special">{</span>
     <span class="comment">// Define a client side representation type for the component type</span>
     <span class="comment">// 'some_component' defined in the previous section.</span>
+    <span class="comment">//</span>
     <span class="keyword">struct</span> <span class="identifier">some_component_client</span>
       <span class="special">:</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">client_base</span><span class="special">&lt;</span><span class="identifier">some_component_client</span><span class="special">,</span> <span class="identifier">some_component</span><span class="special">&gt;</span>
     <span class="special">{</span>
@@ -36,14 +47,20 @@
           <span class="special">:</span> <span class="identifier">base_type</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">id</span><span class="special">))</span>
         <span class="special">{}</span>
 
-        <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">some_member_function</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">)</span>
+        <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">some_member_function</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">s</span><span class="special">)</span>
         <span class="special">{</span>
             <span class="identifier">some_component</span><span class="special">::</span><span class="identifier">some_member_action</span> <span class="identifier">act</span><span class="special">;</span>
-            <span class="keyword">return</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">(</span><span class="identifier">act</span><span class="special">,</span> <span class="identifier">get_gid</span><span class="special">());</span>
+            <span class="keyword">return</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">(</span><span class="identifier">act</span><span class="special">,</span> <span class="identifier">get_gid</span><span class="special">(),</span> <span class="identifier">s</span><span class="special">);</span>
         <span class="special">}</span>
     <span class="special">};</span>
 <span class="special">}</span>
 </pre>
+<p>
+          A client side object stores the global id of the component instance it
+          represents. This global id is accessible by calling the function <code class="computeroutput"><span class="identifier">client_base</span><span class="special">&lt;&gt;::</span><span class="identifier">get_gid</span><span class="special">()</span></code>.
+          The special constructor which is provided in the example allows to create
+          this client side object directly using the API function <code class="computeroutput"><a class="link" href="../../new_idp27200144.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code>.
+        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -28,12 +28,12 @@
 <span class="keyword">class</span> <a class="link" href="task_block.html" title="Class task_block">task_block</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
 
-  <span class="comment">// <a class="link" href="task_block.html#idp26925824-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="task_block.html#idp26926384-bb"><span class="identifier">run</span></a><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="task_block.html#idp26937680-bb"><span class="identifier">wait</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="task_block.html#idp27023120-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="task_block.html#idp27023680-bb"><span class="identifier">run</span></a><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="task_block.html#idp27034976-bb"><span class="identifier">wait</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp34568224"></a><h2>Description</h2>
+<a name="idp66192336"></a><h2>Description</h2>
 <p>   The class task_block defines an interface for forking and
    joining parallel tasks. The \a define_task_block and
    \a define_task_block_restore_thread
@@ -47,7 +47,7 @@
    address by any other means is unspecified.
 
    A \a task_block is active if it was created by the nearest
-   enclosing task region, where "task region" refers to an invocation of
+   enclosing task block, where "task block" refers to an invocation of
    define_task_block or define_task_block_restore_thread and "nearest
    enclosing" means the most
    recent invocation that has not yet completed. Code designated for
@@ -65,13 +65,13 @@
    @code 
  Example: define_task_block([&amp;](auto&amp; tr) { tr.run([&amp;] { tr.run([] { f(); }); // Error: tr is not active define_task_block([&amp;](auto&amp; tr) { // Nested task block tr.run(f); // OK: inner tr is active /// ... }); }); /// ... });  </p>
 <div class="refsect2">
-<a name="idp34572992"></a><h3>
-<a name="idp26925824-bb"></a><code class="computeroutput">task_block</code> public member functions</h3>
+<a name="idp66197104"></a><h3>
+<a name="idp27023120-bb"></a><code class="computeroutput">task_block</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp26926384-bb"></a><span class="identifier">run</span><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp27023680-bb"></a><span class="identifier">run</span><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
 <p>Causes the expression f() to be invoked asynchronously. The invocation of f is permitted to run on an unspecified thread in an unordered fashion relative to the sequence of operations following the call to run(f) (the continuation), or indeterminately sequenced within the same thread as the continuation.</p>
-<p>The call to <span class="emphasis"><em>run</em></span> synchronizes with the invocation of f. The completion of f() synchronizes with the next invocation of wait on the same <code class="computeroutput"><a class="link" href="task_block.html" title="Class task_block">task_block</a></code> or completion of the nearest enclosing task region (i.e., the <span class="emphasis"><em>define_task_block</em></span> or <span class="emphasis"><em>define_task_block_restore_thread</em></span> that created this task block).</p>
+<p>The call to <span class="emphasis"><em>run</em></span> synchronizes with the invocation of f. The completion of f() synchronizes with the next invocation of wait on the same <code class="computeroutput"><a class="link" href="task_block.html" title="Class task_block">task_block</a></code> or completion of the nearest enclosing task block (i.e., the <span class="emphasis"><em>define_task_block</em></span> or <span class="emphasis"><em>define_task_block_restore_thread</em></span> that created this task block).</p>
 <p>Requires: F shall be MoveConstructible. The expression, (void)f(), shall be well-formed.</p>
 <p>Precondition: this shall be the active <code class="computeroutput"><a class="link" href="task_block.html" title="Class task_block">task_block</a></code>.</p>
 <p>Postconditions: A call to run may return on a different thread than that on which it was called.</p>
@@ -97,7 +97,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp26937680-bb"></a><span class="identifier">wait</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp27034976-bb"></a><span class="identifier">wait</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>       Blocks until the tasks spawned using this task_block have
        finished.
 

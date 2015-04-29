@@ -133,7 +133,7 @@ small_size = ${HPX_SMALL_STACK_SIZE:&lt;hpx_small_stack_size&gt;}
 medium_size = ${HPX_MEDIUM_STACK_SIZE:&lt;hpx_medium_stack_size&gt;}
 large_size = ${HPX_LARGE_STACK_SIZE:&lt;hpx_large_stack_size&gt;}
 huge_size = ${HPX_HUGE_STACK_SIZE:&lt;hpx_huge_stack_size&gt;}
-use_guard_pages = ${HPX_USE_GUARD_PAGES:1}
+use_guard_pages = ${HPX_THREAD_GUARD_PAGE:1}
 </pre>
 <div class="informaltable">
 <a name="hpx.manual.init.configuration.config_defaults.ini_hpx"></a><table class="table">
@@ -278,7 +278,7 @@ use_guard_pages = ${HPX_USE_GUARD_PAGES:1}
                     <p>
                       This setting verifies that no locks are being held while a
                       <span class="emphasis"><em>HPX</em></span> thread is suspended. This setting
-                      is applicable only if <code class="computeroutput"><span class="identifier">HPX_VERIFY_LOCKS</span></code>
+                      is applicable only if <code class="computeroutput"><span class="identifier">HPX_WITH_VERIFY_LOCKS</span></code>
                       is set during configuration in CMake.
                     </p>
                   </td>
@@ -293,8 +293,9 @@ use_guard_pages = ${HPX_USE_GUARD_PAGES:1}
                     <p>
                       This setting causes an exception if during lock detection at
                       least one lock is being held while a <span class="emphasis"><em>HPX</em></span>
-                      thread is suspended. This setting is applicable only if <code class="computeroutput"><span class="identifier">HPX_VERIFY_LOCKS</span></code> is set during
-                      configuration in CMake. This setting has no effect if <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">lock_detection</span><span class="special">=</span><span class="number">0</span></code>
+                      thread is suspended. This setting is applicable only if <code class="computeroutput"><span class="identifier">HPX_WITH_VERIFY_LOCKS</span></code> is
+                      set during configuration in CMake. This setting has no effect
+                      if <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">lock_detection</span><span class="special">=</span><span class="number">0</span></code>
                     </p>
                   </td>
 </tr>
@@ -311,7 +312,7 @@ use_guard_pages = ${HPX_USE_GUARD_PAGES:1}
                       to <code class="computeroutput"><span class="number">1</span></code> (for Debug
                       builds) or to <code class="computeroutput"><span class="number">0</span></code>
                       (for Release, RelWithDebInfo, RelMinSize builds), this setting
-                      is effective only if <code class="computeroutput"><span class="identifier">HPX_THREAD_MINIMAL_DEADLOCK_DETECTION</span></code>
+                      is effective only if <code class="computeroutput"><span class="identifier">HPX_WITH_THREAD_DEADLOCK_DETECTION</span></code>
                       is set during configuration in CMake.
                     </p>
                   </td>
@@ -387,7 +388,7 @@ use_guard_pages = ${HPX_USE_GUARD_PAGES:1}
                       This entry controls whether the coroutine library will generate
                       stack guard pages or not. This entry is applicable on Linux
                       only and only if the <code class="computeroutput"><span class="identifier">HPX_USE_GENERIC_COROUTINE_CONTEXT</span></code>
-                      option is not enabled and the <code class="computeroutput"><span class="identifier">HPX_THREAD_GUARD_PAGE</span></code>
+                      option is not enabled and the <code class="computeroutput"><span class="identifier">HPX_WITH_THREAD_GUARD_PAGE</span></code>
                       is set to 1 while configuring the build system. It is set by
                       default to <code class="computeroutput"><span class="number">1</span></code>.
                     </p>
@@ -805,7 +806,7 @@ enable_security = ${HPX_PARCEL_ENABLE_SECURITY:0}
             The following settings relate to the TCP/IP parcelport.
           </p>
 <pre class="programlisting">[hpx.parcel.tcp]
-enable = ${HPX_PARCELPORT_TCP:1}
+enable = ${HPX_HAVE_PARCELPORT_TCP:1}
 array_optimization = ${HPX_PARCEL_TCP_ARRAY_OPTIMIZATION:$[hpx.parcel.array_optimization]}
 zero_copy_optimization = ${HPX_PARCEL_TCP_ZERO_COPY_OPTIMIZATION:$[hpx.parcel.zero_copy_optimization]}
 async_serialization = ${HPX_PARCEL_TCP_ASYNC_SERIALIZATION:$[hpx.parcel.async_serialization]}
@@ -984,12 +985,12 @@ max_outbound_message_size =  ${HPX_PARCEL_TCP_MAX_OUTBOUND_MESSAGE_SIZE:$[hpx.pa
 <p>
             The following settings relate to the shared memory parcelport (which
             is usable for communication between two localities on the same node).
-            These settings take effect only if the compile time constant <code class="computeroutput"><span class="identifier">HPX_PARCELPORT_IPC</span></code> is set (the equivalent
-            cmake variable is <code class="computeroutput"><span class="identifier">HPX_PARCELPORT_IPC</span></code>,
+            These settings take effect only if the compile time constant <code class="computeroutput"><span class="identifier">HPX_HAVE_PARCELPORT_IPC</span></code> is set (the
+            equivalent cmake variable is <code class="computeroutput"><span class="identifier">HPX_WITH_PARCELPORT_IPC</span></code>,
             and has to be set to <code class="computeroutput"><span class="identifier">ON</span></code>).
           </p>
 <pre class="programlisting">[hpx.parcel.ipc]
-enable = ${HPX_PARCELPORT_IPC:0}
+enable = ${HPX_HAVE_PARCELPORT_IPC:0}
 data_buffer_cache_size=${HPX_PARCEL_IPC_DATA_BUFFER_CACHE_SIZE:512}
 array_optimization = ${HPX_PARCEL_IPC_ARRAY_OPTIMIZATION:$[hpx.parcel.array_optimization]}
 async_serialization = ${HPX_PARCEL_IPC_ASYNC_SERIALIZATION:$[hpx.parcel.async_serialization]}
@@ -1355,26 +1356,26 @@ max_outbound_message_size =  ${HPX_PARCEL_IBVERBS_MAX_OUTBOUND_MESSAGE_SIZE:$[hp
 </div>
 <p>
             The following settings relate to the MPI parcelport. These settings take
-            effect only if the compile time constant <code class="computeroutput"><span class="identifier">HPX_PARCELPORT_MPI</span></code>
-            is set (the equivalent cmake variable is <code class="computeroutput"><span class="identifier">HPX_PARCELPORT_MPI</span></code>,
+            effect only if the compile time constant <code class="computeroutput"><span class="identifier">HPX_HAVE_PARCELPORT_MPI</span></code>
+            is set (the equivalent cmake variable is <code class="computeroutput"><span class="identifier">HPX_WITH_PARCELPORT_MPI</span></code>,
             and has to be set to <code class="computeroutput"><span class="identifier">ON</span></code>).
           </p>
 <pre class="programlisting">[hpx.parcel.mpi]
-enable = ${HPX_PARCELPORT_MPI:1}
-env = ${HPX_PARCELPORT_MPI_ENV:MV2_COMM_WORLD_RANK,PMI_RANK,OMPI_COMM_WORLD_SIZE,ALPS_APP_PE}
-multithreaded = ${HPX_PARCELPORT_MPI_MULTITHREADED:0}
+enable = ${HPX_HAVE_PARCELPORT_MPI:1}
+env = ${HPX_HAVE_PARCELPORT_MPI_ENV:MV2_COMM_WORLD_RANK,PMI_RANK,OMPI_COMM_WORLD_SIZE,ALPS_APP_PE}
+multithreaded = ${HPX_HAVE_PARCELPORT_MPI_MULTITHREADED:0}
 rank = &lt;MPI_rank&gt;
 processor_name = &lt;MPI_processor_name&gt;
-array_optimization = ${HPX_PARCEL_MPI_ARRAY_OPTIMIZATION:$[hpx.parcel.array_optimization]}
-zero_copy_optimization = ${HPX_PARCEL_MPI_ZERO_COPY_OPTIMIZATION:$[hpx.parcel.zero_copy_optimization]}
-use_io_pool = ${HPX_PARCEL_MPI_USE_IO_POOL:$1}
-async_serialization = ${HPX_PARCEL_MPI_ASYNC_SERIALIZATION:$[hpx.parcel.async_serialization]}
-enable_security = ${HPX_PARCEL_MPI_ENABLE_SECURITY:$[hpx.parcel.enable_security]}
-parcel_pool_size = ${HPX_PARCEL_MPI_PARCEL_POOL_SIZE:$[hpx.threadpools.parcel_pool_size]}
-max_connections =  ${HPX_PARCEL_MPI_MAX_CONNECTIONS:$[hpx.parcel.max_connections]}
-max_connections_per_locality = ${HPX_PARCEL_MPI_MAX_CONNECTIONS_PER_LOCALITY:$[hpx.parcel.max_connections_per_locality]}
-max_message_size =  ${HPX_PARCEL_MPI_MAX_MESSAGE_SIZE:$[hpx.parcel.max_message_size]}
-max_outbound_message_size =  ${HPX_PARCEL_MPI_MAX_OUTBOUND_MESSAGE_SIZE:$[hpx.parcel.max_outbound_message_size]}
+array_optimization = ${HPX_HAVE_PARCEL_MPI_ARRAY_OPTIMIZATION:$[hpx.parcel.array_optimization]}
+zero_copy_optimization = ${HPX_HAVE_PARCEL_MPI_ZERO_COPY_OPTIMIZATION:$[hpx.parcel.zero_copy_optimization]}
+use_io_pool = ${HPX_HAVE_PARCEL_MPI_USE_IO_POOL:$1}
+async_serialization = ${HPX_HAVE_PARCEL_MPI_ASYNC_SERIALIZATION:$[hpx.parcel.async_serialization]}
+enable_security = ${HPX_HAVE_PARCEL_MPI_ENABLE_SECURITY:$[hpx.parcel.enable_security]}
+parcel_pool_size = ${HPX_HAVE_PARCEL_MPI_PARCEL_POOL_SIZE:$[hpx.threadpools.parcel_pool_size]}
+max_connections =  ${HPX_HAVE_PARCEL_MPI_MAX_CONNECTIONS:$[hpx.parcel.max_connections]}
+max_connections_per_locality = ${HPX_HAVE_PARCEL_MPI_MAX_CONNECTIONS_PER_LOCALITY:$[hpx.parcel.max_connections_per_locality]}
+max_message_size =  ${HPX_HAVE_PARCEL_MPI_MAX_MESSAGE_SIZE:$[hpx.parcel.max_message_size]}
+max_outbound_message_size =  ${HPX_HAVE_PARCEL_MPI_MAX_OUTBOUND_MESSAGE_SIZE:$[hpx.parcel.max_outbound_message_size]}
 </pre>
 <div class="informaltable">
 <a name="hpx.manual.init.configuration.config_defaults.ini_hpx_parcel_mpi"></a><table class="table">

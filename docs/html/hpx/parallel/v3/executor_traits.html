@@ -1,0 +1,392 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Class template executor_traits</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 0.9.11">
+<link rel="up" href="../../../header/hpx/parallel/executors/executor_traits_hpp.html" title="Header &lt;hpx/parallel/executors/executor_traits.hpp&gt;">
+<link rel="prev" href="vector_execution_tag.html" title="Struct vector_execution_tag">
+<link rel="next" href="executor_traits/future.html" title="Struct template future">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="460" height="106" src="../../../images/hpx_0_9_11_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="vector_execution_tag.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/executors/executor_traits_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="executor_traits/future.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.parallel.v3.executor_traits"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Class template executor_traits</span></h2>
+<p>hpx::parallel::v3::executor_traits</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/executors/executor_traits_hpp.html" title="Header &lt;hpx/parallel/executors/executor_traits.hpp&gt;">hpx/parallel/executors/executor_traits.hpp</a>&gt;
+
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Executor<span class="special">,</span> <span class="keyword">typename</span> Enable<span class="special">&gt;</span> 
+<span class="keyword">class</span> <a class="link" href="executor_traits.html" title="Class template executor_traits">executor_traits</a> <span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="comment">// <a class="link" href="executor_traits.html#hpx.parallel.v3.executor_traitstypes">types</a></span>
+  <span class="keyword">typedef</span> <span class="identifier">Executor</span>    <a class="link" href="executor_traits.html#hpx.parallel.v3.executor_traits.executor_type"><span class="identifier">executor_type</span></a><span class="special">;</span>     
+  <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="executor_traits.html#hpx.parallel.v3.executor_traits.execution_category"><span class="identifier">execution_category</span></a><span class="special">;</span>
+
+  <span class="comment">// member classes/structs/unions</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
+  <span class="keyword">struct</span> <a class="link" href="executor_traits/future.html" title="Struct template future">future</a> <span class="special">{</span>
+    <span class="comment">// types</span>
+    <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="executor_traits/future.html#hpx.parallel.v3.executor_traits.future.type"><span class="identifier">type</span></a><span class="special">;</span>  <span class="comment">// The future type returned from async_execute. </span>
+  <span class="special">}</span><span class="special">;</span>
+
+  <span class="comment">// <a class="link" href="executor_traits.html#idp29007008-bb">public static functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="executor_traits.html#idp29007568-bb"><span class="identifier">apply_execute</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <a class="link" href="executor_traits/future.html" title="Struct template future">future</a><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">decay</span><span class="special">&lt;</span> <span class="identifier">F</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">(</span><span class="special">)</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
+    <a class="link" href="executor_traits.html#idp29014112-bb"><span class="identifier">async_execute</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">decay</span><span class="special">&lt;</span> <span class="identifier">F</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">(</span><span class="special">)</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
+    <a class="link" href="executor_traits.html#idp29023088-bb"><span class="identifier">execute</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span> Shape<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="executor_traits.html#idp29030096-bb"><span class="identifier">async_execute</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">,</span> <span class="identifier">Shape</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span> Shape<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="executor_traits.html#idp29041600-bb"><span class="identifier">execute</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">,</span> <span class="identifier">Shape</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a class="link" href="executor_traits.html#idp29053632-bb"><span class="identifier">os_thread_count</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+<span class="special">}</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idp38648864"></a><h2>Description</h2>
+<p>The <a class="link" href="executor_traits.html" title="Class template executor_traits">executor_traits</a> type is used to request execution agents from an executor. It is analogous to the interaction between containers and allocator_traits.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>For maximum implementation flexibility, <a class="link" href="executor_traits.html" title="Class template executor_traits">executor_traits</a> does not require executors to implement a particular exception reporting mechanism. Executors may choose whether or not to report exceptions, and if so, in what manner they are communicated back to the caller. However, we expect many executors to report exceptions in a manner consistent with the behavior of execution policies described by the Parallelism TS, where multiple exceptions are collected into an <a class="link" href="../../exception_list.html" title="Class exception_list">exception_list</a>. This list would be reported through async_execute()'s returned future, or thrown directly by execute(). </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="refsect2">
+<a name="idp38653440"></a><h3>
+<a name="hpx.parallel.v3.executor_traitstypes"></a><code class="computeroutput">executor_traits</code> 
+        public
+       types</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+<p>
+<span class="keyword">typedef</span> <span class="identifier">Executor</span> <a name="hpx.parallel.v3.executor_traits.executor_type"></a><span class="identifier">executor_type</span><span class="special">;</span></p>
+<p>The type of the executor associated with this instance of <span class="emphasis"><em><a class="link" href="executor_traits.html" title="Class template executor_traits">executor_traits</a></em></span> </p>
+</li>
+<li class="listitem">
+<p>
+<span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="hpx.parallel.v3.executor_traits.execution_category"></a><span class="identifier">execution_category</span><span class="special">;</span></p>
+<p>The category of agents created by the bulk-form execute() and async_execute()</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>This evaluates to executor_type::execution_category if it exists; otherwise it evaluates to <span class="emphasis"><em><a class="link" href="parallel_execution_tag.html" title="Struct parallel_execution_tag">parallel_execution_tag</a></em></span>. </p></td></tr>
+</table></div>
+<p>
+</p>
+</li>
+</ol></div>
+</div>
+<div class="refsect2">
+<a name="idp38666016"></a><h3>
+<a name="idp29007008-bb"></a><code class="computeroutput">executor_traits</code> public static functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">void</span> <a name="idp29007568-bb"></a><span class="identifier">apply_execute</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous fire &amp; forget execution agent creation. <p>This asynchronously (fire &amp; forget) creates a single function invocation f() using the associated executor.</p>
+<p>
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>This calls exec.apply_execute(f), if available, otherwise it calls exec.async_execute() while discarding the returned future </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">exec</code></span></p></td>
+<td><p>[in] The executor object to use for scheduling of the function <span class="emphasis"><em>f</em></span>. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
+<td><p>[in] The function which will be scheduled using the given executor.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <a class="link" href="executor_traits/future.html" title="Struct template future">future</a><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">decay</span><span class="special">&lt;</span> <span class="identifier">F</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">(</span><span class="special">)</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
+  <a name="idp29014112-bb"></a><span class="identifier">async_execute</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous execution agent creation. <p>This asynchronously creates a single function invocation f() using the associated executor.</p>
+<p>
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>Executors have to implement only <code class="computeroutput">async_execute()</code>. All other functions will be emulated by this <code class="computeroutput"><code class="computeroutput"><a class="link" href="executor_traits.html" title="Class template executor_traits">executor_traits</a></code></code> in terms of this single basic primitive. However, some executors will naturally specialize all four operations for maximum efficiency.</p>
+<p>This calls exec.async_execute(f)</p>
+</td></tr>
+</table></div>
+<p>
+
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">exec</code></span></p></td>
+<td><p>[in] The executor object to use for scheduling of the function <span class="emphasis"><em>f</em></span>. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
+<td><p>[in] The function which will be scheduled using the given executor.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>f()'s result through a future </p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">decay</span><span class="special">&lt;</span> <span class="identifier">F</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">(</span><span class="special">)</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
+  <a name="idp29023088-bb"></a><span class="identifier">execute</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>Singleton form of synchronous execution agent creation. <p>This synchronously creates a single function invocation f() using the associated executor. The execution of the supplied function synchronizes with the caller</p>
+<p>
+
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>This calls exec.execute(f) if it exists; otherwise hpx::async(f).get() </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">exec</code></span></p></td>
+<td><p>[in] The executor object to use for scheduling of the function <span class="emphasis"><em>f</em></span>. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
+<td><p>[in] The function which will be scheduled using the given executor.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>f()'s result through a future</p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span> Shape<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp29030096-bb"></a><span class="identifier">async_execute</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> <span class="identifier">Shape</span> <span class="keyword">const</span> <span class="special">&amp;</span> shape<span class="special">)</span><span class="special">;</span></pre>Bulk form of asynchronous execution agent creation. <p>This asynchronously creates a group of function invocations f(i) whose ordering is given by the execution_category associated with the executor.</p>
+<p>Here <span class="emphasis"><em>i</em></span> takes on all values in the index space implied by shape. All exceptions thrown by invocations of f(i) are reported in a manner consistent with parallel algorithm execution through the returned future.</p>
+<p>
+
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>This calls exec.async_execute(f, shape) if it exists; otherwise it executes hpx::async(f, i) as often as needed. </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">exec</code></span></p></td>
+<td><p>[in] The executor object to use for scheduling of the function <span class="emphasis"><em>f</em></span>. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
+<td><p>[in] The function which will be scheduled using the given executor. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">shape</code></span></p></td>
+<td><p>[in] The shape objects which defines the iteration boundaries for the arguments to be passed to <span class="emphasis"><em>f</em></span>.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The return type of <span class="emphasis"><em>executor_type::async_execute</em></span> if defined by <span class="emphasis"><em>executor_type</em></span>. Otherwise a vector of futures holding the returned value of each invocation of <span class="emphasis"><em>f</em></span>.</p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span> Shape<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp29041600-bb"></a><span class="identifier">execute</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> <span class="identifier">Shape</span> <span class="keyword">const</span> <span class="special">&amp;</span> shape<span class="special">)</span><span class="special">;</span></pre>Bulk form of synchronous execution agent creation. <p>This synchronously creates a group of function invocations f(i) whose ordering is given by the execution_category associated with the executor. The function synchronizes the execution of all scheduled functions with the caller.</p>
+<p>Here <span class="emphasis"><em>i</em></span> takes on all values in the index space implied by shape. All exceptions thrown by invocations of f(i) are reported in a manner consistent with parallel algorithm execution through the returned future.</p>
+<p>
+
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>This calls exec.execute(f, shape) if it exists; otherwise it executes hpx::async(f, i) as often as needed. </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">exec</code></span></p></td>
+<td><p>[in] The executor object to use for scheduling of the function <span class="emphasis"><em>f</em></span>. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
+<td><p>[in] The function which will be scheduled using the given executor. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">shape</code></span></p></td>
+<td><p>[in] The shape objects which defines the iteration boundaries for the arguments to be passed to <span class="emphasis"><em>f</em></span>.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The return type of <span class="emphasis"><em>executor_type::execute</em></span> if defined by <span class="emphasis"><em>executor_type</em></span>. Otherwise a vector holding the returned value of each invocation of <span class="emphasis"><em>f</em></span> except when <span class="emphasis"><em>f</em></span> returns void, which case void is returned.</p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a name="idp29053632-bb"></a><span class="identifier">os_thread_count</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> exec<span class="special">)</span><span class="special">;</span></pre>
+<p>Retrieve the number of (kernel-)threads used by the associated executor.</p>
+<p>
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>This calls exec.os_thread_count() if it exists; otherwise it executes hpx::get_os_thread_count(). </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><code class="computeroutput">exec</code></span></p></td>
+<td><p>[in] The executor object to use for scheduling of the function <span class="emphasis"><em>f</em></span>.</p></td>
+</tr></tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2015 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="vector_execution_tag.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/executors/executor_traits_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="executor_traits/future.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

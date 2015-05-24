@@ -1,0 +1,152 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Executors and Executor Traits</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 0.9.11">
+<link rel="up" href="../parallel.html" title="High Level Parallel Facilities">
+<link rel="prev" href="parallel_algorithms.html" title="Using Parallel Algorithms">
+<link rel="next" href="task_block.html" title="Using Task Blocks">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="460" height="106" src="../../../images/hpx_0_9_11_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="parallel_algorithms.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../parallel.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="task_block.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="hpx.manual.parallel.executors"></a><a class="link" href="executors.html" title="Executors and Executor Traits">Executors and Executor
+        Traits</a>
+</h4></div></div></div>
+<p>
+          The existing Version 1 of the Parallelism TS (<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4409.pdf" target="_top">N4409</a>)
+          exposes parallel execution to the programmer in the form of standard algorithms
+          that accept execution policies. A companion executor facility both provides
+          a suitable substrate for implementing these algorithms in a standard way
+          and provide a mechanism for exercising programmatic control over where
+          parallel work should be executed.
+        </p>
+<p>
+          The algorithms and execution policies specified by the Parallelism TS are
+          designed to permit implementation on the broadest range of platforms. In
+          addition to preemptive thread pools common on some platforms, implementations
+          of these algorithms may want to take advantage of a number of mechanisms
+          for parallel execution, including cooperative fibers, GPU threads, and
+          SIMD vector units, among others. This diversity of possible execution resources
+          strongly suggests that a suitable abstraction encapsulating the details
+          of how work is created across diverse platforms would be of significant
+          value to parallel algorithm implementations. Suitably defined executors
+          provide just such a facility.
+        </p>
+<p>
+          An executor is an object responsible for creating execution agents on which
+          work is performed, thus abstracting the (potentially platform-specific)
+          mechanisms for launching work. To accommodate the goals of the Parallelism
+          TS, whose algorithms aim to support the broadest range of possible platforms,
+          the requirements that all executors are expected to fulfill are small.
+          They are also be consistent with a broad range of execution semantics,
+          including preemptive threads, cooperative fibers, GPU threads, and SIMD
+          vector units, among others.
+        </p>
+<p>
+          The executors implemented by <span class="emphasis"><em>HPX</em></span> are aligned with
+          the interfaces proposed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4406.pdf" target="_top">N4406</a>
+          (Parallel Algorithms Need Executors).
+        </p>
+<p>
+          Executors are modular components for requisitioning execution agents. During
+          parallel algorithm execution, execution policies generate execution agents
+          by requesting their creation from an associated executor. Rather than focusing
+          on asynchronous task queueing, our complementary treatment of executors
+          casts them as modular components for invoking functions over the points
+          of an index space. We believe that executors may be conceived of as allocators
+          for execution agents and our interface's design reflects this analogy.
+          The process of requesting agents from an executor is mediated via the
+          <code class="computeroutput"><a class="link" href="../../parallel/v3/executor_traits.html" title="Class template executor_traits">hpx::parallel::executor_traits</a></code>
+          API, which is analogous to the interaction between containers and allocator_traits.
+        </p>
+<p>
+          With executor_traits, clients manipulate all types of executors uniformly:
+        </p>
+<pre class="programlisting"><span class="identifier">executor_traits</span><span class="special">&lt;</span><span class="identifier">my_executor_t</span><span class="special">&gt;::</span><span class="identifier">execute</span><span class="special">(</span><span class="identifier">my_executor</span><span class="special">,</span>
+    <span class="special">[](</span><span class="identifier">size_t</span> <span class="identifier">i</span><span class="special">){</span> <span class="comment">// perform task i },</span>
+    <span class="identifier">range</span><span class="special">(</span><span class="number">0</span><span class="special">,</span> <span class="identifier">n</span><span class="special">));</span>
+</pre>
+<p>
+          This call synchronously creates a group of invocations of the given function,
+          where each individual invocation within the group is identified by a unique
+          integer i in <code class="computeroutput"><span class="special">[</span><span class="number">0</span><span class="special">,</span> <span class="identifier">n</span><span class="special">)</span></code>.
+          Other functions in the interface exist to create groups of invocations
+          asynchronously and support the special case of creating a singleton group,
+          resulting in four different combinations.
+        </p>
+<p>
+          Though this interface appears to require executor authors to implement
+          four different basic operations, there is really only one requirement:
+          <code class="computeroutput"><span class="identifier">async_execute</span><span class="special">()</span></code>.
+          In practice, the other operations may be defined in terms of this single
+          basic primitive. However, some executors will naturally specialize all
+          four operations for maximum efficiency.
+        </p>
+<p>
+          For maximum implementation flexibility, <code class="computeroutput"><span class="identifier">executor_traits</span></code>
+          does not require executors to implement a particular exception reporting
+          mechanism. Executors may choose whether or not to report exceptions, and
+          if so, in what manner they are communicated back to the caller. However,
+          all executors in <span class="emphasis"><em>HPX</em></span> report exceptions in a manner
+          consistent with the behavior of execution policies described by the Parallelism
+          TS, where multiple exceptions are collected into an <code class="computeroutput"><a class="link" href="../../exception_list.html" title="Class exception_list">exception_list</a></code>. This list
+          is reported through <code class="computeroutput"><span class="identifier">async_execute</span><span class="special">()</span><span class="error">'</span><span class="identifier">s</span></code>
+          returned future, or thrown directly by execute().
+        </p>
+<p>
+          In <span class="emphasis"><em>HPX</em></span> we have implemented the following executor
+          types:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <code class="computeroutput"><a class="link" href="../../parallel/v3/sequential_executor.html" title="Struct sequential_executor">hpx::parallel::sequential_executor</a></code>:
+              creates groups of sequential execution agents which execute in the
+              calling thread. The sequential order is given by the lexicographical
+              order of indices in the index space.
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><a class="link" href="../../parallel/v3/parallel_executor.html" title="Struct parallel_executor">hpx::parallel::parallel_executor</a></code>: creates
+              groups of parallel execution agents which execute in threads implicitly
+              created by the executor. This executor prefers continuing with the
+              creating thread first before executing newly created threads.
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><a class="link" href="../../parallel/v3/parallel_fork_executor.html" title="Struct parallel_fork_executor">hpx::parallel::parallel_fork_executor</a></code>:
+              creates groups of parallel execution agents which execute in threads
+              implicitly created by the executor. This executor prefers executing
+              newly created threads first before continuing with the creating thread.
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><a class="link" href="../../parallel/v3/service_executor.html" title="Struct service_executor">hpx::parallel::service_executor</a></code>: creates
+              groups of parallel execution agents which execute in one of the kernel
+              threads associated with a given pool category (I/O, parcel, or timer
+              pool, or on the main thread of the application).
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><a class="link" href="../../parallel/v3/local_priority_idp29094144.html" title="Struct local_priority_queue_executor">hpx::parallel::local_priority_queue_executor</a></code>
+            </li>
+</ul></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2015 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="parallel_algorithms.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../parallel.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="task_block.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

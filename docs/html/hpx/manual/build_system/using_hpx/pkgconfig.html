@@ -58,7 +58,8 @@
               <span class="emphasis"><em>HPX</em></span>):
             </p>
 <pre class="programlisting">export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$HPX_LOCATION/lib/pkgconfig
-c++ -o hello_world hello_world.cpp `pkg-config --cflags --libs hpx_application` -liostreams -DHPX_APPLICATION_NAME=hello_world
+c++ -o hello_world hello_world.cpp \
+    `pkg-config --cflags --libs hpx_application` -lhpx_iostreams -DHPX_APPLICATION_NAME=hello_world
 </pre>
 <div class="important"><table border="0" summary="Important">
 <tr>
@@ -82,8 +83,8 @@ c++ -o hello_world hello_world.cpp `pkg-config --cflags --libs hpx_application` 
                 name. That means instead of <code class="computeroutput">hpx_application</code> or <code class="computeroutput">hpx_component</code>
                 you will have to use <code class="computeroutput">hpx_application_debug</code> or <code class="computeroutput">hpx_component_debug</code>.
                 Moreover, all referenced <span class="emphasis"><em>HPX</em></span> components need
-                to have a appended 'd' suffix, e.g. instead of <code class="computeroutput">-liostreams</code>
-                you will need to specify <code class="computeroutput">-liostreamsd</code>.
+                to have a appended 'd' suffix, e.g. instead of <code class="computeroutput">-lhpx_iostreams</code>
+                you will need to specify <code class="computeroutput">-lhpx_iostreamsd</code>.
               </p></td></tr>
 </table></div>
 <div class="important"><table border="0" summary="Important">
@@ -245,7 +246,9 @@ c++ -o hello_world hello_world.cpp `pkg-config --cflags --libs hpx_application` 
               used while building <span class="emphasis"><em>HPX</em></span>):
             </p>
 <pre class="programlisting">export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$HPX_LOCATION/lib/pkgconfig
-c++ -o libhello_world.so hello_world_component.cpp `pkg-config --cflags --libs hpx_component` -DHPX_COMPONENT_NAME=hello_world
+c++ -o libhpx_hello_world.so hello_world_component.cpp \
+    `pkg-config --cflags --libs hpx_component` \
+    -DHPX_COMPONENT_NAME=hpx_hello_world
 </pre>
 <p>
               Now pick a directory in which to install your <span class="emphasis"><em>HPX</em></span>
@@ -267,8 +270,8 @@ mv libhello_world.so ~/my_hpx_libs
                 name. That means instead of <code class="computeroutput">hpx_application</code> or <code class="computeroutput">hpx_component</code>
                 you will have to use <code class="computeroutput">hpx_application_debug</code> or <code class="computeroutput">hpx_component_debug</code>.
                 Moreover, all referenced <span class="emphasis"><em>HPX</em></span> components need
-                to have a appended 'd' suffix, e.g. instead of <code class="computeroutput">-liostreams</code>
-                you will need to specify <code class="computeroutput">-liostreamsd</code>.
+                to have a appended 'd' suffix, e.g. instead of <code class="computeroutput">-lhpx_iostreams</code>
+                you will need to specify <code class="computeroutput">-lhpx_iostreamsd</code>.
               </p></td></tr>
 </table></div>
 <div class="important"><table border="0" summary="Important">
@@ -285,7 +288,7 @@ mv libhello_world.so ~/my_hpx_libs
 <p>
               In the ~/my_hpx_libs directory you need to create an ini file inside
               that directory which matches the name of the component (as supplied
-              by -DHPX_COMPONENT_NAME above).
+              by <code class="computeroutput">-DHPX_COMPONENT_NAME</code> above).
             </p>
 <p>
               <span class="bold"><strong>hello_world.ini</strong></span>
@@ -319,7 +322,9 @@ ini_path = $[hpx.ini_path]:${HOME}/my_hpx_libs
               we do:
             </p>
 <pre class="programlisting">export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$HPX_LOCATION/lib/pkgconfig
-c++ -o hello_world_client hello_world_client.cpp `pkg-config --cflags --libs hpx_application` -liostreams -L${HOME}/my_hpx_libs -lhello_world
+c++ -o hello_world_client hello_world_client.cpp \
+    `pkg-config --cflags --libs hpx_application` \
+    -lhpx_iostreams -L${HOME}/my_hpx_libs -lhello_world
 </pre>
 <div class="important"><table border="0" summary="Important">
 <tr>

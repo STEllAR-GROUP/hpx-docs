@@ -237,6 +237,7 @@ namespace hpx { namespace lcos
 
                 if (!next_future_data->is_ready())
                 {
+
                     next_future_data->execute_deferred();
 
                     // execute_deferred might have made the future ready
@@ -247,7 +248,6 @@ namespace hpx { namespace lcos
                         // (if any).
                         void (when_each_frame::*f)(TupleIter, true_, false_) =
                             &when_each_frame::await_next;
-
                         boost::intrusive_ptr<when_each_frame> this_(this);
                         next_future_data->set_on_completed(
                             hpx::util::bind(

@@ -197,6 +197,7 @@ namespace hpx { namespace lcos
                 {
                     // handle future only if not enough futures are ready yet
                     // also, do not touch any futures which are already ready
+
                     shared_state->execute_deferred();
 
                     // execute_deferred might have made the future ready
@@ -206,7 +207,6 @@ namespace hpx { namespace lcos
                         return;
                     }
                 }
-
                 if (wait_.count_.fetch_add(1) + 1 == wait_.needed_count_)
                 {
                     wait_.goal_reached_on_calling_thread_ = true;

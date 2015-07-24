@@ -57,24 +57,57 @@ project(your_app CXX)
 find_package(HPX)
 </pre>
 <p>
-            In order to have CMake find HPX, it needs to be told. The easiest is
-            to add the HPX_DIR cmake variable pointing to the directory containing
-            the HPXConfig.cmake script which gets picked up by cmake and sets up
-            all the necessary macros needed to use HPX in your project. Pass it on
-            the command line while invoking cmake (where <code class="literal">$HPX_LOCATION</code>
-            is the build directory or <code class="literal">CMAKE_INSTALL_PREFIX</code> you
-            used while building <span class="emphasis"><em>HPX</em></span>):
+            In order to have CMake find <span class="emphasis"><em>HPX</em></span>, it needs to be
+            told where to look for the <code class="computeroutput">HPXConfig.cmake</code> file that is
+            generated when HPX is built or installed, it is used by <code class="computeroutput">find_package(HPX)</code>
+            to set up all the necessary macros needed to use <span class="emphasis"><em>HPX</em></span>
+            in your project. The ways to achieve this are
           </p>
-<pre class="programlisting">cmake -DHPX_DIR=$HPX_LOCATION/lib/cmake/hpx ...
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+<p class="simpara">
+                set the <code class="computeroutput">HPX_DIR</code> cmake variable to point to the directory
+                containing the <code class="computeroutput">HPXConfig.cmake</code> script on the command
+                line when you invoke cmake,
+              </p>
+<pre class="programlisting">cmake -DHPX_DIR=$HPX_LOCATION/lib/cmake/HPX ...
 </pre>
+<p class="simpara">
+                where <code class="literal">$HPX_LOCATION</code> is the build directory or
+                <code class="literal">CMAKE_INSTALL_PREFIX</code> you used when building/configuring
+                <span class="emphasis"><em>HPX</em></span>
+              </p>
+</li>
+<li class="listitem">
+<p class="simpara">
+                set the <code class="computeroutput">CMAKE_PREFIX_PATH</code> variable to the root directory
+                of your <span class="emphasis"><em>HPX</em></span> build or install location on the
+                command line when you invoke cmake,
+              </p>
+<pre class="programlisting">cmake -DCMAKE_PREFIX_PATH=$HPX_LOCATION ...
+</pre>
+<p class="simpara">
+                the difference between <code class="computeroutput">CMAKE_PREFIX_PATH</code> and <code class="computeroutput">HPX_DIR</code>
+                is that cmake will add common postfixes such as <code class="computeroutput">lib/cmake/&lt;project&gt;</code>
+                to the <code class="computeroutput">CMAKE_PREFIX_PATH</code> and search in these locations
+                too. Note that if your project uses <span class="emphasis"><em>HPX</em></span> as well
+                as other cmake managed projects, the paths to the locations of these
+                multiple projects may be concatenated in the <code class="computeroutput">CMAKE_PREFIX_PATH</code>.
+              </p>
+</li>
+<li class="listitem">
+                The variables above may be set in the CMake GUI or curses ccmake
+                interface instead of the command line.
+              </li>
+</ul></div>
 <p>
-            Alternatively, if you wish to require <span class="emphasis"><em>HPX</em></span> for your
+            Additionally, if you wish to require <span class="emphasis"><em>HPX</em></span> for your
             project, replace the <code class="computeroutput">find_package(HPX)</code> line with <code class="computeroutput">find_package(HPX
             REQUIRED)</code>.
           </p>
 <p>
-            You can check if HPX was succesfully found with the <code class="computeroutput">HPX_FOUND</code>
-            CMake variable.
+            You can check if <span class="emphasis"><em>HPX</em></span> was succesfully found with
+            the <code class="computeroutput">HPX_FOUND</code> CMake variable.
           </p>
 <p>
             The simplst way to add the <span class="emphasis"><em>HPX</em></span> component is to use

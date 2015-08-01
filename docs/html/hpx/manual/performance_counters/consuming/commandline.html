@@ -119,6 +119,41 @@
                     </p>
                   </td>
 </tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">print</span><span class="special">-</span><span class="identifier">counter</span><span class="special">-</span><span class="identifier">format</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      print the performance counter(s) specified with <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">print</span><span class="special">-</span><span class="identifier">counter</span></code>,
+                      possible formats in csv format with header or without any header
+                      (see option <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">no</span><span class="special">-</span><span class="identifier">csv</span><span class="special">-</span><span class="identifier">header</span></code>) values: 'csv' (prints
+                      counter values in CSV format with full names as header) 'csv-short'
+                      (prints counter values in CSV format with shortnames provided
+                      with <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">print</span><span class="special">-</span><span class="identifier">counter</span></code>
+                      as <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">print</span><span class="special">-</span><span class="identifier">counter</span>
+                      <span class="identifier">shortname</span><span class="special">,</span><span class="identifier">full</span><span class="special">-</span><span class="identifier">countername</span></code>)
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">no</span><span class="special">-</span><span class="identifier">csv</span><span class="special">-</span><span class="identifier">header</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      print the performance counter(s) specified with <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">print</span><span class="special">-</span><span class="identifier">counter</span></code>
+                      and <code class="computeroutput"><span class="identifier">csv</span></code> or
+                      <code class="computeroutput"><span class="identifier">csv</span><span class="special">-</span><span class="keyword">short</span></code> format specified with
+                      <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">print</span><span class="special">-</span><span class="identifier">counter</span><span class="special">-</span><span class="identifier">format</span></code>
+                      without header
+                    </p>
+                  </td>
+</tr>
 </tbody>
 </table></div>
 </div>
@@ -274,6 +309,87 @@ hello world from OS-thread 2 on locality 0
 /threads{locality#0/worker-thread#1}/count/cumulative,1,0.0025453[s],33
 /threads{locality#0/worker-thread#2}/count/cumulative,1,0.0025683[s],29
 /threads{locality#0/worker-thread#3}/count/cumulative,1,0.0025904[s],33
+</pre>
+<p>
+            The command <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">print</span><span class="special">-</span><span class="identifier">counter</span><span class="special">-</span><span class="identifier">format</span></code>
+            takes values <code class="computeroutput"><span class="identifier">csv</span></code> and
+            <code class="computeroutput"><span class="identifier">csv</span><span class="special">-</span><span class="keyword">short</span></code> to generate CSV formatted counter
+            values with header
+          </p>
+<p>
+            With format as csv:
+          </p>
+<pre class="programlisting">hello_world \
+    --hpx:threads=2 \
+    --hpx:print-counter-format csv \
+    --hpx:print-counter /threads{locality#*/total}/count/cumulative \
+    --hpx:print-counter /threads{locality#*/total}/count/cumulative-phases
+</pre>
+<p>
+            will print the values of performance counters in CSV format with full
+            countername as header
+          </p>
+<pre class="programlisting">hello world from OS-thread 1 on locality 0
+hello world from OS-thread 0 on locality 0
+/threads{locality#*/total}/count/cumulative,/threads{locality#*/total}/count/cumulative-phases
+39,93
+</pre>
+<p>
+            With format csv-short:
+          </p>
+<pre class="programlisting">hello_world \
+    --hpx:threads 2 \
+    --hpx:print-counter-format csv-short \
+    --hpx:print-counter cumulative,/threads{locality#*/total}/count/cumulative \
+    --hpx:print-counter phases,/threads{locality#*/total}/count/cumulative-phases
+</pre>
+<p>
+            will print the values of performance counters in CSV format with short
+            countername as header
+          </p>
+<pre class="programlisting">hello world from OS-thread 1 on locality 0
+hello world from OS-thread 0 on locality 0
+cumulative,phases
+39,93
+</pre>
+<p>
+            With format csv and csv-short when used with <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">print</span><span class="special">-</span><span class="identifier">counter</span><span class="special">-</span><span class="identifier">interval</span></code>:
+          </p>
+<pre class="programlisting">hello_world \
+    --hpx:threads 2 \
+    --hpx:print-counter-format csv-short \
+    --hpx:print-counter cumulative,/threads{locality#*/total}/count/cumulative \
+    --hpx:print-counter phases,/threads{locality#*/total}/count/cumulative-phases \
+    --hpx:print-counter-interval 5
+</pre>
+<p>
+            will print the header only once repeating the performance counter value(s)
+            repeatidly
+          </p>
+<pre class="programlisting">cum,phases
+25,42
+hello world from OS-thread 1 on locality 0
+hello world from OS-thread 0 on locality 0
+44,95
+</pre>
+<p>
+            The command <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">no</span><span class="special">-</span><span class="identifier">csv</span><span class="special">-</span><span class="identifier">header</span></code>
+            to be used with <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">print</span><span class="special">-</span><span class="identifier">counter</span><span class="special">-</span><span class="identifier">format</span></code>
+            to print performance counter values in CSV format without any header
+          </p>
+<pre class="programlisting">hello_world \
+--hpx:threads 2 \
+--hpx:print-counter-format csv-short \
+--hpx:print-counter cumulative,/threads{locality#*/total}/count/cumulative \
+--hpx:print-counter phases,/threads{locality#*/total}/count/cumulative-phases \
+--hpx:no-csv-header
+</pre>
+<p>
+            will print
+          </p>
+<pre class="programlisting">hello world from OS-thread 1 on locality 0
+hello world from OS-thread 0 on locality 0
+37,91
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

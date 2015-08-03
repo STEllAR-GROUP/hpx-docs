@@ -1,0 +1,148 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template set_symmetric_difference</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 0.9.11">
+<link rel="up" href="../../../header/hpx/parallel/algorithms/set_symmetric_difference_hpp.html" title="Header &lt;hpx/parallel/algorithms/set_symmetric_difference.hpp&gt;">
+<link rel="prev" href="../../../header/hpx/parallel/algorithms/set_symmetric_difference_hpp.html" title="Header &lt;hpx/parallel/algorithms/set_symmetric_difference.hpp&gt;">
+<link rel="next" href="set_symmetric__idp28848096.html" title="Function template set_symmetric_difference">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="460" height="106" src="../../../images/hpx_0_9_11_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/set_symmetric_difference_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/set_symmetric_difference_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="set_symmetric__idp28848096.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.parallel.v1.set_symmetric__idp28814544"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template set_symmetric_difference</span></h2>
+<p>hpx::parallel::v1::set_symmetric_difference</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/algorithms/set_symmetric_difference_hpp.html" title="Header &lt;hpx/parallel/algorithms/set_symmetric_difference.hpp&gt;">hpx/parallel/algorithms/set_symmetric_difference.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> InIter1<span class="special">,</span> <span class="keyword">typename</span> InIter2<span class="special">,</span> 
+         <span class="keyword">typename</span> OutIter<span class="special">,</span> <span class="keyword">typename</span> F<span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">set_symmetric_difference</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">InIter1</span> first1<span class="special">,</span> 
+                                       <span class="identifier">InIter1</span> last1<span class="special">,</span> <span class="identifier">InIter2</span> first2<span class="special">,</span> 
+                                       <span class="identifier">InIter2</span> last2<span class="special">,</span> <span class="identifier">OutIter</span> dest<span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idp36043056"></a><h2>Description</h2>
+<p>Constructs a sorted range beginning at dest consisting of all elements present in either of the sorted ranges [first1, last1) and [first2, last2), but not in both of them are copied to the range beginning at <span class="emphasis"><em>dest</em></span>. The resulting range is also sorted. This algorithm expects both input ranges to be sorted with the given binary predicate <span class="emphasis"><em>f</em></span>.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Complexity: At most 2*(N1 + N2 - 1) comparisons, where <span class="emphasis"><em>N1</em></span> is the length of the first sequence and <span class="emphasis"><em>N2</em></span> is the length of the second sequence.</p></td></tr>
+</table></div>
+<p>
+If some element is found <span class="emphasis"><em>m</em></span> times in [first1, last1) and <span class="emphasis"><em>n</em></span> times in [first2, last2), it will be copied to <span class="emphasis"><em>dest</em></span> exactly std::abs(m-n) times. If m&gt;n, then the last m-n of those elements are copied from [first1,last1), otherwise the last n-m elements are copied from [first2,last2). The resulting range cannot overlap with either of the input ranges.</p>
+<p>The resulting range cannot overlap with either of the input ranges.</p>
+<p>
+
+The application of function objects in parallel algorithm invoked with a sequential execution policy object execute in sequential order in the calling thread (<span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequential_exe_idp29370736.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span>) or in a single new thread spawned from the current thread (for <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequential_tas_idp29326880.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></code></em></span>).</p>
+<p>The application of function objects in parallel algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_task__idp29411488.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">dest</code></span></p></td>
+<td><p>Refers to the beginning of the destination range. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
+<td>
+<p>The binary predicate which returns true if the elements should be treated as equal. The signature of the predicate function should be equivalent to the following: </p>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">pred</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Type2</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
+</pre>
+<p> <br>
+ The signature does not need to have const &amp;, but the function must not modify the objects passed to it. The types <span class="emphasis"><em>Type1</em></span> and <span class="emphasis"><em>Type2</em></span> must be such that objects of types <span class="emphasis"><em>InIter1</em></span> and <span class="emphasis"><em>InIter2</em></span> can be dereferenced and then implicitly converted to <span class="emphasis"><em>Type1</em></span> and <span class="emphasis"><em>Type2</em></span> respectively</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">first1</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of elements of the first range the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">first2</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of elements of the second range the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">last1</code></span></p></td>
+<td><p>Refers to the end of the sequence of elements of the first range the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">last2</code></span></p></td>
+<td><p>Refers to the end of the sequence of elements of the second range the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">policy</code></span></p></td>
+<td><p>The execution policy to use for the scheduling of the iterations. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Template Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">ExPolicy</code></span></p></td>
+<td><p>The type of the execution policy to use (deduced). It describes the manner in which the execution of the algorithm may be parallelized and the manner in which it applies user-provided function objects. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">F</code></span></p></td>
+<td><p>The type of the function/function object to use (deduced). Unlike its sequential form, the parallel overload of <span class="emphasis"><em>set_symmetric_difference</em></span> requires <span class="emphasis"><em>F</em></span> to meet the requirements of <span class="emphasis"><em>CopyConstructible</em></span>.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">OutIter</code></span></p></td>
+<td><p>The type of the iterator representing the destination range (deduced). This iterator type must meet the requirements of an output iterator. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The <span class="emphasis"><em>set_symmetric_difference</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;OutIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em><a class="link" href="sequential_tas_idp29326880.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></em></span> or <span class="emphasis"><em><a class="link" href="parallel_task__idp29411488.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></em></span> and returns <span class="emphasis"><em>OutIter</em></span> otherwise. The <span class="emphasis"><em>set_symmetric_difference</em></span> algorithm returns the output iterator to the element in the destination range, one past the last element copied. </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2015 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/set_symmetric_difference_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/set_symmetric_difference_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="set_symmetric__idp28848096.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

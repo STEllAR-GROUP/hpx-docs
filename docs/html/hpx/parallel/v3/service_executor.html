@@ -7,13 +7,13 @@
 <link rel="home" href="../../../index.html" title="HPX 0.9.11">
 <link rel="up" href="../../../header/hpx/parallel/executors/service_executors_hpp.html" title="Header &lt;hpx/parallel/executors/service_executors.hpp&gt;">
 <link rel="prev" href="../../../header/hpx/parallel/executors/service_executors_hpp.html" title="Header &lt;hpx/parallel/executors/service_executors.hpp&gt;">
-<link rel="next" href="service_executor_type.html" title="Type service_executor_type">
+<link rel="next" href="../../../header/hpx/parallel/executors/static_chunk_size_hpp.html" title="Header &lt;hpx/parallel/executors/static_chunk_size.hpp&gt;">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="460" height="106" src="../../../images/hpx_0_9_11_draft.png"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../../../header/hpx/parallel/executors/service_executors_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/executors/service_executors_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="service_executor_type.html"><img src="../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="../../../header/hpx/parallel/executors/service_executors_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/executors/service_executors_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../header/hpx/parallel/executors/static_chunk_size_hpp.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="hpx.parallel.v3.service_executor"></a><div class="titlepage"></div>
@@ -30,10 +30,11 @@
   <span class="keyword">typedef</span> <a class="link" href="static_chunk_size.html" title="Struct static_chunk_size">static_chunk_size</a> <a name="hpx.parallel.v3.service_executor.executor_parameters_type"></a><span class="identifier">executor_parameters_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="service_executor.html#hpx.parallel.v3.service_executorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="service_executor.html#idp30856080-bb"><span class="identifier">service_executor</span></a><span class="special">(</span><span class="identifier">service_executor_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="service_executor.html#idp31249280-bb"><span class="identifier">service_executor</span></a><span class="special">(</span><span class="identifier">threads</span><span class="special">::</span><span class="identifier">executors</span><span class="special">::</span><span class="identifier">service_executor_type</span><span class="special">,</span> 
+                   <span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> <span class="special">=</span> <span class="string">""</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp40682384"></a><h2>Description</h2>
+<a name="idp72132352"></a><h2>Description</h2>
 <p>A <span class="emphasis"><em><a class="link" href="service_executor.html" title="Struct service_executor">service_executor</a></em></span> exposes one of the predefined HPX thread pools through an executor interface.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -45,12 +46,13 @@
 <p>
 </p>
 <div class="refsect2">
-<a name="idp40684880"></a><h3>
+<a name="idp72134944"></a><h3>
 <a name="hpx.parallel.v3.service_executorconstruct-copy-destruct"></a><code class="computeroutput">service_executor</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp30856080-bb"></a><span class="identifier">service_executor</span><span class="special">(</span><span class="identifier">service_executor_type</span> t<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp31249280-bb"></a><span class="identifier">service_executor</span><span class="special">(</span><span class="identifier">threads</span><span class="special">::</span><span class="identifier">executors</span><span class="special">::</span><span class="identifier">service_executor_type</span> t<span class="special">,</span> 
+                 <span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> name_suffix <span class="special">=</span> <span class="string">""</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Create a new service executor for the given HPX thread pool</p>
 <p>
 </p>
@@ -66,10 +68,16 @@
 <col align="left" valign="top">
 <col>
 </colgroup>
-<tbody><tr>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">name_suffix</code></span></p></td>
+<td><p>[in] The name suffix to use for the underlying thread pool </p></td>
+</tr>
+<tr>
 <td><p><span class="term"><code class="computeroutput">t</code></span></p></td>
 <td><p>[in] Specifies the HPX thread pool to encapsulate </p></td>
-</tr></tbody>
+</tr>
+</tbody>
 </table></div></td>
 </tr></tbody>
 </table></div>
@@ -88,7 +96,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../../../header/hpx/parallel/executors/service_executors_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/executors/service_executors_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="service_executor_type.html"><img src="../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="../../../header/hpx/parallel/executors/service_executors_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/executors/service_executors_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../header/hpx/parallel/executors/static_chunk_size_hpp.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

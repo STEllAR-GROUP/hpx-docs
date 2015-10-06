@@ -1,0 +1,144 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template find_first_of</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 0.9.11">
+<link rel="up" href="../../../header/hpx/parallel/algorithms/find_hpp.html" title="Header &lt;hpx/parallel/algorithms/find.hpp&gt;">
+<link rel="prev" href="find_first_of_idp29238304.html" title="Function template find_first_of">
+<link rel="next" href="../../../header/hpx/parallel/algorithms/for_each_hpp.html" title="Header &lt;hpx/parallel/algorithms/for_each.hpp&gt;">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="460" height="106" src="../../../images/hpx_0_9_11_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="find_first_of_idp29238304.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/find_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../header/hpx/parallel/algorithms/for_each_hpp.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.parallel.v1.find_first_of_idp29260672"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template find_first_of</span></h2>
+<p>hpx::parallel::v1::find_first_of</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/algorithms/find_hpp.html" title="Header &lt;hpx/parallel/algorithms/find.hpp&gt;">hpx/parallel/algorithms/find.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> InIter<span class="special">,</span> <span class="keyword">typename</span> FwdIter<span class="special">,</span> <span class="keyword">typename</span> Pred<span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">find_first_of</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">InIter</span> first<span class="special">,</span> <span class="identifier">InIter</span> last<span class="special">,</span> 
+                            <span class="identifier">FwdIter</span> s_first<span class="special">,</span> <span class="identifier">FwdIter</span> s_last<span class="special">,</span> <span class="identifier">Pred</span> <span class="special">&amp;&amp;</span> op<span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idp91536704"></a><h2>Description</h2>
+<p>Searches the range [first, last) for any elements in the range [s_first, s_last). Uses binary predicate p to compare elements</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Complexity: at most (S*N) comparisons where <span class="emphasis"><em>S</em></span> = distance(s_first, s_last) and <span class="emphasis"><em>N</em></span> = distance(first, last).</p></td></tr>
+</table></div>
+<p>
+
+
+The comparison operations in the parallel <span class="emphasis"><em>find_first_of</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequential_exe_idp31193120.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span> execute in sequential order in the calling thread.</p>
+<p>The comparison operations in the parallel <span class="emphasis"><em>find_first_of</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_task__idp31264752.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">first</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of elements of the first range the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">last</code></span></p></td>
+<td><p>Refers to the end of the sequence of elements of the first range the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">op</code></span></p></td>
+<td>
+<p>The binary predicate which returns <span class="emphasis"><em>true</em></span> if the elements should be treated as equal. The signature should be equivalent to the following: </p>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">pred</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Type2</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
+</pre>
+<p> <br>
+ The signature does not need to have const &amp;, but the function must not modify the objects passed to it. The types <span class="emphasis"><em>Type1</em></span> and <span class="emphasis"><em>Type2</em></span> must be such that objects of types <span class="emphasis"><em>FwdIter1</em></span> and <span class="emphasis"><em>FwdIter2</em></span> can be dereferenced and then implicitly converted to <span class="emphasis"><em>Type1</em></span> and <span class="emphasis"><em>Type2</em></span> respectively.</p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">policy</code></span></p></td>
+<td><p>The execution policy to use for the scheduling of the iterations. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">s_first</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of elements the algorithm will be searching for. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">s_last</code></span></p></td>
+<td><p>Refers to the end of the sequence of elements of the algorithm will be searching for. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Template Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">ExPolicy</code></span></p></td>
+<td><p>The type of the execution policy to use (deduced). It describes the manner in which the execution of the algorithm may be parallelized and the manner in which it executes the assignments. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">FwdIter</code></span></p></td>
+<td><p>The type of the source iterators used for the second range (deduced). This iterator type must meet the requirements of an forward iterator. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">InIter</code></span></p></td>
+<td><p>The type of the source iterators used for the first range (deduced). This iterator type must meet the requirements of an input iterator. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">Pred</code></span></p></td>
+<td><p>The type of the function/function object to use (deduced). Unlike its sequential form, the parallel overload of <span class="emphasis"><em>equal</em></span> requires <span class="emphasis"><em>Pred</em></span> to meet the requirements of <span class="emphasis"><em>CopyConstructible</em></span>.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The <span class="emphasis"><em>find_first_of</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;InIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em><a class="link" href="sequential_tas_idp31118240.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></em></span> or <span class="emphasis"><em><a class="link" href="parallel_task__idp31264752.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></em></span> and returns <span class="emphasis"><em>InIter</em></span> otherwise. The <span class="emphasis"><em>find_first_of</em></span> algorithm returns an iterator to the first element in the range [first, last) that is equal to an element from the range [s_first, s_last). If the length of the subsequence [s_first, s_last) is greater than the length of the range [first, last), <span class="emphasis"><em>last</em></span> is returned. Additionally if the size of the subsequence is empty or no subsequence is found, <span class="emphasis"><em>last</em></span> is also returned. This overload of <span class="emphasis"><em>find_end</em></span> is available if the user decides to provide the algorithm their own predicate <span class="emphasis"><em>f</em></span>. </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2015 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="find_first_of_idp29238304.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/find_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../header/hpx/parallel/algorithms/for_each_hpp.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

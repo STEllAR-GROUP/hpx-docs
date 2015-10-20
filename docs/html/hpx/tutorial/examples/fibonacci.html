@@ -151,7 +151,7 @@ elapsed time: 0.233827 [s]
 <span class="special">}</span>
 </pre>
 <p>
-          The <code class="computeroutput"><a class="link" href="../../init_idp27964176.html" title="Function init">hpx::init</a></code><code class="computeroutput"><span class="special">()</span></code> function in <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> starts the runtime system, and invokes
+          The <code class="computeroutput"><a class="link" href="../../init_idp28105568.html" title="Function init">hpx::init</a></code><code class="computeroutput"><span class="special">()</span></code> function in <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> starts the runtime system, and invokes
           <code class="computeroutput">hpx_main</code><code class="computeroutput"><span class="special">()</span></code>
           as the first <span class="emphasis"><em>HPX</em></span>-thread. Below we can see that the
           basic program is simple. The command line option <code class="literal">--n-value</code>
@@ -180,19 +180,20 @@ elapsed time: 0.233827 [s]
 <span class="special">}</span>
 </pre>
 <p>
-          Upon a closer look we see that the <code class="computeroutput">hpx::future</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code> we created is assigned the return
-          of <code class="computeroutput">hpx::async</code><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">fibonacci_action</span><span class="special">&gt;(</span></code><code class="computeroutput"><a class="link" href="../../find_here.html" title="Function find_here">hpx::find_here</a></code><code class="computeroutput"><span class="special">(),</span> <span class="identifier">n</span><span class="special">)</span></code>. <code class="computeroutput">hpx::async</code><code class="computeroutput"><span class="special">&lt;&gt;()</span></code>, and asynchronously kicks of
-          the computation of the action (<code class="computeroutput"><span class="identifier">fibonacci_action</span></code>),
-          returning a future which represents the result of the computation. But
-          wait, what is an action? And what is this <code class="computeroutput"><span class="identifier">fibonacci_action</span></code>?
+          Upon a closer look we see that we've created a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span></code>
+          to store the result of invoking our <code class="computeroutput"><span class="identifier">fibonacci_action</span></code>
+          <span class="emphasis"><em>fib</em></span>. This action will launch synchronously ( as the
+          work done inside of the action will be asynchronous itself) and return
+          the result of the fibonacci sequence. But wait, what is an action? And
+          what is this <code class="computeroutput"><span class="identifier">fibonacci_action</span></code>?
           For starters, an action is a wrapper for a function. By wrapping functions,
           <span class="emphasis"><em>HPX</em></span> can send packets of work to different processing
           units. These vehicles allow users to calculate work now, later, or on certain
-          nodes. The first argument to <code class="computeroutput">hpx::async</code><code class="computeroutput"><span class="special">&lt;&gt;()</span></code> is the location where the action
+          nodes. The first argument to our action is the location where the action
           should be run. In this case, we just want to run the action on the machine
-          that we are currently on, so we use <code class="computeroutput"><a class="link" href="../../find_here.html" title="Function find_here">hpx::find_here</a></code><code class="computeroutput"><span class="special">()</span></code>. To further understand this we turn to
-          the code to find where <code class="computeroutput"><span class="identifier">fibonacci_action</span></code>
-          was defined:
+          that we are currently on, so we use <code class="computeroutput"><a class="link" href="../../find_here.html" title="Function find_here">hpx::find_here</a></code><code class="computeroutput"><span class="special">()</span></code>. The second parameter simply forward
+          the fibonacci sequence <span class="emphasis"><em>n</em></span> that we wish to calculate.
+          To further understand this we turn to the code to find where <code class="computeroutput"><span class="identifier">fibonacci_action</span></code> was defined:
         </p>
 <pre class="programlisting"><span class="comment">// forward declaration of the Fibonacci function</span>
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">fibonacci</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">n</span><span class="special">);</span>
@@ -213,8 +214,10 @@ elapsed time: 0.233827 [s]
 <p>
           This picture should now start making sense. The function <code class="computeroutput"><span class="identifier">fibonacci</span><span class="special">()</span></code>
           is wrapped in an action <code class="computeroutput"><span class="identifier">fibonacci_action</span></code>,
-          which was spawned by <code class="computeroutput">hpx::async</code><code class="computeroutput"><span class="special">&lt;&gt;()</span></code>, where the action returns a future
-          representing the result of the function <code class="computeroutput"><span class="identifier">fibonacci</span><span class="special">()</span></code>. Now, lets look at the function <code class="computeroutput"><span class="identifier">fibonacci</span><span class="special">()</span></code>:
+          which was run synchronously but created asynchronous work, then returns
+          a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span></code> representing the result of the
+          function <code class="computeroutput"><span class="identifier">fibonacci</span><span class="special">()</span></code>.
+          Now, lets look at the function <code class="computeroutput"><span class="identifier">fibonacci</span><span class="special">()</span></code>:
         </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">fibonacci</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">n</span><span class="special">)</span>
 <span class="special">{</span>

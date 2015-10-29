@@ -27,9 +27,7 @@
 <p>
           Components are globally named, meaning that a component action can be called
           remotely (e.g. from another machine). There are two accumulator examples
-          in <span class="emphasis"><em>HPX</em></span>; managed_accumulator and simple_accumulator
-          (we will talk more about the differences between the two later). This tutorial
-          will examine the managed_accumulator variant.
+          in <span class="emphasis"><em>HPX</em></span>; accumulator.
         </p>
 <p>
           In the <a class="link" href="fibonacci.html" title="Fibonacci">Fibonacci Example</a>
@@ -72,7 +70,7 @@
           <span class="phrase"><a name="hpx.tutorial.examples.accumulator.setup"></a></span><a class="link" href="accumulator.html#hpx.tutorial.examples.accumulator.setup">Setup</a>
         </h6>
 <p>
-          The source code for this example can be found here: <a href="../../.././code/examples/accumulator/managed_accumulator_client.cpp" target="_top">managed_accumulator_client.cpp</a>.
+          The source code for this example can be found here: <a href="../../.././code/examples/accumulators/accumulator_client.cpp" target="_top">accumulator_client.cpp</a>.
         </p>
 <p>
           To compile this program, go to your <span class="emphasis"><em>HPX</em></span> build directory
@@ -80,12 +78,12 @@
           for information on configuring and building <span class="emphasis"><em>HPX</em></span>) and
           enter:
         </p>
-<pre class="programlisting">make examples.accumulator.managed_accumulator
+<pre class="programlisting">make examples.accumulator.accumulator
 </pre>
 <p>
           To run the program type:
         </p>
-<pre class="programlisting">./bin/managed_accumulator_client
+<pre class="programlisting">./bin/accumulator_client
 </pre>
 <p>
           Once the program starts running, it will print the following prompt and
@@ -110,12 +108,12 @@
           <span class="phrase"><a name="hpx.tutorial.examples.accumulator.walkthrough"></a></span><a class="link" href="accumulator.html#hpx.tutorial.examples.accumulator.walkthrough">Walkthrough</a>
         </h6>
 <p>
-          Now, let's take a look at the source code of the managed_accumulator example.
-          This example consists of two parts: an <span class="emphasis"><em>HPX</em></span> component
-          library (a library that exposes an <span class="emphasis"><em>HPX</em></span> component)
-          and a client application which uses the library. This walkthrough will
-          cover the <span class="emphasis"><em>HPX</em></span> component library. The code for the
-          client application can be found here: <a href="../../.././code/examples/accumulator/managed_accumulator_client.cpp" target="_top">managed_accumulator_client.cpp</a>.
+          Now, let's take a look at the source code of the accumulator example. This
+          example consists of two parts: an <span class="emphasis"><em>HPX</em></span> component library
+          (a library that exposes an <span class="emphasis"><em>HPX</em></span> component) and a client
+          application which uses the library. This walkthrough will cover the <span class="emphasis"><em>HPX</em></span>
+          component library. The code for the client application can be found here:
+          <a href="../../.././code/examples/accumulators/accumulator_client.cpp" target="_top">accumulator_client.cpp</a>.
         </p>
 <p>
           An <span class="emphasis"><em>HPX</em></span> component is represented by three C++ classes:
@@ -138,18 +136,17 @@
           Typically, these three classes all have the same name, but stubs and server
           classes usually live in different sub-namespaces (<code class="computeroutput"><span class="identifier">server</span></code>
           and <code class="computeroutput"><span class="identifier">stubs</span></code> respectively).
-          For example, the full names of the three classes in managed_accumulator
-          are:
+          For example, the full names of the three classes in accumulator are:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><span class="identifier">examples</span><span class="special">::</span><span class="identifier">server</span><span class="special">::</span><span class="identifier">managed_accumulator</span></code> (server class)
+              <code class="computeroutput"><span class="identifier">examples</span><span class="special">::</span><span class="identifier">server</span><span class="special">::</span><span class="identifier">accumulator</span></code> (server class)
             </li>
 <li class="listitem">
-              <code class="computeroutput"><span class="identifier">examples</span><span class="special">::</span><span class="identifier">stubs</span><span class="special">::</span><span class="identifier">managed_accumulator</span></code> (stubs class)
+              <code class="computeroutput"><span class="identifier">examples</span><span class="special">::</span><span class="identifier">stubs</span><span class="special">::</span><span class="identifier">accumulator</span></code> (stubs class)
             </li>
 <li class="listitem">
-              <code class="computeroutput"><span class="identifier">examples</span><span class="special">::</span><span class="identifier">managed_accumulator</span></code> (client class)
+              <code class="computeroutput"><span class="identifier">examples</span><span class="special">::</span><span class="identifier">accumulator</span></code> (client class)
             </li>
 </ul></div>
 <h6>
@@ -158,106 +155,62 @@
           Class</a>
         </h6>
 <p>
-          The following code is from: <a href="../../.././code/examples/accumulator/accumulators/server/managed_accumulator.hpp" target="_top">server/managed_accumulator.hpp</a>.
+          The following code is from: <a href="../../.././code/examples/accumulators/server/accumulator.hpp" target="_top">server/accumulator.hpp</a>.
         </p>
 <p>
           All <span class="emphasis"><em>HPX</em></span> component server classes must inherit publicly
-          from an <span class="emphasis"><em>HPX</em></span> component base class. There are currently
-          two component base classes:
+          from the <span class="emphasis"><em>HPX</em></span> component base class: <code class="computeroutput">hpx::components::component_base</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem">
-              <code class="computeroutput">hpx::components::managed_component_base</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code> - Managed components are components
-              which are allocated in bulk by <span class="emphasis"><em>HPX</em></span>. Managed components
-              are more efficient if you are creating a large number (e.g. hundreds
-              or more per machine) of component instances.
-            </li>
-<li class="listitem">
-              <code class="computeroutput">hpx::components::simple_component_base</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code> - Simple components are components
-              which are allocated individually by <span class="emphasis"><em>HPX</em></span>. Simple
-              components are more efficient if you are creating a small number (e.g.
-              only a handful per machine) of component instances.
-            </li>
-</ul></div>
 <p>
-          The managed_accumulator component inherits from <code class="computeroutput">hpx::components::locking_hock</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code>. This allows the runtime system
+          The accumulator component inherits from <code class="computeroutput">hpx::components::locking_hock</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code>. This allows the runtime system
           to ensure that all action invocations are serialized. That means that the
           system ensures that no two actions are invoked at the same time on a given
           component instance. This makes the component thread safe and no additional
-          locking has to be implemented by the user. Moreover, managed_accumulator
-          component is a managed component, because it also inherits from <code class="computeroutput">hpx::components::managed_component_base</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code> (the template argument passed to
+          locking has to be implemented by the user. Moreover, accumulator component
+          is a component, because it also inherits from <code class="computeroutput">hpx::components::component_base</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code> (the template argument passed to
           locking_hook is used as its base class). The following snippet shows the
           corresponding code:
         </p>
-<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">managed_accumulator</span>
-  <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">locking_hook</span><span class="special">&lt;</span>
-        <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">managed_component_base</span><span class="special">&lt;</span><span class="identifier">managed_accumulator</span><span class="special">&gt;</span>
-    <span class="special">&gt;</span>
-</pre>
+<p>
+          [accumulator_server_inherit]
+        </p>
 <p>
           Our accumulator class will need a data member to store its value in, so
           let's declare a data member:
         </p>
-<pre class="programlisting"><span class="keyword">private</span><span class="special">:</span>
-    <span class="identifier">argument_type</span> <span class="identifier">value_</span><span class="special">;</span>
-</pre>
+<p>
+          [accumulator_server_data_member]
+        </p>
 <p>
           The constructor for this class simply initializes <code class="computeroutput"><span class="identifier">value_</span></code>
           to 0:
         </p>
-<pre class="programlisting"><span class="identifier">managed_accumulator</span><span class="special">()</span> <span class="special">:</span> <span class="identifier">value_</span><span class="special">(</span><span class="number">0</span><span class="special">)</span> <span class="special">{}</span>
-</pre>
+<p>
+          [accumulator_server_ctor]
+        </p>
 <p>
           Next, let's look at the three methods of this component that we will be
           exposing as component actions:
         </p>
-<pre class="programlisting"><span class="comment">/// Reset the value to 0.</span>
-<span class="keyword">void</span> <span class="identifier">reset</span><span class="special">()</span>
-<span class="special">{</span>
-    <span class="comment">// set value_ to 0.</span>
-    <span class="identifier">value_</span><span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-<span class="special">}</span>
-
-<span class="comment">/// Add the given number to the accumulator.</span>
-<span class="keyword">void</span> <span class="identifier">add</span><span class="special">(</span><span class="identifier">argument_type</span> <span class="identifier">arg</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="comment">// add value_ to arg, and store the result in value_.</span>
-    <span class="identifier">value_</span> <span class="special">+=</span> <span class="identifier">arg</span><span class="special">;</span>
-<span class="special">}</span>
-
-<span class="comment">/// Return the current value to the caller.</span>
-<span class="identifier">argument_type</span> <span class="identifier">query</span><span class="special">()</span> <span class="keyword">const</span>
-<span class="special">{</span>
-    <span class="comment">// Get the value of value_.</span>
-    <span class="keyword">return</span> <span class="identifier">value_</span><span class="special">;</span>
-<span class="special">}</span>
-</pre>
+<p>
+          [accumulator_methods]
+        </p>
 <p>
           Here are the action types. These types wrap the methods we're exposing.
           The wrapping technique is very similar to the one used in the <a class="link" href="fibonacci.html" title="Fibonacci">Fibonacci
           Example</a> and the <a class="link" href="hello_world.html" title="Hello World">Hello
           World Example</a>:
         </p>
-<pre class="programlisting"><span class="identifier">HPX_DEFINE_COMPONENT_ACTION</span><span class="special">(</span><span class="identifier">managed_accumulator</span><span class="special">,</span> <span class="identifier">reset</span><span class="special">);</span>
-<span class="identifier">HPX_DEFINE_COMPONENT_ACTION</span><span class="special">(</span><span class="identifier">managed_accumulator</span><span class="special">,</span> <span class="identifier">add</span><span class="special">);</span>
-<span class="identifier">HPX_DEFINE_COMPONENT_ACTION</span><span class="special">(</span><span class="identifier">managed_accumulator</span><span class="special">,</span> <span class="identifier">query</span><span class="special">);</span>
-</pre>
+<p>
+          [accumulator_action_types]
+        </p>
 <p>
           The last piece of code in the server class header is the declaration of
           the action type registration code:
         </p>
-<pre class="programlisting"><span class="identifier">HPX_REGISTER_ACTION_DECLARATION</span><span class="special">(</span>
-    <span class="identifier">examples</span><span class="special">::</span><span class="identifier">server</span><span class="special">::</span><span class="identifier">managed_accumulator</span><span class="special">::</span><span class="identifier">reset_action</span><span class="special">,</span>
-    <span class="identifier">managed_accumulator_reset_action</span><span class="special">);</span>
-
-<span class="identifier">HPX_REGISTER_ACTION_DECLARATION</span><span class="special">(</span>
-    <span class="identifier">examples</span><span class="special">::</span><span class="identifier">server</span><span class="special">::</span><span class="identifier">managed_accumulator</span><span class="special">::</span><span class="identifier">add_action</span><span class="special">,</span>
-    <span class="identifier">managed_accumulator_add_action</span><span class="special">);</span>
-
-<span class="identifier">HPX_REGISTER_ACTION_DECLARATION</span><span class="special">(</span>
-    <span class="identifier">examples</span><span class="special">::</span><span class="identifier">server</span><span class="special">::</span><span class="identifier">managed_accumulator</span><span class="special">::</span><span class="identifier">query_action</span><span class="special">,</span>
-    <span class="identifier">managed_accumulator_query_action</span><span class="special">);</span>
-</pre>
+<p>
+          [accumulator_registration_declarations]
+        </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
@@ -268,31 +221,11 @@
           </p></td></tr>
 </table></div>
 <p>
-          The rest of the registration code is in <a href="../../.././code/examples/accumulator/accumulators/managed_accumulator.cpp" target="_top">managed_accumulator.cpp</a>.
+          The rest of the registration code is in <a href="../../.././code/examples/accumulators/accumulator.cpp" target="_top">accumulator.cpp</a>.
         </p>
-<pre class="programlisting"><span class="comment">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="comment">// Add factory registration functionality.</span>
-<span class="identifier">HPX_REGISTER_COMPONENT_MODULE</span><span class="special">();</span>
-
-<span class="comment">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="keyword">typedef</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">managed_component</span><span class="special">&lt;</span>
-    <span class="identifier">examples</span><span class="special">::</span><span class="identifier">server</span><span class="special">::</span><span class="identifier">managed_accumulator</span>
-<span class="special">&gt;</span> <span class="identifier">accumulator_type</span><span class="special">;</span>
-
-<span class="identifier">HPX_REGISTER_COMPONENT</span><span class="special">(</span><span class="identifier">accumulator_type</span><span class="special">,</span> <span class="identifier">managed_accumulator</span><span class="special">);</span>
-
-<span class="comment">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="comment">// Serialization support for managed_accumulator actions.</span>
-<span class="identifier">HPX_REGISTER_ACTION</span><span class="special">(</span>
-    <span class="identifier">accumulator_type</span><span class="special">::</span><span class="identifier">wrapped_type</span><span class="special">::</span><span class="identifier">reset_action</span><span class="special">,</span>
-    <span class="identifier">managed_accumulator_reset_action</span><span class="special">);</span>
-<span class="identifier">HPX_REGISTER_ACTION</span><span class="special">(</span>
-    <span class="identifier">accumulator_type</span><span class="special">::</span><span class="identifier">wrapped_type</span><span class="special">::</span><span class="identifier">add_action</span><span class="special">,</span>
-    <span class="identifier">managed_accumulator_add_action</span><span class="special">);</span>
-<span class="identifier">HPX_REGISTER_ACTION</span><span class="special">(</span>
-    <span class="identifier">accumulator_type</span><span class="special">::</span><span class="identifier">wrapped_type</span><span class="special">::</span><span class="identifier">query_action</span><span class="special">,</span>
-    <span class="identifier">managed_accumulator_query_action</span><span class="special">);</span>
-</pre>
+<p>
+          [accumulator_registration_definitions]
+        </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
@@ -308,14 +241,14 @@
           Stubs Class</a>
         </h6>
 <p>
-          The following code is from <a href="../../.././code/examples/accumulator/accumulators/stubs/managed_accumulator.hpp" target="_top">stubs/managed_accumulator.hpp</a>.
+          The following code is from <a href="../../.././code/examples/accumulators/stubs/accumulator.hpp" target="_top">stubs/accumulator.hpp</a>.
         </p>
 <p>
           All stubs classes must inherit from the stubs base class, <code class="computeroutput">hpx::components::stub_base</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code>:
         </p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">managed_accumulator</span>
-  <span class="special">:</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">stub_base</span><span class="special">&lt;</span><span class="identifier">server</span><span class="special">::</span><span class="identifier">managed_accumulator</span><span class="special">&gt;</span>
-</pre>
+<p>
+          [accumulator_stubs_inherit]
+        </p>
 <p>
           The stubs class contains helper functions which invoke actions on component
           instances. There are a few different ways of invoking actions:
@@ -328,41 +261,30 @@
               we forget about it completely and continue with our computation. We
               use <code class="computeroutput">hpx::applier::apply</code><code class="computeroutput"><span class="special">&lt;&gt;()</span></code> instead of <code class="computeroutput">hpx::async</code><code class="computeroutput"><span class="special">&lt;&gt;()</span></code>
               to invoke an action in a non-blocking fashion. Here's an example from
-              the managed_accumulator stubs class:
+              the accumulator stubs class:
             </li></ul></div>
-<pre class="programlisting"><span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">reset_non_blocking</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">naming</span><span class="special">::</span><span class="identifier">id_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">gid</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="keyword">typedef</span> <span class="identifier">server</span><span class="special">::</span><span class="identifier">managed_accumulator</span><span class="special">::</span><span class="identifier">reset_action</span> <span class="identifier">action_type</span><span class="special">;</span>
-    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">apply</span><span class="special">&lt;</span><span class="identifier">action_type</span><span class="special">&gt;(</span><span class="identifier">gid</span><span class="special">);</span>
-<span class="special">}</span>
-</pre>
+<p>
+          [accumulator_stubs_reset_non_blocking]
+        </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <span class="bold"><strong>Asynchronous</strong></span>: Futures, as demonstrated
               in <a class="link" href="fibonacci.html" title="Fibonacci">Fibonacci Example</a>
               and the <a class="link" href="hello_world.html" title="Hello World">Hello World
               Example</a>, enable asynchronous action invocation. Here's an example
-              from the managed_accumulator stubs class:
+              from the accumulator stubs class:
             </li></ul></div>
-<pre class="programlisting"><span class="keyword">static</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">argument_type</span><span class="special">&gt;</span>
-<span class="identifier">query_async</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">naming</span><span class="special">::</span><span class="identifier">id_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">gid</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="keyword">typedef</span> <span class="identifier">server</span><span class="special">::</span><span class="identifier">managed_accumulator</span><span class="special">::</span><span class="identifier">query_action</span> <span class="identifier">action_type</span><span class="special">;</span>
-    <span class="keyword">return</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">&lt;</span><span class="identifier">action_type</span><span class="special">&gt;(</span><span class="identifier">gid</span><span class="special">);</span>
-<span class="special">}</span>
-</pre>
+<p>
+          [accumulator_stubs_query_async]
+        </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
               <span class="bold"><strong>Synchronous</strong></span>: To invoke an action in
               a fully synchronous manner, we can simply call <code class="computeroutput">hpx::async</code><code class="computeroutput"><span class="special">&lt;&gt;().</span><span class="identifier">get</span><span class="special">()</span></code> (e.g., create a future and immediately
-              wait on it to be ready). Here's an example from the managed_accumulator
-              stubs class:
+              wait on it to be ready). Here's an example from the accumulator stubs
+              class:
             </li></ul></div>
-<pre class="programlisting"><span class="keyword">static</span> <span class="keyword">void</span>
-<span class="identifier">add_sync</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">naming</span><span class="special">::</span><span class="identifier">id_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">gid</span><span class="special">,</span> <span class="identifier">argument_type</span> <span class="identifier">arg</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="keyword">typedef</span> <span class="identifier">server</span><span class="special">::</span><span class="identifier">managed_accumulator</span><span class="special">::</span><span class="identifier">add_action</span> <span class="identifier">action_type</span><span class="special">;</span>
-    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">&lt;</span><span class="identifier">action_type</span><span class="special">&gt;(</span><span class="identifier">gid</span><span class="special">,</span> <span class="identifier">arg</span><span class="special">).</span><span class="identifier">get</span><span class="special">();</span>
-<span class="special">}</span>
-</pre>
+<p>
+          [accumulator_stubs_add_sync]
+        </p>
 <p>
           <code class="computeroutput">hpx::naming::id_type</code>
           is a type which represents a global identifier in <span class="emphasis"><em>HPX</em></span>.
@@ -375,13 +297,13 @@
           Class</a>
         </h6>
 <p>
-          The following code is from <a href="../../.././code/examples/accumulator/accumulators/managed_accumulator.hpp" target="_top">managed_accumulator.hpp</a>.
+          The following code is from <a href="../../.././code/examples/accumulators/accumulator.hpp" target="_top">accumulator.hpp</a>.
         </p>
 <p>
           The client class is the primary interface to a component instance. Client
           classes are used to create components:
         </p>
-<pre class="programlisting"><span class="identifier">examples</span><span class="special">::</span><span class="identifier">managed_accumulator</span> <span class="identifier">c</span><span class="special">;</span>
+<pre class="programlisting"><span class="identifier">examples</span><span class="special">::</span><span class="identifier">accumulator</span> <span class="identifier">c</span><span class="special">;</span>
 <span class="identifier">c</span><span class="special">.</span><span class="identifier">create</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">());</span> <span class="comment">// Create a component on this machine.</span>
 </pre>
 <p>
@@ -393,39 +315,27 @@
           Clients, like stubs and servers, need to inherit from a base class, this
           time, <code class="computeroutput">hpx::components::client_base</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code>:
         </p>
-<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">managed_accumulator</span>
-  <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">client_base</span><span class="special">&lt;</span>
-        <span class="identifier">managed_accumulator</span><span class="special">,</span> <span class="identifier">stubs</span><span class="special">::</span><span class="identifier">managed_accumulator</span>
-    <span class="special">&gt;</span>
-</pre>
+<p>
+          [accumulator_client_inherit]
+        </p>
 <p>
           For readability, we typedef the base class like so:
         </p>
-<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">client_base</span><span class="special">&lt;</span>
-    <span class="identifier">managed_accumulator</span><span class="special">,</span> <span class="identifier">stubs</span><span class="special">::</span><span class="identifier">managed_accumulator</span>
-<span class="special">&gt;</span> <span class="identifier">base_type</span><span class="special">;</span>
-</pre>
+<p>
+          [accumulator_base_type]
+        </p>
 <p>
           Here are examples of how to expose actions through a client class:
         </p>
-<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">reset_non_blocking</span><span class="special">()</span>
-<span class="special">{</span>
-    <span class="identifier">HPX_ASSERT</span><span class="special">(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
-    <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">base_type</span><span class="special">::</span><span class="identifier">reset_non_blocking</span><span class="special">(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
-<span class="special">}</span>
-</pre>
-<pre class="programlisting"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">argument_type</span><span class="special">&gt;</span> <span class="identifier">query_async</span><span class="special">()</span>
-<span class="special">{</span>
-    <span class="identifier">HPX_ASSERT</span><span class="special">(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
-    <span class="keyword">return</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">base_type</span><span class="special">::</span><span class="identifier">query_async</span><span class="special">(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
-<span class="special">}</span>
-</pre>
-<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">add_sync</span><span class="special">(</span><span class="identifier">argument_type</span> <span class="identifier">arg</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">HPX_ASSERT</span><span class="special">(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
-    <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">base_type</span><span class="special">::</span><span class="identifier">add_sync</span><span class="special">(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">(),</span> <span class="identifier">arg</span><span class="special">);</span>
-<span class="special">}</span>
-</pre>
+<p>
+          [accumulator_client_reset_non_blocking]
+        </p>
+<p>
+          [accumulator_client_query_async]
+        </p>
+<p>
+          [accumulator_client_add_sync]
+        </p>
 <p>
           Note that <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">gid_</span></code> references a data member of the
           <code class="computeroutput">hpx::components::client_base</code><code class="computeroutput"><span class="special">&lt;&gt;</span></code> base class.

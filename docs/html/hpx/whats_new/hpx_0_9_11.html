@@ -30,7 +30,7 @@
         itself in a large number of pull-requests which has been merged (please see
         below for a full list of closed issues and pull-requests). All in all for
         this release, we closed almost 100 issues and merged over 220 pull-requests.
-        There have been over 1500 to the master branch commits since the last release.
+        There have been over 1600 to the master branch commits since the last release.
       </p>
 <h5>
 <a name="hpx.whats_new.hpx_0_9_11.h0"></a>
@@ -38,6 +38,14 @@
         Changes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            We are moving into the direction of unifying managed and simple components.
+            As such, the classes <code class="computeroutput">hpx::components::component</code>
+            and <code class="computeroutput">hpx::components::component_base</code>
+            have been added which currently just forward to the currently existing
+            simple component facilities. The examples have been converted to only
+            use those two classes.
+          </li>
 <li class="listitem">
             Added integration with the <a href="https://circleci.com/gh/STEllAR-GROUP/hpx" target="_top">CircleCI</a>
             hosted continuous integration service. This gives us constant and immediate
@@ -51,11 +59,11 @@
           </li>
 <li class="listitem">
             The API for creating instances of components has been consolidated. All
-            component instances should be created using the <code class="computeroutput"><a class="link" href="../new_idp31850944.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code>
+            component instances should be created using the <code class="computeroutput"><a class="link" href="../new_idp31537024.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code>
             only. It allows to instantiate both, single component instances and multiple
             component instances. The placement of the created components can be controlled
             by special distribution policies. Please see the corresponding documentation
-            outlining the use of <code class="computeroutput"><a class="link" href="../new_idp31850944.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code>.
+            outlining the use of <code class="computeroutput"><a class="link" href="../new_idp31537024.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code>.
           </li>
 <li class="listitem">
             Introduced four new distribution policies which can be used with many
@@ -63,17 +71,17 @@
             id. The new distribution policies are:
             <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
-                  <code class="computeroutput"><a class="link" href="../components/default_distri_idp31767824.html" title="Struct default_distribution_policy">hpx::default_distribution_policy</a></code>
+                  <code class="computeroutput"><a class="link" href="../components/default_distri_idp31453904.html" title="Struct default_distribution_policy">hpx::default_distribution_policy</a></code>
                   which tries to place multiple component instances as evenly as
                   possible.
                 </li>
 <li class="listitem">
-                  <code class="computeroutput"><a class="link" href="../components/colocating_dis_idp31666160.html" title="Struct colocating_distribution_policy">hpx::colocating_distribution_policy</a></code>
+                  <code class="computeroutput"><a class="link" href="../components/colocating_dis_idp31352240.html" title="Struct colocating_distribution_policy">hpx::colocating_distribution_policy</a></code>
                   which will refer to the locality where a given component instance
                   is currently placed.
                 </li>
 <li class="listitem">
-                  <code class="computeroutput"><a class="link" href="../components/binpacking_dis_idp31630736.html" title="Struct binpacking_distribution_policy">hpx::binpacking_distribution_policy</a></code>
+                  <code class="computeroutput"><a class="link" href="../components/binpacking_dis_idp31316816.html" title="Struct binpacking_distribution_policy">hpx::binpacking_distribution_policy</a></code>
                   which will place multiple component instances as evenly as possible
                   based on any performance counter.
                 </li>
@@ -140,6 +148,13 @@
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
+            We are moving into the direction of unifying managed and simple components.
+            In order to stop exposing the old facilities, all examples have been
+            converted to use the new classes. The breaking change in this release
+            is that performance counters are now a <code class="computeroutput">hpx::components::component_base</code>
+            instead of <code class="computeroutput">hpx::components::managed_component_base</code>.
+          </li>
+<li class="listitem">
             We removed the support for stackless threads. It turned out that there
             was no performance benefit when using stackless threads. As such, we
             decided to clean up our codebase. This feature was not documented.
@@ -157,15 +172,15 @@
 <li class="listitem">
             The obsolete distributing_factory and binpacking_factory components have
             been removed. The corresponding functionality is now provided by the
-            <code class="computeroutput"><a class="link" href="../new_idp31850944.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code> API function
+            <code class="computeroutput"><a class="link" href="../new_idp31537024.html" title="Function template new_">hpx::new_&lt;&gt;()</a></code> API function
             in conjunction with the <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">default_layout</span></code>
-            and <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">binpacking</span></code> distribution policies (<code class="computeroutput"><a class="link" href="../components/default_distri_idp31767824.html" title="Struct default_distribution_policy">hpx::default_distribution_policy</a></code>
-            and <code class="computeroutput"><a class="link" href="../components/binpacking_dis_idp31630736.html" title="Struct binpacking_distribution_policy">hpx::binpacking_distribution_policy</a></code>)
+            and <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">binpacking</span></code> distribution policies (<code class="computeroutput"><a class="link" href="../components/default_distri_idp31453904.html" title="Struct default_distribution_policy">hpx::default_distribution_policy</a></code>
+            and <code class="computeroutput"><a class="link" href="../components/binpacking_dis_idp31316816.html" title="Struct binpacking_distribution_policy">hpx::binpacking_distribution_policy</a></code>)
           </li>
 <li class="listitem">
             The API function <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">new_colocated</span></code>
-            has been deprecated. Please use the consolidated API <code class="computeroutput"><a class="link" href="../new_idp31850944.html" title="Function template new_">hpx::new_</a></code> in conjunction
-            with the new <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">colocated</span></code> distribution policy (<code class="computeroutput"><a class="link" href="../components/colocating_dis_idp31666160.html" title="Struct colocating_distribution_policy">hpx::colocating_distribution_policy</a></code>)
+            has been deprecated. Please use the consolidated API <code class="computeroutput"><a class="link" href="../new_idp31537024.html" title="Function template new_">hpx::new_</a></code> in conjunction
+            with the new <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">colocated</span></code> distribution policy (<code class="computeroutput"><a class="link" href="../components/colocating_dis_idp31352240.html" title="Struct colocating_distribution_policy">hpx::colocating_distribution_policy</a></code>)
             instead. The old API function will still be available for at least one
             release of <span class="emphasis"><em>HPX</em></span> if the configuration variable <code class="computeroutput"><span class="identifier">HPX_WITH_COLOCATED_BACKWARDS_COMPATIBILITY</span></code>
             is enabled.
@@ -174,7 +189,7 @@
             The API function <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async_colocated</span></code>
             has been deprecated. Please use the consolidated API <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span></code>
             in conjunction with the new <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">colocated</span></code>
-            distribution policy (<code class="computeroutput"><a class="link" href="../components/colocating_dis_idp31666160.html" title="Struct colocating_distribution_policy">hpx::colocating_distribution_policy</a></code>)
+            distribution policy (<code class="computeroutput"><a class="link" href="../components/colocating_dis_idp31352240.html" title="Struct colocating_distribution_policy">hpx::colocating_distribution_policy</a></code>)
             instead. The old API function will still be available for at least one
             release of <span class="emphasis"><em>HPX</em></span> if the configuration variable <code class="computeroutput"><span class="identifier">HPX_WITH_COLOCATED_BACKWARDS_COMPATIBILITY</span></code>
             is enabled.
@@ -225,6 +240,217 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1822" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1822</a> -
+            applying fixes suggested by clang 3.7
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1820" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1820</a> -
+            added parallel multi-locality sanity test
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1819" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1819</a> -
+            Fixing #1667
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1814" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1814</a> -
+            Fix async to dispatch to the correct locality in all cases
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1813" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1813</a> -
+            async(launch::..., action(), ...) always invokes locally
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1812" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1812</a> -
+            fixed syntax error in CMakeLists.txt
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1811" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1811</a> -
+            Agas optimizations
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1810" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1810</a> -
+            drop superfluous typedefs
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1809" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1809</a> -
+            Allow HPX to be used as an optional package in 3rd party code
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1808" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1808</a> -
+            Fixing #1723
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1807" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1807</a> -
+            Making sure resolve_localities does not hang during normal operation
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1806" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1806</a> -
+            Spinlock no longer movable and deletes operator '=', breaks MiniGhost
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1804" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1804</a> -
+            register_with_basename causes hangs
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1801" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1801</a> -
+            Enhanced the inspect tool to take user directly to the problem with hyperlinks
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1800" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1800</a> -
+            Problems compiling application on smic
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1799" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1799</a> -
+            Fixing cv exceptions
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1798" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1798</a> -
+            Documentation refactoring &amp; updating
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1797" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1797</a> -
+            Updating the activeharmony CMake module
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1795" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1795</a> -
+            Fixing cv
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1794" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1794</a> -
+            Fix connect with hpx::runtime_mode_connect
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1793" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1793</a> -
+            fix a wrong use of HPX_MAX_CPU_COUNT instead of HPX_HAVE_MAX_CPU_COUNT
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1792" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1792</a> -
+            Allow for default constructed parcel instances to be moved
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1791" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1791</a> -
+            Fix connect with hpx::runtime_mode_connect
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1790" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1790</a> -
+            assertion 'action_.get()' failed: HPX(assertion_failure) when running
+            Octotiger with pull request 1786
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1789" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1789</a> -
+            Fixing discover_counter_types API function
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1788" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1788</a> -
+            connect with hpx::runtime_mode_connect
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1787" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1787</a> -
+            discover_counter_types not working
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1786" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1786</a> -
+            Changing addressing_service to use std::unordered_map instead of std::map
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1785" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1785</a> -
+            Fix is_iterator for container algorithms
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1784" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1784</a> -
+            Adding new command line options:
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1783" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1783</a> -
+            Minor changes for APEX support
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1782" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1782</a> -
+            Drop legacy forwarding action traits
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1781" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1781</a> -
+            Attempt to resolve the race between cv::wait_xxx and cv::notify_all
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1780" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1780</a> -
+            Removing serialize_sequence
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1779" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1779</a> -
+            Fixed #1501: hwloc configuration options are wrong for MIC
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1778" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1778</a> -
+            Removing ability to enable/disable parcel handling
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1777" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1777</a> -
+            Completely removing stackless threads
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1776" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1776</a> -
+            Cleaning up util/plugin
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1775" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1775</a> -
+            Agas fixes
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1774" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1774</a> -
+            Action invocation count
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1772" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1772</a> -
+            Fixing Problems in MPI parcelport and future serialization.
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1771" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1771</a> -
+            Fixing intel 13 compiler errors related to variadic template template
+            parameters for lcos::when_ tests
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1770" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1770</a> -
+            Forwarding decay to std::
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1769" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1769</a> -
+            Add more characters with special regex meaning to the existing patch
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1768" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1768</a> -
+            Adding test for receive_buffer
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1767" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1767</a> -
+            Making sure that uptime counter throws exception on any attempt to be
+            reset
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1766" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1766</a> -
+            Cleaning up code related to throttling scheduler
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1765" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1765</a> -
+            Restricting thread_data to creating only with intrusive_pointers
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1764" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1764</a> -
+            Fixing 1763
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1763" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1763</a> -
+            UB in thread_data::operator delete
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1762" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1762</a> -
+            Making sure all serialization registries/factories are unique
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1761" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1761</a> -
+            Fixed #1751: hpx::future::wait_for fails a simple test
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1758" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1758</a> -
             Fixing #1757
           </li>
@@ -237,8 +463,24 @@
             Making output serialization const-correct
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1752" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1752</a> -
+            Error in AGAS
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1751" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1751</a> -
+            hpx::future::wait_for fails a simple test
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1750" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1750</a> -
+            Removing hpx_fwd.hpp includes
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1749" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1749</a> -
             Simplify result_of and friends
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1747" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1747</a> -
+            Removed superfluous code from message_buffer.hpp
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1746" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1746</a> -
@@ -273,6 +515,10 @@
             Parallel composition with generic containers
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1737" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1737</a> -
+            Uptime problems
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1736" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1736</a> -
             added convenience c-tor and begin()/end() to serialize_buffer
           </li>
@@ -283,6 +529,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1734" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1734</a> -
             Fixed #1688: Add timer counters for tfunc_total and exec_total
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1733" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1733</a> -
+            Add unit test for hpx/lcos/local/receive_buffer.hpp
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1732" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1732</a> -
@@ -319,6 +569,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1724" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1724</a> -
             Renaming vector
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1723" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1723</a> -
+            Drop support for intel compilers and gcc 4.4. based standard libs
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1722" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1722</a> -
@@ -620,6 +874,10 @@
             Remove traits::action_may_require_id_splitting
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1642" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1642</a> -
+            Adds spell checker to the inspect tool for qbk and doxygen comments
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1640" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1640</a> -
             First step towards fixing 688
           </li>
@@ -799,6 +1057,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1592" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1592</a> -
             Error (typo) in the docs
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1590" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1590</a> -
+            CMake fails when CMAKE_BINARY_DIR contains '+'.
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1589" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1589</a> -
@@ -1111,6 +1373,10 @@
             <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">exists</span></code> throws unexpected exception
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1501" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1501</a> -
+            hwloc configuration options are wrong for MIC
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1504" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1504</a> -
             Making sure boost::filesystem::exists() does not throw
           </li>
@@ -1233,6 +1499,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1466" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1466</a> -
             HPX doesn't pick up Torque's nodefile on SuperMIC
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1464" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1464</a> -
+            HPX option for pre and post bootstrap performance counters
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1463" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1463</a> -
@@ -1436,8 +1706,16 @@
             Added serialization/de-serialization to examples.tuplespace
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1251" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1251</a> -
+            hpx::threads::get_thread_count doesn't consider pending threads
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1001" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1001</a> -
             Zero copy serialization raises assert
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/524" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>524</a> -
+            Extend scheduler to support threads which can't be stolen
           </li>
 </ul></div>
 </div>

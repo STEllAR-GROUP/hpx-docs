@@ -25,12 +25,20 @@
         Changes</a>
       </h5>
 <p>
-        - We have started to add parallel algorithm overloads based on the C++ Extensions
-        for Ranges (<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4560.pdf" target="_top">N4560</a>)
+        - We have fixed a couple of issues in AGAS and the parcel layer which have
+        caused hangs, segmentation faults at exit, and a slowdown of applications
+        over time. Fixing those has significantly increased the overall stability
+        and performance of distributed runs. - We have started to add parallel algorithm
+        overloads based on the C++ Extensions for Ranges (<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4560.pdf" target="_top">N4560</a>)
         proposal. This also includes the addition of projections to the existing
         algorithms. Please see <a href="http://github.com/STEllAR-GROUP/hpx/issues/1668" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1668</a>
   for a list of algorithms which have been
         adapted to <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4560.pdf" target="_top">N4560</a>.
+        - Added <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">make_future</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&gt;(</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&amp;&amp;)</span></code> allowing to convert a future of
+        any type <code class="computeroutput"><span class="identifier">T</span></code> into a future
+        of any other type <code class="computeroutput"><span class="identifier">R</span></code>, either
+        based on default conversion rules of the embedded types or using a given
+        explicit conversion function.
       </p>
 <h5>
 <a name="hpx.whats_new.hpx_0_9_12.h1"></a>
@@ -51,7 +59,7 @@
         so far: <code class="computeroutput"><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">for_each</span></code>, <code class="computeroutput"><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">copy</span></code>,
         <code class="computeroutput"><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">rotate</span></code>, <code class="computeroutput"><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">reverse</span></code>
         and <code class="computeroutput"><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">reverse_copy</span></code>, <code class="computeroutput"><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">remove</span></code>
-        and <code class="computeroutput"><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">remove_copy</span></code>.
+        and <code class="computeroutput"><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">remove_copy</span></code>. - The facility <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">make_future_void</span><span class="special">()</span></code> has been replaced by <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">make_future</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;()</span></code>
       </p>
 <h5>
 <a name="hpx.whats_new.hpx_0_9_12.h2"></a>
@@ -62,6 +70,58 @@
         Here is a list of the important tickets we closed for this release.
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1952" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1952</a> -
+            Adapting test for explicit variadics to fail for gcc 4.6
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1948" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1948</a> -
+            Fixed container algorithms for Intel
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1947" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1947</a> -
+            Adding workaround for tagged_tuple
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1946" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1946</a> -
+            Hang in wait_all() in distributed run
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1945" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1945</a> -
+            Fixed container algorithm tests
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1943" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1943</a> -
+            Fix a couple of compile errors with clang
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1940" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1940</a> -
+            Touching up make_future
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1938" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1938</a> -
+            Removing use of unified Boost.Thread header
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1937" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1937</a> -
+            Cleaning up the use of Boost.Accumulator headers
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1936" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1936</a> -
+            Making sure interval timer is started for aggregating performance counters
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1935" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1935</a> -
+            Tagged results
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1934" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1934</a> -
+            Fix remote async with deferred launch policy
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1933" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1933</a> -
+            Floating point exception in <code class="computeroutput"><span class="identifier">statistics_counter</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">accumulators</span><span class="special">::</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">mean</span><span class="special">&gt;::</span><span class="identifier">get_counter_value</span></code>
+          </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1932" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1932</a> -
             Removing superfluous includes of boost/lockfree/detail/branch_hints.hpp
@@ -89,6 +149,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1926" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1926</a> -
             Fixing serialization of std::array
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1925" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1925</a> -
+            Issues with static HPX libraries
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1924" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1924</a> -
@@ -382,6 +446,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1748" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1748</a> -
             All public HPX headers need to be self contained
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1523" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1523</a> -
+            Remote async with deferred launch policy never executes
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1472" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1472</a> -

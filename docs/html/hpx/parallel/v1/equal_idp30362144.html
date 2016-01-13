@@ -1,0 +1,138 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template equal</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 0.9.12">
+<link rel="up" href="../../../header/hpx/parallel/algorithms/equal_hpp.html" title="Header &lt;hpx/parallel/algorithms/equal.hpp&gt;">
+<link rel="prev" href="../../../header/hpx/parallel/algorithms/equal_hpp.html" title="Header &lt;hpx/parallel/algorithms/equal.hpp&gt;">
+<link rel="next" href="equal_idp30383248.html" title="Function template equal">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="479" height="104" src="../../../images/hpx_0_9_12_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/equal_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/equal_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="equal_idp30383248.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.parallel.v1.equal_idp30362144"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template equal</span></h2>
+<p>hpx::parallel::v1::equal</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/algorithms/equal_hpp.html" title="Header &lt;hpx/parallel/algorithms/equal.hpp&gt;">hpx/parallel/algorithms/equal.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> InIter1<span class="special">,</span> <span class="keyword">typename</span> InIter2<span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">equal</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">InIter1</span> first1<span class="special">,</span> <span class="identifier">InIter1</span> last1<span class="special">,</span> 
+                    <span class="identifier">InIter2</span> first2<span class="special">,</span> <span class="identifier">InIter2</span> last2<span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idp31887072"></a><h2>Description</h2>
+<p>Returns true if the range [first1, last1) is equal to the range [first2, last2), and false otherwise.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Complexity: At most min(last1 - first1, last2 - first2) applications of the operator==().</p></td></tr>
+</table></div>
+<p>
+
+
+The comparison operations in the parallel <span class="emphasis"><em>equal</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequential_exe_idp33107488.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span> execute in sequential order in the calling thread.</p>
+<p>The comparison operations in the parallel <span class="emphasis"><em>equal</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_task__idp33179120.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>The two ranges are considered equal if, for every iterator i in the range [first1,last1), *i equals *(first2 + (i - first1)). This overload of equal uses operator== to determine if two elements are equal.</p></td></tr>
+</table></div>
+<p>
+
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">first1</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of elements of the first range the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">first2</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of elements of the second range the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">last1</code></span></p></td>
+<td><p>Refers to the end of the sequence of elements of the first range the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">last2</code></span></p></td>
+<td><p>Refers to the end of the sequence of elements of the second range the algorithm will be applied to.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">policy</code></span></p></td>
+<td><p>The execution policy to use for the scheduling of the iterations. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Template Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">ExPolicy</code></span></p></td>
+<td><p>The type of the execution policy to use (deduced). It describes the manner in which the execution of the algorithm may be parallelized and the manner in which it executes the assignments. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">InIter1</code></span></p></td>
+<td><p>The type of the source iterators used for the first range (deduced). This iterator type must meet the requirements of an input iterator. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">InIter2</code></span></p></td>
+<td><p>The type of the source iterators used for the second range (deduced). This iterator type must meet the requirements of an input iterator.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The <span class="emphasis"><em>equal</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;bool&gt;</em></span> if the execution policy is of type <span class="emphasis"><em><a class="link" href="sequential_tas_idp33032608.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></em></span> or <span class="emphasis"><em><a class="link" href="parallel_task__idp33179120.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></em></span> and returns <span class="emphasis"><em>bool</em></span> otherwise. The <span class="emphasis"><em>equal</em></span> algorithm returns true if the elements in the two ranges are equal, otherwise it returns false. If the length of the range [first1, last1) does not equal the length of the range [first2, last2), it returns false. </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2016 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/equal_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/equal_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="equal_idp30383248.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

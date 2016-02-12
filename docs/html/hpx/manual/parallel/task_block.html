@@ -69,8 +69,8 @@
 <span class="special">}</span>
 </pre>
 <p>
-          The example above demonstrates the use of two of the functions, <code class="computeroutput"><a class="link" href="../../parallel/v2/define_task_bl_idp33737936.html" title="Function template define_task_block">define_task_block</a></code>
-          and the <code class="computeroutput"><a class="link" href="../../parallel/v2/task_block.html#idp33719376-bb">run</a></code>
+          The example above demonstrates the use of two of the functions, <code class="computeroutput"><a class="link" href="../../parallel/v2/define_task_bl_idp33223408.html" title="Function template define_task_block">define_task_block</a></code>
+          and the <code class="computeroutput"><a class="link" href="../../parallel/v2/task_block.html#idp33192192-bb">run</a></code>
           member function of a <code class="computeroutput"><a class="link" href="../../parallel/v2/task_block.html" title="Class template task_block">task_block</a></code>.
         </p>
 <p>
@@ -109,40 +109,9 @@
 
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-    <span class="identifier">task_block</span><span class="special">&lt;&gt;</span> <span class="identifier">tr</span><span class="special">;</span>      <span class="comment">// Error: no public constructor</span>
+    <span class="identifier">task_block</span><span class="special">&lt;&gt;</span> <span class="identifier">tr</span><span class="special">;</span>    <span class="comment">// Error: no public constructor</span>
     <span class="identifier">tr</span><span class="special">.</span><span class="identifier">run</span><span class="special">(</span><span class="identifier">g</span><span class="special">);</span>          <span class="comment">// No way to call run outside of a define_task_block</span>
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
-<span class="special">}</span>
-</pre>
-<h6>
-<a name="hpx.manual.parallel.task_block.h0"></a>
-          <span class="phrase"><a name="hpx.manual.parallel.task_block.using_execution_policies_with_ta"></a></span><a class="link" href="task_block.html#hpx.manual.parallel.task_block.using_execution_policies_with_ta">Using
-          Execution Policies with Task Blocks</a>
-        </h6>
-<p>
-          An execution policy is an object that expresses the requirements on the
-          ordering of functions invoked as a consequence of the invocation of a task
-          block. Enabling passing an execution policy to <code class="computeroutput"><span class="identifier">define_task_block</span></code>
-          gives the user control over the amount of parallelism employed by the created
-          <code class="computeroutput"><span class="identifier">task_block</span></code>. In the following
-          example the use of an explicit <code class="computeroutput"><span class="identifier">par</span></code>
-          execution policy makes the user's intent explicit:
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Func</span><span class="special">&gt;</span>
-<span class="keyword">int</span> <span class="identifier">traverse</span><span class="special">(</span><span class="identifier">node</span> <span class="special">*</span><span class="identifier">n</span><span class="special">,</span> <span class="identifier">Func</span><span class="special">&amp;&amp;</span> <span class="identifier">compute</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="keyword">int</span> <span class="identifier">left</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">right</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-
-    <span class="identifier">define_task_block</span><span class="special">(</span>
-        <span class="identifier">par</span><span class="special">,</span>                <span class="comment">// parallel_execution_policy</span>
-        <span class="special">[&amp;](</span><span class="identifier">task_block</span><span class="special">&lt;&gt;&amp;</span> <span class="identifier">tb</span><span class="special">)</span> <span class="special">{</span>
-            <span class="keyword">if</span> <span class="special">(</span><span class="identifier">n</span><span class="special">-&gt;</span><span class="identifier">left</span><span class="special">)</span>
-                <span class="identifier">tb</span><span class="special">.</span><span class="identifier">run</span><span class="special">([&amp;]</span> <span class="special">{</span> <span class="identifier">left</span> <span class="special">=</span> <span class="identifier">traverse</span><span class="special">(</span><span class="identifier">n</span><span class="special">-&gt;</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">compute</span><span class="special">);</span> <span class="special">});</span>
-            <span class="keyword">if</span> <span class="special">(</span><span class="identifier">n</span><span class="special">-&gt;</span><span class="identifier">right</span><span class="special">)</span>
-                <span class="identifier">tb</span><span class="special">.</span><span class="identifier">run</span><span class="special">([&amp;]</span> <span class="special">{</span> <span class="identifier">right</span> <span class="special">=</span> <span class="identifier">traverse</span><span class="special">(</span><span class="identifier">n</span><span class="special">-&gt;</span><span class="identifier">right</span><span class="special">,</span> <span class="identifier">compute</span><span class="special">);</span> <span class="special">});</span>
-        <span class="special">});</span>
-
-    <span class="keyword">return</span> <span class="identifier">compute</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span> <span class="special">+</span> <span class="identifier">left</span> <span class="special">+</span> <span class="identifier">right</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 </div>

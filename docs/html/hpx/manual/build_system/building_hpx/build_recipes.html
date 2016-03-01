@@ -394,6 +394,190 @@ popd
               please refer its documentation and also the section <a class="link" href="../building_hpx.html" title="Building HPX">Building
               <span class="emphasis"><em>HPX</em></span> with CMake</a>.
             </p>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="hpx.manual.build_system.building_hpx.build_recipes.windows_installation.howto_win32"></a><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.windows_installation.howto_win32" title="How to build HPX under Windows 10 x64 with Visual Studio 2015">How
+              to build HPX under Windows 10 x64 with Visual Studio 2015</a>
+</h6></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+                    Download the <a href="http://www.cmake.org" target="_top">CMake</a>
+                    V3.4.3 installer (or latest version) from <a href="https://blog.kitware.com/cmake-3-4-3-available-for-download/" target="_top">here</a>
+                  </li>
+<li class="listitem">
+                    Download the <a href="http://www.open-mpi.org/projects/hwloc/" target="_top">Portable
+                    Hardware Locality (HWLOC)</a> V1.11.0 (or latest version)
+                    from <a href="http://www.open-mpi.org/software/hwloc/v1.11/downloads/hwloc-win64-build-1.11.0.zip" target="_top">here</a>
+                    and unpack it.
+                  </li>
+<li class="listitem">
+                    Download <a href="http://www.boost.org/" target="_top">Boost</a> libraries
+                    V1.60 (or latest version) from <a href="https://sourceforge.net/projects/boost/files/boost/1.60.0/" target="_top">here</a>
+                    and unpack them.
+                  </li>
+<li class="listitem">
+<p class="simpara">
+                    Build the boost DLLs and LIBs by using these commands from Command
+                    Line (or PowerShell). Open CMD/PowerShell inside the Boost dir
+                    and type in:
+                  </p>
+<pre class="programlisting"><span class="identifier">bootstrap</span><span class="special">.</span><span class="identifier">bat</span>
+</pre>
+<p class="simpara">
+                    This batch file will set up everything needed to create a successful
+                    build. Now execute:
+                  </p>
+<pre class="programlisting"><span class="identifier">b2</span><span class="special">.</span><span class="identifier">exe</span> <span class="identifier">link</span><span class="special">=</span><span class="identifier">shared</span> <span class="identifier">variant</span><span class="special">=</span><span class="identifier">release</span><span class="special">,</span><span class="identifier">debug</span> <span class="identifier">architecture</span><span class="special">=</span><span class="identifier">x86</span> <span class="identifier">address</span><span class="special">-</span><span class="identifier">model</span><span class="special">=</span><span class="number">64</span> <span class="identifier">threading</span><span class="special">=</span><span class="identifier">multi</span> <span class="special">--</span><span class="identifier">build</span><span class="special">-</span><span class="identifier">type</span><span class="special">=</span><span class="identifier">complete</span> <span class="identifier">install</span>
+</pre>
+<p class="simpara">
+                    This command will start a (very long) build of all available
+                    Boost libraries. Please, be patient.
+                  </p>
+</li>
+<li class="listitem">
+<p class="simpara">
+                    Open CMake-GUI.exe and set up your source directory (input field
+                    'Where is the source code') to the <span class="underline">base
+                    directory</span> of the source code you downloaded from HPX'
+                    GitHub pages. Here's an example of my CMake path settings which
+                    point to my <code class="computeroutput"><span class="identifier">Documents</span><span class="special">/</span><span class="identifier">GitHub</span><span class="special">/</span><span class="identifier">hpx</span></code>
+                    folder:
+                  </p>
+<p class="simpara">
+                    <div class="figure">
+<a name="win32_cmake_settings1"></a><p class="title"><b>Figure&#160;3.&#160;Example CMake path settings</b></p>
+<div class="figure-contents"><span class="inlinemediaobject"><img src="../../../.././images/cmake_settings1.png" alt="Example CMake path settings"></span></div>
+</div><br class="figure-break">
+                  </p>
+<p class="simpara">
+                    Inside the 'Where is the source-code' enter the base directory
+                    of your HPX source directory (do not enter the "src"
+                    sub-directory!) Inside 'Where to build the binaries' you should
+                    put in the path where all the building process will happen. This
+                    is important because the building machinery will do an "out-of-tree"
+                    build. CMake is not touching or changing in any way the original
+                    source files. Instead, it will generate Visual Studio Solution
+                    Files which will build HPX packages out of the HPX source tree.
+                  </p>
+</li>
+<li class="listitem">
+<p class="simpara">
+                    Set four new environment variables (in CMake, not in Windows
+                    environment, by the way): <code class="computeroutput"><span class="identifier">BOOST_ROOT</span></code>,
+                    <code class="computeroutput"><span class="identifier">HWLOC_ROOT</span></code>,
+                    <code class="computeroutput"><span class="identifier">CMAKE_INSTALL_PREFIX</span></code>
+                    and <code class="computeroutput"><span class="identifier">HPX_WITH_BOOST_ALL_DYNAMIC_LINK</span></code>
+                  </p>
+<p class="simpara">
+                    The meaning of these variables is as follows:
+                  </p>
+<p class="simpara">
+                    <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                          <code class="computeroutput"><span class="identifier">BOOST_ROOT</span></code>:
+                          the root directory of the unpacked Boost headers/cpp files.
+                        </li>
+<li class="listitem">
+                          <code class="computeroutput"><span class="identifier">HWLOC_ROOT</span></code>:
+                          the root directory of the unpacked Portable Hardware Locality
+                          files.
+                        </li>
+<li class="listitem">
+                          <code class="computeroutput"><span class="identifier">CMAKE_INSTALL_PREFIX</span></code>:
+                          the "root directory" where the future builds
+                          of HPX should be installed to.
+                        </li>
+</ul></div>
+                  </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+                      HPX is a BIG software collection and I really don't recommend
+                      using the default <code class="computeroutput"><span class="identifier">C</span><span class="special">:\</span><span class="identifier">Program</span>
+                      <span class="identifier">Files</span><span class="special">\</span><span class="identifier">hpx</span></code>. I prefer simpler paths
+                      <span class="bold"><strong>without</strong></span> white space, like
+                      <code class="computeroutput"><span class="identifier">C</span><span class="special">:\</span><span class="identifier">bin</span><span class="special">\</span><span class="identifier">hpx</span></code> or <code class="computeroutput"><span class="identifier">D</span><span class="special">:\</span><span class="identifier">bin</span><span class="special">\</span><span class="identifier">hpx</span></code>
+                      etc.
+                    </p></td></tr>
+</table></div>
+<p class="simpara">
+                    To insert new env-vars klick on "Add Entrz" and then
+                    insert the name inside "Name", select <code class="computeroutput"><span class="identifier">PATH</span></code> as Type and put the path-name
+                    in "Path" text field. Repeat this for the first three
+                    variables.
+                  </p>
+<p class="simpara">
+                    The last one: <code class="computeroutput"><span class="identifier">HPX_WITH_BOOST_ALL_DYNAMIC_LINK</span></code>
+                    is a <code class="computeroutput"><span class="identifier">BOOL</span></code> and
+                    must be checked (there will be a checkbox instead of a textfield).
+                  </p>
+<p class="simpara">
+                    This is how variable insertion looks like:
+                  </p>
+<p class="simpara">
+                    <div class="figure">
+<a name="win32_cmake_settings2"></a><p class="title"><b>Figure&#160;4.&#160;Example CMake Adding Entry</b></p>
+<div class="figure-contents"><span class="inlinemediaobject"><img src="../../../.././images/cmake_settings2.png" alt="Example CMake Adding Entry"></span></div>
+</div><br class="figure-break">
+                  </p>
+<p class="simpara">
+                    Alternatively you could provide <code class="computeroutput"><span class="identifier">BOOST_LIBRARYDIR</span></code>
+                    instead of <code class="computeroutput"><span class="identifier">BOOST_ROOT</span></code>
+                    with a difference that <code class="computeroutput"><span class="identifier">BOOST_LIBRARYDIR</span></code>
+                    should point to the sudbirectory inside Boost root where all
+                    the compiled DLLs/LIBs are. I myself have used <code class="computeroutput"><span class="identifier">BOOST_LIBRARYDIR</span></code> which pointed
+                    to the <code class="computeroutput"><span class="identifier">bin</span><span class="special">.</span><span class="identifier">v2</span></code> subdirectory under the Boost
+                    rootdir. Important is to keep the meanings of these two variables
+                    separated from each other: <code class="computeroutput"><span class="identifier">BOOST_DIR</span></code>
+                    points to the ROOT folder of the boost library. <code class="computeroutput"><span class="identifier">BOOST_LIBRARYDIR</span></code> points to
+                    the subdir inside Boost root folder where the compiled binaries
+                    are.
+                  </p>
+</li>
+<li class="listitem">
+                    Click the 'Configure' button of CMake-GUI. You will be immediately
+                    presented a small window where you can select the C++ compiler
+                    to be used within Visual Studio. In my case I have used the latest
+                    v14 (a.k.a C++ 2015) but older versions should be sufficient
+                    too. Make sure to select the 64Bit compiler
+                  </li>
+<li class="listitem">
+                    After the generate process has finished successfully click the
+                    'Generate' button. Now, CMake will put new VS Solution files
+                    into the BUILD folder you selected at the beginning.
+                  </li>
+<li class="listitem">
+                    Open Visual Studio and load the <code class="computeroutput"><span class="identifier">HPX</span><span class="special">.</span><span class="identifier">sln</span></code>
+                    from your build folder.
+                  </li>
+<li class="listitem">
+<p class="simpara">
+                    Go to <code class="computeroutput"><span class="identifier">CMakePredefinedTargets</span></code>
+                    and build the <code class="computeroutput"><span class="identifier">INSTALL</span></code>
+                    project:
+                  </p>
+<p class="simpara">
+                    <div class="figure">
+<a name="win32_vs_targets"></a><p class="title"><b>Figure&#160;5.&#160;Visual Studio INSTALL Target</b></p>
+<div class="figure-contents"><span class="inlinemediaobject"><img src="../../../.././images/vs_targets_install.png" alt="Visual Studio INSTALL Target"></span></div>
+</div><br class="figure-break">
+                  </p>
+<p class="simpara">
+                    It will take some time to compile everything and in the end you
+                    should see an output similar to this one:
+                  </p>
+<p class="simpara">
+                    <div class="figure">
+<a name="win32_vs_build_output"></a><p class="title"><b>Figure&#160;6.&#160;Visual Studio Build Output</b></p>
+<div class="figure-contents"><span class="inlinemediaobject"><img src="../../../.././images/vs_build_output.png" alt="Visual Studio Build Output"></span></div>
+</div><br class="figure-break">
+                  </p>
+</li>
+</ul></div>
+</div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">

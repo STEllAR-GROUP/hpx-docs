@@ -1,0 +1,118 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template reduction</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 0.9.12">
+<link rel="up" href="../../../header/hpx/parallel/algorithms/for_loop_reduction_hpp.html" title="Header &lt;hpx/parallel/algorithms/for_loop_reduction.hpp&gt;">
+<link rel="prev" href="../../../header/hpx/parallel/algorithms/for_loop_reduction_hpp.html" title="Header &lt;hpx/parallel/algorithms/for_loop_reduction.hpp&gt;">
+<link rel="next" href="../../../header/hpx/parallel/algorithms/generate_hpp.html" title="Header &lt;hpx/parallel/algorithms/generate.hpp&gt;">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX - High Performance ParalleX" width="479" height="104" src="../../../images/hpx_0_9_12_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/for_loop_reduction_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/for_loop_reduction_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../header/hpx/parallel/algorithms/generate_hpp.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.parallel.v2.reduction"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template reduction</span></h2>
+<p>hpx::parallel::v2::reduction</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/algorithms/for_loop_reduction_hpp.html" title="Header &lt;hpx/parallel/algorithms/for_loop_reduction.hpp&gt;">hpx/parallel/algorithms/for_loop_reduction.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">,</span> <span class="keyword">typename</span> Op<span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">reduction</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> var<span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> identity<span class="special">,</span> <span class="identifier">Op</span> <span class="special">&amp;&amp;</span> combiner<span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idp65781872"></a><h2>Description</h2>
+<p>The function template returns a reduction object of unspecified type having a value type and encapsulating an identity value for the reduction, a combiner function object, and a live-out object from which the initial value is obtained and into which the final value is stored.</p>
+<p>A parallel algorithm uses reduction objects by allocating an unspecified number of instances, called views, of the reduction's value type. Each view is initialized with the reduction object's identity value, except that the live-out object (which was initialized by the caller) comprises one of the views. The algorithm passes a reference to a view to each application of an element-access function, ensuring that no two concurrently-executing invocations share the same view. A view can be shared between two applications that do not execute concurrently, but initialization is performed only once per view.</p>
+<p>Modifications to the view by the application of element access functions accumulate as partial results. At some point before the algorithm returns, the partial results are combined, two at a time, using the reduction object's combiner operation until a single value remains, which is then assigned back to the live-out object.</p>
+<p>
+
+T shall meet the requirements of CopyConstructible and MoveAssignable. The expression var = combiner(var, var) shall be well formed.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>In order to produce useful results, modifications to the view should be limited to commutative operations closely related to the combiner operation. For example if the combiner is plus&lt;T&gt;, incrementing the view would be consistent with the combiner but doubling it or assigning to it would not.</p></td></tr>
+</table></div>
+<p>
+
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">combiner</code></span></p></td>
+<td><p>[in] The binary function (object) used to perform a pairwise reduction on the elements.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">identity</code></span></p></td>
+<td><p>[in] The identity value to use for the reduction operation. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">var</code></span></p></td>
+<td><p>[in,out] The life-out value to use for the reduction object. This will hold the reduced value after the algorithm is finished executing. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Template Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">Op</code></span></p></td>
+<td><p>The type of the binary function (object) used to perform the reduction operation.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">T</code></span></p></td>
+<td><p>The value type to be used by the induction object. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>This returns a reduction object of unspecified type having a value type of <span class="emphasis"><em>T</em></span>. When the return value is used by an algorithm, the reference to <span class="emphasis"><em>var</em></span> is used as the live-out object, new views are initialized to a copy of identity, and views are combined by invoking the copy of combiner, passing it the two views to be combined. </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2016 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/for_loop_reduction_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/for_loop_reduction_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../header/hpx/parallel/algorithms/generate_hpp.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

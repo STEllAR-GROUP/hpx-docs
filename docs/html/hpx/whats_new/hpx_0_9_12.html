@@ -47,6 +47,17 @@
             been adapted to <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4560.pdf" target="_top">N4560</a>.
           </li>
 <li class="listitem">
+            We have started to implement index-based parallel for-loops based on
+            a corresponding standardization proposal (<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0075r1.pdf" target="_top">P0075R1</a>).
+            Please see <a href="http://github.com/STEllAR-GROUP/hpx/issues/2016" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2016</a> for
+            a list of available algorithms.
+          </li>
+<li class="listitem">
+            We have pervasively added (optional) executor arguments to all API functions
+            which schedule new work. Executors are now used throughout the code base
+            as the main means of executing tasks.
+          </li>
+<li class="listitem">
             Added <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">make_future</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&gt;(</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&amp;&amp;)</span></code> allowing to convert a future
             of any type <code class="computeroutput"><span class="identifier">T</span></code> into a
             future of any other type <code class="computeroutput"><span class="identifier">R</span></code>,
@@ -85,6 +96,18 @@
             the plain values of the data to gather (in addition to the existing overloads
             expecting futures).
           </li>
+<li class="listitem">
+            We have cleaned up and refactored large parts of the code base. This
+            helped reducing compile and link times of <span class="emphasis"><em>HPX</em></span> itself
+            and also of applications depending on it. We have further decreased the
+            dependency of <span class="emphasis"><em>HPX</em></span> on the Boost libraries by replacing
+            part of those with facilities available from the standard libraries.
+          </li>
+<li class="listitem">
+            We have added new performance counters for parcel coalescing, file-IO,
+            the AGAS cache, and overall scheduler time. Resetting performance counters
+            has been overhauled and fixed.
+          </li>
 </ul></div>
 <h5>
 <a name="hpx.whats_new.hpx_0_9_12.h1"></a>
@@ -112,6 +135,9 @@
             The facility <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">make_future_void</span><span class="special">()</span></code>
             has been replaced by <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">make_future</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;()</span></code>.
           </li>
+<li class="listitem">
+            We have removed support for Intel V13 and gcc 4.4.x.
+          </li>
 </ul></div>
 <h5>
 <a name="hpx.whats_new.hpx_0_9_12.h2"></a>
@@ -123,12 +149,52 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2058" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2058</a> -
+            Move several definitions to more appropriate headers
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2057" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2057</a> -
+            Simplify assert_owns_lock and ignore_while_checking
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2056" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2056</a> -
+            Replacing std::result_of with util::result_of
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2053" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2053</a> -
+            Replace uses of boost::unordered_map with std::unordered_map
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2052" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2052</a> -
+            Rewrite tuple unwrap
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2050" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2050</a> -
+            Replace uses of BOOST_SCOPED_ENUM with C++11 scoped enums
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2049" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2049</a> -
+            Attempt to narrow down split_credit problem
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2048" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2048</a> -
             Fixing gcc startup hangs
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2047" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2047</a> -
             Fixing when_xxx and wait_xxx for MSVC12
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2045" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2045</a> -
+            Fixing HPX_HAVE_THREAD_BACKTRACE_DEPTH build time configuration
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2044" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2044</a> -
+            Adding missing service executor types
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2043" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2043</a> -
+            Removing ambiguous definitions for is_future_range and future_range_traits
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2042" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2042</a> -
@@ -171,6 +237,10 @@
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2033" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2033</a> -
             Compilation error when compiling with thread queue waittime performance
             counter
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2032" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2032</a> -
+            Ambiguous template instantiation for is_future_range and future_range_traits.
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2031" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2031</a> -
@@ -337,7 +407,7 @@
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1984" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1984</a> -
-            Adding an optimized LRU Cache implementation
+            Adding an optimized LRU Cache implementation (for AGAS)
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1983" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1983</a> -
@@ -871,6 +941,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1658" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1658</a> -
             Add serialization for std::set (as there is for std::vector and std::map)
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1603" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1603</a> -
+            Adds preferred namespace check to inspect tool
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1523" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1523</a> -

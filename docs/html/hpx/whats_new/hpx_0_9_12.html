@@ -47,8 +47,8 @@
             been adapted to <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4560.pdf" target="_top">N4560</a>.
           </li>
 <li class="listitem">
-            We have started to implement index-based parallel for-loops based on
-            a corresponding standardization proposal (<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0075r1.pdf" target="_top">P0075R1</a>).
+            We have implemented index-based parallel for-loops based on a corresponding
+            standardization proposal (<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0075r1.pdf" target="_top">P0075R1</a>).
             Please see <a href="http://github.com/STEllAR-GROUP/hpx/issues/2016" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2016</a> for
             a list of available algorithms.
           </li>
@@ -108,6 +108,13 @@
             the AGAS cache, and overall scheduler time. Resetting performance counters
             has been overhauled and fixed.
           </li>
+<li class="listitem">
+            We have introduced a generic client type <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">components</span><span class="special">::</span><span class="identifier">client</span><span class="special">&lt;&gt;</span></code> and added support for using it
+            with <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span></code>. This removes the necessity to
+            implement specific client types for every component type without loosing
+            type safety. This deemphasizes the need for using the low level <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span></code> for referencing (possibly remote)
+            component instances. The plan is to deprecate the direct use of <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span></code> in user code in the future.
+          </li>
 </ul></div>
 <h5>
 <a name="hpx.whats_new.hpx_0_9_12.h1"></a>
@@ -145,6 +152,13 @@
             <code class="computeroutput"><span class="special">-</span><span class="identifier">DHPX_WITH_GENERIC_EXECUTION_POLICY</span><span class="special">=</span><span class="identifier">On</span></code>
             at the configure step.
           </li>
+<li class="listitem">
+            We have removed (default) support for the generic <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">execution_poliy</span></code>
+            because it was removed from the Parallelism TS (<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4409.pdf" target="_top">N4409</a>)
+            while it was being added to the upcomming C++17 Standard. This facility
+            can be still enabled at configure time by specifying <code class="computeroutput"><span class="special">-</span><span class="identifier">DHPX_WITH_GENERIC_EXECUTION_POLICY</span><span class="special">=</span><span class="identifier">On</span></code>
+            to <a href="http://www.cmake.org" target="_top">CMake</a>.
+          </li>
 </ul></div>
 <h5>
 <a name="hpx.whats_new.hpx_0_9_12.h2"></a>
@@ -156,6 +170,58 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2075" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2075</a> -
+            Fixed some documentation typos
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2072" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2072</a> -
+            Refactor local::condition_variable
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2070" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2070</a> -
+            Refactor tuple based functionality
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2069" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2069</a> -
+            Fixed typos
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2067" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2067</a> -
+            Algorithm cleanup
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2066" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2066</a> -
+            Split credit fixes
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2065" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2065</a> -
+            Rename HPX_MOVABLE_BUT_NOT_COPYABLE to HPX_MOVABLE_ONLY
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2064" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2064</a> -
+            Fixed some typos in docs
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2063" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2063</a> -
+            Adding example demonstrating template components
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2062" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2062</a> -
+            Support component templates
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2061" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2061</a> -
+            Replace some uses of lexical_cast&lt;string&gt; with C++11 std::to_string
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2060" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2060</a> -
+            Replace uses of boost::noncopyable with HPX_NON_COPYABLE
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2059" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2059</a> -
+            Adding missing for_loop algorithms
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2058" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2058</a> -
             Move several definitions to more appropriate headers
           </li>
@@ -166,6 +232,14 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2056" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2056</a> -
             Replacing std::result_of with util::result_of
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2055" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2055</a> -
+            Fix process launching/connecting back
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2054" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2054</a> -
+            Add a forwarding coroutine header
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2053" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2053</a> -
@@ -190,6 +264,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2047" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2047</a> -
             Fixing when_xxx and wait_xxx for MSVC12
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2046" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2046</a> -
+            adding persistent_auto_chunk_size and related tests for for_each
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2045" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2045</a> -
@@ -302,6 +380,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2017" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2017</a> -
             Non-recursive at_index implementation
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2016" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2016</a> -
+            Add index-based for-loops
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2014" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2014</a> -
@@ -755,6 +837,10 @@
             version 1.0?
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1895" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1895</a> -
+            Warning comment on numa_allocator is not very clear
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1894" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1894</a> -
             Add support for compilers that have thread_local
           </li>
@@ -950,6 +1036,10 @@
             Add serialization for std::set (as there is for std::vector and std::map)
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1641" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1641</a> -
+            Generic client
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1603" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1603</a> -
             Adds preferred namespace check to inspect tool
           </li>
@@ -964,6 +1054,14 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1457" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1457</a> -
             Implement N4392: C++ Latches and Barriers
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1444" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>1444</a> -
+            Enabling usage of moveonly types for component construction
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1405" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1405</a> -
+            Allow component constructors to take movable only types
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1265" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1265</a> -

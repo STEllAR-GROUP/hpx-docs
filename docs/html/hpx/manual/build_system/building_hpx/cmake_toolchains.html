@@ -28,9 +28,6 @@
           </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-                <a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.XeonPhi">XeonPhi</a>
-              </li>
-<li class="listitem">
                 <a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.ARM_gcc">ARM-gcc</a>
               </li>
 <li class="listitem">
@@ -42,6 +39,9 @@
 <li class="listitem">
                 <a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.Cray_Intel">Cray-Intel</a>
               </li>
+<li class="listitem">
+                <a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.XeonPhi">XeonPhi</a>
+              </li>
 </ul></div>
 <p>
             To use them pass the <code class="computeroutput">-DCMAKE_TOOLCHAIN_FILE=&lt;toolchain&gt;</code>
@@ -49,55 +49,6 @@
           </p>
 <h6>
 <a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h0"></a>
-            <span class="phrase"><a name="hpx.manual.build_system.building_hpx.cmake_toolchains.XeonPhi"></a></span><a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.XeonPhi">XeonPhi</a>
-          </h6>
-<pre class="programlisting"># Copyright (c) 2014 Thomas Heller
-#
-# Distributed under the Boost Software License, Version 1.0. (See accompanying
-# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-#
-# This is the default toolchain file to be used with Intel Xeon PHIs. It sets
-# the appropriate compile flags and compiler such that HPX will compile.
-# Note that you still need to provide Boost, hwloc and other utility libraries
-# like a custom allocator yourself.
-#
-set(CMAKE_SYSTEM_NAME Linux)
-# Set the Intel Compiler
-set(CMAKE_CXX_COMPILER icpc)
-set(CMAKE_C_COMPILER icc)
-set(CMAKE_Fortran_COMPILER ifort)
-# Add the -mmic compile flag such that everything will be compiled for the correct
-# platform
-set(CMAKE_CXX_FLAGS_INIT "-mmic" CACHE STRING "Initial compiler flags used to compile for the Xeon Phi")
-set(CMAKE_C_FLAGS_INIT "-mmic" CACHE STRING "Initial compiler flags used to compile for the Xeon Phi")
-set(CMAKE_Fortran_FLAGS_INIT "-mmic" CACHE STRING "Initial compiler flags used to compile for the Xeon Phi")
-# Disable searches in the default system paths. We are cross compiling after all
-# and cmake might pick up wrong libraries that way
-set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM BOTH)
-set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
-# We do a cross compilation here ...
-set(CMAKE_CROSSCOMPILING ON)
-# Set our platform name
-set(HPX_PLATFORM "XeonPhi")
-# Always disable the ibverbs parcelport as it is nonfunctional on the BGQ.
-set(HPX_WITH_PARCELPORT_IBVERBS OFF CACHE BOOL "Enable the ibverbs based parcelport. This is currently an experimental feature")
-# We have a bunch of cores on the MIC ... increase the default
-set(HPX_WITH_MAX_CPU_COUNT "256" CACHE STRING "")
-# We default to tbbmalloc as our allocator on the MIC
-if(NOT DEFINED HPX_WITH_MALLOC)
-  set(HPX_WITH_MALLOC "tbbmalloc" CACHE STRING "")
-endif()
-# Set the TBBMALLOC_PLATFORM correctly so that find_package(TBBMalloc) sets the
-# right hints
-set(TBBMALLOC_PLATFORM "mic" CACHE STRING "")
-set(HPX_HIDDEN_VISIBILITY OFF CACHE BOOL "Use -fvisibility=hidden for builds on platforms which support it")
-# RDTSC is available on Xeon/Phis
-set(HPX_WITH_RDTSC ON CACHE BOOL "")
-</pre>
-<h6>
-<a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h1"></a>
             <span class="phrase"><a name="hpx.manual.build_system.building_hpx.cmake_toolchains.ARM_gcc"></a></span><a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.ARM_gcc">ARM-gcc</a>
           </h6>
 <pre class="programlisting"># Copyright (c) 2015 Thomas Heller
@@ -116,7 +67,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 </pre>
 <h6>
-<a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h2"></a>
+<a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h1"></a>
             <span class="phrase"><a name="hpx.manual.build_system.building_hpx.cmake_toolchains.BGION_gcc"></a></span><a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.BGION_gcc">BGION-gcc</a>
           </h6>
 <pre class="programlisting"># Copyright (c) 2014 John Biddiscombe
@@ -183,7 +134,7 @@ set(DART_TESTING_TIMEOUT           45  CACHE STRING "Life is too short")
 # HPX_WITH_STATIC_LINKING
 </pre>
 <h6>
-<a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h3"></a>
+<a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h2"></a>
             <span class="phrase"><a name="hpx.manual.build_system.building_hpx.cmake_toolchains.BGQ"></a></span><a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.BGQ">BGQ</a>
           </h6>
 <pre class="programlisting"># Copyright (c) 2014 Thomas Heller
@@ -240,7 +191,7 @@ if(NOT DEFINED HPX_WITH_MALLOC)
 endif()
 </pre>
 <h6>
-<a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h4"></a>
+<a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h3"></a>
             <span class="phrase"><a name="hpx.manual.build_system.building_hpx.cmake_toolchains.Cray_Intel"></a></span><a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.Cray_Intel">Cray-Intel</a>
           </h6>
 <pre class="programlisting"># Copyright (c) 2014 Thomas Heller
@@ -296,6 +247,55 @@ if(NOT DEFINED HPX_WITH_MALLOC)
 endif()
 # We do a cross compilation here ...
 set(CMAKE_CROSSCOMPILING ON CACHE BOOL "")
+</pre>
+<h6>
+<a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h4"></a>
+            <span class="phrase"><a name="hpx.manual.build_system.building_hpx.cmake_toolchains.XeonPhi"></a></span><a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.XeonPhi">XeonPhi</a>
+          </h6>
+<pre class="programlisting"># Copyright (c) 2014 Thomas Heller
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+# This is the default toolchain file to be used with Intel Xeon PHIs. It sets
+# the appropriate compile flags and compiler such that HPX will compile.
+# Note that you still need to provide Boost, hwloc and other utility libraries
+# like a custom allocator yourself.
+#
+set(CMAKE_SYSTEM_NAME Linux)
+# Set the Intel Compiler
+set(CMAKE_CXX_COMPILER icpc)
+set(CMAKE_C_COMPILER icc)
+set(CMAKE_Fortran_COMPILER ifort)
+# Add the -mmic compile flag such that everything will be compiled for the correct
+# platform
+set(CMAKE_CXX_FLAGS_INIT "-mmic" CACHE STRING "Initial compiler flags used to compile for the Xeon Phi")
+set(CMAKE_C_FLAGS_INIT "-mmic" CACHE STRING "Initial compiler flags used to compile for the Xeon Phi")
+set(CMAKE_Fortran_FLAGS_INIT "-mmic" CACHE STRING "Initial compiler flags used to compile for the Xeon Phi")
+# Disable searches in the default system paths. We are cross compiling after all
+# and cmake might pick up wrong libraries that way
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM BOTH)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+# We do a cross compilation here ...
+set(CMAKE_CROSSCOMPILING ON)
+# Set our platform name
+set(HPX_PLATFORM "XeonPhi")
+# Always disable the ibverbs parcelport as it is nonfunctional on the BGQ.
+set(HPX_WITH_PARCELPORT_IBVERBS OFF CACHE BOOL "Enable the ibverbs based parcelport. This is currently an experimental feature")
+# We have a bunch of cores on the MIC ... increase the default
+set(HPX_WITH_MAX_CPU_COUNT "256" CACHE STRING "")
+# We default to tbbmalloc as our allocator on the MIC
+if(NOT DEFINED HPX_WITH_MALLOC)
+  set(HPX_WITH_MALLOC "tbbmalloc" CACHE STRING "")
+endif()
+# Set the TBBMALLOC_PLATFORM correctly so that find_package(TBBMalloc) sets the
+# right hints
+set(TBBMALLOC_PLATFORM "mic" CACHE STRING "")
+set(HPX_HIDDEN_VISIBILITY OFF CACHE BOOL "Use -fvisibility=hidden for builds on platforms which support it")
+# RDTSC is available on Xeon/Phis
+set(HPX_WITH_RDTSC ON CACHE BOOL "")
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

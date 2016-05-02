@@ -31,6 +31,8 @@
             to Install <span class="emphasis"><em>HPX</em></span> on BlueGene/Q</a></span></dt>
 <dt><span class="section"><a href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.intel_mic_installation">How
             to Install <span class="emphasis"><em>HPX</em></span> on the Xeon Phi</a></span></dt>
+<dt><span class="section"><a href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.fedora_installation">How
+            to Install <span class="emphasis"><em>HPX</em></span> on Fedora Distributions</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
@@ -757,6 +759,75 @@ make install
               to the section about HPX_WITH_MALLOC as this is crucial for getting
               decent performance on the Xeon Phi.
             </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="hpx.manual.build_system.building_hpx.build_recipes.fedora_installation"></a><a class="link" href="build_recipes.html#hpx.manual.build_system.building_hpx.build_recipes.fedora_installation" title="How to Install HPX on Fedora Distributions">How
+            to Install <span class="emphasis"><em>HPX</em></span> on Fedora Distributions</a>
+</h6></div></div></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+                This section of the manual is based off of our collaborators Patrick
+                Diehl's blog <a href="http://diehlpk.github.io/2015/08/04/hpx-fedora.html" target="_top">Installing
+                HPX on Fedora 22</a>.
+              </p></td></tr>
+</table></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+<p class="simpara">
+                  Install all packages for minimal installation
+                </p>
+<pre class="programlisting">sudo dnf install gcc-c++ cmake boost-build boost boost-devel hwloc-devel \
+  hwloc gcc-gfortran papi-devel gperftools-devel docbook-dtds \
+  docbook-style-xsl libsodium-devel doxygen boost-doc hdf5-devel \
+  fop boost-devel boost-openmpi-devel boost-mpich-devel
+</pre>
+</li>
+<li class="listitem">
+<p class="simpara">
+                  Get the developmet branch of HPX
+                </p>
+<pre class="programlisting">git clone https://github.com/STEllAR-GROUP/hpx.git
+</pre>
+</li>
+<li class="listitem">
+<p class="simpara">
+                  Configure it with CMake
+                </p>
+<pre class="programlisting">cd hpx
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/opt/hpx ..
+make -j
+make install
+</pre>
+</li>
+</ul></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+                To build HPX without examples use:
+              </p>
+<pre class="programlisting">cmake -DCMAKE_INSTALL_PREFIX=/opt/hpx -DHPX_BUILD_EXAMPLES=Off ..
+</pre>
+</td></tr>
+</table></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<p class="simpara">
+                  Add the library path of HPX to ldconfig
+                </p>
+<pre class="programlisting">sudo echo /opt/hpx/lib &gt; /etc/ld.so.conf.d/hpx.conf
+sudo ldconfig
+</pre>
+</li></ul></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

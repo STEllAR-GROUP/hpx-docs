@@ -39,31 +39,37 @@
     <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="timed_executor_traits/future.html#hpx.parallel.v3.timed_executor_traits.future.type"><span class="identifier">type</span></a><span class="special">;</span>  <span class="comment">// The future type returned from async_execute. </span>
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="timed_executor_traits.html#idp35429136-bb">public static functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-    <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="timed_executor_traits.html#idp35429696-bb"><span class="identifier">apply_execute_at</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
-                                 <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_time_point</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-    <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="timed_executor_traits.html#idp35437568-bb"><span class="identifier">apply_execute_after</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
-                                    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_duration</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="timed_executor_traits.html#idp35445456-bb"><span class="identifier">async_execute_at</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
-                                 <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_time_point</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="timed_executor_traits.html#idp35453696-bb"><span class="identifier">async_execute_after</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
-                                    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_duration</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="timed_executor_traits.html#idp35461952-bb"><span class="identifier">execute_at</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
-                           <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_time_point</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="timed_executor_traits.html#idp35470224-bb"><span class="identifier">execute_after</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
-                              <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_duration</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="timed_executor_traits.html#idp35507584-bb">public static functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="timed_executor_traits.html#idp35508144-bb"><span class="identifier">apply_execute_at</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+                                 <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_time_point</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">,</span> 
+                                 <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="timed_executor_traits.html#idp35517552-bb"><span class="identifier">apply_execute_after</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+                                    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_duration</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">,</span> 
+                                    <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="timed_executor_traits.html#idp35526976-bb"><span class="identifier">async_execute_at</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+                                 <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_time_point</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">,</span> 
+                                 <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="timed_executor_traits.html#idp35536752-bb"><span class="identifier">async_execute_after</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+                                    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_duration</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">,</span> 
+                                    <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="timed_executor_traits.html#idp35546544-bb"><span class="identifier">execute_at</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+                           <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_time_point</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">,</span> 
+                           <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="link" href="timed_executor_traits.html#idp35556352-bb"><span class="identifier">execute_after</span></a><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+                              <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_duration</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="special">,</span> 
+                              <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp45363936"></a><h2>Description</h2>
+<a name="idp45614064"></a><h2>Description</h2>
 <p>The <a class="link" href="timed_executor_traits.html" title="Struct template timed_executor_traits">timed_executor_traits</a> type is used to request execution agents from an executor. It is analogous to the interaction between containers and allocator_traits. The generated generated execution agents support timed scheduling functionality (in addition to what is supported execution agents generated using execution_traits type). </p>
 <div class="refsect2">
-<a name="idp45365840"></a><h3>
+<a name="idp45615968"></a><h3>
 <a name="hpx.parallel.v3.timed_executor_traitstypes"></a><code class="computeroutput">timed_executor_traits</code> 
         public
        types</h3>
@@ -90,14 +96,14 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp45384816"></a><h3>
-<a name="idp35429136-bb"></a><code class="computeroutput">timed_executor_traits</code> public static functions</h3>
+<a name="idp222880"></a><h3>
+<a name="idp35507584-bb"></a><code class="computeroutput">timed_executor_traits</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-  <span class="keyword">static</span> <span class="keyword">void</span> <a name="idp35429696-bb"></a><span class="identifier">apply_execute_at</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <span class="keyword">void</span> <a name="idp35508144-bb"></a><span class="identifier">apply_execute_at</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
                                <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_time_point</span> <span class="keyword">const</span> <span class="special">&amp;</span> abs_time<span class="special">,</span> 
-                               <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous fire &amp; forget execution agent creation supporting timed execution. <p>This asynchronously (fire &amp; forget) creates a single function invocation f() using the associated executor at the given point in time.</p>
+                               <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span> ts<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous fire &amp; forget execution agent creation supporting timed execution. <p>This asynchronously (fire &amp; forget) creates a single function invocation f() using the associated executor at the given point in time.</p>
 <p>
 </p>
 <div class="note"><table border="0" summary="Note">
@@ -132,7 +138,7 @@
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
-<td><p>[in] The function which will be scheduled using the given executor.</p></td>
+<td><p>[in] The function which will be scheduled using the given executor. </p></td>
 </tr>
 </tbody>
 </table></div></td>
@@ -140,10 +146,10 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-  <span class="keyword">static</span> <span class="keyword">void</span> <a name="idp35437568-bb"></a><span class="identifier">apply_execute_after</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <span class="keyword">void</span> <a name="idp35517552-bb"></a><span class="identifier">apply_execute_after</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
                                   <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_duration</span> <span class="keyword">const</span> <span class="special">&amp;</span> rel_time<span class="special">,</span> 
-                                  <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous fire &amp; forget execution agent creation supporting timed execution. <p>This asynchronously (fire &amp; forget) creates a single function invocation f() using the associated executor after the given amount of time.</p>
+                                  <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span> ts<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous fire &amp; forget execution agent creation supporting timed execution. <p>This asynchronously (fire &amp; forget) creates a single function invocation f() using the associated executor after the given amount of time.</p>
 <p>
 </p>
 <div class="note"><table border="0" summary="Note">
@@ -174,7 +180,7 @@
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
-<td><p>[in] The function which will be scheduled using the given executor.</p></td>
+<td><p>[in] The function which will be scheduled using the given executor. </p></td>
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">rel_time</code></span></p></td>
@@ -186,10 +192,10 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp35445456-bb"></a><span class="identifier">async_execute_at</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp35526976-bb"></a><span class="identifier">async_execute_at</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
                                <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_time_point</span> <span class="keyword">const</span> <span class="special">&amp;</span> abs_time<span class="special">,</span> 
-                               <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous execution agent creation supporting timed execution. <p>This asynchronously creates a single function invocation f() using the associated executor at the given point in time.</p>
+                               <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span> ts<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous execution agent creation supporting timed execution. <p>This asynchronously creates a single function invocation f() using the associated executor at the given point in time.</p>
 <p>
 </p>
 <div class="note"><table border="0" summary="Note">
@@ -226,23 +232,23 @@
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
-<td><p>[in] The function which will be scheduled using the given executor.</p></td>
+<td><p>[in] The function which will be scheduled using the given executor. </p></td>
 </tr>
 </tbody>
 </table></div></td>
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
-<td><p>f()'s result through a future </p></td>
+<td><p>f(ts...)'s result through a future </p></td>
 </tr>
 </tbody>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp35453696-bb"></a><span class="identifier">async_execute_after</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp35536752-bb"></a><span class="identifier">async_execute_after</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
                                   <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_duration</span> <span class="keyword">const</span> <span class="special">&amp;</span> rel_time<span class="special">,</span> 
-                                  <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous execution agent creation supporting timed execution. <p>This asynchronously creates a single function invocation f() using the associated executor after the given amount of time.</p>
+                                  <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span> ts<span class="special">)</span><span class="special">;</span></pre>Singleton form of asynchronous execution agent creation supporting timed execution. <p>This asynchronously creates a single function invocation f() using the associated executor after the given amount of time.</p>
 <p>
 </p>
 <div class="note"><table border="0" summary="Note">
@@ -275,7 +281,7 @@
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
-<td><p>[in] The function which will be scheduled using the given executor.</p></td>
+<td><p>[in] The function which will be scheduled using the given executor. </p></td>
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">rel_time</code></span></p></td>
@@ -286,16 +292,16 @@
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
-<td><p>f()'s result through a future </p></td>
+<td><p>f(ts...)'s result through a future </p></td>
 </tr>
 </tbody>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp35461952-bb"></a><span class="identifier">execute_at</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp35546544-bb"></a><span class="identifier">execute_at</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
                          <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_time_point</span> <span class="keyword">const</span> <span class="special">&amp;</span> abs_time<span class="special">,</span> 
-                         <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>Singleton form of synchronous execution agent creation supporting timed execution. <p>This synchronously creates a single function invocation f() using the associated executor at the given point in time. The execution of the supplied function synchronizes with the caller.</p>
+                         <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span> ts<span class="special">)</span><span class="special">;</span></pre>Singleton form of synchronous execution agent creation supporting timed execution. <p>This synchronously creates a single function invocation f() using the associated executor at the given point in time. The execution of the supplied function synchronizes with the caller.</p>
 <p>
 
 </p>
@@ -332,23 +338,23 @@
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
-<td><p>[in] The function which will be scheduled using the given executor.</p></td>
+<td><p>[in] The function which will be scheduled using the given executor. </p></td>
 </tr>
 </tbody>
 </table></div></td>
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
-<td><p>f()'s result</p></td>
+<td><p>f(ts...)'s result</p></td>
 </tr>
 </tbody>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">&gt;</span> 
-  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp35470224-bb"></a><span class="identifier">execute_after</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
+  <span class="keyword">static</span> <span class="keyword">auto</span> <a name="idp35556352-bb"></a><span class="identifier">execute_after</span><span class="special">(</span><span class="identifier">executor_type</span> <span class="special">&amp;</span> exec<span class="special">,</span> 
                             <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">steady_duration</span> <span class="keyword">const</span> <span class="special">&amp;</span> rel_time<span class="special">,</span> 
-                            <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>Singleton form of synchronous execution agent creation supporting timed execution. <p>This synchronously creates a single function invocation f() using the associated executor after the given amount of time. The execution of the supplied function synchronizes with the caller.</p>
+                            <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> <span class="identifier">Ts</span> <span class="special">&amp;&amp;</span><span class="special">...</span> ts<span class="special">)</span><span class="special">;</span></pre>Singleton form of synchronous execution agent creation supporting timed execution. <p>This synchronously creates a single function invocation f() using the associated executor after the given amount of time. The execution of the supplied function synchronizes with the caller.</p>
 <p>
 
 </p>
@@ -381,7 +387,7 @@
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
-<td><p>[in] The function which will be scheduled using the given executor.</p></td>
+<td><p>[in] The function which will be scheduled using the given executor. </p></td>
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">rel_time</code></span></p></td>
@@ -392,7 +398,7 @@
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
-<td><p>f()'s result</p></td>
+<td><p>f(ts...)'s result</p></td>
 </tr>
 </tbody>
 </table></div>

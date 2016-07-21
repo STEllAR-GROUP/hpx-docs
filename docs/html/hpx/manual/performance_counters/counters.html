@@ -48,12 +48,12 @@
                 </th>
 <th>
                   <p>
-                    Parameters
+                    Description
                   </p>
                 </th>
 <th>
                   <p>
-                    Description
+                    Parameters
                   </p>
                 </th>
 </tr></thead>
@@ -417,12 +417,12 @@
                 </th>
 <th>
                   <p>
-                    Parameters
+                    Description
                   </p>
                 </th>
 <th>
                   <p>
-                    Description
+                    Parameters
                   </p>
                 </th>
 </tr></thead>
@@ -1029,12 +1029,12 @@
                 </th>
 <th>
                   <p>
-                    Parameters
+                    Description
                   </p>
                 </th>
 <th>
                   <p>
-                    Description
+                    Parameters
                   </p>
                 </th>
 </tr></thead>
@@ -2098,12 +2098,12 @@
                 </th>
 <th>
                   <p>
-                    Parameters
+                    Description
                   </p>
                 </th>
 <th>
                   <p>
-                    Description
+                    Parameters
                   </p>
                 </th>
 </tr></thead>
@@ -2516,12 +2516,12 @@
                 </th>
 <th>
                   <p>
-                    Parameters
+                    Description
                   </p>
                 </th>
 <th>
                   <p>
-                    Description
+                    Parameters
                   </p>
                 </th>
 </tr></thead>
@@ -2729,12 +2729,12 @@
                 </th>
 <th>
                   <p>
-                    Parameters
+                    Description
                   </p>
                 </th>
 <th>
                   <p>
-                    Description
+                    Parameters
                   </p>
                 </th>
 </tr></thead>
@@ -2900,12 +2900,12 @@ hello world from OS-thread 1 on locality 0
                 </th>
 <th>
                   <p>
-                    Parameters
+                    Description
                   </p>
                 </th>
 <th>
                   <p>
-                    Description
+                    Parameters
                   </p>
                 </th>
 </tr></thead>
@@ -3039,6 +3039,63 @@ hello world from OS-thread 1 on locality 0
                   </p>
                 </td>
 </tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput">/coalescing/time/parcel-arrival-histogram</code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <code class="computeroutput">locality#*/total</code>
+                  </p>
+                  <p>
+                    where:<br> <code class="computeroutput">*</code> is the locality id of the locality
+                    the average time between parcels for the given action should
+                    be queried for. The locality id is a (zero based) number identifying
+                    the locality.
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Returns a histogram representing the times between arriving parcels
+                    for the action which is given by the counter parameter.
+                  </p>
+                  <p>
+                    This counter returns an array of values, where the first three
+                    values represent the three parameters used for the histogram
+                    followed by one value for each of the histogram buckets.
+                  </p>
+                  <p>
+                    The first unit of measure displayed for this counter (<code class="computeroutput">[ns]</code>)
+                    refers to the lower and upper boundary values in the returned
+                    histogram data only. The second unit of mesure displayed (<code class="computeroutput">[0.1%]</code>)
+                    refers to the actual histogram data.
+                  </p>
+                  <p>
+                    For each bucket the counter shows a value between <code class="computeroutput">0</code>
+                    and <code class="computeroutput">1000</code>, which corresponds to a percentage value
+                    between <code class="computeroutput">0%</code> and <code class="computeroutput">100%</code>.
+                  </p>
+                </td>
+<td>
+                  <p>
+                    The action type and optional histogram parameters. The action
+                    type is the string which has been used while registering the
+                    action with <span class="emphasis"><em>HPX</em></span>, e.g. which has been passed
+                    as the second parameter to the macro <code class="computeroutput"><a class="link" href="../../../HPX_REGISTER_ACTION.html" title="Macro HPX_REGISTER_ACTION">HPX_REGISTER_ACTION</a></code>
+                    or <code class="computeroutput"><a class="link" href="../../../HPX_REGISTER_ACTION_ID.html" title="Macro HPX_REGISTER_ACTION_ID">HPX_REGISTER_ACTION_ID</a></code>.
+                  </p>
+                  <p>
+                    The action type may be follwowed by a comma separated list of
+                    up-to three numbers: the lower and upper boundaries for the collected
+                    histogram, and the number of buckets for the histogram to generate.
+                    By default these three numbers will be assumed to be <code class="computeroutput">0</code>
+                    (<code class="computeroutput">[ns]</code>, lower bound), <code class="computeroutput">1000000</code> (<code class="computeroutput">[ns]</code>,
+                    upper bound), and <code class="computeroutput">20</code> (number of buckets to generate).
+                  </p>
+                </td>
+</tr>
 </tbody>
 </table></div>
 </div>
@@ -3052,7 +3109,8 @@ hello world from OS-thread 1 on locality 0
             if the configuration time constant <code class="computeroutput">HPX_WITH_PARCEL_COALESCING</code>
             is set to <code class="computeroutput">ON</code> (default: ON). However, even in this case it
             will be available only for those actions, which are enabled for parcel
-            coalescing (see the macro <code class="computeroutput">HPX_ACTION_USES_MESSAGE_COALESCING_NOTHROW</code>).
+            coalescing (see the macros <code class="computeroutput">HPX_ACTION_USES_MESSAGE_COALESCING</code>
+            and <code class="computeroutput">HPX_ACTION_USES_MESSAGE_COALESCING_NOTHROW</code>).
           </p></td></tr>
 </table></div>
 </div>

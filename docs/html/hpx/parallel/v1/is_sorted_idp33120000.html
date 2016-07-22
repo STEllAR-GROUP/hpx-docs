@@ -1,0 +1,128 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template is_sorted</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 1.0.0">
+<link rel="up" href="../../../header/hpx/parallel/algorithms/is_sorted_hpp.html" title="Header &lt;hpx/parallel/algorithms/is_sorted.hpp&gt;">
+<link rel="prev" href="../../../header/hpx/parallel/algorithms/is_sorted_hpp.html" title="Header &lt;hpx/parallel/algorithms/is_sorted.hpp&gt;">
+<link rel="next" href="is_sorted_idp33140368.html" title="Function template is_sorted">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="562" height="104" src="../../../images/hpx_1_0_0_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/is_sorted_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/is_sorted_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="is_sorted_idp33140368.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.parallel.v1.is_sorted_idp33120000"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template is_sorted</span></h2>
+<p>hpx::parallel::v1::is_sorted</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/algorithms/is_sorted_hpp.html" title="Header &lt;hpx/parallel/algorithms/is_sorted.hpp&gt;">hpx/parallel/algorithms/is_sorted.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> FwdIter<span class="special">,</span> <span class="keyword">typename</span> Pred<span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">is_sorted</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">FwdIter</span> first<span class="special">,</span> <span class="identifier">FwdIter</span> last<span class="special">,</span> 
+                        <span class="identifier">Pred</span> <span class="special">&amp;&amp;</span> pred<span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idp119997968"></a><h2>Description</h2>
+<p>Determines if the range [first, last) is sorted. Uses pred to compare elements.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Complexity: at most (N+S-1) comparisons where <span class="emphasis"><em>N</em></span> = distance(first, last). <span class="emphasis"><em>S</em></span> = number of partitions</p></td></tr>
+</table></div>
+<p>
+
+
+The comparison operations in the parallel <span class="emphasis"><em>is_sorted</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequential_exe_idp35195696.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span> executes in sequential order in the calling thread.</p>
+<p>The comparison operations in the parallel <span class="emphasis"><em>is_sorted</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_task__idp35275360.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">first</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of elements of that the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">last</code></span></p></td>
+<td><p>Refers to the end of the sequence of elements of that the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">policy</code></span></p></td>
+<td><p>The execution policy to use for the scheduling of the iterations. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">pred</code></span></p></td>
+<td>
+<p>Refers to the binary predicate which returns true if the first argument should be treated as less than the second argument. The signature of the function should be equivalent to </p>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">pred</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Type</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
+</pre>
+<p> <br>
+ The signature does not need to have const &amp;, but the function must not modify the objects passed to it. The type <span class="emphasis"><em>Type</em></span> must be such that objects of types <span class="emphasis"><em>FwdIter</em></span> can be dereferenced and then implicitly converted to Type.</p>
+</td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Template Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">ExPolicy</code></span></p></td>
+<td><p>The type of the execution policy to use (deduced). It describes the manner in which the execution of the algorithm may be parallelized and the manner in which it executes the assignments. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">FwdIter</code></span></p></td>
+<td><p>The type of the source iterators used for the This iterator type must meet the requirements of a forward iterator. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The <span class="emphasis"><em>is_sorted</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;bool&gt;</em></span> if the execution policy is of type <span class="emphasis"><em>task_execution_policy</em></span> and returns <span class="emphasis"><em>bool</em></span> otherwise. The <span class="emphasis"><em>is_sorted</em></span> algorithm returns a bool if each element in the sequence [first, last) satisfies the predicate passed. If the range [first, last) contains less than two elements, the function always returns true. </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2016 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/is_sorted_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/is_sorted_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="is_sorted_idp33140368.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

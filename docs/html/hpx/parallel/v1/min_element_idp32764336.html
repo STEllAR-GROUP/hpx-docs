@@ -1,0 +1,143 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template min_element</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 1.0.0">
+<link rel="up" href="../../../header/hpx/parallel/algorithms/minmax_hpp.html" title="Header &lt;hpx/parallel/algorithms/minmax.hpp&gt;">
+<link rel="prev" href="../../../header/hpx/parallel/algorithms/minmax_hpp.html" title="Header &lt;hpx/parallel/algorithms/minmax.hpp&gt;">
+<link rel="next" href="max_element_idp32793664.html" title="Function template max_element">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="562" height="104" src="../../../images/hpx_1_0_0_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/minmax_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/minmax_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="max_element_idp32793664.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.parallel.v1.min_element_idp32764336"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template min_element</span></h2>
+<p>hpx::parallel::v1::min_element</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/algorithms/minmax_hpp.html" title="Header &lt;hpx/parallel/algorithms/minmax.hpp&gt;">hpx/parallel/algorithms/minmax.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> FwdIter<span class="special">,</span> 
+         <span class="keyword">typename</span> Proj <span class="special">=</span> <span class="identifier">util</span><span class="special">::</span><span class="identifier">projection_identity</span><span class="special">,</span> 
+         <span class="keyword">typename</span> F <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">less</span><span class="special">&lt;</span>            <span class="keyword">typename</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">remove_reference</span><span class="special">&lt;</span>                <span class="keyword">typename</span> <span class="identifier">traits</span><span class="special">::</span><span class="identifier">projected_result_of</span><span class="special">&lt;</span><span class="identifier">Proj</span><span class="special">,</span> <span class="identifier">FwdIter</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span>            <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">&gt;</span><span class="special">,</span> 
+         <span class="identifier">FwdIter</span> <span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">min_element</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">FwdIter</span> first<span class="special">,</span> <span class="identifier">FwdIter</span> last<span class="special">,</span> 
+                          <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f <span class="special">=</span> <span class="identifier">F</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> <span class="identifier">Proj</span> <span class="special">&amp;&amp;</span> proj <span class="special">=</span> <span class="identifier">Proj</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idp37096880"></a><h2>Description</h2>
+<p>Finds the smallest element in the range [first, last) using the given comparison function <span class="emphasis"><em>f</em></span>.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Complexity: Exactly <span class="emphasis"><em>max</em></span>(N-1, 0) comparisons, where N = std::distance(first, last).</p></td></tr>
+</table></div>
+<p>
+
+
+The comparisons in the parallel <span class="emphasis"><em>min_element</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequential_exe_idp34703488.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span> execute in sequential order in the calling thread.</p>
+<p>The comparisons in the parallel <span class="emphasis"><em>min_element</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_task__idp34783120.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
+<td>
+<p>The binary predicate which returns true if the the left argument is less than the right element. The signature of the predicate function should be equivalent to the following: </p>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">pred</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
+</pre>
+<p> <br>
+ The signature does not need to have const &amp;, but the function must not modify the objects passed to it. The type <span class="emphasis"><em>Type1</em></span> must be such that objects of type <span class="emphasis"><em>FwdIter</em></span> can be dereferenced and then implicitly converted to <span class="emphasis"><em>Type1</em></span>. </p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">first</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of elements the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">last</code></span></p></td>
+<td><p>Refers to the end of the sequence of elements the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">policy</code></span></p></td>
+<td><p>The execution policy to use for the scheduling of the iterations. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">proj</code></span></p></td>
+<td><p>Specifies the function (or function object) which will be invoked for each of the elements as a projection operation before the actual predicate <span class="emphasis"><em>is</em></span> invoked.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Template Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">ExPolicy</code></span></p></td>
+<td><p>The type of the execution policy to use (deduced). It describes the manner in which the execution of the algorithm may be parallelized and the manner in which it executes the assignments. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">F</code></span></p></td>
+<td><p>The type of the function/function object to use (deduced). Unlike its sequential form, the parallel overload of <span class="emphasis"><em>min_element</em></span> requires <span class="emphasis"><em>F</em></span> to meet the requirements of <span class="emphasis"><em>CopyConstructible</em></span>. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">FwdIter</code></span></p></td>
+<td><p>The type of the source iterators used (deduced). This iterator type must meet the requirements of a forward iterator. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">Proj</code></span></p></td>
+<td><p>The type of an optional projection function. This defaults to <span class="emphasis"><em>util::projection_identity</em></span> </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The <span class="emphasis"><em>min_element</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;FwdIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em><a class="link" href="sequential_tas_idp34620752.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></em></span> or <span class="emphasis"><em><a class="link" href="parallel_task__idp34783120.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></em></span> and returns <span class="emphasis"><em>FwdIter</em></span> otherwise. The <span class="emphasis"><em>min_element</em></span> algorithm returns the iterator to the smallest element in the range [first, last). If several elements in the range are equivalent to the smallest element, returns the iterator to the first such element. Returns last if the range is empty. </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2016 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/minmax_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/minmax_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="max_element_idp32793664.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

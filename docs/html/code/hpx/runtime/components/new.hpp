@@ -17,12 +17,11 @@
 #include <hpx/traits/is_client.hpp>
 #include <hpx/traits/is_component.hpp>
 #include <hpx/traits/is_distribution_policy.hpp>
+#include <hpx/util/lazy_enable_if.hpp>
 
 #include <algorithm>
 #include <type_traits>
 #include <vector>
-
-#include <boost/utility/enable_if.hpp>
 
 #if defined(DOXYGEN)
 namespace hpx
@@ -274,7 +273,7 @@ namespace hpx { namespace components
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Component, typename ...Ts>
-    inline typename boost::lazy_enable_if_c<
+    inline typename util::lazy_enable_if<
         traits::is_component_or_component_array<Component>::value,
         detail::new_component<Component>
     >::type
@@ -285,7 +284,7 @@ namespace hpx { namespace components
     }
 
     template <typename Component, typename DistPolicy, typename ...Ts>
-    inline typename boost::lazy_enable_if_c<
+    inline typename util::lazy_enable_if<
         traits::is_component_or_component_array<Component>::value &&
             traits::is_distribution_policy<DistPolicy>::value,
         detail::new_component<Component>
@@ -350,7 +349,7 @@ namespace hpx { namespace components
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Client, typename ...Ts>
-    inline typename boost::lazy_enable_if_c<
+    inline typename util::lazy_enable_if<
         traits::is_client_or_client_array<Client>::value,
         detail::new_client<Client>
     >::type
@@ -361,7 +360,7 @@ namespace hpx { namespace components
     }
 
     template <typename Client, typename DistPolicy, typename ...Ts>
-    inline typename boost::lazy_enable_if_c<
+    inline typename util::lazy_enable_if<
         traits::is_client_or_client_array<Client>::value &&
             traits::is_distribution_policy<DistPolicy>::value,
         detail::new_client<Client>

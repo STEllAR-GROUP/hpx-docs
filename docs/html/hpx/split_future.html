@@ -28,30 +28,52 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> Ts<span class="special">&gt;</span> 
   <span class="identifier">tuple</span><span class="special">&lt;</span> <span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">Ts</span> <span class="special">&gt;</span><span class="special">...</span><span class="special">&gt;</span> <span class="identifier">split_future</span><span class="special">(</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="identifier">tuple</span><span class="special">&lt;</span> <span class="identifier">Ts</span><span class="special">...</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp30877264"></a><h2>Description</h2>
-<p>   The function \a split_future is an operator allowing to split a given
-   future of a sequence of values (any tuple, std::pair, or std::array)
-   into an equivalent container of futures where each future represents
-   one of the values from the original future. In some sense this function
-   provides the inverse operation of \a when_all.
+<a name="idm140384656615456"></a><h2>Description</h2>
+<p>The function <span class="emphasis"><em>split_future</em></span> is an operator allowing to split a given future of a sequence of values (any tuple, std::pair, or std::array) into an equivalent container of futures where each future represents one of the values from the original future. In some sense this function provides the inverse operation of <span class="emphasis"><em>when_all</em></span>.</p>
+<p>
 
-   \param f    [in] A future holding an arbitrary sequence of values stored
-               in a tuple-like container. This facility supports
-               \a hpx::util::tuple&lt;&gt;, \a std::pair&lt;T1, T2&gt;, and
-               \a std::array&lt;T, N&gt;
-
-   \return     Returns an equivalent container (same container type as
-               passed as the argument) of futures, where each future refers
-               to the corresponding value in the input parameter. All of
-               the returned futures become ready once the input future has
-               become ready. If the input future is exceptional, all output
-               futures will be exceptional as well.
-
-   \note       The following cases are special:
-   @code 
-tuple&lt;future&lt;void&gt; &gt; split_future(future&lt;tuple&lt;&gt; &gt; &amp;&amp; f);
-array&lt;future&lt;void&gt;, 1&gt; split_future(future&lt;array&lt;T, 0&gt; &gt; &amp;&amp; f);
-  here the returned futures are directly representing the futures which were passed to the function. </p>
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>The following cases are special: </p>
+<pre class="programlisting"><span class="special">*</span>      <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">split_future</span><span class="special">(</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&amp;&amp;</span> <span class="identifier">f</span><span class="special">)</span><span class="special">;</span>
+<span class="special">*</span>      <span class="identifier">array</span><span class="special">&lt;</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span><span class="special">,</span> <span class="number">1</span><span class="special">&gt;</span> <span class="identifier">split_future</span><span class="special">(</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">array</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="number">0</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&amp;&amp;</span> <span class="identifier">f</span><span class="special">)</span><span class="special">;</span>
+<span class="special">*</span>  
+</pre>
+<p> here the returned futures are directly representing the futures which were passed to the function. </p>
+</td></tr>
+</table></div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
+<td><p>[in] A future holding an arbitrary sequence of values stored in a tuple-like container. This facility supports <span class="emphasis"><em>hpx::util::tuple&lt;&gt;</em></span>, <span class="emphasis"><em>std::pair&lt;T1, T2&gt;</em></span>, and <span class="emphasis"><em>std::array&lt;T, N&gt;</em></span> </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>Returns an equivalent container (same container type as passed as the argument) of futures, where each future refers to the corresponding value in the input parameter. All of the returned futures become ready once the input future has become ready. If the input future is exceptional, all output futures will be exceptional as well.</p></td>
+</tr>
+</tbody>
+</table></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

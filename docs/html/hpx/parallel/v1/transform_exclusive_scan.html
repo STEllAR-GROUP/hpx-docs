@@ -31,7 +31,7 @@
                                        <span class="identifier">InIter</span> last<span class="special">,</span> <span class="identifier">OutIter</span> dest<span class="special">,</span> 
                                        <span class="identifier">Conv</span> <span class="special">&amp;&amp;</span> conv<span class="special">,</span> <span class="identifier">T</span> init<span class="special">,</span> <span class="identifier">Op</span> <span class="special">&amp;&amp;</span> op<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp42466880"></a><h2>Description</h2>
+<a name="idm140507220604624"></a><h2>Description</h2>
 <p>Assigns through each iterator <span class="emphasis"><em>i</em></span> in [result, result + (last - first)) the value of GENERALIZED_NONCOMMUTATIVE_SUM(binary_op, init, conv(*first), ..., conv(*(first + (i - result) - 1))).</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -43,8 +43,8 @@
 <p>
 
 
-The reduce operations in the parallel <span class="emphasis"><em>transform_exclusive_scan</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequential_exe_idp35713168.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span> execute in sequential order in the calling thread.</p>
-<p>The reduce operations in the parallel <span class="emphasis"><em>transform_exclusive_scan</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_task__idp35792800.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
+The reduce operations in the parallel <span class="emphasis"><em>transform_exclusive_scan</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequent_idm139708246726320.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span> execute in sequential order in the calling thread.</p>
+<p>The reduce operations in the parallel <span class="emphasis"><em>transform_exclusive_scan</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="paralle_idm139708246646688.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
 <p>
 </p>
 <div class="note"><table border="0" summary="Note">
@@ -83,7 +83,8 @@ Neither <span class="emphasis"><em>conv</em></span> nor <span class="emphasis"><
 <td><p><span class="term"><code class="computeroutput">conv</code></span></p></td>
 <td>
 <p>Specifies the function (or function object) which will be invoked for each of the elements in the sequence specified by [first, last). This is a unary predicate. The signature of this predicate should be equivalent to: </p>
-<pre class="programlisting"><span class="identifier">R</span> <span class="identifier">fun</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="special">*</span>                      <span class="identifier">R</span> <span class="identifier">fun</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">)</span><span class="special">;</span>
+<span class="special">*</span>                      
 </pre>
 <p> <br>
  The signature does not need to have const&amp;, but the function must not modify the objects passed to it. The type <span class="emphasis"><em>Type</em></span> must be such that an object of type <span class="emphasis"><em>InIter</em></span> can be dereferenced and then implicitly converted to Type. The type <span class="emphasis"><em>R</em></span> must be such that an object of this type can be implicitly converted to <span class="emphasis"><em>T</em></span>. </p>
@@ -109,7 +110,8 @@ Neither <span class="emphasis"><em>conv</em></span> nor <span class="emphasis"><
 <td><p><span class="term"><code class="computeroutput">op</code></span></p></td>
 <td>
 <p>Specifies the function (or function object) which will be invoked for each of the values of the input sequence. This is a binary predicate. The signature of this predicate should be equivalent to: </p>
-<pre class="programlisting"><span class="identifier">Ret</span> <span class="identifier">fun</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"><span class="special">*</span>                      <span class="identifier">Ret</span> <span class="identifier">fun</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
+<span class="special">*</span>                      
 </pre>
 <p> <br>
  The signature does not need to have const&amp;, but the function must not modify the objects passed to it. The types <span class="emphasis"><em>Type1</em></span> and <span class="emphasis"><em>Ret</em></span> must be such that an object of a type as given by the input sequence can be implicitly converted to any of those types.</p>
@@ -159,7 +161,7 @@ Neither <span class="emphasis"><em>conv</em></span> nor <span class="emphasis"><
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
-<td><p>The <span class="emphasis"><em>copy_n</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;OutIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em><a class="link" href="sequential_tas_idp35630432.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></em></span> or <span class="emphasis"><em><a class="link" href="parallel_task__idp35792800.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></em></span> and returns <span class="emphasis"><em>OutIter</em></span> otherwise. The <span class="emphasis"><em>transform_exclusive_scan</em></span> algorithm returns the output iterator to the element in the destination range, one past the last element copied.</p></td>
+<td><p>The <span class="emphasis"><em>copy_n</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;OutIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em><a class="link" href="sequent_idm139708246809056.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></em></span> or <span class="emphasis"><em><a class="link" href="paralle_idm139708246646688.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></em></span> and returns <span class="emphasis"><em>OutIter</em></span> otherwise. The <span class="emphasis"><em>transform_exclusive_scan</em></span> algorithm returns the output iterator to the element in the destination range, one past the last element copied.</p></td>
 </tr>
 </tbody>
 </table></div>

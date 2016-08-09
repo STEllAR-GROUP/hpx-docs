@@ -324,7 +324,7 @@
               use <code class="computeroutput">hpx::apply</code><code class="computeroutput"><span class="special">&lt;&gt;()</span></code> instead of <code class="computeroutput">hpx::async</code><code class="computeroutput"><span class="special">&lt;&gt;()</span></code>
               to invoke an action in a non-blocking fashion.
             </li></ul></div>
-<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">reset_non_blocking</span><span class="special">()</span>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">reset</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">apply_policy</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="identifier">HPX_ASSERT</span><span class="special">(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
 
@@ -339,12 +339,12 @@
               Example</a>, enable asynchronous action invocation. Here's an example
               from the accumulator client class:
             </li></ul></div>
-<pre class="programlisting"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">argument_type</span><span class="special">&gt;</span> <span class="identifier">query_async</span><span class="special">()</span>
+<pre class="programlisting"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">argument_type</span><span class="special">&gt;</span> <span class="identifier">query</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async_policy</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="identifier">HPX_ASSERT</span><span class="special">(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
 
     <span class="keyword">typedef</span> <span class="identifier">server</span><span class="special">::</span><span class="identifier">accumulator</span><span class="special">::</span><span class="identifier">query_action</span> <span class="identifier">action_type</span><span class="special">;</span>
-    <span class="keyword">return</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">&lt;</span><span class="identifier">action_type</span><span class="special">&gt;(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
+    <span class="keyword">return</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">&lt;</span><span class="identifier">action_type</span><span class="special">&gt;(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async</span><span class="special">,</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
 <span class="special">}</span>
 </pre>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
@@ -353,12 +353,12 @@
               wait on it to be ready). Here's an example from the accumulator client
               class:
             </li></ul></div>
-<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">add_sync</span><span class="special">(</span><span class="identifier">argument_type</span> <span class="identifier">arg</span><span class="special">)</span>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">add</span><span class="special">(</span><span class="identifier">argument_type</span> <span class="identifier">arg</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="identifier">HPX_ASSERT</span><span class="special">(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">());</span>
 
     <span class="keyword">typedef</span> <span class="identifier">server</span><span class="special">::</span><span class="identifier">accumulator</span><span class="special">::</span><span class="identifier">add_action</span> <span class="identifier">action_type</span><span class="special">;</span>
-    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">&lt;</span><span class="identifier">action_type</span><span class="special">&gt;(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">(),</span> <span class="identifier">arg</span><span class="special">).</span><span class="identifier">get</span><span class="special">();</span>
+    <span class="identifier">action_type</span><span class="special">()(</span><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">(),</span> <span class="identifier">arg</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>

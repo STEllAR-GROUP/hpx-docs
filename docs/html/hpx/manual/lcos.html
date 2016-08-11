@@ -39,21 +39,87 @@
 <li class="listitem">
             barrier
           </li>
-<li class="listitem">
-            and_gate
-          </li>
-<li class="listitem">
-            barrier
-          </li>
-<li class="listitem">
-            composable_guard - Composable guards operate in a manner similar to locks,
-            but are applied only to asynchronous functions. The guard (or guards)
-            is automatically locked at the beginning of a specified task and automatically
-            unlocked at the end. Because guards are never added to an existing task's
-            execution context, the calling of guards is freely composable and can
-            never deadlock.
-          </li>
 </ol></div>
+<h5>
+<a name="hpx.manual.lcos.h0"></a>
+        <span class="phrase"><a name="hpx.manual.lcos.channels"></a></span><a class="link" href="lcos.html#hpx.manual.lcos.channels">Channels</a>
+      </h5>
+<p>
+        Channels combine communication (the exchange of a value) with synchronization
+        (guaranteeing that two calculations (tasks) are in a known state). A channel
+        can transport any number of values of a given type from a sender to a receiver:
+      </p>
+<pre class="programlisting"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">local</span><span class="special">::</span><span class="identifier">channel</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">c</span><span class="special">;</span>
+<span class="identifier">c</span><span class="special">.</span><span class="identifier">set</span><span class="special">(</span><span class="number">42</span><span class="special">);</span>
+<span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>      <span class="comment">// will print '42'</span>
+</pre>
+<p>
+        Channels can be handed to another thread (or in case of channel components,
+        to other localities), thus establishing a communication channel between two
+        independed places in the program:
+      </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">do_something</span><span class="special">(</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">local</span><span class="special">::</span><span class="identifier">receive_channel</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">c</span><span class="special">,</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">local</span><span class="special">::</span><span class="identifier">send_channel</span><span class="special">&lt;&gt;</span> <span class="identifier">done</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>        <span class="comment">// prints 42</span>
+    <span class="identifier">done</span><span class="special">.</span><span class="identifier">set</span><span class="special">();</span>             <span class="comment">// signal back</span>
+<span class="special">}</span>
+
+<span class="special">{</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">local</span><span class="special">::</span><span class="identifier">channel</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">c</span><span class="special">;</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">local</span><span class="special">::</span><span class="identifier">channel</span><span class="special">&lt;&gt;</span> <span class="identifier">done</span><span class="special">;</span>
+
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">apply</span><span class="special">(&amp;</span><span class="identifier">do_something</span><span class="special">,</span> <span class="identifier">c</span><span class="special">,</span> <span class="identifier">done</span><span class="special">);</span>
+
+    <span class="identifier">c</span><span class="special">.</span><span class="identifier">set</span><span class="special">(</span><span class="number">42</span><span class="special">);</span>              <span class="comment">// send some value</span>
+    <span class="identifier">done</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>             <span class="comment">// wait for thread to be done</span>
+<span class="special">}</span>
+</pre>
+<p>
+        A channel component is created on one locality and can be send to another
+        locality using an action. This example also demonstrates how a channel can
+        be used as a range of values:
+      </p>
+<pre class="programlisting"><span class="comment">// channel components need to be registered for each used type (not needed</span>
+<span class="comment">// for hpx::lcos::local::channel)</span>
+<span class="identifier">HPX_REGISTER_CHANNEL</span><span class="special">(</span><span class="keyword">double</span><span class="special">);</span>
+
+<span class="keyword">void</span> <span class="identifier">some_action</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">channel</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">c</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">for</span> <span class="special">(</span><span class="keyword">double</span> <span class="identifier">d</span> <span class="special">:</span> <span class="identifier">c</span><span class="special">)</span>
+        <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">d</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+<span class="identifier">HPX_REGISTER_ACTION</span><span class="special">(</span><span class="identifier">some_action</span><span class="special">);</span>
+
+<span class="special">{</span>
+    <span class="comment">// create the channel on this locality</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">channel</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">c</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">());</span>
+
+    <span class="comment">// pass the channel to a (possibly remote invoked) action</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">apply</span><span class="special">(</span><span class="identifier">some_action</span><span class="special">(),</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">);</span>
+
+    <span class="comment">// send some values to the receiver</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">v</span> <span class="special">=</span> <span class="special">{</span> <span class="number">1.2</span><span class="special">,</span> <span class="number">3.4</span><span class="special">,</span> <span class="number">5.0</span> <span class="special">};</span>
+    <span class="keyword">for</span> <span class="special">(</span><span class="keyword">double</span> <span class="identifier">d</span> <span class="special">:</span> <span class="identifier">v</span><span class="special">)</span>
+        <span class="identifier">c</span><span class="special">.</span><span class="identifier">set</span><span class="special">(</span><span class="identifier">d</span><span class="special">);</span>
+
+    <span class="comment">// explicitly close the communication channel (implicit at destruction)</span>
+    <span class="identifier">c</span><span class="special">.</span><span class="identifier">close</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<h5>
+<a name="hpx.manual.lcos.h1"></a>
+        <span class="phrase"><a name="hpx.manual.lcos.composable_guards"></a></span><a class="link" href="lcos.html#hpx.manual.lcos.composable_guards">Composable
+        Guards</a>
+      </h5>
+<p>
+        Composable guards operate in a manner similar to locks, but are applied only
+        to asynchronous functions. The guard (or guards) is automatically locked
+        at the beginning of a specified task and automatically unlocked at the end.
+        Because guards are never added to an existing task's execution context, the
+        calling of guards is freely composable and can never deadlock.
+      </p>
 <p>
         To call an application with a single guard, simply declare the guard and
         call run_guarded() with a function (task).

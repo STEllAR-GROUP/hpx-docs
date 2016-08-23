@@ -38,18 +38,29 @@
             of values for each invocation. We also added a first counter of this
             type which collects a histogram of the times between parcels being created.
           </li>
+<li class="listitem">
+            Added new LCOs: <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">channel</span></code> and <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">local</span><span class="special">::</span><span class="identifier">channel</span></code>
+            which are very similar to the well known channel constructs used in the
+            Go language.
+          </li>
 </ul></div>
 <h5>
 <a name="hpx.whats_new.hpx_1_0_0.h1"></a>
         <span class="phrase"><a name="hpx.whats_new.hpx_1_0_0.breaking_changes"></a></span><a class="link" href="hpx_1_0_0.html#hpx.whats_new.hpx_1_0_0.breaking_changes">Breaking
         Changes</a>
       </h5>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            We have dropped support for the gcc compiler versions V4.6 and 4.7. The
+            minimal gcc version we now test on is gcc V4.8.
+          </li>
+<li class="listitem">
             We have removed (default) support for <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">chrono</span></code>
             in interfaces, uses of it have been replaced with <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">chrono</span></code>.
             This facility can be still enabled at configure time by specifying <code class="computeroutput"><span class="special">-</span><span class="identifier">DHPX_WITH_BOOST_CHRONO_COMPATIBILITY</span><span class="special">=</span><span class="identifier">On</span></code>
             to <a href="http://www.cmake.org" target="_top">CMake</a>.
-          </li></ul></div>
+          </li>
+</ul></div>
 <h5>
 <a name="hpx.whats_new.hpx_1_0_0.h2"></a>
         <span class="phrase"><a name="hpx.whats_new.hpx_1_0_0.bug_fixes_closed_tickets"></a></span><a class="link" href="hpx_1_0_0.html#hpx.whats_new.hpx_1_0_0.bug_fixes_closed_tickets">Bug
@@ -59,6 +70,103 @@
         Here is a list of the important tickets we closed for this release.
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2301" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2301</a> -
+            Algorithm overloads fix for VS2013
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2299" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2299</a> -
+            Replace boost::[c]ref with std::[c]ref, add inspect checks
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2297" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2297</a> -
+            Fixing compilation with no hw_loc
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2295" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2295</a> -
+            Making sure for_loop(par, 0, N, ...) is actually executed in parallel
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2294" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2294</a> -
+            Throwing exceptions if the runtime is not up and running
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2293" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2293</a> -
+            Removing unused parcel port code
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2292" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2292</a> -
+            Refactor function vtables
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2291" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2291</a> -
+            Fixing 2286
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2290" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2290</a> -
+            Simplify algorithm overloads
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2288" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2288</a> -
+            Remove dormant parcelports
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2286" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2286</a> -
+            adjustments to parcel handling to support parcelports that do not need
+            a connection cache
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2285" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2285</a> -
+            add CMake option to disable package export
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2283" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2283</a> -
+            Add more inspect checks for use of deprecated components
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2282" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2282</a> -
+            Arithmetic exception in executor static chunker
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2281" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2281</a> -
+            For loop doesn't parallelize
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2280" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2280</a> -
+            Fixing 2277: build failure with PAPI
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2279" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2279</a> -
+            Child vs parent stealing
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2277" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2277</a> -
+            master branch build failure (53c5b4f) with papi
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2276" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2276</a> -
+            Compile time launch policies
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2275" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2275</a> -
+            Replace boost::chrono with std::chrono in interfaces
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2274" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2274</a> -
+            Replace most uses of Boost.Assign with initializer list
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2273" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2273</a> -
+            Fixed typos
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2272" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2272</a> -
+            Inspect checks
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2270" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2270</a> -
+            Adding test verifying -Ihpx.os_threads=all
+          </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2269" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2269</a> -
             Added inspect check for now obsolete boost type traits
@@ -72,12 +180,20 @@
             Add inspect support to deprecate Boost.TypeTraits
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2265" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2265</a> -
+            Adding channel LCO
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2264" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2264</a> -
             Make support for std::ref mandatory
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2263" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2263</a> -
             Constrain tuple_member forwarding constructor
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2262" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2262</a> -
+            Test hpx.os_threads=all
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2261" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2261</a> -
@@ -126,6 +242,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2249" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2249</a> -
             Adding iterator_facade and iterator_adaptor
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2248" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2248</a> -
+            Need a feature to yield to a new task immediately
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2246" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2246</a> -

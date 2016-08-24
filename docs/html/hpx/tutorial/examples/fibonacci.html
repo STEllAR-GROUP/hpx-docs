@@ -142,7 +142,7 @@ elapsed time: 0.233827 [s]
 
     <span class="identifier">desc_commandline</span><span class="special">.</span><span class="identifier">add_options</span><span class="special">()</span>
         <span class="special">(</span> <span class="string">"n-value"</span><span class="special">,</span>
-          <span class="identifier">boost</span><span class="special">::</span><span class="identifier">program_options</span><span class="special">::</span><span class="identifier">value</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span><span class="special">&gt;()-&gt;</span><span class="identifier">default_value</span><span class="special">(</span><span class="number">10</span><span class="special">),</span>
+          <span class="identifier">boost</span><span class="special">::</span><span class="identifier">program_options</span><span class="special">::</span><span class="identifier">value</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span><span class="special">&gt;()-&gt;</span><span class="identifier">default_value</span><span class="special">(</span><span class="number">10</span><span class="special">),</span>
           <span class="string">"n value for the Fibonacci function"</span><span class="special">)</span>
         <span class="special">;</span>
 
@@ -151,7 +151,7 @@ elapsed time: 0.233827 [s]
 <span class="special">}</span>
 </pre>
 <p>
-          The <code class="computeroutput"><a class="link" href="../../init_idm140494182579936.html" title="Function init">hpx::init</a></code><code class="computeroutput"><span class="special">()</span></code> function in <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> starts the runtime system, and invokes
+          The <code class="computeroutput"><a class="link" href="../../init_idm140225758690288.html" title="Function init">hpx::init</a></code><code class="computeroutput"><span class="special">()</span></code> function in <code class="computeroutput"><span class="identifier">main</span><span class="special">()</span></code> starts the runtime system, and invokes
           <code class="computeroutput">hpx_main</code><code class="computeroutput"><span class="special">()</span></code>
           as the first <span class="emphasis"><em>HPX</em></span>-thread. Below we can see that the
           basic program is simple. The command line option <code class="literal">--n-value</code>
@@ -162,7 +162,7 @@ elapsed time: 0.233827 [s]
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">hpx_main</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">program_options</span><span class="special">::</span><span class="identifier">variables_map</span><span class="special">&amp;</span> <span class="identifier">vm</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="comment">// extract command line argument, i.e. fib(N)</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">n</span> <span class="special">=</span> <span class="identifier">vm</span><span class="special">[</span><span class="string">"n-value"</span><span class="special">].</span><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span><span class="special">&gt;();</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">n</span> <span class="special">=</span> <span class="identifier">vm</span><span class="special">[</span><span class="string">"n-value"</span><span class="special">].</span><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span><span class="special">&gt;();</span>
 
     <span class="special">{</span>
         <span class="comment">// Keep track of the time required to execute.</span>
@@ -170,7 +170,7 @@ elapsed time: 0.233827 [s]
 
         <span class="comment">// Wait for fib() to return the value</span>
         <span class="identifier">fibonacci_action</span> <span class="identifier">fib</span><span class="special">;</span>
-        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">fib</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">(),</span> <span class="identifier">n</span><span class="special">);</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">fib</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_here</span><span class="special">(),</span> <span class="identifier">n</span><span class="special">);</span>
 
         <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">fmt</span> <span class="special">=</span> <span class="string">"fibonacci(%1%) == %2%\nelapsed time: %3% [s]\n"</span><span class="special">;</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span><span class="special">(</span><span class="identifier">fmt</span><span class="special">)</span> <span class="special">%</span> <span class="identifier">n</span> <span class="special">%</span> <span class="identifier">r</span> <span class="special">%</span> <span class="identifier">t</span><span class="special">.</span><span class="identifier">elapsed</span><span class="special">());</span>
@@ -196,7 +196,7 @@ elapsed time: 0.233827 [s]
           To further understand this we turn to the code to find where <code class="computeroutput"><span class="identifier">fibonacci_action</span></code> was defined:
         </p>
 <pre class="programlisting"><span class="comment">// forward declaration of the Fibonacci function</span>
-<span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">fibonacci</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">n</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">fibonacci</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">n</span><span class="special">);</span>
 
 <span class="comment">// This is to generate the required boilerplate we need for the remote</span>
 <span class="comment">// invocation to work.</span>
@@ -219,7 +219,7 @@ elapsed time: 0.233827 [s]
           function <code class="computeroutput"><span class="identifier">fibonacci</span><span class="special">()</span></code>.
           Now, lets look at the function <code class="computeroutput"><span class="identifier">fibonacci</span><span class="special">()</span></code>:
         </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">fibonacci</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">n</span><span class="special">)</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">fibonacci</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">n</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">n</span> <span class="special">&lt;</span> <span class="number">2</span><span class="special">)</span>
         <span class="keyword">return</span> <span class="identifier">n</span><span class="special">;</span>
@@ -232,9 +232,9 @@ elapsed time: 0.233827 [s]
     <span class="comment">// heavy workload.</span>
 
     <span class="identifier">fibonacci_action</span> <span class="identifier">fib</span><span class="special">;</span>
-    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span><span class="special">&gt;</span> <span class="identifier">n1</span> <span class="special">=</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span><span class="special">&gt;</span> <span class="identifier">n1</span> <span class="special">=</span>
         <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">(</span><span class="identifier">fib</span><span class="special">,</span> <span class="identifier">locality_id</span><span class="special">,</span> <span class="identifier">n</span> <span class="special">-</span> <span class="number">1</span><span class="special">);</span>
-    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span><span class="special">&gt;</span> <span class="identifier">n2</span> <span class="special">=</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">uint64_t</span><span class="special">&gt;</span> <span class="identifier">n2</span> <span class="special">=</span>
         <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">(</span><span class="identifier">fib</span><span class="special">,</span> <span class="identifier">locality_id</span><span class="special">,</span> <span class="identifier">n</span> <span class="special">-</span> <span class="number">2</span><span class="special">);</span>
 
     <span class="keyword">return</span> <span class="identifier">n1</span><span class="special">.</span><span class="identifier">get</span><span class="special">()</span> <span class="special">+</span> <span class="identifier">n2</span><span class="special">.</span><span class="identifier">get</span><span class="special">();</span>   <span class="comment">// wait for the Futures to return their values</span>

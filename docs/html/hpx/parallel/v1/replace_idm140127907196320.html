@@ -1,0 +1,147 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template replace_if</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 1.0.0">
+<link rel="up" href="../../../header/hpx/parallel/container_algorithms/replace_hpp.html" title="Header &lt;hpx/parallel/container_algorithms/replace.hpp&gt;">
+<link rel="prev" href="replace_idm140127907222032.html" title="Function template replace">
+<link rel="next" href="replace_idm140127907165024.html" title="Function template replace_copy">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="562" height="104" src="../../../images/hpx_1_0_0_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="replace_idm140127907222032.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/container_algorithms/replace_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="replace_idm140127907165024.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.parallel.v1.replace_idm140127907196320"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template replace_if</span></h2>
+<p>hpx::parallel::v1::replace_if</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/container_algorithms/replace_hpp.html" title="Header &lt;hpx/parallel/container_algorithms/replace.hpp&gt;">hpx/parallel/container_algorithms/replace.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> Rng<span class="special">,</span> <span class="keyword">typename</span> F<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">,</span> 
+         <span class="keyword">typename</span> Proj <span class="special">=</span> <span class="identifier">util</span><span class="special">::</span><span class="identifier">projection_identity</span><span class="special">,</span> <span class="identifier">Rng</span> <span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">replace_if</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">Rng</span> <span class="special">&amp;&amp;</span> rng<span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> 
+                         <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> new_value<span class="special">,</span> <span class="identifier">Proj</span> <span class="special">&amp;&amp;</span> proj <span class="special">=</span> <span class="identifier">Proj</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idm140010362922848"></a><h2>Description</h2>
+<p>Replaces all elements satisfying specific criteria (for which predicate <span class="emphasis"><em>f</em></span> returns true) with <span class="emphasis"><em>new_value</em></span> in the range [first, last).</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Complexity: Performs exactly <span class="emphasis"><em>last</em></span> - <span class="emphasis"><em>first</em></span> applications of the predicate.</p></td></tr>
+</table></div>
+<p>
+Effects: Substitutes elements referred by the iterator it in the range [first, last) with new_value, when the following corresponding conditions hold: INVOKE(f, INVOKE(proj, *it)) != false</p>
+<p>
+
+The assignments in the parallel <span class="emphasis"><em>replace_if</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequent_idm140127906076944.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span> execute in sequential order in the calling thread.</p>
+<p>The assignments in the parallel <span class="emphasis"><em>replace_if</em></span> algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="paralle_idm140127905998464.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">f</code></span></p></td>
+<td>
+<p>Specifies the function (or function object) which will be invoked for each of the elements in the sequence specified by [first, last).This is an unary predicate which returns <span class="emphasis"><em>true</em></span> for the elements which need to replaced. The signature of this predicate should be equivalent to: </p>
+<pre class="programlisting"><span class="special">*</span>                      <span class="keyword">bool</span> <span class="identifier">pred</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">)</span><span class="special">;</span>
+<span class="special">*</span>                      
+</pre>
+<p> <br>
+ The signature does not need to have const&amp;, but the function must not modify the objects passed to it. The type <span class="emphasis"><em>Type</em></span> must be such that an object of type <span class="emphasis"><em>FwdIter</em></span> can be dereferenced and then implicitly converted to <span class="emphasis"><em>Type</em></span>. </p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">new_value</code></span></p></td>
+<td><p>Refers to the new value to use as the replacement. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">policy</code></span></p></td>
+<td><p>The execution policy to use for the scheduling of the iterations. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">proj</code></span></p></td>
+<td><p>Specifies the function (or function object) which will be invoked for each of the elements as a projection operation before the actual predicate <span class="emphasis"><em>is</em></span> invoked.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">rng</code></span></p></td>
+<td><p>Refers to the sequence of elements the algorithm will be applied to. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Template Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">ExPolicy</code></span></p></td>
+<td><p>The type of the execution policy to use (deduced). It describes the manner in which the execution of the algorithm may be parallelized and the manner in which it executes the assignments. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">F</code></span></p></td>
+<td><p>The type of the function/function object to use (deduced). Unlike its sequential form, the parallel overload of <span class="emphasis"><em>equal</em></span> requires <span class="emphasis"><em>F</em></span> to meet the requirements of <span class="emphasis"><em>CopyConstructible</em></span>. (deduced). </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">Proj</code></span></p></td>
+<td><p>The type of an optional projection function. This defaults to <span class="emphasis"><em>util::projection_identity</em></span> </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">Rng</code></span></p></td>
+<td><p>The type of the source range used (deduced). The iterators extracted from this range type must meet the requirements of a forward iterator. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">T</code></span></p></td>
+<td><p>The type of the new values to replace (deduced). </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The <span class="emphasis"><em>replace_if</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;FwdIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em><a class="link" href="sequent_idm140127906158528.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></em></span> or <span class="emphasis"><em><a class="link" href="paralle_idm140127905998464.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></em></span> and returns <span class="emphasis"><em>void</em></span> otherwise. It returns <span class="emphasis"><em>last</em></span>. </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2016 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="replace_idm140127907222032.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/container_algorithms/replace_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="replace_idm140127907165024.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

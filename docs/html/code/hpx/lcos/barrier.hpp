@@ -70,6 +70,9 @@ namespace hpx { namespace lcos {
         /// \a num participate and the local rank is \a rank.
         barrier(std::string const&  base_name, std::size_t num, std::size_t rank);
 
+        barrier(barrier&& other);
+        barrier& operator=(barrier&& other);
+
         /// \cond NOINTERNAL
         ~barrier();
         /// \endcond
@@ -92,8 +95,10 @@ namespace hpx { namespace lcos {
         // Resets this barrier instance.
         void release();
 
+
         // Get the instance of the global barrier
         static barrier& get_global_barrier();
+        static barrier create_global_barrier();
         /// \endcond
 
         /// Perform a global synchronization using the default global barrier
@@ -106,6 +111,8 @@ namespace hpx { namespace lcos {
 
     private:
         /// \cond NOINTERNAL
+        barrier();
+
         boost::intrusive_ptr<wrapping_type> node_;
         /// \endcond
     };

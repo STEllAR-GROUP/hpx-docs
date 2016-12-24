@@ -31,7 +31,7 @@
                         <span class="identifier">InIter2</span> first2<span class="special">,</span> <span class="identifier">InIter2</span> last2<span class="special">,</span> <span class="identifier">OutIter</span> dest<span class="special">,</span> 
                         <span class="identifier">Pred</span> <span class="special">&amp;&amp;</span> op <span class="special">=</span> <span class="identifier">Pred</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm140231769986640"></a><h2>Description</h2>
+<a name="idm139829117150240"></a><h2>Description</h2>
 <p>Constructs a sorted range beginning at dest consisting of all elements present in one or both sorted ranges [first1, last1) and [first2, last2). This algorithm expects both input ranges to be sorted with the given binary predicate <span class="emphasis"><em>f</em></span>.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -45,8 +45,8 @@ If some element is found <span class="emphasis"><em>m</em></span> times in [firs
 <p>The resulting range cannot overlap with either of the input ranges.</p>
 <p>
 
-The application of function objects in parallel algorithm invoked with a sequential execution policy object execute in sequential order in the calling thread (<span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequent_idm139812855648848.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span>) or in a single new thread spawned from the current thread (for <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequent_idm139812855730432.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></code></em></span>).</p>
-<p>The application of function objects in parallel algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="paralle_idm139812855570368.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
+The application of function objects in parallel algorithm invoked with a sequential execution policy object execute in sequential order in the calling thread (<span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequent_idm139818295629680.html" title="Struct sequential_execution_policy">sequential_execution_policy</a></code></em></span>) or in a single new thread spawned from the current thread (for <span class="emphasis"><em><code class="computeroutput"><a class="link" href="sequent_idm139818295711264.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></code></em></span>).</p>
+<p>The application of function objects in parallel algorithm invoked with an execution policy object of type <span class="emphasis"><em><code class="computeroutput"><a class="link" href="parallel_execution_policy.html" title="Struct parallel_execution_policy">parallel_execution_policy</a></code></em></span> or <span class="emphasis"><em><code class="computeroutput"><a class="link" href="paralle_idm139818295551200.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></code></em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -84,6 +84,17 @@ The application of function objects in parallel algorithm invoked with a sequent
 <td><p>Refers to the end of the sequence of elements of the second range the algorithm will be applied to. </p></td>
 </tr>
 <tr>
+<td><p><span class="term"><code class="computeroutput">op</code></span></p></td>
+<td>
+<p>The binary predicate which returns true if the elements should be treated as equal. The signature of the predicate function should be equivalent to the following: </p>
+<pre class="programlisting"><span class="special">*</span>                      <span class="keyword">bool</span> <span class="identifier">pred</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
+<span class="special">*</span>                      
+</pre>
+<p> <br>
+ The signature does not need to have const &amp;, but the function must not modify the objects passed to it. The type <span class="emphasis"><em>Type1</em></span> must be such that objects of type <span class="emphasis"><em>InIter</em></span> can be dereferenced and then implicitly converted to <span class="emphasis"><em>Type1</em></span> </p>
+</td>
+</tr>
+<tr>
 <td><p><span class="term"><code class="computeroutput">policy</code></span></p></td>
 <td><p>The execution policy to use for the scheduling of the iterations. </p></td>
 </tr>
@@ -106,16 +117,12 @@ The application of function objects in parallel algorithm invoked with a sequent
 <td><p><span class="term"><code class="computeroutput">OutIter</code></span></p></td>
 <td><p>The type of the iterator representing the destination range (deduced). This iterator type must meet the requirements of an output iterator. </p></td>
 </tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">Pred</code></span></p></td>
-<td><p>The type of an optional function/function object to use. Unlike its sequential form, the parallel overload of <span class="emphasis"><em>set_union</em></span> requires <span class="emphasis"><em>Pred</em></span> to meet the requirements of <span class="emphasis"><em>CopyConstructible</em></span>. This defaults to std::less&lt;&gt;</p></td>
-</tr>
 </tbody>
 </table></div></td>
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
-<td><p>The <span class="emphasis"><em>set_union</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;OutIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em><a class="link" href="sequent_idm139812855730432.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></em></span> or <span class="emphasis"><em><a class="link" href="paralle_idm139812855570368.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></em></span> and returns <span class="emphasis"><em>OutIter</em></span> otherwise. The <span class="emphasis"><em>set_union</em></span> algorithm returns the output iterator to the element in the destination range, one past the last element copied. </p></td>
+<td><p>The <span class="emphasis"><em>set_union</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;OutIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em><a class="link" href="sequent_idm139818295711264.html" title="Struct sequential_task_execution_policy">sequential_task_execution_policy</a></em></span> or <span class="emphasis"><em><a class="link" href="paralle_idm139818295551200.html" title="Struct parallel_task_execution_policy">parallel_task_execution_policy</a></em></span> and returns <span class="emphasis"><em>OutIter</em></span> otherwise. The <span class="emphasis"><em>set_union</em></span> algorithm returns the output iterator to the element in the destination range, one past the last element copied. </p></td>
 </tr>
 </tbody>
 </table></div>

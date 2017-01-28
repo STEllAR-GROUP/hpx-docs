@@ -61,11 +61,30 @@
 <pre class="programlisting"><span class="comment">// print the current number of threads created on locality 0</span>
 <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">performance_counters</span><span class="special">::</span><span class="identifier">performance_counter</span> <span class="identifier">count</span><span class="special">(</span>
     <span class="string">"/threads{locality#0/total}/count/cumulative"</span><span class="special">);</span>
-<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">count</span><span class="special">.</span><span class="identifier">get_value</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;()</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">count</span><span class="special">.</span><span class="identifier">get_value</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;().</span><span class="identifier">get</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
 <p>
             For more information about the client component type see <code class="computeroutput">hpx::performance_counters::performance_counter</code>.
           </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+              In the above example count.get_value() returns a future. In order to
+              print the result we must append .get() to retrieve the value. You could
+              write the above example like this for more clarity:
+            </p>
+<pre class="programlisting"><span class="comment">// print the current number of threads created on locality 0</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">performance_counters</span><span class="special">::</span><span class="identifier">performance_counter</span> <span class="identifier">count</span><span class="special">(</span>
+    <span class="string">"/threads{locality#0/total}/count/cumulative"</span><span class="special">);</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">count</span><span class="special">.</span><span class="identifier">get_value</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;();</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">result</span><span class="special">.</span><span class="identifier">get</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+</pre>
+</td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -487,7 +487,8 @@ timer_pool_size = ${HPX_NUM_TIMER_POOL_SIZE:2}
             </p></td></tr>
 </table></div>
 <pre class="programlisting">[hpx.thread_queue]
-min_tasks_to_steal = ${HPX_THREAD_QUEUE_MIN_TASKS_TO_STEAL:10}
+min_tasks_to_steal_pending = ${HPX_THREAD_QUEUE_MIN_TASKS_TO_STEAL_PENDING:0}
+min_tasks_to_steal_staged = ${HPX_THREAD_QUEUE_MIN_TASKS_TO_STEAL_STAGED:10}
 min_add_new_count = ${HPX_THREAD_QUEUE_MIN_ADD_NEW_COUNT:10}
 max_add_new_count = ${HPX_THREAD_QUEUE_MAX_ADD_NEW_COUNT:10}
 max_delete_count = ${HPX_THREAD_QUEUE_MAX_DELETE_COUNT:1000}
@@ -514,14 +515,30 @@ max_delete_count = ${HPX_THREAD_QUEUE_MAX_DELETE_COUNT:1000}
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">thread_queue</span><span class="special">.</span><span class="identifier">min_tasks_to_steal</span></code>
+                      <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">thread_queue</span><span class="special">.</span><span class="identifier">min_tasks_to_steal_pending</span></code>
                     </p>
                   </td>
 <td>
                     <p>
-                      The value of this property defines the number <span class="emphasis"><em>HPX</em></span>
-                      tasks have to be available before neighboring cores are allowed
-                      to steal work.
+                      The value of this property defines the number of pending <span class="emphasis"><em>HPX</em></span>
+                      threads which have to be available before neighboring cores
+                      are allowed to steal work. The default is to allow stealing
+                      always.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">thread_queue</span><span class="special">.</span><span class="identifier">min_tasks_to_steal_staged</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      The value of this property defines the number of staged <span class="emphasis"><em>HPX</em></span>
+                      tasks have which to be available before neighboring cores are
+                      allowed to steal work. The default is to allow stealing only
+                      if there are more tan 10 tasks available.
                     </p>
                   </td>
 </tr>

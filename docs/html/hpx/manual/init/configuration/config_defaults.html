@@ -127,6 +127,11 @@ cmd_line =
 lock_detection = ${HPX_LOCK_DETECTION:0}
 throw_on_held_lock = ${HPX_THROW_ON_HELD_LOCK:1}
 minimal_deadlock_detection = &lt;debug&gt;
+spinlock_deadlock_detection = &lt;debug&gt;
+spinlock_deadlock_detection_limit = ${HPX_SPINLOCK_DEADLOCK_DETECTION_LIMIT:1000000}
+max_background_threads = ${HPX_MAX_BACKGROUND_THREADS:$[hpx.os_threads]}
+max_idle_loop_count = ${HPX_MAX_IDLE_LOOP_COUNT:&lt;hpx_idle_loop_count_max&gt;}
+max_busy_loop_count = ${HPX_MAX_BUSY_LOOP_COUNT:&lt;hpx_busy_loop_count_max&gt;}
 
 [hpx.stacks]
 small_size = ${HPX_SMALL_STACK_SIZE:&lt;hpx_small_stack_size&gt;}
@@ -314,6 +319,86 @@ use_guard_pages = ${HPX_THREAD_GUARD_PAGE:1}
                       (for Release, RelWithDebInfo, RelMinSize builds), this setting
                       is effective only if <code class="computeroutput"><span class="identifier">HPX_WITH_THREAD_DEADLOCK_DETECTION</span></code>
                       is set during configuration in CMake.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">spinlock_deadlock_detection</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      This setting verifies that spinlocks don't spin longer than
+                      specified using the <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">spinlock_deadlock_detection_limit</span></code>.
+                      This setting is applicable only if <code class="computeroutput"><span class="identifier">HPX_WITH_SPINLOCK_DEADLOCK_DETECTION</span></code>
+                      is set during configuration in CMake. By default this is set
+                      to <code class="computeroutput"><span class="number">1</span></code> (for Debug
+                      builds) or to <code class="computeroutput"><span class="number">0</span></code>
+                      (for Release, RelWithDebInfo, RelMinSize builds).
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">spinlock_deadlock_detection_limit</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      This setting specifies the upper limit of allowed number of
+                      spins that spinlocks are allowed to perform. This setting is
+                      applicable only if <code class="computeroutput"><span class="identifier">HPX_WITH_SPINLOCK_DEADLOCK_DETECTION</span></code>
+                      is set during configuration in CMake. By default this is set
+                      to <code class="computeroutput"><span class="number">1000000</span></code>.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">max_background_threads</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      This setting defines the number of threads in the scheduler
+                      which are used to execute background work. By default this
+                      is the same as the number of cores used for the scheduler.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">max_idle_loop_count</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      This setting defines the maximum value of the idle-loop counter
+                      in the scheduler. By default this is defined by the preprocessor
+                      constant <code class="computeroutput"><span class="identifier">HPX_IDLE_LOOP_COUNT_MAX</span></code>.
+                      This is an internal setting which you should change only if
+                      you know exactly what you are doing.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">max_busy_loop_count</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      This setting defines the maximum value of the busy-loop counter
+                      in the scheduler. By default this is defined by the preprocessor
+                      constant <code class="computeroutput"><span class="identifier">HPX_BUSY_LOOP_COUNT_MAX</span></code>.
+                      This is an internal setting which you should change only if
+                      you know exactly what you are doing.
                     </p>
                   </td>
 </tr>

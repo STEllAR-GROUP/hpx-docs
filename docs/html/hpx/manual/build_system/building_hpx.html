@@ -224,6 +224,43 @@
           In order to enable full static linking with the __libraries, the <a href="http://www.cmake.org" target="_top">CMake</a> variable <code class="computeroutput"><span class="identifier">HPX_WITH_STATIC_LINKING</span></code>
           has to be set to <code class="computeroutput"><span class="identifier">On</span></code>.
         </p>
+<h6>
+<a name="hpx.manual.build_system.building_hpx.h3"></a>
+          <span class="phrase"><a name="hpx.manual.build_system.building_hpx.debugging_core"></a></span><a class="link" href="building_hpx.html#hpx.manual.build_system.building_hpx.debugging_core">Debugging
+          applications using core files</a>
+        </h6>
+<p>
+          For <span class="emphasis"><em>HPX</em></span> to generate useful core files, <span class="emphasis"><em>HPX</em></span>
+          has to be compiled without signal and exception handlers (<code class="computeroutput"><span class="identifier">HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS</span></code>).
+          If this option is not specified, the signal handlers change the application
+          state. For example, after a segmentation fault the stack trace will show
+          the signal handler. Similarly, unhandled exceptions are also caught by
+          the these handlers and the stack trace will not point to the location where
+          the unhandled exception was thrown.
+        </p>
+<p>
+          In general, core files are a helpful tool to inspect the state of the application
+          at the moment of the crash (post-mortem debugging), without the need of
+          attaching a debugger beforehand. This approach to debugging is especially
+          useful if the error cannot be reliably reproduced, as only a single crashed
+          application run is required to gain potentially helpful information like
+          a stacktrace.
+        </p>
+<p>
+          To debug with core files, the operating system first has to be told to
+          actually write them. On most unix systems this can be done by calling
+        </p>
+<pre class="programlisting"><span class="identifier">ulimit</span> <span class="special">-</span><span class="identifier">c</span> <span class="identifier">unlimited</span>
+</pre>
+<p>
+          in the shell. Now the debugger can be started up with:
+        </p>
+<pre class="programlisting"><span class="identifier">gdb</span> <span class="special">&lt;</span><span class="identifier">application</span><span class="special">&gt;</span> <span class="special">&lt;</span><span class="identifier">core</span> <span class="identifier">file</span> <span class="identifier">name</span><span class="special">&gt;</span>
+</pre>
+<p>
+          The debugger should now display the last state of the application. The
+          default file name for core files is <code class="computeroutput"><span class="identifier">core</span></code>.
+        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

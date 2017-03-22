@@ -87,7 +87,7 @@
             (instead of a global id).
           </li>
 <li class="listitem">
-            Added the helper utility <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">performance_countyers</span><span class="special">::</span><span class="identifier">performance_counter_set</span></code>
+            Added the helper utility <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">performance_counters</span><span class="special">::</span><span class="identifier">performance_counter_set</span></code>
             helping to encapsulate a set of performance counters to be managed concurrently.
           </li>
 <li class="listitem">
@@ -96,6 +96,28 @@
             namespace <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">execution</span></code>. The ols names can be still
             enabled at configure time by specifying <code class="computeroutput"><span class="special">-</span><span class="identifier">DHPX_WITH_EXECUTION_POLICY_COMPATIBILITY</span><span class="special">=</span><span class="identifier">On</span></code>
             to <a href="http://www.cmake.org" target="_top">CMake</a>.
+          </li>
+<li class="listitem">
+            The thread scheduling subsystem has undergone a major refactoring which
+            results in significant performance improvements. We have also imroved
+            the performance of creating <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span></code>
+            and of various facilities handling those.
+          </li>
+<li class="listitem">
+            We have consolidated all of the code in HPX.Compute related to the integration
+            of CUDA. <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span></code> has been enabled
+            to be usable with <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">compute</span><span class="special">::</span><span class="identifier">vector</span></code>
+            which allows to place the partitions on one or more GPU devices.
+          </li>
+<li class="listitem">
+            Added new performance counters exposing various internals of the thread
+            scheduling subsystem, such as the current idle- and busy-loop counters
+            and instantaneous scheduler utilization.
+          </li>
+<li class="listitem">
+            Extended and improved the use of the ITTNotify hooks allowing to collect
+            performance counter data and function annotation information from within
+            the Intel Amplifier tool.
           </li>
 </ul></div>
 <h5>
@@ -141,6 +163,621 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2549" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2549</a> -
+            Pre-include defines.hpp to get the macro HPX_HAVE_CUDA value
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2548" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2548</a> -
+            Fixing issue with disconnect
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2546" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2546</a> -
+            Some fixes around cuda clang partitioned_vector example
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2545" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2545</a> -
+            Fix uses of the Vc2 datapar flags; the value, not the type, should be
+            passed to functions
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2542" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2542</a> -
+            Make HPX_WITH_MALLOC easier to use
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2541" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2541</a> -
+            avoid recompiles when enabling/disabling examples
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2540" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2540</a> -
+            Fixing usage of target_link_libraries()
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2539" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2539</a> -
+            fix RPATH behaviour
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2537" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2537</a> -
+            Add output of a Bazel Skylark extension for paths and compile options
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2536" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2536</a> -
+            Add counter exposing total available memory to Windows as well
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2535" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2535</a> -
+            Remove obsolete support for security
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2533" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2533</a> -
+            Pre-cache locality endpoints during bootstrap
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2532" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2532</a> -
+            Fixing handling of GIDs during serialization preprocessing
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2531" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2531</a> -
+            Amend uses of the term "functor"
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2529" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2529</a> -
+            added counter for reading available memory
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2527" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2527</a> -
+            Facilities to create actions from lambdas
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2526" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2526</a> -
+            Updated docs: HPX_WITH_EXAMPLES
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2525" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2525</a> -
+            Remove warnings related to unused captured variables
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2524" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2524</a> -
+            CMAKE failed because it is missing: TCMALLOC_LIBRARY TCMALLOC_INCLUDE_DIR
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2523" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2523</a> -
+            Fixing compose_cb stack overflow
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2522" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2522</a> -
+            Instead of unlocking, ignore the lock while creating the message handler
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2521" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2521</a> -
+            Create LPROGRESS_ logging macro to simplify progress tracking and timings
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2520" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2520</a> -
+            Intel 17 support
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2519" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2519</a> -
+            Fix components example
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2518" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2518</a> -
+            Fixing parcel scheduling
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2517" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2517</a> -
+            Race condition during Parcel Coalescing Handler creation
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2516" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2516</a> -
+            HPX locks up when using at least 256 localities
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2515" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2515</a> -
+            error: Install cannot find "/lib/hpx/libparcel_coalescing.so.0.9.99"
+            but I can see that file
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2514" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2514</a> -
+            Making sure that all continuations of a shared_future are invoked in
+            order
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2513" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2513</a> -
+            Fixing locks held during suspension
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2512" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2512</a> -
+            MPI Parcelport improvements and fixes related to the background work
+            changes
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2511" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2511</a> -
+            Fixing bit-wise (zero-copy) serialization
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2508" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2508</a> -
+            Added documentation for debugging with core files
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2506" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2506</a> -
+            Fixing background work invocations
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2505" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2505</a> -
+            Fix tuple serialization
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2504" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2504</a> -
+            Ensure continuations are called in the order they have been attached
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2503" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2503</a> -
+            Adding serialization support for Vc v2 (datapar)
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2502" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2502</a> -
+            Resolve various, minor compiler warnings
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2501" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2501</a> -
+            Some other fixes around cuda examples
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2500" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2500</a> -
+            nvcc / cuda clang issue due to a missing -DHPX_WITH_CUDA flag
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2499" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2499</a> -
+            Adding support for std::array to wait_all and friends
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2498" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2498</a> -
+            Execute background work as HPX thread
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2497" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2497</a> -
+            Fixing configuration options for spinlock-deadlock detection
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2496" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2496</a> -
+            Accounting for different compilers in CrayKNL toolchain file
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2494" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2494</a> -
+            Adding component base class which ties a component instance to a given
+            executor
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2493" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2493</a> -
+            Enable controlling amount of pending threads which must be available
+            to allow thread stealing
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2492" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2492</a> -
+            Adding new command line option --hpx:print-counter-reset
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2491" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2491</a> -
+            Resolve ambiguities when compiling with APEX
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2490" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2490</a> -
+            Resuming threads waiting on future with higher priority
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2488" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2488</a> -
+            Adding performance counters exposing the internal idle and busy-loop
+            counters
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2487" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2487</a> -
+            Allowing for plain suspend to reschedule thread right away
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2486" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2486</a> -
+            Only flag HPX code for CUDA if HPX_WITH_CUDA is set
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2485" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2485</a> -
+            Making thread-queue parameters runtime-configurable
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2484" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2484</a> -
+            Added atomic counter for parcel-destinations
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2483" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2483</a> -
+            Added priority-queue lifo scheduler
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2482" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2482</a> -
+            Changing scheduler to steal only if more than a minimal number of tasks
+            are available
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2481" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2481</a> -
+            Extending command line option --hpx:print-counter-destination to support
+            value 'none'
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2479" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2479</a> -
+            Added option to disable signal handler
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2478" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2478</a> -
+            Making sure the sine performance counter module gets loaded only for
+            the corresponding example
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2477" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2477</a> -
+            Breaking at a throw statement
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2476" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2476</a> -
+            Annotated function
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2475" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2475</a> -
+            Ensure that using %osthread% during logging will not throw for non-hpx
+            threads
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2474" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2474</a> -
+            Remove now superficial non_direct actions from base_lco and friends
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2473" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2473</a> -
+            Refining support for ITTNotify
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2472" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2472</a> -
+            Some fixes around hpx compute
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2470" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2470</a> -
+            redefinition of boost::detail::spinlock
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2469" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2469</a> -
+            Dataflow performance issue
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2468" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2468</a> -
+            Perf docs update
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2466" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2466</a> -
+            Guarantee to execute remote direct actions on HPX-thread
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2465" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2465</a> -
+            Improve demo : Async copy and fixed device handling
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2464" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2464</a> -
+            Adding performance counter exposing instantaneous scheduler utilization
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2463" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2463</a> -
+            Downcast to future&lt;void&gt;
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2462" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2462</a> -
+            Fixed usage of ITT-Notify API with Intel Amplifier
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2461" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2461</a> -
+            Cublas demo
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2460" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2460</a> -
+            Fixing thread bindings
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2459" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2459</a> -
+            Make -std=c++11 nvcc flag consistent for in-build and installed versions
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2457" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2457</a> -
+            Segmentation fault when registering a partitioned vector
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2452" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2452</a> -
+            Properly releasing global barrier for unhandled exceptions
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2451" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2451</a> -
+            Fixing long shutdown times
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2450" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2450</a> -
+            Attempting to fix initialization errors on newer platforms (Boost V1.63)
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2449" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2449</a> -
+            Replace BOOST_COMPILER_FENCE with an HPX version
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2448" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2448</a> -
+            This fixes a possible race in the migration code
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2445" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2445</a> -
+            Fixing dataflow et.al. for futures or future-ranges wrapped into ref()
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2444" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2444</a> -
+            Fix segfaults
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2443" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2443</a> -
+            Issue 2442
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2442" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2442</a> -
+            Mismatch between #if/#endif and namespace scope brackets in this_thread_executers.hpp
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2441" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2441</a> -
+            undeclared identifier BOOST_COMPILER_FENCE
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2440" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2440</a> -
+            Knl build
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2438" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2438</a> -
+            Datapar backend
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2437" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2437</a> -
+            Adapt algorithm parameter sequence changes from C++17
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2436" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2436</a> -
+            Adapt execution policy name changes from C++17
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2435" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2435</a> -
+            Trunk broken, undefined reference to hpx::thread::interrupt(hpx::thread::id,
+            bool)
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2434" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2434</a> -
+            More fixes to resource manager
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2433" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2433</a> -
+            Added versions of <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">get_ptr</span></code>
+            taking client side representations
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2432" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2432</a> -
+            Warning fixes
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2431" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2431</a> -
+            Adding facility representing set of performance counters
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2430" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2430</a> -
+            Fix parallel_executor thread spawning
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2429" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2429</a> -
+            Fix attribute warning for gcc
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2427" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2427</a> -
+            Seg fault running octo-tiger with latest HPX commit
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2426" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2426</a> -
+            Bug in 9592f5c0bc29806fce0dbe73f35b6ca7e027edcb causes immediate crash
+            in Octo-tiger
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2425" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2425</a> -
+            Fix nvcc errors due to constexpr specifier
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2424" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2424</a> -
+            Async action on component present on hpx::find_here is executing synchronously
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2423" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2423</a> -
+            Fix nvcc errors due to constexpr specifier
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2422" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2422</a> -
+            Implementing hpx::this_thread thread data functions
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2421" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2421</a> -
+            Adding benchmark for wait_all
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2420" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2420</a> -
+            Returning object of a component client from another component action
+            fails
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2419" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2419</a> -
+            Infiniband parcelport
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2418" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2418</a> -
+            gcc + nvcc fails to compile code that uses partitioned_vector
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2417" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2417</a> -
+            Fixing context switching
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2416" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2416</a> -
+            Adding fixes and workarounds to allow compilation with nvcc/msvc (VS2015up3)
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2415" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2415</a> -
+            Fix errors coming from hpx compute examples
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2414" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2414</a> -
+            Fixing msvc12
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2413" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2413</a> -
+            Enable cuda/nvcc or cuda/clang when using add_hpx_executable()
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2412" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2412</a> -
+            Fix issue in HPX_SetupTarget.cmake when cuda is used
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2411" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2411</a> -
+            This fixes the core compilation issues with MSVC12
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2410" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2410</a> -
+            undefined reference to opal_hwloc191_hwloc_.....
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2409" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2409</a> -
+            Fixing locking for channel and receive_buffer
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2407" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2407</a> -
+            Solving #2402 and #2403
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2406" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2406</a> -
+            Improve guards
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2405" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2405</a> -
+            Enable parallel::for_each for iterators returning proxy types
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2404" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2404</a> -
+            Forward the explicitly given result_type in the hpx invoke
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2403" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2403</a> -
+            datapar_execution + zip iterator: lambda arguments aren't references
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2402" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2402</a> -
+            datapar algorithm instantiated with wrong type #2402
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2401" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2401</a> -
+            Added support for imported libraries to HPX_Libraries.cmake
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2400" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2400</a> -
+            Use CMake policy CMP0060
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2399" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2399</a> -
+            Error trying to push back vector of futures to vector
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2398" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2398</a> -
+            Allow config #defines to be written out to custom config/defines.hpp
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2397" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2397</a> -
+            CMake generated config defines can cause tedious rebuilds category
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2396" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2396</a> -
+            BOOST_ROOT paths are not used at link time
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2395" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2395</a> -
+            Fix target_link_libraries() issue when HPX Cuda is enabled
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2393" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2393</a> -
+            Fixing lock registration for recursive mutex
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2392" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2392</a> -
+            Add keywords in target_link_libraries in hpx_setup_target
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2391" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2391</a> -
+            Clang goroutines
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2390" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2390</a> -
+            Adapt execution policy name changes from C++17
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2389" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2389</a> -
+            Chunk allocator and pool are not used and are obsolete
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2388" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2388</a> -
+            Adding functionalities to datapar needed by octotiger
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2387" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2387</a> -
+            Fixing race condition for early parcels
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2386" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2386</a> -
+            Lock registration broken for recursive_mutex
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2385" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2385</a> -
+            Datapar zip iterator
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2384" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2384</a> -
+            Fixing race condition in for_loop_reduction
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2383" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2383</a> -
+            Continuations
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2382" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2382</a> -
+            add LibFlatArray-based backend for datapar
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2381" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2381</a> -
+            remove unused typedef to get rid of compiler warnings
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2380" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2380</a> -
+            Tau cleanup
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2379" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2379</a> -
+            Can send immediate
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2378" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2378</a> -
+            Renaming copy_helper/copy_n_helper/move_helper/move_n_helper
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2376" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2376</a> -
+            Boost trunk's spinlock initializer fails to compile
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2375" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2375</a> -
+            Add support for minimal thread local data
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2374" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2374</a> -
+            Adding API functions set_config_entry_callback
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2373" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2373</a> -
+            Add a simple utility for debugging that gives supended task backtraces
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2372" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2372</a> -
             Barrier Fixes
           </li>
@@ -155,6 +792,14 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2367" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2367</a> -
             Fixing find_prefixes for Windows platforms
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2366" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2366</a> -
+            Testing for experimental/optional only in C++14 mode
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2364" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2364</a> -
+            Adding set_config_entry
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2363" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2363</a> -
@@ -191,6 +836,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2354" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2354</a> -
             Adding serialization for mask_type if CPU_COUNT &gt; 64
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2353" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2353</a> -
+            Adding hooks to tie in APEX into the parcel layer
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2352" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2352</a> -
@@ -279,6 +928,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2330" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2330</a> -
             Support for data-parallelism for parallel algorithms
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2329" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2329</a> -
+            Coordinate settings in cmake
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2328" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2328</a> -
@@ -600,6 +1253,18 @@
             would like to know how much data is being routed by particular actions
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2109" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2109</a> -
+            Warning while compiling hpx
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1973" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1973</a> -
+            Setting INTERFACE_COMPILE_OPTIONS for hpx_init in CMake taints Fortran_FLAGS
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1864" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1864</a> -
+            run_guarded using bound function ignores reference
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/1754" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1754</a> -
             Running with TCP parcelport causes immediate crash or freeze
           </li>
@@ -612,8 +1277,32 @@
             Optimize AGAS for shared memory only operation
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1401" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1401</a> -
+            Need an efficient infiniband parcelport
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/1125" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>1125</a> -
+            Fix the IPC parcelport
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/839" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>839</a> -
+            Refactor ibverbs and shmem parcelport
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/702" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>702</a> -
+            Add instrumentation of parcel layer
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/668" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>668</a> -
             Implement ispc task interface
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/533" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>533</a> -
+            Thread queue/deque internal parameters should be runtime configurable
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/475" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>475</a> -
+            Create a means of combining performance counters into querysets
           </li>
 </ul></div>
 </div>

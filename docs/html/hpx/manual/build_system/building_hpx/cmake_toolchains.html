@@ -43,6 +43,9 @@
                 <a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.CrayKNL">CrayKNL</a>
               </li>
 <li class="listitem">
+                <a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.CrayKNLStatic">CrayKNLStatic</a>
+              </li>
+<li class="listitem">
                 <a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.XeonPhi">XeonPhi</a>
               </li>
 </ul></div>
@@ -321,6 +324,55 @@ set(HPX_WITH_RDTSCP ON CACHE BOOL "")
 </pre>
 <h6>
 <a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h5"></a>
+            <span class="phrase"><a name="hpx.manual.build_system.building_hpx.cmake_toolchains.CrayKNLStatic"></a></span><a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.CrayKNLStatic">CrayKNLStatic</a>
+          </h6>
+<pre class="programlisting"># Copyright (c) 2014-2017 Thomas Heller
+# Copyright (c) 2017      Bryce Adelstein Lelbach
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+set(HPX_WITH_STATIC_LINKING ON CACHE BOOL "")
+set(HPX_WITH_STATIC_EXE_LINKING ON CACHE BOOL "")
+set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS FALSE)
+# Set the Cray Compiler Wrapper
+set(CMAKE_CXX_COMPILER CC)
+set(CMAKE_C_COMPILER cc)
+set(CMAKE_Fortran_COMPILER ftn)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+  set(AVX512_FLAGS "-xmic-avx512")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Gnu")
+  set(AVX512_FLAGS "-mavx512f -mavx512pf")
+endif()
+set(CMAKE_C_FLAGS_INIT ${AVX512_FLAGS} CACHE STRING "")
+set(CMAKE_C_COMPILE_OBJECT "&lt;CMAKE_C_COMPILER&gt; -static -fPIC &lt;DEFINES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;" CACHE STRING "")
+set(CMAKE_C_LINK_EXECUTABLE "&lt;CMAKE_C_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_C_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;" CACHE STRING "")
+set(CMAKE_CXX_FLAGS_INIT ${AVX512_FLAGS} CACHE STRING "")
+set(CMAKE_CXX_COMPILE_OBJECT "&lt;CMAKE_CXX_COMPILER&gt; -static -fPIC &lt;DEFINES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;" CACHE STRING "")
+set(CMAKE_CXX_LINK_EXECUTABLE "&lt;CMAKE_CXX_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_CXX_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;" CACHE STRING "")
+set(CMAKE_Fortran_FLAGS_INIT ${AVX512_FLAGS} CACHE STRING "")
+set(CMAKE_Fortran_COMPILE_OBJECT "&lt;CMAKE_Fortran_COMPILER&gt; -static -fPIC &lt;DEFINES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;" CACHE STRING "")
+set(CMAKE_Fortran_LINK_EXECUTABLE "&lt;CMAKE_Fortran_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_Fortran_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;")
+# Disable searches in the default system paths. We are cross compiling after all
+# and cmake might pick up wrong libraries that way
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM BOTH)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+set(HPX_WITH_PARCELPORT_TCP OFF CACHE BOOL "")
+set(HPX_WITH_PARCELPORT_MPI ON CACHE BOOL "")
+set(HPX_WITH_PARCELPORT_MPI_MULTITHREADED ON CACHE BOOL "")
+# Set the TBBMALLOC_PLATFORM correctly so that find_package(TBBMalloc) sets the
+# right hints
+set(TBBMALLOC_PLATFORM "mic-knl" CACHE STRING "")
+# We have a bunch of cores on the MIC ... increase the default
+set(HPX_WITH_MAX_CPU_COUNT "512" CACHE STRING "")
+# We do a cross compilation here ...
+set(CMAKE_CROSSCOMPILING ON CACHE BOOL "")
+# RDTSCP is available on Xeon/Phis
+set(HPX_WITH_RDTSCP ON CACHE BOOL "")
+</pre>
+<h6>
+<a name="hpx.manual.build_system.building_hpx.cmake_toolchains.h6"></a>
             <span class="phrase"><a name="hpx.manual.build_system.building_hpx.cmake_toolchains.XeonPhi"></a></span><a class="link" href="cmake_toolchains.html#hpx.manual.build_system.building_hpx.cmake_toolchains.XeonPhi">XeonPhi</a>
           </h6>
 <pre class="programlisting"># Copyright (c) 2014 Thomas Heller

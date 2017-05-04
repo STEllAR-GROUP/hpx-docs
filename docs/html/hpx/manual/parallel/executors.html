@@ -64,7 +64,7 @@
           of an index space. We believe that executors may be conceived of as allocators
           for execution agents and our interface's design reflects this analogy.
           The process of requesting agents from an executor is mediated via the
-          <code class="computeroutput"><a class="link" href="../../parallel/v3/executor_traits.html" title="Struct template executor_traits">hpx::parallel::executor_traits</a></code>
+          <code class="computeroutput">hpx::parallel::executor_traits</code>
           API, which is analogous to the interaction between containers and allocator_traits.
         </p>
 <p>
@@ -102,39 +102,53 @@
           is reported through <code class="computeroutput"><span class="identifier">async_execute</span><span class="special">()</span></code>'s returned future, or thrown directly
           by execute().
         </p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            Please note that the executor interface as described above has no been
+            deprecated. It has been replaced by separate executor customization points,
+            one for each of the exposed functions. Please see <a href="https://github.com/executors/issaquah_2016" target="_top">P0443</a>
+            for more details. The old interface based on <code class="computeroutput"><span class="identifier">executor_traits</span></code>
+            will be supported for some time, you might have to enable the <code class="computeroutput"><span class="identifier">HPX_WITH_EXECUTOR_COMPATIBILITY</span></code> configuration
+            setting, however.
+          </p></td></tr>
+</table></div>
 <p>
           In <span class="emphasis"><em>HPX</em></span> we have implemented the following executor
           types:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../../parallel/v3/sequential_executor.html" title="Struct sequential_executor">hpx::parallel::sequential_executor</a></code>:
-              creates groups of sequential execution agents which execute in the
-              calling thread. The sequential order is given by the lexicographical
-              order of indices in the index space.
+              <code class="computeroutput"><a class="link" href="../../parallel/execution/sequenced_executor.html" title="Struct sequenced_executor">hpx::parallel::execution::sequenced_executor</a></code>: creates
+              groups of sequential execution agents which execute in the calling
+              thread. The sequential order is given by the lexicographical order
+              of indices in the index space.
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../../parallel/v3/parallel_executor.html" title="Struct parallel_executor">hpx::parallel::parallel_executor</a></code>: creates
+              <code class="computeroutput"><a class="link" href="../../parallel/execution/parallel_executor.html" title="Struct parallel_executor">hpx::parallel::execution::parallel_executor</a></code>: creates
               groups of parallel execution agents which execute in threads implicitly
               created by the executor. This executor uses a given launch policy.
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../../parallel/v3/service_executor.html" title="Struct service_executor">hpx::parallel::service_executor</a></code>: creates
+              <code class="computeroutput"><a class="link" href="../../parallel/execution/service_executor.html" title="Struct service_executor">hpx::parallel::execution::service_executor</a></code>: creates
               groups of parallel execution agents which execute in one of the kernel
               threads associated with a given pool category (I/O, parcel, or timer
               pool, or on the main thread of the application).
             </li>
 <li class="listitem">
-              <code class="computeroutput"><a class="link" href="../../parallel/v3/local_p_idm140652598756656.html" title="Type definition local_priority_queue_executor">hpx::parallel::local_priority_queue_executor</a></code>,
-              <code class="computeroutput">hpx::parallel::local_queue_executor</code>
-              <code class="computeroutput">hpx::parallel::static_priority_queue_executor</code>
+              <code class="computeroutput"><a class="link" href="../../parallel/execution/local_p_idm140310286193520.html" title="Type definition local_priority_queue_executor">hpx::parallel::execution::local_priority_queue_executor</a></code>,
+              <code class="computeroutput">hpx::parallel::execution::local_queue_executor</code>
+              <code class="computeroutput">hpx::parallel::execution::static_priority_queue_executor</code>
               create executors on top of the corresponding <span class="emphasis"><em>HPX</em></span>
               schedulers.
             </li>
 <li class="listitem">
-              <code class="computeroutput">hpx::parallel::distribution_policy_executor</code>
+              <code class="computeroutput">hpx::parallel::execution::distribution_policy_executor</code>
               creates executors using any of the existing distribution policies (like
-              <code class="computeroutput"><a class="link" href="../../components/colocat_idm140652598292144.html" title="Struct colocating_distribution_policy">`hpx::components::colocating_distribution_policy</a></code>
+              <code class="computeroutput"><a class="link" href="../../components/colocat_idm140310285730416.html" title="Struct colocating_distribution_policy">`hpx::components::colocating_distribution_policy</a></code>
               et.al.).
             </li>
 </ul></div>

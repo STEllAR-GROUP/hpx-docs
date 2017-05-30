@@ -1,0 +1,153 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template reduce_by_key</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 1.1.0">
+<link rel="up" href="../../../header/hpx/parallel/algorithms/reduce_by_key_hpp.html" title="Header &lt;hpx/parallel/algorithms/reduce_by_key.hpp&gt;">
+<link rel="prev" href="../../../header/hpx/parallel/algorithms/reduce_by_key_hpp.html" title="Header &lt;hpx/parallel/algorithms/reduce_by_key.hpp&gt;">
+<link rel="next" href="../../../header/hpx/parallel/algorithms/remove_copy_hpp.html" title="Header &lt;hpx/parallel/algorithms/remove_copy.hpp&gt;">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="531" height="105" src="../../../images/hpx_1_1_0_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/reduce_by_key_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/reduce_by_key_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../header/hpx/parallel/algorithms/remove_copy_hpp.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.parallel.v1.reduce_by_key"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template reduce_by_key</span></h2>
+<p>hpx::parallel::v1::reduce_by_key</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/algorithms/reduce_by_key_hpp.html" title="Header &lt;hpx/parallel/algorithms/reduce_by_key.hpp&gt;">hpx/parallel/algorithms/reduce_by_key.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> RanIter<span class="special">,</span> <span class="keyword">typename</span> RanIter2<span class="special">,</span> 
+         <span class="keyword">typename</span> OutIter<span class="special">,</span> <span class="keyword">typename</span> OutIter2<span class="special">,</span> 
+         <span class="keyword">typename</span> Compare <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">equal_to</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">iterator_traits</span><span class="special">&lt;</span><span class="identifier">RanIter</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">&gt;</span><span class="special">,</span> 
+         <span class="keyword">typename</span> Func <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">plus</span><span class="special">&lt;</span>            <span class="keyword">typename</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">iterator_traits</span><span class="special">&lt;</span><span class="identifier">RanIter2</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">&gt;</span> <span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">reduce_by_key</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">RanIter</span> key_first<span class="special">,</span> 
+                            <span class="identifier">RanIter</span> key_last<span class="special">,</span> <span class="identifier">RanIter2</span> values_first<span class="special">,</span> 
+                            <span class="identifier">OutIter</span> keys_output<span class="special">,</span> <span class="identifier">OutIter2</span> values_output<span class="special">,</span> 
+                            <span class="identifier">Compare</span> <span class="special">&amp;&amp;</span> comp <span class="special">=</span> <span class="identifier">Compare</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> 
+                            <span class="identifier">Func</span> <span class="special">&amp;&amp;</span> func <span class="special">=</span> <span class="identifier">Func</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idm140063989263488"></a><h2>Description</h2>
+<p>Reduce by Key performs an inclusive scan reduction operation on elements supplied in key/value pairs. The algorithm produces a single output value for each set of equal consecutive keys in [key_first, key_last). the value being the GENERALIZED_NONCOMMUTATIVE_SUM(op, init, *first, ..., *(first + (i - result))). for the run of consecutive matching keys. The number of keys supplied must match the number of values.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Complexity: O(<span class="emphasis"><em>last</em></span> - <span class="emphasis"><em>first</em></span>) applications of the predicate <span class="emphasis"><em>op</em></span>.</p></td></tr>
+</table></div>
+<p>
+
+
+<span class="emphasis"><em>comp</em></span> has to induce a strict weak ordering on the values.</p>
+<p>The application of function objects in parallel algorithm invoked with an execution policy object of type <span class="emphasis"><em>sequenced_policy</em></span> execute in sequential order in the calling thread.</p>
+<p>The application of function objects in parallel algorithm invoked with an execution policy object of type <span class="emphasis"><em>parallel_policy</em></span> or <span class="emphasis"><em>parallel_task_policy</em></span> are permitted to execute in an unordered fashion in unspecified threads, and indeterminately sequenced within each thread.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">comp</code></span></p></td>
+<td><p>comp is a callable object. The return value of the INVOKE operation applied to an object of type Comp, when contextually converted to bool, yields true if the first argument of the call is less than the second, and false otherwise. It is assumed that comp will not apply any non-constant function through the dereferenced iterator.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">key_first</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of key elements the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">key_last</code></span></p></td>
+<td><p>Refers to the end of the sequence of key elements the algorithm will be applied to. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">keys_output</code></span></p></td>
+<td><p>Refers to the start output location for the keys produced by the algorithm. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">policy</code></span></p></td>
+<td><p>The execution policy to use for the scheduling of the iterations. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">values_output</code></span></p></td>
+<td><p>Refers to the start output location for the values produced by the algorithm. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Template Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">Compare</code></span></p></td>
+<td><p>The type of the optional function/function object to use to compare keys (deduced). Assumed to be std::equal_to otherwise.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">ExPolicy</code></span></p></td>
+<td><p>The type of the execution policy to use (deduced). It describes the manner in which the execution of the algorithm may be parallelized and the manner in which it applies user-provided function objects. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">OutIter</code></span></p></td>
+<td><p>The type of the iterator representing the destination key range (deduced). This iterator type must meet the requirements of an output iterator. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">OutIter2</code></span></p></td>
+<td><p>The type of the iterator representing the destination value range (deduced). This iterator type must meet the requirements of an output iterator. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">RanIter</code></span></p></td>
+<td><p>The type of the key iterators used (deduced). This iterator type must meet the requirements of a random access iterator. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">RanIter2</code></span></p></td>
+<td><p>The type of the value iterators used (deduced). This iterator type must meet the requirements of a random access iterator. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>The <span class="emphasis"><em>reduce_by_key</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;pair&lt;Iter1,Iter2&gt;&gt;</em></span> if the execution policy is of type <span class="emphasis"><em>sequenced_task_policy</em></span> or <span class="emphasis"><em>parallel_task_policy</em></span> and returns <span class="emphasis"><em>pair&lt;Iter1,Iter2&gt;</em></span> otherwise. </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2017 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../header/hpx/parallel/algorithms/reduce_by_key_hpp.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../header/hpx/parallel/algorithms/reduce_by_key_hpp.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../header/hpx/parallel/algorithms/remove_copy_hpp.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

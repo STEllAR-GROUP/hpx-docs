@@ -1,208 +1,147 @@
-//  Copyright (c) 2013 Agustin Berge
+//  Copyright (c) 2013-2015 Agustin Berge
+//  Copyright (c) 2016 Antoine Tran Tan
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-
-#if !BOOST_PP_IS_ITERATING
 
 #ifndef HPX_UTIL_INVOKE_FUSED_HPP
 #define HPX_UTIL_INVOKE_FUSED_HPP
 
 #include <hpx/config.hpp>
-#include <hpx/util/decay.hpp>
+#include <hpx/util/detail/pack.hpp>
 #include <hpx/util/invoke.hpp>
-#include <hpx/util/move.hpp>
+#include <hpx/util/result_of.hpp>
 #include <hpx/util/tuple.hpp>
-#include <hpx/util/detail/pp_strip_parens.hpp>
-#include <hpx/util/detail/qualify_as.hpp>
+#include <hpx/util/void_guard.hpp>
 
-#include <boost/preprocessor/cat.hpp>
-#include <boost/preprocessor/iteration/iterate.hpp>
-#include <boost/preprocessor/repetition/enum.hpp>
-#include <boost/preprocessor/repetition/enum_params.hpp>
-
-#include <boost/type_traits/add_const.hpp>
+#include <cstddef>
+#include <type_traits>
+#include <utility>
 
 namespace hpx { namespace util
 {
+    ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
-        template <typename FD, typename F, typename Enable = void>
-        struct invoke_fused_result_of_impl;
-
-        template <typename FD, typename F, typename Tuple>
-        struct invoke_fused_result_of_impl<
-            FD, F(Tuple)
-          , typename boost::enable_if_c<
-                util::tuple_size<typename util::decay<Tuple>::type>::value == 0
-            >::type
-        > : invoke_result_of<F()>
-        {};
-    }
-
-    template <typename F>
-    struct invoke_fused_result_of;
-
-    template <typename F, typename Tuple>
-    struct invoke_fused_result_of<F(Tuple)>
-      : detail::invoke_fused_result_of_impl<
-            typename util::decay<F>::type
-          , F(Tuple)
-        >
-    {};
-
-    template <typename R, typename F>
-    BOOST_FORCEINLINE
-    R
-    invoke_fused_r(F && f, util::tuple<>)
-    {
-        return invoke_r<R>(std::forward<F>(f));
-    }
-
-    template <typename F>
-    BOOST_FORCEINLINE
-    typename invoke_result_of<F()>::type
-    invoke_fused(F && f, util::tuple<>)
-    {
-        return invoke(std::forward<F>(f));
-    }
-}}
-
-#if !defined(HPX_USE_PREPROCESSOR_LIMIT_EXPANSION)
-#  include <hpx/util/preprocessed/invoke_fused.hpp>
-#else
-
-#define HPX_UTIL_INVOKE_FUSED_ARG_RESULT(Z, N, D)                             \
-    typename boost::add_const<BOOST_PP_CAT(Arg, N)>::type                     \
-    /**/
-
-#define HPX_UTIL_INVOKE_FUSED_ARG(Z, N, D)                                    \
-    util::get<N>(args)                                                        \
-    /**/
-
-#define HPX_UTIL_INVOKE_FUSED_FWD_ARG(Z, N, D)                                \
-    util::get<N>(std::move(args))                                           \
-    /**/
-
-#if defined(__WAVE__) && defined(HPX_CREATE_PREPROCESSED_FILES)
-#  pragma wave option(preserve: 1, line: 0, output: "preprocessed/invoke_fused_" HPX_LIMIT_STR ".hpp")
-#endif
-
-///////////////////////////////////////////////////////////////////////////////
-#define BOOST_PP_ITERATION_PARAMS_1                                           \
-    (                                                                         \
-        3                                                                     \
-      , (                                                                     \
-            1                                                                 \
-          , HPX_FUNCTION_ARGUMENT_LIMIT                                       \
-          , <hpx/util/invoke_fused.hpp>                                       \
-        )                                                                     \
-    )                                                                         \
-/**/
-#include BOOST_PP_ITERATE()
-
-#if defined(__WAVE__) && defined (HPX_CREATE_PREPROCESSED_FILES)
-#  pragma wave option(output: null)
-#endif
-
-#undef HPX_UTIL_INVOKE_FUSED_ARG_RESULT
-#undef HPX_UTIL_INVOKE_FUSED_ARG
-#undef HPX_UTIL_INVOKE_FUSED_FWD_ARG
-
-#endif // !defined(HPX_USE_PREPROCESSOR_LIMIT_EXPANSION)
-
-#endif
-
-#else // !BOOST_PP_IS_ITERATING
-
-#define N BOOST_PP_ITERATION()
-
-namespace hpx { namespace util
-{
-    namespace detail
-    {
-#       define HPX_UTIL_INVOKE_FUSED_TUPLE_ELEM(Z, N, D)                      \
-        typename detail::qualify_as<                                          \
-            typename util::tuple_element<                                     \
-                N                                                             \
-              , typename util::decay<Tuple>::type                             \
-            >::type                                                           \
-          , Tuple                                                             \
-        >::type                                                               \
-        /**/
-        template <typename FD, typename F, typename Tuple>
-        struct invoke_fused_result_of_impl<
-            FD, F(Tuple)
-          , typename boost::enable_if_c<
-                util::tuple_size<typename util::decay<Tuple>::type>::value == N
-            >::type
-        > : invoke_result_of<
-                F(BOOST_PP_ENUM(N, HPX_UTIL_INVOKE_FUSED_TUPLE_ELEM, _))
+        template <typename Tuple>
+        struct fused_index_pack
+          : make_index_pack<
+                util::tuple_size<typename std::decay<Tuple>::type>::value
             >
         {};
-#       undef HPX_UTIL_INVOKE_FUSED_TUPLE_ELEM
+
+        ///////////////////////////////////////////////////////////////////////
+        template <typename F, typename Tuple, typename Is>
+        struct fused_result_of_impl;
+
+        template <typename F, typename Tuple, std::size_t ...Is>
+        struct fused_result_of_impl<F, Tuple&, pack_c<std::size_t, Is...> >
+          : util::result_of<
+                F(typename util::tuple_element<Is, Tuple>::type&...)
+            >
+        {};
+
+        template <typename F, typename Tuple, std::size_t ...Is>
+        struct fused_result_of_impl<F, Tuple&&, pack_c<std::size_t, Is...> >
+          : util::result_of<
+                F(typename util::tuple_element<Is, Tuple>::type&&...)
+            >
+        {};
+
+        template <typename T>
+        struct fused_result_of;
+
+        template <typename F, typename Tuple>
+        struct fused_result_of<F(Tuple)>
+          : fused_result_of_impl<F, Tuple&&, typename fused_index_pack<Tuple>::type>
+        {};
+
+        ///////////////////////////////////////////////////////////////////////
+        template <typename R, typename F, typename Tuple, std::size_t ...Is>
+        HPX_HOST_DEVICE
+        inline R
+        invoke_fused_impl(F&&f, Tuple&& t, pack_c<std::size_t, Is...>)
+        {
+            using util::get;
+            return util::invoke_r<R>(std::forward<F>(f),
+                get<Is>(std::forward<Tuple>(t))...);
+        }
     }
 
+    /// Invokes the given callable object f with the content of
+    /// the sequenced type t (tuples, pairs)
+    ///
+    /// \param f Must be a callable object. If f is a member function pointer,
+    ///          the first argument in the sequenced type will be treated as
+    ///          the callee (this object).
+    ///
+    /// \param t A type which is content accessible through a call
+    ///          to hpx#util#get.
+    ///
+    /// \returns The result of the callable object when it's called with
+    ///          the content of the given sequenced type.
+    ///
+    /// \throws std::exception like objects thrown by call to object f
+    ///         with the arguments contained in the sequenceable type t.
+    ///
+    /// \note This function is similar to `std::apply` (C++17)
+    template <typename F, typename Tuple>
+    HPX_HOST_DEVICE HPX_FORCEINLINE
+    typename detail::fused_result_of<F&&(Tuple&&)>::type
+    invoke_fused(F&& f, Tuple&& t)
+    {
+        typedef typename detail::fused_result_of<F&&(Tuple&&)>::type R;
+
+        return detail::invoke_fused_impl<R>(
+            std::forward<F>(f), std::forward<Tuple>(t),
+            typename detail::fused_index_pack<Tuple>::type());
+    }
+
+    /// \copydoc invoke_fused
+    ///
+    /// \tparam R The result type of the function when it's called
+    ///           with the content of the given sequenced type.
+    template <typename R, typename F, typename Tuple>
+    HPX_HOST_DEVICE HPX_FORCEINLINE
+    R invoke_fused_r(F&& f, Tuple&& t)
+    {
+        return detail::invoke_fused_impl<R>(
+            std::forward<F>(f), std::forward<Tuple>(t),
+            typename detail::fused_index_pack<Tuple>::type());
+    }
     ///////////////////////////////////////////////////////////////////////////
-    template <typename R, typename F, BOOST_PP_ENUM_PARAMS(N, typename Arg)>
-    BOOST_FORCEINLINE
-    typename boost::enable_if_c<
-        util::tuple_size<util::tuple<BOOST_PP_ENUM_PARAMS(N, Arg)> >::value == N
-      , R
-    >::type
-    invoke_fused_r(F && f
-      , util::tuple<BOOST_PP_ENUM_PARAMS(N, Arg)> const& args)
+    /// \cond NOINTERNAL
+    namespace functional
     {
-        return
-            invoke_r<R>(std::forward<F>(f)
-              , BOOST_PP_ENUM(N, HPX_UTIL_INVOKE_FUSED_ARG, _));
-    }
+        struct invoke_fused
+        {
+            template <typename F, typename Tuple>
+            HPX_HOST_DEVICE HPX_FORCEINLINE
+            typename util::detail::fused_result_of<F&&(Tuple&&)>::type
+            operator()(F&& f, Tuple&& args)
+            {
+                typedef typename util::detail::fused_result_of<F&&(Tuple&&)>::type R;
 
-    template <typename R, typename F, BOOST_PP_ENUM_PARAMS(N, typename Arg)>
-    BOOST_FORCEINLINE
-    typename boost::enable_if_c<
-        util::tuple_size<util::tuple<BOOST_PP_ENUM_PARAMS(N, Arg)> >::value == N
-      , R
-    >::type
-    invoke_fused_r(F && f, util::tuple<BOOST_PP_ENUM_PARAMS(N, Arg)>&& args)
-    {
-        return
-            invoke_r<R>(std::forward<F>(f)
-              , BOOST_PP_ENUM(N, HPX_UTIL_INVOKE_FUSED_FWD_ARG, _));
-    }
+                return hpx::util::void_guard<R>(), util::invoke_fused(
+                    std::forward<F>(f),
+                    std::forward<Tuple>(args));
+            }
+        };
 
-    template <typename F, BOOST_PP_ENUM_PARAMS(N, typename Arg)>
-    BOOST_FORCEINLINE
-    typename boost::enable_if_c<
-        util::tuple_size<util::tuple<BOOST_PP_ENUM_PARAMS(N, Arg)> >::value == N
-      , typename invoke_result_of<
-            F(BOOST_PP_ENUM(N, HPX_UTIL_INVOKE_FUSED_ARG_RESULT, _))
-        >::type
-    >::type
-    invoke_fused(F && f
-      , util::tuple<BOOST_PP_ENUM_PARAMS(N, Arg)> const& args)
-    {
-        return
-            invoke(std::forward<F>(f)
-              , BOOST_PP_ENUM(N, HPX_UTIL_INVOKE_FUSED_ARG, _));
+        template <typename R>
+        struct invoke_fused_r
+        {
+            template <typename F, typename Tuple>
+            HPX_HOST_DEVICE HPX_FORCEINLINE
+            R operator()(F&& f, Tuple&& args)
+            {
+                return hpx::util::void_guard<R>(), util::invoke_fused_r<R>(
+                    std::forward<F>(f),
+                    std::forward<Tuple>(args));
+            }
+        };
     }
-
-    template <typename F, BOOST_PP_ENUM_PARAMS(N, typename Arg)>
-    BOOST_FORCEINLINE
-    typename boost::enable_if_c<
-        util::tuple_size<util::tuple<BOOST_PP_ENUM_PARAMS(N, Arg)> >::value == N
-      , typename invoke_result_of<
-            F(BOOST_PP_ENUM_PARAMS(N, Arg))
-        >::type
-    >::type
-    invoke_fused(F && f, util::tuple<BOOST_PP_ENUM_PARAMS(N, Arg)>&& args)
-    {
-        return
-            invoke(std::forward<F>(f)
-              , BOOST_PP_ENUM(N, HPX_UTIL_INVOKE_FUSED_FWD_ARG, _));
-    }
+    /// \endcond
 }}
-
-#undef N
 
 #endif

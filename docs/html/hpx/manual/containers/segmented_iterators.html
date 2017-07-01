@@ -1,0 +1,119 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Segmented and Segmented Iterator Traits</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 1.1.0">
+<link rel="up" href="../containers.html" title="Segmented Containers">
+<link rel="prev" href="parallel_containers.html" title="Using Segmented Containers">
+<link rel="next" href="../s15.html" title="Index">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="531" height="105" src="../../../images/hpx_1_1_0_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="parallel_containers.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../containers.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../s15.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="hpx.manual.containers.segmented_iterators"></a><a class="link" href="segmented_iterators.html" title="Segmented and Segmented Iterator Traits">Segmented
+        and Segmented Iterator Traits</a>
+</h4></div></div></div>
+<p>
+          The basic iterator used in the STL library is only suitable for one-dimensional
+          structures. The iterators we use in <code class="computeroutput"><span class="identifier">hpx</span></code>
+          must adapt to the segmented format of our containers. Our iterators are
+          then able to know when incrementing themselves if the next element of type
+          <code class="computeroutput"><span class="identifier">T</span></code> is in the same data segment
+          or in another segment. In this second case, the iterator will automatically
+          point to the beginning of the next segment.
+        </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            Note that the dereference operation (<code class="computeroutput"><span class="keyword">operator</span>
+            <span class="special">*</span></code>) does not directly return a
+            reference of type <code class="computeroutput"><span class="identifier">T</span><span class="special">&amp;</span></code>
+            but an intermediate object wrapping this reference. When this object
+            is used as an l-value, a remote write operation is performed; When this
+            object is used as an r-value, implicit conversion to <code class="computeroutput"><span class="identifier">T</span></code>
+            type will take care of performing remote read operation.
+          </p></td></tr>
+</table></div>
+<p>
+          It is sometimes useful not only to iterate element by element, but also
+          segment by segment, or simply get a local iterator in order to avoid additional
+          construction costs at each deferencing operations. To mitigate this need,
+          the <code class="computeroutput">hpx::traits::segmented_iterator_traits</code>
+          are used.
+        </p>
+<p>
+          With <code class="computeroutput"><span class="identifier">segmented_iterator_traits</span></code>,
+          users can uniformly get the iterators which specifically iterates over
+          segments (by providing a segmented iterator as a parameter), or get the
+          local begin/end iterators of the nearest local segment (by providing a
+          per-segment iterator as a parameter).
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">partitioned_vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="comment">// The following code generates all necessary boiler plate to enable the</span>
+<span class="comment">// remote creation of 'partitioned_vector' segments</span>
+<span class="comment">//</span>
+<code class="computeroutput">HPX_REGISTER_PARTITIONED_VECTOR</code><span class="special">(</span><span class="keyword">double</span><span class="special">);</span>
+
+<span class="keyword">using</span> <span class="identifier">iterator</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">iterator</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">traits</span>   <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">segmented_iterator_traits</span><span class="special">&lt;</span><span class="identifier">iterator</span><span class="special">&gt;;</span>
+
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">count</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+<span class="keyword">auto</span> <span class="identifier">seg_begin</span> <span class="special">=</span> <span class="identifier">traits</span><span class="special">::</span><span class="identifier">segment</span><span class="special">(</span><span class="identifier">v</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
+<span class="keyword">auto</span> <span class="identifier">seg_end</span>   <span class="special">=</span> <span class="identifier">traits</span><span class="special">::</span><span class="identifier">segment</span><span class="special">(</span><span class="identifier">v</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
+
+<span class="comment">// Iterate over segments</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">auto</span> <span class="identifier">seg_it</span> <span class="special">=</span> <span class="identifier">seg_begin</span><span class="special">;</span> <span class="identifier">seg_it</span> <span class="special">!=</span> <span class="identifier">seg_end</span><span class="special">;</span> <span class="special">++</span><span class="identifier">seg_it</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">auto</span> <span class="identifier">loc_begin</span> <span class="special">=</span> <span class="identifier">traits</span><span class="special">::</span><span class="identifier">begin</span><span class="special">(</span><span class="identifier">seg_it</span><span class="special">)</span>
+    <span class="keyword">auto</span> <span class="identifier">loc_end</span>   <span class="special">=</span> <span class="identifier">traits</span><span class="special">::</span><span class="identifier">end</span><span class="special">(</span><span class="identifier">seg_it</span><span class="special">);</span>
+
+    <span class="comment">// Iterate over elements inside segments</span>
+    <span class="keyword">for</span> <span class="special">(</span><span class="keyword">auto</span> <span class="identifier">lit</span> <span class="special">=</span> <span class="identifier">loc_begin</span><span class="special">;</span> <span class="identifier">lit</span> <span class="special">!=</span> <span class="identifier">loc_end</span><span class="special">;</span> <span class="special">++</span><span class="identifier">lit</span><span class="special">,</span> <span class="special">++</span><span class="identifier">count</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="special">*</span><span class="identifier">lit</span> <span class="special">=</span> <span class="identifier">count</span><span class="special">;</span>
+    <span class="special">}</span>
+<span class="special">}</span>
+</pre>
+<p>
+          Which is equivalent to:
+        </p>
+<pre class="programlisting"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">count</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+<span class="keyword">auto</span> <span class="identifier">begin</span> <span class="special">=</span> <span class="identifier">v</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
+<span class="keyword">auto</span> <span class="identifier">end</span>   <span class="special">=</span> <span class="identifier">v</span><span class="special">.</span><span class="identifier">end</span><span class="special">();</span>
+
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">auto</span> <span class="identifier">it</span> <span class="special">=</span> <span class="identifier">begin</span><span class="special">;</span> <span class="identifier">it</span> <span class="special">!=</span> <span class="identifier">end</span><span class="special">;</span> <span class="special">++</span><span class="identifier">it</span><span class="special">,</span> <span class="special">++</span><span class="identifier">count</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="special">*</span><span class="identifier">it</span> <span class="special">=</span> <span class="identifier">count</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2017 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="parallel_containers.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../containers.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../s15.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

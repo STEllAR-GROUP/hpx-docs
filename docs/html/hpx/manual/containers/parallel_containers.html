@@ -1,0 +1,270 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Using Segmented Containers</title>
+<link rel="stylesheet" href="../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="HPX 1.1.0">
+<link rel="up" href="../containers.html" title="Segmented Containers">
+<link rel="prev" href="../containers.html" title="Segmented Containers">
+<link rel="next" href="segmented_iterators.html" title="Segmented and Segmented Iterator Traits">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="531" height="105" src="../../../images/hpx_1_1_0_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../containers.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../containers.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="segmented_iterators.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="hpx.manual.containers.parallel_containers"></a><a class="link" href="parallel_containers.html" title="Using Segmented Containers">Using Segmented
+        Containers</a>
+</h4></div></div></div>
+<p>
+          A segmented container is a template class that is described in the namespace
+          <code class="computeroutput"><span class="identifier">hpx</span></code>. All segmented containers
+          are very similar semantically to their sequential counterpart (defined
+          in <code class="computeroutput"><span class="keyword">namespace</span> <span class="identifier">std</span></code>)
+          but with an additional template parameter named <code class="computeroutput"><span class="identifier">DistPolicy</span></code>.
+          The distribution policy is an optional parameter that is passed last to
+          the segmented container constructor (after the container size when no default
+          value is given, after the default value if not). The distribution policy
+          describes the manner in which a container is segmented and the placement
+          of each segment among the available runtime localities.
+        </p>
+<p>
+          However, only a part of the <code class="computeroutput"><span class="identifier">std</span></code>
+          container member functions were reimplemented:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <code class="computeroutput"><span class="special">(</span><span class="identifier">constructor</span><span class="special">)</span></code>, <code class="computeroutput"><span class="special">(</span><span class="identifier">destructor</span><span class="special">)</span></code>,
+              <code class="computeroutput"><span class="keyword">operator</span><span class="special">=</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="keyword">operator</span><span class="special">[]</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">begin</span></code>, <code class="computeroutput"><span class="identifier">cbegin</span></code>, <code class="computeroutput"><span class="identifier">end</span></code>,
+              <code class="computeroutput"><span class="identifier">cend</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">size</span></code>
+            </li>
+</ul></div>
+<p>
+          An example of how to use the <code class="computeroutput"><span class="identifier">partitioned_vector</span></code>
+          container would be :
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">partitioned_vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="comment">// The following code generates all necessary boiler plate to enable the</span>
+<span class="comment">// remote creation of 'partitioned_vector' segments</span>
+<span class="comment">//</span>
+<code class="computeroutput">HPX_REGISTER_PARTITIONED_VECTOR</code><span class="special">(</span><span class="keyword">double</span><span class="special">);</span>
+
+<span class="comment">// By default, the number of segments is equal to the current number of</span>
+<span class="comment">// localities</span>
+<span class="comment">//</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">va</span><span class="special">(</span><span class="number">50</span><span class="special">);</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">vb</span><span class="special">(</span><span class="number">50</span><span class="special">,</span> <span class="number">0.0</span><span class="special">);</span>
+</pre>
+<p>
+          An example of how to use the <code class="computeroutput"><span class="identifier">partitioned_vector</span></code>
+          container with distribution policies would be:
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">partitioned_vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">runtime</span><span class="special">/</span><span class="identifier">find_localities</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="comment">// The following code generates all necessary boiler plate to enable the</span>
+<span class="comment">// remote creation of 'partitioned_vector' segments</span>
+<span class="comment">//</span>
+<code class="computeroutput">HPX_REGISTER_PARTITIONED_VECTOR</code><span class="special">(</span><span class="keyword">double</span><span class="special">);</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">num_segments</span> <span class="special">=</span> <span class="number">10</span><span class="special">;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">id_type</span><span class="special">&gt;</span> <span class="identifier">locs</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">find_all_localities</span><span class="special">()</span>
+
+<span class="keyword">auto</span> <span class="identifier">layout</span> <span class="special">=</span>
+        <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">container_layout</span><span class="special">(</span> <span class="identifier">num_segments</span><span class="special">,</span> <span class="identifier">locs</span> <span class="special">);</span>
+
+<span class="comment">// The number of segments is 10 and those segments are spread across the</span>
+<span class="comment">// localities collected in the variable locs in a Round-Robin manner</span>
+<span class="comment">//</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">va</span><span class="special">(</span><span class="number">50</span><span class="special">,</span> <span class="identifier">layout</span><span class="special">);</span>
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">vb</span><span class="special">(</span><span class="number">50</span><span class="special">,</span> <span class="number">0.0</span><span class="special">,</span> <span class="identifier">layout</span><span class="special">);</span>
+</pre>
+<p>
+          By definition, a segmented container must be accessible from any thread
+          although its construction is synchronous only for the thread who has called
+          its constructor. To overcome this problem, it is possible to assign a symbolic
+          name to the segmented container.
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">partitioned_vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="comment">// The following code generates all necessary boiler plate to enable the</span>
+<span class="comment">// remote creation of 'partitioned_vector' segments</span>
+<span class="comment">//</span>
+<code class="computeroutput">HPX_REGISTER_PARTITIONED_VECTOR</code><span class="special">(</span><span class="keyword">double</span><span class="special">);</span>
+
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span> <span class="identifier">fserver</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">(</span>
+  <span class="special">[](){</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">(</span><span class="number">50</span><span class="special">);</span>
+
+    <span class="comment">// Register the 'partitioned_vector' with the name "some_name"</span>
+    <span class="comment">//</span>
+    <span class="identifier">v</span><span class="special">.</span><span class="identifier">register_as</span><span class="special">(</span><span class="string">"some_name"</span><span class="special">);</span>
+
+    <span class="comment">/* Do some code  */</span>
+  <span class="special">});</span>
+
+<span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span> <span class="identifier">fclient</span> <span class="special">=</span>
+  <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">(</span>
+    <span class="special">[](){</span>
+      <span class="comment">// Naked 'partitioned_vector'</span>
+      <span class="comment">//</span>
+      <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
+
+      <span class="comment">// Now the variable v points to the same 'partitioned_vector' that has</span>
+      <span class="comment">// been registered with the name "some_name"</span>
+      <span class="comment">//</span>
+      <span class="identifier">v</span><span class="special">.</span><span class="identifier">connect_to</span><span class="special">(</span><span class="string">"some_name"</span><span class="special">);</span>
+
+      <span class="comment">/* Do some code  */</span>
+    <span class="special">});</span>
+</pre>
+<h6>
+<a name="hpx.manual.containers.parallel_containers.h0"></a>
+          <span class="phrase"><a name="hpx.manual.containers.parallel_containers.segmented_containers"></a></span><a class="link" href="parallel_containers.html#hpx.manual.containers.parallel_containers.segmented_containers">Segmented
+          Containers</a>
+        </h6>
+<p>
+          <span class="emphasis"><em>HPX</em></span> provides the following segmented containers:
+        </p>
+<div class="table">
+<a name="hpx.manual.containers.parallel_containers.sequence_containers"></a><p class="title"><b>Table&#160;36.&#160;Sequence Containers</b></p>
+<div class="table-contents"><table class="table" summary="Sequence Containers">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Name
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Description
+                  </p>
+                </th>
+<th>
+                  <p>
+                    In Header
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Class page at cppreference.com
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                  <p>
+                    [hpx::partitioned_vector]
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Dynamic segmented contiguous array.
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">partitioned_vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <a href="http://en.cppreference.com/w/cpp/container/vector" target="_top">vector</a>
+                  </p>
+                </td>
+</tr></tbody>
+</table></div>
+</div>
+<br class="table-break"><div class="table">
+<a name="hpx.manual.containers.parallel_containers.unordered_associative_containers"></a><p class="title"><b>Table&#160;37.&#160;Unordered Associative Containers</b></p>
+<div class="table-contents"><table class="table" summary="Unordered Associative Containers">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Name
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Description
+                  </p>
+                </th>
+<th>
+                  <p>
+                    In Header
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Class page at cppreference.com
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                  <p>
+                    [hpx::unordered_map]
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Segmented collection of key-value pairs, hashed by keys, keys
+                    are unique.
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">unordered_map</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <a href="http://en.cppreference.com/w/cpp/container/unordered_map" target="_top">unordered_map</a>
+                  </p>
+                </td>
+</tr></tbody>
+</table></div>
+</div>
+<br class="table-break">
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2017 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../containers.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../containers.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="segmented_iterators.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

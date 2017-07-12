@@ -25,12 +25,12 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/algorithms/for_each_hpp.html" title="Header &lt;hpx/parallel/algorithms/for_each.hpp&gt;">hpx/parallel/algorithms/for_each.hpp</a>&gt;
 
 </span>
-<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> InIter<span class="special">,</span> <span class="keyword">typename</span> Size<span class="special">,</span> <span class="keyword">typename</span> F<span class="special">,</span> 
-         <span class="keyword">typename</span> Proj <span class="special">=</span> <span class="identifier">util</span><span class="special">::</span><span class="identifier">projection_identity</span><span class="special">,</span> <span class="identifier">InIter</span> <span class="special">&gt;</span> 
-  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">for_each_n</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">InIter</span> first<span class="special">,</span> <span class="identifier">Size</span> count<span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> 
-                         <span class="identifier">Proj</span> <span class="special">&amp;&amp;</span> proj <span class="special">=</span> <span class="identifier">Proj</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> FwdIter<span class="special">,</span> <span class="keyword">typename</span> Size<span class="special">,</span> <span class="keyword">typename</span> F<span class="special">,</span> 
+         <span class="keyword">typename</span> Proj <span class="special">=</span> <span class="identifier">util</span><span class="special">::</span><span class="identifier">projection_identity</span><span class="special">,</span> <span class="identifier">FwdIter</span> <span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">for_each_n</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">FwdIter</span> first<span class="special">,</span> <span class="identifier">Size</span> count<span class="special">,</span> 
+                         <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">,</span> <span class="identifier">Proj</span> <span class="special">&amp;&amp;</span> proj <span class="special">=</span> <span class="identifier">Proj</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm140611007892288"></a><h2>Description</h2>
+<a name="idm140385028836144"></a><h2>Description</h2>
 <p>Applies <span class="emphasis"><em>f</em></span> to the result of dereferencing every iterator in the range [first, first + count), starting from first and proceeding to first + count - 1.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -75,7 +75,7 @@ The application of function objects in parallel algorithm invoked with an execut
 <span class="special">*</span>                      
 </pre>
 <p> <br>
- The signature does not need to have const&amp;. The type <span class="emphasis"><em>Type</em></span> must be such that an object of type <span class="emphasis"><em>InIter</em></span> can be dereferenced and then implicitly converted to Type. </p>
+ The signature does not need to have const&amp;. The type <span class="emphasis"><em>Type</em></span> must be such that an object of type <span class="emphasis"><em>FwdIter</em></span> can be dereferenced and then implicitly converted to Type. </p>
 </td>
 </tr>
 <tr>
@@ -110,8 +110,8 @@ The application of function objects in parallel algorithm invoked with an execut
 <td><p>The type of the function/function object to use (deduced). Unlike its sequential form, the parallel overload of <span class="emphasis"><em>for_each</em></span> requires <span class="emphasis"><em>F</em></span> to meet the requirements of <span class="emphasis"><em>CopyConstructible</em></span>. </p></td>
 </tr>
 <tr>
-<td><p><span class="term"><code class="computeroutput">InIter</code></span></p></td>
-<td><p>The type of the source iterators used (deduced). This iterator type must meet the requirements of an input iterator. </p></td>
+<td><p><span class="term"><code class="computeroutput">FwdIter</code></span></p></td>
+<td><p>The type of the source iterators used (deduced). This iterator type must meet the requirements of an forward iterator. </p></td>
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">Proj</code></span></p></td>
@@ -126,7 +126,7 @@ The application of function objects in parallel algorithm invoked with an execut
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
-<td><p>The <span class="emphasis"><em>for_each_n</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;InIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em>sequenced_task_policy</em></span> or <span class="emphasis"><em>parallel_task_policy</em></span> and returns <span class="emphasis"><em>InIter</em></span> otherwise. It returns <span class="emphasis"><em>first</em></span> + <span class="emphasis"><em>count</em></span> for non-negative values of <span class="emphasis"><em>count</em></span> and <span class="emphasis"><em>first</em></span> for negative values. </p></td>
+<td><p>The <span class="emphasis"><em>for_each_n</em></span> algorithm returns a <span class="emphasis"><em>hpx::future&lt;FwdIter&gt;</em></span> if the execution policy is of type <span class="emphasis"><em>sequenced_task_policy</em></span> or <span class="emphasis"><em>parallel_task_policy</em></span> and returns <span class="emphasis"><em>FwdIter</em></span> otherwise. It returns <span class="emphasis"><em>first</em></span> + <span class="emphasis"><em>count</em></span> for non-negative values of <span class="emphasis"><em>count</em></span> and <span class="emphasis"><em>first</em></span> for negative values. </p></td>
 </tr>
 </tbody>
 </table></div>

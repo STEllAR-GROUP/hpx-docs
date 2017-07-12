@@ -62,6 +62,16 @@
             Removed the (broken) component type <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">lcos</span><span class="special">::</span><span class="identifier">queue</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>. The old type is still available
             at configure time by passing <code class="computeroutput"><span class="special">-</span><span class="identifier">DHPX_WITH_QUEUE_COMPATIBILITY</span><span class="special">=</span><span class="identifier">On</span></code> to <a href="http://www.cmake.org" target="_top">CMake</a>.
           </li>
+<li class="listitem">
+            The parallel algorithms adopted for C++17 restrict the iterator categories
+            usable with those to at least forward iterators. Our implementation of
+            the parallel algorithms was supporting input iterators (and output iterators)
+            as well by simply falling back to sequential execution. We have now made
+            our implementations conforming by requiring at least forward iterators.
+            In order to enable the old behavior use the the compatibility option
+            <code class="computeroutput"><span class="special">-</span><span class="identifier">DHPX_WITH_ALGORITHM_INPUT_ITERATOR_SUPPORT</span><span class="special">=</span><span class="identifier">On</span></code>
+            on the <a href="http://www.cmake.org" target="_top">CMake</a> command line.
+          </li>
 </ul></div>
 <h5>
 <a name="hpx.whats_new.hpx_1_1_0.h1"></a>

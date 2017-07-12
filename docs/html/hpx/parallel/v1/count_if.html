@@ -25,10 +25,11 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/hpx/parallel/algorithms/count_hpp.html" title="Header &lt;hpx/parallel/algorithms/count.hpp&gt;">hpx/parallel/algorithms/count.hpp</a>&gt;
 
 </span>
-<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> InIter<span class="special">,</span> <span class="keyword">typename</span> F<span class="special">&gt;</span> 
-  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">count_if</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">InIter</span> first<span class="special">,</span> <span class="identifier">InIter</span> last<span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre></div>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ExPolicy<span class="special">,</span> <span class="keyword">typename</span> FwdIter<span class="special">,</span> <span class="keyword">typename</span> F<span class="special">&gt;</span> 
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">count_if</span><span class="special">(</span><span class="identifier">ExPolicy</span> <span class="special">&amp;&amp;</span> policy<span class="special">,</span> <span class="identifier">FwdIter</span> first<span class="special">,</span> <span class="identifier">FwdIter</span> last<span class="special">,</span> 
+                       <span class="identifier">F</span> <span class="special">&amp;&amp;</span> f<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm140611008983856"></a><h2>Description</h2>
+<a name="idm140385029927632"></a><h2>Description</h2>
 <p>Returns the number of elements in the range [first, last) satisfying a specific criteria. This version counts elements for which predicate <span class="emphasis"><em>f</em></span> returns true.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -76,7 +77,7 @@
 <span class="special">*</span>                      
 </pre>
 <p> <br>
- The signature does not need to have const&amp;, but the function must not modify the objects passed to it. The type <span class="emphasis"><em>Type</em></span> must be such that an object of type <span class="emphasis"><em>InIter</em></span> can be dereferenced and then implicitly converted to Type.</p>
+ The signature does not need to have const&amp;, but the function must not modify the objects passed to it. The type <span class="emphasis"><em>Type</em></span> must be such that an object of type <span class="emphasis"><em>FwdIter</em></span> can be dereferenced and then implicitly converted to Type.</p>
 </td>
 </tr>
 <tr>
@@ -111,15 +112,15 @@
 <td><p>The type of the function/function object to use (deduced). Unlike its sequential form, the parallel overload of <span class="emphasis"><em>count_if</em></span> requires <span class="emphasis"><em>F</em></span> to meet the requirements of <span class="emphasis"><em>CopyConstructible</em></span>.</p></td>
 </tr>
 <tr>
-<td><p><span class="term"><code class="computeroutput">InIter</code></span></p></td>
-<td><p>The type of the source iterators used (deduced). This iterator type must meet the requirements of an input iterator. </p></td>
+<td><p><span class="term"><code class="computeroutput">FwdIter</code></span></p></td>
+<td><p>The type of the source iterators used (deduced). This iterator type must meet the requirements of an forward iterator. </p></td>
 </tr>
 </tbody>
 </table></div></td>
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
-<td><p>The <span class="emphasis"><em>count_if</em></span> algorithm returns <span class="emphasis"><em>hpx::future&lt;difference_type&gt;</em></span> if the execution policy is of type <span class="emphasis"><em>sequenced_task_policy</em></span> or <span class="emphasis"><em>parallel_task_policy</em></span> and returns <span class="emphasis"><em>difference_type</em></span> otherwise (where <span class="emphasis"><em>difference_type</em></span> is defined by <span class="emphasis"><em>std::iterator_traits&lt;InIter&gt;::difference_type</em></span>. The <span class="emphasis"><em>count</em></span> algorithm returns the number of elements satisfying the given criteria. </p></td>
+<td><p>The <span class="emphasis"><em>count_if</em></span> algorithm returns <span class="emphasis"><em>hpx::future&lt;difference_type&gt;</em></span> if the execution policy is of type <span class="emphasis"><em>sequenced_task_policy</em></span> or <span class="emphasis"><em>parallel_task_policy</em></span> and returns <span class="emphasis"><em>difference_type</em></span> otherwise (where <span class="emphasis"><em>difference_type</em></span> is defined by <span class="emphasis"><em>std::iterator_traits&lt;FwdIter&gt;::difference_type</em></span>. The <span class="emphasis"><em>count</em></span> algorithm returns the number of elements satisfying the given criteria. </p></td>
 </tr>
 </tbody>
 </table></div>

@@ -35,7 +35,7 @@ namespace hpx { namespace parallel { inline namespace v1
     /// The order of the elements is preserved.
     ///
     /// \note   Complexity: Performs not more than N assignments,
-    ///         exactly N applications of the predicate \a f,
+    ///         exactly N applications of the predicate \a pred,
     ///         where N = std::distance(begin(rng), end(rng)).
     ///
     /// \tparam ExPolicy    The type of the execution policy to use (deduced).
@@ -54,7 +54,7 @@ namespace hpx { namespace parallel { inline namespace v1
     ///                     destination range for the elements that don't satisfy
     ///                     the predicate \a pred (deduced).
     ///                     This iterator type must meet the requirements of an
-    ///                     output iterator.
+    ///                     forward iterator.
     /// \tparam Pred        The type of the function/function object to use
     ///                     (deduced). Unlike its sequential form, the parallel
     ///                     overload of \a partition_copy requires \a Pred to meet
@@ -105,9 +105,9 @@ namespace hpx { namespace parallel { inline namespace v1
     /// \a tagged_tuple<tag::in(InIter), tag::out1(OutIter1), tag::out2(OutIter2)>
     ///           otherwise.
     ///           The \a partition_copy algorithm returns the tuple of
-    ///           the input iterator \a last,
-    ///           the output iterator to the end of the \a dest_true range, and
-    ///           the output iterator to the end of the \a dest_false range.
+    ///           the source iterator \a last,
+    ///           the destination iterator to the end of the \a dest_true range, and
+    ///           the destination iterator to the end of the \a dest_false range.
     ///
     template <typename ExPolicy, typename Rng, typename FwdIter2, typename FwdIter3,
         typename Pred, typename Proj = util::projection_identity,

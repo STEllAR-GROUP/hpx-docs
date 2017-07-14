@@ -30,22 +30,26 @@
                        <a class="link" href="thread_priority.html#hpx.threads.thread_priority.thread_priority_default">thread_priority_default</a> = = 0, 
                        <a class="link" href="thread_priority.html#hpx.threads.thread_priority.thread_priority_low">thread_priority_low</a> = = 1, 
                        <a class="link" href="thread_priority.html#hpx.threads.thread_priority.thread_priority_normal">thread_priority_normal</a> = = 2, 
-                       <a class="link" href="thread_priority.html#hpx.threads.thread_priority.thread_priority_critical">thread_priority_critical</a> = = 3, 
-                       <a class="link" href="thread_priority.html#hpx.threads.thread_priority.thread_priority_boost">thread_priority_boost</a> = = 4 <span class="special">}</span><span class="special">;</span></pre></div>
+                       <a class="link" href="thread_priority.html#hpx.threads.thread_priority.thread_priority_high_recursive">thread_priority_high_recursive</a> = = 3, 
+                       <a class="link" href="thread_priority.html#hpx.threads.thread_priority.thread_priority_boost">thread_priority_boost</a> = = 4, 
+                       <a class="link" href="thread_priority.html#hpx.threads.thread_priority.thread_priority_high">thread_priority_high</a> = = 5 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm139632955880304"></a><h2>Description</h2>
+<a name="idm140679937543840"></a><h2>Description</h2>
 <p>This enumeration lists all possible thread-priorities for HPX threads. </p>
 <div class="variablelist"><dl class="variablelist compact">
 <dt><span class="term"><code class="computeroutput">thread_priority_default</code><a name="hpx.threads.thread_priority.thread_priority_default"></a></span></dt>
-<dd>use default priority </dd>
+<dd><p>Will assign the priority of the task to the default (normal) priority. </p></dd>
 <dt><span class="term"><code class="computeroutput">thread_priority_low</code><a name="hpx.threads.thread_priority.thread_priority_low"></a></span></dt>
-<dd>low thread priority </dd>
+<dd><p>Task goes onto a special low
+ priority queue and will not be executed until all high/normal priority tasks are done, even if they are added after the low priority task. </p></dd>
 <dt><span class="term"><code class="computeroutput">thread_priority_normal</code><a name="hpx.threads.thread_priority.thread_priority_normal"></a></span></dt>
-<dd>normal thread priority (default) </dd>
-<dt><span class="term"><code class="computeroutput">thread_priority_critical</code><a name="hpx.threads.thread_priority.thread_priority_critical"></a></span></dt>
-<dd>high thread priority </dd>
+<dd><p>Task will be executed when it is taken from the normal priority queue, this is usually a first in-first-out ordering of tasks (depending on scheduler choice). This is the default priority. </p></dd>
+<dt><span class="term"><code class="computeroutput">thread_priority_high_recursive</code><a name="hpx.threads.thread_priority.thread_priority_high_recursive"></a></span></dt>
+<dd><p>The task is a high priority task and any child tasks spawned by this task will be made high priority as well - unless they are specifically flagged as non default priority. </p></dd>
 <dt><span class="term"><code class="computeroutput">thread_priority_boost</code><a name="hpx.threads.thread_priority.thread_priority_boost"></a></span></dt>
-<dd><p>high thread priority for first invocation, normal afterwards </p></dd>
+<dd><p>Same as <span class="emphasis"><em>thread_priority_high</em></span> except that the thread will fall back to <span class="emphasis"><em>thread_priority_normal</em></span> if resumed after being suspended. </p></dd>
+<dt><span class="term"><code class="computeroutput">thread_priority_high</code><a name="hpx.threads.thread_priority.thread_priority_high"></a></span></dt>
+<dd><p>Task goes onto a special high priority queue and will be executed before normal/low priority tasks are taken (some schedulers modify the behavior slightly and the documentation for those should be consulted). </p></dd>
 </dl></div>
 </div>
 </div>

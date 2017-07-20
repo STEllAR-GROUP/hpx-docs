@@ -35,7 +35,7 @@
                             <span class="identifier">Compare</span> <span class="special">&amp;&amp;</span> comp <span class="special">=</span> <span class="identifier">Compare</span><span class="special">(</span><span class="special">)</span><span class="special">,</span> 
                             <span class="identifier">Func</span> <span class="special">&amp;&amp;</span> func <span class="special">=</span> <span class="identifier">Func</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm140182640350688"></a><h2>Description</h2>
+<a name="idm140436450552720"></a><h2>Description</h2>
 <p>Reduce by Key performs an inclusive scan reduction operation on elements supplied in key/value pairs. The algorithm produces a single output value for each set of equal consecutive keys in [key_first, key_last). the value being the GENERALIZED_NONCOMMUTATIVE_SUM(op, init, *first, ..., *(first + (i - result))). for the run of consecutive matching keys. The number of keys supplied must match the number of values.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -68,7 +68,18 @@
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">comp</code></span></p></td>
-<td><p>comp is a callable object. The return value of the INVOKE operation applied to an object of type Comp, when contextually converted to bool, yields true if the first argument of the call is less than the second, and false otherwise. It is assumed that comp will not apply any non-constant function through the dereferenced iterator.</p></td>
+<td><p>comp is a callable object. The return value of the INVOKE operation applied to an object of type Comp, when contextually converted to bool, yields true if the first argument of the call is less than the second, and false otherwise. It is assumed that comp will not apply any non-constant function through the dereferenced iterator. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">func</code></span></p></td>
+<td>
+<p>Specifies the function (or function object) which will be invoked for each of the elements in the sequence specified by [first, last). This is a binary predicate. The signature of this predicate should be equivalent to: </p>
+<pre class="programlisting"><span class="special">*</span>                      <span class="identifier">Ret</span> <span class="identifier">fun</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Type1</span> <span class="special">&amp;</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
+<span class="special">*</span>                      
+</pre>
+<p> <br>
+ The signature does not need to have const&amp;. The types <span class="emphasis"><em>Type1</em></span> <span class="emphasis"><em>Ret</em></span> must be such that an object of type <span class="emphasis"><em>FwdIter</em></span> can be dereferenced and then implicitly converted to any of those types.</p>
+</td>
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">key_first</code></span></p></td>
@@ -87,6 +98,10 @@
 <td><p>The execution policy to use for the scheduling of the iterations. </p></td>
 </tr>
 <tr>
+<td><p><span class="term"><code class="computeroutput">values_first</code></span></p></td>
+<td><p>Refers to the beginning of the sequence of value elements the algorithm will be applied to. </p></td>
+</tr>
+<tr>
 <td><p><span class="term"><code class="computeroutput">values_output</code></span></p></td>
 <td><p>Refers to the start output location for the values produced by the algorithm. </p></td>
 </tr>
@@ -103,11 +118,15 @@
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">Compare</code></span></p></td>
-<td><p>The type of the optional function/function object to use to compare keys (deduced). Assumed to be std::equal_to otherwise.</p></td>
+<td><p>The type of the optional function/function object to use to compare keys (deduced). Assumed to be std::equal_to otherwise. </p></td>
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">ExPolicy</code></span></p></td>
 <td><p>The type of the execution policy to use (deduced). It describes the manner in which the execution of the algorithm may be parallelized and the manner in which it applies user-provided function objects. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">Func</code></span></p></td>
+<td><p>The type of the function/function object to use (deduced). Unlike its sequential form, the parallel overload of <span class="emphasis"><em>copy_if</em></span> requires <span class="emphasis"><em>F</em></span> to meet the requirements of <span class="emphasis"><em>CopyConstructible</em></span>.</p></td>
 </tr>
 <tr>
 <td><p><span class="term"><code class="computeroutput">FwdIter1</code></span></p></td>

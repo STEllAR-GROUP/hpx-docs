@@ -157,7 +157,7 @@
     <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">space</span><span class="special">&gt;</span> <span class="identifier">do_work</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">nx</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">nt</span><span class="special">)</span>
     <span class="special">{</span>
         <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">dataflow</span><span class="special">;</span>
-        <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">unwrapped</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">unwrapping</span><span class="special">;</span>
 
         <span class="comment">// U[t][i] is the state of position i at time t.</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">space</span><span class="special">&gt;</span> <span class="identifier">U</span><span class="special">(</span><span class="number">2</span><span class="special">);</span>
@@ -168,7 +168,7 @@
         <span class="keyword">for</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">!=</span> <span class="identifier">nx</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
             <span class="identifier">U</span><span class="special">[</span><span class="number">0</span><span class="special">][</span><span class="identifier">i</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">make_ready_future</span><span class="special">(</span><span class="keyword">double</span><span class="special">(</span><span class="identifier">i</span><span class="special">));</span>
 
-        <span class="keyword">auto</span> <span class="identifier">Op</span> <span class="special">=</span> <span class="identifier">unwrapped</span><span class="special">(&amp;</span><span class="identifier">stepper</span><span class="special">::</span><span class="identifier">heat</span><span class="special">);</span>
+        <span class="keyword">auto</span> <span class="identifier">Op</span> <span class="special">=</span> <span class="identifier">unwrapping</span><span class="special">(&amp;</span><span class="identifier">stepper</span><span class="special">::</span><span class="identifier">heat</span><span class="special">);</span>
 
         <span class="comment">// Actual time step loop</span>
         <span class="keyword">for</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">t</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">t</span> <span class="special">!=</span> <span class="identifier">nt</span><span class="special">;</span> <span class="special">++</span><span class="identifier">t</span><span class="special">)</span>
@@ -341,13 +341,13 @@
     <span class="identifier">partition</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">middle</span><span class="special">,</span> <span class="identifier">partition</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">right</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">dataflow</span><span class="special">;</span>
-    <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">unwrapped</span><span class="special">;</span>
+    <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">unwrapping</span><span class="special">;</span>
 
     <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">shared_future</span><span class="special">&lt;</span><span class="identifier">partition_data</span><span class="special">&gt;</span> <span class="identifier">middle_data</span> <span class="special">=</span>
         <span class="identifier">middle</span><span class="special">.</span><span class="identifier">get_data</span><span class="special">(</span><span class="identifier">partition_server</span><span class="special">::</span><span class="identifier">middle_partition</span><span class="special">);</span>
 
     <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">partition_data</span><span class="special">&gt;</span> <span class="identifier">next_middle</span> <span class="special">=</span> <span class="identifier">middle_data</span><span class="special">.</span><span class="identifier">then</span><span class="special">(</span>
-        <span class="identifier">unwrapped</span><span class="special">(</span>
+        <span class="identifier">unwrapping</span><span class="special">(</span>
             <span class="special">[</span><span class="identifier">middle</span><span class="special">](</span><span class="identifier">partition_data</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">m</span><span class="special">)</span> <span class="special">-&gt;</span> <span class="identifier">partition_data</span>
             <span class="special">{</span>
                 <span class="identifier">HPX_UNUSED</span><span class="special">(</span><span class="identifier">middle</span><span class="special">);</span>
@@ -365,7 +365,7 @@
 
     <span class="keyword">return</span> <span class="identifier">dataflow</span><span class="special">(</span>
         <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async</span><span class="special">,</span>
-        <span class="identifier">unwrapped</span><span class="special">(</span>
+        <span class="identifier">unwrapping</span><span class="special">(</span>
             <span class="special">[</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">middle</span><span class="special">,</span> <span class="identifier">right</span><span class="special">](</span><span class="identifier">partition_data</span> <span class="identifier">next</span><span class="special">,</span> <span class="identifier">partition_data</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">l</span><span class="special">,</span>
                 <span class="identifier">partition_data</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">m</span><span class="special">,</span> <span class="identifier">partition_data</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">r</span><span class="special">)</span> <span class="special">-&gt;</span> <span class="identifier">partition</span>
             <span class="special">{</span>

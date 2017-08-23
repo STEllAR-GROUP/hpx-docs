@@ -7,13 +7,13 @@
 <link rel="home" href="../../../../index.html" title="HPX 1.1.0">
 <link rel="up" href="../partitioned_vector_views.html" title="Using Views">
 <link rel="prev" href="spmd_block.html" title="Preface : Why SPMD ?">
-<link rel="next" href="../../s15.html" title="Index">
+<link rel="next" href="../c_co_arrays.html" title="C++ Co-Arrays">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="531" height="105" src="../../../../images/hpx_1_1_0_draft.png"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="spmd_block.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../partitioned_vector_views.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../s15.html"><img src="../../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="spmd_block.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../partitioned_vector_views.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../c_co_arrays.html"><img src="../../../../images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
@@ -29,15 +29,16 @@
             Sub-views</a></span></dt>
 </dl></div>
 <p>
-            based member functions classes are defined as "container views"
-            when the purpose is to observe and/or to modify the values of a container
-            using another perspective than the one that characterizes the container.
-            For example, the values of an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>
-            object can be accessed via the expression <code class="computeroutput"><span class="identifier">v</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span></code>. Container views can be used, for example,
-            when it is desired for those values to be "viewed" as a 2D
-            matrix that would have been flattened in a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>.
-            The values would be possibly accessible via the expression <code class="computeroutput"><span class="identifier">vv</span><span class="special">(</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">j</span><span class="special">)</span></code>
-            which would call internally the expression <code class="computeroutput"><span class="identifier">v</span><span class="special">[</span><span class="identifier">k</span><span class="special">]</span></code>.
+            Some classes are defined as "container views" when the purpose
+            is to observe and/or modify the values of a container using another perspective
+            than the one that characterizes the container. For example, the values
+            of an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code> object can be accessed via the
+            expression <code class="computeroutput"><span class="identifier">v</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span></code>.
+            Container views can be used, for example, when it is desired for those
+            values to be "viewed" as a 2D matrix that would have been flattened
+            in a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>. The values would be possibly
+            accessible via the expression <code class="computeroutput"><span class="identifier">vv</span><span class="special">(</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">j</span><span class="special">)</span></code> which would call internally the expression
+            <code class="computeroutput"><span class="identifier">v</span><span class="special">[</span><span class="identifier">k</span><span class="special">]</span></code>.
           </p>
 <p>
             By default, the <code class="computeroutput"><span class="identifier">partitioned_vector</span></code>
@@ -50,6 +51,9 @@
 <span class="comment">//</span>
 <code class="computeroutput">HPX_REGISTER_PARTITIONED_VECTOR</code><span class="special">(</span><span class="keyword">double</span><span class="special">);</span>
 
+<span class="keyword">using</span> <span class="identifier">iterator</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;::</span><span class="identifier">iterator</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">traits</span>   <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">segmented_iterator_traits</span><span class="special">&lt;</span><span class="identifier">iterator</span><span class="special">&gt;;</span>
+
 <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
 
 <span class="comment">// Create a 1-D view of the vector of segments</span>
@@ -60,7 +64,7 @@
 </pre>
 <p>
             Our views are called "multi-dimensional" in the sense that
-            they generalize to N dimensions the purpose of <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">segments</span><span class="special">()</span></code> in the 1-D case. Note that in a parallel
+            they generalize to N dimensions the purpose of <code class="computeroutput"><span class="identifier">segmented_iterator_traits</span><span class="special">::</span><span class="identifier">segments</span><span class="special">()</span></code> in the 1-D case. Note that in a parallel
             section, the 2-D expression <code class="computeroutput"><span class="identifier">a</span><span class="special">(</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">j</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">b</span><span class="special">(</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">j</span><span class="special">)</span></code> is quite confusing because without convention,
             each of the images invoked will race to execute the statement. For this
             reason, our views are not only multi-dimensional but also "spmd-aware".
@@ -72,9 +76,9 @@
 </tr>
 <tr><td align="left" valign="top"><p>
               Spmd-awareness: The convention is simple. If an assignment statement
-              &#160;&#160;&#160;&#160;&#160;&#160; contains a view subscript as an l-value, it is only and
-              only the image &#160;&#160;&#160;&#160;&#160;&#160; holding the r-value who is evaluating the
-              statement. (In MPI sense, &#160;&#160;&#160;&#160;&#160;&#160; it is called a Put operation
+              contains a view subscript as an l-value, it is only and only the image
+              holding the r-value who is evaluating the statement. (In MPI sense,
+              it is called a Put operation)
             </p></td></tr>
 </table></div>
 <div class="section">
@@ -146,8 +150,8 @@
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">sixe_x</span><span class="special">,</span> <span class="identifier">size_y</span><span class="special">,</span> <span class="identifier">size_z</span><span class="special">;</span>
 
     <span class="comment">// Instanciate the views</span>
-    <span class="identifier">View_3D</span> <span class="identifier">vv1</span><span class="special">(</span><span class="identifier">block</span><span class="special">,</span> <span class="identifier">v</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">v</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="special">{</span><span class="identifier">sixe_x</span><span class="special">,</span><span class="identifier">size_y</span><span class="special">,</span><span class="identifier">size_z</span><span class="special">});</span>
-    <span class="identifier">View_3D</span> <span class="identifier">vv2</span><span class="special">(</span><span class="identifier">block</span><span class="special">,</span> <span class="identifier">v</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">v</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="special">{</span><span class="identifier">sixe_x</span><span class="special">,</span><span class="identifier">size_y</span><span class="special">,</span><span class="identifier">size_z</span><span class="special">});</span>
+    <span class="identifier">View_3D</span> <span class="identifier">vv1</span><span class="special">(</span><span class="identifier">block</span><span class="special">,</span> <span class="identifier">v1</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">v1</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="special">{</span><span class="identifier">sixe_x</span><span class="special">,</span><span class="identifier">size_y</span><span class="special">,</span><span class="identifier">size_z</span><span class="special">});</span>
+    <span class="identifier">View_3D</span> <span class="identifier">vv2</span><span class="special">(</span><span class="identifier">block</span><span class="special">,</span> <span class="identifier">v2</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">v2</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="special">{</span><span class="identifier">sixe_x</span><span class="special">,</span><span class="identifier">size_y</span><span class="special">,</span><span class="identifier">size_z</span><span class="special">});</span>
 
     <span class="comment">// Save previous segments covered by vv1 into segments covered by vv2</span>
     <span class="keyword">auto</span> <span class="identifier">vv2_it</span> <span class="special">=</span> <span class="identifier">vv2</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
@@ -291,7 +295,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="spmd_block.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../partitioned_vector_views.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../s15.html"><img src="../../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="spmd_block.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../partitioned_vector_views.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../c_co_arrays.html"><img src="../../../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

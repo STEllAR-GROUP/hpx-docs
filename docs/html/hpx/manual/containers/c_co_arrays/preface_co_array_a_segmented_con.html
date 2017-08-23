@@ -1,0 +1,161 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Preface : Co-array, a segmented container tied to a SPMD Multidimensionnal View</title>
+<link rel="stylesheet" href="../../../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../../index.html" title="HPX 1.1.0">
+<link rel="up" href="../c_co_arrays.html" title="C++ Co-Arrays">
+<link rel="prev" href="../c_co_arrays.html" title="C++ Co-Arrays">
+<link rel="next" href="using_co_arrays.html" title="Using Co-Arrays">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="531" height="105" src="../../../../images/hpx_1_1_0_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../c_co_arrays.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../c_co_arrays.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="using_co_arrays.html"><img src="../../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="hpx.manual.containers.c_co_arrays.preface_co_array_a_segmented_con"></a><a class="link" href="preface_co_array_a_segmented_con.html" title="Preface : Co-array, a segmented container tied to a SPMD Multidimensionnal View">Preface
+          : Co-array, a segmented container tied to a SPMD Multidimensionnal View</a>
+</h5></div></div></div>
+<p>
+            As mentioned before, a co-array is a distributed array whose segments
+            are accessible through an array -inspired access mode. We have previously
+            seen that it is possible to reproduce such access mode using the concept
+            of views. Nevertheless, the user must pre-create a segmented container
+            to instanciate this view. We illustrate below how a single constructor
+            call can perform those two operations :
+          </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">components</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">coarray</span><span class="special">/</span><span class="identifier">coarray</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">lcos</span><span class="special">/</span><span class="identifier">spmd_block</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="comment">// The following code generates all necessary boiler plate to enable the</span>
+<span class="comment">// co-creation of 'coarray'</span>
+<span class="comment">//</span>
+<code class="computeroutput">HPX_REGISTER_COARRAY</code><span class="special">(</span><span class="keyword">double</span><span class="special">);</span>
+
+<span class="comment">// Parallel section (suppose 'block' an spmd_block instance)</span>
+<span class="special">{</span>
+    <span class="keyword">using</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">container</span><span class="special">::</span><span class="identifier">placeholders</span><span class="special">::</span><span class="identifier">_</span><span class="special">;</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">height</span><span class="special">=</span><span class="number">32</span><span class="special">,</span> <span class="identifier">width</span><span class="special">=</span><span class="number">4</span><span class="special">,</span> <span class="identifier">segment_size</span><span class="special">=</span><span class="number">10</span><span class="special">;</span>
+
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">coarray</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span><span class="number">3</span><span class="special">&gt;</span> <span class="identifier">a</span><span class="special">(</span><span class="identifier">block</span><span class="special">,</span> <span class="string">"a"</span><span class="special">,</span> <span class="special">{</span><span class="identifier">height</span><span class="special">,</span><span class="identifier">width</span><span class="special">,</span><span class="identifier">_</span><span class="special">},</span> <span class="identifier">segment_size</span><span class="special">);</span>
+
+    <span class="comment">/* Do some code */</span>
+<span class="special">}</span>
+</pre>
+<p>
+            Unlike segmented containers, a co-array object can only be instantiated
+            within a parallel section; Here is the description of the parameters
+            to provide to the coarray constructor :
+          </p>
+<div class="table">
+<a name="hpx.manual.containers.c_co_arrays.preface_co_array_a_segmented_con.parameters_of_coarray_constructo"></a><p class="title"><b>Table&#160;40.&#160;Parameters of coarray constructor</b></p>
+<div class="table-contents"><table class="table" summary="Parameters of coarray constructor">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                    <p>
+                      Parameter
+                    </p>
+                  </th>
+<th>
+                    <p>
+                      Description
+                    </p>
+                  </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">block</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Reference to a <code class="computeroutput"><span class="identifier">spmd_block</span></code>
+                      object
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="string">"a"</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Symbolic name of type <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="special">{</span><span class="identifier">height</span><span class="special">,</span><span class="identifier">width</span><span class="special">,</span><span class="identifier">_</span><span class="special">}</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Dimensions of the <code class="computeroutput"><span class="identifier">coarray</span></code>
+                      object
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">segment_size</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Size of a co-indexed element (i.e. size of the object referenced
+                      by the expression <code class="computeroutput"><span class="identifier">a</span><span class="special">(</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">j</span><span class="special">,</span><span class="identifier">k</span><span class="special">)</span></code>)
+                    </p>
+                  </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+            Note that the "last dimension size" cannot be set by the user.
+            It only accepts the constexpr variable <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">container</span><span class="special">::</span><span class="identifier">placeholders</span><span class="special">::</span><span class="identifier">_</span></code>.
+            This size, which is considered private, is equal to the number of current
+            images (value returned by <code class="computeroutput"><span class="identifier">block</span><span class="special">.</span><span class="identifier">get_num_images</span><span class="special">()</span></code>)
+          </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              An important constraint to remember about coarray objects is that all
+              segments sharing the same "last dimension index" are located
+              in the same image
+            </p></td></tr>
+</table></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2017 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../c_co_arrays.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../c_co_arrays.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="using_co_arrays.html"><img src="../../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

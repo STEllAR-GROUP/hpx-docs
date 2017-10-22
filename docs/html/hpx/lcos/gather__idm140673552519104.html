@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function template gather_there</title>
+<link rel="stylesheet" href="../../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="HPX 1.1.0">
+<link rel="up" href="../../header/hpx/lcos/gather_hpp.html" title="Header &lt;hpx/lcos/gather.hpp&gt;">
+<link rel="prev" href="gather__idm140673552531376.html" title="Function template gather_here">
+<link rel="next" href="../../HPX_REGISTER_GATHER_DECLARATION.html" title="Macro HPX_REGISTER_GATHER_DECLARATION">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="531" height="105" src="../../images/hpx_1_1_0_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="gather__idm140673552531376.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../header/hpx/lcos/gather_hpp.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../HPX_REGISTER_GATHER_DECLARATION.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="hpx.lcos.gather__idm140673552519104"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function template gather_there</span></h2>
+<p>hpx::lcos::gather_there</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../header/hpx/lcos/gather_hpp.html" title="Header &lt;hpx/lcos/gather.hpp&gt;">hpx/lcos/gather.hpp</a>&gt;
+
+</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
+  <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span> <span class="keyword">void</span> <span class="special">&gt;</span> 
+  <span class="identifier">gather_there</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span> <span class="special">*</span> basename<span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;&amp;</span> result<span class="special">,</span> 
+               <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> generation <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">(</span><span class="special">-</span><span class="number">1</span><span class="special">)</span><span class="special">,</span> 
+               <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> root_site <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
+               <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> this_site <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">(</span><span class="special">-</span><span class="number">1</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idm139793202905600"></a><h2>Description</h2>
+<p>Gather a given value at the given call site</p>
+<p>This function transmits the value given by <span class="emphasis"><em>result</em></span> to a central gather site (where the corresponding <span class="emphasis"><em>gather_here</em></span> is executed)</p>
+<p>
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Each gather operation has to be accompanied with a unique usage of the <span class="emphasis"><em>HPX_REGISTER_GATHER</em></span> macro to define the necessary internal facilities used by <span class="emphasis"><em>gather_here</em></span> and <span class="emphasis"><em>gather_there</em></span> </p></td></tr>
+</table></div>
+<p>
+
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">basename</code></span></p></td>
+<td><p>The base name identifying the gather operation </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">generation</code></span></p></td>
+<td><p>The generational counter identifying the sequence number of the gather operation performed on the given base name. This is optional and needs to be supplied only if the gather operation on the given base name has to be performed more than once. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">result</code></span></p></td>
+<td><p>The value to transmit to the central gather point from this call site. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">root_site</code></span></p></td>
+<td><p>The sequence number of the central gather point (usually the locality id). This value is optional and defaults to 0. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">this_site</code></span></p></td>
+<td><p>The sequence number of this invocation (usually the locality id). This value is optional and defaults to whatever hpx::get_locality_id() returns.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>This function returns a future which will become ready once the gather operation has been completed. </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2017 The STE||AR Group (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="gather__idm140673552531376.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../header/hpx/lcos/gather_hpp.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../HPX_REGISTER_GATHER_DECLARATION.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

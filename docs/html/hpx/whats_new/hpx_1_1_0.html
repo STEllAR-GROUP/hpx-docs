@@ -30,6 +30,27 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
+            We have changed the way <span class="emphasis"><em>HPX</em></span> manages the processing
+            units on a node. We do not longer implicitly bind all available cores
+            to a single thread pool. The user has now full control over what processing
+            units are bound to what thread pool, each with a separate scheduler.
+            It is now also possible to create your own scheduler implementation and
+            control what processing units this scheduler should use. We added the
+            <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">resource</span><span class="special">::</span><span class="identifier">partitioner</span></code> that manages all available
+            processing units and assigns resources to the used thread pools. Thread
+            pools can be now be suspended/resumed independently. This functionality
+            helps in running <span class="emphasis"><em>HPX</em></span> concurrently to code that is
+            directly relying on <a href="http://openmp.org/wp/" target="_top">OpenMP</a>
+            and/or <a href="http://en.wikipedia.org/wiki/Message_Passing_Interface" target="_top">MPI</a>.
+          </li>
+<li class="listitem">
+            We have continued to implement various parallel algorithms. <span class="emphasis"><em>HPX</em></span>
+            now almost completely implements all of the parallel algorithms as specified
+            by the <a href="http://www.open-std.org/jtc1/sc22/wg21" target="_top">C++17 Standard</a>.
+            We have also continued to implement these alogorithms for the distributed
+            use case (for segmented data structures, such as <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">partitioned_vector</span></code>).
+          </li>
+<li class="listitem">
             Added a compatibility layer for <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">thread</span></code>,
             <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">mutex</span></code>, and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">condition_variable</span></code>
             allowing for the code to use those facilities where available and to
@@ -72,6 +93,23 @@
             <code class="computeroutput"><span class="special">-</span><span class="identifier">DHPX_WITH_ALGORITHM_INPUT_ITERATOR_SUPPORT</span><span class="special">=</span><span class="identifier">On</span></code>
             on the <a href="http://www.cmake.org" target="_top">CMake</a> command line.
           </li>
+<li class="listitem">
+            We have added the functionalities allowing for LCOs being implemented
+            using (simple) components. Before LCOs had to always be implemented using
+            managed components.
+          </li>
+<li class="listitem">
+            User defined components don't have to be default-constructible anymore.
+            Return types from actions don't have to be default-constructible anymore
+            either. Our serialization layer now in general supports non-default-constructible
+            types.
+          </li>
+<li class="listitem">
+            We have added a new launch policy <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">lazy</span></code>
+            that allows to defer the decision on what launch policy to use to the
+            point of execution. This policy is initializaed with a function (object)
+            that -- when invoked -- is expected to produce the desired launch policy.
+          </li>
 </ul></div>
 <h5>
 <a name="hpx.whats_new.hpx_1_1_0.h1"></a>
@@ -81,7 +119,8 @@
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             We have dropped support for the gcc compiler version V4.8. The minimal
-            gcc version we now test on is gcc V4.9.
+            gcc version we now test on is gcc V4.9. The minimally required version
+            of <a href="http://www.cmake.org" target="_top">CMake</a> is now V3.3.2.
           </li>
 <li class="listitem">
             We have dropped support for the Visual Studio 2013 compiler version.
@@ -99,6 +138,29 @@
             should be changed to the new <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">unwrapping</span></code>
             function whereas the immediate usage should be replaced to <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">unwrap</span></code>.
           </li>
+<li class="listitem">
+            The performance counter names referring to properties as exposed by the
+            threading subsystem have changes as those now additionally have to specify
+            the thread-pool. See the corresponding documentation for more details.
+          </li>
+<li class="listitem">
+            The overloads of <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span></code>
+            that invoke and action do not perform implicit unwrapping of the returned
+            future anymore in case the invoked function does return a future in the
+            first place. In this case <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span></code>
+            now returns a <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&gt;</span></code>
+            making its behavior conforming to its local counterpart.
+          </li>
+<li class="listitem">
+            We have replaced the used of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">exception_ptr</span></code>
+            in our APIs with the equivalent <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">exception_ptr</span></code>.
+            Please change your codes accordingly. No compatibility settings are provided.
+          </li>
+<li class="listitem">
+            We have removed the compatibility settings for <code class="computeroutput"><span class="identifier">HPX_WITH_COLOCATED_BACKWARDS_COMPATIBILITY</span></code>
+            and <code class="computeroutput"><span class="identifier">HPX_WITH_COMPONENT_GET_GID_COMPATIBILITY</span></code>
+            as their life-cycle has reached its end.
+          </li>
 </ul></div>
 <h5>
 <a name="hpx.whats_new.hpx_1_1_0.h2"></a>
@@ -109,6 +171,110 @@
         Here is a list of the important tickets we closed for this release.
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3117" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3117</a> -
+            Replace uses of boost/experimental::optional with util::optional
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3114" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3114</a> -
+            Avoid using util::function for thread function wrappers
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3113" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3113</a> -
+            cmake V3.10.2 has changed the variable names used for MPI
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3112" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3112</a> -
+            Minor fixes to exclusive_scan algorithm
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3111" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3111</a> -
+            Revert "fix detection of cxx11_std_atomic"
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3109" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3109</a> -
+            Fixing thread scheduling when yielding a thread id
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3108" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3108</a> -
+            Revert "Suspend thread pool"
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3107" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3107</a> -
+            Remove UB from thread::id relational operators
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3106" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3106</a> -
+            Add cmake test for std::decay_t to fix cuda build
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3105" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3105</a> -
+            Fixing refcount for async traversal frame
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3104" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3104</a> -
+            Local execution of direct actions is now actually performed directly
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3101" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3101</a> -
+            Revert "Adapting stack overhead limit for gcc 4.9"
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3100" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3100</a> -
+            Fix #3068 (condition_variable deadlock)
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3099" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3099</a> -
+            Fixing lock held during suspension in papi counter component
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3098" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3098</a> -
+            Unbreak broadcast_wait_for_2822 test
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3097" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3097</a> -
+            Adapting stack overhead limit for gcc 4.9
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3096" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3096</a> -
+            fix detection of cxx11_std_atomic
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3095" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3095</a> -
+            Add ciso646 header to get _LIBCPP_VERSION for testing inplace merge
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3094" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3094</a> -
+            Relax atomic operations on performance counter values
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3093" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3093</a> -
+            Short-circuit all_of/any_of/none_of instantiations
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3092" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3092</a> -
+            Take advantage of C++14 lambda capture initialization syntax, where possible
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3091" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3091</a> -
+            Remove more references to Boost from logging code
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3090" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3090</a> -
+            Unify use of yield/yield_k
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3089" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3089</a> -
+            Fix a strange thing in parallel::detail::handle_exception. (Fix #2834.)
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3088" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>3088</a> -
+            A strange thing in parallel::sort.
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3087" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3087</a> -
+            Fixing assertion in default_distribution_policy
+          </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/3086" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3086</a> -
             Implement parallel::remove and parallel::remove_if
@@ -128,6 +294,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/3081" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3081</a> -
             Pre-decay template arguments early
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3080" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3080</a> -
+            Suspend thread pool
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/3079" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3079</a> -
@@ -165,6 +335,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/3069" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3069</a> -
             Fix scheduling loop exit
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3068" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>3068</a> -
+            hpx::lcos::condition_variable could be suspect to deadlocks
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/3067" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3067</a> -
@@ -216,6 +390,10 @@
             Update documentation for running tests
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3054" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>3054</a> -
+            Assertion failure when using bulk hpx::new_ in asynchronous mode
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/3052" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3052</a> -
             Do not bind test running to cmake test build rule
           </li>
@@ -262,6 +440,11 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/3032" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>3032</a> -
             Fix partitioner arg copy found in #2982
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/3031" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>3031</a> -
+            Errors linking libhpx.so due to missing references (master branch, commit
+            6679a8882)
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/3030" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>3030</a> -
@@ -486,6 +669,10 @@
             Adding missing #include
           </li>
 <li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2964" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2964</a> -
+            parallel merge is not stable
+          </li>
+<li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2963" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2963</a> -
             Making sure any function object passed to dataflow is released after
             being invoked
@@ -513,6 +700,10 @@
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2956" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2956</a> -
             Mixing attribute syntaxes leads to compiler errors
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2955" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2955</a> -
+            Fix OS-Thread throttling
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2953" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2953</a> -
@@ -957,6 +1148,10 @@
             <code class="computeroutput"><span class="keyword">constexpr</span></code> functions with
             <code class="computeroutput"><span class="keyword">void</span></code> return type break compilation
             with CUDA 8.0
+          </li>
+<li class="listitem">
+            <a href="http://github.com/STEllAR-GROUP/hpx/issues/2834" target="_top"><code class="computeroutput"><span class="identifier">IS</span><span class="special">#</span></code>2834</a> -
+            One suspicion in parallel::detail::handle_exception
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2833" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2833</a> -
@@ -1706,7 +1901,7 @@
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2624" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2624</a> -
-            Fixing a smalll cmake typo
+            Fixing a small cmake typo
           </li>
 <li class="listitem">
             <a href="http://github.com/STEllAR-GROUP/hpx/issues/2622" target="_top"><code class="computeroutput"><span class="identifier">PR</span><span class="special">#</span></code>2622</a> -

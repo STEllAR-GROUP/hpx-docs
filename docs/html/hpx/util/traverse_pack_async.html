@@ -4,13 +4,13 @@
 <title>Function template traverse_pack_async</title>
 <link rel="stylesheet" href="../../src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="HPX 1.1.0">
+<link rel="home" href="../../index.html" title="HPX 1.2.0">
 <link rel="up" href="../../header/hpx/util/pack_traversal_async_hpp.html" title="Header &lt;hpx/util/pack_traversal_async.hpp&gt;">
 <link rel="prev" href="../../header/hpx/util/pack_traversal_async_hpp.html" title="Header &lt;hpx/util/pack_traversal_async.hpp&gt;">
 <link rel="next" href="../../header/hpx/util/unwrap_hpp.html" title="Header &lt;hpx/util/unwrap.hpp&gt;">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="536" height="100" src="../../images/hpx_1_1_0.png"></td></tr></table>
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="567" height="125" src="../../images/hpx_1_2_0_draft.png"></td></tr></table>
 <hr>
 <div class="spirit-nav">
 <a accesskey="p" href="../../header/hpx/util/pack_traversal_async_hpp.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../../header/hpx/util/pack_traversal_async_hpp.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../header/hpx/util/unwrap_hpp.html"><img src="../../images/next.png" alt="Next"></a>
@@ -28,7 +28,7 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Visitor<span class="special">,</span> <span class="keyword">typename</span><span class="special">...</span> T<span class="special">&gt;</span> 
   <span class="keyword">auto</span> <span class="identifier">traverse_pack_async</span><span class="special">(</span><span class="identifier">Visitor</span> <span class="special">&amp;&amp;</span> visitor<span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;&amp;</span><span class="special">...</span> pack<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm140117738198144"></a><h2>Description</h2>
+<a name="idm139645484321824"></a><h2>Description</h2>
 <p>Traverses the pack with the given visitor in an asynchronous way.</p>
 <p>This function works in the same way as <code class="computeroutput">traverse_pack</code>, however, we are able to suspend and continue the traversal at later time. Thus we require a visitor callable object which provides three <code class="computeroutput">operator()</code> overloads as depicted by the code sample below: ```cpp struct my_async_visitor { /// The synchronous overload is called for each object, /// it may return false to suspend the current control. /// In that case the overload below is called. template &lt;typename t&gt;=""&gt; bool operator()(async_traverse_visit_tag, T&amp;&amp; element) { return true; }</p>
 <p>/// The asynchronous overload this is called when the /// synchronous overload returned false. /// In addition to the current visited element the overload is /// called with a contnuation callable object which resumes the /// traversal when it's called later. /// The continuation next may be stored and called later or /// dropped completely to abort the traversal early. template &lt;typename T, typename N&gt; void operator()(async_traverse_detach_tag, T&amp;&amp; element, N&amp;&amp; next) { }</p>

@@ -1,0 +1,555 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Quick Start</title>
+<link rel="stylesheet" href="../src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="HPX 1.2.0">
+<link rel="up" href="../index.html" title="HPX 1.2.0">
+<link rel="prev" href="whats_new/hpx_previous/hpx_0_7_0.html" title="HPX V0.7.0 (Dec 12, 2011)">
+<link rel="next" href="tutorial.html" title="Tutorial">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr><td valign="top"><img alt="HPX" width="567" height="125" src="../images/hpx_1_2_0_draft.png"></td></tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="whats_new/hpx_previous/hpx_0_7_0.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="tutorial.html"><img src="../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="hpx.applications"></a><a class="link" href="applications.html" title="Quick Start">Quick Start</a>
+</h2></div></div></div>
+<p>
+      This section is intended to get you to the point of running a basic <span class="emphasis"><em>HPX</em></span>
+      program as quickly as possible. To that end we skip many details but instead
+      give you hints and links to more details along the way.
+    </p>
+<p>
+      We assume that you are on a Unix system with access to reasonably recent packages.
+      You should have <code class="computeroutput"><span class="identifier">cmake</span></code> and
+      <code class="computeroutput"><span class="identifier">make</span></code> available for the build
+      system (<code class="computeroutput"><span class="identifier">pkg</span><span class="special">-</span><span class="identifier">config</span></code> is also supported, see <a class="link" href="manual/build_system/using_hpx/pkgconfig.html#hpx.manual.build_system.using_hpx.pkgconfig.comps" title="How to Build HPX Components with pkg-config">How
+      to Build <span class="emphasis"><em>HPX</em></span> Components with pkg-config</a>).
+    </p>
+<h4>
+<a name="hpx.applications.h0"></a>
+      <span class="phrase"><a name="hpx.applications.getting_hpx"></a></span><a class="link" href="applications.html#hpx.applications.getting_hpx">Getting
+      HPX</a>
+    </h4>
+<p>
+      Download a tarball of the latest release from <a href="http://stellar-group.org/downloads/" target="_top"><span class="emphasis"><em>HPX</em></span>
+      Downloads</a> and unpack it or clone the repository directly using <code class="computeroutput"><span class="identifier">git</span></code>:
+    </p>
+<pre class="programlisting"><span class="identifier">git</span> <span class="identifier">clone</span> <span class="identifier">https</span><span class="special">://</span><span class="identifier">github</span><span class="special">.</span><span class="identifier">com</span><span class="special">/</span><span class="identifier">STEllAR</span><span class="special">-</span><span class="identifier">GROUP</span><span class="special">/</span><span class="identifier">hpx</span><span class="special">.</span><span class="identifier">git</span>
+</pre>
+<p>
+      It is also recommended that you check out the latest stable tag:
+    </p>
+<pre class="programlisting"><span class="identifier">git</span> <span class="identifier">checkout</span> <span class="number">1.1</span><span class="special">.</span><span class="number">0</span>
+</pre>
+<h4>
+<a name="hpx.applications.h1"></a>
+      <span class="phrase"><a name="hpx.applications.hpx_dependencies"></a></span><a class="link" href="applications.html#hpx.applications.hpx_dependencies">HPX
+      dependencies</a>
+    </h4>
+<p>
+      The minimum dependencies needed to use <span class="emphasis"><em>HPX</em></span> are <a href="http://www.boost.org/" target="_top">Boost</a> and <a href="http://www.open-mpi.org/projects/hwloc/" target="_top">Portable
+      Hardware Locality (HWLOC)</a>. If these are not available through your
+      system package manager, see <a class="link" href="manual/build_system/prerequisites/boost_installation.html" title="Installing Boost Libraries">Installing
+      Boost Libraries</a> and <a class="link" href="manual/build_system/prerequisites/hwloc_installation.html" title="Installing Hwloc">Installing
+      Hwloc</a> for instructions on how to build them yourself. In addition to
+      <a href="http://www.boost.org/" target="_top">Boost</a> and <a href="http://www.open-mpi.org/projects/hwloc/" target="_top">Portable
+      Hardware Locality (HWLOC)</a>, it is recommended that you don't use the
+      system allocator, but instead use either <code class="computeroutput"><span class="identifier">tcmalloc</span></code>
+      from <a href="http://code.google.com/p/gperftools" target="_top">google-perftools</a>
+      (default) or <a href="http://www.canonware.com/jemalloc" target="_top">jemalloc</a>
+      for better performance. If you would like to try <span class="emphasis"><em>HPX</em></span> without
+      a custom allocator at this point you can configure <span class="emphasis"><em>HPX</em></span>
+      to use the system allocator in the next step.
+    </p>
+<p>
+      A full list of required and optional dependencies, including recommended versions
+      is available at <a class="link" href="manual/build_system/prerequisites.html" title="Build Prerequisites">Build
+      Prerequisites</a>.
+    </p>
+<h4>
+<a name="hpx.applications.h2"></a>
+      <span class="phrase"><a name="hpx.applications.building_hpx"></a></span><a class="link" href="applications.html#hpx.applications.building_hpx">Building
+      HPX</a>
+    </h4>
+<p>
+      Once you have the source code and the dependencies, set up a separate build
+      directory and configure the project. Assuming all your dependencies are in
+      paths known to <a href="http://www.cmake.org" target="_top">CMake</a>, the following
+      gets you started:
+    </p>
+<pre class="programlisting"><span class="preprocessor"># In</span> <span class="identifier">the</span> <span class="identifier">HPX</span> <span class="identifier">source</span> <span class="identifier">directory</span>
+<span class="identifier">mkdir</span> <span class="identifier">build</span> <span class="special">&amp;&amp;</span> <span class="identifier">cd</span> <span class="identifier">build</span>
+<span class="identifier">cmake</span> <span class="special">-</span><span class="identifier">DCMAKE_INSTALL_PREFIX</span><span class="special">=/</span><span class="identifier">install</span><span class="special">/</span><span class="identifier">path</span> <span class="special">..</span>
+<span class="identifier">make</span> <span class="identifier">install</span>
+</pre>
+<p>
+      This will build the core <span class="emphasis"><em>HPX</em></span> libraries and examples, and
+      install them to your chosen location. If you want to install <span class="emphasis"><em>HPX</em></span>
+      to system folders simply leave out the <code class="computeroutput"><span class="identifier">CMAKE_INSTALL_PREFIX</span></code>
+      option. This may take a while. To speed up the process launch more jobs by
+      passing the <code class="computeroutput"><span class="special">-</span><span class="identifier">jN</span></code>
+      option to <code class="computeroutput"><span class="identifier">make</span></code>.
+    </p>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        Do not set only <code class="computeroutput"><span class="special">-</span><span class="identifier">j</span></code>
+        (i.e. <code class="computeroutput"><span class="special">-</span><span class="identifier">j</span></code>
+        without an explicit number of jobs) unless you have a lot of memory available
+        on your machine.
+      </p></td></tr>
+</table></div>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        If you want to change <a href="http://www.cmake.org" target="_top">CMake</a> variables
+        for your build it is usually a good idea to start with a clean build directory
+        to avoid configuration problems. It is especially important that you use
+        a clean build directory when changing between <code class="computeroutput"><span class="identifier">Release</span></code>
+        and <code class="computeroutput"><span class="identifier">Debug</span></code> modes.
+      </p></td></tr>
+</table></div>
+<p>
+      If your dependencies are in custom locations you may need to tell <a href="http://www.cmake.org" target="_top">CMake</a>
+      where to find them by passing one or more of the following options to <a href="http://www.cmake.org" target="_top">CMake</a>:
+    </p>
+<pre class="programlisting"><span class="special">-</span><span class="identifier">DBOOST_DIR</span><span class="special">=/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">boost</span>
+<span class="special">-</span><span class="identifier">DHWLOC_ROOT</span><span class="special">=/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">hwloc</span>
+<span class="special">-</span><span class="identifier">DTCMALLOC_ROOT</span><span class="special">=/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">tcmalloc</span>
+<span class="special">-</span><span class="identifier">DJEMALLOC_ROOT</span><span class="special">=/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">jemalloc</span>
+</pre>
+<p>
+      If you want to try <span class="emphasis"><em>HPX</em></span> without using a custom allocator
+      pass <code class="computeroutput"><span class="special">-</span><span class="identifier">DHPX_WITH_MALLOC</span><span class="special">=</span><span class="identifier">system</span></code> to
+      <a href="http://www.cmake.org" target="_top">CMake</a>.
+    </p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        If you are building <span class="emphasis"><em>HPX</em></span> for a system with more than
+        64 processing units you must change the <a href="http://www.cmake.org" target="_top">CMake</a>
+        variables <code class="computeroutput"><span class="identifier">HPX_WITH_MORE_THAN_64_THREADS</span></code>
+        (to <code class="computeroutput"><span class="identifier">On</span></code>) and <code class="computeroutput"><span class="identifier">HPX_WITH_MAX_CPU_COUNT</span></code> (to a value at least
+        as big as the number of (virtual) cores on your system).
+      </p></td></tr>
+</table></div>
+<p>
+      To build the tests run <code class="computeroutput"><span class="identifier">make</span> <span class="identifier">tests</span></code>. To run the tests run either <code class="computeroutput"><span class="identifier">make</span> <span class="identifier">test</span></code>
+      or use <code class="computeroutput"><span class="identifier">ctest</span></code> for more control
+      over which tests to run. You can run single tests for example with <code class="computeroutput"><span class="identifier">ctest</span> <span class="special">--</span><span class="identifier">output</span><span class="special">-</span><span class="identifier">on</span><span class="special">-</span><span class="identifier">failure</span> <span class="special">-</span><span class="identifier">R</span> <span class="identifier">tests</span><span class="special">.</span><span class="identifier">unit</span><span class="special">.</span><span class="identifier">parallel</span><span class="special">.</span><span class="identifier">algorithms</span><span class="special">.</span><span class="identifier">for_loop</span></code> or a whole group of tests with
+      <code class="computeroutput"><span class="identifier">ctest</span> <span class="special">--</span><span class="identifier">output</span><span class="special">-</span><span class="identifier">on</span><span class="special">-</span><span class="identifier">failure</span> <span class="special">-</span><span class="identifier">R</span> <span class="identifier">tests</span><span class="special">.</span><span class="identifier">unit</span></code>.
+    </p>
+<p>
+      If you did not run <code class="computeroutput"><span class="identifier">make</span> <span class="identifier">install</span></code>
+      earlier do so now or build the <code class="computeroutput"><span class="identifier">simplest_hello_world_1</span></code>
+      example by running
+    </p>
+<pre class="programlisting"><span class="identifier">make</span> <span class="identifier">simplest_hello_world_1_exe</span>
+</pre>
+<p>
+      <span class="emphasis"><em>HPX</em></span> executables end up in the <code class="computeroutput"><span class="identifier">bin</span></code>
+      directory in your build directory. You can now run <code class="computeroutput"><span class="identifier">simplest_hello_world_1</span></code>
+      and should see the following output:
+    </p>
+<pre class="programlisting"><span class="special">./</span><span class="identifier">bin</span><span class="special">/</span><span class="identifier">simplest_hello_world_1</span>
+<span class="identifier">Hello</span> <span class="identifier">World</span><span class="special">!</span>
+</pre>
+<p>
+      You've just run an example which prints <code class="computeroutput"><span class="identifier">Hello</span>
+      <span class="identifier">World</span><span class="special">!</span></code>
+      from the <span class="emphasis"><em>HPX</em></span> runtime. The source for the example is in
+      <code class="computeroutput"><span class="identifier">examples</span><span class="special">/</span><span class="identifier">quickstart</span><span class="special">/</span><span class="identifier">simplest_hello_world_1</span><span class="special">.</span><span class="identifier">cpp</span></code>. The <code class="computeroutput"><span class="identifier">hello_world</span></code>
+      example (also available in the <code class="computeroutput"><span class="identifier">examples</span><span class="special">/</span><span class="identifier">quickstart</span></code>
+      directory is a distributed hello world program which is described in <a class="link" href="tutorial/examples/hello_world.html" title="Hello World">Hello World Example</a>. It
+      is recommended that you go through that example only once you are more familiar
+      with the distributed concepts of __HPX__.
+    </p>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+        Most build targets in <span class="emphasis"><em>HPX</em></span> have two names: a simple name
+        suffixed with <code class="computeroutput"><span class="identifier">_exe</span></code> and a
+        hierarchical name corresponding to what type of example or test the target
+        is. If you are developing <span class="emphasis"><em>HPX</em></span> it is often helpful to
+        run <code class="computeroutput"><span class="identifier">make</span> <span class="identifier">help</span></code>
+        to get a list of available targets. For example, <code class="computeroutput"><span class="identifier">make</span>
+        <span class="identifier">help</span> <span class="special">|</span>
+        <span class="identifier">grep</span> <span class="identifier">hello_world</span></code>
+        outputs the following:
+      </p>
+<pre class="programlisting"><span class="special">...</span> <span class="identifier">examples</span><span class="special">.</span><span class="identifier">quickstart</span><span class="special">.</span><span class="identifier">simplest_hello_world_2</span>
+<span class="special">...</span> <span class="identifier">simplest_hello_world_2_exe</span>
+<span class="special">...</span> <span class="identifier">examples</span><span class="special">.</span><span class="identifier">quickstart</span><span class="special">.</span><span class="identifier">simplest_hello_world_1</span>
+<span class="special">...</span> <span class="identifier">simplest_hello_world_1_exe</span>
+<span class="special">...</span> <span class="identifier">hello_world_exe</span>
+<span class="special">...</span> <span class="identifier">examples</span><span class="special">.</span><span class="identifier">quickstart</span><span class="special">.</span><span class="identifier">hello_world</span>
+</pre>
+<p>
+        It is also possible to build e.g. all quickstart examples using <code class="computeroutput"><span class="identifier">make</span> <span class="identifier">examples</span><span class="special">.</span><span class="identifier">quickstart</span></code>.
+      </p>
+</td></tr>
+</table></div>
+<h4>
+<a name="hpx.applications.h3"></a>
+      <span class="phrase"><a name="hpx.applications.setting_up_an_hpx_project"></a></span><a class="link" href="applications.html#hpx.applications.setting_up_an_hpx_project">Setting
+      up an HPX project</a>
+    </h4>
+<p>
+      The following <code class="computeroutput"><span class="identifier">CMakeLists</span><span class="special">.</span><span class="identifier">txt</span></code> is a minimal example of what you need
+      in order to build an executable using <a href="http://www.cmake.org" target="_top">CMake</a>
+      and <span class="emphasis"><em>HPX</em></span>:
+    </p>
+<pre class="programlisting"><span class="identifier">cmake_minimum_required</span><span class="special">(</span><span class="identifier">VERSION</span> <span class="number">3.3</span><span class="special">.</span><span class="number">2</span><span class="special">)</span>
+<span class="identifier">project</span><span class="special">(</span><span class="identifier">my_hpx_project</span> <span class="identifier">CXX</span><span class="special">)</span>
+<span class="identifier">find_package</span><span class="special">(</span><span class="identifier">hpx</span> <span class="identifier">REQUIRED</span><span class="special">)</span>
+<span class="identifier">add_hpx_executable</span><span class="special">(</span><span class="identifier">my_hpx_program</span> <span class="identifier">SOURCES</span> <span class="identifier">main</span><span class="special">.</span><span class="identifier">cpp</span><span class="special">)</span>
+</pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        You will most likely have more than one <code class="computeroutput"><span class="identifier">main</span><span class="special">.</span><span class="identifier">cpp</span></code> file
+        in your project. See the section on <a class="link" href="manual/build_system/using_hpx/using_hpx_cmake.html" title="Using HPX with CMake based projects">Using
+        <span class="emphasis"><em>HPX</em></span> with CMake based projects</a> for more details
+        on how to use <code class="computeroutput"><span class="identifier">add_hpx_executable</span></code>.
+      </p></td></tr>
+</table></div>
+<p>
+      Create a new project directory and a <code class="computeroutput"><span class="identifier">CMakeLists</span><span class="special">.</span><span class="identifier">txt</span></code> with
+      the contents above. Then, in your project directory run the following:
+    </p>
+<pre class="programlisting"><span class="identifier">touch</span> <span class="identifier">main</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">#</span> <span class="identifier">Create</span> <span class="identifier">an</span> <span class="identifier">empty</span> <span class="identifier">file</span> <span class="keyword">for</span> <span class="identifier">now</span>
+<span class="identifier">mkdir</span> <span class="identifier">build</span> <span class="special">&amp;&amp;</span> <span class="identifier">cd</span> <span class="identifier">build</span>
+<span class="identifier">cmake</span> <span class="special">-</span><span class="identifier">DCMAKE_PREFIX_PATH</span><span class="special">=/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">installation</span> <span class="special">..</span>
+<span class="identifier">make</span> <span class="identifier">all</span>
+<span class="special">./</span><span class="identifier">my_hpx_program</span>
+</pre>
+<p>
+      Your program should now start but fail quickly because it doesn't contain a
+      main function yet.
+    </p>
+<h4>
+<a name="hpx.applications.h4"></a>
+      <span class="phrase"><a name="hpx.applications.hello_world"></a></span><a class="link" href="applications.html#hpx.applications.hello_world">Hello,
+      World!</a>
+    </h4>
+<p>
+      Once you have your project set up, add the following to your <code class="computeroutput"><span class="identifier">main</span><span class="special">.</span><span class="identifier">cpp</span></code>:
+    </p>
+<pre class="programlisting"><span class="comment">// Including 'hpx/hpx_main.hpp' instead of the usual 'hpx/hpx_init.hpp' enables</span>
+<span class="comment">// to use the plain C-main below as the direct main HPX entry point.</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">hpx_main</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">iostreams</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="comment">// Say hello to the world!</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Hello World!\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">flush</span><span class="special">;</span>
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+      It looks almost like a regular <code class="computeroutput"><span class="identifier">C</span><span class="special">++</span></code> hello world with the exception of the two
+      includes and <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span></code>. When you include <code class="computeroutput"><span class="identifier">hpx_main</span><span class="special">.</span><span class="identifier">hpp</span></code> some
+      things will be done behind the scenes to make sure that <code class="computeroutput"><span class="identifier">main</span></code>
+      actually get's launched on the <span class="emphasis"><em>HPX</em></span> runtime. So while it
+      looks almost the same you can now use futures, <code class="computeroutput"><span class="identifier">async</span></code>,
+      parallel algorithms and more which make use of the <span class="emphasis"><em>HPX</em></span>
+      runtime with lightweight threads. <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span></code> is
+      a replacement for <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></code> to make sure printing never blocks a
+      lightweight thread. You can read more about <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span></code> in
+      <a class="link" href="manual/system_components/iostreams.html" title="The HPX I/O-streams Component">HPX I/O-streams Component</a>.
+      If you run your program now you should see the familiar <code class="computeroutput"><span class="identifier">Hello</span>
+      <span class="identifier">World</span><span class="special">!</span></code>:
+    </p>
+<pre class="programlisting"><span class="special">./</span><span class="identifier">my_hpx_program</span>
+<span class="identifier">Hello</span> <span class="identifier">World</span><span class="special">!</span>
+</pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+        You do not have to let <span class="emphasis"><em>HPX</em></span> take over your main function
+        like in the example. You can instead keep your normal main function, and
+        define a separate <code class="computeroutput"><span class="identifier">hpx_main</span></code>
+        function which acts as the entry point to the <span class="emphasis"><em>HPX</em></span> runtime.
+        In that case you start the <span class="emphasis"><em>HPX</em></span> runtime explicitly by
+        calling <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">init</span></code>:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">hpx_init</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">iostreams</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">int</span> <span class="identifier">hpx_main</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">**)</span>
+<span class="special">{</span>
+    <span class="comment">// Say hello to the world!</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Hello World!\n"</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">flush</span><span class="special">;</span>
+    <span class="keyword">return</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">finalize</span><span class="special">();</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="keyword">return</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">init</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+        You can also use the <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">start</span></code>
+        and <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">stop</span></code> for a non-blocking alternative, or
+        use <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">resume</span></code> and <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">suspend</span></code>
+        if you need to combine <span class="emphasis"><em>HPX</em></span> with other runtimes.
+      </p>
+<p>
+        See <a class="link" href="manual/applications.html" title="Writing HPX applications">Writing <span class="emphasis"><em>HPX</em></span>
+        applications</a> for more details on how to initialize and run the <span class="emphasis"><em>HPX</em></span>
+        runtime.
+      </p>
+</td></tr>
+</table></div>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        When including <code class="computeroutput"><span class="identifier">hpx_main</span><span class="special">.</span><span class="identifier">hpp</span></code> the user-defined <code class="computeroutput"><span class="identifier">main</span></code>
+        gets renamed and the real <code class="computeroutput"><span class="identifier">main</span></code>
+        function is defined by <span class="emphasis"><em>HPX</em></span>. This means that the user-defined
+        <code class="computeroutput"><span class="identifier">main</span></code> must include a return
+        statement, unlike the real <code class="computeroutput"><span class="identifier">main</span></code>.
+        If you do not include the return statement you may end up with confusing
+        compile time errors mentioning <code class="computeroutput"><span class="identifier">user_main</span></code>
+        or even runtime errors.
+      </p></td></tr>
+</table></div>
+<h4>
+<a name="hpx.applications.h5"></a>
+      <span class="phrase"><a name="hpx.applications.writing_task_based_applications"></a></span><a class="link" href="applications.html#hpx.applications.writing_task_based_applications">Writing
+      task-based applications</a>
+    </h4>
+<p>
+      So far we haven't done anything that can't be done using the C++ standard library.
+      In this section we will give a short overview of what you can do with <span class="emphasis"><em>HPX</em></span>
+      on a single node. The essence is to avoid global synchronization and break
+      up your application into small, composable tasks whose dependencies control
+      the flow of your application. Remember, however, that <span class="emphasis"><em>HPX</em></span>
+      allows you to write distributed applications similarly to how you would write
+      applications for a single node (see the <a class="link" href="tutorial/intro.html" title="Introduction">Introduction</a>).
+    </p>
+<p>
+      If you are already familiar with <code class="computeroutput"><span class="identifier">async</span></code>
+      and <code class="computeroutput"><span class="identifier">future</span></code>s from the C++ standard
+      library, the same functionality is available in <span class="emphasis"><em>HPX</em></span>.
+    </p>
+<p>
+      The following terminology is essential when talking about task-based C++ programs:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          lightweight thread: Essential for good performance with task-based programs.
+          Lightweight refers to smaller stacks and faster context switching compared
+          to OS-threads. Smaller overheads allow the program to be broken up into
+          smaller tasks, which in turns helps the runtime fully utilize all processing
+          units.
+        </li>
+<li class="listitem">
+          <code class="computeroutput"><span class="identifier">async</span></code>: The most basic way
+          of launching tasks asynchronously. Returns a <code class="computeroutput"><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>.
+        </li>
+<li class="listitem">
+          <code class="computeroutput"><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>:
+          Represents a value of type <code class="computeroutput"><span class="identifier">T</span></code>
+          that will be ready in the future. The value can be retrieved with <code class="computeroutput"><span class="identifier">get</span></code> (blocking) and one can check if the
+          value is ready with <code class="computeroutput"><span class="identifier">is_ready</span></code>
+          (non-blocking).
+        </li>
+<li class="listitem">
+          <code class="computeroutput"><span class="identifier">shared_future</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>:
+          Same as <code class="computeroutput"><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
+          but can be copied (similar to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_ptr</span></code>
+          vs <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">shared_ptr</span></code>).
+        </li>
+<li class="listitem">
+          continuation: A function that is to be run after a previous task has run
+          (represented by a future). <code class="computeroutput"><span class="identifier">then</span></code>
+          is a method of <code class="computeroutput"><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
+          that takes a function to run next. Used to build up dataflow DAGs. <code class="computeroutput"><span class="identifier">shared_future</span></code>s help you split up nodes
+          in the DAG and functions like <code class="computeroutput"><span class="identifier">when_all</span></code>
+          help you join nodes in the DAG.
+        </li>
+</ul></div>
+<p>
+      The following example is a collection of the most commonly used functionality
+      in <span class="emphasis"><em>HPX</em></span>.
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">hpx_main</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">iostreams</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lcos</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">parallel_generate</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">parallel_sort</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">random</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">vector</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">final_task</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">util</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;,</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;&gt;&gt;)</span>
+<span class="special">{</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"in final_task"</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">**)</span>
+<span class="special">{</span>
+    <span class="comment">// A function can be launched asynchronously. The program will not block</span>
+    <span class="comment">// here until the result is available.</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">f</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">([]()</span> <span class="special">{</span> <span class="keyword">return</span> <span class="number">42</span><span class="special">;</span> <span class="special">});</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Just launched a task!"</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="comment">// Use get to retrieve the value from the future. This will block this task</span>
+    <span class="comment">// until the future is ready, but the HPX runtime will schedule other tasks</span>
+    <span class="comment">// if there are tasks available.</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"f contains "</span> <span class="special">&lt;&lt;</span> <span class="identifier">f</span><span class="special">.</span><span class="identifier">get</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="comment">// Let's launch another task.</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">g</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">async</span><span class="special">([]()</span> <span class="special">{</span> <span class="keyword">return</span> <span class="number">3.14</span><span class="special">;</span> <span class="special">});</span>
+
+    <span class="comment">// Tasks can be chained using the then method. The continuation takes the</span>
+    <span class="comment">// future as an argument.</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">g</span><span class="special">.</span><span class="identifier">then</span><span class="special">([](</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;&amp;&amp;</span> <span class="identifier">gg</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="comment">// This function will be called once g is ready. gg is g moved</span>
+            <span class="comment">// into the continuation.</span>
+            <span class="keyword">return</span> <span class="identifier">gg</span><span class="special">.</span><span class="identifier">get</span><span class="special">()</span> <span class="special">*</span> <span class="number">42.0</span> <span class="special">*</span> <span class="number">42.0</span><span class="special">;</span>
+        <span class="special">});</span>
+
+    <span class="comment">// You can check if a future is ready with the is_ready method.</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Result is ready? "</span> <span class="special">&lt;&lt;</span> <span class="identifier">result</span><span class="special">.</span><span class="identifier">is_ready</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="comment">// You can launch other work in the meantime. Let's sort a vector.</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">(</span><span class="number">1000000</span><span class="special">);</span>
+
+    <span class="comment">// We fill the vector synchronously and sequentially.</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">execution</span><span class="special">::</span><span class="identifier">seq</span><span class="special">,</span>
+                  <span class="identifier">std</span><span class="special">::</span><span class="identifier">begin</span><span class="special">(</span><span class="identifier">v</span><span class="special">),</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">end</span><span class="special">(</span><span class="identifier">v</span><span class="special">),</span> <span class="special">&amp;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">rand</span><span class="special">);</span>
+
+    <span class="comment">// We can launch the sort in parallel and asynchronously.</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">future</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span> <span class="identifier">done_sorting</span> <span class="special">=</span>
+        <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">sort</span><span class="special">(</span>
+            <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">execution</span><span class="special">::</span><span class="identifier">par</span><span class="special">(</span> <span class="comment">// In parallel.</span>
+                <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">parallel</span><span class="special">::</span><span class="identifier">execution</span><span class="special">::</span><span class="identifier">task</span><span class="special">),</span> <span class="comment">// Asynchronously.</span>
+            <span class="identifier">std</span><span class="special">::</span><span class="identifier">begin</span><span class="special">(</span><span class="identifier">v</span><span class="special">),</span>
+            <span class="identifier">std</span><span class="special">::</span><span class="identifier">end</span><span class="special">(</span><span class="identifier">v</span><span class="special">));</span>
+
+    <span class="comment">// We launch the final task when the vector has been sorted and result is</span>
+    <span class="comment">// ready using when_all.</span>
+    <span class="keyword">auto</span> <span class="identifier">all</span> <span class="special">=</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">when_all</span><span class="special">(</span><span class="identifier">result</span><span class="special">,</span> <span class="identifier">done_sorting</span><span class="special">).</span><span class="identifier">then</span><span class="special">(&amp;</span><span class="identifier">final_task</span><span class="special">);</span>
+
+    <span class="comment">// We can wait for all to be ready.</span>
+    <span class="identifier">all</span><span class="special">.</span><span class="identifier">wait</span><span class="special">();</span>
+
+    <span class="comment">// all must be ready at this point because we waited for it to be ready.</span>
+    <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span>
+        <span class="special">(</span><span class="identifier">all</span><span class="special">.</span><span class="identifier">is_ready</span><span class="special">()</span> <span class="special">?</span> <span class="string">"all is ready!"</span> <span class="special">:</span> <span class="string">"all is not ready..."</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">hpx</span><span class="special">::</span><span class="identifier">finalize</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+      Try copying the contents to your <code class="computeroutput"><span class="identifier">main</span><span class="special">.</span><span class="identifier">cpp</span></code> file
+      and look at the output. It can be a good idea to go through the program step
+      by step with a debugger. You can also try changing the types or adding new
+      arguments to functions to make sure you can get the types to match. The type
+      of the <code class="computeroutput"><span class="identifier">then</span></code> method can be especially
+      tricky to get right (the continuation needs to take the future as an argument).
+    </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        <span class="emphasis"><em>HPX</em></span> programs accept command line arguments. The most
+        important one is <code class="computeroutput"><span class="special">--</span><span class="identifier">hpx</span><span class="special">:</span><span class="identifier">threads</span><span class="special">=</span><span class="identifier">N</span></code> to set
+        the number of OS-threads used by <span class="emphasis"><em>HPX</em></span>. <span class="emphasis"><em>HPX</em></span>
+        uses all available processing units by default. Play around with the example
+        above and see what difference the number of threads makes on the <code class="computeroutput"><span class="identifier">sort</span></code> function. See __launching__ for more
+        details on how and what options you can pass to <span class="emphasis"><em>HPX</em></span>.
+      </p></td></tr>
+</table></div>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        The example above used the construction <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">when_all</span><span class="special">(...).</span><span class="identifier">then</span><span class="special">(...)</span></code>. For convenience and performance it
+        is a good idea to replace uses of <code class="computeroutput"><span class="identifier">hpx</span><span class="special">::</span><span class="identifier">when_all</span><span class="special">(...).</span><span class="identifier">then</span><span class="special">(...)</span></code> with <code class="computeroutput"><span class="identifier">dataflow</span></code>.
+      </p></td></tr>
+</table></div>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        If possible, prefer to use the provided parallel algorithms instead of writing
+        your own implementation. This can save you time and the resulting program
+        is often faster.
+      </p></td></tr>
+</table></div>
+<h4>
+<a name="hpx.applications.h6"></a>
+      <span class="phrase"><a name="hpx.applications.next_steps"></a></span><a class="link" href="applications.html#hpx.applications.next_steps">Next
+      steps</a>
+    </h4>
+<p>
+      If you haven't done so already, reading the <a class="link" href="terminology.html" title="Terminology">Terminology</a>
+      section will help you get familiar with the terms used in <span class="emphasis"><em>HPX</em></span>.
+    </p>
+<p>
+      The <a class="link" href="tutorial.html" title="Tutorial">Tutorial</a> section contains small, self-contained
+      walkthroughs of example <span class="emphasis"><em>HPX</em></span> programs. The <a class="link" href="tutorial/futurization_example.html" title="Futurization Example">Futurization
+      Example</a> is a thorough, realistic example starting from a single node
+      implementation and going stepwise to a distributed implementation.
+    </p>
+<p>
+      The <a class="link" href="manual.html" title="Manual">Manual</a> contains detailed information
+      on writing, building and running <span class="emphasis"><em>HPX</em></span> applications.
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011-2018 The STE||AR Group
+      (http://stellar-group.org)<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">LICENSE_1_0.txt</a>
+        or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="whats_new/hpx_previous/hpx_0_7_0.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="tutorial.html"><img src="../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

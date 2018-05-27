@@ -115,11 +115,22 @@ find_package(HPX)
             file:
           </p>
 <pre class="programlisting"># build your application using HPX
-add_hpx_component(hello_world_component
+add_hpx_component(hello_world
     SOURCES hello_world_component.cpp
     HEADERS hello_world_component.hpp
     COMPONENT_DEPENDENCIES iostreams)
 </pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              <code class="computeroutput">add_hpx_component</code> adds a <code class="computeroutput">_component</code> suffix
+              to the target name. In the example above a <code class="computeroutput">hello_world_component</code>
+              target will be created.
+            </p></td></tr>
+</table></div>
 <p>
             The available options to <code class="computeroutput">add_hpx_component</code> are:
           </p>
@@ -165,6 +176,20 @@ add_hpx_executable(hello_world
     SOURCES hello_world_client.cpp
     COMPONENT_DEPENDENCIES hello_world)
 </pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              <code class="computeroutput">add_hpx_executable</code> adds a <code class="computeroutput">_exe</code> suffix to
+              the target name. In the example above a <code class="computeroutput">hello_world_exe</code>
+              target will be created. In addition, a <code class="computeroutput">_component</code> suffix
+              will automatically be added to dependencies specified in <code class="computeroutput">COMPONENT_DEPENDENCIES</code>,
+              meaning you can directly use the name given when adding a component
+              using <code class="computeroutput">add_hpx_component</code>.
+            </p></td></tr>
+</table></div>
 <p>
             When you configure your application, all you need to do is set the HPX_DIR
             variable to point to the installation of <span class="emphasis"><em>HPX</em></span>!

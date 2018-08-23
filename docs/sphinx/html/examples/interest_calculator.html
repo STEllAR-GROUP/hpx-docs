@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Interest calculator &mdash; HPX 1.2.0-trunk documentation</title>
+  <title>Dataflow: Interest calculator &mdash; HPX 1.2.0-trunk documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="HPX 1.2.0-trunk documentation" href="../index.html"/>
         <link rel="up" title="Examples" href="../examples.html"/>
-        <link rel="next" title="1D stencil" href="1d_stencil.html"/>
-        <link rel="prev" title="Accumulator" href="accumulator.html"/> 
+        <link rel="next" title="Local to remote: 1D stencil" href="1d_stencil.html"/>
+        <link rel="prev" title="Components and actions: Accumulator" href="accumulator.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -102,15 +102,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../terminology.html">Terminology</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="fibonacci.html">Fibonacci</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hello_world.html">Hello world</a></li>
-<li class="toctree-l2"><a class="reference internal" href="accumulator.html">Accumulator</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Interest calculator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fibonacci_local.html">Asynchronous execution with <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code>: Fibonacci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fibonacci.html">Asynchronous execution with <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> and actions: Fibonacci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hello_world.html">Remote execution with actions: Hello world</a></li>
+<li class="toctree-l2"><a class="reference internal" href="accumulator.html">Components and actions: Accumulator</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Dataflow: Interest calculator</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#walkthrough">Walkthrough</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="1d_stencil.html">1D stencil</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1d_stencil.html">Local to remote: 1D stencil</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
@@ -174,7 +175,7 @@
         
           <li><a href="../examples.html">Examples</a> &raquo;</li>
         
-      <li>Interest calculator</li>
+      <li>Dataflow: Interest calculator</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -191,8 +192,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="interest-calculator">
-<span id="tutorials-interest-calculator"></span><h1>Interest calculator<a class="headerlink" href="#interest-calculator" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="dataflow-interest-calculator">
+<span id="examples-interest-calculator"></span><h1>Dataflow: Interest calculator<a class="headerlink" href="#dataflow-interest-calculator" title="Permalink to this headline">¶</a></h1>
 <p><em>HPX</em> provides its users with several different tools to simply express parallel
 concepts. One of these tools is a <a class="reference internal" href="../terminology.html#term-local-control-object"><span class="xref std std-term">local control object</span></a> (<a class="reference internal" href="../terminology.html#term-lco"><span class="xref std std-term">LCO</span></a>)
 called dataflow. An <a class="reference internal" href="../terminology.html#term-lco"><span class="xref std std-term">LCO</span></a> is a type of component that can spawn a new
@@ -230,8 +231,8 @@ P = P + I
 <p>The source code for this example can be found here:
 <a class="reference download internal" href="../_downloads/interest_calculator.cpp" download=""><code class="xref download docutils literal notranslate"><span class="pre">interest_calculator.cpp</span></code></a>.</p>
 <p>To compile this program, go to your <em>HPX</em> build directory (see
-<a class="reference internal" href="../manual/running_on_batch_systems.html#running-on-batch-systems"><span class="std std-ref">Running on batch systems</span></a> for information on configuring and building
-<em>HPX</em>) and enter:</p>
+<a class="reference internal" href="../manual/building_hpx.html#hpx-build-system"><span class="std std-ref">HPX build system</span></a> for information on configuring and building <em>HPX</em>) and
+enter:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make examples.quickstart.interest_calculator
 </pre></div>
 </div>
@@ -249,7 +250,7 @@ Amount made: 34.0096
 <h2>Walkthrough<a class="headerlink" href="#walkthrough" title="Permalink to this headline">¶</a></h2>
 <p>Let us begin with main, here we can see that we again are using
 Boost.Program Options to set our command line variables (see
-<a class="reference internal" href="fibonacci.html#tutorials-fibonacci"><span class="std std-ref">Fibonacci</span></a> for more details). These options set the principal,
+<a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> for more details). These options set the principal,
 rate, compound period, and time. It is important to note that the units of time
 for <code class="docutils literal notranslate"><span class="pre">cp</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> must be the same.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
@@ -376,10 +377,10 @@ the initial value of the investment.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="1d_stencil.html" class="btn btn-neutral float-right" title="1D stencil" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="1d_stencil.html" class="btn btn-neutral float-right" title="Local to remote: 1D stencil" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="accumulator.html" class="btn btn-neutral" title="Accumulator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="accumulator.html" class="btn btn-neutral" title="Components and actions: Accumulator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

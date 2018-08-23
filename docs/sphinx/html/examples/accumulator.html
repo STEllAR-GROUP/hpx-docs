@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Accumulator &mdash; HPX 1.2.0-trunk documentation</title>
+  <title>Components and actions: Accumulator &mdash; HPX 1.2.0-trunk documentation</title>
   
 
   
@@ -39,8 +39,8 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="HPX 1.2.0-trunk documentation" href="../index.html"/>
         <link rel="up" title="Examples" href="../examples.html"/>
-        <link rel="next" title="Interest calculator" href="interest_calculator.html"/>
-        <link rel="prev" title="Hello world" href="hello_world.html"/> 
+        <link rel="next" title="Dataflow: Interest calculator" href="interest_calculator.html"/>
+        <link rel="prev" title="Remote execution with actions: Hello world" href="hello_world.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -102,9 +102,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../terminology.html">Terminology</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="fibonacci.html">Fibonacci</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hello_world.html">Hello world</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Accumulator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fibonacci_local.html">Asynchronous execution with <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code>: Fibonacci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fibonacci.html">Asynchronous execution with <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> and actions: Fibonacci</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hello_world.html">Remote execution with actions: Hello world</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Components and actions: Accumulator</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#walkthrough">Walkthrough</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#the-server-class">The server class</a></li>
@@ -113,8 +114,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="interest_calculator.html">Interest calculator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="1d_stencil.html">1D stencil</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interest_calculator.html">Dataflow: Interest calculator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1d_stencil.html">Local to remote: 1D stencil</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
@@ -178,7 +179,7 @@
         
           <li><a href="../examples.html">Examples</a> &raquo;</li>
         
-      <li>Accumulator</li>
+      <li>Components and actions: Accumulator</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,15 +196,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="accumulator">
-<span id="tutorials-accumulator"></span><h1>Accumulator<a class="headerlink" href="#accumulator" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="components-and-actions-accumulator">
+<span id="examples-accumulator"></span><h1>Components and actions: Accumulator<a class="headerlink" href="#components-and-actions-accumulator" title="Permalink to this headline">¶</a></h1>
 <p>The accumulator example demonstrates the use of components. Components are C++
 classes that expose methods as a type of <em>HPX</em> action. These actions are called
 component actions.</p>
 <p>Components are globally named, meaning that a component action can be called
 remotely (e.g.  from another machine). There are two accumulator examples in
 <em>HPX</em>; accumulator.</p>
-<p>In the <a class="reference internal" href="fibonacci.html#tutorials-fibonacci"><span class="std std-ref">Fibonacci</span></a> and the <a class="reference internal" href="hello_world.html#tutorials-hello-world"><span class="std std-ref">Hello world</span></a>, we
+<p>In the <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> and the <a class="reference internal" href="hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions: Hello world</span></a>, we
 introduced plain actions, which wrapped global functions. The target of a plain
 action is an identifier which refers to a particular machine involved in the
 computation. For plain actions, the target is the machine where the action will
@@ -225,8 +226,8 @@ instance.</p>
 <p>The source code for this example can be found here:
 <a class="reference download internal" href="../_downloads/accumulator_client.cpp" download=""><code class="xref download docutils literal notranslate"><span class="pre">accumulator_client.cpp</span></code></a>.</p>
 <p>To compile this program, go to your <em>HPX</em> build directory (see
-<a class="reference internal" href="../manual/running_on_batch_systems.html#running-on-batch-systems"><span class="std std-ref">Running on batch systems</span></a> for information on configuring and building
-<em>HPX</em>) and enter:</p>
+<a class="reference internal" href="../manual/building_hpx.html#hpx-build-system"><span class="std std-ref">HPX build system</span></a> for information on configuring and building <em>HPX</em>) and
+enter:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make examples.accumulators.accumulator
 </pre></div>
 </div>
@@ -326,7 +327,7 @@ as component actions:</p>
 </div>
 <p>Here are the action types. These types wrap the methods we’re exposing. The
 wrapping technique is very similar to the one used in the
-<a class="reference internal" href="fibonacci.html#tutorials-fibonacci"><span class="std std-ref">Fibonacci</span></a> and the <a class="reference internal" href="hello_world.html#tutorials-hello-world"><span class="std std-ref">Hello world</span></a>:</p>
+<a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> and the <a class="reference internal" href="hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions: Hello world</span></a>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">reset</span><span class="p">);</span>
         <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">add</span><span class="p">);</span>
         <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">query</span><span class="p">);</span>
@@ -428,9 +429,10 @@ We use <code class="xref cpp cpp-func docutils literal notranslate"><span class=
 </pre></div>
 </div>
 <ul class="simple">
-<li><strong>Asynchronous</strong>: Futures, as demonstrated in <a class="reference internal" href="fibonacci.html#tutorials-fibonacci"><span class="std std-ref">Fibonacci</span></a>
-and the <a class="reference internal" href="hello_world.html#tutorials-hello-world"><span class="std std-ref">Hello world</span></a>, enable asynchronous action invocation.
-Here’s an example from the accumulator client class:</li>
+<li><strong>Asynchronous</strong>: Futures, as demonstrated in <a class="reference internal" href="fibonacci_local.html#examples-fibonacci-local"><span class="std std-ref">Asynchronous execution with hpx::async: Fibonacci</span></a>,
+<a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a>, and the <a class="reference internal" href="hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions: Hello world</span></a>, enable
+asynchronous action invocation. Here’s an example from the accumulator client
+class:</li>
 </ul>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">argument_type</span><span class="o">&gt;</span> <span class="n">query</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async_policy</span><span class="p">)</span>
         <span class="p">{</span>
@@ -477,10 +479,10 @@ returned by <a class="reference internal" href="../api.html#_CPPv3N3hpx9find_her
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="interest_calculator.html" class="btn btn-neutral float-right" title="Interest calculator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="interest_calculator.html" class="btn btn-neutral float-right" title="Dataflow: Interest calculator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hello_world.html" class="btn btn-neutral" title="Hello world" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hello_world.html" class="btn btn-neutral" title="Remote execution with actions: Hello world" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -30,23 +30,25 @@ in each compound period, and then add that interest back to the principal before
 calculating the interest made in the next period. A practical person would of
 course use the formula for compound interest:
 
-.. code-block:: text
+.. math::
 
    F = P(1 + i) ^ n
-   where:
-       F = Future value
-       P = Principal
-       i = Interest rate
-       n = number of compound periods
+
+where :math:`F` is the future value, :math:`P` is the principal value, :math:`i`
+is the interest rate, and :math:`n` is the number of compound periods.
 
 Nevertheless, we have chosen for the sake of example to manually calculate the
 future value by iterating:
 
-.. code-block:: text
+.. math::
 
-   I = P * i
-     and
-   P = P + I
+   I = Pi
+
+and
+
+.. math::
+
+   P = P + i
 
 Setup
 =====
@@ -99,8 +101,8 @@ then our shared_futures are set up. Notice that we first place our principal and
 rate into shares futures by passing the variables ``init_principal`` and
 ``init_rate`` using :cpp:class:`hpx::make_ready_future`.
 
-In this way :cpp:class:`hpx::shared_future`\ ``<double>`` principal`` and
-``rate`` will be initialized to ``init_principal`` and ``init_rate`` when
+In this way :cpp:class:`hpx::shared_future`\ ``<double>`` principal and ``rate``
+will be initialized to ``init_principal`` and ``init_rate`` when
 :cpp:class:`hpx::make_ready_future`\ ``<double>`` returns a future containing
 those initial values. These shared futures then enter the for loop and are
 passed to ``interest``. Next ``principal`` and ``interest`` are passed to the

@@ -141,7 +141,6 @@
 <li class="toctree-l2"><a class="reference internal" href="debugging_hpx_applications.html">Debugging <em>HPX</em> applications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="optimizing_hpx_applications.html">Optimizing <em>HPX</em> applications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpx_runtime_and_resources.html"><em>HPX</em> runtime and resources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="miscellaneous.html">Miscellaneous</a></li>
 </ul>
 </li>
@@ -227,11 +226,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="writing-distributed-hpx-applications">
-<h1>Writing distributed <em>HPX</em> applications<a class="headerlink" href="#writing-distributed-hpx-applications" title="Permalink to this headline">¶</a></h1>
+<span id="writing-distributed-node-hpx-applications"></span><h1>Writing distributed <em>HPX</em> applications<a class="headerlink" href="#writing-distributed-hpx-applications" title="Permalink to this headline">¶</a></h1>
 <p>This section focuses on the features of <em>HPX</em> needed to write distributed
 applications, namely the <a class="reference internal" href="../terminology.html#term-active-global-address-space"><span class="xref std std-term">Active Global Address Space</span></a> (<a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>),
-remotely executable functions (i.e. <span class="xref std std-term">actions</span>), and distributed objects
-(i.e. <span class="xref std std-term">components</span>).</p>
+remotely executable functions (i.e. <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">actions</span></a>), and distributed
+objects (i.e. <a class="reference internal" href="../terminology.html#term-component"><span class="xref std std-term">components</span></a>).</p>
 <div class="section" id="global-names">
 <span id="id2"></span><h2>Global names<a class="headerlink" href="#global-names" title="Permalink to this headline">¶</a></h2>
 <p><em>HPX</em> implements an <a class="reference internal" href="../terminology.html#term-active-global-address-space"><span class="xref std std-term">Active Global Address Space</span></a> (<a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>) which is
@@ -260,25 +259,25 @@ is referring to.</p>
 following <em>HPX</em> API functions allow one to retrieve the global addresses of
 localities:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../api.html#_CPPv3N3hpx9find_hereER10error_code" title="hpx::find_here"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_here()</span></code></a>: retrieve the global address of the
+<li><a class="reference internal" href="../api.html#_CPPv3N3hpx9find_hereER10error_code" title="hpx::find_here"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_here</span></code></a>: retrieve the global address of the
 <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> this function is called on.</li>
-<li><a class="reference internal" href="../api.html#_CPPv3N3hpx19find_all_localitiesER10error_code" title="hpx::find_all_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_all_localities()</span></code></a>: retrieve the global addresses of all
+<li><a class="reference internal" href="../api.html#_CPPv3N3hpx19find_all_localitiesER10error_code" title="hpx::find_all_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_all_localities</span></code></a>: retrieve the global addresses of all
 localities available to this application (including the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the
 function is being called on).</li>
-<li><a class="reference internal" href="../api.html#_CPPv3N3hpx22find_remote_localitiesER10error_code" title="hpx::find_remote_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_remote_localities()</span></code></a>: retrieve the global addresses of
+<li><a class="reference internal" href="../api.html#_CPPv3N3hpx22find_remote_localitiesER10error_code" title="hpx::find_remote_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_remote_localities</span></code></a>: retrieve the global addresses of
 all remote localities available to this application (not including the
 <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the function is being called on)</li>
-<li><a class="reference internal" href="../api.html#_CPPv3N3hpx18get_num_localitiesEv" title="hpx::get_num_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_num_localities()</span></code></a>: retrieve the number of localities
+<li><a class="reference internal" href="../api.html#_CPPv3N3hpx18get_num_localitiesEv" title="hpx::get_num_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_num_localities</span></code></a>: retrieve the number of localities
 available to this application.</li>
-<li><a class="reference internal" href="../api.html#_CPPv3N3hpx13find_localityEN10components14component_typeER10error_code" title="hpx::find_locality"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_locality()</span></code></a>: retrieve the global address of any
+<li><a class="reference internal" href="../api.html#_CPPv3N3hpx13find_localityEN10components14component_typeER10error_code" title="hpx::find_locality"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_locality</span></code></a>: retrieve the global address of any
 <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> supporting the given component type.</li>
-<li><a class="reference internal" href="../api.html#_CPPv3N3hpx17get_colocation_idEN6launch11sync_policyERN6naming7id_typeER10error_code" title="hpx::get_colocation_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_colocation_id()</span></code></a>: retrieve the global address of the</li>
+<li><a class="reference internal" href="../api.html#_CPPv3N3hpx17get_colocation_idEN6launch11sync_policyERN6naming7id_typeER10error_code" title="hpx::get_colocation_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_colocation_id</span></code></a>: retrieve the global address of the</li>
 </ul>
 <p><a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> currently hosting the object with the given global address.</p>
 <p>Additionally, the global addresses of localities can be used to create new
 instances of components using the following <em>HPX</em> API function:</p>
 <ul class="simple">
-<li><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::components::new_()</span></code>: Create a new instance of the given
+<li><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::components::new_</span></code>: Create a new instance of the given
 <code class="docutils literal notranslate"><span class="pre">Component</span></code> type on the specified <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</li>
 </ul>
 <div class="admonition note">
@@ -890,7 +889,7 @@ described in the previous section could look like:</p>
 represents. This global id is accessible by calling the function
 <code class="docutils literal notranslate"><span class="pre">client_base&lt;&gt;::get_id()</span></code>. The special constructor which is provided in the
 example allows to create this client side object directly using the API function
-<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::new_()</span></code>.</p>
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::new_</span></code>.</p>
 </div>
 <div class="section" id="creating-component-instances">
 <span id="create-components"></span><h3>Creating component instances<a class="headerlink" href="#creating-component-instances" title="Permalink to this headline">¶</a></h3>
@@ -1667,7 +1666,13 @@ dimension index” equal to the value returned by <code class="docutils literal 
             
            </div>
           </div>
-          <footer>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
@@ -1686,7 +1691,7 @@ dimension index” equal to the value returned by <code class="docutils literal 
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>881505a1d50780a3584558a8257aa71cc9e8ab3e</code>.
+          Revision <code>bcd44e6630f1b394e5a0efcb0958dd8dcedb15ba</code>.
         </span>
       
 

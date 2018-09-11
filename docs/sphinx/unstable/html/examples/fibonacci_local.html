@@ -264,22 +264,22 @@ elapsed time: 0.062854 [s]
 Since this code is written in C++, we will begin with the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function.
 Here you can see that in <em>HPX</em>, <code class="docutils literal notranslate"><span class="pre">main()</span></code> is only used to initialize the
 runtime system. It is important to note that application-specific command line
-options are defined here. <em>HPX</em> uses <a class="reference external" href="http://www.boost.org/doc/html/program_options.html">Boost.Program Options</a> for command line
+options are defined here. <em>HPX</em> uses <a class="reference external" href="https://www.boost.org/doc/html/program_options.html">Boost.Program Options</a> for command line
 processing. You can see that our programs <code class="docutils literal notranslate"><span class="pre">--n-value</span></code> option is set by calling
 the <code class="docutils literal notranslate"><span class="pre">add_options()</span></code> method on an instance of
 <code class="docutils literal notranslate"><span class="pre">boost::program_options::options_description</span></code>. The default value of the
 variable is set to 10. This is why when we ran the program for the first time
 without using the <code class="docutils literal notranslate"><span class="pre">--n-value</span></code> option the program returned the 10th value of
 the Fibonacci sequence. The constructor argument of the description is the text
-that appears when a user uses the <code class="xref std std-option docutils literal notranslate"><span class="pre">--help</span></code> option to see what command
-line options are available. <code class="docutils literal notranslate"><span class="pre">HPX_APPLICATION_STRING</span></code> is a macro that expands
-to a string constant containing the name of the <em>HPX</em> application currently
-being compiled.</p>
+that appears when a user uses the <a class="reference internal" href="../manual/launching_and_configuring_hpx_applications.html#cmdoption-hpx-help"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:help</span></code></a> option to see what
+command line options are available. <code class="docutils literal notranslate"><span class="pre">HPX_APPLICATION_STRING</span></code> is a macro that
+expands to a string constant containing the name of the <em>HPX</em> application
+currently being compiled.</p>
 <p>In <em>HPX</em> <code class="docutils literal notranslate"><span class="pre">main()</span></code> is used to initialize the runtime system and pass the
 command line arguments to the program. If you wish to add command line options
 to your program you would add them here using the instance of the Boost class
 <code class="docutils literal notranslate"><span class="pre">options_description</span></code>, and invoking the public member function
-<code class="docutils literal notranslate"><span class="pre">.add_options()</span></code> (see <a class="reference external" href="http://www.boost.org/doc/">Boost Documentation</a> for more details). <a class="reference internal" href="../api.html#_CPPv3N3hpx4initERN4util15function_nonserIFiRN5boost15program_options13variables_mapEEEERN5boost15program_options19options_descriptionEiPPcRNSt6vectorINSt6stringEEE21startup_function_type22shutdown_function_typeN3hpx12runtime_modeE" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init()</span></code></a>
+<code class="docutils literal notranslate"><span class="pre">.add_options()</span></code> (see <a class="reference external" href="https://www.boost.org/doc/">Boost Documentation</a> for more details). <a class="reference internal" href="../api.html#_CPPv3N3hpx4initERN4util15function_nonserIFiRN5boost15program_options13variables_mapEEEERN5boost15program_options19options_descriptionEiPPcRNSt6vectorINSt6stringEEE21startup_function_type22shutdown_function_typeN3hpx12runtime_modeE" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init</span></code></a>
 calls <code class="docutils literal notranslate"><span class="pre">hpx_main()</span></code> after setting up <em>HPX</em>, which is where the logic of our
 program is encoded.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
@@ -299,7 +299,7 @@ program is encoded.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The <a class="reference internal" href="../api.html#_CPPv3N3hpx4initERN4util15function_nonserIFiRN5boost15program_options13variables_mapEEEERN5boost15program_options19options_descriptionEiPPcRNSt6vectorINSt6stringEEE21startup_function_type22shutdown_function_typeN3hpx12runtime_modeE" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init()</span></code></a> function in <code class="docutils literal notranslate"><span class="pre">main()</span></code> starts the runtime system, and
+<p>The <a class="reference internal" href="../api.html#_CPPv3N3hpx4initERN4util15function_nonserIFiRN5boost15program_options13variables_mapEEEERN5boost15program_options19options_descriptionEiPPcRNSt6vectorINSt6stringEEE21startup_function_type22shutdown_function_typeN3hpx12runtime_modeE" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init</span></code></a> function in <code class="docutils literal notranslate"><span class="pre">main()</span></code> starts the runtime system, and
 invokes <code class="docutils literal notranslate"><span class="pre">hpx_main()</span></code> as the first <em>HPX</em>-thread. Below we can see that the
 basic program is simple. The command line option <code class="docutils literal notranslate"><span class="pre">--n-value</span></code> is read in, a
 timer (<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::high_resolution_timer</span></code>) is set up to record the
@@ -347,7 +347,7 @@ asynchronous. To understand what is happening we have to look inside the
 meaning n is 0 or 1, then we return 0 or 1 (recall the first element of the
 Fibonacci sequence is 0 and the second is 1). If n is larger than 1 we spawn two
 new tasks whose results are contained in <code class="docutils literal notranslate"><span class="pre">n1</span></code> and <code class="docutils literal notranslate"><span class="pre">n2</span></code>. This is done using
-<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async()</span></code> which takes as arguments a function (function pointer,
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async</span></code> which takes as arguments a function (function pointer,
 object or lambda) and the arguments to the function. Instead of returning a
 <code class="docutils literal notranslate"><span class="pre">std::uint64_t</span></code> like <code class="docutils literal notranslate"><span class="pre">fibonacci</span></code> does, <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> returns a future of a
 <code class="docutils literal notranslate"><span class="pre">std::uint64_t</span></code>, i.e. <code class="docutils literal notranslate"><span class="pre">hpx::future&lt;std::uint64_t&gt;</span></code>. Each of these futures
@@ -376,7 +376,13 @@ efficiently chain together multiple tasks.</p>
             
            </div>
           </div>
-          <footer>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
@@ -395,7 +401,7 @@ efficiently chain together multiple tasks.</p>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>881505a1d50780a3584558a8257aa71cc9e8ab3e</code>.
+          Revision <code>bcd44e6630f1b394e5a0efcb0958dd8dcedb15ba</code>.
         </span>
       
 

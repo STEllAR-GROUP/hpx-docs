@@ -275,7 +275,7 @@ along with its neighbors, are passed to the function <code class="docutils liter
 improve readability, references named <code class="docutils literal notranslate"><span class="pre">current</span></code> and <code class="docutils literal notranslate"><span class="pre">next</span></code> are created
 which, depending on the time step, point to the first and second vector of
 doubles. The first vector of doubles is initialized with a simple heat ramp.
-After calling the heat function with the data in the “current” vector, the
+After calling the heat function with the data in the <code class="docutils literal notranslate"><span class="pre">current</span></code> vector, the
 results are placed into the <code class="docutils literal notranslate"><span class="pre">next</span></code> vector.</p>
 <p>In example 2 we employ a technique called futurization. Futurization is a method
 by which we can easily transform a code which is serially executed into a code
@@ -343,7 +343,7 @@ below shows how this technique was applied to the <code class="docutils literal 
 </pre></div>
 </div>
 <p>In example 2, we re-define our partition type as a <code class="docutils literal notranslate"><span class="pre">shared_future</span></code> and, in
-<code class="docutils literal notranslate"><span class="pre">main</span></code>, create the object “result” which is a future to a vector of
+<code class="docutils literal notranslate"><span class="pre">main</span></code>, create the object <code class="docutils literal notranslate"><span class="pre">result</span></code> which is a future to a vector of
 partitions. We use <code class="docutils literal notranslate"><span class="pre">result</span></code> to represent the last vector in a string of
 vectors created for each timestep. In order to move to the next timestep, the
 values of a partition and its neighbors must be passed to <code class="docutils literal notranslate"><span class="pre">heat</span></code> once the
@@ -392,10 +392,10 @@ to improve the application’s scalability. Currently this code only runs on one
 distribute the work to other machines in a cluster. We begin to add this
 functionality in example 5.</p>
 <p>In order to run on a distributed system, a large amount of boilerplate code must
-be added. Fortunately, HPX provides us with the concept of a “component” which
-saves us from having to write quite as much code. A component is an object which
-can be remotely accessed using its global address. Components are made of two
-parts: a server and a client class. While the client class is not required,
+be added. Fortunately, HPX provides us with the concept of a <a class="reference internal" href="../terminology.html#term-component"><span class="xref std std-term">component</span></a>
+which saves us from having to write quite as much code. A component is an object
+which can be remotely accessed using its global address. Components are made of
+two parts: a server and a client class. While the client class is not required,
 abstracting the server behind a client allows us to ensure type safety instead
 of having to pass around pointers to global objects. Example 5 renames example
 4’s <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">partition</span></code> to <code class="docutils literal notranslate"><span class="pre">partition_data</span></code> and adds serialization support.
@@ -523,13 +523,9 @@ the GIDs of neighboring partitions visible to each other, we created two buffers
 to store the GIDs of the remote neighboring partitions on the left and right
 respectively. These buffers are filled by sending the GID of a newly created
 edge partitions to the right and left buffers of the neighboring localities.</p>
-<p>In order to finish the simulation the solution vectors named “result” are then
+<p>In order to finish the simulation the solution vectors named <code class="docutils literal notranslate"><span class="pre">result</span></code> are then
 gathered together on <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> 0 and added into a vector of spaces
 <code class="docutils literal notranslate"><span class="pre">overall_result</span></code> using the HPX functions <code class="docutils literal notranslate"><span class="pre">gather_id</span></code> and <code class="docutils literal notranslate"><span class="pre">gather_here</span></code>.</p>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">Insert performance of <code class="docutils literal notranslate"><span class="pre">stencil_8</span></code>.</p>
-</div>
 <p>Example 8 completes this example series which takes the serial code of example 1
 and incrementally morphs it into a fully distributed parallel code. This
 evolution was guided by the simple principles of futurization, the knowledge of
@@ -543,7 +539,13 @@ facilitates the scalable parallelization of most applications.</p>
             
            </div>
           </div>
-          <footer>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
@@ -562,7 +564,7 @@ facilitates the scalable parallelization of most applications.</p>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>881505a1d50780a3584558a8257aa71cc9e8ab3e</code>.
+          Revision <code>bcd44e6630f1b394e5a0efcb0958dd8dcedb15ba</code>.
         </span>
       
 

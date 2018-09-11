@@ -17,15 +17,15 @@ scalability, and efficient utilization of system resources. Emerging
 technological trends such as multi-core processors further highlight limitations
 of existing parallel computation models. To mitigate the aforementioned
 problems, it is necessary to rethink the approach to parallelization models.
-ParalleX contains mechanisms such as multi-threading, parcels, global name space
-support, percolation and :term:`local control object`\ s (:term:`LCO`). By
-design, ParalleX overcomes limitations of current models of parallelism by
-alleviating contention, latency, overhead and starvation. With ParalleX, it is
-further possible to increase performance by at least an order of magnitude on
-challenging parallel algorithms, e.g., dynamic directed graph algorithms and
-adaptive mesh refinement methods for astrophysics. An additional benefit of
-ParalleX is fine-grained control of power usage, enabling reductions in power
-consumption.
+ParalleX contains mechanisms such as multi-threading, :term:`parcels <parcel>`,
+:term:`global name space <AGAS>` support, percolation and :term:`local control
+object`\ s (:term:`LCO`). By design, ParalleX overcomes limitations of current
+models of parallelism by alleviating contention, latency, overhead and
+starvation. With ParalleX, it is further possible to increase performance by at
+least an order of magnitude on challenging parallel algorithms, e.g., dynamic
+directed graph algorithms and adaptive mesh refinement methods for astrophysics.
+An additional benefit of ParalleX is fine-grained control of power usage,
+enabling reductions in power consumption.
 
 ParalleX---a new execution model for future architectures
 ---------------------------------------------------------
@@ -158,7 +158,7 @@ created by today's technology.
 So, what are the overarching objectives for designing systems allowing for
 applications to scale as they should? In our opinion, the main objectives are:
 
-* Performance: as mentioned, scalable and efficiency are the main criteria
+* Performance: as mentioned, scalability and efficiency are the main criteria
   people are interested in
 * Fault tolerance: the low expected mean time between failures (`MTBF
   <http://en.wikipedia.org/wiki/Mean_time_between_failures>`_) of future systems
@@ -171,8 +171,8 @@ applications to scale as they should? In our opinion, the main objectives are:
 
 What needs to be done to meet those objectives, to make applications scale
 better on tomorrow's architectures? Well, the answer is almost obvious: we need
-to devise a new execution model - a set of governing principles for the holistic
-design of future systems - targeted at minimizing the effect of the outlined
+to devise a new execution model---a set of governing principles for the holistic
+design of future systems---targeted at minimizing the effect of the outlined
 **SLOW** factors. Everything we create for future systems, every design decision
 we make, every criteria we apply, has to be validated against this single,
 uniform metric. This includes changes in the hardware architecture we
@@ -183,7 +183,7 @@ co-designed, they are interdependent and cannot be seen as separate facets. The
 systems we have today have been evolving for over 50 years now. All layers
 function in a certain way relying on the other layers to do so as well. However,
 we do not have the time to wait for a coherent system to evolve for another 50
-years. The new paradigms are needed now - therefore, co-design is the key.
+years. The new paradigms are needed now---therefore, co-design is the key.
 
 Governing principles applied while developing |hpx|
 ---------------------------------------------------
@@ -191,9 +191,9 @@ Governing principles applied while developing |hpx|
 As it turn out, we do not have to start from scratch. Not everything has to be
 invented and designed anew. Many of the ideas needed to combat the 4 horsemen
 have already been had, often more than 30 years ago. All it takes is to gather
-them into a coherent approach. So please let me highlight some of the derived
-principles we think to be crucial for defeating **SLOW**. Some of those are
-focused on high-performance computing, others are more general.
+them into a coherent approach. We'll highlight some of the derived principles we
+think to be crucial for defeating **SLOW**. Some of those are focused on
+high-performance computing, others are more general.
 
 Focus on latency hiding instead of latency avoidance
 ----------------------------------------------------
@@ -210,9 +210,9 @@ note, that existing latencies are often tightly related to some resource having
 to wait for the operation to be completed. At the same time it would be
 perfectly fine to do some other, unrelated work in the meantime, allowing the
 system to hide the latencies by filling the idle-time with useful work. Modern
-system already employ similar techniques (pipelined instruction execution in the
-processor cores, asynchronous input/output operations, and many more). What we
-propose is to go beyond anything we know today and to make latency hiding an
+systems already employ similar techniques (pipelined instruction execution in
+the processor cores, asynchronous input/output operations, and many more). What
+we propose is to go beyond anything we know today and to make latency hiding an
 intrinsic concept of the operation of the whole system stack.
 
 Embrace fine-grained parallelism instead of heavyweight Threads
@@ -240,7 +240,7 @@ Rediscover constraint-based synchronization to replace global Barriers
 ----------------------------------------------------------------------
 
 The code we write today is riddled with implicit (and explicit) global barriers.
-When I say global barrier I mean the synchronization of the control flow between
+By global barrier we mean the synchronization of the control flow between
 several (very often all) threads (when using |openmp|_) or processes (|mpi|_).
 For instance, an implicit global barrier is inserted after each loop
 parallelized using |openmp|_ as the system synchronizes the threads used to

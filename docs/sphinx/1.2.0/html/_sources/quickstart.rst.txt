@@ -37,14 +37,14 @@ It is also recommended that you check out the latest stable tag:
 |hpx| dependencies
 ==================
 
-The minimum dependencies needed to use |hpx| are |boost| and |hwloc|. If these
+The minimum dependencies needed to use |hpx| are |boost|_ and |hwloc|_. If these
 are not available through your system package manager, see
-:ref:`boost_installation` and :ref:`hwloc_installation` for instructions on how to
-build them yourself. In addition to |boost| and |hwloc|, it is recommended that
-you don't use the system allocator, but instead use either ``tcmalloc`` from
-|google_perftools| (default) or |jemalloc| for better performance. If you would
-like to try |hpx| without a custom allocator at this point you can configure
-|hpx| to use the system allocator in the next step.
+:ref:`boost_installation` and :ref:`hwloc_installation` for instructions on how
+to build them yourself. In addition to |boost|_ and |hwloc|_, it is recommended
+that you don't use the system allocator, but instead use either ``tcmalloc``
+from |google_perftools|_ (default) or |jemalloc|_ for better performance. If you
+would like to try |hpx| without a custom allocator at this point you can
+configure |hpx| to use the system allocator in the next step.
 
 A full list of required and optional dependencies, including recommended
 versions is available at :ref:`prerequisites`.
@@ -75,13 +75,13 @@ process launch more jobs by passing the ``-jN`` option to ``make``.
 
 .. tip::
 
-   If you want to change |cmake| variables for your build it is usually a good
+   If you want to change |cmake|_ variables for your build it is usually a good
    idea to start with a clean build directory to avoid configuration problems.
    It is especially important that you use a clean build directory when changing
    between ``Release`` and ``Debug`` modes.
 
-If your dependencies are in custom locations you may need to tell |cmake| where
-to find them by passing one or more of the following options to |cmake|:
+If your dependencies are in custom locations you may need to tell |cmake|_ where
+to find them by passing one or more of the following options to |cmake|_:
 
 .. code-block:: sh
 
@@ -91,7 +91,7 @@ to find them by passing one or more of the following options to |cmake|:
     -DJEMALLOC_ROOT=/path/to/jemalloc
 
 If you want to try |hpx| without using a custom allocator pass
-``-DHPX_WITH_MALLOC=system`` to |cmake|.
+``-DHPX_WITH_MALLOC=system`` to |cmake|_.
 
 .. important::
 
@@ -124,10 +124,9 @@ can now run ``simplest_hello_world_1`` and should see the following output:
 You've just run an example which prints ``Hello World!`` from the |hpx| runtime.
 The source for the example is in
 ``examples/quickstart/simplest_hello_world_1.cpp``. The ``hello_world`` example
-(also available in the ``examples/quickstart`` directory is a distributed hello
-world program which is described in :ref:`examples_hello_world`. It is
-recommended that you go through that example only once you are more familiar
-with the distributed concepts of |HPX|.
+(also available in the ``examples/quickstart`` directory) is a distributed hello
+world program which is described in :ref:`examples_hello_world`. It provides a
+gentle introduction to the distributed aspects of |hpx|.
 
 .. tip::
 
@@ -153,7 +152,7 @@ Setting up an |hpx| project
 ===========================
 
 The following ``CMakeLists.txt`` is a minimal example of what you need in order to
-build an executable using |cmake| and |hpx|:
+build an executable using |cmake|_ and |hpx|:
 
 .. code-block:: cmake
 
@@ -199,9 +198,9 @@ and add the following to your ``main.cpp``:
    :start-after: //[simplest_hello_world_1_getting_started
    :end-before: //]
 
-The program looks almost like a regular ``C++`` hello world with the exception
-of the two includes and ``hpx::cout``. When you include ``hpx_main.hpp`` some
-things will be done behind the scenes to make sure that ``main`` actually get's
+The program looks almost like a regular C++ hello world with the exception of
+the two includes and ``hpx::cout``. When you include ``hpx_main.hpp`` some
+things will be done behind the scenes to make sure that ``main`` actually gets
 launched on the |hpx| runtime. So while it looks almost the same you can now use
 futures, ``async``, parallel algorithms and more which make use of the |hpx|
 runtime with lightweight threads. ``hpx::cout`` is a replacement for
@@ -225,7 +224,7 @@ program now you should see the familiar ``Hello World!``:
    .. literalinclude:: ../examples/quickstart/simplest_hello_world_2.cpp
       :language: c++
 
-   You can also use the :cpp:func:`hpx::start` and :cpp:func:`hpx::stop` for a
+   You can also use :cpp:func:`hpx::start` and :cpp:func:`hpx::stop` for a
    non-blocking alternative, or use :cpp:func:`hpx::resume` and
    :cpp:func:`hpx::suspend` if you need to combine |hpx| with other runtimes.
 
@@ -246,11 +245,12 @@ Writing task-based applications
 
 So far we haven't done anything that can't be done using the C++ standard
 library. In this section we will give a short overview of what you can do with
-|hpx| on a single node. The essence is to avoid global synchronization and
-break up your application into small, composable tasks whose dependencies
-control the flow of your application. Remember, however, that |hpx| allows you
-to write distributed applications similarly to how you would write applications
-for a single node (see the :ref:`why_hpx`).
+|hpx| on a single node. The essence is to avoid global synchronization and break
+up your application into small, composable tasks whose dependencies control the
+flow of your application. Remember, however, that |hpx| allows you to write
+distributed applications similarly to how you would write applications for a
+single node (see :ref:`why_hpx` and
+:ref:`writing_distributed_hpx_applications`).
 
 If you are already familiar with ``async`` and ``future``\ s from the C++ standard
 library, the same functionality is available in |hpx|.
@@ -275,9 +275,9 @@ programs:
 
 * continuation: A function that is to be run after a previous task has run
   (represented by a future). ``then`` is a method of ``future<T>`` that takes a
-  function to run next. Used to build up dataflow DAGs. ``shared_future``\ s help
-  you split up nodes in the DAG and functions like ``when_all`` help you join
-  nodes in the DAG.
+  function to run next. Used to build up dataflow DAGs (directed acyclic
+  graphs). ``shared_future``\ s help you split up nodes in the DAG and functions
+  like ``when_all`` help you join nodes in the DAG.
 
 The following example is a collection of the most commonly used functionality in
 |hpx|:
@@ -296,8 +296,8 @@ tricky to get right (the continuation needs to take the future as an argument).
 
    |hpx| programs accept command line arguments. The most important one is
    :option:`--hpx:threads`\ ``=N`` to set the number of OS-threads used by
-   |hpx|. |hpx| uses all available processing units by default. Play around with
-   the example above and see what difference the number of threads makes on the
+   |hpx|. |hpx| uses one thread per core by default. Play around with the
+   example above and see what difference the number of threads makes on the
    ``sort`` function. See :ref:`launching_and_configuring` for more details on
    how and what options you can pass to |hpx|.
 
@@ -321,9 +321,9 @@ If you haven't done so already, reading the :ref:`terminology` section will help
 you get familiar with the terms used in |hpx|.
 
 The :ref:`examples` section contains small, self-contained walkthroughs of
-example |hpx| programs. The :ref:`examples_1d_stencil` is a thorough, realistic
-example starting from a single node implementation and going stepwise to a
-distributed implementation.
+example |hpx| programs. The :ref:`examples_1d_stencil` example is a thorough,
+realistic example starting from a single node implementation and going stepwise
+to a distributed implementation.
 
 The :ref:`manual` contains detailed information on writing, building and running
 |hpx| applications.

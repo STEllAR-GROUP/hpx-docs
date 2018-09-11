@@ -150,3 +150,114 @@ policy use the command line option :option:`--hpx:queuing`\
     enum { max_thread_count = 1000 };
 
     I see both FIFO and double ended queues in ABP policies?
+
+The |hpx| resource partitioner
+==============================
+
+The |hpx| resource partitioner lets you take the execution resources available
+on a system---processing units, cores, and numa domains---and assign them to
+thread pools. By default |hpx| creates a single thread pool name ``default``.
+While this is good for most use cases, the resource partitioner lets you create
+multiple thread pools with custom resources and options.
+
+Creating custom thread pools is useful for cases where you have tasks which
+absolutely need to run without interference from other tasks. An example of this
+is when using |mpi|_ for distribution instead of the built-in mechanisms in
+|hpx| (useful in legacy applications). In this case one can create a thread pool
+containing a single thread for |mpi|_ communication. |mpi|_ tasks will then
+always run on the same thread, instead of potentially being stuck in a queue
+behind other threads.
+
+Note that |hpx| thread pools are completely independent from each other in the
+sense that task stealing will never happen between different thread pools.
+However, tasks running on a particular thread pool can schedule tasks on another
+thread pool.
+
+.. note::
+
+   It is simpler in some situations to to schedule important tasks with high
+   priority instead of using a separate thread pool.
+
+Using the resource partitioner
+------------------------------
+
+In order to create custom thread pools the resource partitioner needs to be set
+up before |hpx| is initialized by creating an instance of
+:cpp:class:`hpx::resource::partitioner`:
+
+.. literalinclude:: ../../examples/resource_partitioner/simplest_resource_partitioner_1.cpp
+   :start-after: //[body
+   :end-before: //body]
+
+Note that we have to pass ``argc`` and ``argv`` to the resource partitioner to
+be able to parse thread binding options passed on the command line. You should
+pass the same arguments to the :cpp:class:`hpx::resource::partitioner`
+constructor as you would to :cpp:func:`hpx::init` or :cpp:func:`hpx::start`.
+Running the above code will have the same effect as not initializing it at all,
+i.e. a default thread pool will be created with the type and number of threads
+specified on the command line.
+
+The resource partitioner class is the interface to add thread pools to the |hpx|
+runtime and to assign resources to the thread pools.
+
+To add a thread pool use the
+:cpp:member:`hpx::resource::partitioner::create_thread_pool` method. If you
+simply want to use the default scheduler and scheduler options it is enough to
+call ``rp.create_thread_pool("my-thread-pool")``.
+
+Then, to add resources to the thread pool you can use the
+:cpp:member:`hpx::resource::partitioner::add_resource` method. The resource
+partitioner exposes the hardware topology retrieved using |hwloc|_ and lets you
+iterate through the topology to add the wanted processing units to the thread
+pool. Below is an example of adding all processing units from the first NUMA
+domain to a custom thread pool, unless there is only one NUMA domain in which
+case we leave the first processing unit for the default thread pool:
+
+.. literalinclude:: ../../examples/resource_partitioner/simplest_resource_partitioner_2.cpp
+   :start-after: //[body
+   :end-before: //body]
+
+.. note::
+
+   Whatever processing units not assigned to a thread pool by the time
+   :cpp:func:`hpx::init` is called will be added to the default thread pool. It
+   is also possible to explicitly add processing units to the default thread
+   pool, and to create the default thread pool manually (in order to e.g. set
+   the scheduler type).
+
+.. tip::
+
+   The command line option :option:`--hpx:print-bind` is useful for checking
+   that the thread pools have been set up the way you expect.
+
+Advanced usage
+--------------
+
+It is possible to customize the built in schedulers by passing scheduler options
+to :cpp:member:`hpx::resource::partitioner::create_thread_pool`. It is also possible
+to create and use custom schedulers.
+
+.. note::
+
+   It is not recommended to create your own scheduler. The |hpx| developers use
+   this to experiment with new scheduler designs before making them available to
+   users via the standard mechanisms of choosing a scheduler (command line
+   options). If you would like to experiment with a custom scheduler the
+   resource partitioner example ``shared_priority_queue_scheduler.cpp`` contains
+   a fully implemented scheduler with logging etc. to make exploration easier.
+
+To choose a scheduler and custom mode for a thread pool, pass additional options
+when creating the thread pool like this::
+
+    rp.create_thread_pool("my-thread-pool",
+        hpx::resource::policies::local_priority_lifo,
+        hpx::policies::scheduler_mode(
+            hpx::policies::scheduler_mode::default |
+            hpx::policies::scheduler_mode::enable_elasticity));
+
+The available schedulers are documented here:
+:cpp:enum:`hpx::resource::scheduling_policy`, and the available scheduler modes
+here: :cpp:enum:`hpx::threads::policies::scheduler_mode`. Also see the examples
+folder for examples of advanced resource partitioner usage:
+``simple_resource_partitioner.cpp`` and
+``oversubscribing_resource_partitioner.cpp``.

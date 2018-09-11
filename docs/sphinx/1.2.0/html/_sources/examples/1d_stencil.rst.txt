@@ -52,7 +52,7 @@ along with its neighbors, are passed to the function ``heat``. In order to
 improve readability, references named ``current`` and ``next`` are created
 which, depending on the time step, point to the first and second vector of
 doubles. The first vector of doubles is initialized with a simple heat ramp.
-After calling the heat function with the data in the "current" vector, the
+After calling the heat function with the data in the ``current`` vector, the
 results are placed into the ``next`` vector.
 
 In example 2 we employ a technique called futurization. Futurization is a method
@@ -66,7 +66,7 @@ below shows how this technique was applied to the ``struct stepper``.
    :lines: 51-107
 
 In example 2, we re-define our partition type as a ``shared_future`` and, in
-``main``, create the object "result" which is a future to a vector of
+``main``, create the object ``result`` which is a future to a vector of
 partitions. We use ``result`` to represent the last vector in a string of
 vectors created for each timestep. In order to move to the next timestep, the
 values of a partition and its neighbors must be passed to ``heat`` once the
@@ -121,10 +121,10 @@ distribute the work to other machines in a cluster. We begin to add this
 functionality in example 5.
 
 In order to run on a distributed system, a large amount of boilerplate code must
-be added. Fortunately, HPX provides us with the concept of a "component" which
-saves us from having to write quite as much code. A component is an object which
-can be remotely accessed using its global address. Components are made of two
-parts: a server and a client class. While the client class is not required,
+be added. Fortunately, HPX provides us with the concept of a :term:`component`
+which saves us from having to write quite as much code. A component is an object
+which can be remotely accessed using its global address. Components are made of
+two parts: a server and a client class. While the client class is not required,
 abstracting the server behind a client allows us to ensure type safety instead
 of having to pass around pointers to global objects. Example 5 renames example
 4's ``struct partition`` to ``partition_data`` and adds serialization support.
@@ -205,7 +205,7 @@ to store the GIDs of the remote neighboring partitions on the left and right
 respectively. These buffers are filled by sending the GID of a newly created
 edge partitions to the right and left buffers of the neighboring localities.
 
-In order to finish the simulation the solution vectors named "result" are then
+In order to finish the simulation the solution vectors named ``result`` are then
 gathered together on :term:`locality` 0 and added into a vector of spaces
 ``overall_result`` using the HPX functions ``gather_id`` and ``gather_here``.
 

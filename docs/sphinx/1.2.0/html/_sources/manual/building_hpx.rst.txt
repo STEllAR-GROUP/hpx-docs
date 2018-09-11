@@ -74,7 +74,7 @@ We use here the command-line, non-interactive |cmake| interface.
    minimally required version for |hpx|.
 
 #. Open a shell. Your development tools must be reachable from this shell
-   through the PATH environment variable.
+   through the ``PATH`` environment variable.
 
 #. Create a directory for containing the build. It is not supported to build
    |hpx| on the source directory. cd to this directory:
@@ -97,12 +97,12 @@ values for all build parameters. See the :ref:`cmake_variables` section for
 fine-tuning your build.
 
 This can fail if CMake can't detect your toolset, or if it thinks that the
-environment is not sane enough. On this case make sure that the toolset that you
+environment is not sane enough. In this case make sure that the toolset that you
 intend to use is the only one reachable from the shell and that the shell itself
 is the correct one for you development environment. CMake will refuse to build
-MinGW makefiles if you have a POSIX shell reachable through the PATH environment
-variable, for instance. You can force CMake to use various compilers and tools.
-Please visit `CMake Useful Variables
+MinGW makefiles if you have a POSIX shell reachable through the ``PATH``
+environment variable, for instance. You can force CMake to use various compilers
+and tools. Please visit `CMake Useful Variables
 <https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/Useful-Variables#Compilers-and-Tools>`_
 for a detailed overview of specific |cmake| variables.
 
@@ -201,12 +201,12 @@ favorite compiler with |hpx| visit |hpx_buildbot|_.
     **Compilers**
     |gcc|                  4.9 or newer        4.9
     |icpc|                 2014 or newer       2014
-    |clang|                3.4 or newer        3.3
+    |clang|                3.8 or newer        3.8
     **Build System**
     |cmake|                3.9.0               3.3.2
     **Required Libraries**
     |boost_libraries|      1.62.0 or newer     1.58.0
-    |hwloc|                1.10                1.2 (Xeon Phi: 1.6)
+    |hwloc|                2.0.1 or newer      1.2 (Xeon Phi: 1.6)
     ====================== =================== =================== =====
 
 .. note::
@@ -258,7 +258,7 @@ favorite compiler with |hpx| visit |hpx_buildbot|_.
      * 1.58.0
      * See below for an important limitation when using Boost V1.55.0.
    * * |hwloc|
-     * 1.10
+     * 2.0.1 or newer
      * 1.5
      * Used for OS-thread pinning and NUMA awareness.
 
@@ -343,6 +343,42 @@ listed below.
 
       export CFLAGS='-DHDatexit=""'
       export CPPFLAGS='-DHDatexit=""'
+
+.. _documentation_prerequisites:
+
+Documentation
+-------------
+
+To build the |hpx| documentation you need recent versions of the following
+packages:
+
+- ``python`` (2 or 3)
+- ``sphinx`` (Python package)
+- ``sphinx_rtd_theme`` (Python package)
+- ``breathe`` (Python package)
+- ``doxygen``
+
+If the |python|_ dependencies are not available through your system package
+manager you can install them using the |python|_ package manager ``pip``:
+
+.. code-block:: bash
+
+   pip install --user sphinx sphinx_rtd_theme breathe
+
+You may need to set the following |cmake|_ variables to make sure |cmake|_ can
+find the required dependencies.
+
+.. option:: DOXYGEN_ROOT:PATH
+
+   Specifies where to look for the installation of the |doxygen|_ tool.
+
+.. option:: SPHINX_ROOT:PATH
+
+   Specifies where to look for the installation of the |sphinx|_ tool.
+
+.. option:: BREATHE_APIDOC_ROOT:PATH
+
+   Specifies where to look for the installation of the |breathe|_ tool.
 
 .. _boost_installation:
 
@@ -460,17 +496,21 @@ influence the build process. The build process consists of the following parts:
   * ``io_counter_component``: A dynamically loaded plugin plugin that exposes
     I/O performance counters (only available on Linux).
   * ``papi_component``: A dynamically loaded plugin that exposes PAPI
-    performance counters (enabled with ``HPX_WITH_PAPI``, default is ``Off``).
+    performance counters (enabled with :option:`HPX_WITH_PAPI:BOOL`, default is
+    ``Off``).
 
 * |hpx| Examples (target ``examples``): This target is enabled by default and
   builds all |hpx| examples (disable by setting
-  ``HPX_WITH_BUILD_EXAMPLES=Off``). |hpx| examples are part of the ``all``
-  target and are included in the installation if enabled.
+  :option:`HPX_WITH_BUILD_EXAMPLES:BOOL`\ ``=Off``). |hpx| examples are part of
+  the ``all`` target and are included in the installation if enabled.
 * |hpx| Tests (target ``tests``): This target builds the |hpx| test suite and is
-  enabled by default (disable by setting ``HPX_WITH_BUILD_TESTS=Off``). They are
-  not built by the ``all`` target and have to be built separately.
+  enabled by default (disable by setting :option:`HPX_WITH_BUILD_TESTS:BOOL`\
+  ``=Off``). They are not built by the ``all`` target and have to be built
+  separately.
 * |hpx| Documentation (target ``docs``): This target builds the documentation,
-  this is not enabled by default. For more information see :ref:`documentation`.
+  this is not enabled by default (enable by setting
+  :option:`HPX_WITH_DOCUMENTATION:BOOL`\ ``=On``. For more information see
+  :ref:`documentation`.
 
 For a complete list of available |cmake| variables that influence the build of
 |hpx| see :ref:`cmake_variables`.
@@ -546,7 +586,7 @@ itself and applications depending on |hpx|. Please see :ref:`cmake_toolchains`
 for more information.
 
 In order to enable full static linking with the libraries, the |cmake| variable
-``HPX_WITH_STATIC_LINKING`` has to be set to ``On``.
+:option:`HPX_WITH_STATIC_LINKING:BOOL` has to be set to ``On``.
 
 .. _debugging_core:
 
@@ -554,12 +594,13 @@ Debugging applications using core files
 ---------------------------------------
 
 For |hpx| to generate useful core files, |hpx| has to be compiled without signal
-and exception handlers ``HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS``. If this
-option is not specified, the signal handlers change the application state. For
-example, after a segmentation fault the stack trace will show the signal
-handler. Similarly, unhandled exceptions are also caught by the these handlers
-and the stack trace will not point to the location where the unhandled exception
-was thrown.
+and exception handlers
+:option:`HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS:BOOL`. If this option is
+not specified, the signal handlers change the application state. For example,
+after a segmentation fault the stack trace will show the signal handler.
+Similarly, unhandled exceptions are also caught by the these handlers and the
+stack trace will not point to the location where the unhandled exception was
+thrown.
 
 In general, core files are a helpful tool to inspect the state of the
 application at the moment of the crash (post-mortem debugging), without the need
@@ -666,8 +707,8 @@ How to install |hpx| on Unix variants
 
 For more detailed information about using |cmake| please refer its documentation
 and also the section :ref:`building_hpx`. Please pay special attention to the
-section about ``HPX_WITH_MALLOC`` as this is crucial for getting decent
-performance.
+section about :option:`HPX_WITH_MALLOC:STRING` as this is crucial for getting
+decent performance.
 
 .. _macos_installation:
 
@@ -871,7 +912,7 @@ Installation of the |hpx| library
   files and final executables.
 * Add CMake variable definitions (if any) by clicking the "Add Entry" button.
   There are two required variables you need to define: ``BOOST_ROOT`` and
-  ``HWLOC_ROOT`` These (PATH) variables need to be set to point to the root
+  ``HWLOC_ROOT`` These (``PATH``) variables need to be set to point to the root
   folder of your |boost| and |hwloc| installations. It is recommended to set the
   variable ``CMAKE_INSTALL_PREFIX`` as well. This determines where the HPX
   libraries will be built and installed. If this (``PATH``) variable is set, it
@@ -944,8 +985,8 @@ How to build HPX under Windows 10 x64 with Visual Studio 2015
 
 * Set four new environment variables (in CMake, not in Windows environment, by
   the way): ``BOOST_ROOT``, ``HWLOC_ROOT``, ``CMAKE_INSTALL_PREFIX`` and
-  ``HPX_WITH_BOOST_ALL_DYNAMIC_LINK``. The meaning of these variables is as
-  follows:
+  :option:`HPX_WITH_BOOST_ALL_DYNAMIC_LINK:BOOL`. The meaning of these variables
+  is as follows:
 
   * ``BOOST_ROOT`` the root directory of the unpacked Boost headers/cpp files.
   * ``HWLOC_ROOT`` the root directory of the unpacked Portable Hardware Locality
@@ -963,8 +1004,8 @@ How to build HPX under Windows 10 x64 with Visual Studio 2015
     "Name", select ``PATH`` as Type and put the path-name in "Path" text field.
     Repeat this for the first three variables.
 
-    The last one: ``HPX_WITH_BOOST_ALL_DYNAMIC_LINK`` is a ``BOOL`` and must be
-    checked (there will be a checkbox instead of a textfield).
+    The last one: :option:`HPX_WITH_BOOST_ALL_DYNAMIC_LINK:BOOL` is a ``BOOL`` and
+    must be checked (there will be a checkbox instead of a textfield).
 
     This is how variable insertion looks like:
 
@@ -1169,8 +1210,8 @@ following way:
 
 For more detailed information about using |cmake| please refer to its
 documentation and to the section :ref:`building_hpx`. Please pay special
-attention to the section about ``HPX_WITH_MALLOC`` as this is crucial for
-getting decent performance on the Xeon Phi.
+attention to the section about :option:`HPX_WITH_MALLOC:STRING` as this is
+crucial for getting decent performance on the Xeon Phi.
 
 .. _fedora_installation:
 
@@ -1180,8 +1221,8 @@ How to install |hpx| on Fedora distributions
 .. note::
 
    This section of the manual is based off of our collaborators Patrick Diehl's
-   blog [@http://diehlpk.github.io/2015/08/04/hpx-fedora.html Installing HPX on
-   Fedora 22].
+   blog post `Installing HPX on Fedora 22
+   <http://diehlpk.github.io/2015/08/04/hpx-fedora.html>`.
 
 * Install all packages for minimal installation:
 

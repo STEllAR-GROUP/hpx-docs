@@ -16,14 +16,14 @@ system you need to initialize the |hpx| library by inserting certain calls
 into the code of your application. Depending on your use case, this can be done
 in 3 different ways:
 
-* :ref:`Minimally invasive <minimal>`: Re-use the `main()` function as the main
-  |hpx| entry point.
+* :ref:`Minimally invasive <minimal>`: Re-use the ``main()`` function as the
+  main |hpx| entry point.
 * :ref:`Balanced use case <medium>`: Supply your own main |hpx| entry point
   while blocking the main thread.
 * :ref:`Most flexibility <flexible>`: Supply your own main |hpx| entry point
   while avoiding to block the main thread.
 * :ref:`Suspend and resume <suspend_resume>`: As above but suspend and resume
-  the |hpx| runtime to allow for other runtimes to be used
+  the |hpx| runtime to allow for other runtimes to be used.
 
 .. _minimal:
 
@@ -294,17 +294,18 @@ Automatically suspending worker threads
 The previous method guarantees that the worker threads are suspended when you
 ask for it and that they stay suspended. An alternative way to achieve the same
 effect is to tweak how quickly |hpx| suspends its worker threads when they run
-out of work. The following values make sure that |hpx| idles very quickly:
+out of work. The following configuration values make sure that |hpx| idles very
+quickly:
 
 .. code-block:: ini
 
    hpx.max_idle_backoff_time = 1000
    hpx.max_idle_loop_count = 0
 
-They be set on the command line using
+They can be set on the command line using
 ``--hpx:ini=hpx.max_idle_backoff_time=1000`` and
 ``--hpx:ini=hpx.max_idle_loop_count=0``. See :ref:`launching_and_configuring`
-more more details on how to set configuration parameters.
+for more details on how to set configuration parameters.
 
 After setting idling parameters the previous example could now be written like
 this instead:

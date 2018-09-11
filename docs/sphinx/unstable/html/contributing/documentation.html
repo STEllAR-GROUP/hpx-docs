@@ -39,7 +39,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="HPX unstable documentation" href="../index.html"/>
         <link rel="up" title="Contributing to HPX" href="../contributing.html"/>
-        <link rel="next" title="Testing HPX" href="testing_hpx.html"/>
+        <link rel="next" title="Releases" href="../releases.html"/>
         <link rel="prev" title="Using docker for development" href="docker_image.html"/> 
 
   
@@ -112,14 +112,15 @@
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../contributing.html">Contributing to <em>HPX</em></a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="release_procedure.html">Release Procedure for HPX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_procedure.html">Release procedure for <em>HPX</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_hpx.html">Testing <em>HPX</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="docker_image.html">Using docker for development</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Documentation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#building-documentation">Building documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#style-guide">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-documentation">API documentation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="testing_hpx.html">Testing <em>HPX</em></a></li>
 </ul>
 </li>
 </ul>
@@ -196,16 +197,17 @@
             
   <div class="section" id="documentation">
 <span id="id2"></span><h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
-<p>This documentation is built using Sphinx and an automatically generated API
-reference using doxygen.</p>
+<p>This documentation is built using <a class="reference external" href="http://www.sphinx-doc.org">Sphinx</a>, and an automatically generated API
+reference using <a class="reference external" href="https://www.doxygen.org">Doxygen</a> and <a class="reference external" href="https://breathe.readthedocs.io/en/latest">Breathe</a>.</p>
+<p>We always welcome suggestions on how to improve our documentation, as well as
+pull requests with corrections and additions.</p>
 <div class="section" id="building-documentation">
 <h2>Building documentation<a class="headerlink" href="#building-documentation" title="Permalink to this headline">¶</a></h2>
-<p>To build the documentation you need <code class="docutils literal notranslate"><span class="pre">python</span></code>, <code class="docutils literal notranslate"><span class="pre">doxygen</span></code> and the following
-<code class="docutils literal notranslate"><span class="pre">python</span></code> packages: <code class="docutils literal notranslate"><span class="pre">sphinx</span></code>, <code class="docutils literal notranslate"><span class="pre">sphinx_rtd_theme</span></code> and <code class="docutils literal notranslate"><span class="pre">breathe</span></code> (can be
-installed with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">package_name</span></code>). Enable the sphinx output by
-setting and <code class="docutils literal notranslate"><span class="pre">HPX_WITH_DOCUMENTATION_SPHINX=ON</span></code> during <a class="reference external" href="https://www.cmake.org">CMake</a> configuration.</p>
-<p>To build the documentation build the <code class="docutils literal notranslate"><span class="pre">docs_sphinx</span></code> target using your
-build tool.</p>
+<p>Please see the <a class="reference internal" href="../manual/building_hpx.html#documentation-prerequisites"><span class="std std-ref">documentation prerequisites</span></a>
+section for details on what you need in order to build the <em>HPX</em> documentation.
+Enable building of the documentation by setting <code class="docutils literal notranslate"><span class="pre">HPX_WITH_DOCUMENTATION=ON</span></code>
+during <a class="reference external" href="https://www.cmake.org">CMake</a> configuration. To build the documentation build the <code class="docutils literal notranslate"><span class="pre">docs</span></code>
+target using your build tool.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you add new source files to the Sphinx documentation you have to run
@@ -214,8 +216,10 @@ CMake again to have the files included in the build.</p>
 </div>
 <div class="section" id="style-guide">
 <h2>Style guide<a class="headerlink" href="#style-guide" title="Permalink to this headline">¶</a></h2>
-<p>These are the conventions used for writing documentation:</p>
+<p>The documentation is written using reStructuredText. These are the conventions
+used for formatting the documentation:</p>
 <ul class="simple">
+<li>Use at most 80 characters per line.</li>
 <li>Top-level headings use over- and underlines with <code class="docutils literal notranslate"><span class="pre">=</span></code>.</li>
 <li>Sub-headings use only underlines with characters in decreasing level of
 importance: <code class="docutils literal notranslate"><span class="pre">=</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code> and <code class="docutils literal notranslate"><span class="pre">.</span></code>.</li>
@@ -232,6 +236,13 @@ with other directives.</li>
 <li>Use <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">list-table::</span></code> to wrap tables with a lot of text in cells.</li>
 </ul>
 </div>
+<div class="section" id="api-documentation">
+<h2>API documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h2>
+<p>The source code is documented using <a class="reference external" href="https://www.doxygen.org">Doxygen</a>. If you add new API documentation
+either to existing or new source files, make sure that you add the documented
+source files to the <code class="docutils literal notranslate"><span class="pre">doxygen_dependencies</span></code> variable in
+<code class="docutils literal notranslate"><span class="pre">docs/CMakeLists.txt</span></code>.</p>
+</div>
 </div>
 
 
@@ -240,11 +251,17 @@ with other directives.</li>
             
            </div>
           </div>
-          <footer>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="testing_hpx.html" class="btn btn-neutral float-right" title="Testing HPX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../releases.html" class="btn btn-neutral float-right" title="Releases" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="docker_image.html" class="btn btn-neutral" title="Using docker for development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -259,7 +276,7 @@ with other directives.</li>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>881505a1d50780a3584558a8257aa71cc9e8ab3e</code>.
+          Revision <code>bcd44e6630f1b394e5a0efcb0958dd8dcedb15ba</code>.
         </span>
       
 

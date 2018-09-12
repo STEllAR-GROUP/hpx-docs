@@ -13,8 +13,6 @@
 
   
   
-  
-  
 
   
 
@@ -49,7 +47,6 @@
 
 <body class="wy-body-for-nav" role="document">
 
-   
   <div class="wy-grid-for-nav">
 
     
@@ -93,10 +90,7 @@
           
             
             
-              
-            
-            
-              <p class="caption"><span class="caption-text">User documentation</span></p>
+                <p class="caption"><span class="caption-text">User documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../why_hpx.html">Why <em>HPX</em>?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick start</a></li>
@@ -146,10 +140,8 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">HPX</a>
-        
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">HPX</a>
       </nav>
 
 
@@ -158,44 +150,25 @@
         <div class="rst-content">
           
 
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
-
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
           <li><a href="../manual.html">Manual</a> &raquo;</li>
-        
-      <li>Debugging <em>HPX</em> applications</li>
-    
-    
+      
+    <li>Debugging <em>HPX</em> applications</li>
       <li class="wy-breadcrumbs-aside">
         
-            
-            
-              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/manual/debugging_hpx_applications.rst" class="fa fa-github"> Edit on GitHub</a>
-            
+          
+            <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/manual/debugging_hpx_applications.rst" class="fa fa-github"> Edit on GitHub</a>
           
         
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -205,12 +178,12 @@
 <h1>Debugging <em>HPX</em> applications<a class="headerlink" href="#debugging-hpx-applications" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="using-a-debugger-with-hpx-applications">
 <h2>Using a debugger with <em>HPX</em> applications<a class="headerlink" href="#using-a-debugger-with-hpx-applications" title="Permalink to this headline">¶</a></h2>
-<p>Using a debugger such as <code class="docutils literal notranslate"><span class="pre">gdb</span></code> with <em>HPX</em> applications is no problem. However,
+<p>Using a debugger such as <code class="docutils literal"><span class="pre">gdb</span></code> with <em>HPX</em> applications is no problem. However,
 there are some things to keep in mind to make the experience somewhat more
 productive.</p>
 <p>Call stacks in <em>HPX</em> can often be quite unwieldy as the library is heavily
 templated and the call stacks can be very deep. For this reason it is sometimes
-a good idea compile <em>HPX</em> in <code class="docutils literal notranslate"><span class="pre">RelWithDebInfo</span></code> mode which applies some
+a good idea compile <em>HPX</em> in <code class="docutils literal"><span class="pre">RelWithDebInfo</span></code> mode which applies some
 optimizations but keeps debugging symbols. This can often compress call stacks
 significantly. On the other hand, stepping through the code can also be more
 difficult because of statements being reordered and variables being optimized
@@ -222,9 +195,9 @@ except at startup and shutdown. If using the default settings, <em>HPX</em> will
 six additional threads (used for service thread pools). The first worker thread
 is usually the eighth thread, and most user code will be run on these worker
 threads. The last thread is a helper thread used for <em>HPX</em> shutdown.</p>
-<p>Finally, since <em>HPX</em> is a multi-threaded runtime, the following <code class="docutils literal notranslate"><span class="pre">gdb</span></code> options
+<p>Finally, since <em>HPX</em> is a multi-threaded runtime, the following <code class="docutils literal"><span class="pre">gdb</span></code> options
 can be helpful:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>set pagination off
+<div class="highlight-text"><div class="highlight"><pre><span></span>set pagination off
 set non-stop on
 </pre></div>
 </div>
@@ -239,20 +212,17 @@ stopping all other threads as well.</p>
 with false positives from <em>HPX</em> itself when using sanitizers for your
 application.</p>
 </div>
-<p>To use sanitizers with <em>HPX</em> you should turn on <code class="docutils literal notranslate"><span class="pre">HPX_WITH_SANITIZERS</span></code> and turn
-off <code class="docutils literal notranslate"><span class="pre">HPX_WITH_STACK_OVERFLOW_DETECTION</span></code> during CMake configuration. It’s
+<p>To use sanitizers with <em>HPX</em> you should turn on <code class="docutils literal"><span class="pre">HPX_WITH_SANITIZERS</span></code> and turn
+off <code class="docutils literal"><span class="pre">HPX_WITH_STACK_OVERFLOW_DETECTION</span></code> during CMake configuration. It&#8217;s
 recommended to also build Boost with the same sanitizers that you will be
 using for <em>HPX</em>. The appropriate sanitizers can then be enabled using CMake by
-appending <code class="docutils literal notranslate"><span class="pre">-fsanitize=address</span> <span class="pre">-fno-omit-frame-pointer</span></code> to <code class="docutils literal notranslate"><span class="pre">CXXFLAGS</span></code> and
-<code class="docutils literal notranslate"><span class="pre">-fsanitize=address</span></code> to <code class="docutils literal notranslate"><span class="pre">LDCXXFLAGS</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">address</span></code> with the sanitizer
-that you want to use.</p>
+appending <code class="docutils literal"><span class="pre">-fsanitize=address</span> <span class="pre">-fno-omit-frame-pointer</span></code> to <code class="docutils literal"><span class="pre">CMAKE_CXX_FLAGS</span></code>
+and <code class="docutils literal"><span class="pre">-fsanitize=address</span></code> to <code class="docutils literal"><span class="pre">CMAKE_EXE_LINKER_FLAGS</span></code>. Replace <code class="docutils literal"><span class="pre">address</span></code>
+with the sanitizer that you want to use.</p>
 </div>
 </div>
 
 
-           </div>
-           <div class="articleComments">
-            
            </div>
           </div>
           <!-- Copyright (c) 2018 Mikael Simberg
@@ -265,10 +235,10 @@ that you want to use.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="optimizing_hpx_applications.html" class="btn btn-neutral float-right" title="Optimizing HPX applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="optimizing_hpx_applications.html" class="btn btn-neutral float-right" title="Optimizing HPX applications" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="running_on_batch_systems.html" class="btn btn-neutral" title="Running on batch systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="running_on_batch_systems.html" class="btn btn-neutral" title="Running on batch systems" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -280,7 +250,7 @@ that you want to use.</p>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>bcd44e6630f1b394e5a0efcb0958dd8dcedb15ba</code>.
+          Revision <code>e21d3df42b728a9f179e31fbe1f8960369192208</code>.
         </span>
       
 
@@ -314,14 +284,13 @@ LICENSE_1_0.txt or copy at
             VERSION:'unstable',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
+            HAS_SOURCE:  true
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -16,6 +16,14 @@ to write real |hpx| applications and the :ref:`manual` contains detailed
 information about everything from building |hpx| to debugging it. There are
 links to blog posts and videos about |hpx| in :ref:`additional_material`.
 
+If you can't find what you're looking for in the documentation, please:
+
+* open an issue on `GitHub <hpx_github_issues_>`_;
+* contact us on `IRC <stellar_irc_>`_, the HPX channel on the `C++ Slack
+  <cpplang_slack_>`_, or on our `mailing list <stellar_list_>`_; or
+* read or ask questions tagged with |hpx| on `StackOverflow
+  <hpx_stackoverflow>`_.
+
 What is |hpx|?
 ==============
 

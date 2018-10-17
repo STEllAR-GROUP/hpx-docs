@@ -112,9 +112,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#using-parallel-algorithms">Using parallel algorithms</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#parallel-exceptions">Parallel exceptions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id3">Parallel algorithms</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#executors-and-executor-traits">Executors and executor traits</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#executor-parameters-and-executor-parameter-traits">Executor parameters and executor parameter traits</a></li>
 </ul>
 </li>
@@ -1125,107 +1122,12 @@ sequence <code class="docutils literal"><span class="pre">{1,1,1,2,3,3,3,3,1}</s
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="executors-and-executor-traits">
-<span id="executors"></span><h2>Executors and executor traits<a class="headerlink" href="#executors-and-executor-traits" title="Permalink to this headline">¶</a></h2>
-<p>The existing Version 1 of the Parallelism TS (<a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4409.pdf">N4409</a>) exposes parallel
-execution to the programmer in the form of standard algorithms that accept
-execution policies. A companion executor facility both provides a suitable
-substrate for implementing these algorithms in a standard way and provide a
-mechanism for exercising programmatic control over where parallel work should be
-executed.</p>
-<p>The algorithms and execution policies specified by the Parallelism TS are
-designed to permit implementation on the broadest range of platforms. In
-addition to preemptive thread pools common on some platforms, implementations of
-these algorithms may want to take advantage of a number of mechanisms for
-parallel execution, including cooperative fibers, GPU threads, and SIMD vector
-units, among others. This diversity of possible execution resources strongly
-suggests that a suitable abstraction encapsulating the details of how work is
-created across diverse platforms would be of significant value to parallel
-algorithm implementations. Suitably defined executors provide just such a
-facility.</p>
-<p>An executor is an object responsible for creating execution agents on which work
-is performed, thus abstracting the (potentially platform-specific) mechanisms
-for launching work. To accommodate the goals of the Parallelism TS, whose
-algorithms aim to support the broadest range of possible platforms, the
-requirements that all executors are expected to fulfill are small. They are also
-consistent with a broad range of execution semantics, including preemptive
-threads, cooperative fibers, GPU threads, and SIMD vector units, among others.</p>
-<p>The executors implemented by <em>HPX</em> are aligned with the interfaces proposed by
-<a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4406.pdf">N4406</a> (Parallel Algorithms Need Executors).</p>
-<p>Executors are modular components for requisitioning execution agents. During
-parallel algorithm execution, execution policies generate execution agents by
-requesting their creation from an associated executor. Rather than focusing on
-asynchronous task queuing, our complementary treatment of executors casts them
-as modular components for invoking functions over the points of an index space.
-We believe that executors may be conceived of as allocators for execution agents
-and our interface&#8217;s design reflects this analogy. The process of requesting
-agents from an executor is mediated via the
-<code class="xref cpp cpp-class docutils literal"><span class="pre">hpx::parallel::executor_traits</span></code> API, which is analogous to the
-interaction between containers and allocator_traits.</p>
-<p>With <code class="docutils literal"><span class="pre">executor_traits</span></code> clients manipulate all types of executors uniformly:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">executor_traits</span><span class="o">&lt;</span><span class="n">my_executor_t</span><span class="o">&gt;::</span><span class="n">execute</span><span class="p">(</span><span class="n">my_executor</span><span class="p">,</span>
-    <span class="p">[](</span><span class="kt">size_t</span> <span class="n">i</span><span class="p">){</span> <span class="c1">// perform task i },</span>
-    <span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">));</span>
-</pre></div>
-</div>
-<p>This call synchronously creates a group of invocations of the given function,
-where each individual invocation within the group is identified by a unique
-integer <code class="docutils literal"><span class="pre">i</span></code> in <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">n)</span></code> Other functions in the interface exist to create
-groups of invocations asynchronously and support the special case of creating a
-singleton group, resulting in four different combinations.</p>
-<p>Though this interface appears to require executor authors to implement four
-different basic operations, there is really only one requirement:
-<code class="docutils literal"><span class="pre">async_execute()</span></code>. In practice, the other operations may be defined in terms
-of this single basic primitive. However, some executors will naturally
-specialize all four operations for maximum efficiency.</p>
-<p>For maximum implementation flexibility, <code class="docutils literal"><span class="pre">executor_traits</span></code> does not require
-executors to implement a particular exception reporting mechanism. Executors may
-choose whether or not to report exceptions, and if so, in what manner they are
-communicated back to the caller. However, all executors in <em>HPX</em> report
-exceptions in a manner consistent with the behavior of execution policies
-described by the Parallelism TS, where multiple exceptions are collected into an
-__exception_list__. This list is reported through <code class="docutils literal"><span class="pre">async_execute()</span></code> s returned
-future, or thrown directly by <code class="docutils literal"><span class="pre">execute()</span></code>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Please note that the executor interface as described above has now been
-deprecated. It has been replaced by separate executor customization points,
-one for each of the exposed functions. Please see __cpp20_p0443__ for more
-details. The old interface based on <code class="docutils literal"><span class="pre">executor_traits</span></code> will be supported for
-some time, you might have to enable the <code class="docutils literal"><span class="pre">HPX_WITH_EXECUTOR_COMPATIBILITY</span></code>
-configuration setting, however.</p>
-</div>
-<p>In <em>HPX</em> we have implemented the following executor types:</p>
-<ul class="simple">
-<li><a class="reference internal" href="../api.html#_CPPv2N3hpx8parallel9execution18sequenced_executorE" title="hpx::parallel::execution::sequenced_executor"><code class="xref cpp cpp-class docutils literal"><span class="pre">hpx::parallel::execution::sequenced_executor</span></code></a>: creates groups of
-sequential execution agents which execute in the calling thread. The
-sequential order is given by the lexicographical order of indices in the index
-space.</li>
-<li><code class="xref cpp cpp-class docutils literal"><span class="pre">hpx::parallel::execution::parallel_executor</span></code>: creates groups of
-parallel execution agents which execute in threads implicitly created by the
-executor. This executor uses a given launch policy.</li>
-<li><code class="xref cpp cpp-class docutils literal"><span class="pre">hpx::parallel::execution::service_executor</span></code>: creates groups of
-parallel execution agents which execute in one of the kernel threads
-associated with a given pool category (I/O, <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a>, or timer pool, or
-on the main thread of the application).</li>
-<li><code class="xref cpp cpp-class docutils literal"><span class="pre">hpx::parallel::execution::local_priority_queue_executor</span></code>,
-<code class="xref cpp cpp-class docutils literal"><span class="pre">hpx::parallel::execution::local_queue_executor</span></code>,
-<code class="xref cpp cpp-class docutils literal"><span class="pre">hpx::parallel::execution::static_priority_queue_executor</span></code> create
-executors on top of the corresponding <em>HPX</em> schedulers.</li>
-<li><code class="xref cpp cpp-class docutils literal"><span class="pre">hpx::parallel::execution::distribution_policy_executor</span></code> creates
-executors using any of the existing distribution policies (like
-<a class="reference internal" href="../api.html#_CPPv2N3hpx10components30colocating_distribution_policyE" title="hpx::components::colocating_distribution_policy"><code class="xref cpp cpp-class docutils literal"><span class="pre">hpx::components::colocating_distribution_policy</span></code></a> et.al.).</li>
-</ul>
 <div class="section" id="executor-parameters-and-executor-parameter-traits">
 <span id="executor-parameters"></span><h3>Executor parameters and executor parameter traits<a class="headerlink" href="#executor-parameters-and-executor-parameter-traits" title="Permalink to this headline">¶</a></h3>
-<p>Executors as described in the previous section add a powerful customization
-capability to any facility which exposes management of parallel execution.
-However, sometimes it is necessary to be able to customize certain parameters of
-the execution as well. In <em>HPX</em> we introduce the notion of execution parameters
-and execution parameter traits. At this point, the only parameter which can be
-customized is the size of the chunks of work executed on a single <em>HPX</em>-thread
-(such as the number of loop iterations combined to run as a single task).</p>
+<p>In <em>HPX</em> we introduce the notion of execution parameters and execution parameter
+traits. At this point, the only parameter which can be customized is the size of
+the chunks of work executed on a single <em>HPX</em>-thread (such as the number of loop
+iterations combined to run as a single task).</p>
 <p>An executor parameter object is responsible for exposing the calculation of the
 size of the chunks scheduled. It abstracts the (potential platform-specific)
 algorithms of determining those chunks sizes.</p>
@@ -1471,7 +1373,7 @@ executor associated with the execution policy which was used to call
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>5788334</code>.
+          Revision <code>72a4010</code>.
         </span>
       
 

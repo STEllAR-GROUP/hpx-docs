@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -47,6 +49,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -90,7 +93,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">User documentation</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../why_hpx.html">Why <em>HPX</em>?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick start</a></li>
@@ -135,8 +141,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">HPX</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HPX</a>
+        
       </nav>
 
 
@@ -145,25 +153,44 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../examples.html">Examples</a> &raquo;</li>
-      
-    <li>Asynchronous execution with <code class="docutils literal"><span class="pre">hpx::async</span></code>: Fibonacci</li>
+        
+      <li>Asynchronous execution with <code class="docutils literal"><span class="pre">hpx::async</span></code>: Fibonacci</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/examples/fibonacci_local.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/examples/fibonacci_local.rst" class="fa fa-github"> Edit on GitHub</a>
+            
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -192,8 +219,8 @@ when the future is created.</p>
 <p>Once the function has finished executing, a write operation is performed on the
 future. The write operation marks the future as completed, and optionally stores
 data returned by the function. When the result of the delayed computation is
-needed, a read operation is performed on the future. If the future&#8217;s function
-hasn&#8217;t completed when a read operation is performed on it, the reader
+needed, a read operation is performed on the future. If the future’s function
+hasn’t completed when a read operation is performed on it, the reader
 <em>HPX</em>-thread is suspended until the future is ready. The future facility allows
 <em>HPX</em> to schedule work early in a program so that when the function value is
 needed it will already be calculated and available. We use this property in our
@@ -219,7 +246,7 @@ elapsed time: 0.002430 [s]
 </div>
 <p>This run used the default settings, which calculate the tenth element of the
 Fibonacci sequence. To declare which Fibonacci value you want to calculate, use
-the <code class="docutils literal"><span class="pre">--n-value</span></code> option. Additionally you can use the <code class="xref std std-option docutils literal"><span class="pre">--hpx:threads</span></code>
+the <code class="docutils literal"><span class="pre">--n-value</span></code> option. Additionally you can use the <a class="reference internal" href="../manual/launching_and_configuring_hpx_applications.html#cmdoption-hpx-threads"><code class="xref std std-option docutils literal"><span class="pre">--hpx:threads</span></code></a>
 option to declare how many OS-threads you wish to use when running the program.
 For instance, running:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>./bin/fibonacci --n-value <span class="m">20</span> --hpx:threads <span class="m">4</span>
@@ -233,7 +260,7 @@ elapsed time: 0.062854 [s]
 </div>
 <div class="section" id="walkthrough">
 <h2>Walkthrough<a class="headerlink" href="#walkthrough" title="Permalink to this headline">¶</a></h2>
-<p>Now that you have compiled and run the code, let&#8217;s look at how the code works.
+<p>Now that you have compiled and run the code, let’s look at how the code works.
 Since this code is written in C++, we will begin with the <code class="docutils literal"><span class="pre">main()</span></code> function.
 Here you can see that in <em>HPX</em>, <code class="docutils literal"><span class="pre">main()</span></code> is only used to initialize the
 runtime system. It is important to note that application-specific command line
@@ -244,7 +271,7 @@ the <code class="docutils literal"><span class="pre">add_options()</span></code>
 variable is set to 10. This is why when we ran the program for the first time
 without using the <code class="docutils literal"><span class="pre">--n-value</span></code> option the program returned the 10th value of
 the Fibonacci sequence. The constructor argument of the description is the text
-that appears when a user uses the <code class="xref std std-option docutils literal"><span class="pre">--hpx:help</span></code> option to see what
+that appears when a user uses the <a class="reference internal" href="../manual/launching_and_configuring_hpx_applications.html#cmdoption-hpx-help"><code class="xref std std-option docutils literal"><span class="pre">--hpx:help</span></code></a> option to see what
 command line options are available. <code class="docutils literal"><span class="pre">HPX_APPLICATION_STRING</span></code> is a macro that
 expands to a string constant containing the name of the <em>HPX</em> application
 currently being compiled.</p>
@@ -324,7 +351,7 @@ new tasks whose results are contained in <code class="docutils literal"><span cl
 object or lambda) and the arguments to the function. Instead of returning a
 <code class="docutils literal"><span class="pre">std::uint64_t</span></code> like <code class="docutils literal"><span class="pre">fibonacci</span></code> does, <code class="docutils literal"><span class="pre">hpx::async</span></code> returns a future of a
 <code class="docutils literal"><span class="pre">std::uint64_t</span></code>, i.e. <code class="docutils literal"><span class="pre">hpx::future&lt;std::uint64_t&gt;</span></code>. Each of these futures
-represents an asynchronous, recursive call to <code class="docutils literal"><span class="pre">fibonacci</span></code>. After we&#8217;ve created
+represents an asynchronous, recursive call to <code class="docutils literal"><span class="pre">fibonacci</span></code>. After we’ve created
 the futures, we wait for both of them to finish computing, we add them together,
 and return that value as our result. We get the values from the futures using
 the <code class="docutils literal"><span class="pre">get</span></code> method. The recursive call tree will continue until n is equal to 0
@@ -345,6 +372,9 @@ efficiently chain together multiple tasks.</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <!-- Copyright (c) 2018 Mikael Simberg
 
@@ -356,10 +386,10 @@ efficiently chain together multiple tasks.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="fibonacci.html" class="btn btn-neutral float-right" title="Asynchronous execution with hpx::async and actions: Fibonacci" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="fibonacci.html" class="btn btn-neutral float-right" title="Asynchronous execution with hpx::async and actions: Fibonacci" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../examples.html" class="btn btn-neutral" title="Examples" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../examples.html" class="btn btn-neutral" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -371,7 +401,7 @@ efficiently chain together multiple tasks.</p>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>5c93c40</code>.
+          Revision <code>c643ac3</code>.
         </span>
       
 
@@ -405,13 +435,14 @@ LICENSE_1_0.txt or copy at
             VERSION:'master',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -47,6 +49,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -90,7 +93,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">User documentation</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../why_hpx.html">Why <em>HPX</em>?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick start</a></li>
@@ -131,8 +137,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">HPX</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HPX</a>
+        
       </nav>
 
 
@@ -141,25 +149,44 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../examples.html">Examples</a> &raquo;</li>
-      
-    <li>Local to remote: 1D stencil</li>
+        
+      <li>Local to remote: 1D stencil</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/examples/1d_stencil.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/examples/1d_stencil.rst" class="fa fa-github"> Edit on GitHub</a>
+            
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -174,7 +201,7 @@ a simple serial program to an efficient, fully distributed HPX application. For
 this demonstration, we implemented a 1D heat distribution problem. This
 calculation simulates the diffusion of heat across a ring from an initialized
 state to some user defined point in the future. It does this by breaking each
-portion of the ring into discrete segments and using the current segment&#8217;s
+portion of the ring into discrete segments and using the current segment’s
 temperature and the temperature of the surrounding segments to calculate the
 temperature of the current segment in the next timestep as shown by
 <a class="reference internal" href="#d-stencil-program-flow"><span class="std std-numref">Fig. 2</span></a> below.</p>
@@ -344,7 +371,7 @@ amortize the overheads of our synchronization techniques, we need to be able to
 control the amount of work that will be done with each future. We call this
 amount of work per overhead grain size.</p>
 <p>In example 3, we return to our serial code to figure out how to control the
-grain size of our program. The strategy that we employ is to create &#8220;partitions&#8221;
+grain size of our program. The strategy that we employ is to create “partitions”
 of data points. The user can define how many partitions are created and how many
 data points are contained in each partition. This is accomplished by creating
 the <code class="docutils literal"><span class="pre">struct</span> <span class="pre">partition</span></code> which contains a member object <code class="docutils literal"><span class="pre">data_</span></code>, a vector of
@@ -360,7 +387,7 @@ manner that was done in example 2. It should be noted how strikingly similar
 example 4 is to example 2.</p>
 <p>Example 4 finally shows good results. This code scales equivalently to the
 OpenMP version. While these results are promising, there are more opportunities
-to improve the application&#8217;s scalability. Currently this code only runs on one
+to improve the application’s scalability. Currently this code only runs on one
 <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>, but to get the full benefit of HPX we need to be able to
 distribute the work to other machines in a cluster. We begin to add this
 functionality in example 5.</p>
@@ -371,17 +398,17 @@ which can be remotely accessed using its global address. Components are made of
 two parts: a server and a client class. While the client class is not required,
 abstracting the server behind a client allows us to ensure type safety instead
 of having to pass around pointers to global objects. Example 5 renames example
-4&#8217;s <code class="docutils literal"><span class="pre">struct</span> <span class="pre">partition</span></code> to <code class="docutils literal"><span class="pre">partition_data</span></code> and adds serialization support.
+4’s <code class="docutils literal"><span class="pre">struct</span> <span class="pre">partition</span></code> to <code class="docutils literal"><span class="pre">partition_data</span></code> and adds serialization support.
 Next we add the server side representation of the data in the structure
 <code class="docutils literal"><span class="pre">partition_server</span></code>. <code class="docutils literal"><span class="pre">Partition_server</span></code> inherits from
 <code class="docutils literal"><span class="pre">hpx::components::component_base</span></code> which contains a server side component
-boilerplate. The boilerplate code allows a component&#8217;s public members to be
+boilerplate. The boilerplate code allows a component’s public members to be
 accessible anywhere on the machine via its Global Identifier (GID). To
 encapsulate the component, we create a client side helper class. This object
 allows us to create new instances of our component, and access its members
 without having to know its GID. In addition, we are using the client class to
 assist us with managing our asynchrony. For example, our client class
-<code class="docutils literal"><span class="pre">partition</span></code>&#8216;s member function <code class="docutils literal"><span class="pre">get_data()</span></code> returns a future to
+<code class="docutils literal"><span class="pre">partition</span></code>’s member function <code class="docutils literal"><span class="pre">get_data()</span></code> returns a future to
 <code class="docutils literal"><span class="pre">partition_data</span> <span class="pre">get_data()</span></code>. This struct inherits its boilerplate code from
 <code class="docutils literal"><span class="pre">hpx::components::client_base</span></code>.</p>
 <p>In the structure <code class="docutils literal"><span class="pre">stepper</span></code>, we have also had to make some changes to
@@ -508,6 +535,9 @@ facilitates the scalable parallelization of most applications.</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <!-- Copyright (c) 2018 Mikael Simberg
 
@@ -519,10 +549,10 @@ facilitates the scalable parallelization of most applications.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../manual.html" class="btn btn-neutral float-right" title="Manual" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../manual.html" class="btn btn-neutral float-right" title="Manual" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="interest_calculator.html" class="btn btn-neutral" title="Dataflow: Interest calculator" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="interest_calculator.html" class="btn btn-neutral" title="Dataflow: Interest calculator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -534,7 +564,7 @@ facilitates the scalable parallelization of most applications.</p>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>5c93c40</code>.
+          Revision <code>c643ac3</code>.
         </span>
       
 
@@ -568,13 +598,14 @@ LICENSE_1_0.txt or copy at
             VERSION:'master',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

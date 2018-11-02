@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -47,6 +49,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -90,7 +93,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">User documentation</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../why_hpx.html">Why <em>HPX</em>?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick start</a></li>
@@ -139,8 +145,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">HPX</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HPX</a>
+        
       </nav>
 
 
@@ -149,25 +157,44 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../examples.html">Examples</a> &raquo;</li>
-      
-    <li>Components and actions: Accumulator</li>
+        
+      <li>Components and actions: Accumulator</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/examples/accumulator.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/examples/accumulator.rst" class="fa fa-github"> Edit on GitHub</a>
+            
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -187,7 +214,7 @@ action is an identifier which refers to a particular machine involved in the
 computation. For plain actions, the target is the machine where the action will
 be executed.</p>
 <p>Component actions, however, do not target machines. Instead, they target
-component instances. The instance may live on the machine that we&#8217;ve invoked the
+component instances. The instance may live on the machine that we’ve invoked the
 component action from, or it may live on another machine.</p>
 <p>The component in this example exposes three different functions:</p>
 <ul class="simple">
@@ -232,7 +259,7 @@ wait for input. An example session is given below:</p>
 </div>
 <div class="section" id="walkthrough">
 <h2>Walkthrough<a class="headerlink" href="#walkthrough" title="Permalink to this headline">¶</a></h2>
-<p>Now, let&#8217;s take a look at the source code of the accumulator example. This
+<p>Now, let’s take a look at the source code of the accumulator example. This
 example consists of two parts: an <em>HPX</em> component library (a library that
 exposes an <em>HPX</em> component) and a client application which uses the library.
 This walkthrough will cover the <em>HPX</em> component library. The code for the client
@@ -269,7 +296,7 @@ following snippet shows the corresponding code:</p>
             <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">accumulator</span><span class="o">&gt;</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>Our accumulator class will need a data member to store its value in, so let&#8217;s
+<p>Our accumulator class will need a data member to store its value in, so let’s
 declare a data member:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span>        <span class="n">argument_type</span> <span class="n">value_</span><span class="p">;</span>
 </pre></div>
@@ -278,7 +305,7 @@ declare a data member:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span>        <span class="n">accumulator</span><span class="p">()</span> <span class="o">:</span> <span class="n">value_</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
 </pre></div>
 </div>
-<p>Next, let&#8217;s look at the three methods of this component that we will be exposing
+<p>Next, let’s look at the three methods of this component that we will be exposing
 as component actions:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span>        <span class="c1">/// Reset the components value to 0.</span>
         <span class="kt">void</span> <span class="nf">reset</span><span class="p">()</span>
@@ -302,7 +329,7 @@ as component actions:</p>
         <span class="p">}</span>
 </pre></div>
 </div>
-<p>Here are the action types. These types wrap the methods we&#8217;re exposing. The
+<p>Here are the action types. These types wrap the methods we’re exposing. The
 wrapping technique is very similar to the one used in the
 <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> and the <a class="reference internal" href="hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions: Hello world</span></a>:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span>        <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">reset</span><span class="p">);</span>
@@ -390,7 +417,7 @@ are used to create components:</p>
 <p>Here are examples of how to expose actions through a client class:</p>
 <p>There are a few different ways of invoking actions:</p>
 <ul class="simple">
-<li><strong>Non-blocking</strong>: For actions which don&#8217;t have return types, or when we do not
+<li><strong>Non-blocking</strong>: For actions which don’t have return types, or when we do not
 care about the result of an action, we can invoke the action using
 fire-and-forget semantics. This means that once we have asked <em>HPX</em> to compute
 the action, we forget about it completely and continue with our computation.
@@ -408,7 +435,7 @@ We use <code class="xref cpp cpp-func docutils literal"><span class="pre">hpx::a
 <ul class="simple">
 <li><strong>Asynchronous</strong>: Futures, as demonstrated in <a class="reference internal" href="fibonacci_local.html#examples-fibonacci-local"><span class="std std-ref">Asynchronous execution with hpx::async: Fibonacci</span></a>,
 <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a>, and the <a class="reference internal" href="hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions: Hello world</span></a>, enable
-asynchronous action invocation. Here&#8217;s an example from the accumulator client
+asynchronous action invocation. Here’s an example from the accumulator client
 class:</li>
 </ul>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span>        <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">argument_type</span><span class="o">&gt;</span> <span class="n">query</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async_policy</span><span class="p">)</span>
@@ -423,7 +450,7 @@ class:</li>
 <ul class="simple">
 <li><strong>Synchronous</strong>: To invoke an action in a fully synchronous manner, we can
 simply call <code class="xref cpp cpp-func docutils literal"><span class="pre">hpx::async</span></code><code class="docutils literal"><span class="pre">().get()</span></code> (e.g., create a future and
-immediately wait on it to be ready). Here&#8217;s an example from the accumulator
+immediately wait on it to be ready). Here’s an example from the accumulator
 client class:</li>
 </ul>
 <div class="highlight-cpp"><div class="highlight"><pre><span></span>        <span class="kt">void</span> <span class="nf">add</span><span class="p">(</span><span class="n">argument_type</span> <span class="n">arg</span><span class="p">)</span>
@@ -448,6 +475,9 @@ returned by <a class="reference internal" href="../api.html#_CPPv2N3hpx9find_her
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <!-- Copyright (c) 2018 Mikael Simberg
 
@@ -459,10 +489,10 @@ returned by <a class="reference internal" href="../api.html#_CPPv2N3hpx9find_her
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="interest_calculator.html" class="btn btn-neutral float-right" title="Dataflow: Interest calculator" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="interest_calculator.html" class="btn btn-neutral float-right" title="Dataflow: Interest calculator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hello_world.html" class="btn btn-neutral" title="Remote execution with actions: Hello world" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hello_world.html" class="btn btn-neutral" title="Remote execution with actions: Hello world" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -474,7 +504,7 @@ returned by <a class="reference internal" href="../api.html#_CPPv2N3hpx9find_her
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>1733acb</code>.
+          Revision <code>93ca2f0</code>.
         </span>
       
 
@@ -508,13 +538,14 @@ LICENSE_1_0.txt or copy at
             VERSION:'release',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

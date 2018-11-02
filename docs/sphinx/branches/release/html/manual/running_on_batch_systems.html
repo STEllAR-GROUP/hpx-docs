@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -47,6 +49,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -90,7 +93,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">User documentation</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../why_hpx.html">Why <em>HPX</em>?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick start</a></li>
@@ -144,8 +150,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">HPX</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HPX</a>
+        
       </nav>
 
 
@@ -154,25 +162,44 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../manual.html">Manual</a> &raquo;</li>
-      
-    <li>Running on batch systems</li>
+        
+      <li>Running on batch systems</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/manual/running_on_batch_systems.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/manual/running_on_batch_systems.rst" class="fa fa-github"> Edit on GitHub</a>
+            
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -213,9 +240,9 @@ pbsdsh -u <span class="nv">$APP_PATH</span> <span class="nv">$APP_OPTIONS</span>
 <p class="first admonition-title">Caution</p>
 <p>If the first application specific argument (inside <code class="docutils literal"><span class="pre">$APP_OPTIONS</span></code>) is a
 non-option (i.e. does not start with a <code class="docutils literal"><span class="pre">-</span></code> or a <code class="docutils literal"><span class="pre">--</span></code>), then those have to
-be placed before the option <code class="xref std std-option docutils literal"><span class="pre">--hpx:nodes</span></code>, which in this case should
+be placed before the option <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-nodes"><code class="xref std std-option docutils literal"><span class="pre">--hpx:nodes</span></code></a>, which in this case should
 be the last option on the command line.</p>
-<p>Alternatively, use the option <code class="xref std std-option docutils literal"><span class="pre">--hpx:endnodes</span></code> to explicitly mark the
+<p>Alternatively, use the option <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-endnodes"><code class="xref std std-option docutils literal"><span class="pre">--hpx:endnodes</span></code></a> to explicitly mark the
 end of the list of node names:</p>
 <div class="last highlight-bash"><div class="highlight"><pre><span></span>pbsdsh -u <span class="nv">$APP_PATH</span> --hpx:nodes<span class="sb">`</span>cat <span class="nv">$PBS_NODEFILE</span><span class="sb">`</span> --hpx:endnodes <span class="nv">$APP_OPTIONS</span>
 </pre></div>
@@ -224,7 +251,7 @@ end of the list of node names:</p>
 <p>The <code class="docutils literal"><span class="pre">#PBS</span> <span class="pre">-l</span> <span class="pre">nodes=2:ppn=4</span></code> directive will cause two compute nodes to be
 allocated for the application, as specified in the option <code class="docutils literal"><span class="pre">nodes</span></code>. Each of the
 nodes will dedicate four cores to the program, as per the option <code class="docutils literal"><span class="pre">ppn</span></code>, short
-for &#8220;processors per node&#8221; (PBS does not distinguish between processors and
+for “processors per node” (PBS does not distinguish between processors and
 cores). Note that requesting more cores per node than physically available is
 pointless and may prevent PBS from accepting the script.</p>
 <p>On newer PBS versions the PBS command syntax might be different. For instance,
@@ -241,9 +268,9 @@ pbsdsh -u <span class="nv">$APP_PATH</span> <span class="nv">$APP_OPTIONS</span>
 </div>
 <p><code class="docutils literal"><span class="pre">APP_PATH</span></code> and <code class="docutils literal"><span class="pre">APP_OPTIONS</span></code> are shell variables that respectively specify
 the correct path to the executable (<code class="docutils literal"><span class="pre">hello_world</span></code> in this case) and the
-command line options. Since the <code class="docutils literal"><span class="pre">hello_world</span></code> application doesn&#8217;t need any
+command line options. Since the <code class="docutils literal"><span class="pre">hello_world</span></code> application doesn’t need any
 command line options, <code class="docutils literal"><span class="pre">APP_OPTIONS</span></code> has been left empty. Unlike in other
-execution environments, there is no need to use the <code class="xref std std-option docutils literal"><span class="pre">--hpx:threads</span></code>
+execution environments, there is no need to use the <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-threads"><code class="xref std std-option docutils literal"><span class="pre">--hpx:threads</span></code></a>
 option to indicate the required number of OS threads per node; the <em>HPX</em> library
 will derive this parameter automatically from PBS.</p>
 <p>Finally, pbsdsh is a PBS command that starts tasks to the resources allocated
@@ -251,7 +278,7 @@ to the current job. It is recommended to leave this line as shown and modify
 only the PBS options and shell variables as needed for a specific application.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">A script invoked by pbsdsh starts in a very basic environment: the user&#8217;s
+<p class="last">A script invoked by pbsdsh starts in a very basic environment: the user’s
 <code class="docutils literal"><span class="pre">$HOME</span></code> directory is defined and is the current directory, the <code class="docutils literal"><span class="pre">LANG</span></code>
 variable is set to <code class="docutils literal"><span class="pre">C</span></code> and the <code class="docutils literal"><span class="pre">PATH</span></code> is set to the basic
 <code class="docutils literal"><span class="pre">/usr/local/bin:/usr/bin:/bin</span></code> as defined in a system-wide file
@@ -358,11 +385,11 @@ the <em>HPX</em> startup code.</p>
 </div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">The srun documentation explicitly states: &#8220;If <code class="docutils literal"><span class="pre">-c</span></code> is specified without
+<p class="last">The srun documentation explicitly states: “If <code class="docutils literal"><span class="pre">-c</span></code> is specified without
 <code class="docutils literal"><span class="pre">-n</span></code> as many tasks will be allocated per node as possible while satisfying
 the <code class="docutils literal"><span class="pre">-c</span></code> restriction. For instance on a cluster with 8 CPUs per node, a job
 request for 4 nodes and 3 CPUs per task may be allocated 3 or 6 CPUs per node
-(1 or 2 tasks per node) depending upon resource consumption by other jobs.&#8221;
+(1 or 2 tasks per node) depending upon resource consumption by other jobs.”
 For this reason, we suggest to always specify <code class="docutils literal"><span class="pre">-n</span> <span class="pre">&lt;number-of-instances&gt;</span></code>,
 even if <code class="docutils literal"><span class="pre">&lt;number-of-instances&gt;</span></code> is equal to one (<code class="docutils literal"><span class="pre">1</span></code>).</p>
 </div>
@@ -374,7 +401,7 @@ following command:</p>
 </pre></div>
 </div>
 <p>After the shell has been opened, you can run your HPX application. By default,
-it uses all available cores. Note that if you requested one node, you don&#8217;t need
+it uses all available cores. Note that if you requested one node, you don’t need
 to do <code class="docutils literal"><span class="pre">srun</span></code> again. However, if you requested more than one node, and want to
 run your distributed application, you can use <code class="docutils literal"><span class="pre">srun</span></code> again to start up the
 distributed HPX application. It will use the resources that have been requested
@@ -399,6 +426,9 @@ you were in an interactive shell.</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <!-- Copyright (c) 2018 Mikael Simberg
 
@@ -410,10 +440,10 @@ you were in an interactive shell.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="debugging_hpx_applications.html" class="btn btn-neutral float-right" title="Debugging HPX applications" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="debugging_hpx_applications.html" class="btn btn-neutral float-right" title="Debugging HPX applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="writing_distributed_hpx_applications.html" class="btn btn-neutral" title="Writing distributed HPX applications" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="writing_distributed_hpx_applications.html" class="btn btn-neutral" title="Writing distributed HPX applications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -425,7 +455,7 @@ you were in an interactive shell.</p>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>1733acb</code>.
+          Revision <code>93ca2f0</code>.
         </span>
       
 
@@ -459,13 +489,14 @@ LICENSE_1_0.txt or copy at
             VERSION:'release',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

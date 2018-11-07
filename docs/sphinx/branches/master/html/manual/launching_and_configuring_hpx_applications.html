@@ -682,7 +682,6 @@ sections, one for each component.</p>
 <span class="na">array_optimization</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_ARRAY_OPTIMIZATION:1}</span>
 <span class="na">zero_copy_optimization</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_ZERO_COPY_OPTIMIZATION:$[hpx.parcel.array_optimization]}</span>
 <span class="na">async_serialization</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_ASYNC_SERIALIZATION:1}</span>
-<span class="na">enable_security</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_ENABLE_SECURITY:0}</span>
 <span class="na">message_handlers</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_MESSAGE_HANDLERS:0}</span>
 </pre></div>
 </div>
@@ -755,11 +754,7 @@ is the same value as set for <code class="docutils literal"><span class="pre">hp
 new thread for serialization (this is both for encoding and decoding
 parcels). The default is <code class="docutils literal"><span class="pre">1</span></code>.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.enable_security</span></code></td>
-<td>This property defines whether this <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> is encrypting
-parcels. The default is <code class="docutils literal"><span class="pre">0</span></code>.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.message_handlers</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.message_handlers</span></code></td>
 <td>This property defines whether message handlers are loaded. The default is
 <code class="docutils literal"><span class="pre">0</span></code>.</td>
 </tr>
@@ -771,7 +766,6 @@ parcels. The default is <code class="docutils literal"><span class="pre">0</span
 <span class="na">array_optimization</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_TCP_ARRAY_OPTIMIZATION:$[hpx.parcel.array_optimization]}</span>
 <span class="na">zero_copy_optimization</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_TCP_ZERO_COPY_OPTIMIZATION:$[hpx.parcel.zero_copy_optimization]}</span>
 <span class="na">async_serialization</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_TCP_ASYNC_SERIALIZATION:$[hpx.parcel.async_serialization]}</span>
-<span class="na">enable_security</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_TCP_ENABLE_SECURITY:$[hpx.parcel.enable_security]}</span>
 <span class="na">parcel_pool_size</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_TCP_PARCEL_POOL_SIZE:$[hpx.threadpools.parcel_pool_size]}</span>
 <span class="na">max_connections</span> <span class="o">=</span>  <span class="s">${HPX_PARCEL_TCP_MAX_CONNECTIONS:$[hpx.parcel.max_connections]}</span>
 <span class="na">max_connections_per_locality</span> <span class="o">=</span> <span class="s">${HPX_PARCEL_TCP_MAX_CONNECTIONS_PER_LOCALITY:$[hpx.parcel.max_connections_per_locality]}</span>
@@ -812,32 +806,27 @@ new thread for serialization in the TCP/IP parcelport (this is both for
 encoding and decoding parcels). The default is the same value as set for
 <code class="docutils literal"><span class="pre">hpx.parcel.async_serialization</span></code>.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.enable_security</span></code></td>
-<td>This property defines whether this <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> is encrypting parcels
-in the TCP/IP parcelport. The default is the same value as set for
-<code class="docutils literal"><span class="pre">hpx.parcel.enable_security</span></code>.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.parcel_pool_size</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.parcel_pool_size</span></code></td>
 <td>The value of this property defines the number of OS-threads created for
 the internal parcel thread pool of the TCP <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> port. The default is
 taken from <code class="docutils literal"><span class="pre">hpx.threadpools.parcel_pool_size</span></code>.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.max_connections</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.max_connections</span></code></td>
 <td>This property defines how many network connections between different
 localities are overall kept alive by each of <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. The
 default is taken from <code class="docutils literal"><span class="pre">hpx.parcel.max_connections</span></code>.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.max_connections_per_locality</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.max_connections_per_locality</span></code></td>
 <td>This property defines the maximum number of network connections that one
 <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> will open to another <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. The default is
 taken from <code class="docutils literal"><span class="pre">hpx.parcel.max_connections_per_locality</span></code>.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.max_message_size</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.max_message_size</span></code></td>
 <td>This property defines the maximum allowed message size which will be
 transferrable through the <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> layer. The default is taken from
 <code class="docutils literal"><span class="pre">hpx.parcel.max_message_size</span></code>.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.max_outbound_message_size</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.tcp.max_outbound_message_size</span></code></td>
 <td>This property defines the maximum allowed outbound coalesced message size
 which will be transferrable through the <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> layer. The default is
 taken from <code class="docutils literal"><span class="pre">hpx.parcel.max_outbound_connections</span></code>.</td>
@@ -858,7 +847,6 @@ equivalent cmake variable is <code class="docutils literal"><span class="pre">HP
 <span class="na">zero_copy_optimization</span> <span class="o">=</span> <span class="s">${HPX_HAVE_PARCEL_MPI_ZERO_COPY_OPTIMIZATION:$[hpx.parcel.zero_copy_optimization]}</span>
 <span class="na">use_io_pool</span> <span class="o">=</span> <span class="s">${HPX_HAVE_PARCEL_MPI_USE_IO_POOL:$1}</span>
 <span class="na">async_serialization</span> <span class="o">=</span> <span class="s">${HPX_HAVE_PARCEL_MPI_ASYNC_SERIALIZATION:$[hpx.parcel.async_serialization]}</span>
-<span class="na">enable_security</span> <span class="o">=</span> <span class="s">${HPX_HAVE_PARCEL_MPI_ENABLE_SECURITY:$[hpx.parcel.enable_security]}</span>
 <span class="na">parcel_pool_size</span> <span class="o">=</span> <span class="s">${HPX_HAVE_PARCEL_MPI_PARCEL_POOL_SIZE:$[hpx.threadpools.parcel_pool_size]}</span>
 <span class="na">max_connections</span> <span class="o">=</span>  <span class="s">${HPX_HAVE_PARCEL_MPI_MAX_CONNECTIONS:$[hpx.parcel.max_connections]}</span>
 <span class="na">max_connections_per_locality</span> <span class="o">=</span> <span class="s">${HPX_HAVE_PARCEL_MPI_MAX_CONNECTIONS_PER_LOCALITY:$[hpx.parcel.max_connections_per_locality]}</span>
@@ -923,32 +911,27 @@ new thread for serialization in the MPI parcelport (this is both for
 encoding and decoding parcels). The default is the same value as set for
 <code class="docutils literal"><span class="pre">hpx.parcel.async_serialization</span></code>.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.enable_security</span></code></td>
-<td>This property defines whether this <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> is encrypting parcels
-in the MPI parcelport. The default is the same value as set for
-<code class="docutils literal"><span class="pre">hpx.parcel.enable_security</span></code>.</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.parcel_pool_size</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.parcel_pool_size</span></code></td>
 <td>The value of this property defines the number of OS-threads created for
 the internal parcel thread pool of the MPI <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> port. The default is
 taken from <code class="docutils literal"><span class="pre">hpx.threadpools.parcel_pool_size</span></code>.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.max_connections</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.max_connections</span></code></td>
 <td>This property defines how many network connections between different
 localities are overall kept alive by each of <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. The
 default is taken from <code class="docutils literal"><span class="pre">hpx.parcel.max_connections</span></code>.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.max_connections_per_locality</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.max_connections_per_locality</span></code></td>
 <td>This property defines the maximum number of network connections that one
 <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> will open to another <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. The default is
 taken from <code class="docutils literal"><span class="pre">hpx.parcel.max_connections_per_locality</span></code>.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.max_message_size</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.max_message_size</span></code></td>
 <td>This property defines the maximum allowed message size which will be
 transferrable through the <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> layer. The default is taken from
 <code class="docutils literal"><span class="pre">hpx.parcel.max_message_size</span></code>.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.max_outbound_message_size</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">hpx.parcel.mpi.max_outbound_message_size</span></code></td>
 <td>This property defines the maximum allowed outbound coalesced message size
 which will be transferrable through the <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> layer. The default is
 taken from <code class="docutils literal"><span class="pre">hpx.parcel.max_outbound_connections</span></code>.</td>
@@ -2412,7 +2395,7 @@ activated.</td></tr>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>9cf39e6</code>.
+          Revision <code>e415108</code>.
         </span>
       
 

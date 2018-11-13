@@ -425,6 +425,67 @@ available (move semantics, rvalue references, magic statics, etc.). This may
 speed up the execution of your code significantly. We currently support the
 following C++ compilers: GCC, MSVC, ICPC and clang. For the status of your
 favorite compiler with <em>HPX</em> visit <a class="reference external" href="https://rostam.cct.lsu.edu/"><em>HPX</em> Buildbot Website</a>.</p>
+<table border="1" class="docutils" id="id16">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Software prerequisites for <em>HPX</em> on Linux systems.</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Name</td>
+<td>Recommended version</td>
+<td>Minimum version</td>
+<td>Notes</td>
+</tr>
+<tr class="row-even"><td><strong>Compilers</strong></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://gcc.gnu.org">GNU Compiler Collection (g++)</a></td>
+<td>4.9 or newer</td>
+<td>4.9</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="https://software.intel.com/en-us/intel-composer-xe/">Intel Composer XE Suites</a></td>
+<td>2014 or newer</td>
+<td>2014</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://clang.llvm.org/">clang: a C language family frontend for LLVM</a></td>
+<td>3.8 or newer</td>
+<td>3.8</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>Build System</strong></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://www.cmake.org">CMake</a></td>
+<td>3.9.0</td>
+<td>3.3.2</td>
+<td>Cuda support 3.9</td>
+</tr>
+<tr class="row-even"><td><strong>Required Libraries</strong></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://www.boost.org/">Boost C++ Libraries</a></td>
+<td>1.62.0 or newer</td>
+<td>1.58.0</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a></td>
+<td>1.11</td>
+<td>1.2 (Xeon Phi: 1.6)</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">When compiling <em>HPX</em> using clang/libc++ on OSX platform it is advised not
@@ -444,8 +505,8 @@ specify a <code class="docutils literal"><span class="pre">cxxflags=-std=c++11</
 Note however, that this is absolutely necessary when using gcc V5.2 and
 above.</p>
 </div>
-<table border="1" class="docutils" id="id16">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Software prerequisites for <em>HPX</em> on Windows systems</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id17">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Software prerequisites for <em>HPX</em> on Windows systems</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="25%" />
@@ -486,20 +547,22 @@ above.</p>
 <tr class="row-odd"><td><a class="reference external" href="https://www.boost.org/">Boost</a></td>
 <td>1.62.0 or newer</td>
 <td>1.58.0</td>
-<td>See below for an important limitation when using Boost V1.55.0.</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a></td>
-<td>2.0.1 or newer</td>
+<td>1.11</td>
 <td>1.5</td>
-<td>Used for OS-thread pinning and NUMA awareness.</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You need to build the following Boost libraries for <em>HPX</em>: Boost.DateTime,
-Boost.Filesystem, Boost.ProgramOptions, Boost.Regex, Boost.System,
-Boost.Thread, Boost.Chrono, and Boost.Atomic.</p>
+<p class="last">You need to build the following Boost libraries for <em>HPX</em>: Boost.Atomic,
+Boost.Filesystem, Boost.ProgramOptions, Boost.Regex, and Boost.System. The
+following are not needed by default, but are required in certain
+configurations: Boost.Chrono, Boost.DateTime, Boost.Log, Boost.LogSetup, and
+Boost.Thread.</p>
 </div>
 <p>Depending on the options you chose while building and installing <em>HPX</em>,
 you will find that <em>HPX</em> may depend on several other libraries such as those
@@ -511,9 +574,9 @@ HPX to use MPI so that MPI can be used for communication between different
 localities. Please set the CMake variable <code class="docutils literal"><span class="pre">MPI_CXX_COMPILER</span></code> to your MPI
 C++ compiler wrapper if not detected automatically.</p>
 </div>
-<table border="1" class="docutils" id="id17">
-<caption><span class="caption-number">Table 3 </span><span class="caption-text">Highly recommended optional software prerequisites for <em>HPX</em> on
-Linux systems</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id18">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">Highly recommended optional software prerequisites for <em>HPX</em> on
+Linux systems</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="25%" />
@@ -545,8 +608,8 @@ parcelport.</td>
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id18">
-<caption><span class="caption-number">Table 4 </span><span class="caption-text">Optional software prerequisites for <em>HPX</em> on Linux systems</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id19">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">Optional software prerequisites for <em>HPX</em> on Linux systems</span><a class="headerlink" href="#id19" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="25%" />
@@ -576,8 +639,8 @@ parcelport.</td>
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id19">
-<caption><span class="caption-number">Table 5 </span><span class="caption-text">Optional software prerequisites for <em>HPX</em> on Windows systems</span><a class="headerlink" href="#id19" title="Permalink to this table">¶</a></caption>
+<table border="1" class="docutils" id="id20">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">Optional software prerequisites for <em>HPX</em> on Windows systems</span><a class="headerlink" href="#id20" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="25%" />
@@ -750,10 +813,11 @@ performance counters (enabled with <a class="reference internal" href="#cmdoptio
 </li>
 <li><em>HPX</em> Examples (target <code class="docutils literal"><span class="pre">examples</span></code>): This target is enabled by default and
 builds all <em>HPX</em> examples (disable by setting
-<code class="xref std std-option docutils literal"><span class="pre">HPX_WITH_BUILD_EXAMPLES:BOOL</span></code><code class="docutils literal"><span class="pre">=Off</span></code>). <em>HPX</em> examples are part of
-the <code class="docutils literal"><span class="pre">all</span></code> target and are included in the installation if enabled.</li>
+<a class="reference internal" href="#cmdoption-arg-hpx-with-examples-bool"><code class="xref std std-option docutils literal"><span class="pre">HPX_WITH_EXAMPLES:BOOL</span></code></a><code class="docutils literal"><span class="pre">=Off</span></code>). <em>HPX</em> examples are part of the
+<code class="docutils literal"><span class="pre">all</span></code> target and are included in the installation if enabled.</li>
 <li><em>HPX</em> Tests (target <code class="docutils literal"><span class="pre">tests</span></code>): This target builds the <em>HPX</em> test suite and is
-enabled by default (disable by setting <code class="xref std std-option docutils literal"><span class="pre">HPX_WITH_BUILD_TESTS:BOOL</span></code><code class="docutils literal"><span class="pre">=Off</span></code>). They are not built by the <code class="docutils literal"><span class="pre">all</span></code> target and have to be built
+enabled by default (disable by setting <a class="reference internal" href="#cmdoption-arg-hpx-with-tests-bool"><code class="xref std std-option docutils literal"><span class="pre">HPX_WITH_TESTS:BOOL</span></code></a>
+<code class="docutils literal"><span class="pre">=Off</span></code>). They are not built by the <code class="docutils literal"><span class="pre">all</span></code> target and have to be built
 separately.</li>
 <li><em>HPX</em> Documentation (target <code class="docutils literal"><span class="pre">docs</span></code>): This target builds the documentation,
 this is not enabled by default (enable by setting
@@ -1153,7 +1217,7 @@ Please, be patient.</p>
 source code’) to the <em>base directory</em> of the source code you downloaded from
 HPX’s GitHub pages. Here’s an example of my CMake path settings which point to
 my <code class="docutils literal"><span class="pre">Documents/GitHub/hpx</span></code> folder:</p>
-<div class="figure" id="id20">
+<div class="figure" id="id21">
 <span id="win32-cmake-settings1"></span><img alt="../_images/cmake_settings1.png" src="../_images/cmake_settings1.png" />
 <p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Example CMake path settings.</span></p>
 </div>
@@ -1167,8 +1231,8 @@ will build HPX packages out of the HPX source tree.</p>
 </li>
 <li><p class="first">Set four new environment variables (in CMake, not in Windows environment, by
 the way): <code class="docutils literal"><span class="pre">BOOST_ROOT</span></code>, <code class="docutils literal"><span class="pre">HWLOC_ROOT</span></code>, <code class="docutils literal"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> and
-<code class="xref std std-option docutils literal"><span class="pre">HPX_WITH_BOOST_ALL_DYNAMIC_LINK:BOOL</span></code>. The meaning of these variables
-is as follows:</p>
+<code class="docutils literal"><span class="pre">HPX_WITH_BOOST_ALL_DYNAMIC_LINK</span></code>. The meaning of these variables is as
+follows:</p>
 <ul>
 <li><p class="first"><code class="docutils literal"><span class="pre">BOOST_ROOT</span></code> the root directory of the unpacked Boost headers/cpp files.</p>
 </li>
@@ -1183,13 +1247,15 @@ should be installed to.</p>
 default <code class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files\hpx</span></code>. I prefer simpler paths <em>without</em> white
 space, like <code class="docutils literal"><span class="pre">C:\bin\hpx</span></code> or <code class="docutils literal"><span class="pre">D:\bin\hpx</span></code> etc.</p>
 </div>
+</li>
+</ul>
 <p>To insert new env-vars click on “Add Entry” and then insert the name inside
 “Name”, select <code class="docutils literal"><span class="pre">PATH</span></code> as Type and put the path-name in “Path” text field.
 Repeat this for the first three variables.</p>
-<p>The last one: <code class="xref std std-option docutils literal"><span class="pre">HPX_WITH_BOOST_ALL_DYNAMIC_LINK:BOOL</span></code> is a <code class="docutils literal"><span class="pre">BOOL</span></code> and
-must be checked (there will be a checkbox instead of a textfield).</p>
+<p>The last one: <code class="docutils literal"><span class="pre">HPX_WITH_BOOST_ALL_DYNAMIC_LINK</span></code> is a <code class="docutils literal"><span class="pre">BOOL</span></code> and must be
+checked (there will be a checkbox instead of a textfield).</p>
 <p>This is how variable insertion looks like:</p>
-<div class="figure" id="id21">
+<div class="figure" id="id22">
 <span id="win32-cmake-settings2"></span><img alt="../_images/cmake_settings2.png" src="../_images/cmake_settings2.png" />
 <p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Example CMake adding entry.</span></p>
 </div>
@@ -1201,8 +1267,6 @@ subdirectory under the Boost rootdir. Important is to keep the meanings of
 these two variables separated from each other: <code class="docutils literal"><span class="pre">BOOST_DIR</span></code> points to the
 ROOT folder of the boost library. <code class="docutils literal"><span class="pre">BOOST_LIBRARYDIR</span></code> points to the subdir
 inside Boost root folder where the compiled binaries are.</p>
-</li>
-</ul>
 </li>
 <li><p class="first">Click the ‘Configure’ button of CMake-GUI. You will be immediately presented a
 small window where you can select the C++ compiler to be used within Visual
@@ -1216,13 +1280,13 @@ selected at the beginning.</p>
 <li><p class="first">Open Visual Studio and load the <code class="docutils literal"><span class="pre">HPX.sln</span></code> from your build folder.</p>
 </li>
 <li><p class="first">Go to <code class="docutils literal"><span class="pre">CMakePredefinedTargets</span></code> and build the <code class="docutils literal"><span class="pre">INSTALL</span></code> project:</p>
-<div class="figure" id="id22">
+<div class="figure" id="id23">
 <span id="win32-vs-targets"></span><img alt="../_images/vs_targets_install.png" src="../_images/vs_targets_install.png" />
 <p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Visual Studio INSTALL target.</span></p>
 </div>
 <p>It will take some time to compile everything and in the end you should see an
 output similar to this one:</p>
-<div class="figure" id="id23">
+<div class="figure" id="id24">
 <span id="win32-vs-build-output"></span><img alt="../_images/vs_build_output.png" src="../_images/vs_build_output.png" />
 <p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Visual Studio build output.</span></p>
 </div>
@@ -1379,8 +1443,7 @@ crucial for getting decent performance on the Xeon Phi.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This section of the manual is based off of our collaborators Patrick Diehl’s
-blog post <cite>Installing HPX on Fedora 22
-&lt;http://diehlpk.github.io/2015/08/04/hpx-fedora.html&gt;</cite>.</p>
+blog post <a class="reference external" href="http://diehlpk.github.io/2015/08/04/hpx-fedora.html">Installing HPX on Fedora 22</a>.</p>
 </div>
 <ul>
 <li><p class="first">Install all packages for minimal installation:</p>
@@ -2772,7 +2835,7 @@ improves the generated diagnostics.</p>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>0c5eeed</code>.
+          Revision <code>a40fc75</code>.
         </span>
       
 

@@ -102,7 +102,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#getting-hpx">Getting <em>HPX</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hpx-dependencies"><em>HPX</em> dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-hpx">Building <em>HPX</em></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#setting-up-an-hpx-project">Setting up an <em>HPX</em> project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hello-world">Hello, World!</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#writing-task-based-applications">Writing task-based applications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#next-steps">Next steps</a></li>
@@ -312,14 +311,16 @@ test the target is. If you are developing <em>HPX</em> it is often helpful to ru
 <span class="pre">examples.quickstart</span></code>.</p>
 </div>
 </div>
-<div class="section" id="setting-up-an-hpx-project">
-<h2>Setting up an <em>HPX</em> project<a class="headerlink" href="#setting-up-an-hpx-project" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hello-world">
+<h2>Hello, World!<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
 <p>The following <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code> is a minimal example of what you need in order to
 build an executable using <a class="reference external" href="https://www.cmake.org">CMake</a> and <em>HPX</em>:</p>
 <div class="highlight-cmake"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">3.3.2</span><span class="p">)</span>
 <span class="nb">project</span><span class="p">(</span><span class="s">my_hpx_project</span> <span class="s">CXX</span><span class="p">)</span>
 <span class="nb">find_package</span><span class="p">(</span><span class="s">HPX</span> <span class="s">REQUIRED</span><span class="p">)</span>
-<span class="nb">add_hpx_executable</span><span class="p">(</span><span class="s">my_hpx_program</span> <span class="s">SOURCES</span> <span class="s">main.cpp</span><span class="p">)</span>
+<span class="nb">add_hpx_executable</span><span class="p">(</span><span class="s">my_hpx_program</span>
+    <span class="s">SOURCES</span> <span class="s">main.cpp</span>
+    <span class="s">COMPONENT_DEPENDENCIES</span> <span class="s">iostreams</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -328,26 +329,14 @@ build an executable using <a class="reference external" href="https://www.cmake.
 See the section on <a class="reference internal" href="manual/creating_hpx_projects.html#using-hpx-cmake"><span class="std std-ref">Using HPX with CMake-based projects</span></a> for more details on how to use
 <code class="docutils literal"><span class="pre">add_hpx_executable</span></code>.</p>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">COMPONENT_DEPENDENCIES</span> <span class="pre">iostreams</span></code> is optional for a minimal project but
+lets us use the <em>HPX</em> equivalent of <code class="docutils literal"><span class="pre">std::cout</span></code>, i.e. the <em>HPX</em>
+<a class="reference internal" href="manual/miscellaneous.html#iostreams"><span class="std std-ref">The HPX I/O-streams component</span></a> functionality in our application.</p>
+</div>
 <p>Create a new project directory and a <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code> with the contents above.
-Then, in your project directory run the following:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>touch main.cpp <span class="c1"># Create an empty file for now</span>
-mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
-cmake -DCMAKE_PREFIX_PATH<span class="o">=</span>/path/to/hpx/installation ..
-make all
-./my_hpx_program
-</pre></div>
-</div>
-<p>Your program should now start but fail quickly because it doesn’t contain a main
-function yet.</p>
-</div>
-<div class="section" id="hello-world">
-<h2>Hello, World!<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
-<p>Once you have your project set up change the line containing
-<code class="docutils literal"><span class="pre">add_hpx_executable</span></code> in <code class="docutils literal"><span class="pre">CMakeLists.txt</span></code> to the following:</p>
-<div class="highlight-cmake"><div class="highlight"><pre><span></span><span class="nb">add_hpx_executable</span><span class="p">(</span><span class="s">my_hpx_program</span> <span class="s">SOURCES</span> <span class="s">main.cpp</span> <span class="s">COMPONENT_DEPENDENCIES</span> <span class="s">iostreams</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>and add the following to your <code class="docutils literal"><span class="pre">main.cpp</span></code>:</p>
+Also create a <code class="docutils literal"><span class="pre">main.cpp</span></code> with the contents below.</p>
 <div class="highlight-c++"><div class="highlight"><pre><span></span><span class="c1">// Including &#39;hpx/hpx_main.hpp&#39; instead of the usual &#39;hpx/hpx_init.hpp&#39; enables</span>
 <span class="c1">// to use the plain C-main below as the direct main HPX entry point.</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
@@ -359,6 +348,13 @@ function yet.</p>
     <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello World!</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+<p>Then, in your project directory run the following:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
+cmake -DCMAKE_PREFIX_PATH<span class="o">=</span>/path/to/hpx/installation ..
+make all
+./my_hpx_program
 </pre></div>
 </div>
 <p>The program looks almost like a regular C++ hello world with the exception of
@@ -601,7 +597,7 @@ to a distributed implementation.</p>
         &copy; Copyright 2008-2019, The STE||AR Group.
       
         <span class="commit">
-          Revision <code>8874646</code>.
+          Revision <code>918e066</code>.
         </span>
       
 

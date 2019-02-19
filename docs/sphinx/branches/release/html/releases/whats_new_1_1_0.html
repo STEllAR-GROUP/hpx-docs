@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HPX V1.1.0 (Mar 24, 2018) &mdash; HPX release documentation</title>
+  <title>HPX V1.1.0 (Mar 24, 2018) &mdash; HPX 1.2.1 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="HPX release documentation" href="../index.html"/>
+    <link rel="top" title="HPX 1.2.1 documentation" href="../index.html"/>
         <link rel="up" title="Releases" href="../releases.html"/>
         <link rel="next" title="HPX V1.0.0 (Apr 24, 2017)" href="whats_new_1_0_0.html"/>
         <link rel="prev" title="HPX V1.2.0 (Nov 12, 2018)" href="whats_new_1_2_0.html"/> 
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                release
+                1.2.1
               </div>
             
           
@@ -116,7 +116,7 @@
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../releases.html">Releases</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="whats_new_1_2_1.html"><em>HPX</em> V1.2.1 (unreleased)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whats_new_1_2_1.html"><em>HPX</em> V1.2.1 (Feb 19, 2019)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whats_new_1_2_0.html"><em>HPX</em> V1.2.0 (Nov 12, 2018)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#"><em>HPX</em> V1.1.0 (Mar 24, 2018)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#general-changes">General changes</a></li>
@@ -219,7 +219,7 @@ not longer implicitly bind all available cores to a single thread pool. The
 user has now full control over what processing units are bound to what thread
 pool, each with a separate scheduler. It is now also possible to create your
 own scheduler implementation and control what processing units this scheduler
-should use. We added the <code class="docutils literal"><span class="pre">hpx::resource::partitioner</span></code> that manages all
+should use. We added the <code class="docutils literal notranslate"><span class="pre">hpx::resource::partitioner</span></code> that manages all
 available processing units and assigns resources to the used thread pools.
 Thread pools can be now be suspended/resumed independently. This functionality
 helps in running <em>HPX</em> concurrently to code that is directly relying on
@@ -228,37 +228,37 @@ helps in running <em>HPX</em> concurrently to code that is directly relying on
 completely implements all of the parallel algorithms as specified by the
 <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21">C++17 Standard</a>. We have also continued to implement these algorithms for the
 distributed use case (for segmented data structures, such as
-<code class="docutils literal"><span class="pre">hpx::partitioned_vector</span></code>).</li>
-<li>Added a compatibility layer for <code class="docutils literal"><span class="pre">std::thread</span></code>, <code class="docutils literal"><span class="pre">std::mutex</span></code>, and
-<code class="docutils literal"><span class="pre">std::condition_variable</span></code> allowing for the code to use those facilities
+<code class="docutils literal notranslate"><span class="pre">hpx::partitioned_vector</span></code>).</li>
+<li>Added a compatibility layer for <code class="docutils literal notranslate"><span class="pre">std::thread</span></code>, <code class="docutils literal notranslate"><span class="pre">std::mutex</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">std::condition_variable</span></code> allowing for the code to use those facilities
 where available and to fall back to the corresponding Boost facilities
 otherwise. The <a class="reference external" href="https://www.cmake.org">CMake</a> configuration option
-<code class="docutils literal"><span class="pre">-DHPX_WITH_THREAD_COMPATIBILITY=On</span></code> can be used to force using the Boost
+<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_THREAD_COMPATIBILITY=On</span></code> can be used to force using the Boost
 equivalents.</li>
-<li>The parameter sequence for the <code class="docutils literal"><span class="pre">hpx::parallel::transform_inclusive_scan</span></code>
+<li>The parameter sequence for the <code class="docutils literal notranslate"><span class="pre">hpx::parallel::transform_inclusive_scan</span></code>
 overload taking one iterator range has changed (again) to match the changes
 this algorithm has undergone while being moved to C++17. The old overloads can
 be still enabled at configure time by passing
-<code class="docutils literal"><span class="pre">-DHPX_WITH_TRANSFORM_REDUCE_COMPATIBILITY=On</span></code> to <a class="reference external" href="https://www.cmake.org">CMake</a>.</li>
-<li>The parameter sequence for the <code class="docutils literal"><span class="pre">hpx::parallel::inclusive_scan</span></code> overload
+<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_TRANSFORM_REDUCE_COMPATIBILITY=On</span></code> to <a class="reference external" href="https://www.cmake.org">CMake</a>.</li>
+<li>The parameter sequence for the <code class="docutils literal notranslate"><span class="pre">hpx::parallel::inclusive_scan</span></code> overload
 taking one iterator range has changed to match the changes this algorithm has
 undergone while being moved to C++17. The old overloads can be still enabled
-at configure time by passing <code class="docutils literal"><span class="pre">-DHPX_WITH_INCLUSIVE_SCAN_COMPATIBILITY=On</span></code> to
+at configure time by passing <code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_INCLUSIVE_SCAN_COMPATIBILITY=On</span></code> to
 CMake.</li>
-<li>Added a helper facility <code class="docutils literal"><span class="pre">hpx::local_new</span></code> which is equivalent to
-<code class="docutils literal"><span class="pre">hpx::new_</span></code> except that it creates components locally only. As a
+<li>Added a helper facility <code class="docutils literal notranslate"><span class="pre">hpx::local_new</span></code> which is equivalent to
+<code class="docutils literal notranslate"><span class="pre">hpx::new_</span></code> except that it creates components locally only. As a
 consequence, the used component constructor may accept non-serializable
 argument types and/or non-const references or pointers.</li>
-<li>Removed the (broken) component type <code class="docutils literal"><span class="pre">hpx::lcos::queue&lt;T&gt;</span></code>. The old type is
+<li>Removed the (broken) component type <code class="docutils literal notranslate"><span class="pre">hpx::lcos::queue&lt;T&gt;</span></code>. The old type is
 still available at configure time by passing
-<code class="docutils literal"><span class="pre">-DHPX_WITH_QUEUE_COMPATIBILITY=On</span></code> to CMake.</li>
+<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_QUEUE_COMPATIBILITY=On</span></code> to CMake.</li>
 <li>The parallel algorithms adopted for C++17 restrict the iterator categories
 usable with those to at least forward iterators. Our implementation of the
 parallel algorithms was supporting input iterators (and output iterators) as
 well by simply falling back to sequential execution. We have now made our
 implementations conforming by requiring at least forward iterators. In order
 to enable the old behavior use the the compatibility option
-<code class="docutils literal"><span class="pre">-DHPX_WITH_ALGORITHM_INPUT_ITERATOR_SUPPORT=On</span></code> on the <a class="reference external" href="https://www.cmake.org">CMake</a> command
+<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_ALGORITHM_INPUT_ITERATOR_SUPPORT=On</span></code> on the <a class="reference external" href="https://www.cmake.org">CMake</a> command
 line.</li>
 <li>We have added the functionalities allowing for LCOs being implemented using
 (simple) components. Before LCOs had to always be implemented using managed
@@ -266,7 +266,7 @@ components.</li>
 <li>User defined components don’t have to be default-constructible anymore. Return
 types from actions don’t have to be default-constructible anymore either. Our
 serialization layer now in general supports non-default-constructible types.</li>
-<li>We have added a new launch policy <code class="docutils literal"><span class="pre">hpx::launch::lazy</span></code> that allows to defer
+<li>We have added a new launch policy <code class="docutils literal notranslate"><span class="pre">hpx::launch::lazy</span></code> that allows to defer
 the decision on what launch policy to use to the point of execution. This
 policy is initialized with a function (object) that – when invoked – is
 expected to produce the desired launch policy.</li>
@@ -282,26 +282,26 @@ is now V3.3.2.</li>
 minimal Visual Studio version we now test on is Visual Studio 2015.5.</li>
 <li>We have dropped support for the Boost V1.51-V1.54. The minimal version of
 Boost we now test is Boost V1.55.</li>
-<li>We have dropped support for the <code class="docutils literal"><span class="pre">hpx::util::unwrapped</span></code> API.
-<code class="docutils literal"><span class="pre">hpx::util::unwrapped</span></code> will stay functional to some degree, until it finally
+<li>We have dropped support for the <code class="docutils literal notranslate"><span class="pre">hpx::util::unwrapped</span></code> API.
+<code class="docutils literal notranslate"><span class="pre">hpx::util::unwrapped</span></code> will stay functional to some degree, until it finally
 gets removed in a later version of HPX. The functional usage of
-<code class="docutils literal"><span class="pre">hpx::util::unwrapped</span></code> should be changed to the new
-<code class="docutils literal"><span class="pre">hpx::util::unwrapping</span></code> function whereas the immediate usage should be
-replaced to <code class="docutils literal"><span class="pre">hpx::util::unwrap</span></code>.</li>
+<code class="docutils literal notranslate"><span class="pre">hpx::util::unwrapped</span></code> should be changed to the new
+<code class="docutils literal notranslate"><span class="pre">hpx::util::unwrapping</span></code> function whereas the immediate usage should be
+replaced to <code class="docutils literal notranslate"><span class="pre">hpx::util::unwrap</span></code>.</li>
 <li>The performance counter names referring to properties as exposed by the
 threading subsystem have changes as those now additionally have to specify the
 thread-pool. See the corresponding documentation for more details.</li>
-<li>The overloads of <code class="docutils literal"><span class="pre">hpx::async</span></code> that invoke an action do not perform implicit
+<li>The overloads of <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> that invoke an action do not perform implicit
 unwrapping of the returned future anymore in case the invoked function does
-return a future in the first place. In this case <code class="docutils literal"><span class="pre">hpx::async</span></code> now returns a
-<code class="docutils literal"><span class="pre">hpx::future&lt;future&lt;T&gt;&gt;</span></code> making its behavior conforming to its local
+return a future in the first place. In this case <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> now returns a
+<code class="docutils literal notranslate"><span class="pre">hpx::future&lt;future&lt;T&gt;&gt;</span></code> making its behavior conforming to its local
 counterpart.</li>
-<li>We have replaced the use of <code class="docutils literal"><span class="pre">boost::exception_ptr</span></code> in our APIs with the
-equivalent <code class="docutils literal"><span class="pre">std::exception_ptr</span></code>. Please change your codes accordingly. No
+<li>We have replaced the use of <code class="docutils literal notranslate"><span class="pre">boost::exception_ptr</span></code> in our APIs with the
+equivalent <code class="docutils literal notranslate"><span class="pre">std::exception_ptr</span></code>. Please change your codes accordingly. No
 compatibility settings are provided.</li>
 <li>We have removed the compatibility settings for
-<code class="docutils literal"><span class="pre">HPX_WITH_COLOCATED_BACKWARDS_COMPATIBILITY</span></code> and
-<code class="docutils literal"><span class="pre">HPX_WITH_COMPONENT_GET_GID_COMPATIBILITY</span></code> as their life-cycle has reached
+<code class="docutils literal notranslate"><span class="pre">HPX_WITH_COLOCATED_BACKWARDS_COMPATIBILITY</span></code> and
+<code class="docutils literal notranslate"><span class="pre">HPX_WITH_COMPONENT_GET_GID_COMPATIBILITY</span></code> as their life-cycle has reached
 its end.</li>
 <li>We have removed the experimental thread schedulers hierarchy_scheduler,
 periodic_priority_scheduler and throttling_scheduler in an effort to clean up
@@ -696,13 +696,13 @@ Boost 1.65</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2887">PR #2887</a> - Adapt broadcast() to non-unwrapping async&lt;Action&gt;</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2886">PR #2886</a> - Replace Boost.Random with C++11 &lt;random&gt;</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2885">Issue #2885</a> - regression in broadcast?</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2884">Issue #2884</a> - linking <code class="docutils literal"><span class="pre">-latomic</span></code> is not portable</li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2884">Issue #2884</a> - linking <code class="docutils literal notranslate"><span class="pre">-latomic</span></code> is not portable</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2883">PR #2883</a> - Explicitly set -pthread flag if available</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2882">PR #2882</a> - Wrap boost::format uses</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2881">Issue #2881</a> - hpx not compiling with <code class="docutils literal"><span class="pre">HPX_WITH_ITTNOTIFY=On</span></code></li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2881">Issue #2881</a> - hpx not compiling with <code class="docutils literal notranslate"><span class="pre">HPX_WITH_ITTNOTIFY=On</span></code></li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2880">Issue #2880</a> - hpx::bind scatter/balanced give wrong pu masks</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2878">PR #2878</a> - Fix incorrect pool usage masks setup in RP/thread manager</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2877">PR #2877</a> - Require <code class="docutils literal"><span class="pre">std::array</span></code> by default</li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2877">PR #2877</a> - Require <code class="docutils literal notranslate"><span class="pre">std::array</span></code> by default</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2875">PR #2875</a> - Deprecate use of BOOST_ASSERT</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2874">PR #2874</a> - Changed serialization of boost.variant to use variadic
 templates</li>
@@ -710,7 +710,7 @@ templates</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2871">PR #2871</a> - Adding missing support for throttling scheduler</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2870">PR #2870</a> - Disambiguate use of base_lco_with_value macros with channel</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2869">Issue #2869</a> - Difficulty compiling
-<code class="docutils literal"><span class="pre">HPX_REGISTER_CHANNEL_DECLARATION(double)</span></code></li>
+<code class="docutils literal notranslate"><span class="pre">HPX_REGISTER_CHANNEL_DECLARATION(double)</span></code></li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2868">PR #2868</a> - Removing uneeded assert</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2867">PR #2867</a> - Implement parallel::unique</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2866">Issue #2866</a> - The chunk_size_iterator violates multipass guarantee</li>
@@ -748,14 +748,14 @@ version</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2840">PR #2840</a> - Remove constexpr from a void function</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2839">Issue #2839</a> - memcpy buffer overflow: load_construct_data() and
 std::complex members</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2835">Issue #2835</a> - <code class="docutils literal"><span class="pre">constexpr</span></code> functions with <code class="docutils literal"><span class="pre">void</span></code> return type break
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2835">Issue #2835</a> - <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> functions with <code class="docutils literal notranslate"><span class="pre">void</span></code> return type break
 compilation with CUDA 8.0</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2834">Issue #2834</a> - One suspicion in parallel::detail::handle_exception</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2833">PR #2833</a> - Implement parallel::merge</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2832">PR #2832</a> - Fix a strange thing in
 parallel::util::detail::handle_local_exceptions. (Fix #2818)</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2830">PR #2830</a> - Break the debugger when a test failed</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2831">Issue #2831</a> - <code class="docutils literal"><span class="pre">parallel/executors/execution_fwd.hpp</span></code> causes
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2831">Issue #2831</a> - <code class="docutils literal notranslate"><span class="pre">parallel/executors/execution_fwd.hpp</span></code> causes
 compilation failure in C++11 mode.</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2829">PR #2829</a> - Implement an API for asynchronous pack traversal</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2828">PR #2828</a> - Split unit test builds on CircleCI to avoid timeouts</li>
@@ -784,7 +784,7 @@ future::then</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2809">PR #2809</a> - Disable throttling scheduler if HWLOC is not found/used</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2808">PR #2808</a> - Fix compile errors on some environments of
 parallel::partition</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2807">Issue #2807</a> - Difficulty building with <code class="docutils literal"><span class="pre">HPX_WITH_HWLOC=Off</span></code></li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2807">Issue #2807</a> - Difficulty building with <code class="docutils literal notranslate"><span class="pre">HPX_WITH_HWLOC=Off</span></code></li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2806">PR #2806</a> - Partitioned vector</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2805">PR #2805</a> - Serializing collections with non-default constructible data</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2802">PR #2802</a> - Fix FreeBSD 11</li>
@@ -945,7 +945,7 @@ uninitialized_default_construct_n</li>
 cause by util::reinitializable_static</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2662">Issue #2662</a> - Crash in managed_component::get_base_gid due to problem
 with util::reinitializable_static</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2665">PR #2665</a> - Hide the <code class="docutils literal"><span class="pre">detail</span></code> namespace in doxygen per default</li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2665">PR #2665</a> - Hide the <code class="docutils literal notranslate"><span class="pre">detail</span></code> namespace in doxygen per default</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2660">PR #2660</a> - Add documentation to hpx::util::unwrapped and
 hpx::util::unwrapped2</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2659">PR #2659</a> - Improve integration with vcpkg</li>
@@ -963,7 +963,7 @@ properly handled</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2647">Issue #2647</a> - hpx::parcelset::detail::parcel_data::<a href="#id4"><span class="problematic" id="id5">has_continuation_</span></a> is
 unitialized</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2644">Issue #2644</a> - Some .vcxproj in the HPX.sln fail to build</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2641">Issue #2641</a> - <code class="docutils literal"><span class="pre">hpx::lcos::queue</span></code> should be deprecated</li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2641">Issue #2641</a> - <code class="docutils literal notranslate"><span class="pre">hpx::lcos::queue</span></code> should be deprecated</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2640">PR #2640</a> - A new throttling policy with public APIs to suspend/resume</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2639">PR #2639</a> - Fix a tiny typo in tutorial.</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2638">Issue #2638</a> - Invalid return type ‘void’ of constexpr function</li>
@@ -975,7 +975,7 @@ types</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2629">PR #2629</a> - Move unordered_map out of parcelport into hpx/concurrent</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2628">PR #2628</a> - Making sure that shutdown does not hang</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2627">PR #2627</a> - Fix serialization</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2626">PR #2626</a> - Generate <code class="docutils literal"><span class="pre">cmake_variables.qbk</span></code> and <code class="docutils literal"><span class="pre">cmake_toolchains.qbk</span></code>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2626">PR #2626</a> - Generate <code class="docutils literal notranslate"><span class="pre">cmake_variables.qbk</span></code> and <code class="docutils literal notranslate"><span class="pre">cmake_toolchains.qbk</span></code>
 outside of the source tree</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2625">PR #2625</a> - Supporting -std=c++17 flag</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2624">PR #2624</a> - Fixing a small cmake typo</li>
@@ -986,7 +986,7 @@ failed: Bad value</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2619">PR #2619</a> - LF multiple parcels</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2618">PR #2618</a> - Some fixes to libfabric that didn’t get caught before the
 merge</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2617">PR #2617</a> - Adding <code class="docutils literal"><span class="pre">hpx::local_new</span></code></li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2617">PR #2617</a> - Adding <code class="docutils literal notranslate"><span class="pre">hpx::local_new</span></code></li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/2616">PR #2616</a> - Documentation: Extract all entities in order to autolink
 functions correctly</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/2615">Issue #2615</a> - Documentation: Linking functions is broken</li>
@@ -1094,7 +1094,7 @@ count/comparisons to hpx_run_tests.py</li>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>edb02d1</code>.
+          Revision <code>b26d3ba</code>.
         </span>
       
 
@@ -1125,7 +1125,7 @@ LICENSE_1_0.txt or copy at
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'release',
+            VERSION:'1.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

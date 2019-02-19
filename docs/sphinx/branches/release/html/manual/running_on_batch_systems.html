@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Running on batch systems &mdash; HPX release documentation</title>
+  <title>Running on batch systems &mdash; HPX 1.2.1 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="HPX release documentation" href="../index.html"/>
+    <link rel="top" title="HPX 1.2.1 documentation" href="../index.html"/>
         <link rel="up" title="Manual" href="../manual.html"/>
         <link rel="next" title="Debugging HPX applications" href="debugging_hpx_applications.html"/>
         <link rel="prev" title="Writing distributed HPX applications" href="writing_distributed_hpx_applications.html"/> 
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                release
+                1.2.1
               </div>
             
           
@@ -224,9 +224,9 @@ like any other regular shell script. While the description of all available PBS
 options is outside the scope of this tutorial (the interested reader may refer
 to in-depth <a class="reference external" href="http://www.clusterresources.com/torquedocs21/">documentation</a> for
 more information), below is a minimal example to illustrate the approach. As a
-test application we will use the multithreaded <code class="docutils literal"><span class="pre">hello_world</span></code> program,
+test application we will use the multithreaded <code class="docutils literal notranslate"><span class="pre">hello_world</span></code> program,
 explained in the section <a class="reference internal" href="../examples/hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions: Hello world</span></a>.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#</span>
 <span class="c1">#PBS -l nodes=2:ppn=4</span>
 
@@ -238,25 +238,25 @@ pbsdsh -u <span class="nv">$APP_PATH</span> <span class="nv">$APP_OPTIONS</span>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
-<p>If the first application specific argument (inside <code class="docutils literal"><span class="pre">$APP_OPTIONS</span></code>) is a
-non-option (i.e. does not start with a <code class="docutils literal"><span class="pre">-</span></code> or a <code class="docutils literal"><span class="pre">--</span></code>), then those have to
-be placed before the option <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-nodes"><code class="xref std std-option docutils literal"><span class="pre">--hpx:nodes</span></code></a>, which in this case should
+<p>If the first application specific argument (inside <code class="docutils literal notranslate"><span class="pre">$APP_OPTIONS</span></code>) is a
+non-option (i.e. does not start with a <code class="docutils literal notranslate"><span class="pre">-</span></code> or a <code class="docutils literal notranslate"><span class="pre">--</span></code>), then those have to
+be placed before the option <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-nodes"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:nodes</span></code></a>, which in this case should
 be the last option on the command line.</p>
-<p>Alternatively, use the option <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-endnodes"><code class="xref std std-option docutils literal"><span class="pre">--hpx:endnodes</span></code></a> to explicitly mark the
+<p>Alternatively, use the option <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-endnodes"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:endnodes</span></code></a> to explicitly mark the
 end of the list of node names:</p>
-<div class="last highlight-bash"><div class="highlight"><pre><span></span>pbsdsh -u <span class="nv">$APP_PATH</span> --hpx:nodes<span class="sb">`</span>cat <span class="nv">$PBS_NODEFILE</span><span class="sb">`</span> --hpx:endnodes <span class="nv">$APP_OPTIONS</span>
+<div class="last highlight-bash notranslate"><div class="highlight"><pre><span></span>pbsdsh -u <span class="nv">$APP_PATH</span> --hpx:nodes<span class="sb">`</span>cat <span class="nv">$PBS_NODEFILE</span><span class="sb">`</span> --hpx:endnodes <span class="nv">$APP_OPTIONS</span>
 </pre></div>
 </div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">#PBS</span> <span class="pre">-l</span> <span class="pre">nodes=2:ppn=4</span></code> directive will cause two compute nodes to be
-allocated for the application, as specified in the option <code class="docutils literal"><span class="pre">nodes</span></code>. Each of the
-nodes will dedicate four cores to the program, as per the option <code class="docutils literal"><span class="pre">ppn</span></code>, short
+<p>The <code class="docutils literal notranslate"><span class="pre">#PBS</span> <span class="pre">-l</span> <span class="pre">nodes=2:ppn=4</span></code> directive will cause two compute nodes to be
+allocated for the application, as specified in the option <code class="docutils literal notranslate"><span class="pre">nodes</span></code>. Each of the
+nodes will dedicate four cores to the program, as per the option <code class="docutils literal notranslate"><span class="pre">ppn</span></code>, short
 for “processors per node” (PBS does not distinguish between processors and
 cores). Note that requesting more cores per node than physically available is
 pointless and may prevent PBS from accepting the script.</p>
 <p>On newer PBS versions the PBS command syntax might be different. For instance,
 the PBS script above would look like:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#</span>
 <span class="c1">#PBS -l select=2:ncpus=4</span>
 
@@ -266,11 +266,11 @@ the PBS script above would look like:</p>
 pbsdsh -u <span class="nv">$APP_PATH</span> <span class="nv">$APP_OPTIONS</span> --hpx:nodes<span class="o">=</span><span class="sb">`</span>cat <span class="nv">$PBS_NODEFILE</span><span class="sb">`</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">APP_PATH</span></code> and <code class="docutils literal"><span class="pre">APP_OPTIONS</span></code> are shell variables that respectively specify
-the correct path to the executable (<code class="docutils literal"><span class="pre">hello_world</span></code> in this case) and the
-command line options. Since the <code class="docutils literal"><span class="pre">hello_world</span></code> application doesn’t need any
-command line options, <code class="docutils literal"><span class="pre">APP_OPTIONS</span></code> has been left empty. Unlike in other
-execution environments, there is no need to use the <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-threads"><code class="xref std std-option docutils literal"><span class="pre">--hpx:threads</span></code></a>
+<p><code class="docutils literal notranslate"><span class="pre">APP_PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">APP_OPTIONS</span></code> are shell variables that respectively specify
+the correct path to the executable (<code class="docutils literal notranslate"><span class="pre">hello_world</span></code> in this case) and the
+command line options. Since the <code class="docutils literal notranslate"><span class="pre">hello_world</span></code> application doesn’t need any
+command line options, <code class="docutils literal notranslate"><span class="pre">APP_OPTIONS</span></code> has been left empty. Unlike in other
+execution environments, there is no need to use the <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-threads"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:threads</span></code></a>
 option to indicate the required number of OS threads per node; the <em>HPX</em> library
 will derive this parameter automatically from PBS.</p>
 <p>Finally, pbsdsh is a PBS command that starts tasks to the resources allocated
@@ -279,18 +279,18 @@ only the PBS options and shell variables as needed for a specific application.</
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">A script invoked by pbsdsh starts in a very basic environment: the user’s
-<code class="docutils literal"><span class="pre">$HOME</span></code> directory is defined and is the current directory, the <code class="docutils literal"><span class="pre">LANG</span></code>
-variable is set to <code class="docutils literal"><span class="pre">C</span></code> and the <code class="docutils literal"><span class="pre">PATH</span></code> is set to the basic
-<code class="docutils literal"><span class="pre">/usr/local/bin:/usr/bin:/bin</span></code> as defined in a system-wide file
+<code class="docutils literal notranslate"><span class="pre">$HOME</span></code> directory is defined and is the current directory, the <code class="docutils literal notranslate"><span class="pre">LANG</span></code>
+variable is set to <code class="docutils literal notranslate"><span class="pre">C</span></code> and the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> is set to the basic
+<code class="docutils literal notranslate"><span class="pre">/usr/local/bin:/usr/bin:/bin</span></code> as defined in a system-wide file
 pbs_environment. Nothing that would normally be set up by a system shell
 profile or user shell profile is defined, unlike the environment for the main
 job script.</p>
 </div>
 <p>Another choice is for the pbsdsh command in your main job script to invoke
-your program via a shell, like <code class="docutils literal"><span class="pre">sh</span></code> or <code class="docutils literal"><span class="pre">bash</span></code> so that it gives an initialized
-environment for each instance. We create a small script <code class="docutils literal"><span class="pre">runme.sh</span></code> which is used
+your program via a shell, like <code class="docutils literal notranslate"><span class="pre">sh</span></code> or <code class="docutils literal notranslate"><span class="pre">bash</span></code> so that it gives an initialized
+environment for each instance. We create a small script <code class="docutils literal notranslate"><span class="pre">runme.sh</span></code> which is used
 to invoke the program:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1"># Small script which invokes the program based on what was passed on its</span>
 <span class="c1"># command line.</span>
 <span class="c1">#</span>
@@ -300,7 +300,7 @@ to invoke the program:</p>
 </pre></div>
 </div>
 <p>Now, we invoke this script using the pbsdsh tool:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#</span>
 <span class="c1">#PBS -l nodes=2:ppn=4</span>
 
@@ -311,18 +311,18 @@ pbsdsh -u runme.sh <span class="nv">$APP_PATH</span> <span class="nv">$APP_OPTIO
 </pre></div>
 </div>
 <p>All that remains now is submitting the job to the queuing system. Assuming that
-the contents of the PBS script were saved in file <code class="docutils literal"><span class="pre">pbs_hello_world.sh</span></code> in the
+the contents of the PBS script were saved in file <code class="docutils literal notranslate"><span class="pre">pbs_hello_world.sh</span></code> in the
 current directory, this is accomplished by typing:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>qsub ./pbs_hello_world_pbs.sh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qsub ./pbs_hello_world_pbs.sh
 </pre></div>
 </div>
 <p>If the job is accepted, qsub will print out the assigned job ID, which may
 look like:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="m">42</span>.supercomputer.some.university.edu
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="m">42</span>.supercomputer.some.university.edu
 </pre></div>
 </div>
 <p>To check the status of your job, issue the following command:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>qstat <span class="m">42</span>.supercomputer.some.university.edu
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qstat <span class="m">42</span>.supercomputer.some.university.edu
 </pre></div>
 </div>
 <p>and look for a single-letter job status symbol. The common cases include:</p>
@@ -333,18 +333,18 @@ look like:</p>
 </ul>
 <p>The example qstat output below shows a job waiting for execution resources
 to become available:</p>
-<div class="highlight-text"><div class="highlight"><pre><span></span>Job id                    Name             User            Time Use S Queue
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Job id                    Name             User            Time Use S Queue
 ------------------------- ---------------- --------------- -------- - -----
 42.supercomputer          ...ello_world.sh joe_user               0 Q batch
 </pre></div>
 </div>
-<p>After the job completes, PBS will place two files, <code class="docutils literal"><span class="pre">pbs_hello_world.sh.o42</span></code> and
-<code class="docutils literal"><span class="pre">pbs_hello_world.sh.e42</span></code>, in the directory where the job was submitted. The
+<p>After the job completes, PBS will place two files, <code class="docutils literal notranslate"><span class="pre">pbs_hello_world.sh.o42</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pbs_hello_world.sh.e42</span></code>, in the directory where the job was submitted. The
 first contains the standard output and the second contains the standard error
 from all the nodes on which the application executed. In our example, the error
 output file should be empty and standard output file should contain something
 similar to:</p>
-<div class="highlight-text"><div class="highlight"><pre><span></span>hello world from OS-thread 3 on locality 0
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hello world from OS-thread 3 on locality 0
 hello world from OS-thread 2 on locality 0
 hello world from OS-thread 1 on locality 1
 hello world from OS-thread 0 on locality 0
@@ -364,17 +364,17 @@ management system which is widely used on large supercomputing systems. Any
 can be done.</p>
 <p>The easiest way to run an <em>HPX</em> application using SLURM is to utilize the
 command line tool srun which interacts with the SLURM batch scheduling system:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>srun -p &lt;partition&gt; -N &lt;number-of-nodes&gt; hpx-application &lt;application-arguments&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>srun -p &lt;partition&gt; -N &lt;number-of-nodes&gt; hpx-application &lt;application-arguments&gt;
 </pre></div>
 </div>
-<p>Here, <code class="docutils literal"><span class="pre">&lt;partition&gt;</span></code> is one of the node partitions existing on the target
+<p>Here, <code class="docutils literal notranslate"><span class="pre">&lt;partition&gt;</span></code> is one of the node partitions existing on the target
 machine (consult the machines documentation to get a list of existing
-partitions) and <code class="docutils literal"><span class="pre">&lt;number-of-nodes&gt;</span></code> is the number of compute nodes you want to
+partitions) and <code class="docutils literal notranslate"><span class="pre">&lt;number-of-nodes&gt;</span></code> is the number of compute nodes you want to
 use. By default, the HPX application is started with one <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> per
 node and uses all available cores on a node. You can change the number of
 localities started per node (for example to account for NUMA effects) by
-specifying the <code class="docutils literal"><span class="pre">-n</span></code> option of srun. The number of cores per <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>
-can be set by <code class="docutils literal"><span class="pre">-c</span></code>. The <code class="docutils literal"><span class="pre">&lt;application-arguments&gt;</span></code> are any application
+specifying the <code class="docutils literal notranslate"><span class="pre">-n</span></code> option of srun. The number of cores per <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>
+can be set by <code class="docutils literal notranslate"><span class="pre">-c</span></code>. The <code class="docutils literal notranslate"><span class="pre">&lt;application-arguments&gt;</span></code> are any application
 specific arguments which need to be passed on to the application.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -385,39 +385,39 @@ the <em>HPX</em> startup code.</p>
 </div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">The srun documentation explicitly states: “If <code class="docutils literal"><span class="pre">-c</span></code> is specified without
-<code class="docutils literal"><span class="pre">-n</span></code> as many tasks will be allocated per node as possible while satisfying
-the <code class="docutils literal"><span class="pre">-c</span></code> restriction. For instance on a cluster with 8 CPUs per node, a job
+<p class="last">The srun documentation explicitly states: “If <code class="docutils literal notranslate"><span class="pre">-c</span></code> is specified without
+<code class="docutils literal notranslate"><span class="pre">-n</span></code> as many tasks will be allocated per node as possible while satisfying
+the <code class="docutils literal notranslate"><span class="pre">-c</span></code> restriction. For instance on a cluster with 8 CPUs per node, a job
 request for 4 nodes and 3 CPUs per task may be allocated 3 or 6 CPUs per node
 (1 or 2 tasks per node) depending upon resource consumption by other jobs.”
-For this reason, we suggest to always specify <code class="docutils literal"><span class="pre">-n</span> <span class="pre">&lt;number-of-instances&gt;</span></code>,
-even if <code class="docutils literal"><span class="pre">&lt;number-of-instances&gt;</span></code> is equal to one (<code class="docutils literal"><span class="pre">1</span></code>).</p>
+For this reason, we suggest to always specify <code class="docutils literal notranslate"><span class="pre">-n</span> <span class="pre">&lt;number-of-instances&gt;</span></code>,
+even if <code class="docutils literal notranslate"><span class="pre">&lt;number-of-instances&gt;</span></code> is equal to one (<code class="docutils literal notranslate"><span class="pre">1</span></code>).</p>
 </div>
 <div class="section" id="interactive-shells">
 <h3>Interactive shells<a class="headerlink" href="#interactive-shells" title="Permalink to this headline">¶</a></h3>
 <p>To get an interactive development shell on one of the nodes you can issue the
 following command:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>srun -p &lt;node-type&gt; -N &lt;number-of-nodes&gt; --pty /bin/bash -l
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>srun -p &lt;node-type&gt; -N &lt;number-of-nodes&gt; --pty /bin/bash -l
 </pre></div>
 </div>
 <p>After the shell has been opened, you can run your HPX application. By default,
 it uses all available cores. Note that if you requested one node, you don’t need
-to do <code class="docutils literal"><span class="pre">srun</span></code> again. However, if you requested more than one node, and want to
-run your distributed application, you can use <code class="docutils literal"><span class="pre">srun</span></code> again to start up the
+to do <code class="docutils literal notranslate"><span class="pre">srun</span></code> again. However, if you requested more than one node, and want to
+run your distributed application, you can use <code class="docutils literal notranslate"><span class="pre">srun</span></code> again to start up the
 distributed HPX application. It will use the resources that have been requested
 for the interactive shell.</p>
 </div>
 <div class="section" id="scheduling-batch-jobs">
 <h3>Scheduling batch jobs<a class="headerlink" href="#scheduling-batch-jobs" title="Permalink to this headline">¶</a></h3>
 <p>The above mentioned method of running <em>HPX</em> applications is fine for development
-purposes. The disadvantage that comes with <code class="docutils literal"><span class="pre">srun</span></code> is that it only returns once
+purposes. The disadvantage that comes with <code class="docutils literal notranslate"><span class="pre">srun</span></code> is that it only returns once
 the application is finished. This might not be appropriate for longer running
 applications (for example benchmarks or larger scale simulations). In order to
 cope with that limitation you can use the sbatch command.</p>
-<p>The <code class="docutils literal"><span class="pre">sbatch</span></code> command expects a script that it can run once the requested
+<p>The <code class="docutils literal notranslate"><span class="pre">sbatch</span></code> command expects a script that it can run once the requested
 resources are available. In order to request resources you need to add
-<code class="docutils literal"><span class="pre">#SBATCH</span></code> comments in your script or provide the necessary parameters to
-<code class="docutils literal"><span class="pre">sbatc</span></code> directly. The parameters are the same as with <code class="docutils literal"><span class="pre">run</span></code>. The commands
+<code class="docutils literal notranslate"><span class="pre">#SBATCH</span></code> comments in your script or provide the necessary parameters to
+<code class="docutils literal notranslate"><span class="pre">sbatc</span></code> directly. The parameters are the same as with <code class="docutils literal notranslate"><span class="pre">run</span></code>. The commands
 you need to execute are the same you would need to start your application as if
 you were in an interactive shell.</p>
 </div>
@@ -455,7 +455,7 @@ you were in an interactive shell.</p>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>edb02d1</code>.
+          Revision <code>b26d3ba</code>.
         </span>
       
 
@@ -486,7 +486,7 @@ LICENSE_1_0.txt or copy at
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'release',
+            VERSION:'1.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

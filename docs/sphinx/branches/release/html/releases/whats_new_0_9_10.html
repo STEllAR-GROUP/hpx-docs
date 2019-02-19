@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HPX V0.9.10 (Mar 24, 2015) &mdash; HPX release documentation</title>
+  <title>HPX V0.9.10 (Mar 24, 2015) &mdash; HPX 1.2.1 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="HPX release documentation" href="../index.html"/>
+    <link rel="top" title="HPX 1.2.1 documentation" href="../index.html"/>
         <link rel="up" title="Releases" href="../releases.html"/>
         <link rel="next" title="HPX V0.9.9 (Oct 31, 2014, codename Spooky)" href="whats_new_0_9_9.html"/>
         <link rel="prev" title="HPX V0.9.11 (Nov 11, 2015)" href="whats_new_0_9_11.html"/> 
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                release
+                1.2.1
               </div>
             
           
@@ -116,7 +116,7 @@
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../releases.html">Releases</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="whats_new_1_2_1.html"><em>HPX</em> V1.2.1 (unreleased)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whats_new_1_2_1.html"><em>HPX</em> V1.2.1 (Feb 19, 2019)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whats_new_1_2_0.html"><em>HPX</em> V1.2.0 (Nov 12, 2018)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whats_new_1_1_0.html"><em>HPX</em> V1.1.0 (Mar 24, 2018)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whats_new_1_0_0.html"><em>HPX</em> V1.0.0 (Apr 24, 2017)</a></li>
@@ -239,13 +239,13 @@ about 75% of all specified parallel algorithms (see [link
 hpx.manual.parallel.parallel_algorithms Parallel Algorithms] for more details).
 We also implemented some extensions to __cpp11_n4104__ allowing to invoke all of
 the algorithms asynchronously.</p>
-<p>This release adds a first implementation of <code class="docutils literal"><span class="pre">hpx::vector</span></code> which is a
+<p>This release adds a first implementation of <code class="docutils literal notranslate"><span class="pre">hpx::vector</span></code> which is a
 distributed data structure closely aligned to the functionality of
-<code class="docutils literal"><span class="pre">std::vector</span></code>. The difference is that <code class="docutils literal"><span class="pre">hpx::vector</span></code> stores the data in
+<code class="docutils literal notranslate"><span class="pre">std::vector</span></code>. The difference is that <code class="docutils literal notranslate"><span class="pre">hpx::vector</span></code> stores the data in
 partitions where the partitions can be distributed over different localities. We
-started to work on allowing to use the parallel algorithms with <code class="docutils literal"><span class="pre">hpx::vector</span></code>.
+started to work on allowing to use the parallel algorithms with <code class="docutils literal notranslate"><span class="pre">hpx::vector</span></code>.
 At this point we have implemented only a few of the parallel algorithms to
-support distributed data structures (like <code class="docutils literal"><span class="pre">hpx::vector</span></code>) for testing purposes
+support distributed data structures (like <code class="docutils literal notranslate"><span class="pre">hpx::vector</span></code>) for testing purposes
 (see <a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1338">Issue #1338</a> for a documentation of our progress).</p>
 </div>
 <div class="section" id="breaking-changes">
@@ -256,21 +256,21 @@ compatibility:</p>
 <ul class="simple">
 <li>Move to Variadics- All of the API now uses variadic templates. However, this
 change required to modify the argument sequence for some of the exiting API
-functions (<code class="xref cpp cpp-func docutils literal"><span class="pre">hpx::async_continue</span></code>, <code class="xref cpp cpp-func docutils literal"><span class="pre">hpx::apply_continue</span></code>,
-<a class="reference internal" href="../api.html#_CPPv2N3hpx9when_eachERR1FRRNSt6vectorI6FutureEE" title="hpx::when_each"><code class="xref cpp cpp-func docutils literal"><span class="pre">hpx::when_each</span></code></a>, <a class="reference internal" href="../api.html#_CPPv2N3hpx9wait_eachERR1FRRNSt6vectorI6FutureEE" title="hpx::wait_each"><code class="xref cpp cpp-func docutils literal"><span class="pre">hpx::wait_each</span></code></a>, synchronous invocation
+functions (<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async_continue</span></code>, <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::apply_continue</span></code>,
+<a class="reference internal" href="../api.html#_CPPv3N3hpx9when_eachERR1FRRNSt6vectorI6FutureEE" title="hpx::when_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::when_each</span></code></a>, <a class="reference internal" href="../api.html#_CPPv3N3hpx9wait_eachERR1FRRNSt6vectorI6FutureEE" title="hpx::wait_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::wait_each</span></code></a>, synchronous invocation
 of actions).</li>
-<li>Changes to Macros- We also removed the macros <code class="docutils literal"><span class="pre">HPX_STD_FUNCTION</span></code> and
-<code class="docutils literal"><span class="pre">HPX_STD_TUPLE</span></code>. This shouldn’t affect any user code as we replaced
-<code class="docutils literal"><span class="pre">HPX_STD_FUNCTION</span></code> with <code class="docutils literal"><span class="pre">hpx::util::function_nonser</span></code> which was the default
+<li>Changes to Macros- We also removed the macros <code class="docutils literal notranslate"><span class="pre">HPX_STD_FUNCTION</span></code> and
+<code class="docutils literal notranslate"><span class="pre">HPX_STD_TUPLE</span></code>. This shouldn’t affect any user code as we replaced
+<code class="docutils literal notranslate"><span class="pre">HPX_STD_FUNCTION</span></code> with <code class="docutils literal notranslate"><span class="pre">hpx::util::function_nonser</span></code> which was the default
 expansion used for this macro. All <em>HPX</em> API functions which expect a
-<code class="docutils literal"><span class="pre">hpx::util::function_nonser</span></code> (or a <code class="docutils literal"><span class="pre">hpx::util::unique_function_nonser</span></code>)
-can now be transparently called with a compatible <code class="docutils literal"><span class="pre">std::function</span></code> instead.
-Similarly, <code class="docutils literal"><span class="pre">HPX_STD_TUPLE</span></code> was replaced by its default expansion as well:
-<code class="docutils literal"><span class="pre">hpx::util::tuple</span></code>.</li>
-<li>Changes to <code class="docutils literal"><span class="pre">hpx::unique_future</span></code>- <code class="docutils literal"><span class="pre">hpx::unique_future</span></code>, which was
-deprecated in the previous release for <code class="xref cpp cpp-func docutils literal"><span class="pre">hpx::future</span></code> is now
+<code class="docutils literal notranslate"><span class="pre">hpx::util::function_nonser</span></code> (or a <code class="docutils literal notranslate"><span class="pre">hpx::util::unique_function_nonser</span></code>)
+can now be transparently called with a compatible <code class="docutils literal notranslate"><span class="pre">std::function</span></code> instead.
+Similarly, <code class="docutils literal notranslate"><span class="pre">HPX_STD_TUPLE</span></code> was replaced by its default expansion as well:
+<code class="docutils literal notranslate"><span class="pre">hpx::util::tuple</span></code>.</li>
+<li>Changes to <code class="docutils literal notranslate"><span class="pre">hpx::unique_future</span></code>- <code class="docutils literal notranslate"><span class="pre">hpx::unique_future</span></code>, which was
+deprecated in the previous release for <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::future</span></code> is now
 completely removed from <em>HPX</em>. This completes the transition to a completely
-standards conforming implementation of <code class="docutils literal"><span class="pre">hpx::future</span></code>.</li>
+standards conforming implementation of <code class="docutils literal notranslate"><span class="pre">hpx::future</span></code>.</li>
 <li>Changes to Supported Compilers. Finally, in order to utilize more C++11
 semantics, we have officially dropped support for GCC 4.4 and MSVC 2012.
 Please see our <a class="reference internal" href="../manual/building_hpx.html#prerequisites"><span class="std std-ref">Prerequisites</span></a> page for more details.</li>
@@ -295,18 +295,18 @@ held” - 1d_stencil_8 - SuperMIC</li>
 of elements</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1387">Issue #1387</a> - Failure with more than 4 localities</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1386">Issue #1386</a> - Dispatching unhandled exceptions to outer user code</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1385">Issue #1385</a> - Adding Copy algorithms, fixing <code class="docutils literal"><span class="pre">parallel::copy_if</span></code></li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1385">Issue #1385</a> - Adding Copy algorithms, fixing <code class="docutils literal notranslate"><span class="pre">parallel::copy_if</span></code></li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1384">Issue #1384</a> - Fixing 1325</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1383">Issue #1383</a> - Fixed #504: Refactor Dataflow LCO to work with futures,
 this removes the dataflow component as it is obsolete</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1382">Issue #1382</a> - <code class="docutils literal"><span class="pre">is_sorted</span></code>, <code class="docutils literal"><span class="pre">is_sorted_until</span></code> and <code class="docutils literal"><span class="pre">is_partitioned</span></code>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1382">Issue #1382</a> - <code class="docutils literal notranslate"><span class="pre">is_sorted</span></code>, <code class="docutils literal notranslate"><span class="pre">is_sorted_until</span></code> and <code class="docutils literal notranslate"><span class="pre">is_partitioned</span></code>
 algorithms</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1381">Issue #1381</a> - fix for CMake versions prior to 3.1</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1380">Issue #1380</a> - resolved warning in CMake 3.1 and newer</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1379">Issue #1379</a> - Compilation error with papi</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1378">Issue #1378</a> - Towards safer migration</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1377">Issue #1377</a> - HPXConfig.cmake should include <code class="docutils literal"><span class="pre">TCMALLOC_LIBRARY</span></code> and
-<code class="docutils literal"><span class="pre">TCMALLOC_INCLUDE_DIR</span></code></li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1377">Issue #1377</a> - HPXConfig.cmake should include <code class="docutils literal notranslate"><span class="pre">TCMALLOC_LIBRARY</span></code> and
+<code class="docutils literal notranslate"><span class="pre">TCMALLOC_INCLUDE_DIR</span></code></li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1376">Issue #1376</a> - Warning on uninitialized member</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1375">Issue #1375</a> - Fixing 1163</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1374">Issue #1374</a> - Fixing the MSVC 12 release builder</li>
@@ -316,7 +316,7 @@ searches</li>
 searches</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1371">Issue #1371</a> - Avoid holding a lock during agas::incref while doing a
 credit split</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1370">Issue #1370</a> - <code class="docutils literal"><span class="pre">--hpx:bind</span></code> throws unexpected error</li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1370">Issue #1370</a> - <code class="docutils literal notranslate"><span class="pre">--hpx:bind</span></code> throws unexpected error</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1369">Issue #1369</a> - Getting rid of (void) in loops</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1368">Issue #1368</a> - Variadic templates support for tuple</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1367">Issue #1367</a> - One last batch of variadic templates support</li>
@@ -334,7 +334,7 @@ components</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1356">Issue #1356</a> - fixed coordinate test for intel13</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1355">Issue #1355</a> - fixed coordinate.hpp</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1354">Issue #1354</a> - Lexicographical Compare completed</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1353">Issue #1353</a> - HPX should set <code class="docutils literal"><span class="pre">Boost_ADDITIONAL_VERSIONS</span></code> flags</li>
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1353">Issue #1353</a> - HPX should set <code class="docutils literal notranslate"><span class="pre">Boost_ADDITIONAL_VERSIONS</span></code> flags</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1352">Issue #1352</a> - Error: Cannot find action ‘’ in type registry:
 HPX(bad_action_code)</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1351">Issue #1351</a> - Variadic templates support for appliers</li>
@@ -348,7 +348,7 @@ HPX(bad_action_code)</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1343">Issue #1343</a> - Removing various distribution policies for hpx::vector</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1342">Issue #1342</a> - Inclusive scan</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1341">Issue #1341</a> - Exclusive scan</li>
-<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1340">Issue #1340</a> - Adding <code class="docutils literal"><span class="pre">parallel::count</span></code> for distributed data
+<li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1340">Issue #1340</a> - Adding <code class="docutils literal notranslate"><span class="pre">parallel::count</span></code> for distributed data
 structures, adding tests</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1339">Issue #1339</a> - Update argument order for transform_reduce</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/1337">Issue #1337</a> - Fix dataflow to handle properly ranges of futures</li>
@@ -421,7 +421,7 @@ into the public interface</li>
 HPX_STD_BIND</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/680">Issue #680</a> - Convert parcel ports into a plugin system</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/582">Issue #582</a> - Make exception thrown from HPX threads available from
-<code class="docutils literal"><span class="pre">hpx::init</span></code></li>
+<code class="docutils literal notranslate"><span class="pre">hpx::init</span></code></li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/504">Issue #504</a> - Refactor Dataflow LCO to work with futures</li>
 <li><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/196">Issue #196</a> - Don’t store copies of the locality network metadata in the
 gva table</li>
@@ -460,7 +460,7 @@ gva table</li>
         &copy; Copyright 2008-2018, The Ste||ar Group.
       
         <span class="commit">
-          Revision <code>edb02d1</code>.
+          Revision <code>b26d3ba</code>.
         </span>
       
 
@@ -491,7 +491,7 @@ LICENSE_1_0.txt or copy at
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'release',
+            VERSION:'1.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

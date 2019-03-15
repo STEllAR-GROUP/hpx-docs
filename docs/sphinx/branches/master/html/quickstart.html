@@ -468,6 +468,13 @@ like <code class="docutils literal"><span class="pre">when_all</span></code> hel
     <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;in final_task&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
 
+<span class="c1">// Avoid ABI incompatibilities between C++11/C++17 as std::rand has exception</span>
+<span class="c1">// specification in libstdc++.</span>
+<span class="kt">int</span> <span class="nf">rand_wrapper</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">rand</span><span class="p">();</span>
+<span class="p">}</span>
+
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// A function can be launched asynchronously. The program will not block</span>
@@ -500,7 +507,7 @@ like <code class="docutils literal"><span class="pre">when_all</span></code> hel
 
     <span class="c1">// We fill the vector synchronously and sequentially.</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">generate</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">seq</span><span class="p">,</span>
-                  <span class="n">std</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">rand</span><span class="p">);</span>
+                  <span class="n">std</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">rand_wrapper</span><span class="p">);</span>
 
     <span class="c1">// We can launch the sort in parallel and asynchronously.</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">done_sorting</span> <span class="o">=</span>
@@ -597,7 +604,7 @@ to a distributed implementation.</p>
         &copy; Copyright 2008-2019, The STE||AR Group.
       
         <span class="commit">
-          Revision <code>71f3d4d</code>.
+          Revision <code>83c1a06</code>.
         </span>
       
 

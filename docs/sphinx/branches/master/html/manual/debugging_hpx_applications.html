@@ -17,45 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="HPX master documentation" href="../index.html"/>
-        <link rel="up" title="Manual" href="../manual.html"/>
-        <link rel="next" title="Optimizing HPX applications" href="optimizing_hpx_applications.html"/>
-        <link rel="prev" title="Running on batch systems" href="running_on_batch_systems.html"/> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Optimizing HPX applications" href="optimizing_hpx_applications.html" />
+    <link rel="prev" title="Running on batch systems" href="running_on_batch_systems.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -64,7 +57,7 @@
 
           
             
-            <img src="../_static/HPX_STELLAR.png" class="logo" />
+            <img src="../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -150,7 +143,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">HPX</a>
@@ -158,9 +151,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -210,12 +204,12 @@
 <h1>Debugging <em>HPX</em> applications<a class="headerlink" href="#debugging-hpx-applications" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="using-a-debugger-with-hpx-applications">
 <h2>Using a debugger with <em>HPX</em> applications<a class="headerlink" href="#using-a-debugger-with-hpx-applications" title="Permalink to this headline">¶</a></h2>
-<p>Using a debugger such as <code class="docutils literal"><span class="pre">gdb</span></code> with <em>HPX</em> applications is no problem. However,
+<p>Using a debugger such as <code class="docutils literal notranslate"><span class="pre">gdb</span></code> with <em>HPX</em> applications is no problem. However,
 there are some things to keep in mind to make the experience somewhat more
 productive.</p>
 <p>Call stacks in <em>HPX</em> can often be quite unwieldy as the library is heavily
 templated and the call stacks can be very deep. For this reason it is sometimes
-a good idea compile <em>HPX</em> in <code class="docutils literal"><span class="pre">RelWithDebInfo</span></code> mode which applies some
+a good idea compile <em>HPX</em> in <code class="docutils literal notranslate"><span class="pre">RelWithDebInfo</span></code> mode which applies some
 optimizations but keeps debugging symbols. This can often compress call stacks
 significantly. On the other hand, stepping through the code can also be more
 difficult because of statements being reordered and variables being optimized
@@ -227,9 +221,9 @@ except at startup and shutdown. If using the default settings, <em>HPX</em> will
 six additional threads (used for service thread pools). The first worker thread
 is usually the eighth thread, and most user code will be run on these worker
 threads. The last thread is a helper thread used for <em>HPX</em> shutdown.</p>
-<p>Finally, since <em>HPX</em> is a multi-threaded runtime, the following <code class="docutils literal"><span class="pre">gdb</span></code> options
+<p>Finally, since <em>HPX</em> is a multi-threaded runtime, the following <code class="docutils literal notranslate"><span class="pre">gdb</span></code> options
 can be helpful:</p>
-<div class="highlight-text"><div class="highlight"><pre><span></span>set pagination off
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>set pagination off
 set non-stop on
 </pre></div>
 </div>
@@ -244,21 +238,19 @@ stopping all other threads as well.</p>
 with false positives from <em>HPX</em> itself when using sanitizers for your
 application.</p>
 </div>
-<p>To use sanitizers with <em>HPX</em> you should turn on <code class="docutils literal"><span class="pre">HPX_WITH_SANITIZERS</span></code> and turn
-off <code class="docutils literal"><span class="pre">HPX_WITH_STACK_OVERFLOW_DETECTION</span></code> during CMake configuration. It’s
+<p>To use sanitizers with <em>HPX</em> you should turn on <code class="docutils literal notranslate"><span class="pre">HPX_WITH_SANITIZERS</span></code> and turn
+off <code class="docutils literal notranslate"><span class="pre">HPX_WITH_STACK_OVERFLOW_DETECTION</span></code> during CMake configuration. It’s
 recommended to also build Boost with the same sanitizers that you will be
 using for <em>HPX</em>. The appropriate sanitizers can then be enabled using CMake by
-appending <code class="docutils literal"><span class="pre">-fsanitize=address</span> <span class="pre">-fno-omit-frame-pointer</span></code> to <code class="docutils literal"><span class="pre">CMAKE_CXX_FLAGS</span></code>
-and <code class="docutils literal"><span class="pre">-fsanitize=address</span></code> to <code class="docutils literal"><span class="pre">CMAKE_EXE_LINKER_FLAGS</span></code>. Replace <code class="docutils literal"><span class="pre">address</span></code>
+appending <code class="docutils literal notranslate"><span class="pre">-fsanitize=address</span> <span class="pre">-fno-omit-frame-pointer</span></code> to <code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_FLAGS</span></code>
+and <code class="docutils literal notranslate"><span class="pre">-fsanitize=address</span></code> to <code class="docutils literal notranslate"><span class="pre">CMAKE_EXE_LINKER_FLAGS</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">address</span></code>
 with the sanitizer that you want to use.</p>
 </div>
 </div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <!-- Copyright (c) 2018 Mikael Simberg
 
@@ -273,7 +265,7 @@ with the sanitizer that you want to use.</p>
         <a href="optimizing_hpx_applications.html" class="btn btn-neutral float-right" title="Optimizing HPX applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="running_on_batch_systems.html" class="btn btn-neutral" title="Running on batch systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="running_on_batch_systems.html" class="btn btn-neutral float-left" title="Running on batch systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -282,16 +274,16 @@ with the sanitizer that you want to use.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2008-2019, The STE||AR Group.
+        &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>3bf8859</code>.
+          Revision <code>ac618af</code>.
         </span>
       
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
  
 
 Distributed under the Boost Software License, Version 1.0. (See accompanying file
@@ -311,37 +303,15 @@ LICENSE_1_0.txt or copy at
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'master',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

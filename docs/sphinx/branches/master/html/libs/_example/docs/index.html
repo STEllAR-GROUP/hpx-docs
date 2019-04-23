@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="pp" href="../../pp/docs/index.html" />
+    <link rel="next" title="&lt;no title&gt;" href="../../preprocessor/docs/index.html" />
     <link rel="prev" title="Additional material" href="../../../additional_material.html" /> 
 </head>
 
@@ -101,7 +101,6 @@
 <p class="caption"><span class="caption-text">Libraries</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">HPX Modules</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../pp/docs/index.html">pp</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -183,105 +182,73 @@
             
   <div class="section" id="hpx-modules">
 <span id="libs-example"></span><h1>HPX Modules<a class="headerlink" href="#hpx-modules" title="Permalink to this headline">¶</a></h1>
-<p>HPX itself is organized into different sub-libraries. Those libraries can be seen as
-independent modules, with clear dependencies and no cycles.</p>
+<p><em>HPX</em> itself is organized into different sub-libraries. Those libraries can be
+seen as independent modules, with clear dependencies and no cycles.</p>
 <p>The tool <a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/blob/master/libs/create_library_skeleton.py">create_library_skeleton.py</a>
-can be used to generate a basic skeleton. The structure of this skeleton is as follows:</p>
+can be used to generate a basic skeleton. The structure of this skeleton is as
+follows:</p>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;lib_name&gt;/</span></code>
+* <code class="docutils literal notranslate"><span class="pre">README.rst</span></code>
+* <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>
+* <code class="docutils literal notranslate"><span class="pre">cmake</span></code>
+* <code class="docutils literal notranslate"><span class="pre">docs/</span></code></p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><cite>&lt;lib_name&gt;/</cite></dt>
-<dd><ul class="first last">
-<li><cite>Readme.md</cite></li>
-<li><cite>CMakeLists.txt</cite></li>
-<li><cite>cmake</cite></li>
-<li><cite>docs/</cite>
-- <cite>index.rst</cite></li>
-<li><dl class="first docutils">
-<dt><cite>examples/</cite></dt>
-<dd><ul class="first last">
-<li><cite>CMakeLists.txt</cite></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>include/</cite></dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt><cite>hpx/</cite></dt>
-<dd><ul class="first last">
-<li><cite>&lt;lib_name&gt;</cite></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>src/</cite></dt>
-<dd><ul class="first last">
-<li><cite>CMakeLists.txt</cite></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>tests/</cite></dt>
-<dd><ul class="first last">
-<li><cite>CMakeLists.txt</cite></li>
-<li><dl class="first docutils">
-<dt><cite>unit/</cite></dt>
-<dd><ul class="first last">
-<li><cite>CMakeLists.txt</cite></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>regressions/</cite></dt>
-<dd><ul class="first last">
-<li><cite>CMakeLists.txt</cite></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>performance/</cite></dt>
-<dd><ul class="first last">
-<li><cite>CMakeLists.txt</cite></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
+<li><code class="docutils literal notranslate"><span class="pre">index.rst</span></code></li>
 </ul>
 </div></blockquote>
-<p>A Readme should be always included which explains the basic purpose of the library
-and a link to the generated documentation.</p>
-<p>The include directory should contain only headers that other libraries need. For each of those
-headers, an automatic header test to check for self containment will be generated.
-Private headers should be placed under the src directory. This allows for clear
-seperation. The cmake subdirectory may include additional cmake scripts needed
-to generate the respective build configurations.</p>
-<p>Documentation is placed in the docs folder. A empty skeleton for the index is
-created, which is picked up by the main build system and will be part of the
-generated documentation. Each header inside the include directory will automatically
-be processed by Doxygen and included into the documentation. If a header should be
-excluded from the API reference, a comment <cite>// sphinx:undocumented</cite> needs to be
-added.</p>
-<p>In order to consume any library defined here, all you have to do is use <cite>target_link_libraries</cite>
-to get the dependencies. This of course requires that the library to link against
-specified the appropriate target include directories and libraries.</p>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">examples/</span></code>
+* <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">include/</span></code>
+* <code class="docutils literal notranslate"><span class="pre">hpx/</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&lt;lib_name&gt;</span></code></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">src/</span></code>
+* <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">tests/</span></code>
+* <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>
+* <code class="docutils literal notranslate"><span class="pre">unit/</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">regressions/</span></code>
+* <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">performance/</span></code>
+* <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>A <code class="docutils literal notranslate"><span class="pre">README.rst</span></code> should be always included which explains the basic purpose of
+the library and a link to the generated documentation.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">include</span></code> directory should contain only headers that other libraries need.
+For each of those headers, an automatic header test to check for self
+containment will be generated. Private headers should be placed under the
+<code class="docutils literal notranslate"><span class="pre">src</span></code> directory. This allows for clear seperation. The <code class="docutils literal notranslate"><span class="pre">cmake</span></code> subdirectory
+may include additional <a class="reference external" href="https://www.cmake.org">CMake</a> scripts needed to generate the respective build
+configurations.</p>
+<p>Documentation is placed in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> folder. A empty skeleton for the index
+is created, which is picked up by the main build system and will be part of the
+generated documentation. Each header inside the <code class="docutils literal notranslate"><span class="pre">include</span></code> directory will
+automatically be processed by Doxygen and included into the documentation. If a
+header should be excluded from the API reference, a comment <code class="docutils literal notranslate"><span class="pre">//</span>
+<span class="pre">sphinx:undocumented</span></code> needs to be added.</p>
+<p>In order to consume any library defined here, all you have to do is use
+<code class="docutils literal notranslate"><span class="pre">target_link_libraries</span></code> to get the dependencies. This of course requires that
+the library to link against specified the appropriate target include directories
+and libraries.</p>
 </div>
 
 
@@ -298,7 +265,7 @@ specified the appropriate target include directories and libraries.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../pp/docs/index.html" class="btn btn-neutral float-right" title="pp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../../preprocessor/docs/index.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../../../additional_material.html" class="btn btn-neutral float-left" title="Additional material" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -313,7 +280,7 @@ specified the appropriate target include directories and libraries.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>74873d9</code>.
+          Revision <code>493df76</code>.
         </span>
       
 

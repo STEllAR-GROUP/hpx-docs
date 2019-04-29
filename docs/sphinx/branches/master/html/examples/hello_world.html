@@ -110,9 +110,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../additional_material.html">Additional material</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption"><span class="caption-text">Modules</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../libs/_example/docs/index.html">HPX Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../libs/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../libs/all_modules.html">All modules</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -361,6 +362,33 @@ OS-thread prints out the statement, the future is marked as ready, and
 <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::lcos::wait_each</span></code> in <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code>. If it is not
 executing on the correct OS-thread, it returns a value of -1, which causes
 <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code> to leave the OS-thread id in <code class="docutils literal notranslate"><span class="pre">attendance</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">hello_world_worker</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">desired</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Returns the OS-thread number of the worker that is running this</span>
+    <span class="c1">// HPX-thread.</span>
+    <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">current</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_worker_thread_num</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">current</span> <span class="o">==</span> <span class="n">desired</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// The HPX-thread has been run on the desired OS-thread.</span>
+        <span class="kt">char</span> <span class="k">const</span><span class="o">*</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;hello world from OS-thread {1} on locality {2}</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+        <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">format_to</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_locality_id</span><span class="p">())</span>
+            <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">desired</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// This HPX-thread has been run by the wrong OS-thread, make the foreman</span>
+    <span class="c1">// try again by rescheduling it.</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Define the boilerplate code necessary for the function &#39;hello_world_worker&#39;</span>
+<span class="c1">// to be invoked as an HPX action (by a HPX future). This macro defines the</span>
+<span class="c1">// type &#39;hello_world_worker_action&#39;.</span>
+<span class="n">HPX_PLAIN_ACTION</span><span class="p">(</span><span class="n">hello_world_worker</span><span class="p">,</span> <span class="n">hello_world_worker_action</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>Because <em>HPX</em> features work stealing task schedulers, there is no way to
 guarantee that an action will be scheduled on a particular OS-thread. This is
 why we must use a guess-and-check approach.</p>
@@ -396,7 +424,7 @@ why we must use a guess-and-check approach.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>51e5132</code>.
+          Revision <code>18ab489</code>.
         </span>
       
 

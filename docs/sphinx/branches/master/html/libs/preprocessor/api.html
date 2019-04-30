@@ -110,10 +110,10 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../../api.html#modules-reference">Modules reference</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">preprocessor</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-hpp"><cite>#include &lt;hpx/preprocessor.hpp&gt;</cite></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-strip-parens-hpp"><cite>#include &lt;hpx/preprocessor/strip_parens.hpp&gt;</cite></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-expand-hpp"><cite>#include &lt;hpx/preprocessor/expand.hpp&gt;</cite></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-nargs-hpp"><cite>#include &lt;hpx/preprocessor/nargs.hpp&gt;</cite></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-expand-hpp"><cite>#include &lt;hpx/preprocessor/expand.hpp&gt;</cite></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-cat-hpp"><cite>#include &lt;hpx/preprocessor/cat.hpp&gt;</cite></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-strip-parens-hpp"><cite>#include &lt;hpx/preprocessor/strip_parens.hpp&gt;</cite></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-stringize-hpp"><cite>#include &lt;hpx/preprocessor/stringize.hpp&gt;</cite></a></li>
 </ul>
 </li>
@@ -203,31 +203,31 @@
 <div class="section" id="include-hpx-preprocessor-hpp">
 <h2><cite>#include &lt;hpx/preprocessor.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-hpp" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="include-hpx-preprocessor-strip-parens-hpp">
-<h2><cite>#include &lt;hpx/preprocessor/strip_parens.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-strip-parens-hpp" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="include-hpx-preprocessor-nargs-hpp">
+<h2><cite>#include &lt;hpx/preprocessor/nargs.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-nargs-hpp" title="Permalink to this headline">¶</a></h2>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Defines</p>
 <dl class="macro">
-<dt id="c.HPX_PP_STRIP_PARENS">
-<span class="target" id="strip__parens_8hpp_1a28a0f44736abb5d32ff71dd625c03384"></span><code class="descname">HPX_PP_STRIP_PARENS</code><span class="sig-paren">(</span>X<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_STRIP_PARENS" title="Permalink to this definition">¶</a></dt>
-<dd><p>For any symbol <code class="docutils literal notranslate"><span class="pre">X</span></code>, this macro returns the same symbol from which potential outer parens have been removed. If no outer parens are found, this macros evaluates to <code class="docutils literal notranslate"><span class="pre">X</span></code> itself without error.</p>
-<p>The original implementation of this macro is from Steven Watanbe as shown in <a class="reference external" href="http://boost.2283326.n4.nabble.com/preprocessor-removing-parentheses-td2591973.html#a2591976">http://boost.2283326.n4.nabble.com/preprocessor-removing-parentheses-td2591973.html#a2591976</a></p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HPX_PP_STRIP_PARENS</span><span class="p">(</span><span class="n">no_parens</span><span class="p">)</span>
-<span class="n">HPX_PP_STRIP_PARENS</span><span class="p">((</span><span class="n">with_parens</span><span class="p">))</span>
+<dt id="c.HPX_PP_NARGS">
+<span class="target" id="nargs_8hpp_1a6fc6303a818e9c4b9dc058ca169de729"></span><code class="descname">HPX_PP_NARGS</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_NARGS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expands to the number of arguments passed in</p>
+<p><p>Example Usage: </p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HPX_PP_NARGS</span><span class="p">(</span><span class="n">hpx</span><span class="p">,</span> <span class="n">pp</span><span class="p">,</span> <span class="n">nargs</span><span class="p">)</span>
+<span class="n">HPX_PP_NARGS</span><span class="p">(</span><span class="n">hpx</span><span class="p">,</span> <span class="n">pp</span><span class="p">)</span>
+<span class="n">HPX_PP_NARGS</span><span class="p">(</span><span class="n">hpx</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="docutils">
-<dt><strong>Example Usage:</strong></dt>
-<dd></dd>
 <dt><strong>Parameters</strong></dt>
 <dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">X</span></code>: Symbol to strip parens from</li>
+<li><code class="docutils literal notranslate"><span class="pre">...</span></code>: The variadic number of arguments</li>
 </ul>
 </dd>
 </dl>
 </p>
-<p>This produces the following output <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">no_parens</span>
-<span class="n">with_parens</span>
+<p>Expands to: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+<span class="mi">2</span>
+<span class="mi">1</span>
 </pre></div>
 </div>
  </p>
@@ -262,38 +262,6 @@
 
 </div>
 </div>
-<div class="section" id="include-hpx-preprocessor-nargs-hpp">
-<h2><cite>#include &lt;hpx/preprocessor/nargs.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-nargs-hpp" title="Permalink to this headline">¶</a></h2>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Defines</p>
-<dl class="macro">
-<dt id="c.HPX_PP_NARGS">
-<span class="target" id="nargs_8hpp_1a6fc6303a818e9c4b9dc058ca169de729"></span><code class="descname">HPX_PP_NARGS</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_NARGS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Expands to the number of arguments passed in</p>
-<p><p>Example Usage: </p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HPX_PP_NARGS</span><span class="p">(</span><span class="n">hpx</span><span class="p">,</span> <span class="n">pp</span><span class="p">,</span> <span class="n">nargs</span><span class="p">)</span>
-<span class="n">HPX_PP_NARGS</span><span class="p">(</span><span class="n">hpx</span><span class="p">,</span> <span class="n">pp</span><span class="p">)</span>
-<span class="n">HPX_PP_NARGS</span><span class="p">(</span><span class="n">hpx</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="docutils">
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">...</span></code>: The variadic number of arguments</li>
-</ul>
-</dd>
-</dl>
-</p>
-<p>Expands to: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
-<span class="mi">2</span>
-<span class="mi">1</span>
-</pre></div>
-</div>
- </p>
-</dd></dl>
-
-</div>
-</div>
 <div class="section" id="include-hpx-preprocessor-cat-hpp">
 <h2><cite>#include &lt;hpx/preprocessor/cat.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-cat-hpp" title="Permalink to this headline">¶</a></h2>
 <div class="breathe-sectiondef docutils container">
@@ -310,6 +278,38 @@
 </dd>
 </dl>
 </p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="include-hpx-preprocessor-strip-parens-hpp">
+<h2><cite>#include &lt;hpx/preprocessor/strip_parens.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-strip-parens-hpp" title="Permalink to this headline">¶</a></h2>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="macro">
+<dt id="c.HPX_PP_STRIP_PARENS">
+<span class="target" id="strip__parens_8hpp_1a28a0f44736abb5d32ff71dd625c03384"></span><code class="descname">HPX_PP_STRIP_PARENS</code><span class="sig-paren">(</span>X<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_STRIP_PARENS" title="Permalink to this definition">¶</a></dt>
+<dd><p>For any symbol <code class="docutils literal notranslate"><span class="pre">X</span></code>, this macro returns the same symbol from which potential outer parens have been removed. If no outer parens are found, this macros evaluates to <code class="docutils literal notranslate"><span class="pre">X</span></code> itself without error.</p>
+<p>The original implementation of this macro is from Steven Watanbe as shown in <a class="reference external" href="http://boost.2283326.n4.nabble.com/preprocessor-removing-parentheses-td2591973.html#a2591976">http://boost.2283326.n4.nabble.com/preprocessor-removing-parentheses-td2591973.html#a2591976</a></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HPX_PP_STRIP_PARENS</span><span class="p">(</span><span class="n">no_parens</span><span class="p">)</span>
+<span class="n">HPX_PP_STRIP_PARENS</span><span class="p">((</span><span class="n">with_parens</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><strong>Example Usage:</strong></dt>
+<dd></dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">X</span></code>: Symbol to strip parens from</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>This produces the following output <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">no_parens</span>
+<span class="n">with_parens</span>
+</pre></div>
+</div>
+ </p>
 </dd></dl>
 
 </div>
@@ -366,7 +366,7 @@
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>18ab489</code>.
+          Revision <code>2dd0968</code>.
         </span>
       
 

@@ -3,10 +3,10 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// This is the seventh in a series of examples demonstrating the development
-// of a fully distributed solver for a simple 1D heat distribution problem.
+// This is the sixth in a series of examples demonstrating the development of a
+// fully distributed solver for a simple 1D heat distribution problem.
 //
-// This example builds on example six.
+// This example builds on example five.
 
 #include <hpx/hpx_init.hpp>
 #include <hpx/hpx.hpp>
@@ -60,16 +60,16 @@ public:
 
     // Create a new (uninitialized) partition of the given size.
     partition_data(std::size_t size)
-      : data_(new double [size], size, buffer_type::take),
-        size_(size),
-        min_index_(0)
+      : data_(std::allocator<double>().allocate(size), size, buffer_type::take)
+      , size_(size)
+      , min_index_(0)
     {}
 
     // Create a new (initialized) partition of the given size.
     partition_data(std::size_t size, double initial_value)
-      : data_(new double [size], size, buffer_type::take),
-        size_(size),
-        min_index_(0)
+      : data_(std::allocator<double>().allocate(size), size, buffer_type::take)
+      , size_(size)
+      , min_index_(0)
     {
         double base_value = double(initial_value * size);
         for (std::size_t i = 0; i != size; ++i)
@@ -253,62 +253,49 @@ struct stepper
         return middle + (k*dt/(dx*dx)) * (left - 2*middle + right);
     }
 
-    //[stepper_7
     // The partitioned operator, it invokes the heat operator above on all elements
     // of a partition.
-    static partition heat_part(partition const& left,
-        partition const& middle, partition const& right)
+    static partition_data heat_part_data(partition_data const& left,
+        partition_data const& middle, partition_data const& right)
+    {
+        std::size_t size = middle.size();
+        partition_data next(size);
+
+        next[0] = heat(left[size-1], middle[0], middle[1]);
+
+        for (std::size_t i = 1; i != size-1; ++i)
+            next[i] = heat(middle[i-1], middle[i], middle[i+1]);
+
+        next[size-1] = heat(middle[size-2], middle[size-1], right[0]);
+
+        return next;
+    }
+
+    static partition heat_part(partition const& left, partition const& middle,
+        partition const& right)
     {
         using hpx::dataflow;
         using hpx::util::unwrapping;
 
-        hpx::shared_future<partition_data> middle_data =
-            middle.get_data(partition_server::middle_partition);
-
-        hpx::future<partition_data> next_middle = middle_data.then(
-            unwrapping(
-                [middle](partition_data const& m) -> partition_data
-                {
-                    HPX_UNUSED(middle);
-
-                    // All local operations are performed once the middle data of
-                    // the previous time step becomes available.
-                    std::size_t size = m.size();
-                    partition_data next(size);
-                    for (std::size_t i = 1; i != size-1; ++i)
-                        next[i] = heat(m[i-1], m[i], m[i+1]);
-                    return next;
-                }
-            )
-        );
-
         return dataflow(
             hpx::launch::async,
             unwrapping(
-                [left, middle, right](partition_data next, partition_data const& l,
-                    partition_data const& m, partition_data const& r) -> partition
+                [left, middle, right](partition_data const& l, partition_data const& m,
+                    partition_data const& r)
                 {
                     HPX_UNUSED(left);
                     HPX_UNUSED(right);
 
-                    // Calculate the missing boundary elements once the
-                    // corresponding data has become available.
-                    std::size_t size = m.size();
-                    next[0] = heat(l[size-1], m[0], m[1]);
-                    next[size-1] = heat(m[size-2], m[size-1], r[0]);
-
                     // The new partition_data will be allocated on the same locality
                     // as 'middle'.
-                    return partition(middle.get_id(), next);
+                    return partition(middle.get_id(), heat_part_data(l, m, r));
                 }
             ),
-            std::move(next_middle),
             left.get_data(partition_server::left_partition),
-            middle_data,
+            middle.get_data(partition_server::middle_partition),
             right.get_data(partition_server::right_partition)
         );
     }
-    //]
 
     // do all the work on 'np' partitions, 'nx' data points each, for 'nt'
     // time steps
@@ -337,9 +324,10 @@ stepper::space stepper::do_work(std::size_t np, std::size_t nx, std::size_t nt)
         s.resize(np);
 
     // Initial conditions: f(0, i) = i
+    //[do_work_6
     for (std::size_t i = 0; i != np; ++i)
         U[0][i] = partition(localities[locidx(i, np, nl)], nx, double(i));
-
+    //]
     heat_part_action act;
     for (std::size_t t = 0; t != nt; ++t)
     {
@@ -371,11 +359,11 @@ int hpx_main(boost::program_options::variables_map& vm)
     std::uint64_t nx = vm["nx"].as<std::uint64_t>();   // Number of grid points.
     std::uint64_t nt = vm["nt"].as<std::uint64_t>();   // Number of steps.
 
-    std::vector<hpx::id_type> localities = hpx::find_all_localities();
-    std::size_t nl = localities.size();                    // Number of localities
-
     if (vm.count("no-header"))
         header = false;
+
+    std::vector<hpx::id_type> localities = hpx::find_all_localities();
+    std::size_t nl = localities.size();                    // Number of localities
 
     if (np < nl)
     {

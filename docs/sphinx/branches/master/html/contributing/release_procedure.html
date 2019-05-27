@@ -217,8 +217,8 @@ feedback. Update the list as necessary.</p>
 </li>
 <li><p class="first">Write release notes in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases/whats_new_$VERSION.rst</span></code>. Keep
 adding merged PRs and closed issues to this until just before the release is
-made. Add the new release notes to the table of contents in
-<code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases.rst</span></code>.</p>
+made. Use <code class="docutils literal notranslate"><span class="pre">tools/generate_pr_issue_list.sh</span></code> to generate the lists. Add the
+new release notes to the table of contents in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases.rst</span></code>.</p>
 </li>
 <li><p class="first">Build the docs, and proof-read them. Update any documentation that may have
 changed, and correct any typos. Pay special attention to:</p>
@@ -297,14 +297,9 @@ the breaking change was introduced first.</p>
 <ol class="arabic simple">
 <li>Change <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_TAG</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to <code class="docutils literal notranslate"><span class="pre">-rcN</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code>
 is the current iteration of this step. Start with <code class="docutils literal notranslate"><span class="pre">-rc1</span></code>.</li>
-<li>Tag a release candidate from the release branch, where tag name is the
-version to be released with a <code class="docutils literal notranslate"><span class="pre">-rcN</span></code> suffix and description is “HPX
-V$VERSION: The C++ Standards Library for Parallelism and Concurrency”.<ul>
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">tag</span> <span class="pre">-a</span> <span class="pre">[tag</span> <span class="pre">name]</span> <span class="pre">-m</span> <span class="pre">'[description]'</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">[tag</span> <span class="pre">name]</span></code></li>
-<li>Create a pre-release on GitHub</li>
-</ul>
-</li>
+<li>Tag and create a pre-release on GitHub using the script
+<code class="docutils literal notranslate"><span class="pre">tools/roll_release.sh</span></code>. The script requires that you have the STE||AR
+Group signing key.</li>
 <li>This step is not necessary for patch releases. Notify
 <code class="docutils literal notranslate"><span class="pre">hpx-users&#64;stellar.cct.lsu.edu</span></code> and <code class="docutils literal notranslate"><span class="pre">stellar&#64;cct.lsu.edu</span></code> of the
 availability of the release candidate. Ask users to test the candidate by
@@ -333,44 +328,15 @@ with the new version number and a link to the corresponding changelog.</p>
 the docs, and change the value of <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_DATE</span></code> in
 <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p>
 </li>
-<li><p class="first">Tag the release from the release branch, where tag name is the version to be
-released and description is “HPX V$VERSION: The C++ Standards Library for
-Parallelism and Concurrency”. Sign the release tag with the
-<code class="docutils literal notranslate"><span class="pre">contact&#64;stellar-group.org</span></code> key by adding the <code class="docutils literal notranslate"><span class="pre">-s</span></code> flag to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">tag</span></code>.
-Make sure you change git to sign with the <code class="docutils literal notranslate"><span class="pre">contact&#64;stellar-group.org</span></code> key,
-rather than your own key if you use one. You also need to change the name and
-email used for commits. Change them to <code class="docutils literal notranslate"><span class="pre">STE||AR</span> <span class="pre">Group</span></code> and
-<code class="docutils literal notranslate"><span class="pre">contact&#64;stellar-group.org</span></code>, respectively. Finally, the
-<code class="docutils literal notranslate"><span class="pre">contact&#64;stellar-group.org</span></code> email address needs to be added to your GitHub
-account for the tag to show up as verified.</p>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">tag</span> <span class="pre">-s</span> <span class="pre">-a</span> <span class="pre">[tag</span> <span class="pre">name]</span> <span class="pre">-m</span> <span class="pre">'[description]'</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">[tag</span> <span class="pre">name]</span></code></li>
-</ul>
-</li>
-<li><p class="first">Create a release on GitHub</p>
-<ul class="simple">
-<li>Refer to the ‘What’s New’ section in the documentation you uploaded in the
-notes for the Github release (see previous releases for a hint).</li>
-<li>A DOI number using Zenodo is automatically assigned once the release is
-created as such on github.</li>
-<li>Verify on Zenodo (<a class="reference external" href="https://zenodo.org/">https://zenodo.org/</a>) that release was uploaded. Logging
-into zenodo using the github credentials might be necessary to see the new
-release as it usually takes a while for it to propagate to the search
-engine used on zenodo.</li>
-</ul>
+<li><p class="first">Tag and create a release on GitHub using the script
+<code class="docutils literal notranslate"><span class="pre">tools/roll_release.sh</span></code>. The script requires that you have the STE||AR
+Group signing key.</p>
 </li>
 <li><p class="first">Update the websites (<a class="reference external" href="https://stellar-group.org">stellar-group.org</a> and
 <a class="reference external" href="https://stellar.cct.lsu.edu">stellar.cct.lsu.edu</a>) with the following:</p>
 <ul class="simple">
-<li>Download links on the download page<ul>
-<li>Run the script <code class="docutils literal notranslate"><span class="pre">tools/roll_release.sh</span></code>. The script creates archives of
-the release and prints HTML for the download pages. Upload the archives
-to <a class="reference external" href="https://stellar.cct.lsu.edu">stellar.cct.lsu.edu</a>, and add the
-provided HTML to the downloads pages of both websites.</li>
-<li>Check that the download links work.</li>
-</ul>
-</li>
+<li>Download links on the downloads pages. Use the direct link to the release
+printed by the previous step.</li>
 <li>Documentation links on the docs page (link to generated documentation on
 GitHub Pages). Follow the style of previous releases.</li>
 <li>A new blog post announcing the release, which links to downloads and the
@@ -450,7 +416,7 @@ HPC, Heise Online, and a CCT press release.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>735c8c5</code>.
+          Revision <code>3122895</code>.
         </span>
       
 

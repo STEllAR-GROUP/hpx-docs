@@ -332,7 +332,7 @@ below shows how this technique was applied to the <code class="docutils literal 
 
         <span class="c1">// Now the asynchronous computation is running; the above for-loop does not</span>
         <span class="c1">// wait on anything. There is no implicit waiting at the end of each timestep;</span>
-        <span class="c1">// the computation of each U[t][i] will begin as soon as its dependencies</span>
+        <span class="c1">// the computation of each U[t][i] will begin when as soon as its dependencies</span>
         <span class="c1">// are ready and hardware is available.</span>
 
         <span class="c1">// Return the solution at time-step &#39;nt&#39;.</span>
@@ -382,7 +382,7 @@ this manner, each future represents several data points. Because the user can
 define how many data points are contained in each partition (and therefore how
 many data points that are represented by one future) a user can now control the
 grainsize of the simulation. The rest of the code was then futurized in the same
-manner as was done in example 2. It should be noted how strikingly similar
+manner that was done in example 2. It should be noted how strikingly similar
 example 4 is to example 2.</p>
 <p>Example 4 finally shows good results. This code scales equivalently to the
 OpenMP version. While these results are promising, there are more opportunities
@@ -419,11 +419,11 @@ called unless the data from the neighboring partitions have arrived. Therefore
 it should come as no surprise that we synchronize this operation with another
 instance of dataflow (found in <code class="docutils literal notranslate"><span class="pre">heat_part</span></code>). This dataflow is passed futures
 to the data in the current and surrounding partitions by calling <code class="docutils literal notranslate"><span class="pre">get_data()</span></code>
-on each respective partition. When these futures are ready dataflow passes them
+on each respective partition. When these futures are ready dataflow passes then
 to the <code class="docutils literal notranslate"><span class="pre">unwrapped</span></code> function, which extracts the shared_array of doubles and
 passes them to the lambda. The lambda calls <code class="docutils literal notranslate"><span class="pre">heat_part_data</span></code> on the
 <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> which the middle partition is on.</p>
-<p>Although this example could run distributed, it only runs on one
+<p>Although this example could run in distributed, it only runs on one
 <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> as it always uses <code class="docutils literal notranslate"><span class="pre">hpx::find_here()</span></code> as the target for the
 functions to run on.</p>
 <p>In example 6, we begin to distribute the partition data on different nodes. This
@@ -561,7 +561,7 @@ facilitates the scalable parallelization of most applications.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>2d244e1</code>.
+          Revision <code>5a2e45b</code>.
         </span>
       
 

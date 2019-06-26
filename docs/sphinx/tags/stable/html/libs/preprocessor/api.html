@@ -111,12 +111,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../cache/api.html">cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../config/api.html">config</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">preprocessor</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-hpp"><cite>#include &lt;hpx/preprocessor.hpp&gt;</cite></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-nargs-hpp"><cite>#include &lt;hpx/preprocessor/nargs.hpp&gt;</cite></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-strip-parens-hpp"><cite>#include &lt;hpx/preprocessor/strip_parens.hpp&gt;</cite></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-expand-hpp"><cite>#include &lt;hpx/preprocessor/expand.hpp&gt;</cite></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-stringize-hpp"><cite>#include &lt;hpx/preprocessor/stringize.hpp&gt;</cite></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-cat-hpp"><cite>#include &lt;hpx/preprocessor/cat.hpp&gt;</cite></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-expand-hpp"><cite>#include &lt;hpx/preprocessor/expand.hpp&gt;</cite></a></li>
 </ul>
 </li>
 </ul>
@@ -202,9 +201,6 @@
             
   <div class="section" id="preprocessor">
 <h1>preprocessor<a class="headerlink" href="#preprocessor" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="include-hpx-preprocessor-hpp">
-<h2><cite>#include &lt;hpx/preprocessor.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-hpp" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="include-hpx-preprocessor-nargs-hpp">
 <h2><cite>#include &lt;hpx/preprocessor/nargs.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-nargs-hpp" title="Permalink to this headline">¶</a></h2>
 <div class="breathe-sectiondef docutils container">
@@ -269,33 +265,6 @@
 
 </div>
 </div>
-<div class="section" id="include-hpx-preprocessor-expand-hpp">
-<h2><cite>#include &lt;hpx/preprocessor/expand.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-expand-hpp" title="Permalink to this headline">¶</a></h2>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Defines</p>
-<dl class="macro">
-<dt id="c.HPX_PP_EXPAND">
-<span class="target" id="expand_8hpp_1ac495ac928734ee357b5a251d03ed7fd6"></span><code class="descname">HPX_PP_EXPAND</code><span class="sig-paren">(</span>X<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_EXPAND" title="Permalink to this definition">¶</a></dt>
-<dd><p>The HPX_PP_EXPAND macro performs a double macro-expansion on its argument. <p>This macro can be used to produce a delayed preprocessor expansion.</p>
-<dl class="docutils">
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">X</span></code>: Token to be expanded twice</li>
-</ul>
-</dd>
-</dl>
-</p>
-<p>Example: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define MACRO(a, b, c) (a)(b)(c)</span>
-<span class="cp">#define ARGS() (1, 2, 3)</span>
-
-<span class="n">HPX_PP_EXPAND</span><span class="p">(</span><span class="n">MACRO</span> <span class="n">ARGS</span><span class="p">())</span> <span class="c1">// expands to (1)(2)(3)</span>
-</pre></div>
-</div>
- </p>
-</dd></dl>
-
-</div>
-</div>
 <div class="section" id="include-hpx-preprocessor-stringize-hpp">
 <h2><cite>#include &lt;hpx/preprocessor/stringize.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-stringize-hpp" title="Permalink to this headline">¶</a></h2>
 <div class="breathe-sectiondef docutils container">
@@ -337,6 +306,33 @@
 
 </div>
 </div>
+<div class="section" id="include-hpx-preprocessor-expand-hpp">
+<h2><cite>#include &lt;hpx/preprocessor/expand.hpp&gt;</cite><a class="headerlink" href="#include-hpx-preprocessor-expand-hpp" title="Permalink to this headline">¶</a></h2>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="macro">
+<dt id="c.HPX_PP_EXPAND">
+<span class="target" id="expand_8hpp_1ac495ac928734ee357b5a251d03ed7fd6"></span><code class="descname">HPX_PP_EXPAND</code><span class="sig-paren">(</span>X<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_EXPAND" title="Permalink to this definition">¶</a></dt>
+<dd><p>The HPX_PP_EXPAND macro performs a double macro-expansion on its argument. <p>This macro can be used to produce a delayed preprocessor expansion.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">X</span></code>: Token to be expanded twice</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Example: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define MACRO(a, b, c) (a)(b)(c)</span>
+<span class="cp">#define ARGS() (1, 2, 3)</span>
+
+<span class="n">HPX_PP_EXPAND</span><span class="p">(</span><span class="n">MACRO</span> <span class="n">ARGS</span><span class="p">())</span> <span class="c1">// expands to (1)(2)(3)</span>
+</pre></div>
+</div>
+ </p>
+</dd></dl>
+
+</div>
+</div>
 </div>
 
 
@@ -368,7 +364,7 @@
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>1874ca9</code>.
+          Revision <code>61bc33e</code>.
         </span>
       
 

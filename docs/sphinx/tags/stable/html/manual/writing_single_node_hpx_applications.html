@@ -375,7 +375,7 @@ asynchronous operations to <code class="docutils literal notranslate"><span clas
 <td>In asynchronous programming, it is very common for one asynchronous
 operation, on completion, to invoke a second operation and pass data to
 it. The current C++ standard does not allow one to register a
-continuation to a future. With``then`` instead of waiting for the result,
+continuation to a future. With <code class="docutils literal notranslate"><span class="pre">then</span></code> instead of waiting for the result,
 a continuation is “attached” to the asynchronous operation, which is
 invoked when the result is ready. Continuations registered using then
 function will help to avoid blocking waits or wasting threads on polling,
@@ -400,7 +400,7 @@ some non-trivial overhead and near-certain loss of cache efficiency.</td>
 <tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">hpx::make_ready_future</span></code></td>
 <td>Some functions may know the value at the point of construction. In these
 cases the value is immediately available, but needs to be returned as a
-future. By using``hpx::make_ready_future``a future can be created which
+future. By using <code class="docutils literal notranslate"><span class="pre">hpx::make_ready_future</span></code> a future can be created which
 holds a pre-computed result in its shared state. In the current standard
 it is non-trivial to create a future directly from a value. First a
 promise must be created, then the promise is set, and lastly the future
@@ -493,7 +493,7 @@ to what inline namespaces would do, namely all names defined in
 well.</p>
 </div>
 <p>All parallel algorithms are very similar in semantics to their sequential
-counterparts (as defined in the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">std</span></code> with an additional formal
+counterparts (as defined in the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">std</span></code>) with an additional formal
 template parameter named <code class="docutils literal notranslate"><span class="pre">ExecutionPolicy</span></code>. The execution policy is generally
 passed as the first argument to any of the parallel algorithms and describes the
 manner in which the execution of these algorithms may be parallelized and the
@@ -527,7 +527,7 @@ the execution is semantically equivalent to the case of passing a
 <div class="section" id="parallel-exceptions">
 <h3>Parallel exceptions<a class="headerlink" href="#parallel-exceptions" title="Permalink to this headline">¶</a></h3>
 <p>During the execution of a standard parallel algorithm, if temporary memory
-resources are required by any of the algorithms and no memory are available, the
+resources are required by any of the algorithms and no memory is available, the
 algorithm throws a <code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code> exception.</p>
 <p>During the execution of any of the parallel algorithms, if the application of a
 function object terminates with an uncaught exception, the behavior of the
@@ -548,10 +548,10 @@ application of user-provided function objects shall be contained in the
 for_each is unspecified. When <a class="reference internal" href="../api.html#_CPPv4I0000EN3hpx8parallel2v18for_eachEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter7FwdIterRR1FRR4Proj" title="hpx::parallel::v1::for_each"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::v1::for_each</span></code></a> is executed sequentially, only one
 exception will be contained in the <a class="reference internal" href="../api.html#_CPPv4N3hpx14exception_listE" title="hpx::exception_list"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::exception_list</span></code></a> object.</p>
 <p>These guarantees imply that, unless the algorithm has failed to allocate memory
-and terminated with <code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code> all exceptions thrown during the execution
-of the algorithm are communicated to the caller. It is unspecified whether an
-algorithm implementation will “forge ahead” after encountering and capturing a
-user exception.</p>
+and terminated with <code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code>, all exceptions thrown during the
+execution of the algorithm are communicated to the caller. It is unspecified
+whether an algorithm implementation will “forge ahead” after encountering and
+capturing a user exception.</p>
 <p>The algorithm may terminate with the <code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code> exception even if one or
 more user-provided function objects have terminated with an exception. For
 example, this can happen when an algorithm fails to allocate memory while
@@ -1202,7 +1202,7 @@ among the threads. This executor parameters type is equivalent to OpenMP’s
 STATIC scheduling directive.</li>
 <li><a class="reference internal" href="../api.html#_CPPv4N3hpx8parallel9execution18dynamic_chunk_sizeE" title="hpx::parallel::execution::dynamic_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::execution::dynamic_chunk_size</span></code></a>: Loop iterations are
 divided into pieces of a given size and then dynamically scheduled among the
-cores; when an core finishes one chunk, it is dynamically assigned another If
+cores; when a core finishes one chunk, it is dynamically assigned another. If
 the size is not specified, the default chunk size is 1. This executor
 parameters type is equivalent to OpenMP’s DYNAMIC scheduling directive.</li>
 <li><a class="reference internal" href="../api.html#_CPPv4N3hpx8parallel9execution17guided_chunk_sizeE" title="hpx::parallel::execution::guided_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::execution::guided_chunk_size</span></code></a>: Iterations are
@@ -1223,7 +1223,7 @@ directive.</li>
 <p>The <code class="docutils literal notranslate"><span class="pre">define_task_block</span></code>, <code class="docutils literal notranslate"><span class="pre">run</span></code> and the <code class="docutils literal notranslate"><span class="pre">wait</span></code> functions implemented based
 on <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4411.pdf">N4411</a> are based on the <code class="docutils literal notranslate"><span class="pre">task_block</span></code> concept that is a part of the
 common subset of the <a class="reference external" href="https://msdn.microsoft.com/en-us/library/dd492418.aspx">Microsoft Parallel Patterns Library (PPL)</a> and the <a class="reference external" href="https://www.threadingbuildingblocks.org/">Intel Threading Building Blocks (TBB)</a> libraries.</p>
-<p>This implementations adopts a simpler syntax than exposed by those libraries—
+<p>These implementations adopt a simpler syntax than exposed by those libraries—
 one that is influenced by language-based concepts such as spawn and sync from
 <a class="reference external" href="https://software.intel.com/en-us/articles/intel-cilk-plus/">Cilk++</a> and async and finish from <a class="reference external" href="https://x10-lang.org/">X10</a>. It improves on existing practice in
 the following ways:</p>
@@ -1335,7 +1335,7 @@ create a given <code class="docutils literal notranslate"><span class="pre">task
 <div class="section" id="using-executors-to-run-tasks">
 <h4>Using executors to run tasks<a class="headerlink" href="#using-executors-to-run-tasks" title="Permalink to this headline">¶</a></h4>
 <p>Often, we want to be able to not only define an execution policy to use by
-default for all spawned tasks inside the task block, but in addition to
+default for all spawned tasks inside the task block, but also to
 customize the execution context for one of the tasks executed by
 <code class="docutils literal notranslate"><span class="pre">task_block::run</span></code>. Adding an optionally passed executor instance to that
 function enables this use case:</p>
@@ -1401,7 +1401,7 @@ executor associated with the execution policy which was used to call
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>488583e</code>.
+          Revision <code>73e2efb</code>.
         </span>
       
 

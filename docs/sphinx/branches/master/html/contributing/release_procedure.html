@@ -200,191 +200,178 @@ as appropriate.</p>
 <p>One way to use this procedure is to print a copy and check off the lines as they
 are completed to avoid confusion.</p>
 <ol class="arabic">
-<li><p class="first">Notify developers that a release is imminent.</p>
-</li>
-<li><p class="first">Make a list of examples and benchmarks that should not go into the release.
+<li><p>Notify developers that a release is imminent.</p></li>
+<li><p>Make a list of examples and benchmarks that should not go into the release.
 Build all examples and benchmarks that will go in the release and make sure
 they build and run as expected.</p>
 <blockquote>
 <div><ul class="simple">
-<li>Make sure all examples and benchmarks have example input files, and usage
-documentation, either in the form of comments or a readme.</li>
+<li><p>Make sure all examples and benchmarks have example input files, and usage
+documentation, either in the form of comments or a readme.</p></li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">Send the list of examples and benchmarks that will be included in the release
+<li><p>Send the list of examples and benchmarks that will be included in the release
 to <a class="reference external" href="mailto:hpx-users&#37;&#52;&#48;stellar&#46;cct&#46;lsu&#46;edu">hpx-users<span>&#64;</span>stellar<span>&#46;</span>cct<span>&#46;</span>lsu<span>&#46;</span>edu</a> and <a class="reference external" href="mailto:stellar&#37;&#52;&#48;cct&#46;lsu&#46;edu">stellar<span>&#64;</span>cct<span>&#46;</span>lsu<span>&#46;</span>edu</a>, and ask for
-feedback. Update the list as necessary.</p>
-</li>
-<li><p class="first">Write release notes in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases/whats_new_$VERSION.rst</span></code>. Keep
+feedback. Update the list as necessary.</p></li>
+<li><p>Write release notes in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases/whats_new_$VERSION.rst</span></code>. Keep
 adding merged PRs and closed issues to this until just before the release is
 made. Use <code class="docutils literal notranslate"><span class="pre">tools/generate_pr_issue_list.sh</span></code> to generate the lists. Add the
-new release notes to the table of contents in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases.rst</span></code>.</p>
-</li>
-<li><p class="first">Build the docs, and proof-read them. Update any documentation that may have
+new release notes to the table of contents in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases.rst</span></code>.</p></li>
+<li><p>Build the docs, and proof-read them. Update any documentation that may have
 changed, and correct any typos. Pay special attention to:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">$HPX_SOURCE/README.rst</span></code><ul>
-<li>Update grant information</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$HPX_SOURCE/README.rst</span></code></p>
+<ul>
+<li><p>Update grant information</p></li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases/whats_new_$VERSION.rst</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">docs/sphinx/about_hpx/people.rst</span></code><ul>
-<li>Update collaborators</li>
-<li>Update grant information</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases/whats_new_$VERSION.rst</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/sphinx/about_hpx/people.rst</span></code></p>
+<ul>
+<li><p>Update collaborators</p></li>
+<li><p>Update grant information</p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p class="first">This step does not apply to patch releases. For both APEX and hpxMP:</p>
+<li><p>This step does not apply to patch releases. For both APEX and hpxMP:</p>
 <ul class="simple">
-<li>Change the release branch to be the most current release tag available in
+<li><p>Change the release branch to be the most current release tag available in
 the APEX/hpxMP <code class="docutils literal notranslate"><span class="pre">git_external</span></code> section in the main <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.
 Please contact the maintainers of the respective packages to generate a new
-release to synchronize with the HPX release (<a class="reference external" href="http://github.com/khuck/xpress-apex">APEX</a>, <a class="reference external" href="https://github.com/STEllAR-GROUP/hpxMP">hpxMP</a>).</li>
+release to synchronize with the HPX release (<a class="reference external" href="http://github.com/khuck/xpress-apex">APEX</a>, <a class="reference external" href="https://github.com/STEllAR-GROUP/hpxMP">hpxMP</a>).</p></li>
 </ul>
 </li>
-<li><p class="first">If there have been any commits to the release branch since the last release
+<li><p>If there have been any commits to the release branch since the last release
 create a tag from the old release branch before deleting the old release
-branch in the next step.</p>
-</li>
-<li><p class="first">Unprotect the release branch in the github repository settings so that it can
-be deleted and recreated.</p>
-</li>
-<li><p class="first">Delete the old release branch, and create a new one by branching a stable
+branch in the next step.</p></li>
+<li><p>Unprotect the release branch in the github repository settings so that it can
+be deleted and recreated.</p></li>
+<li><p>Delete the old release branch, and create a new one by branching a stable
 point from master. If you are creating a patch release, branch from the
 release tag for which you want to create a patch release.</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">--delete</span> <span class="pre">release</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">-D</span> <span class="pre">release</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">[stable</span> <span class="pre">point</span> <span class="pre">in</span> <span class="pre">master]</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">release</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">release</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">--set-upstream-to=origin/release</span> <span class="pre">release</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">--delete</span> <span class="pre">release</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">-D</span> <span class="pre">release</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">[stable</span> <span class="pre">point</span> <span class="pre">in</span> <span class="pre">master]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">release</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">release</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">--set-upstream-to=origin/release</span> <span class="pre">release</span></code></p></li>
 </ul>
 </li>
-<li><p class="first">Protect the release branch again to disable deleting and force pushes.</p>
-</li>
-<li><p class="first">Check out the release branch.</p>
-</li>
-<li><p class="first">Make sure <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_MAJOR/MINOR/SUBMINOR</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> contain
-the correct values. Change them if needed.</p>
-</li>
-<li><p class="first">Remove the examples and benchmarks that will not go into the release from the
-release branch.</p>
-</li>
-<li><p class="first">This step does not apply to patch releases. Remove features which have been
+<li><p>Protect the release branch again to disable deleting and force pushes.</p></li>
+<li><p>Check out the release branch.</p></li>
+<li><p>Make sure <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_MAJOR/MINOR/SUBMINOR</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> contain
+the correct values. Change them if needed.</p></li>
+<li><p>Remove the examples and benchmarks that will not go into the release from the
+release branch.</p></li>
+<li><p>This step does not apply to patch releases. Remove features which have been
 deprecated for at least 2 releases. This involves removing build options
 which enable those features from the main CMakeLists.txt and also deleting
 all related code and tests from the main source tree.</p>
 <p>The general deprecation policy involves a three-step process we have to go
 through in order to introduce a breaking change</p>
 <ol class="loweralpha simple">
-<li>First release cycle: add a build option which allows to explicitly disable
-any old (now deprecated) code.</li>
-<li>Second release cycle: turn this build option OFF by default.</li>
-<li>Third release cycle: completely remove the old code.</li>
+<li><p>First release cycle: add a build option which allows to explicitly disable
+any old (now deprecated) code.</p></li>
+<li><p>Second release cycle: turn this build option OFF by default.</p></li>
+<li><p>Third release cycle: completely remove the old code.</p></li>
 </ol>
 <p>The main CMakeLists.txt contains a comment indicating for which version
 the breaking change was introduced first.</p>
 </li>
-<li><p class="first">Switch Buildbot over to test the release branch</p>
+<li><p>Switch Buildbot over to test the release branch</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">https://github.com/STEllAR-GROUP/hermione-buildbot/blob/rostam/master/master.cfg</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">branch</span></code> field in <code class="docutils literal notranslate"><span class="pre">c['change_source']</span> <span class="pre">=</span>&#160; <span class="pre">GitPoller</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">https://github.com/STEllAR-GROUP/hermione-buildbot/blob/rostam/master/master.cfg</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">branch</span></code> field in <code class="docutils literal notranslate"><span class="pre">c['change_source']</span> <span class="pre">=</span>&#160; <span class="pre">GitPoller</span></code></p></li>
 </ul>
 </li>
-<li><p class="first">Repeat the following steps until satisfied with the release.</p>
+<li><p>Repeat the following steps until satisfied with the release.</p>
 <ol class="arabic simple">
-<li>Change <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_TAG</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to <code class="docutils literal notranslate"><span class="pre">-rcN</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code>
-is the current iteration of this step. Start with <code class="docutils literal notranslate"><span class="pre">-rc1</span></code>.</li>
-<li>Tag and create a pre-release on GitHub using the script
+<li><p>Change <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_TAG</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to <code class="docutils literal notranslate"><span class="pre">-rcN</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code>
+is the current iteration of this step. Start with <code class="docutils literal notranslate"><span class="pre">-rc1</span></code>.</p></li>
+<li><p>Tag and create a pre-release on GitHub using the script
 <code class="docutils literal notranslate"><span class="pre">tools/roll_release.sh</span></code>. The script requires that you have the STE||AR
-Group signing key.</li>
-<li>This step is not necessary for patch releases. Notify
+Group signing key.</p></li>
+<li><p>This step is not necessary for patch releases. Notify
 <code class="docutils literal notranslate"><span class="pre">hpx-users&#64;stellar.cct.lsu.edu</span></code> and <code class="docutils literal notranslate"><span class="pre">stellar&#64;cct.lsu.edu</span></code> of the
 availability of the release candidate. Ask users to test the candidate by
-checking out the release candidate tag.</li>
-<li>Allow at least a week for testing of the release candidate.<ul>
-<li>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span></code> when possible, and fall back to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">cherry-pick</span></code>
+checking out the release candidate tag.</p></li>
+<li><p>Allow at least a week for testing of the release candidate.</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span></code> when possible, and fall back to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">cherry-pick</span></code>
 when needed. For patch releases <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">cherry-pick</span></code> is most likely your
 only choice if there have been significant unrelated changes on master
-since the previous release.</li>
-<li>Go back to the first step when enough patches have been added.</li>
-<li>If there are no more patches continue to make the final release.</li>
+since the previous release.</p></li>
+<li><p>Go back to the first step when enough patches have been added.</p></li>
+<li><p>If there are no more patches continue to make the final release.</p></li>
 </ul>
 </li>
 </ol>
 </li>
-<li><p class="first">Update any occurrences of the latest stable release to refer to the version
+<li><p>Update any occurrences of the latest stable release to refer to the version
 about to be released. For example, <code class="docutils literal notranslate"><span class="pre">quickstart.rst</span></code> contains instructions
-to check out the latest stable tag. Make sure that refers to the new version.</p>
-</li>
-<li><p class="first">Add a new entry to the RPM changelog (<code class="docutils literal notranslate"><span class="pre">cmake/packaging/rpm/Changelog.txt</span></code>)
-with the new version number and a link to the corresponding changelog.</p>
-</li>
-<li><p class="first">Change <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_TAG</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to an empty string.</p>
-</li>
-<li><p class="first">Add the release date to the caption of the current “What’s New” section in
+to check out the latest stable tag. Make sure that refers to the new version.</p></li>
+<li><p>Add a new entry to the RPM changelog (<code class="docutils literal notranslate"><span class="pre">cmake/packaging/rpm/Changelog.txt</span></code>)
+with the new version number and a link to the corresponding changelog.</p></li>
+<li><p>Change <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_TAG</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to an empty string.</p></li>
+<li><p>Add the release date to the caption of the current “What’s New” section in
 the docs, and change the value of <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_DATE</span></code> in
-<code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p>
-</li>
-<li><p class="first">Tag and create a release on GitHub using the script
+<code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
+<li><p>Tag and create a release on GitHub using the script
 <code class="docutils literal notranslate"><span class="pre">tools/roll_release.sh</span></code>. The script requires that you have the STE||AR
-Group signing key.</p>
-</li>
-<li><p class="first">Update the websites (<a class="reference external" href="https://stellar-group.org">stellar-group.org</a> and
+Group signing key.</p></li>
+<li><p>Update the websites (<a class="reference external" href="https://stellar-group.org">stellar-group.org</a> and
 <a class="reference external" href="https://stellar.cct.lsu.edu">stellar.cct.lsu.edu</a>) with the following:</p>
 <ul class="simple">
-<li>Download links on the downloads pages. Use the direct link to the release
-printed by the previous step.</li>
-<li>Documentation links on the docs page (link to generated documentation on
-GitHub Pages). Follow the style of previous releases.</li>
-<li>A new blog post announcing the release, which links to downloads and the
+<li><p>Download links on the downloads pages. Use the direct link to the release
+printed by the previous step.</p></li>
+<li><p>Documentation links on the docs page (link to generated documentation on
+GitHub Pages). Follow the style of previous releases.</p></li>
+<li><p>A new blog post announcing the release, which links to downloads and the
 “What’s New” section in the documentation (see previous releases for
-examples).</li>
+examples).</p></li>
 </ul>
 </li>
-<li><p class="first">Merge release branch into master.</p>
-</li>
-<li><p class="first">This step does not apply to patch releases. Bump version numbers on master.</p>
+<li><p>Merge release branch into master.</p></li>
+<li><p>This step does not apply to patch releases. Bump version numbers on master.</p>
 <ol class="arabic simple">
-<li>Create a new branch from master, and check that branch out (name it for
-example by the next version number).</li>
-<li>Bump the HPX version to the next release target. The following files
-contain version info:<ul>
-<li><code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></li>
-<li>Grep for old version number</li>
+<li><p>Create a new branch from master, and check that branch out (name it for
+example by the next version number).</p></li>
+<li><p>Bump the HPX version to the next release target. The following files
+contain version info:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></p></li>
+<li><p>Grep for old version number</p></li>
 </ul>
 </li>
-<li>Create a new “What’s New” section for the docs of the next anticipated
+<li><p>Create a new “What’s New” section for the docs of the next anticipated
 release. Set the date to “unreleased”. Make sure you add it to the table
-of contents in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases.rst</span></code>.</li>
-<li>Modify the the release procedure if necessary.</li>
-<li>Merge new branch containing next version numbers to master, resolve conflicts
-if necessary.</li>
+of contents in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases.rst</span></code>.</p></li>
+<li><p>Modify the the release procedure if necessary.</p></li>
+<li><p>Merge new branch containing next version numbers to master, resolve conflicts
+if necessary.</p></li>
 </ol>
 </li>
-<li><p class="first">Switch Buildbot back to test the main branch</p>
+<li><p>Switch Buildbot back to test the main branch</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">https://github.com/STEllAR-GROUP/hermione-buildbot/blob/rostam/master/master.cfg</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">branch</span></code> field in <code class="docutils literal notranslate"><span class="pre">c['change_source']</span> <span class="pre">=</span>&#160; <span class="pre">GitPoller</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">https://github.com/STEllAR-GROUP/hermione-buildbot/blob/rostam/master/master.cfg</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">branch</span></code> field in <code class="docutils literal notranslate"><span class="pre">c['change_source']</span> <span class="pre">=</span>&#160; <span class="pre">GitPoller</span></code></p></li>
 </ul>
 </li>
-<li><p class="first">Update Vcpkg (<code class="docutils literal notranslate"><span class="pre">https://github.com/Microsoft/vcpkg</span></code>) to pull from latest release.</p>
+<li><p>Update Vcpkg (<code class="docutils literal notranslate"><span class="pre">https://github.com/Microsoft/vcpkg</span></code>) to pull from latest release.</p>
 <ul class="simple">
-<li>Update version number in CONTROL</li>
-<li>Update tag and SHA512 to that of the new release</li>
+<li><p>Update version number in CONTROL</p></li>
+<li><p>Update tag and SHA512 to that of the new release</p></li>
 </ul>
 </li>
-<li><p class="first">Announce the release on <a class="reference external" href="mailto:hpx-users&#37;&#52;&#48;stellar&#46;cct&#46;lsu&#46;edu">hpx-users<span>&#64;</span>stellar<span>&#46;</span>cct<span>&#46;</span>lsu<span>&#46;</span>edu</a>, <a class="reference external" href="mailto:stellar&#37;&#52;&#48;cct&#46;lsu&#46;edu">stellar<span>&#64;</span>cct<span>&#46;</span>lsu<span>&#46;</span>edu</a>,
+<li><p>Announce the release on <a class="reference external" href="mailto:hpx-users&#37;&#52;&#48;stellar&#46;cct&#46;lsu&#46;edu">hpx-users<span>&#64;</span>stellar<span>&#46;</span>cct<span>&#46;</span>lsu<span>&#46;</span>edu</a>, <a class="reference external" href="mailto:stellar&#37;&#52;&#48;cct&#46;lsu&#46;edu">stellar<span>&#64;</span>cct<span>&#46;</span>lsu<span>&#46;</span>edu</a>,
 <a class="reference external" href="mailto:allcct&#37;&#52;&#48;cct&#46;lsu&#46;edu">allcct<span>&#64;</span>cct<span>&#46;</span>lsu<span>&#46;</span>edu</a>, <a class="reference external" href="mailto:faculty&#37;&#52;&#48;csc&#46;lsu&#46;edu">faculty<span>&#64;</span>csc<span>&#46;</span>lsu<span>&#46;</span>edu</a>, <a class="reference external" href="mailto:faculty&#37;&#52;&#48;ece&#46;lsu&#46;edu">faculty<span>&#64;</span>ece<span>&#46;</span>lsu<span>&#46;</span>edu</a>,
 <a class="reference external" href="mailto:xpress&#37;&#52;&#48;crest&#46;iu&#46;edu">xpress<span>&#64;</span>crest<span>&#46;</span>iu<span>&#46;</span>edu</a>, the <em>HPX</em> Slack channel, the IRC channel, Sonia Sachs,
 our list of external collaborators, isocpp.org, reddit.com, HPC Wire, Inside
-HPC, Heise Online, and a CCT press release.</p>
-</li>
-<li><p class="first">Beer and pizza.</p>
-</li>
+HPC, Heise Online, and a CCT press release.</p></li>
+<li><p>Beer and pizza.</p></li>
 </ol>
 </div>
 
@@ -417,7 +404,7 @@ HPC, Heise Online, and a CCT press release.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>e0e4dc9</code>.
+          Revision <code>c707bcb</code>.
         </span>
       
 

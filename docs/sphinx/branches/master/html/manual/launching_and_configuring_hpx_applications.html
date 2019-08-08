@@ -1861,6 +1861,13 @@ a detailed description of possible values. Do not use with
 </dd></dl>
 
 <dl class="option">
+<dt id="cmdoption-hpx-use-process-mask">
+<code class="sig-name descname">--hpx:use-process-mask</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-hpx-use-process-mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>use the process mask to restrict available hardware resources (implies
+<a class="reference internal" href="#cmdoption-hpx-ignore-batch-env"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:ignore-batch-env</span></code></a>)</p>
+</dd></dl>
+
+<dl class="option">
 <dt id="cmdoption-hpx-print-bind">
 <code class="sig-name descname">--hpx:print-bind</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-hpx-print-bind" title="Permalink to this definition">¶</a></dt>
 <dd><p>print to the console the bit masks calculated from the arguments specified to
@@ -2346,6 +2353,16 @@ using the <code class="docutils literal notranslate"><span class="pre">scatter</
 <span id="commandline-affinities"></span><img alt="../_images/affinities.png" src="../_images/affinities.png" />
 <p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Schematic of thread affinity type distributions.</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
 </div>
+<p>In addition to the predefined distributions it is possible to restrict the
+resources used by <em>HPX</em> to the process CPU mask. The CPU mask is typically set
+by e.g. <a class="reference external" href="https://en.wikipedia.org/wiki/Message_Passing_Interface">MPI</a> and batch environments. Using the command line option
+<a class="reference internal" href="#cmdoption-hpx-use-process-mask"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:use-process-mask</span></code></a> makes <em>HPX</em> act as if only the processing units
+in the CPU mask are available for use by <em>HPX</em>. The number of threads is
+automatically determined from the CPU mask. The number of threads can still be
+changed manually using this option, but only to a number less than or equal to
+the number of processing units in the CPU mask. The option
+<a class="reference internal" href="#cmdoption-hpx-print-bind"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:print-bind</span></code></a> is useful in conjunction with
+<a class="reference internal" href="#cmdoption-hpx-use-process-mask"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:use-process-mask</span></code></a> to make sure threads are placed as expected.</p>
 <dl class="footnote brackets">
 <dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
 <dd><p>The phase of a <em>HPX</em>-thread counts how often this thread has been
@@ -2386,7 +2403,7 @@ activated.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>6990f6f</code>.
+          Revision <code>5918ff5</code>.
         </span>
       
 

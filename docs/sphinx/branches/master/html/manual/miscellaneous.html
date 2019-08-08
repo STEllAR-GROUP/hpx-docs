@@ -226,15 +226,15 @@ where it is rethrown during synchronization with the calling thread.</p>
 <span id="exceptions"></span><h3>Working with exceptions<a class="headerlink" href="#working-with-exceptions" title="Permalink to this headline">¶</a></h3>
 <p>For the following description we assume that the function <code class="docutils literal notranslate"><span class="pre">raise_exception()</span></code>
 is executed by invoking the plain action <code class="docutils literal notranslate"><span class="pre">raise_exception_type</span></code>.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">raise_exception</span><span class="p">()</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//[error_handling_raise_exception</span>
+<span class="kt">void</span> <span class="nf">raise_exception</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="n">HPX_THROW_EXCEPTION</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">no_success</span><span class="p">,</span> <span class="s">&quot;raise_exception&quot;</span><span class="p">,</span> <span class="s">&quot;simulated error&quot;</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="n">HPX_PLAIN_ACTION</span><span class="p">(</span><span class="n">raise_exception</span><span class="p">,</span> <span class="n">raise_exception_action</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The exception is thrown using the macro <a class="reference internal" href="../api.html#c.HPX_THROW_EXCEPTION" title="HPX_THROW_EXCEPTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_THROW_EXCEPTION</span></code></a>. The type
-of the thrown exception is <a class="reference internal" href="../api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::exception</span></code></a>. This associates
+<p>The exception is thrown using the macro <a class="reference internal" href="../libs/errors/api.html#c.HPX_THROW_EXCEPTION" title="HPX_THROW_EXCEPTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_THROW_EXCEPTION</span></code></a>. The type
+of the thrown exception is <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::exception</span></code></a>. This associates
 additional diagnostic information with the exception, such as file name and line
 number, <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id and thread id, and stack backtrace from the point
 where the exception was thrown.</p>
@@ -242,7 +242,8 @@ where the exception was thrown.</p>
 the (asynchronous) invocation site. It will be rethrown in this context when the
 calling thread tries to wait for the result of the action by invoking either
 <code class="docutils literal notranslate"><span class="pre">future&lt;&gt;::get()</span></code> or the synchronous action invocation wrapper as shown here:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[exception_diagnostic_information</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
         <span class="k">try</span> <span class="p">{</span>
             <span class="c1">// invoke raise_exception() which throws an exception</span>
             <span class="n">raise_exception_action</span> <span class="n">do_it</span><span class="p">;</span>
@@ -257,7 +258,6 @@ calling thread tries to wait for the result of the action by invoking either
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;diagnostic information:&quot;</span>
                 <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">diagnostic_information</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -267,7 +267,7 @@ executed on a different <a class="reference internal" href="../terminology.html#
 </div>
 <p>Additionally, this example demonstrates how an exception thrown by an (possibly
 remote) action can be handled. It shows the use of
-<a class="reference internal" href="../api.html#_CPPv4N3hpx22diagnostic_informationERK14exception_info" title="hpx::diagnostic_information"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::diagnostic_information</span></code></a> which retrieves all available diagnostic
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::diagnostic_information</span></code> which retrieves all available diagnostic
 information from the exception as a formatted string. This includes, for
 instance, the name of the source file and line number, the sequence number of
 the OS-thread and the <em>HPX</em>-thread id, the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id and the stack
@@ -276,7 +276,8 @@ backtrace of the point where the original exception was thrown.</p>
 diagnostics, or to output those using different formatting. For this case, <em>HPX</em>
 exposes a set of lower level functions as demonstrated in the following code
 snippet:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[exception_diagnostic_elements</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
         <span class="k">try</span> <span class="p">{</span>
             <span class="c1">// Invoke raise_exception() which throws an exception.</span>
             <span class="n">raise_exception_action</span> <span class="n">do_it</span><span class="p">;</span>
@@ -301,7 +302,6 @@ snippet:</p>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{stack-trace}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_backtrace</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{env}: &quot;</span>         <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_env</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -310,12 +310,13 @@ snippet:</p>
 <p>Most of the API functions exposed by <em>HPX</em> can be invoked in two different
 modes. By default those will throw an exception on error as described above.
 However, sometimes it is desirable not to throw an exception in case of an error
-condition. In this case an object instance of the <a class="reference internal" href="../api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a>
+condition. In this case an object instance of the <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a>
 type can be passed as the last argument to the API function. In case of an error
-the error condition will be returned in that <a class="reference internal" href="../api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a>
+the error condition will be returned in that <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a>
 instance. The following example demonstrates extracting the full diagnostic
 information without exception handling:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="c1">//[error_handling_diagnostic_information</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
             <span class="c1">// Create a new error_code instance.</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
@@ -335,8 +336,6 @@ information without exception handling:</p>
                 <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;diagnostic information:&quot;</span>
                     <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">diagnostic_information</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
             <span class="p">}</span>
-
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -345,9 +344,9 @@ information without exception handling:</p>
 is executed on a different <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
 </div>
 <p>This example show how an error can be handled without having to resolve to
-exceptions and that the returned <a class="reference internal" href="../api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a> instance can be
-used in a very similar way as the <a class="reference internal" href="../api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::exception</span></code></a> type above. Simply
-pass it to the <a class="reference internal" href="../api.html#_CPPv4N3hpx22diagnostic_informationERK14exception_info" title="hpx::diagnostic_information"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::diagnostic_information</span></code></a> which retrieves all
+exceptions and that the returned <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a> instance can be
+used in a very similar way as the <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::exception</span></code></a> type above. Simply
+pass it to the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::diagnostic_information</span></code> which retrieves all
 available diagnostic information from the error code instance as a formatted
 string.</p>
 <p>As for handling exceptions, when working with error codes, under certain
@@ -355,7 +354,8 @@ circumstances it is desirable to output only some of the diagnostics, or to
 output those using different formatting. For this case, <em>HPX</em> exposes a set of
 lower level functions usable with error codes as demonstrated in the following
 code snippet:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="c1">//[error_handling_diagnostic_elements</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
             <span class="c1">// Create a new error_code instance.</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
@@ -386,19 +386,17 @@ code snippet:</p>
                 <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{stack-trace}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_backtrace</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
                 <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{env}: &quot;</span>         <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_env</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
             <span class="p">}</span>
-
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>For more information please refer to the documentation of
-<a class="reference internal" href="../api.html#_CPPv4N3hpx14get_error_whatERK14exception_info" title="hpx::get_error_what"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_what</span></code></a>, <a class="reference internal" href="../api.html#_CPPv4N3hpx21get_error_locality_idERKN3hpx14exception_infoE" title="hpx::get_error_locality_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_locality_id</span></code></a>,
-<a class="reference internal" href="../api.html#_CPPv4N3hpx19get_error_host_nameERKN3hpx14exception_infoE" title="hpx::get_error_host_name"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_host_name</span></code></a>, <a class="reference internal" href="../api.html#_CPPv4N3hpx20get_error_process_idERKN3hpx14exception_infoE" title="hpx::get_error_process_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_process_id</span></code></a>,
-<a class="reference internal" href="../api.html#_CPPv4N3hpx23get_error_function_nameERKN3hpx14exception_infoE" title="hpx::get_error_function_name"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_function_name</span></code></a>, <a class="reference internal" href="../api.html#_CPPv4N3hpx19get_error_file_nameERKN3hpx14exception_infoE" title="hpx::get_error_file_name"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_file_name</span></code></a>,
-<a class="reference internal" href="../api.html#_CPPv4N3hpx21get_error_line_numberERKN3hpx14exception_infoE" title="hpx::get_error_line_number"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_line_number</span></code></a>, <a class="reference internal" href="../api.html#_CPPv4N3hpx19get_error_os_threadERKN3hpx14exception_infoE" title="hpx::get_error_os_thread"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_os_thread</span></code></a>,
-<a class="reference internal" href="../api.html#_CPPv4N3hpx19get_error_thread_idERKN3hpx14exception_infoE" title="hpx::get_error_thread_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_thread_id</span></code></a>,
-<a class="reference internal" href="../api.html#_CPPv4N3hpx28get_error_thread_descriptionERKN3hpx14exception_infoE" title="hpx::get_error_thread_description"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_thread_description</span></code></a>,
-<a class="reference internal" href="../api.html#_CPPv4N3hpx19get_error_backtraceERKN3hpx14exception_infoE" title="hpx::get_error_backtrace"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_backtrace</span></code></a>, <a class="reference internal" href="../api.html#_CPPv4N3hpx13get_error_envERKN3hpx14exception_infoE" title="hpx::get_error_env"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_env</span></code></a>, and
-<a class="reference internal" href="../api.html#_CPPv4N3hpx15get_error_stateERKN3hpx14exception_infoE" title="hpx::get_error_state"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_state</span></code></a>.</p>
+<a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx14get_error_whatERK14exception_info" title="hpx::get_error_what"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_what</span></code></a>, <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_locality_id</span></code>,
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_host_name</span></code>, <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_process_id</span></code>,
+<a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx23get_error_function_nameERKN3hpx14exception_infoE" title="hpx::get_error_function_name"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_function_name</span></code></a>, <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx19get_error_file_nameERKN3hpx14exception_infoE" title="hpx::get_error_file_name"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_file_name</span></code></a>,
+<a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx21get_error_line_numberERKN3hpx14exception_infoE" title="hpx::get_error_line_number"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_line_number</span></code></a>, <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_os_thread</span></code>,
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_thread_id</span></code>,
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_thread_description</span></code>,
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_backtrace</span></code>, <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_env</span></code>, and
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_error_state</span></code>.</p>
 </div>
 <div class="section" id="lightweight-error-codes">
 <span id="lightweight-error-code"></span><h3>Lightweight error codes<a class="headerlink" href="#lightweight-error-codes" title="Permalink to this headline">¶</a></h3>
@@ -406,7 +404,8 @@ code snippet:</p>
 error at the point where it happened as this might impose too much overhead for
 simple scenarios. In this case, <em>HPX</em> provides a lightweight error code facility
 which will hold the error code only. The following snippet demonstrates its use:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using an lightweight error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="c1">//[lightweight_error_handling_diagnostic_information</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using an lightweight error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
             <span class="c1">// Create a new error_code instance.</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lightweight</span><span class="p">);</span>
@@ -425,12 +424,10 @@ which will hold the error code only. The following snippet demonstrates its use:
                 <span class="c1">// the exception.</span>
                 <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;error code:&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
             <span class="p">}</span>
-
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>All functions which retrieve other diagnostic elements from the
-<a class="reference internal" href="../api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a> will fail if called with a lightweight error_code
+<a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a> will fail if called with a lightweight error_code
 instance.</p>
 </div>
 </div>
@@ -667,7 +664,7 @@ will appear on the console as long as either of those is explicitly used.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>5918ff5</code>.
+          Revision <code>a462f1e</code>.
         </span>
       
 

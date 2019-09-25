@@ -231,7 +231,6 @@ is executed by invoking the plain action <code class="docutils literal notransla
 <span class="kt">void</span> <span class="nf">raise_exception</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="n">HPX_THROW_EXCEPTION</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">no_success</span><span class="p">,</span> <span class="s">&quot;raise_exception&quot;</span><span class="p">,</span> <span class="s">&quot;simulated error&quot;</span><span class="p">);</span>
-<span class="p">}</span>
 </pre></div>
 </div>
 <p>The exception is thrown using the macro <a class="reference internal" href="../libs/errors/api.html#c.HPX_THROW_EXCEPTION" title="HPX_THROW_EXCEPTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_THROW_EXCEPTION</span></code></a>. The type
@@ -243,7 +242,8 @@ where the exception was thrown.</p>
 the (asynchronous) invocation site. It will be rethrown in this context when the
 calling thread tries to wait for the result of the action by invoking either
 <code class="docutils literal notranslate"><span class="pre">future&lt;&gt;::get()</span></code> or the synchronous action invocation wrapper as shown here:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[exception_diagnostic_information</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">// Error reporting using exceptions</span>
+        <span class="c1">//[exception_diagnostic_information</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
         <span class="k">try</span> <span class="p">{</span>
             <span class="c1">// invoke raise_exception() which throws an exception</span>
@@ -258,7 +258,6 @@ calling thread tries to wait for the result of the action by invoking either
             <span class="c1">// the exception.</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;diagnostic information:&quot;</span>
                 <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">diagnostic_information</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -277,7 +276,8 @@ backtrace of the point where the original exception was thrown.</p>
 diagnostics, or to output those using different formatting. For this case, <em>HPX</em>
 exposes a set of lower level functions as demonstrated in the following code
 snippet:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[exception_diagnostic_elements</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">// Detailed error reporting using exceptions</span>
+        <span class="c1">//[exception_diagnostic_elements</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
         <span class="k">try</span> <span class="p">{</span>
             <span class="c1">// Invoke raise_exception() which throws an exception.</span>
@@ -302,7 +302,6 @@ snippet:</p>
                 <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{stack-trace}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_backtrace</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{env}: &quot;</span>         <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_env</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -316,7 +315,8 @@ type can be passed as the last argument to the API function. In case of an error
 the error condition will be returned in that <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a>
 instance. The following example demonstrates extracting the full diagnostic
 information without exception handling:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="c1">//[error_handling_diagnostic_information</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="p">{</span>
+            <span class="c1">//[error_handling_diagnostic_information</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
             <span class="c1">// Create a new error_code instance.</span>
@@ -355,7 +355,8 @@ circumstances it is desirable to output only some of the diagnostics, or to
 output those using different formatting. For this case, <em>HPX</em> exposes a set of
 lower level functions usable with error codes as demonstrated in the following
 code snippet:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="c1">//[error_handling_diagnostic_elements</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="p">{</span>
+            <span class="c1">//[error_handling_diagnostic_elements</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
             <span class="c1">// Create a new error_code instance.</span>
@@ -405,7 +406,8 @@ code snippet:</p>
 error at the point where it happened as this might impose too much overhead for
 simple scenarios. In this case, <em>HPX</em> provides a lightweight error code facility
 which will hold the error code only. The following snippet demonstrates its use:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="c1">//[lightweight_error_handling_diagnostic_information</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="p">{</span>
+            <span class="c1">//[lightweight_error_handling_diagnostic_information</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using an lightweight error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
             <span class="c1">// Create a new error_code instance.</span>
@@ -474,7 +476,8 @@ important to note that passing <code class="docutils literal notranslate"><span 
 function as long as they are the first container passing into the function (In
 the case where a launch policy is used, the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> will immediately
 follow the launch policy). An example of these features can be found below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="kt">char</span> <span class="n">character</span> <span class="o">=</span> <span class="sc">&#39;d&#39;</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[check_test_1</span>
+    <span class="kt">char</span> <span class="n">character</span> <span class="o">=</span> <span class="sc">&#39;d&#39;</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">integer</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">flt</span> <span class="o">=</span> <span class="mf">10.01f</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="n">boolean</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
@@ -485,7 +488,6 @@ follow the launch policy). An example of these features can be found below:</p>
     <span class="c1">// Test 1</span>
     <span class="c1">//  test basic functionality</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f_archive</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">archive</span><span class="p">),</span> <span class="n">character</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">flt</span><span class="p">,</span> <span class="n">boolean</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Now that we can create <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> s we now must be able to restore the
@@ -494,7 +496,8 @@ objects they contain into memory. This is accomplished by the function
 into the containers it is provided. It is important to remember that the
 containers must be ordered in the same way they were placed into the
 <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. For clarity see the example below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="kt">char</span> <span class="n">character2</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[check_test_2</span>
+    <span class="kt">char</span> <span class="n">character2</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">integer2</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">flt2</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="n">boolean2</span><span class="p">;</span>
@@ -502,7 +505,6 @@ containers must be ordered in the same way they were placed into the
     <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">vec2</span><span class="p">;</span>
 
     <span class="n">restore_checkpoint</span><span class="p">(</span>
-        <span class="n">f_archive</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">character2</span><span class="p">,</span> <span class="n">integer2</span><span class="p">,</span> <span class="n">flt2</span><span class="p">,</span> <span class="n">boolean2</span><span class="p">,</span> <span class="n">str2</span><span class="p">,</span> <span class="n">vec2</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The core utility of <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> is in its ability to make certain data
@@ -513,7 +515,8 @@ stream operator overloads and access iterators.</p>
 <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> to stream data
 out of and into <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. You can see an
 example of the overloads in use below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="kt">double</span> <span class="n">a9</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">b9</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">c9</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[check_test_3</span>
+    <span class="kt">double</span> <span class="n">a9</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">b9</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">c9</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
     <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">test_file_9</span><span class="p">(</span><span class="s">&quot;test_file_9.txt&quot;</span><span class="p">);</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f_9</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">a9</span><span class="p">,</span> <span class="n">b9</span><span class="p">,</span> <span class="n">c9</span><span class="p">);</span>
     <span class="n">test_file_9</span> <span class="o">&lt;&lt;</span> <span class="n">f_9</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
@@ -523,7 +526,6 @@ example of the overloads in use below:</p>
     <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">test_file_9_1</span><span class="p">(</span><span class="s">&quot;test_file_9.txt&quot;</span><span class="p">);</span>
     <span class="n">checkpoint</span> <span class="n">archive9</span><span class="p">;</span>
     <span class="n">test_file_9_1</span> <span class="o">&gt;&gt;</span> <span class="n">archive9</span><span class="p">;</span>
-    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">archive9</span><span class="p">,</span> <span class="n">a9_1</span><span class="p">,</span> <span class="n">b9_1</span><span class="p">,</span> <span class="n">c9_1</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This is the primary way to move data into and out of a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. It is
@@ -547,7 +549,8 @@ detail.</p>
 <p>Users may also move the data into and out of a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> using the exposed
 <code class="docutils literal notranslate"><span class="pre">.begin()</span></code> and <code class="docutils literal notranslate"><span class="pre">.end()</span></code> iterators. An example of this use case is
 illustrated below.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">test_file_7</span><span class="p">(</span><span class="s">&quot;checkpoint_test_file.txt&quot;</span><span class="p">);</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[check_test_4</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">test_file_7</span><span class="p">(</span><span class="s">&quot;checkpoint_test_file.txt&quot;</span><span class="p">);</span>
     <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">vec7</span><span class="p">{</span><span class="mf">1.02f</span><span class="p">,</span> <span class="mf">1.03f</span><span class="p">,</span> <span class="mf">1.04f</span><span class="p">,</span> <span class="mf">1.05f</span><span class="p">};</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">fut_7</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">vec7</span><span class="p">);</span>
     <span class="n">checkpoint</span> <span class="n">archive7</span> <span class="o">=</span> <span class="n">fut_7</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
@@ -568,7 +571,6 @@ illustrated below.</p>
         <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">char_vec</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">length</span><span class="p">);</span>
     <span class="p">}</span>
     <span class="n">checkpoint</span> <span class="n">archive7_1</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">char_vec</span><span class="p">));</span>  <span class="c1">// Write data to checkpoint</span>
-    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">archive7_1</span><span class="p">,</span> <span class="n">vec7_1</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -593,6 +595,7 @@ corresponding standard manipulators.</p>
 simplest possible ‘Hello world’ program as included as an example with <em>HPX</em>:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//  Copyright (c) 2007-2012 Hartmut Kaiser</span>
 <span class="c1">//</span>
+<span class="c1">//  SPDX-License-Identifier: BSL-1.0</span>
 <span class="c1">//  Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
 <span class="c1">//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
 
@@ -665,7 +668,7 @@ will appear on the console as long as either of those is explicitly used.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>3decd4d</code>.
+          Revision <code>8f9678c</code>.
         </span>
       
 
@@ -674,6 +677,7 @@ will appear on the console as long as either of those is explicitly used.</p>
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
  
 
+SPDX-License-Identifier: BSL-1.0
 Distributed under the Boost Software License, Version 1.0. (See accompanying file
 LICENSE_1_0.txt or copy at
 <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)

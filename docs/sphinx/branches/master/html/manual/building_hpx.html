@@ -265,23 +265,23 @@ needed by your build tool (GNU make, Visual Studio, etc.) for building <em>HPX</
 <em>HPX</em> and how to use <em>HPX</em> in your own projects.</p>
 <div class="section" id="cmake-basics">
 <h2>CMake basics<a class="headerlink" href="#cmake-basics" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://www.cmake.org">CMake</a> is a cross-platform build-generator tool. cmake does not build the
+<p>CMake is a cross-platform build-generator tool. CMake does not build the
 project, it generates the files needed by your build tool (gnu make, visual
 studio, etc.) for building <em>HPX</em>.</p>
-<p>in general, the hpx <a class="reference external" href="https://www.cmake.org">CMake</a> scripts try to adhere to the general cmake policies
-on how to write <a class="reference external" href="https://www.cmake.org">CMake</a> based projects.</p>
+<p>In general, the <em>HPX</em> CMake scripts try to adhere to the general CMake policies
+on how to write CMake-based projects.</p>
 <div class="section" id="basic-cmake-usage">
 <h3>Basic CMake usage<a class="headerlink" href="#basic-cmake-usage" title="Permalink to this headline">¶</a></h3>
-<p>This section explains basic aspects of CMake, mostly for explaining those
-options which you may need on your day-to-day usage.</p>
+<p>This section explains basic aspects of CMake, specifically options needed for
+day-to-day usage.</p>
 <p>CMake comes with extensive documentation in the form of html files and on the
-cmake executable itself. Execute <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--help</span></code> for further help options.</p>
-<p>CMake requires to know for which build tool it shall generate files (GNU make,
-Visual Studio, Xcode, etc.). If not specified on the command line, it tries to
-guess it based on you environment. Once identified the build tool, CMake uses
-the corresponding Generator for creating files for your build tool. You can
+CMake executable itself. Execute <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--help</span></code> for further help options.</p>
+<p>CMake needs to know which build tool it will generate files for (GNU make,
+Visual Studio, Xcode, etc.). If not specified on the command line, it will try to
+guess the build tool based on you environment. Once it has identified the build tool,
+CMake uses the corresponding generator to create files for your build tool. You can
 explicitly specify the generator with the command line option <code class="docutils literal notranslate"><span class="pre">-G</span> <span class="pre">&quot;Name</span> <span class="pre">of</span> <span class="pre">the</span>
-<span class="pre">generator&quot;</span></code>. For knowing the available generators on your platform, execute:</p>
+<span class="pre">generator&quot;</span></code>. To see the available generators on your platform, execute:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake --help
 </pre></div>
 </div>
@@ -298,14 +298,14 @@ you must tell this to CMake with the <code class="docutils literal notranslate">
 </div>
 <div class="section" id="quick-start">
 <span id="cmake-quick-start"></span><h3>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h3>
-<p>We use here the command-line, non-interactive <a class="reference external" href="https://www.cmake.org">CMake</a> interface.</p>
+<p>Here, you will use the command-line, non-interactive CMake interface.</p>
 <ol class="arabic">
 <li><p>Download and install CMake here: <a class="reference external" href="https://www.cmake.org/cmake/resources/software.html">CMake Downloads</a>. Version 3.3.2 is the
 minimally required version for <em>HPX</em>.</p></li>
 <li><p>Open a shell. Your development tools must be reachable from this shell
 through the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable.</p></li>
-<li><p>Create a directory for containing the build. It is not supported to build
-<em>HPX</em> on the source directory. cd to this directory:</p>
+<li><p>Create a directory for containing the build. Building <em>HPX</em> on the source directory
+is not supported. cd to this directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir mybuilddir
 <span class="nb">cd</span> mybuilddir
 </pre></div>
@@ -329,7 +329,7 @@ is the correct one for you development environment. CMake will refuse to build
 MinGW makefiles if you have a POSIX shell reachable through the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
 environment variable, for instance. You can force CMake to use various compilers
 and tools. Please visit <a class="reference external" href="https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/Useful-Variables#Compilers-and-Tools">CMake Useful Variables</a>
-for a detailed overview of specific <a class="reference external" href="https://www.cmake.org">CMake</a> variables.</p>
+for a detailed overview of specific CMake variables.</p>
 </div>
 <div class="section" id="options-and-variables">
 <span id="options"></span><h3>Options and variables<a class="headerlink" href="#options-and-variables" title="Permalink to this headline">¶</a></h3>
@@ -346,8 +346,8 @@ value. You can also undefine a variable:</p>
 </div>
 <p>Variables are stored on the CMake cache. This is a file named <code class="docutils literal notranslate"><span class="pre">CMakeCache.txt</span></code>
 on the root of the build directory. Do not hand-edit it.</p>
-<p>Variables are listed here appending its type after a colon. It is correct to
-write the variable and the type on the CMake command line:</p>
+<p>Variables are listed here appending its type after a colon. You should write the
+variable and the type on the CMake command line:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DVARIABLE:TYPE<span class="o">=</span>value path/to/llvm/source
 </pre></div>
 </div>
@@ -407,19 +407,18 @@ read further, please make sure you have a recent version of <a class="reference 
 on your target machine. <em>HPX</em> currently requires at least Boost V1.61.0 to work
 properly. It may build and run with older versions, but we do not test <em>HPX</em>
 with those versions, so please be warned.</p>
-<p>Installing the Boost libraries is described in detail in Boost’s own
-Getting Started document. It is often possible to download the Boost
-libraries using the package manager of your distribution. Please refer to the
-corresponding documentation for your system for more information.</p>
-<p>The installation of Boost is described in detail in Boost’s own
-Getting Started document. However, if you’ve never used the Boost
+<p>The installation of Boost is described in detail in Boost’s <a class="reference external" href="https://www.boost.org/doc/libs/1_71_0/more/getting_started/index.html">Getting Started</a>
+document. However, if you’ve never used the Boost
 libraries (or even if you have), here’s a quick primer:
 <a class="reference internal" href="#boost-installation"><span class="std std-ref">Installing Boost</span></a>.</p>
+<p>It is often possible to download the Boost libraries using the package manager of
+your distribution. Please refer to the corresponding documentation for your system
+for more information.</p>
 <p>In addition, we require a recent version of hwloc in order to support thread
 pinning and NUMA awareness. See <a class="reference internal" href="#hwloc-installation"><span class="std std-ref">Installing Hwloc</span></a> for instructions on
 building Portable Hardware Locality (HWLOC).</p>
 <p><em>HPX</em> is written in 99.99% Standard C++ (the remaining 0.01% is platform
-specific assembly code). As such <em>HPX</em> is compilable with almost any standards
+specific assembly code). As such, <em>HPX</em> is compilable with almost any standards
 compliant C++ compiler. A compiler supporting the C++11 Standard is highly
 recommended. The code base takes advantage of C++11 language features when
 available (move semantics, rvalue references, magic statics, etc.). This may
@@ -496,9 +495,9 @@ path is older than 4.8, please specify the path of a newer <code class="docutils
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When building Boost using gcc please note that it is always a good idea to
+<p>When building Boost using gcc, please note that it is always a good idea to
 specify a <code class="docutils literal notranslate"><span class="pre">cxxflags=-std=c++11</span></code> command line argument to <code class="docutils literal notranslate"><span class="pre">b2</span></code> (<code class="docutils literal notranslate"><span class="pre">bjam</span></code>).
-Note however, that this is absolutely necessary when using gcc V5.2 and
+Note, however, that this is absolutely necessary when using gcc V5.2 and
 above.</p>
 </div>
 <table class="docutils align-default" id="id17">
@@ -566,7 +565,7 @@ listed below.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In order to use a high speed parcelport, we currently recommend configuring
-HPX to use MPI so that MPI can be used for communication between different
+<em>HPX</em> to use MPI so that MPI can be used for communication between different
 localities. Please set the CMake variable <code class="docutils literal notranslate"><span class="pre">MPI_CXX_COMPILER</span></code> to your MPI
 C++ compiler wrapper if not detected automatically.</p>
 </div>
@@ -625,9 +624,9 @@ cause communication failures at runtime and should not be used.</p>
 <td><p>Notes</p></td>
 </tr>
 <tr class="row-even"><td><p>Performance Application Programming Interface (PAPI)</p></td>
+<td></td>
+<td></td>
 <td><p>Used for accessing hardware performance data.</p></td>
-<td></td>
-<td></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="http://jemalloc.net">jemalloc</a></p></td>
 <td><p>2.1.2</p></td>
@@ -682,7 +681,7 @@ done on Linux):</p>
 </div>
 <div class="section" id="documentation">
 <span id="documentation-prerequisites"></span><h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
-<p>To build the <em>HPX</em> documentation you need recent versions of the following
+<p>To build the <em>HPX</em> documentation, you need recent versions of the following
 packages:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">python</span></code> (2 or 3)</p></li>
@@ -692,11 +691,11 @@ packages:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">doxygen</span></code></p></li>
 </ul>
 <p>If the <a class="reference external" href="https://www.python.org">Python</a> dependencies are not available through your system package
-manager you can install them using the <a class="reference external" href="https://www.python.org">Python</a> package manager <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+manager, you can install them using the Python package manager <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install --user sphinx sphinx_rtd_theme breathe
 </pre></div>
 </div>
-<p>You may need to set the following <a class="reference external" href="https://www.cmake.org">CMake</a> variables to make sure <a class="reference external" href="https://www.cmake.org">CMake</a> can
+<p>You may need to set the following CMake variables to make sure CMake can
 find the required dependencies.</p>
 <dl class="option">
 <dt id="cmdoption-arg-doxygen-root-path">
@@ -721,17 +720,16 @@ find the required dependencies.</p>
 <span id="boost-installation"></span><h3>Installing Boost<a class="headerlink" href="#installing-boost" title="Permalink to this headline">¶</a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>When building Boost using gcc please note that it is always a good idea to
+<p>When building Boost using gcc, please note that it is always a good idea to
 specify a <code class="docutils literal notranslate"><span class="pre">cxxflags=-std=c++11</span></code> command line argument to <code class="docutils literal notranslate"><span class="pre">b2</span></code> (<code class="docutils literal notranslate"><span class="pre">bjam</span></code>).
-Note however, that this is absolutely necessary when using gcc V5.2 and
-above.</p>
+Doint so is absolutely necessary when using gcc V5.2 and above.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>On Windows, depending on the installed versions of Visual Studio, you might
 also want to pass the correct toolset to the <code class="docutils literal notranslate"><span class="pre">b2</span></code> command depending on
 which version of the IDE you want to use. In addition, passing
-<code class="docutils literal notranslate"><span class="pre">address-model=64</span></code> is highly recommended. It might be also necessary to add
+<code class="docutils literal notranslate"><span class="pre">address-model=64</span></code> is highly recommended. It might also be necessary to add
 command line argument <code class="docutils literal notranslate"><span class="pre">--build-type=complete</span></code> to the <code class="docutils literal notranslate"><span class="pre">b2</span></code> command on the
 Windows platform.</p>
 </div>
@@ -741,8 +739,8 @@ resources, even if they have Boost installed, usually only provide you with an
 older version of Boost. We suggest you download the most recent release of the
 Boost libraries from here: <a class="reference external" href="https://www.boost.org/users/download/">Boost Downloads</a>. Unpack the downloaded archive
 into a directory of your choosing. We will refer to this directory a <code class="docutils literal notranslate"><span class="pre">$BOOST</span></code>.</p>
-<p>Building and installing the Boost binaries is simple, regardless what platform
-you are on the basic instructions are as follows (with possible additional
+<p>Building and installing the Boost binaries is simple. Regardless of what platform
+you are on, the basic instructions are as follows (with possible additional
 platform-dependent command line arguments):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$BOOST</span>
 bootstrap --prefix<span class="o">=</span>&lt;where to install boost&gt;
@@ -753,9 +751,9 @@ bootstrap --prefix<span class="o">=</span>&lt;where to install boost&gt;
 <p>where: <code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span> <span class="pre">boost&gt;</span></code> is the directory the built binaries will be
 installed to, and <code class="docutils literal notranslate"><span class="pre">&lt;N&gt;</span></code> is the number of cores to use to build the Boost
 binaries.</p>
-<p>After the above sequence of commands has been executed (this may take a while!)
+<p>After the above sequence of commands has been executed (this may take a while!),
 you will need to specify the directory where Boost was installed as
-<code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span> <span class="pre">boost&gt;</span></code>) while executing cmake for <em>HPX</em> as
+<code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span> <span class="pre">boost&gt;</span></code>) while executing CMake for <em>HPX</em> as
 explained in detail in the sections <a class="reference internal" href="#unix-installation"><span class="std std-ref">How to install HPX on Unix variants</span></a> and
 <a class="reference internal" href="#windows-installation"><span class="std std-ref">How to install HPX on Windows</span></a>.</p>
 </div>
@@ -764,8 +762,8 @@ explained in detail in the sections <a class="reference internal" href="#unix-in
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>These instructions are for everything except Windows. On Windows there is no
-need to build hwloc. Instead download the latest release, extract the files,
-and set <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> during cmake configuration to the directory in which
+need to build hwloc. Instead, download the latest release, extract the files,
+and set <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> during CMake configuration to the directory in which
 you extracted the files.</p>
 </div>
 <p>We suggest you download the most recent release of hwloc from here:
@@ -779,11 +777,11 @@ make -j&lt;N&gt; install
 </div>
 <p>where: <code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span> <span class="pre">hwloc&gt;</span></code> is the directory the built binaries will be
 installed to, and <code class="docutils literal notranslate"><span class="pre">&lt;N&gt;</span></code> is the number of cores to use to build hwloc.</p>
-<p>After the above sequence of commands has been executed you will need to specify
-the directory where Hwloc was installed as <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span>
-<span class="pre">hwloc&gt;</span></code>) while executing cmake for <em>HPX</em> as explained in detail in the sections
+<p>After the above sequence of commands has been executed, you will need to specify
+the directory where hwloc was installed as <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span>
+<span class="pre">hwloc&gt;</span></code>) while executing CMake for <em>HPX</em> as explained in detail in the sections
 <a class="reference internal" href="#unix-installation"><span class="std std-ref">How to install HPX on Unix variants</span></a> and <a class="reference internal" href="#windows-installation"><span class="std std-ref">How to install HPX on Windows</span></a>.</p>
-<p>Please see <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/doc/">Hwloc Documentation</a> for more information about Hwloc.</p>
+<p>Please see <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/doc/">Hwloc Documentation</a> for more information about hwloc.</p>
 </div>
 </div>
 <div class="section" id="building-hpx">
@@ -791,7 +789,7 @@ the directory where Hwloc was installed as <code class="docutils literal notrans
 <div class="section" id="basic-information">
 <span id="info"></span><h3>Basic information<a class="headerlink" href="#basic-information" title="Permalink to this headline">¶</a></h3>
 <p>Once CMake has been run, the build process can be started. The <em>HPX</em> build
-process is highly configurable through CMake and various CMake variables
+process is highly configurable through CMake, and various CMake variables
 influence the build process. The build process consists of the following parts:</p>
 <ul class="simple">
 <li><p>The <em>HPX</em> core libraries (target core): This forms the basic set of <em>HPX</em>
@@ -810,9 +808,9 @@ persistent storage.</p></li>
 (partitioned) hash table.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">partioned_vector_component</span></code>: The component needed for a distributed
 (partitioned) vector.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">memory_component</span></code>: A dynamically loaded plugin that exposed memory based
+<li><p><code class="docutils literal notranslate"><span class="pre">memory_component</span></code>: A dynamically loaded plugin that exposes memory based
 performance counters (only available on Linux).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">io_counter_component</span></code>: A dynamically loaded plugin plugin that exposes
+<li><p><code class="docutils literal notranslate"><span class="pre">io_counter_component</span></code>: A dynamically loaded plugin that exposes
 I/O performance counters (only available on Linux).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">papi_component</span></code>: A dynamically loaded plugin that exposes PAPI
 performance counters (enabled with <a class="reference internal" href="#cmdoption-arg-hpx-with-papi-bool"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_PAPI:BOOL</span></code></a>, default is
@@ -828,30 +826,30 @@ enabled by default (disable by setting <a class="reference internal" href="#cmdo
 <code class="docutils literal notranslate"><span class="pre">=Off</span></code>). They are not built by the <code class="docutils literal notranslate"><span class="pre">all</span></code> target and have to be built
 separately.</p></li>
 <li><p><em>HPX</em> Documentation (target <code class="docutils literal notranslate"><span class="pre">docs</span></code>): This target builds the documentation,
-this is not enabled by default (enable by setting
+and is not enabled by default (enable by setting
 <a class="reference internal" href="#cmdoption-arg-hpx-with-documentation-bool"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DOCUMENTATION:BOOL</span></code></a><code class="docutils literal notranslate"><span class="pre">=On</span></code>. For more information see
 <a class="reference internal" href="../contributing/documentation.html#documentation"><span class="std std-ref">Documentation</span></a>.</p></li>
 </ul>
 <p>For a complete list of available CMake variables that influence the build of
-<em>HPX</em> see <a class="reference internal" href="#cmake-variables"><span class="std std-ref">CMake variables used to configure HPX</span></a>.</p>
-<p>The variables can be used to refine the recipes that can be found
-<a class="reference internal" href="#build-recipes"><span class="std std-ref">Platform specific build recipes</span></a> which show some basic steps on how to build HPX for a
+<em>HPX</em>, see <a class="reference internal" href="#cmake-variables"><span class="std std-ref">CMake variables used to configure HPX</span></a>.</p>
+<p>The variables can be used to refine the recipes that can be found at
+<a class="reference internal" href="#build-recipes"><span class="std std-ref">Platform specific build recipes</span></a> which show some basic steps on how to build <em>HPX</em> for a
 specific platform.</p>
 <p>In order to use <em>HPX</em>, only the core libraries are required (the ones marked as
-optional above are truly optional). When building against <em>HPX</em>, the <a class="reference external" href="https://www.cmake.org">CMake</a>
+optional above are truly optional). When building against <em>HPX</em>, the CMake
 variable <code class="docutils literal notranslate"><span class="pre">HPX_LIBRARIES</span></code> will contain <code class="docutils literal notranslate"><span class="pre">hpx</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx_init</span></code> (for pkgconfig,
 those are added to the <code class="docutils literal notranslate"><span class="pre">Libs</span></code> sections). In order to use the optional
 libraries, you need to specify them as link dependencies in your build (See
 <a class="reference internal" href="creating_hpx_projects.html#creating-hpx-projects"><span class="std std-ref">Creating HPX projects</span></a>).</p>
-<p>As <em>HPX</em> is a modern C++ Library we require a certain minimal set of features
+<p>As <em>HPX</em> is a modern C++ library, we require a certain minimum set of features
 from the C++11 standard. In addition, we make use of certain C++14 features if
 the used compiler supports them. This means that the <em>HPX</em> build system will try
 to determine the highest support C++ standard flavor and check for availability
 of those features. That is, the default will be the highest C++ standard version
-available. If you want to force <em>HPX</em> to use a specific C++ standard version you
-can use the following <a class="reference external" href="https://www.cmake.org">CMake</a> variables:</p>
+available. If you want to force <em>HPX</em> to use a specific C++ standard version, you
+can use the following CMake variables:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX0X</span></code>: Enables Pre-C++11 support (This is the minimal required
+<li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX0X</span></code>: Enables Pre-C++11 support (This is the minimum required
 mode on older gcc versions).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX11</span></code>: Enables C++11 support</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX14</span></code>: Enables C++14 support</p></li>
@@ -867,8 +865,8 @@ support). The CMake variable used to set the build type is
 <code class="docutils literal notranslate"><span class="pre">CMAKE_BUILD_TYPE</span></code> (for more information see the <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html">CMake Documentation</a>).
 Available build types are:</p>
 <ul class="simple">
-<li><p><strong>Debug</strong>: Full debug symbols available and additional assertions to help
-debugging. To enable the debug build type for the <em>HPX</em> API, the C++ Macro
+<li><p><strong>Debug</strong>: Full debug symbols are available as well as additional assertions to
+help debugging. To enable the debug build type for the <em>HPX</em> API, the C++ Macro
 <code class="docutils literal notranslate"><span class="pre">HPX_DEBUG</span></code> is defined.</p></li>
 <li><p><strong>RelWithDebInfo</strong>: Release build with debugging symbols. This is most useful
 for profiling applications</p></li>
@@ -880,21 +878,21 @@ compiler optimizations.</p></li>
 <p class="admonition-title">Important</p>
 <p>We currently don’t guarantee ABI compatibility between Debug and Release
 builds. Please make sure that applications built against <em>HPX</em> use the same
-build type as you used to build <em>HPX</em>. For <a class="reference external" href="https://www.cmake.org">CMake</a> builds, this means that
+build type as you used to build <em>HPX</em>. For CMake builds, this means that
 the <code class="docutils literal notranslate"><span class="pre">CMAKE_BUILD_TYPE</span></code> variables have to match and for projects not using
 <a class="reference external" href="https://www.cmake.org">CMake</a>, the <code class="docutils literal notranslate"><span class="pre">HPX_DEBUG</span></code> macro has to be set in debug mode.</p>
 </div>
 </div>
 <div class="section" id="platform-specific-notes">
 <span id="platform"></span><h3>Platform specific notes<a class="headerlink" href="#platform-specific-notes" title="Permalink to this headline">¶</a></h3>
-<p>Some platforms require to have special link and/or compiler flags specified to
-build HPX. This is handled via <a class="reference external" href="https://www.cmake.org">CMake</a>’s support for different toolchains (see
+<p>Some platforms require users to have special link and/or compiler flags specified to
+build <em>HPX</em>. This is handled via CMake’s support for different toolchains (see
 <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html">cmake-toolchains(7)</a> for more
 information). This is also used for cross compilation.</p>
 <p><em>HPX</em> ships with a set of toolchains that can be used for compilation of <em>HPX</em>
 itself and applications depending on <em>HPX</em>. Please see <a class="reference internal" href="#cmake-toolchains"><span class="std std-ref">CMake toolchains shipped with HPX</span></a>
 for more information.</p>
-<p>In order to enable full static linking with the libraries, the <a class="reference external" href="https://www.cmake.org">CMake</a> variable
+<p>In order to enable full static linking with the libraries, the CMake variable
 <a class="reference internal" href="#cmdoption-arg-hpx-with-static-linking-bool"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_STATIC_LINKING:BOOL</span></code></a> has to be set to <code class="docutils literal notranslate"><span class="pre">On</span></code>.</p>
 </div>
 <div class="section" id="debugging-applications-using-core-files">
@@ -904,7 +902,7 @@ and exception handlers
 <a class="reference internal" href="#cmdoption-arg-hpx-with-disabled-signal-exception-handlers-bool"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS:BOOL</span></code></a>. If this option is
 not specified, the signal handlers change the application state. For example,
 after a segmentation fault the stack trace will show the signal handler.
-Similarly, unhandled exceptions are also caught by the these handlers and the
+Similarly, unhandled exceptions are also caught by these handlers and the
 stack trace will not point to the location where the unhandled exception was
 thrown.</p>
 <p>In general, core files are a helpful tool to inspect the state of the
@@ -914,7 +912,7 @@ useful if the error cannot be reliably reproduced, as only a single crashed
 application run is required to gain potentially helpful information like a
 stacktrace.</p>
 <p>To debug with core files, the operating system first has to be told to actually
-write them. On most unix systems this can be done by calling:</p>
+write them. On most Unix systems this can be done by calling:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">ulimit</span> -c unlimited
 </pre></div>
 </div>
@@ -952,7 +950,7 @@ of your <em>HPX</em> source tree.</p>
       /path/to/source/tree
 </pre></div>
 </div>
-<p>for instance:</p>
+<p>For instance:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DBOOST_ROOT<span class="o">=</span>~/packages/boost -DHWLOC_ROOT<span class="o">=</span>/packages/hwloc -DCMAKE_INSTALL_PREFIX<span class="o">=</span>~/packages/hpx ~/downloads/hpx_0.9.10
 </pre></div>
 </div>
@@ -993,7 +991,7 @@ gmake install
 </div>
 </li>
 </ul>
-<p>For more detailed information about using CMake please refer its documentation
+<p>For more detailed information about using CMake, please refer to its documentation
 and also the section <a class="reference internal" href="#building-hpx"><span class="std std-ref">Building HPX</span></a>. Please pay special attention to the
 section about <a class="reference internal" href="#cmdoption-arg-hpx-with-malloc-string"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_MALLOC:STRING</span></code></a> as this is crucial for getting
 decent performance.</p>
@@ -1017,7 +1015,7 @@ using clang
 </pre></div>
 </div>
 <p>(Again, remember to replace <code class="docutils literal notranslate"><span class="pre">/path/to</span></code> with whatever you used earlier.)</p>
-<p>You can then use as build command either:</p>
+<p>Then, you can use one of the following for your build command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>b2 --build-dir<span class="o">=</span>/tmp/build-boost --layout<span class="o">=</span>versioned <span class="nv">toolset</span><span class="o">=</span>clang install -j4
 </pre></div>
 </div>
@@ -1026,11 +1024,11 @@ using clang
 </pre></div>
 </div>
 <p>We verified this using Boost V1.53. If you use a different version, just
-remember to replace <code class="docutils literal notranslate"><span class="pre">/usr/local/include/boost-1_53</span></code> with whatever include prefix
-you had in your installation.</p>
+remember to replace <code class="docutils literal notranslate"><span class="pre">/usr/local/include/boost-1_53</span></code> with whatever prefix
+you used in your installation.</p>
 </div>
 <div class="section" id="build-hpx-finally">
-<h4>Build HPX, finally<a class="headerlink" href="#build-hpx-finally" title="Permalink to this headline">¶</a></h4>
+<h4>Build <em>HPX</em>, finally<a class="headerlink" href="#build-hpx-finally" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /path/to
 git clone https://github.com/STEllAR-GROUP/hpx.git
 mkdir build-hpx <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build-hpx
@@ -1054,11 +1052,11 @@ make
 make
 </pre></div>
 </div>
-<p>For more detailed information about using CMake please refer its documentation
-and to the section <a class="reference internal" href="#building-hpx"><span class="std std-ref">Building HPX</span></a> for.</p>
+<p>For more detailed information about using CMake, please refer its documentation
+and to the section <a class="reference internal" href="#building-hpx"><span class="std std-ref">Building HPX</span></a>.</p>
 </div>
 <div class="section" id="alternative-installation-method-of-hpx-on-os-x-mac">
-<h4>Alternative installation method of HPX on OS X (Mac)<a class="headerlink" href="#alternative-installation-method-of-hpx-on-os-x-mac" title="Permalink to this headline">¶</a></h4>
+<h4>Alternative installation method of <em>HPX</em> on OS X (Mac)<a class="headerlink" href="#alternative-installation-method-of-hpx-on-os-x-mac" title="Permalink to this headline">¶</a></h4>
 <p>Alternatively, you can install a recent version of gcc as well as all
 required libraries via MacPorts:</p>
 <ol class="arabic">
@@ -1081,7 +1079,7 @@ sudo port <span class="k">select</span> gcc mp-gcc48
 </div>
 </li>
 <li><p>Build Boost manually (the Boost package of MacPorts is built with Clang, and
-unfortunately doesn’t work with a GCC-build version of HPX):</p>
+unfortunately doesn’t work with a GCC-build version of <em>HPX</em>):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.bz2
 tar xjf boost_1_69_0.tar.bz2
 <span class="nb">pushd</span> boost_1_69_0
@@ -1094,7 +1092,7 @@ tar xjf boost_1_69_0.tar.bz2
 </pre></div>
 </div>
 </li>
-<li><p>Build HPX:</p>
+<li><p>Build <em>HPX</em>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/STEllAR-GROUP/hpx.git
 mkdir hpx-build
 <span class="nb">pushd</span> hpx-build
@@ -1116,11 +1114,11 @@ make -j8 install
 </div>
 </li>
 <li><p>Note that you need to set <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">HPX_ROOT</span></code> and
-<code class="docutils literal notranslate"><span class="pre">DYLD_LIBRARY_PATH</span></code> (for both <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> and <code class="docutils literal notranslate"><span class="pre">HPX_ROOT</span></code> every time
-you configure, build, or run an HPX application.</p></li>
+<code class="docutils literal notranslate"><span class="pre">DYLD_LIBRARY_PATH</span></code> (for both <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> and <code class="docutils literal notranslate"><span class="pre">HPX_ROOT</span></code>) every time
+you configure, build, or run an <em>HPX</em> application.</p></li>
 <li><p>If you want to use <em>HPX</em> with MPI, you need to enable the MPI parcelport, and
-also specify the location of the MPI wrapper scripts. This can be done e.g.
-with the following command:</p>
+also specify the location of the MPI wrapper scripts. This can be done using
+the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DHPX_WITH_PARCELPORT_MPI<span class="o">=</span>ON <span class="se">\</span>
      -DCMAKE_C_COMPILER<span class="o">=</span>gcc <span class="se">\</span>
      -DCMAKE_CXX_COMPILER<span class="o">=</span>g++ <span class="se">\</span>
@@ -1146,7 +1144,7 @@ with the following command:</p>
 <h4>Installation of required prerequisites<a class="headerlink" href="#installation-of-required-prerequisites" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>Download the Boost c++ libraries from <a class="reference external" href="https://www.boost.org/users/download/">Boost Downloads</a></p></li>
-<li><p>Install the boost library as explained in the section
+<li><p>Install the Boost library as explained in the section
 <a class="reference internal" href="#boost-installation"><span class="std std-ref">Installing Boost</span></a></p></li>
 <li><p>Install the hwloc library as explained in the section
 <a class="reference internal" href="#hwloc-installation"><span class="std std-ref">Installing Hwloc</span></a></p></li>
@@ -1162,7 +1160,7 @@ platform section of the downloads page at <a class="reference external" href="ht
 <li><p>Create a build folder. <em>HPX</em> requires an out-of-tree-build. This means that
 you will be unable to run CMake in the <em>HPX</em> source folder.</p></li>
 <li><p>Open up the CMake GUI. In the input box labelled “Where is the source code:”,
-enter the full path to the source folder. The source directory is one where
+enter the full path to the source folder. The source directory is the one where
 the sources were checked out. CMakeLists.txt files in the source directory as
 well as the subdirectories describe the build to CMake. In addition to this,
 there are CMake scripts (usually ending in .cmake) stored in a special CMake
@@ -1174,8 +1172,8 @@ files and final executables.</p></li>
 <li><p>Add CMake variable definitions (if any) by clicking the “Add Entry” button.
 There are two required variables you need to define: <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> and
 <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> These (<code class="docutils literal notranslate"><span class="pre">PATH</span></code>) variables need to be set to point to the root
-folder of your <a class="reference external" href="https://www.boost.org/">Boost</a> and <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a> installations. It is recommended to set
-the variable <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> as well. This determines where the HPX
+folder of your Boost and hwloc installations. It is recommended to set
+the variable <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> as well. This determines where the <em>HPX</em>
 libraries will be built and installed. If this (<code class="docutils literal notranslate"><span class="pre">PATH</span></code>) variable is set, it
 has to refer to the directory where the built <em>HPX</em> files should be installed
 to.</p></li>
@@ -1183,11 +1181,11 @@ to.</p></li>
 to use. Select the Visual Studio 10 (64Bit) compiler (it usually is the
 default if available). The Visual Studio 2012 (64Bit) and Visual Studio 2013
 (64Bit) compilers are supported as well. Note that while it is possible to
-build HPX for x86, we don’t recommend doing so as 32 bit runs are severely
-restricted by a 32 bit Windows system limitation affecting the number of HPX
+build <em>HPX</em> for x86, we don’t recommend doing so as 32 bit runs are severely
+restricted by a 32 bit Windows system limitation affecting the number of <em>HPX</em>
 threads you can create.</p></li>
 <li><p>Press “Configure” again. Repeat this step until the “Generate” button becomes
-clickable (and until no variable definitions are marked red anymore).</p></li>
+clickable (and until no variable definitions are marked in red anymore).</p></li>
 <li><p>Press “Generate”.</p></li>
 <li><p>Open up the build folder, and double-click hpx.sln.</p></li>
 <li><p>Build the INSTALL target.</p></li>
@@ -1196,13 +1194,13 @@ clickable (and until no variable definitions are marked red anymore).</p></li>
 documentation and also the section <a class="reference internal" href="#building-hpx"><span class="std std-ref">Building HPX</span></a>.</p>
 </div>
 <div class="section" id="how-to-build-hpx-under-windows-10-x64-with-visual-studio-2015">
-<span id="howto-win32"></span><h4>How to build HPX under Windows 10 x64 with Visual Studio 2015<a class="headerlink" href="#how-to-build-hpx-under-windows-10-x64-with-visual-studio-2015" title="Permalink to this headline">¶</a></h4>
+<span id="howto-win32"></span><h4>How to build <em>HPX</em> under Windows 10 x64 with Visual Studio 2015<a class="headerlink" href="#how-to-build-hpx-under-windows-10-x64-with-visual-studio-2015" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Download the <a class="reference external" href="https://www.cmake.org">CMake</a> V3.4.3 installer (or latest version) from <a class="reference external" href="https://blog.kitware.com/cmake-3-4-3-available-for-download/">here</a></p></li>
-<li><p>Download the <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a> V1.11.0 (or latest version) from <a class="reference external" href="http://www.open-mpi.org/software/hwloc/v1.11/downloads/hwloc-win64-build-1.11.0.zip">here</a>
+<li><p>Download the CMake V3.4.3 installer (or latest version) from <a class="reference external" href="https://blog.kitware.com/cmake-3-4-3-available-for-download/">here</a></p></li>
+<li><p>Download the hwloc V1.11.0 (or the latest version) from <a class="reference external" href="http://www.open-mpi.org/software/hwloc/v1.11/downloads/hwloc-win64-build-1.11.0.zip">here</a>
 and unpack it.</p></li>
-<li><p>Download the latest <a class="reference external" href="https://www.boost.org/">Boost</a> libraries from <a class="reference external" href="https://www.boost.org/users/download/">here</a> and unpack them.</p></li>
-<li><p>Build the boost DLLs and LIBs by using these commands from Command Line (or
+<li><p>Download the latest Boost libraries from <a class="reference external" href="https://www.boost.org/users/download/">here</a> and unpack them.</p></li>
+<li><p>Build the Boost DLLs and LIBs by using these commands from Command Line (or
 PowerShell). Open CMD/PowerShell inside the Boost dir and type in:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bootstrap.bat
 </pre></div>
@@ -1217,59 +1215,64 @@ Please, be patient.</p>
 </li>
 <li><p>Open CMake-GUI.exe and set up your source directory (input field ‘Where is the
 source code’) to the <em>base directory</em> of the source code you downloaded from
-HPX’s GitHub pages. Here’s an example of my CMake path settings which point to
-my <code class="docutils literal notranslate"><span class="pre">Documents/GitHub/hpx</span></code> folder:</p>
+<em>HPX</em>’s GitHub pages. Here’s an example of CMake path settings, which point to
+the <code class="docutils literal notranslate"><span class="pre">Documents/GitHub/hpx</span></code> folder:</p>
 <div class="figure align-default" id="id21">
 <span id="win32-cmake-settings1"></span><img alt="../_images/cmake_settings1.png" src="../_images/cmake_settings1.png" />
 <p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Example CMake path settings.</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
 </div>
-<p>Inside the ‘Where is the source-code’ enter the base directory of your HPX
-source directory (do not enter the “src” sub-directory!) Inside ‘Where to
-build the binaries’ you should put in the path where all the building process
+<p>Inside ‘Where is the source-code’ enter the base directory of your <em>HPX</em>
+source directory (do not enter the “src” sub-directory!). Inside ‘Where to
+build the binaries’ you should put in the path where all the building processes
 will happen. This is important because the building machinery will do an
-“out-of-tree” build. CMake is not touching or changing in any way the original
-source files. Instead, it will generate Visual Studio Solution Files which
-will build HPX packages out of the HPX source tree.</p>
+“out-of-tree” build. CMake will not touch or change the original source files
+in any way. Instead, it will generate Visual Studio Solution Files, which
+will build <em>HPX</em> packages out of the <em>HPX</em> source tree.</p>
 </li>
-<li><p>Set three new environment variables (in CMake, not in Windows environment, by
-the way): <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>. The
-meaning of these variables is as follows:</p>
+<li><p>Set three new environment variables (in CMake, not in Windows environment):
+<code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>. The meaning of
+these variables is as follows:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> the root directory of the unpacked Boost headers/cpp files.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> the root directory of the unpacked Portable Hardware Locality
+<li><p><code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> the <em>HPX</em> root directory of the unpacked Boost headers/cpp files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> the <em>HPX</em> root directory of the unpacked Portable Hardware Locality
 files.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> the “root directory” where the future builds of HPX
-should be installed to.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> the <em>HPX</em> root directory where the future builds of <em>HPX</em>
+should be installed.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>HPX is a BIG software collection and I really don’t recommend using the
-default <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\hpx</span></code>. I prefer simpler paths <em>without</em> white
-space, like <code class="docutils literal notranslate"><span class="pre">C:\bin\hpx</span></code> or <code class="docutils literal notranslate"><span class="pre">D:\bin\hpx</span></code> etc.</p>
+<p><em>HPX</em> is a very large software collection, so it is not recommended to use the
+default <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\hpx</span></code>. Many users may prefer to use simpler paths <em>without</em>
+whitespace, like <code class="docutils literal notranslate"><span class="pre">C:\bin\hpx</span></code> or <code class="docutils literal notranslate"><span class="pre">D:\bin\hpx</span></code> etc.</p>
 </div>
 </li>
 </ul>
 <p>To insert new env-vars click on “Add Entry” and then insert the name inside
-“Name”, select <code class="docutils literal notranslate"><span class="pre">PATH</span></code> as Type and put the path-name in “Path” text field.
+“Name”, select <code class="docutils literal notranslate"><span class="pre">PATH</span></code> as Type and put the path-name in the “Path” text field.
 Repeat this for the first three variables.</p>
-<p>This is how variable insertion looks like:</p>
+<p>This is how variable insertion will look:</p>
 <div class="figure align-default" id="id22">
 <span id="win32-cmake-settings2"></span><img alt="../_images/cmake_settings2.png" src="../_images/cmake_settings2.png" />
 <p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Example CMake adding entry.</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
 </div>
-<p>Alternatively you could provide <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> instead of
-<code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> with a difference that <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> should point to
-the subdirectory inside Boost root where all the compiled DLLs/LIBs are. I
-myself have used <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> which pointed to the <code class="docutils literal notranslate"><span class="pre">bin.v2</span></code>
-subdirectory under the Boost rootdir. Important is to keep the meanings of
-these two variables separated from each other: <code class="docutils literal notranslate"><span class="pre">BOOST_DIR</span></code> points to the
-ROOT folder of the boost library. <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> points to the subdir
-inside Boost root folder where the compiled binaries are.</p>
+<p>Alternatively, users could provide <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code>; the difference is that <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> should point to
+the subdirectory inside Boost root where all the compiled DLLs/LIBs are. For example,</p>
 </li>
-<li><p>Click the ‘Configure’ button of CMake-GUI. You will be immediately presented a
+</ul>
+<blockquote>
+<div><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> may point to the <code class="docutils literal notranslate"><span class="pre">bin.v2</span></code> subdirectory under the Boost rootdir.</dt><dd><p>It is important to keep the meanings of these two variables separated from each other:</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">BOOST_DIR</span></code> points to the ROOT folder of the Boost library. <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code></dt><dd><p>points to the subdir inside the Boost root folder where the compiled binaries are.</p>
+</dd>
+</dl>
+</div></blockquote>
+<ul>
+<li><p>Click the ‘Configure’ button of CMake-GUI. You will be immediately presented with a
 small window where you can select the C++ compiler to be used within Visual
-Studio. In my case I have used the latest v14 (a.k.a C++ 2015) but older
-versions should be sufficient too. Make sure to select the 64Bit compiler</p></li>
-<li><p>After the generate process has finished successfully click the ‘Generate’
+Studio. This has been tested using the latest v14 (a.k.a C++ 2015) but older
+versions should be sufficient too. Make sure to select the 64Bit compiler.</p></li>
+<li><p>After the generate process has finished successfully, click the ‘Generate’
 button. Now, CMake will put new VS Solution files into the BUILD folder you
 selected at the beginning.</p></li>
 <li><p>Open Visual Studio and load the <code class="docutils literal notranslate"><span class="pre">HPX.sln</span></code> from your build folder.</p></li>
@@ -1278,7 +1281,7 @@ selected at the beginning.</p></li>
 <span id="win32-vs-targets"></span><img alt="../_images/vs_targets_install.png" src="../_images/vs_targets_install.png" />
 <p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Visual Studio INSTALL target.</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
 </div>
-<p>It will take some time to compile everything and in the end you should see an
+<p>It will take some time to compile everything, and in the end you should see an
 output similar to this one:</p>
 <div class="figure align-default" id="id24">
 <span id="win32-vs-build-output"></span><img alt="../_images/vs_build_output.png" src="../_images/vs_build_output.png" />
@@ -1292,7 +1295,7 @@ output similar to this one:</p>
 <span id="bgq-installation"></span><h3>How to Install <em>HPX</em> on BlueGene/Q<a class="headerlink" href="#how-to-install-hpx-on-bluegene-q" title="Permalink to this headline">¶</a></h3>
 <p>So far we only support BGClang for compiling <em>HPX</em> on the BlueGene/Q.</p>
 <ul>
-<li><p>Check if BGClang is available on your installation. If not obtain and install
+<li><p>Check if BGClang is available on your installation. If not, obtain and install
 a copy from the <a class="reference external" href="https://trac.alcf.anl.gov/projects/llvm-bgq">BGClang trac page</a>.</p></li>
 <li><p>Build (and install) a recent version of <a class="reference external" href="https://www.open-mpi.org/software/hwloc/v1.11">Hwloc Downloads</a>. With the following
 commands:</p>
@@ -1329,7 +1332,7 @@ using clang
 </pre></div>
 </div>
 </li>
-<li><p>Generate the <em>HPX</em> buildfiles using cmake:</p>
+<li><p>Generate the <em>HPX</em> buildfiles using CMake:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DHPX_PLATFORM<span class="o">=</span>BlueGeneQ <span class="se">\</span>
         -DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>/path/to/hpx/cmake/toolchains/BGQ.cmake <span class="se">\</span>
         -DCMAKE_CXX_COMPILER<span class="o">=</span>bgclang++11 <span class="se">\</span>
@@ -1379,13 +1382,13 @@ using intel
 </pre></div>
 </div>
 </li>
-<li><p>Change to the directory you unpacked boost in (from now on referred to as
-<code class="docutils literal notranslate"><span class="pre">$BOOST_ROOT</span></code>) and execute the following commands:</p>
+<li><p>Change to the directory you unpacked Boost in (which will be referred to as
+<code class="docutils literal notranslate"><span class="pre">$BOOST_ROOT</span></code> from now on) and execute the following commands:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./bootstrap.sh
 ./b2 <span class="nv">toolset</span><span class="o">=</span>intel-mic -j&lt;N&gt;
 </pre></div>
 </div>
-<p>You should now have all the required boost libraries.</p>
+<p>You should now have all the required Boost libraries.</p>
 </li>
 </ul>
 </div>
@@ -1412,8 +1415,8 @@ is V1.6.</p>
 <div class="section" id="id6">
 <h4>Building <em>HPX</em><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p>After all the prerequisites have been successfully installed, we can now start
-building and installing <em>HPX</em>. The build procedure is almost the same as for
-<a class="reference internal" href="#unix-installation"><span class="std std-ref">How to install HPX on Unix variants</span></a> with the sole difference that you have to enable the
+building and installing <em>HPX</em>. The build procedure is almost the same as the one
+for <a class="reference internal" href="#unix-installation"><span class="std std-ref">How to install HPX on Unix variants</span></a> with the sole difference that you have to enable the
 Xeon Phi in the CMake Build system. This is achieved by invoking CMake in the
 following way:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake                                             <span class="se">\</span>
@@ -1423,7 +1426,7 @@ following way:</p>
     /path/to/hpx
 </pre></div>
 </div>
-<p>For more detailed information about using CMake please refer to its
+<p>For more detailed information about using CMake, please refer to its
 documentation and to the section <a class="reference internal" href="#building-hpx"><span class="std std-ref">Building HPX</span></a>. Please pay special
 attention to the section about <a class="reference internal" href="#cmdoption-arg-hpx-with-malloc-string"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_MALLOC:STRING</span></code></a> as this is
 crucial for getting decent performance on the Xeon Phi.</p>
@@ -1434,13 +1437,13 @@ crucial for getting decent performance on the Xeon Phi.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>There are official <em>HPX</em> packages for Fedora. Unless you want to customize
-your build you may want to start off with the official packages. Instructions
+your, build you may want to start off with the official packages. Instructions
 can be found on the <a class="reference external" href="https://stellar-group.org/downloads/"><em>HPX</em> Downloads</a> page.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This section of the manual is based off of our collaborators Patrick Diehl’s
-blog post <a class="reference external" href="http://diehlpk.github.io/2015/08/04/hpx-fedora.html">Installing HPX on Fedora 22</a>.</p>
+<p>This section of the manual is based off of our collaborator Patrick Diehl’s
+blog post <a class="reference external" href="http://diehlpk.github.io/2015/08/04/hpx-fedora.html">Installing |hpx| on Fedora 22</a>.</p>
 </div>
 <ul>
 <li><p>Install all packages for minimal installation:</p>
@@ -1451,7 +1454,7 @@ blog post <a class="reference external" href="http://diehlpk.github.io/2015/08/0
 </pre></div>
 </div>
 </li>
-<li><p>Get the development branch of HPX:</p>
+<li><p>Get the development branch of <em>HPX</em>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/STEllAR-GROUP/hpx.git
 </pre></div>
 </div>
@@ -1467,13 +1470,13 @@ make install
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To build HPX without examples use:</p>
+<p>To build <em>HPX</em> without examples use:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/hpx -DHPX_WITH_EXAMPLES<span class="o">=</span>Off ..
 </pre></div>
 </div>
 </div>
 </li>
-<li><p>Add the library path of HPX to ldconfig:</p>
+<li><p>Add the library path of <em>HPX</em> to ldconfig:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo <span class="nb">echo</span> /opt/hpx/lib &gt; /etc/ld.so.conf.d/hpx.conf
 sudo ldconfig
 </pre></div>
@@ -1486,7 +1489,7 @@ sudo ldconfig
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>There are <em>HPX</em> packages for Arch in the AUR. Unless you want to customize
-your build you may want to start off with those. Instructions can be found on
+your build, you may want to start off with those. Instructions can be found on
 the <a class="reference external" href="https://stellar-group.org/downloads/"><em>HPX</em> Downloads</a> page.</p>
 </div>
 <ul>
@@ -1495,7 +1498,7 @@ the <a class="reference external" href="https://stellar-group.org/downloads/"><e
 </pre></div>
 </div>
 </li>
-<li><p>For building the documentation you will need to further install the following:</p>
+<li><p>For building the documentation, you will need to further install the following:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo pacman -S doxygen python-pip
 
 pip install --user sphinx sphinx_rtd_theme breathe
@@ -1503,7 +1506,7 @@ pip install --user sphinx sphinx_rtd_theme breathe
 </div>
 </li>
 </ul>
-<p>The rest of the installation steps are same as provided with Fedora
+<p>The rest of the installation steps are the same as those for the Fedora
 or Unix variants.</p>
 </div>
 <div class="section" id="how-to-install-hpx-on-debian-based-distributions">
@@ -1514,7 +1517,7 @@ or Unix variants.</p>
 </pre></div>
 </div>
 </li>
-<li><p>For building the documentation you will need to further install the following:</p>
+<li><p>To build the documentation you will need to further install the following:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install doxygen python-pip
 
 pip install --user sphinx sphinx_rtd_theme breathe
@@ -1527,14 +1530,14 @@ repositories:</p>
 </div>
 </li>
 </ul>
-<p>The rest of the installation steps are same as provided with Fedora
+<p>The rest of the installation steps are same as those for the Fedora
 or Unix variants.</p>
 </div>
 </div>
 <div class="section" id="cmake-toolchains-shipped-with-hpx">
 <span id="cmake-toolchains"></span><h2>CMake toolchains shipped with <em>HPX</em><a class="headerlink" href="#cmake-toolchains-shipped-with-hpx" title="Permalink to this headline">¶</a></h2>
-<p>In order to compile HPX for various platforms, we provide a variety of toolchain
-files that take care of setting up various CMake variables like compilers etc.
+<p>In order to compile <em>HPX</em> for various platforms, we provide a variety of toolchain
+files that take care of setting up various CMake variables like compilers, etc.
 They are located in the <code class="docutils literal notranslate"><span class="pre">cmake/toolchains</span></code> directory:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#arm-gcc"><span class="std std-ref">ARM-gcc</span></a></p></li>
@@ -1546,8 +1549,8 @@ They are located in the <code class="docutils literal notranslate"><span class="
 <li><p><a class="reference internal" href="#craystatic"><span class="std std-ref">CrayStatic</span></a></p></li>
 <li><p><a class="reference internal" href="#xeonphi"><span class="std std-ref">XeonPhi</span></a></p></li>
 </ul>
-<p>To use them pass the <code class="docutils literal notranslate"><span class="pre">-DCMAKE_TOOLCHAIN_FILE=&lt;toolchain&gt;</span></code> argument to the
-cmake invocation.</p>
+<p>To use them, pass the <code class="docutils literal notranslate"><span class="pre">-DCMAKE_TOOLCHAIN_FILE=&lt;toolchain&gt;</span></code> argument to the
+CMake invocation.</p>
 <div class="section" id="arm-gcc">
 <span id="id7"></span><h3>ARM-gcc<a class="headerlink" href="#arm-gcc" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Copyright (c) 2015 Thomas Heller</span>
@@ -2007,7 +2010,7 @@ cmake invocation.</p>
 </div>
 <div class="section" id="cmake-variables-used-to-configure-hpx">
 <span id="cmake-variables"></span><h2>CMake variables used to configure <em>HPX</em><a class="headerlink" href="#cmake-variables-used-to-configure-hpx" title="Permalink to this headline">¶</a></h2>
-<p>In order to configure <em>HPX</em>, you can set a variety of options to allow cmake to
+<p>In order to configure <em>HPX</em>, you can set a variety of options to allow CMake to
 generate your specific makefiles/project files.</p>
 <div class="section" id="variables-that-influence-how-hpx-is-built">
 <span id="configure"></span><h3>Variables that influence how <em>HPX</em> is built<a class="headerlink" href="#variables-that-influence-how-hpx-is-built" title="Permalink to this headline">¶</a></h3>
@@ -3521,29 +3524,29 @@ generate your specific makefiles/project files.</p>
 </div>
 <div class="section" id="additional-tools-and-libraries-used-by-hpx">
 <span id="cmake-additional-tools"></span><h3>Additional tools and libraries used by <em>HPX</em><a class="headerlink" href="#additional-tools-and-libraries-used-by-hpx" title="Permalink to this headline">¶</a></h3>
-<p>Here is a list of additional libraries and tools which are either optionally
+<p>Here is a list of additional libraries and tools that are either optionally
 supported by the build system or are optionally required for certain examples or
 tests. These libraries and tools can be detected by the <em>HPX</em> build system.</p>
 <p>Each of the tools or libraries listed here will be automatically detected if
 they are installed in some standard location. If a tool or library is installed
-in a different location you can specify its base directory by appending
+in a different location, you can specify its base directory by appending
 <code class="docutils literal notranslate"><span class="pre">_ROOT</span></code> to the variable name as listed below. For instance, to configure a
 custom directory for <code class="docutils literal notranslate"><span class="pre">BOOST</span></code>, specify <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT=/custom/boost/root</span></code>.</p>
 <dl class="option">
 <dt id="cmdoption-arg-boost-root-path">
 <code class="sig-name descname">BOOST_ROOT:PATH</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-boost-root-path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specifies where to look for the <a class="reference external" href="https://www.boost.org/">Boost</a> installation to be used for
-compiling <em>HPX</em> Set this if CMake is not able to locate a suitable version of
-<a class="reference external" href="https://www.boost.org/">Boost</a> The directory specified here can be either the root of a installed
-Boost distribution or the directory where you unpacked and built <a class="reference external" href="https://www.boost.org/">Boost</a>
+<dd><p>Specifies where to look for the Boost installation to be used for
+compiling <em>HPX</em>. Set this if CMake is not able to locate a suitable version of
+Boost. The directory specified here can be either the root of an installed
+Boost distribution or the directory where you unpacked and built Boost
 without installing it (with staged libraries).</p>
 </dd></dl>
 
 <dl class="option">
 <dt id="cmdoption-arg-hwloc-root-path">
 <code class="sig-name descname">HWLOC_ROOT:PATH</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-hwloc-root-path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specifies where to look for the <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a> library. Set this if CMake is not
-able to locate a suitable version of <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a> <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a> provides platform
+<dd><p>Specifies where to look for the hwloc library. Set this if CMake is not
+able to locate a suitable version of hwloc. Hwloc provides platform-
 independent support for extracting information about the used hardware
 architecture (number of cores, number of NUMA domains, hyperthreading, etc.).
 <em>HPX</em> utilizes this information if available.</p>
@@ -3552,8 +3555,8 @@ architecture (number of cores, number of NUMA domains, hyperthreading, etc.).
 <dl class="option">
 <dt id="cmdoption-arg-papi-root-path">
 <code class="sig-name descname">PAPI_ROOT:PATH</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-papi-root-path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specifies where to look for the <a class="reference external" href="https://icl.cs.utk.edu/papi/">Performance Application Programming Interface (PAPI)</a> library. The PAPI library is
-necessary to compile a special component exposing PAPI hardware events and
+<dd><p>Specifies where to look for the PAPI library. The PAPI library is
+needed to compile a special component exposing PAPI hardware events and
 counters as <em>HPX</em> performance counters. This is not available on the Windows
 platform.</p>
 </dd></dl>
@@ -3561,8 +3564,8 @@ platform.</p>
 <dl class="option">
 <dt id="cmdoption-arg-amplifier-root-path">
 <code class="sig-name descname">AMPLIFIER_ROOT:PATH</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-amplifier-root-path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specifies where to look for one of the tools of the Intel Parallel Studio(tm)
-product, either Intel Amplifier(tm) or Intel Inspector(tm). This should be
+<dd><p>Specifies where to look for one of the tools of the Intel Parallel Studio
+product, either Intel Amplifier or Intel Inspector. This should be
 set if the CMake variable <code class="docutils literal notranslate"><span class="pre">HPX_USE_ITT_NOTIFY</span></code> is set to <code class="docutils literal notranslate"><span class="pre">ON</span></code>. Enabling
 ITT support in <em>HPX</em> will integrate any application with the mentioned Intel
 tools, which customizes the generated information for your application and
@@ -3609,7 +3612,7 @@ improves the generated diagnostics.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>bfa2266</code>.
+          Revision <code>388ae00</code>.
         </span>
       
 

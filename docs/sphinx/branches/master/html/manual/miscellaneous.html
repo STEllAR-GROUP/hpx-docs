@@ -116,6 +116,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#utilities-in-hpx">Utilities in <em>HPX</em></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#checkpoint">Checkpoint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#checkpointing-components">Checkpointing Components</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#the-hpx-i-o-streams-component">The <em>HPX</em> I/O-streams component</a></li>
@@ -554,9 +555,9 @@ illustrated below.</p>
     <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">vec7</span><span class="p">{</span><span class="mf">1.02f</span><span class="p">,</span> <span class="mf">1.03f</span><span class="p">,</span> <span class="mf">1.04f</span><span class="p">,</span> <span class="mf">1.05f</span><span class="p">};</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">fut_7</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">vec7</span><span class="p">);</span>
     <span class="n">checkpoint</span> <span class="n">archive7</span> <span class="o">=</span> <span class="n">fut_7</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">archive7</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span>    <span class="c1">// Write data to ofstream</span>
-        <span class="p">,</span> <span class="n">archive7</span><span class="p">.</span><span class="n">end</span><span class="p">()</span>    <span class="c1">// ie. the file</span>
-        <span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">test_file_7</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">archive7</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span>    <span class="c1">// Write data to ofstream</span>
+        <span class="n">archive7</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>            <span class="c1">// ie. the file</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">test_file_7</span><span class="p">));</span>
     <span class="n">test_file_7</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
 
     <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">vec7_1</span><span class="p">;</span>
@@ -565,12 +566,45 @@ illustrated below.</p>
     <span class="k">if</span> <span class="p">(</span><span class="n">test_file_7_1</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">end</span><span class="p">);</span>
-        <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+        <span class="k">auto</span> <span class="n">length</span> <span class="o">=</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
         <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">beg</span><span class="p">);</span>
         <span class="n">char_vec</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">length</span><span class="p">);</span>
         <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">char_vec</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">length</span><span class="p">);</span>
     <span class="p">}</span>
-    <span class="n">checkpoint</span> <span class="n">archive7_1</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">char_vec</span><span class="p">));</span>  <span class="c1">// Write data to checkpoint</span>
+    <span class="n">checkpoint</span> <span class="n">archive7_1</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">char_vec</span><span class="p">));</span>    <span class="c1">// Write data to checkpoint</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="checkpointing-components">
+<h3>Checkpointing Components<a class="headerlink" href="#checkpointing-components" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code> and <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code> are also able to store components
+inside <code class="docutils literal notranslate"><span class="pre">checkpoint``s.</span> <span class="pre">This</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">done</span> <span class="pre">in</span> <span class="pre">one</span> <span class="pre">of</span> <span class="pre">two</span> <span class="pre">ways.</span> <span class="pre">First</span> <span class="pre">a</span> <span class="pre">client</span> <span class="pre">of</span>
+<span class="pre">the</span> <span class="pre">component</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">passed</span> <span class="pre">to</span> <span class="pre">``save_checkpoint</span></code>. When the user wishes to
+resurrect the component she can pass a client instance to <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>.</p>
+<p>This technique is demonstrated below:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span>
+        <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">end</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The second way a user can save a component is by passing a <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> to the
+component to <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>. This component can be resurrected by creating
+a new instance of the component type and passing a <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> to the new
+instance to <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>. An example can be found below:</p>
+<p>This technique is demonstrated below:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// Test 5</span>
+    <span class="c1">//  test creation of a checkpoint from a checkpoint</span>
+    <span class="c1">//  test proper handling of futures</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">test_vec2_future</span> <span class="o">=</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="n">test_vec2</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f_check</span> <span class="o">=</span>
+        <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">archive5</span><span class="p">),</span> <span class="n">test_vec2_future</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">test_vec3_future</span><span class="p">;</span>
+    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">f_check</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">test_vec3_future</span><span class="p">);</span>
+
+    <span class="n">HPX_TEST</span><span class="p">(</span><span class="n">test_vec2</span> <span class="o">==</span> <span class="n">test_vec3_future</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+
+    <span class="c1">// Test 7</span>
+    <span class="c1">//  test writing to a file</span>
 </pre></div>
 </div>
 </div>
@@ -668,7 +702,7 @@ will appear on the console as long as either of those is explicitly used.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>f3e86cb</code>.
+          Revision <code>e177b93</code>.
         </span>
       
 

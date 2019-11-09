@@ -202,9 +202,9 @@ concepts. One of these tools is a <a class="reference internal" href="../termino
 called dataflow. An <a class="reference internal" href="../terminology.html#term-lco"><span class="xref std std-term">LCO</span></a> is a type of component that can spawn a new
 thread when triggered. They are also distinguished from other components by a
 standard interface which allow users to understand and use them easily.
-Dataflows, being a <a class="reference internal" href="../terminology.html#term-lco"><span class="xref std std-term">LCO</span></a>, is triggered when the values it depends on
+A Dataflow, being an <a class="reference internal" href="../terminology.html#term-lco"><span class="xref std std-term">LCO</span></a>, is triggered when the values it depends on
 become available. For instance, if you have a calculation X that depends on the
-result of three other calculations, you could set up a dataflow that would begin
+results of three other calculations, you could set up a dataflow that would begin
 the calculation X as soon as the other three calculations have returned their
 values. Dataflows are set up to depend on other dataflows. It is this property
 that makes dataflow a powerful parallelization tool. If you understand the
@@ -224,11 +224,11 @@ future value by iterating:</p>
 \[I = Pi\]</div>
 <p>and</p>
 <div class="math notranslate nohighlight">
-\[P = P + i\]</div>
+\[P = P + I\]</div>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <p>The source code for this example can be found here:
-<a class="reference download internal" download="" href="../_downloads/4589bc8135f219c4d569bb7acf8d0c84/interest_calculator.cpp"><code class="xref download docutils literal notranslate"><span class="pre">interest_calculator.cpp</span></code></a>.</p>
+<a class="reference download internal" download="" href="../_downloads/82e9f7ff951b2164f21907cbcedc1f2f/interest_calculator.cpp"><code class="xref download docutils literal notranslate"><span class="pre">interest_calculator.cpp</span></code></a>.</p>
 <p>To compile this program, go to your <em>HPX</em> build directory (see
 <a class="reference internal" href="../manual/building_hpx.html#hpx-build-system"><span class="std std-ref">HPX build system</span></a> for information on configuring and building <em>HPX</em>) and
 enter:</p>
@@ -252,7 +252,8 @@ Boost.Program Options to set our command line variables (see
 <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> for more details). These options set the principal,
 rate, compound period, and time. It is important to note that the units of time
 for <code class="docutils literal notranslate"><span class="pre">cp</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> must be the same.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//[interest_main</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">options_description</span> <span class="n">cmdline</span><span class="p">(</span><span class="s">&quot;Usage: &quot;</span> <span class="n">HPX_APPLICATION_STRING</span> <span class="s">&quot; [options]&quot;</span><span class="p">);</span>
 
@@ -265,11 +266,11 @@ for <code class="docutils literal notranslate"><span class="pre">cp</span></code
     <span class="p">;</span>
 
     <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">cmdline</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
-<span class="p">}</span>
 </pre></div>
 </div>
 <p>Next we look at hpx_main.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="n">variables_map</span> <span class="o">&amp;</span> <span class="n">vm</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//[interest_hpx_main</span>
+<span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="n">variables_map</span> <span class="o">&amp;</span> <span class="n">vm</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="p">{</span>
         <span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="p">;</span>
@@ -319,7 +320,6 @@ for <code class="docutils literal notranslate"><span class="pre">cp</span></code
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
-<span class="p">}</span>
 </pre></div>
 </div>
 <p>Here we find our command line variables read in, the rate is converted from a
@@ -327,8 +327,8 @@ percent to a decimal, the number of calculation iterations is determined, and
 then our shared_futures are set up. Notice that we first place our principal and
 rate into shares futures by passing the variables <code class="docutils literal notranslate"><span class="pre">init_principal</span></code> and
 <code class="docutils literal notranslate"><span class="pre">init_rate</span></code> using <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::make_ready_future</span></code>.</p>
-<p>In this way <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::shared_future</span></code><code class="docutils literal notranslate"><span class="pre">&lt;double&gt;</span></code> principal and <code class="docutils literal notranslate"><span class="pre">rate</span></code>
-will be initialized to <code class="docutils literal notranslate"><span class="pre">init_principal</span></code> and <code class="docutils literal notranslate"><span class="pre">init_rate</span></code> when
+<p>In this way <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::shared_future</span></code><code class="docutils literal notranslate"><span class="pre">&lt;double&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">principal</span></code>
+and <code class="docutils literal notranslate"><span class="pre">rate</span></code> will be initialized to <code class="docutils literal notranslate"><span class="pre">init_principal</span></code> and <code class="docutils literal notranslate"><span class="pre">init_rate</span></code> when
 <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::make_ready_future</span></code><code class="docutils literal notranslate"><span class="pre">&lt;double&gt;</span></code> returns a future containing
 those initial values. These shared futures then enter the for loop and are
 passed to <code class="docutils literal notranslate"><span class="pre">interest</span></code>. Next <code class="docutils literal notranslate"><span class="pre">principal</span></code> and <code class="docutils literal notranslate"><span class="pre">interest</span></code> are passed to the
@@ -338,7 +338,8 @@ will first wait for its arguments to be ready before launching any callbacks, so
 are ready. This loop continues for each compound period that must be calculated.
 To see how <code class="docutils literal notranslate"><span class="pre">interest</span></code> and <code class="docutils literal notranslate"><span class="pre">principal</span></code> are calculated in the loop let us look
 at <code class="docutils literal notranslate"><span class="pre">calc_action</span></code> and <code class="docutils literal notranslate"><span class="pre">add_action</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate interest for one period</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//[interest_calc_add_action</span>
+<span class="c1">// Calculate interest for one period</span>
 <span class="kt">double</span> <span class="nf">calc</span><span class="p">(</span><span class="kt">double</span> <span class="n">principal</span><span class="p">,</span> <span class="kt">double</span> <span class="n">rate</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">principal</span> <span class="o">*</span> <span class="n">rate</span><span class="p">;</span>
@@ -349,7 +350,6 @@ at <code class="docutils literal notranslate"><span class="pre">calc_action</spa
 <span class="kt">double</span> <span class="nf">add</span><span class="p">(</span><span class="kt">double</span> <span class="n">principal</span><span class="p">,</span> <span class="kt">double</span> <span class="n">interest</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">principal</span> <span class="o">+</span> <span class="n">interest</span><span class="p">;</span>
-<span class="p">}</span>
 </pre></div>
 </div>
 <p>After the shared future dependencies have been defined in hpx_main, we see the
@@ -395,7 +395,7 @@ the initial value of the investment.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>a943fd2</code>.
+          Revision <code>2ba20fe</code>.
         </span>
       
 
@@ -404,6 +404,7 @@ the initial value of the investment.</p>
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
  
 
+SPDX-License-Identifier: BSL-1.0
 Distributed under the Boost Software License, Version 1.0. (See accompanying file
 LICENSE_1_0.txt or copy at
 <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)

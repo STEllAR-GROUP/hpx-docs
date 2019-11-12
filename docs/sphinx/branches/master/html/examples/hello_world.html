@@ -241,9 +241,8 @@ section <a class="reference internal" href="../manual/running_on_batch_systems.h
 <h2>Walkthrough<a class="headerlink" href="#walkthrough" title="Permalink to this headline">¶</a></h2>
 <p>Now that you have compiled and run the code, let’s look at how the code works,
 beginning with <code class="docutils literal notranslate"><span class="pre">main()</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//[hello_world_hpx_main</span>
-<span class="c1">//` Here is the main entry point. By using the include &#39;hpx/hpx_main.hpp&#39; HPX</span>
-<span class="c1">//` will invoke the plain old C-main() as its first HPX thread.</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Here is the main entry point. By using the include &#39;hpx/hpx_main.hpp&#39; HPX</span>
+<span class="c1">// will invoke the plain old C-main() as its first HPX thread.</span>
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="c1">// Get a list of all available localities.</span>
@@ -268,6 +267,7 @@ beginning with <code class="docutils literal notranslate"><span class="pre">main
     <span class="c1">// all of the futures have finished.</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">wait_all</span><span class="p">(</span><span class="n">futures</span><span class="p">);</span>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>In this excerpt of the code we again see the use of futures. This time the
@@ -285,9 +285,9 @@ that we are on.</p>
 <p>As in <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> our futures are set using
 <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async&lt;&gt;</span></code>. The <code class="docutils literal notranslate"><span class="pre">hello_world_foreman_action</span></code> is declared
 here:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//[hello_world_action_wrapper</span>
-<span class="c1">// Define the boilerplate code necessary for the function &#39;hello_world_foreman&#39;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Define the boilerplate code necessary for the function &#39;hello_world_foreman&#39;</span>
 <span class="c1">// to be invoked as an HPX action.</span>
+<span class="n">HPX_PLAIN_ACTION</span><span class="p">(</span><span class="n">hello_world_foreman</span><span class="p">,</span> <span class="n">hello_world_foreman_action</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Another way of thinking about this wrapping technique is as follows: functions
@@ -295,8 +295,7 @@ here:</p>
 locally or remotely (e.g. on another machine participating in the computation).</p>
 <p>Now it is time to look at the <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code> function which was
 wrapped in the action above:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//[hello_world_foreman</span>
-<span class="kt">void</span> <span class="nf">hello_world_foreman</span><span class="p">()</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">hello_world_foreman</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="c1">// Get the number of worker OS-threads in use by this locality.</span>
     <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="k">const</span> <span class="n">os_threads</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_os_thread_count</span><span class="p">();</span>
@@ -327,9 +326,15 @@ wrapped in the action above:</p>
         <span class="p">{</span>
             <span class="c1">// Asynchronously start a new task. The task is encapsulated in a</span>
             <span class="c1">// future, which we can query to determine if the task has</span>
-            <span class="c1">// completed.</span>
-            <span class="k">typedef</span> <span class="n">hello_world_worker_action</span> <span class="n">action_type</span><span class="p">;</span>
-            <span class="n">futures</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="o">&lt;</span><span class="n">action_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">here</span><span class="p">,</span> <span class="n">worker</span><span class="p">));</span>
+            <span class="c1">// completed. We give the task a hint to run on a particular worker</span>
+            <span class="c1">// thread, but no guarantees are given by the scheduler that the</span>
+            <span class="c1">// task will actually run on that worker thread.</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">default_executor</span> <span class="n">exec</span><span class="p">(</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">thread_priority_default</span><span class="p">,</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">thread_stacksize_default</span><span class="p">,</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">thread_schedule_hint</span><span class="p">(</span>
+                    <span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">thread_schedule_hint_mode_thread</span><span class="p">,</span> <span class="n">worker</span><span class="p">));</span>
+            <span class="n">futures</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">exec</span><span class="p">,</span> <span class="n">hello_world_worker</span><span class="p">,</span> <span class="n">worker</span><span class="p">));</span>
         <span class="p">}</span>
 
         <span class="c1">// Wait for all of the futures to finish. The callback version of the</span>
@@ -349,6 +354,7 @@ wrapped in the action above:</p>
             <span class="p">}),</span>
             <span class="n">futures</span><span class="p">);</span>
     <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Now, before we discuss <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code>, let’s talk about the
@@ -362,8 +368,7 @@ OS-thread prints out the statement, the future is marked as ready, and
 <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::lcos::wait_each</span></code> in <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code>. If it is not
 executing on the correct OS-thread, it returns a value of -1, which causes
 <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code> to leave the OS-thread id in <code class="docutils literal notranslate"><span class="pre">attendance</span></code>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//[hello_world_worker</span>
-<span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">hello_world_worker</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">desired</span><span class="p">)</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">hello_world_worker</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">desired</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// Returns the OS-thread number of the worker that is running this</span>
     <span class="c1">// HPX-thread.</span>
@@ -383,10 +388,6 @@ executing on the correct OS-thread, it returns a value of -1, which causes
     <span class="c1">// try again by rescheduling it.</span>
     <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
 <span class="p">}</span>
-
-<span class="c1">// Define the boilerplate code necessary for the function &#39;hello_world_worker&#39;</span>
-<span class="c1">// to be invoked as an HPX action (by a HPX future). This macro defines the</span>
-<span class="c1">// type &#39;hello_world_worker_action&#39;.</span>
 </pre></div>
 </div>
 <p>Because <em>HPX</em> features work stealing task schedulers, there is no way to
@@ -424,7 +425,7 @@ why we must use a guess-and-check approach.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>b6a85ed</code>.
+          Revision <code>ca55e01</code>.
         </span>
       
 

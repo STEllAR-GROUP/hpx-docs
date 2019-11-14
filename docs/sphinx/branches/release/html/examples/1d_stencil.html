@@ -357,7 +357,7 @@ returns a future to the result of the specified function. This allows users to
 string dataflows together and construct an execution tree.</p>
 <p>After the values of the futures in dataflow are ready, the values must be pulled
 out of the future container to be passed to the function <code class="docutils literal notranslate"><span class="pre">heat</span></code>. In order to
-do this, we use the HPX facility <code class="docutils literal notranslate"><span class="pre">unwrapped</span></code>, which underneath calls
+do this, we use the HPX facility <code class="docutils literal notranslate"><span class="pre">unwrapping</span></code>, which underneath calls
 <code class="docutils literal notranslate"><span class="pre">.get()</span></code> on each of the futures so that the function <code class="docutils literal notranslate"><span class="pre">heat</span></code> will be passed
 doubles and not futures to doubles.</p>
 <p>By setting up the algorithm this way, the program will be able to execute as
@@ -420,7 +420,7 @@ it should come as no surprise that we synchronize this operation with another
 instance of dataflow (found in <code class="docutils literal notranslate"><span class="pre">heat_part</span></code>). This dataflow is passed futures
 to the data in the current and surrounding partitions by calling <code class="docutils literal notranslate"><span class="pre">get_data()</span></code>
 on each respective partition. When these futures are ready dataflow passes them
-to the <code class="docutils literal notranslate"><span class="pre">unwrapped</span></code> function, which extracts the shared_array of doubles and
+to the <code class="docutils literal notranslate"><span class="pre">unwrapping</span></code> function, which extracts the shared_array of doubles and
 passes them to the lambda. The lambda calls <code class="docutils literal notranslate"><span class="pre">heat_part_data</span></code> on the
 <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> which the middle partition is on.</p>
 <p>Although this example could run distributed, it only runs on one
@@ -560,7 +560,7 @@ facilitates the scalable parallelization of most applications.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>2ba20fe</code>.
+          Revision <code>66b995f</code>.
         </span>
       
 

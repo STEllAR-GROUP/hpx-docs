@@ -114,11 +114,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#lightweight-error-codes">Lightweight error codes</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#utilities-in-hpx">Utilities in <em>HPX</em></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#checkpoint">Checkpoint</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#checkpointing-components">Checkpointing Components</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#utilities-in-hpx">Utilities in <em>HPX</em></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#the-hpx-i-o-streams-component">The <em>HPX</em> I/O-streams component</a></li>
 </ul>
 </li>
@@ -439,175 +435,6 @@ instance.</p>
 <span id="utilities"></span><h2>Utilities in <em>HPX</em><a class="headerlink" href="#utilities-in-hpx" title="Permalink to this headline">¶</a></h2>
 <p>In order to ease the burden of programming in <em>HPX</em> we have provided several
 utilities to users. The following section documents those facilies.</p>
-<div class="section" id="checkpoint">
-<span id="id3"></span><h3>Checkpoint<a class="headerlink" href="#checkpoint" title="Permalink to this headline">¶</a></h3>
-<p>A common need of users is to periodically backup an application. This practice
-provides resiliency and potential restart points in code. We have developed the
-concept of a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> to support this use case.</p>
-<p>Found in <code class="docutils literal notranslate"><span class="pre">hpx/util/checkpoint.hpp</span></code>, <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>s are defined as objects
-which hold a serialized version of an object or set of objects at a particular
-moment in time. This representation can be stored in memory for later use or it
-can be written to disk for storage and/or recovery at a later point. In order to
-create and fill this object with data we use a function called
-<code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>. In code the function looks like this:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">save_checkpoint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">...);</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code> takes arbitrary data containers such as int, double, float,
-vector, and future and serializes them into a newly created <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>
-object. This function returns a <code class="docutils literal notranslate"><span class="pre">future</span></code> to a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> containing the
-data. Let us look a simple use case below:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">checkpoint</span><span class="p">;</span>
-<span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">save_checkpoint</span><span class="p">;</span>
-
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">};</span>
-<span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Once the future is ready the checkpoint object will contain the <code class="docutils literal notranslate"><span class="pre">vector</span></code>
-<code class="docutils literal notranslate"><span class="pre">vec</span></code> and its five elements.</p>
-<p>It is also possible to modify the launch policy used by <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>.
-This is accomplished by passing a launch policy as the first argument. It is
-important to note that passing <code class="docutils literal notranslate"><span class="pre">hpx::launch::sync</span></code> will cause
-<code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code> to return a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> instead of a <code class="docutils literal notranslate"><span class="pre">future</span></code> to a
-<code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. All other policies passed to <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code> will return a
-<code class="docutils literal notranslate"><span class="pre">future</span></code> to a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>.</p>
-<p>Sometimes <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> s must be declared before they are used.
-<code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code> allows users to move pre-created <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> s into the
-function as long as they are the first container passing into the function (In
-the case where a launch policy is used, the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> will immediately
-follow the launch policy). An example of these features can be found below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[check_test_1</span>
-    <span class="kt">char</span> <span class="n">character</span> <span class="o">=</span> <span class="sc">&#39;d&#39;</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">integer</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">flt</span> <span class="o">=</span> <span class="mf">10.01f</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">boolean</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;I am a string of characters&quot;</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">(</span><span class="n">str</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">str</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
-    <span class="n">checkpoint</span> <span class="n">archive</span><span class="p">;</span>
-
-    <span class="c1">// Test 1</span>
-    <span class="c1">//  test basic functionality</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f_archive</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span>
-</pre></div>
-</div>
-<p>Now that we can create <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> s we now must be able to restore the
-objects they contain into memory. This is accomplished by the function
-<code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>. This function takes a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> and fills its data
-into the containers it is provided. It is important to remember that the
-containers must be ordered in the same way they were placed into the
-<code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. For clarity see the example below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[check_test_2</span>
-    <span class="kt">char</span> <span class="n">character2</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">integer2</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">flt2</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">boolean2</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str2</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">vec2</span><span class="p">;</span>
-
-    <span class="n">restore_checkpoint</span><span class="p">(</span>
-</pre></div>
-</div>
-<p>The core utility of <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> is in its ability to make certain data
-persistent. Often this means that the data is needed to be stored in an object,
-such as a file, for later use. For these cases we have provided two solutions:
-stream operator overloads and access iterators.</p>
-<p>We have created the two stream overloads
-<code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> to stream data
-out of and into <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. You can see an
-example of the overloads in use below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[check_test_3</span>
-    <span class="kt">double</span> <span class="n">a9</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">b9</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">c9</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">test_file_9</span><span class="p">(</span><span class="s">&quot;test_file_9.txt&quot;</span><span class="p">);</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f_9</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">a9</span><span class="p">,</span> <span class="n">b9</span><span class="p">,</span> <span class="n">c9</span><span class="p">);</span>
-    <span class="n">test_file_9</span> <span class="o">&lt;&lt;</span> <span class="n">f_9</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
-    <span class="n">test_file_9</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-
-    <span class="kt">double</span> <span class="n">a9_1</span><span class="p">,</span> <span class="n">b9_1</span><span class="p">,</span> <span class="n">c9_1</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">test_file_9_1</span><span class="p">(</span><span class="s">&quot;test_file_9.txt&quot;</span><span class="p">);</span>
-    <span class="n">checkpoint</span> <span class="n">archive9</span><span class="p">;</span>
-    <span class="n">test_file_9_1</span> <span class="o">&gt;&gt;</span> <span class="n">archive9</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>This is the primary way to move data into and out of a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. It is
-important to note, however, that users should be cautious when using a stream
-operator to load data an another function to remove it (or vice versa). Both
-<code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> rely on a <code class="docutils literal notranslate"><span class="pre">.write()</span></code> and a <code class="docutils literal notranslate"><span class="pre">.read()</span></code>
-function respectively. In order to know how much data to read from the
-<code class="docutils literal notranslate"><span class="pre">std::istream</span></code>, the <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> will write the size of the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>
-before writing the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> data. Correspondingly, the <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> will
-read the size of the stored data before reading the data into new instance of
-<code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. As long as the user employs the <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and
-<code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> to stream the data this detail can be ignored.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Be careful when mixing <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> with other
-facilities to read and write to a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> writes and
-extra variable and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> reads this variable back separately. Used
-together the user will not encounter any issues and can safely ignore this
-detail.</p>
-</div>
-<p>Users may also move the data into and out of a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> using the exposed
-<code class="docutils literal notranslate"><span class="pre">.begin()</span></code> and <code class="docutils literal notranslate"><span class="pre">.end()</span></code> iterators. An example of this use case is
-illustrated below.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[check_test_4</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">test_file_7</span><span class="p">(</span><span class="s">&quot;checkpoint_test_file.txt&quot;</span><span class="p">);</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">vec7</span><span class="p">{</span><span class="mf">1.02f</span><span class="p">,</span> <span class="mf">1.03f</span><span class="p">,</span> <span class="mf">1.04f</span><span class="p">,</span> <span class="mf">1.05f</span><span class="p">};</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">fut_7</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">vec7</span><span class="p">);</span>
-    <span class="n">checkpoint</span> <span class="n">archive7</span> <span class="o">=</span> <span class="n">fut_7</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">archive7</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span>    <span class="c1">// Write data to ofstream</span>
-        <span class="n">archive7</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>            <span class="c1">// ie. the file</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">test_file_7</span><span class="p">));</span>
-    <span class="n">test_file_7</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">vec7_1</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">char_vec</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">test_file_7_1</span><span class="p">(</span><span class="s">&quot;checkpoint_test_file.txt&quot;</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">test_file_7_1</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">end</span><span class="p">);</span>
-        <span class="k">auto</span> <span class="n">length</span> <span class="o">=</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
-        <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">beg</span><span class="p">);</span>
-        <span class="n">char_vec</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">length</span><span class="p">);</span>
-        <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">char_vec</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">length</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="n">checkpoint</span> <span class="n">archive7_1</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">char_vec</span><span class="p">));</span>    <span class="c1">// Write data to checkpoint</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="checkpointing-components">
-<h3>Checkpointing Components<a class="headerlink" href="#checkpointing-components" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code> and <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code> are also able to store components
-inside <code class="docutils literal notranslate"><span class="pre">checkpoint``s.</span> <span class="pre">This</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">done</span> <span class="pre">in</span> <span class="pre">one</span> <span class="pre">of</span> <span class="pre">two</span> <span class="pre">ways.</span> <span class="pre">First</span> <span class="pre">a</span> <span class="pre">client</span> <span class="pre">of</span>
-<span class="pre">the</span> <span class="pre">component</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">passed</span> <span class="pre">to</span> <span class="pre">``save_checkpoint</span></code>. When the user wishes to
-resurrect the component she can pass a client instance to <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>.</p>
-<p>This technique is demonstrated below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span>
-        <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">end</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>The second way a user can save a component is by passing a <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> to the
-component to <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>. This component can be resurrected by creating
-a new instance of the component type and passing a <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> to the new
-instance to <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>. An example can be found below:</p>
-<p>This technique is demonstrated below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// Test 5</span>
-    <span class="c1">//  test creation of a checkpoint from a checkpoint</span>
-    <span class="c1">//  test proper handling of futures</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">test_vec2_future</span> <span class="o">=</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="n">test_vec2</span><span class="p">);</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f_check</span> <span class="o">=</span>
-        <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">archive5</span><span class="p">),</span> <span class="n">test_vec2_future</span><span class="p">);</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">test_vec3_future</span><span class="p">;</span>
-    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">f_check</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">test_vec3_future</span><span class="p">);</span>
-
-    <span class="n">HPX_TEST</span><span class="p">(</span><span class="n">test_vec2</span> <span class="o">==</span> <span class="n">test_vec3_future</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
-
-    <span class="c1">// Test 7</span>
-    <span class="c1">//  test writing to a file</span>
-</pre></div>
-</div>
-</div>
 </div>
 <div class="section" id="the-hpx-i-o-streams-component">
 <span id="iostreams"></span><h2>The <em>HPX</em> I/O-streams component<a class="headerlink" href="#the-hpx-i-o-streams-component" title="Permalink to this headline">¶</a></h2>
@@ -702,7 +529,7 @@ will appear on the console as long as either of those is explicitly used.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>2ba20fe</code>.
+          Revision <code>66b995f</code>.
         </span>
       
 

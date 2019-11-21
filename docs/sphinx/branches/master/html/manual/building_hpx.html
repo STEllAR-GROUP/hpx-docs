@@ -1605,8 +1605,8 @@ CMake invocation.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_PLATFORM</span> <span class="s2">&quot;native&quot;</span><span class="p">)</span>
 <span class="c"># Disable generic coroutines (and use posix version)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_GENERIC_CONTEXT_COROUTINES</span> <span class="s">OFF</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;disable generic coroutines&quot;</span><span class="p">)</span>
-<span class="c"># BGAS nodes support ibverbs</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_IBVERBS</span> <span class="s">ON</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="c"># BGAS nodes support ibverbs, but it is deprecated</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_VERBS</span> <span class="s">OFF</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 <span class="c"># Always disable the tcp parcelport as it is non-functional on the BGQ.</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span> <span class="s">ON</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 <span class="c"># Always enable the tcp parcelport as it is currently the only way to communicate on the BGQ.</span>
@@ -1683,11 +1683,11 @@ CMake invocation.</p>
 <span class="c"># Set our platform name</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_PLATFORM</span> <span class="s2">&quot;BlueGeneQ&quot;</span><span class="p">)</span>
 <span class="c"># Always disable the ibverbs parcelport as it is non-functional on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_IBVERBS_PARCELPORT</span> <span class="s">OFF</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_VERBS</span> <span class="s">OFF</span><span class="p">)</span>
 <span class="c"># Always disable the tcp parcelport as it is non-functional on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_TCP_PARCELPORT</span> <span class="s">OFF</span><span class="p">)</span>
-<span class="c"># Always enable the tcp parcelport as it is currently the only way to communicate on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MPI_PARCELPORT</span> <span class="s">ON</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span> <span class="s">OFF</span><span class="p">)</span>
+<span class="c"># Always enable the mpi parcelport as it is currently the only way to communicate on the BGQ.</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span> <span class="s">ON</span><span class="p">)</span>
 <span class="c"># We have a bunch of cores on the BGQ ...</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MAX_CPU_COUNT</span> <span class="s2">&quot;64&quot;</span><span class="p">)</span>
 <span class="c"># We default to tbbmalloc as our allocator on the MIC</span>
@@ -1991,7 +1991,8 @@ CMake invocation.</p>
 <span class="c"># Set our platform name</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_PLATFORM</span> <span class="s2">&quot;XeonPhi&quot;</span><span class="p">)</span>
 <span class="c"># Always disable the ibverbs parcelport as it is non-functional on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_IBVERBS</span> <span class="s">OFF</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Enable the ibverbs based parcelport. This is currently an experimental feature&quot;</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_VERBS</span> <span class="s">OFF</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Enable the ibverbs based parcelport. This is currently an experimental feature&quot;</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span> <span class="s">ON</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Enable the MPI based parcelport.&quot;</span><span class="p">)</span>
 <span class="c"># We have a bunch of cores on the MIC ... increase the default</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MAX_CPU_COUNT</span> <span class="s2">&quot;256&quot;</span> <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 <span class="c"># We default to tbbmalloc as our allocator on the MIC</span>
@@ -3766,7 +3767,7 @@ improves the generated diagnostics.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>7072568</code>.
+          Revision <code>27f3f83</code>.
         </span>
       
 

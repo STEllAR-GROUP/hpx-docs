@@ -211,17 +211,17 @@ there are some things to keep in mind to make the experience somewhat more
 productive.</p>
 <p>Call stacks in <em>HPX</em> can often be quite unwieldy as the library is heavily
 templated and the call stacks can be very deep. For this reason it is sometimes
-a good idea compile <em>HPX</em> in <code class="docutils literal notranslate"><span class="pre">RelWithDebInfo</span></code> mode which applies some
+a good idea compile <em>HPX</em> in <code class="docutils literal notranslate"><span class="pre">RelWithDebInfo</span></code> mode, which applies some
 optimizations but keeps debugging symbols. This can often compress call stacks
 significantly. On the other hand, stepping through the code can also be more
 difficult because of statements being reordered and variables being optimized
-away. Also note that because <em>HPX</em> implements user-space threads and context
+away. Also, note that because <em>HPX</em> implements user-space threads and context
 switching, call stacks may not always be complete in a debugger.</p>
 <p><em>HPX</em> launches not only worker threads but also a few helper threads. The first
-thread is the main thread which typically does no work in an <em>HPX</em> application,
+thread is the main thread, which typically does no work in an <em>HPX</em> application,
 except at startup and shutdown. If using the default settings, <em>HPX</em> will spawn
 six additional threads (used for service thread pools). The first worker thread
-is usually the eighth thread, and most user code will be run on these worker
+is usually the eighth thread, and most user codes will be run on these worker
 threads. The last thread is a helper thread used for <em>HPX</em> shutdown.</p>
 <p>Finally, since <em>HPX</em> is a multi-threaded runtime, the following <code class="docutils literal notranslate"><span class="pre">gdb</span></code> options
 can be helpful:</p>
@@ -229,21 +229,21 @@ can be helpful:</p>
 set non-stop on
 </pre></div>
 </div>
-<p>Non-stop mode allows you to have a single thread stop on a breakpoint without
+<p>Non-stop mode allows users to have a single thread stop on a breakpoint without
 stopping all other threads as well.</p>
 </div>
 <div class="section" id="using-sanitizers-with-hpx-applications">
 <h2>Using sanitizers with <em>HPX</em> applications<a class="headerlink" href="#using-sanitizers-with-hpx-applications" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Not all parts of <em>HPX</em> are sanitizer-clean. This means that you may end up
-with false positives from <em>HPX</em> itself when using sanitizers for your
-application.</p>
+<p>Not all parts of <em>HPX</em> are sanitizer clean. This means that users may end up
+with false positives from <em>HPX</em> itself when using sanitizers for their
+applications.</p>
 </div>
-<p>To use sanitizers with <em>HPX</em> you should turn on <code class="docutils literal notranslate"><span class="pre">HPX_WITH_SANITIZERS</span></code> and turn
+<p>To use sanitizers with <em>HPX</em>, turn on <code class="docutils literal notranslate"><span class="pre">HPX_WITH_SANITIZERS</span></code> and turn
 off <code class="docutils literal notranslate"><span class="pre">HPX_WITH_STACK_OVERFLOW_DETECTION</span></code> during CMake configuration. It’s
-recommended to also build Boost with the same sanitizers that you will be
-using for <em>HPX</em>. The appropriate sanitizers can then be enabled using CMake by
+recommended to also build Boost with the same sanitizers that will be
+used for <em>HPX</em>. The appropriate sanitizers can then be enabled using CMake by
 appending <code class="docutils literal notranslate"><span class="pre">-fsanitize=address</span> <span class="pre">-fno-omit-frame-pointer</span></code> to <code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_FLAGS</span></code>
 and <code class="docutils literal notranslate"><span class="pre">-fsanitize=address</span></code> to <code class="docutils literal notranslate"><span class="pre">CMAKE_EXE_LINKER_FLAGS</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">address</span></code>
 with the sanitizer that you want to use.</p>
@@ -279,7 +279,7 @@ with the sanitizer that you want to use.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>66b995f</code>.
+          Revision <code>34f678c</code>.
         </span>
       
 

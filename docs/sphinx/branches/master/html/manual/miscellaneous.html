@@ -114,7 +114,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#lightweight-error-codes">Lightweight error codes</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#utilities-in-hpx">Utilities in <em>HPX</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utilities-in-hpx">Utilities in <em>HPX</em></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#checkpoint">Checkpoint</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#the-hpx-i-o-streams-component">The <em>HPX</em> I/O-streams component</a></li>
 </ul>
 </li>
@@ -212,17 +215,17 @@
 <h1>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="error-handling">
 <span id="id2"></span><h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
-<p>Like in any other asynchronous invocation scheme it is important to be able to
+<p>Like in any other asynchronous invocation scheme, it is important to be able to
 handle error conditions occurring while the asynchronous (and possibly remote)
 operation is executed. In <em>HPX</em> all error handling is based on standard C++
 exception handling. Any exception thrown during the execution of an asynchronous
 operation will be transferred back to the original invocation <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>,
-where it is rethrown during synchronization with the calling thread.</p>
+where it will be rethrown during synchronization with the calling thread.</p>
 <p>The source code for this example can be found here:
 <a class="reference download internal" download="" href="../_downloads/af6a8dfc1a92a35a4f195fc60c1646fe/error_handling.cpp"><code class="xref download docutils literal notranslate"><span class="pre">error_handling.cpp</span></code></a>.</p>
 <div class="section" id="working-with-exceptions">
 <span id="exceptions"></span><h3>Working with exceptions<a class="headerlink" href="#working-with-exceptions" title="Permalink to this headline">¶</a></h3>
-<p>For the following description we assume that the function <code class="docutils literal notranslate"><span class="pre">raise_exception()</span></code>
+<p>For the following description assume that the function <code class="docutils literal notranslate"><span class="pre">raise_exception()</span></code>
 is executed by invoking the plain action <code class="docutils literal notranslate"><span class="pre">raise_exception_type</span></code>.</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//[error_handling_raise_exception</span>
 <span class="kt">void</span> <span class="nf">raise_exception</span><span class="p">()</span>
@@ -264,14 +267,14 @@ executed on a different <a class="reference internal" href="../terminology.html#
 </div>
 <p>Additionally, this example demonstrates how an exception thrown by an (possibly
 remote) action can be handled. It shows the use of
-<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::diagnostic_information</span></code> which retrieves all available diagnostic
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::diagnostic_information</span></code>, which retrieves all available diagnostic
 information from the exception as a formatted string. This includes, for
 instance, the name of the source file and line number, the sequence number of
-the OS-thread and the <em>HPX</em>-thread id, the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id and the stack
+the OS thread and the <em>HPX</em> thread id, the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id and the stack
 backtrace of the point where the original exception was thrown.</p>
 <p>Under certain circumstances it is desirable to output only some of the
 diagnostics, or to output those using different formatting. For this case, <em>HPX</em>
-exposes a set of lower level functions as demonstrated in the following code
+exposes a set of lower-level functions as demonstrated in the following code
 snippet:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">// Detailed error reporting using exceptions</span>
         <span class="c1">//[exception_diagnostic_elements</span>
@@ -308,7 +311,7 @@ snippet:</p>
 modes. By default those will throw an exception on error as described above.
 However, sometimes it is desirable not to throw an exception in case of an error
 condition. In this case an object instance of the <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a>
-type can be passed as the last argument to the API function. In case of an error
+type can be passed as the last argument to the API function. In case of an error,
 the error condition will be returned in that <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a>
 instance. The following example demonstrates extracting the full diagnostic
 information without exception handling:</p>
@@ -344,13 +347,13 @@ is executed on a different <a class="reference internal" href="../terminology.ht
 <p>This example show how an error can be handled without having to resolve to
 exceptions and that the returned <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a> instance can be
 used in a very similar way as the <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::exception</span></code></a> type above. Simply
-pass it to the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::diagnostic_information</span></code> which retrieves all
+pass it to the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::diagnostic_information</span></code>, which retrieves all
 available diagnostic information from the error code instance as a formatted
 string.</p>
 <p>As for handling exceptions, when working with error codes, under certain
 circumstances it is desirable to output only some of the diagnostics, or to
 output those using different formatting. For this case, <em>HPX</em> exposes a set of
-lower level functions usable with error codes as demonstrated in the following
+lower-level functions usable with error codes as demonstrated in the following
 code snippet:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="p">{</span>
             <span class="c1">//[error_handling_diagnostic_elements</span>
@@ -402,7 +405,7 @@ code snippet:</p>
 <p>Sometimes it is not desirable to collect all the ambient information about the
 error at the point where it happened as this might impose too much overhead for
 simple scenarios. In this case, <em>HPX</em> provides a lightweight error code facility
-which will hold the error code only. The following snippet demonstrates its use:</p>
+that will hold the error code only. The following snippet demonstrates its use:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="p">{</span>
             <span class="c1">//[lightweight_error_handling_diagnostic_information</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using an lightweight error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
@@ -426,15 +429,19 @@ which will hold the error code only. The following snippet demonstrates its use:
             <span class="p">}</span>
 </pre></div>
 </div>
-<p>All functions which retrieve other diagnostic elements from the
+<p>All functions that retrieve other diagnostic elements from the
 <a class="reference internal" href="../libs/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a> will fail if called with a lightweight error_code
 instance.</p>
 </div>
 </div>
 <div class="section" id="utilities-in-hpx">
 <span id="utilities"></span><h2>Utilities in <em>HPX</em><a class="headerlink" href="#utilities-in-hpx" title="Permalink to this headline">¶</a></h2>
-<p>In order to ease the burden of programming in <em>HPX</em> we have provided several
+<p>In order to ease the burden of programming, <em>HPX</em> provides several
 utilities to users. The following section documents those facilies.</p>
+<div class="section" id="checkpoint">
+<span id="id3"></span><h3>Checkpoint<a class="headerlink" href="#checkpoint" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference internal" href="../libs/checkpoint/docs/index.html#libs-checkpoint"><span class="std std-ref">checkpoint</span></a>.</p>
+</div>
 </div>
 <div class="section" id="the-hpx-i-o-streams-component">
 <span id="iostreams"></span><h2>The <em>HPX</em> I/O-streams component<a class="headerlink" href="#the-hpx-i-o-streams-component" title="Permalink to this headline">¶</a></h2>
@@ -451,9 +458,9 @@ from <code class="docutils literal notranslate"><span class="pre">hpx::cerr</spa
 <code class="docutils literal notranslate"><span class="pre">hpx::endl</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx::flush</span></code> but those are just aliases for the
 corresponding standard manipulators.</p>
 </div>
-<p>In order to use either <code class="docutils literal notranslate"><span class="pre">hpx::cout</span></code> or <code class="docutils literal notranslate"><span class="pre">hpx::cerr</span></code> application codes need to
+<p>In order to use either <code class="docutils literal notranslate"><span class="pre">hpx::cout</span></code> or <code class="docutils literal notranslate"><span class="pre">hpx::cerr</span></code>, application codes need to
 <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/include/iostreams.hpp&gt;</span></code>. For an example, please see the
-simplest possible ‘Hello world’ program as included as an example with <em>HPX</em>:</p>
+following ‘Hello world’ program:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//  Copyright (c) 2007-2012 Hartmut Kaiser</span>
 <span class="c1">//</span>
 <span class="c1">//  SPDX-License-Identifier: BSL-1.0</span>
@@ -479,9 +486,9 @@ simplest possible ‘Hello world’ program as included as an example with <em>H
 <span class="c1">//]</span>
 </pre></div>
 </div>
-<p>Additionally those applications need to link with the iostreams component. When
-using cmake this can be achieved by using the <code class="docutils literal notranslate"><span class="pre">COMPONENT_DEPENDENCIES</span></code>
-parameter, for instance:</p>
+<p>Additionally, those applications need to link with the iostreams component. When
+using CMake this can be achieved by using the <code class="docutils literal notranslate"><span class="pre">COMPONENT_DEPENDENCIES</span></code>
+parameter; for instance:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">include</span><span class="p">(</span><span class="s">HPX_AddExecutable</span><span class="p">)</span>
 
 <span class="nb">add_hpx_executable</span><span class="p">(</span>
@@ -495,7 +502,7 @@ parameter, for instance:</p>
 <p class="admonition-title">Note</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">hpx::cout</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx::cerr</span></code> streams buffer all output locally until a
 <code class="docutils literal notranslate"><span class="pre">std::endl</span></code> or <code class="docutils literal notranslate"><span class="pre">std::flush</span></code> is encountered. That means that no output
-will appear on the console as long as either of those is explicitly used.</p>
+will appear on the console as long as either of these is explicitly used.</p>
 </div>
 </div>
 </div>
@@ -529,7 +536,7 @@ will appear on the console as long as either of those is explicitly used.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>6558a46</code>.
+          Revision <code>49eb429</code>.
         </span>
       
 

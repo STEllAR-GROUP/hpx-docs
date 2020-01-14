@@ -237,21 +237,21 @@
   <div class="section" id="checkpoint">
 <span id="libs-checkpoint"></span><h1>checkpoint<a class="headerlink" href="#checkpoint" title="Permalink to this headline">¶</a></h1>
 <p>A common need of users is to periodically backup an application. This practice
-provides resiliency and potential restart points in code. We have developed the
+provides resiliency and potential restart points in code. <em>HPX</em> utilizes the
 concept of a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> to support this use case.</p>
 <p>Found in <code class="docutils literal notranslate"><span class="pre">hpx/util/checkpoint.hpp</span></code>, <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>s are defined as objects
-which hold a serialized version of an object or set of objects at a particular
+that hold a serialized version of an object or set of objects at a particular
 moment in time. This representation can be stored in memory for later use or it
 can be written to disk for storage and/or recovery at a later point. In order to
-create and fill this object with data we use a function called
+create and fill this object with data, users must use a function called
 <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>. In code the function looks like this:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">save_checkpoint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">...);</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code> takes arbitrary data containers such as int, double, float,
-vector, and future and serializes them into a newly created <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>
-object. This function returns a <code class="docutils literal notranslate"><span class="pre">future</span></code> to a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> containing the
-data. Let us look a simple use case below:</p>
+<p><code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code> takes arbitrary data containers, such as <code class="docutils literal notranslate"><span class="pre">int</span></code>,
+<code class="docutils literal notranslate"><span class="pre">double</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">vector</span></code>, and <code class="docutils literal notranslate"><span class="pre">future</span></code>, and serializes them into a
+newly created <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> object. This function returns a <code class="docutils literal notranslate"><span class="pre">future</span></code> to a
+<code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> containing the data. Here’s an example of a simple use case:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">checkpoint</span><span class="p">;</span>
 <span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">save_checkpoint</span><span class="p">;</span>
 
@@ -259,7 +259,7 @@ data. Let us look a simple use case below:</p>
 <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Once the future is ready the checkpoint object will contain the <code class="docutils literal notranslate"><span class="pre">vector</span></code>
+<p>Once the future is ready, the checkpoint object will contain the <code class="docutils literal notranslate"><span class="pre">vector</span></code>
 <code class="docutils literal notranslate"><span class="pre">vec</span></code> and its five elements.</p>
 <p>It is also possible to modify the launch policy used by <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>.
 This is accomplished by passing a launch policy as the first argument. It is
@@ -272,35 +272,34 @@ important to note that passing <code class="docutils literal notranslate"><span 
 function as long as they are the first container passing into the function (In
 the case where a launch policy is used, the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> will immediately
 follow the launch policy). An example of these features can be found below:</p>
-<p>Now that we can create <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> s we now must be able to restore the
+<p>Once users can create <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>s they must now be able to restore the
 objects they contain into memory. This is accomplished by the function
 <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>. This function takes a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> and fills its data
 into the containers it is provided. It is important to remember that the
 containers must be ordered in the same way they were placed into the
 <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. For clarity see the example below:</p>
 <p>The core utility of <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> is in its ability to make certain data
-persistent. Often this means that the data is needed to be stored in an object,
-such as a file, for later use. For these cases we have provided two solutions:
-stream operator overloads and access iterators.</p>
-<p>We have created the two stream overloads
-<code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> to stream data
-out of and into <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. You can see an
-example of the overloads in use below:</p>
+persistent. Often, this means that the data needs to be stored in an object,
+such as a file, for later use. <em>HPX</em> has two solutions for these issues: stream
+operator overloads and access iterators.</p>
+<p><em>HPX</em> contains two stream overloads, <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code>, to stream
+data out of and into <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. Here is an example of the overloads in
+use below:</p>
 <p>This is the primary way to move data into and out of a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. It is
 important to note, however, that users should be cautious when using a stream
-operator to load data an another function to remove it (or vice versa). Both
+operator to load data and another function to remove it (or vice versa). Both
 <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> rely on a <code class="docutils literal notranslate"><span class="pre">.write()</span></code> and a <code class="docutils literal notranslate"><span class="pre">.read()</span></code>
 function respectively. In order to know how much data to read from the
 <code class="docutils literal notranslate"><span class="pre">std::istream</span></code>, the <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> will write the size of the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>
 before writing the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> data. Correspondingly, the <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> will
-read the size of the stored data before reading the data into new instance of
+read the size of the stored data before reading the data into a new instance of
 <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. As long as the user employs the <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and
-<code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> to stream the data this detail can be ignored.</p>
+<code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> to stream the data, this detail can be ignored.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Be careful when mixing <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> with other
-facilities to read and write to a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> writes and
-extra variable and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> reads this variable back separately. Used
+facilities to read and write to a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> writes an
+extra variable, and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code> reads this variable back separately. Used
 together the user will not encounter any issues and can safely ignore this
 detail.</p>
 </div>
@@ -351,7 +350,7 @@ instance to <code class="docutils literal notranslate"><span class="pre">restore
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>6558a46</code>.
+          Revision <code>49eb429</code>.
         </span>
       
 

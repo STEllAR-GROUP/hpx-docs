@@ -106,11 +106,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../algorithms/docs/index.html">algorithms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../allocator_support/docs/index.html">allocator_support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../assertion/docs/index.html">assertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basic_execution/docs/index.html">Baisc Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_execution/docs/index.html">basic_execution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../batch_environments/docs/index.html">batch_environments</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cache/docs/index.html">cache</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">checkpoint</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#checkpointing-components">Checkpointing Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checkpointing-components">Checkpointing components</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../collectives/docs/index.html">collectives</a></li>
@@ -272,12 +272,37 @@ important to note that passing <code class="docutils literal notranslate"><span 
 function as long as they are the first container passing into the function (In
 the case where a launch policy is used, the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> will immediately
 follow the launch policy). An example of these features can be found below:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="kt">char</span> <span class="n">character</span> <span class="o">=</span> <span class="sc">&#39;d&#39;</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">integer</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">flt</span> <span class="o">=</span> <span class="mf">10.01f</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">boolean</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;I am a string of characters&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">(</span><span class="n">str</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">str</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    <span class="n">checkpoint</span> <span class="n">archive</span><span class="p">;</span>
+
+    <span class="c1">// Test 1</span>
+    <span class="c1">//  test basic functionality</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f_archive</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">archive</span><span class="p">),</span> <span class="n">character</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">flt</span><span class="p">,</span> <span class="n">boolean</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>Once users can create <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>s they must now be able to restore the
 objects they contain into memory. This is accomplished by the function
 <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>. This function takes a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> and fills its data
 into the containers it is provided. It is important to remember that the
 containers must be ordered in the same way they were placed into the
 <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. For clarity see the example below:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="kt">char</span> <span class="n">character2</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">integer2</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">flt2</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">boolean2</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str2</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">vec2</span><span class="p">;</span>
+
+    <span class="n">restore_checkpoint</span><span class="p">(</span>
+        <span class="n">f_archive</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">character2</span><span class="p">,</span> <span class="n">integer2</span><span class="p">,</span> <span class="n">flt2</span><span class="p">,</span> <span class="n">boolean2</span><span class="p">,</span> <span class="n">str2</span><span class="p">,</span> <span class="n">vec2</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>The core utility of <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> is in its ability to make certain data
 persistent. Often, this means that the data needs to be stored in an object,
 such as a file, for later use. <em>HPX</em> has two solutions for these issues: stream
@@ -285,6 +310,19 @@ operator overloads and access iterators.</p>
 <p><em>HPX</em> contains two stream overloads, <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">operator&gt;&gt;</span></code>, to stream
 data out of and into <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. Here is an example of the overloads in
 use below:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="kt">double</span> <span class="n">a9</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">b9</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">c9</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">test_file_9</span><span class="p">(</span><span class="s">&quot;test_file_9.txt&quot;</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f_9</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">a9</span><span class="p">,</span> <span class="n">b9</span><span class="p">,</span> <span class="n">c9</span><span class="p">);</span>
+    <span class="n">test_file_9</span> <span class="o">&lt;&lt;</span> <span class="n">f_9</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+    <span class="n">test_file_9</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+    <span class="kt">double</span> <span class="n">a9_1</span><span class="p">,</span> <span class="n">b9_1</span><span class="p">,</span> <span class="n">c9_1</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">test_file_9_1</span><span class="p">(</span><span class="s">&quot;test_file_9.txt&quot;</span><span class="p">);</span>
+    <span class="n">checkpoint</span> <span class="n">archive9</span><span class="p">;</span>
+    <span class="n">test_file_9_1</span> <span class="o">&gt;&gt;</span> <span class="n">archive9</span><span class="p">;</span>
+    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">archive9</span><span class="p">,</span> <span class="n">a9_1</span><span class="p">,</span> <span class="n">b9_1</span><span class="p">,</span> <span class="n">c9_1</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>This is the primary way to move data into and out of a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>. It is
 important to note, however, that users should be cautious when using a stream
 operator to load data and another function to remove it (or vice versa). Both
@@ -306,18 +344,75 @@ detail.</p>
 <p>Users may also move the data into and out of a <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> using the exposed
 <code class="docutils literal notranslate"><span class="pre">.begin()</span></code> and <code class="docutils literal notranslate"><span class="pre">.end()</span></code> iterators. An example of this use case is
 illustrated below.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">test_file_7</span><span class="p">(</span><span class="s">&quot;checkpoint_test_file.txt&quot;</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">vec7</span><span class="p">{</span><span class="mf">1.02f</span><span class="p">,</span> <span class="mf">1.03f</span><span class="p">,</span> <span class="mf">1.04f</span><span class="p">,</span> <span class="mf">1.05f</span><span class="p">};</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">fut_7</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">vec7</span><span class="p">);</span>
+    <span class="n">checkpoint</span> <span class="n">archive7</span> <span class="o">=</span> <span class="n">fut_7</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">archive7</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span>    <span class="c1">// Write data to ofstream</span>
+        <span class="n">archive7</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>            <span class="c1">// ie. the file</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">test_file_7</span><span class="p">));</span>
+    <span class="n">test_file_7</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">vec7_1</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">char_vec</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">test_file_7_1</span><span class="p">(</span><span class="s">&quot;checkpoint_test_file.txt&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">test_file_7_1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">end</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">length</span> <span class="o">=</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+        <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">beg</span><span class="p">);</span>
+        <span class="n">char_vec</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">length</span><span class="p">);</span>
+        <span class="n">test_file_7_1</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">char_vec</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">length</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">checkpoint</span> <span class="n">archive7_1</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">char_vec</span><span class="p">));</span>    <span class="c1">// Write data to checkpoint</span>
+    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">archive7_1</span><span class="p">,</span> <span class="n">vec7_1</span><span class="p">);</span>
+</pre></div>
+</div>
 <div class="section" id="checkpointing-components">
-<h2>Checkpointing Components<a class="headerlink" href="#checkpointing-components" title="Permalink to this headline">¶</a></h2>
+<h2>Checkpointing components<a class="headerlink" href="#checkpointing-components" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code> and <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code> are also able to store components
-inside <code class="docutils literal notranslate"><span class="pre">checkpoint``s.</span> <span class="pre">This</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">done</span> <span class="pre">in</span> <span class="pre">one</span> <span class="pre">of</span> <span class="pre">two</span> <span class="pre">ways.</span> <span class="pre">First</span> <span class="pre">a</span> <span class="pre">client</span> <span class="pre">of</span>
-<span class="pre">the</span> <span class="pre">component</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">passed</span> <span class="pre">to</span> <span class="pre">``save_checkpoint</span></code>. When the user wishes to
-resurrect the component she can pass a client instance to <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>.</p>
+inside <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code>s. This can be done in one of two ways. First a client of
+the component can be passed to <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>. When the user wishes to
+resurrect the component she can pass a client instance to
+<code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>.</p>
 <p>This technique is demonstrated below:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// Try to checkpoint and restore a component with a client</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec3</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span>
+
+    <span class="c1">// Create a component instance through client constructor</span>
+    <span class="n">data_client</span> <span class="nf">D</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">vec3</span><span class="p">));</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f3</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">D</span><span class="p">);</span>
+
+    <span class="c1">// Create a new client</span>
+    <span class="n">data_client</span> <span class="n">E</span><span class="p">;</span>
+
+    <span class="c1">// Restore server inside client instance</span>
+    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">f3</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">E</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>The second way a user can save a component is by passing a <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> to the
 component to <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>. This component can be resurrected by creating
 a new instance of the component type and passing a <code class="docutils literal notranslate"><span class="pre">shared_ptr</span></code> to the new
-instance to <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>. An example can be found below:</p>
+instance to <code class="docutils literal notranslate"><span class="pre">restore_checkpoint</span></code>.</p>
 <p>This technique is demonstrated below:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// test checkpoint a component using a shared_ptr</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+    <span class="n">data_client</span> <span class="nf">A</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">vec</span><span class="p">));</span>
+
+    <span class="c1">// Checkpoint Server</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span> <span class="n">old_id</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">get_id</span><span class="p">();</span>
+
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">data_server</span><span class="o">&gt;&gt;</span> <span class="n">f_a_ptr</span> <span class="o">=</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">get_ptr</span><span class="o">&lt;</span><span class="n">data_server</span><span class="o">&gt;</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">get_id</span><span class="p">());</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">data_server</span><span class="o">&gt;</span> <span class="n">a_ptr</span> <span class="o">=</span> <span class="n">f_a_ptr</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">a_ptr</span><span class="p">);</span>
+
+    <span class="c1">// Restore Server</span>
+    <span class="c1">// Create a new server instance</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">data_server</span><span class="o">&gt;</span> <span class="n">b_server</span><span class="p">;</span>
+    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">b_server</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -350,7 +445,7 @@ instance to <code class="docutils literal notranslate"><span class="pre">restore
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>49eb429</code>.
+          Revision <code>6c18621</code>.
         </span>
       
 

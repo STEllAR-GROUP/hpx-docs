@@ -311,12 +311,11 @@ test the target is. If you are developing <em>HPX</em> it is often helpful to ru
 <h2>Hello, World!<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
 <p>The following <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> is a minimal example of what you need in order to
 build an executable using <a class="reference external" href="https://www.cmake.org">CMake</a> and <em>HPX</em>:</p>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">3.3.2</span><span class="p">)</span>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">3.13</span><span class="p">)</span>
 <span class="nb">project</span><span class="p">(</span><span class="s">my_hpx_project</span> <span class="s">CXX</span><span class="p">)</span>
 <span class="nb">find_package</span><span class="p">(</span><span class="s">HPX</span> <span class="s">REQUIRED</span><span class="p">)</span>
-<span class="nb">add_hpx_executable</span><span class="p">(</span><span class="s">my_hpx_program</span>
-    <span class="s">SOURCES</span> <span class="s">main.cpp</span>
-    <span class="s">COMPONENT_DEPENDENCIES</span> <span class="s">iostreams</span><span class="p">)</span>
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">my_hpx_program</span> <span class="s">main.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">my_hpx_program</span> <span class="s">HPX::hpx</span> <span class="s">HPX::iostreams_component</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -327,9 +326,9 @@ See the section on <a class="reference internal" href="manual/creating_hpx_proje
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">COMPONENT_DEPENDENCIES</span> <span class="pre">iostreams</span></code> is optional for a minimal project but
-lets us use the <em>HPX</em> equivalent of <code class="docutils literal notranslate"><span class="pre">std::cout</span></code>, i.e. the <em>HPX</em>
-<a class="reference internal" href="manual/miscellaneous.html#iostreams"><span class="std std-ref">The HPX I/O-streams component</span></a> functionality in our application.</p>
+<p><code class="docutils literal notranslate"><span class="pre">HPX::iostreams_component</span></code> is optional for a minimal project but lets us
+use the <em>HPX</em> equivalent of <code class="docutils literal notranslate"><span class="pre">std::cout</span></code>, i.e. the <em>HPX</em> <a class="reference internal" href="manual/miscellaneous.html#iostreams"><span class="std std-ref">The HPX I/O-streams component</span></a>
+functionality in our application.</p>
 </div>
 <p>Create a new project directory and a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> with the contents above.
 Also create a <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> with the contents below.</p>
@@ -599,7 +598,7 @@ to a distributed implementation.</p>
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>affc73c</code>.
+          Revision <code>0be1448</code>.
         </span>
       
 

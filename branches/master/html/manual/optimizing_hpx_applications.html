@@ -764,7 +764,7 @@ data. The value is incremented on each invocation, e.g. each time a consumer
 requests the counter data of this Performance Counter.</p>
 <p>The next step in exposing this counter to the runtime system is to register the
 function as a new raw counter type using the <em>HPX</em> API function
-<a class="reference internal" href="../api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringER10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a>. A counter type
+<a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringER10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a>. A counter type
 represents certain common characteristics of counters, like their counter type
 name, and any associated description information. The following snippet shows an
 example of how to register the function <code class="docutils literal notranslate"><span class="pre">some_performance_data</span></code> which is shown
@@ -789,7 +789,7 @@ counter type:</p>
 scheme <code class="docutils literal notranslate"><span class="pre">&quot;/test{locality#*/total}/data&quot;</span></code> where <code class="docutils literal notranslate"><span class="pre">*</span></code> is a zero based integer
 index identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the counter instance should be
 accessed. The function
-<a class="reference internal" href="../api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringER10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a> enables to
+<a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringER10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a> enables to
 instantiate exactly one counter instance for each <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. Repeated
 requests to instantiate such a counter will return the same instance, e.g. the
 instance created for the first request.</p>
@@ -832,138 +832,6 @@ Performance Counters which support:</p>
 <li><p>Setting the (initial) value of the Performance Counter</p></li>
 </ul>
 <p>Every full Performance Counter will implement a predefined interface:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//  Copyright (c) 2007-2018 Hartmut Kaiser</span>
-<span class="c1">//</span>
-<span class="c1">//  SPDX-License-Identifier: BSL-1.0</span>
-<span class="c1">//  Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c1">//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-
-<span class="cp">#if !defined(HPX_PERFORMANCE_COUNTERS_PERFORMANCE_COUNTER_JAN_18_2013_0939AM)</span>
-<span class="cp">#define HPX_PERFORMANCE_COUNTERS_PERFORMANCE_COUNTER_JAN_18_2013_0939AM</span>
-
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/lcos/future.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/runtime/components/client_base.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/runtime/launch_policy.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/functional/bind_front.hpp&gt;</span><span class="cp"></span>
-
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/performance_counters/counters_fwd.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/performance_counters/stubs/performance_counter.hpp&gt;</span><span class="cp"></span>
-
-<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
-
-<span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="k">namespace</span> <span class="n">hpx</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">performance_counters</span>
-<span class="p">{</span>
-    <span class="c1">///////////////////////////////////////////////////////////////////////////</span>
-    <span class="k">struct</span> <span class="n">HPX_EXPORT</span> <span class="nl">performance_counter</span>
-      <span class="p">:</span> <span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span><span class="n">performance_counter</span><span class="p">,</span> <span class="n">stubs</span><span class="o">::</span><span class="n">performance_counter</span><span class="o">&gt;</span>
-    <span class="p">{</span>
-        <span class="k">typedef</span> <span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span>
-            <span class="n">performance_counter</span><span class="p">,</span> <span class="n">stubs</span><span class="o">::</span><span class="n">performance_counter</span>
-        <span class="o">&gt;</span> <span class="n">base_type</span><span class="p">;</span>
-
-        <span class="n">performance_counter</span><span class="p">()</span> <span class="p">{}</span>
-
-        <span class="n">performance_counter</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">);</span>
-
-        <span class="n">performance_counter</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">locality</span><span class="p">);</span>
-
-        <span class="n">performance_counter</span><span class="p">(</span><span class="n">future</span><span class="o">&lt;</span><span class="n">id_type</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span> <span class="n">id</span><span class="p">)</span>
-          <span class="o">:</span> <span class="n">base_type</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
-        <span class="p">{}</span>
-
-        <span class="n">performance_counter</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">performance_counter</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span> <span class="n">c</span><span class="p">)</span>
-          <span class="o">:</span> <span class="n">base_type</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
-        <span class="p">{}</span>
-
-        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
-        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_info</span><span class="o">&gt;</span> <span class="n">get_info</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-        <span class="n">counter_info</span> <span class="nf">get_info</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span>
-            <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_value</span><span class="o">&gt;</span> <span class="n">get_counter_value</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
-        <span class="n">counter_value</span> <span class="nf">get_counter_value</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span>
-            <span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
-
-        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_value</span><span class="o">&gt;</span> <span class="n">get_counter_value</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-        <span class="n">counter_value</span> <span class="nf">get_counter_value</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span>
-            <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_values_array</span><span class="o">&gt;</span> <span class="n">get_counter_values_array</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
-        <span class="n">counter_values_array</span> <span class="nf">get_counter_values_array</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span>
-            <span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
-
-        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_values_array</span><span class="o">&gt;</span> <span class="n">get_counter_values_array</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-        <span class="n">counter_values_array</span> <span class="nf">get_counter_values_array</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span>
-            <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
-        <span class="n">future</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">();</span>
-        <span class="kt">bool</span> <span class="nf">start</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
-
-        <span class="n">future</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">stop</span><span class="p">();</span>
-        <span class="kt">bool</span> <span class="nf">stop</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
-
-        <span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">reset</span><span class="p">();</span>
-        <span class="kt">void</span> <span class="nf">reset</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
-
-        <span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">reinit</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">true</span><span class="p">);</span>
-        <span class="kt">void</span> <span class="nf">reinit</span><span class="p">(</span>
-            <span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">true</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
-
-        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
-        <span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">get_name</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="k">private</span><span class="o">:</span>
-        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-        <span class="k">static</span> <span class="n">T</span> <span class="n">extract_value</span><span class="p">(</span><span class="n">future</span><span class="o">&lt;</span><span class="n">counter_value</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span> <span class="n">value</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="n">value</span><span class="p">.</span><span class="n">get</span><span class="p">().</span><span class="n">get_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
-        <span class="p">}</span>
-
-    <span class="k">public</span><span class="o">:</span>
-        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-        <span class="n">future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">get_value</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="n">get_counter_value</span><span class="p">(</span><span class="n">reset</span><span class="p">).</span><span class="n">then</span><span class="p">(</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span>
-                <span class="n">util</span><span class="o">::</span><span class="n">bind_front</span><span class="p">(</span>
-                    <span class="o">&amp;</span><span class="n">performance_counter</span><span class="o">::</span><span class="n">extract_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">));</span>
-        <span class="p">}</span>
-        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-        <span class="n">T</span> <span class="n">get_value</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-            <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="n">get_counter_value</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span> <span class="n">reset</span><span class="p">).</span><span class="n">get_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-        <span class="n">future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">get_value</span><span class="p">()</span> <span class="k">const</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="n">get_counter_value</span><span class="p">().</span><span class="n">then</span><span class="p">(</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span>
-                <span class="n">util</span><span class="o">::</span><span class="n">bind_front</span><span class="p">(</span>
-                    <span class="o">&amp;</span><span class="n">performance_counter</span><span class="o">::</span><span class="n">extract_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">));</span>
-        <span class="p">}</span>
-        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-        <span class="n">T</span> <span class="n">get_value</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="n">get_counter_value</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">).</span><span class="n">get_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
-
-    <span class="c1">/// Return all counters matching the given name (with optional wildcards).</span>
-    <span class="n">HPX_API_EXPORT</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">performance_counter</span><span class="o">&gt;</span> <span class="n">discover_counters</span><span class="p">(</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
-<span class="p">}}</span>
-
-<span class="cp">#endif</span>
-</pre></div>
-</div>
 <p>In order to implement a full Performance Counter you have to create an <em>HPX</em>
 component exposing this interface. To simplify this task, <em>HPX</em> provides a ready
 made base class which handles all the boiler plate of creating a component for
@@ -973,66 +841,6 @@ directory <code class="docutils literal notranslate"><span class="pre">examples/
 <p>The base class is defined in the header file [hpx_link
 hpx/performance_counters/base_performance_counter.hpp..hpx/performance_counters/base_performance_counter.hpp]
 as:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//  Copyright (c) 2007-2018 Hartmut Kaiser</span>
-<span class="c1">//</span>
-<span class="c1">//  SPDX-License-Identifier: BSL-1.0</span>
-<span class="c1">//  Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c1">//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-
-<span class="cp">#if !defined(HPX_PERFORMANCE_COUNTERS_BASE_PERFORMANCE_COUNTER_JAN_18_2013_1036AM)</span>
-<span class="cp">#define HPX_PERFORMANCE_COUNTERS_BASE_PERFORMANCE_COUNTER_JAN_18_2013_1036AM</span>
-
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/performance_counters/counters.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/performance_counters/server/base_performance_counter.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/runtime/actions/component_action.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/runtime/components/component_type.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/runtime/components/server/component_base.hpp&gt;</span><span class="cp"></span>
-
-<span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="c1">//[performance_counter_base_class</span>
-<span class="k">namespace</span> <span class="n">hpx</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">performance_counters</span>
-<span class="p">{</span>
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Derived</span><span class="o">&gt;</span>
-    <span class="k">class</span> <span class="nc">base_performance_counter</span><span class="p">;</span>
-<span class="p">}}</span>
-<span class="c1">//]</span>
-
-<span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="k">namespace</span> <span class="n">hpx</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">performance_counters</span>
-<span class="p">{</span>
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Derived</span><span class="o">&gt;</span>
-    <span class="k">class</span> <span class="nc">base_performance_counter</span>
-      <span class="o">:</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">base_performance_counter</span><span class="p">,</span>
-        <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">&gt;</span>
-    <span class="p">{</span>
-    <span class="k">private</span><span class="o">:</span>
-        <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">&gt;</span> <span class="n">base_type</span><span class="p">;</span>
-
-    <span class="k">public</span><span class="o">:</span>
-        <span class="k">typedef</span> <span class="n">Derived</span> <span class="n">type_holder</span><span class="p">;</span>
-        <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">base_performance_counter</span>
-            <span class="n">base_type_holder</span><span class="p">;</span>
-
-        <span class="n">base_performance_counter</span><span class="p">()</span>
-        <span class="p">{}</span>
-
-        <span class="n">base_performance_counter</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">counter_info</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">info</span><span class="p">)</span>
-          <span class="o">:</span> <span class="n">base_type_holder</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
-        <span class="p">{}</span>
-
-        <span class="c1">// Disambiguate finalize() which is implemented in both base classes</span>
-        <span class="kt">void</span> <span class="n">finalize</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="n">base_type_holder</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
-            <span class="n">base_type</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">};</span>
-<span class="p">}}</span>
-
-<span class="cp">#endif</span>
-</pre></div>
-</div>
 <p>The single template parameter is expected to receive the type of the
 derived class implementing the Performance Counter. In the Sine example
 this looks like:</p>
@@ -3086,7 +2894,7 @@ instructions on using <a class="reference external" href="https://khuck.github.i
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>0be1448</code>.
+          Revision <code>87e58d4</code>.
         </span>
       
 

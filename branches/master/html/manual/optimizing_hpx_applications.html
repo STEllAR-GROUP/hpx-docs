@@ -362,8 +362,8 @@ names. Performance counter names can contain 2 types of wildcard characters:</p>
 </ul>
 <p>Wildcard character have a meaning which is very close to usual file name
 wildcard matching rules implemented by common shells (like bash).</p>
-<table class="docutils align-default" id="id6">
-<caption><span class="caption-number">Table 36 </span><span class="caption-text">Wildcard characters in the performance counter type</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">Table 36 </span><span class="caption-text">Wildcard characters in the performance counter type</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -385,8 +385,8 @@ specified within the square brackets.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id7">
-<caption><span class="caption-number">Table 37 </span><span class="caption-text">Wildcard characters in the performance counter instance name</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">Table 37 </span><span class="caption-text">Wildcard characters in the performance counter instance name</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -422,8 +422,8 @@ to Performance Counters allow one to list existing counters, query existing
 counters once at application termination or repeatedly after a constant time
 interval.</p>
 <p>The following table summarizes the available command line options:</p>
-<table class="docutils align-default" id="id8">
-<caption><span class="caption-number">Table 38 </span><span class="caption-text"><em>HPX</em> Command Line Options Related to Performance Counters</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">Table 38 </span><span class="caption-text"><em>HPX</em> Command Line Options Related to Performance Counters</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -479,6 +479,12 @@ argument values: <code class="docutils literal notranslate"><span class="pre">st
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:reset-counters</span></code></p></td>
 <td><p>reset all performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
 after they have been evaluated)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-types</span></code></p></td>
+<td><p>each locality prints only its own local counters</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counters-locally</span></code></p></td>
+<td><p>append counter type description to generated output</p></td>
 </tr>
 </tbody>
 </table>
@@ -550,6 +556,12 @@ counter data as gathered at application shutdown. These lines have 6 fields, the
 counter name, the sequence number of the counter invocation, the time stamp at
 which this information has been sampled, the unit of measure for the time stamp,
 the actual counter value, and an optional unit of measure for the counter value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The command line option <a href="#id4"><span class="problematic" id="id5">``</span></a>–hpx:print-counter-types` will append a seventh
+field to the generated output. This field will hold an abbreviated counter
+type.</p>
+</div>
 <p>The actual counter value can be represented by a single number (for counters
 returning singular values) or a list of numbers separated by <code class="docutils literal notranslate"><span class="pre">':'</span></code> (for
 counters returning an array of values, like for instance a histogram).</p>
@@ -764,7 +776,7 @@ data. The value is incremented on each invocation, e.g. each time a consumer
 requests the counter data of this Performance Counter.</p>
 <p>The next step in exposing this counter to the runtime system is to register the
 function as a new raw counter type using the <em>HPX</em> API function
-<a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringER10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a>. A counter type
+<a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringE12counter_typeR10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a>. A counter type
 represents certain common characteristics of counters, like their counter type
 name, and any associated description information. The following snippet shows an
 example of how to register the function <code class="docutils literal notranslate"><span class="pre">some_performance_data</span></code> which is shown
@@ -789,7 +801,7 @@ counter type:</p>
 scheme <code class="docutils literal notranslate"><span class="pre">&quot;/test{locality#*/total}/data&quot;</span></code> where <code class="docutils literal notranslate"><span class="pre">*</span></code> is a zero based integer
 index identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the counter instance should be
 accessed. The function
-<a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringER10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a> enables to
+<a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringE12counter_typeR10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a> enables to
 instantiate exactly one counter instance for each <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. Repeated
 requests to instantiate such a counter will return the same instance, e.g. the
 instance created for the first request.</p>
@@ -925,8 +937,8 @@ actual value but also provides information about</p>
 Counters. These counters expose critical information about different modules of
 the runtime system. They can help determine system bottlenecks and fine-tune
 system and application performance.</p>
-<table class="docutils align-default" id="id9">
-<caption><span class="caption-number">Table 39 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> performance counters</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">Table 39 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> performance counters</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -1107,8 +1119,8 @@ the <a class="reference internal" href="../terminology.html#term-agas"><span cla
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id10">
-<caption><span class="caption-number">Table 40 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">Parcel</span></a> layer performance counters</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">Table 40 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">Parcel</span></a> layer performance counters</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -1276,7 +1288,7 @@ the corresponding cmake configuration constant is
 messages should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
 number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
-<td><p>Returns the overall number of messages <a class="footnote-reference brackets" href="#id5" id="id4">1</a> transferred using the
+<td><p>Returns the overall number of messages <a class="footnote-reference brackets" href="#id7" id="id6">1</a> transferred using the
 specified <code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> by the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (see
 <code class="docutils literal notranslate"><span class="pre">&lt;operation</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">sent</span></code> or <code class="docutils literal notranslate"><span class="pre">received</span></code>)</p>
 <p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
@@ -1330,8 +1342,8 @@ identifying the <a class="reference internal" href="../terminology.html#term-loc
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id11">
-<caption><span class="caption-number">Table 41 </span><span class="caption-text">Thread manager performance counters</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">Table 41 </span><span class="caption-text">Thread manager performance counters</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2221,8 +2233,8 @@ parcelport only.</p>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id12">
-<caption><span class="caption-number">Table 42 </span><span class="caption-text">General performance counters exposing characteristics of localities</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">Table 42 </span><span class="caption-text">General performance counters exposing characteristics of localities</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2416,8 +2428,8 @@ related data through the /proc file system.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id13">
-<caption><span class="caption-number">Table 43 </span><span class="caption-text">Performance counters exposing PAPI hardware counters</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">Table 43 </span><span class="caption-text">Performance counters exposing PAPI hardware counters</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2460,8 +2472,8 @@ constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_P
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id14">
-<caption><span class="caption-number">Table 44 </span><span class="caption-text">Performance counters for general statistics</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">Table 44 </span><span class="caption-text">Performance counters for general statistics</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2608,8 +2620,8 @@ during evaluation <code class="docutils literal notranslate"><span class="pre">1
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id15">
-<caption><span class="caption-number">Table 45 </span><span class="caption-text">Performance counters for elementary arithmetic operations</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">Table 45 </span><span class="caption-text">Performance counters for elementary arithmetic operations</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2729,8 +2741,8 @@ equivalent to specifying both counters separately to <code class="docutils liter
 </pre></div>
 </div>
 </div>
-<table class="docutils align-default" id="id16">
-<caption><span class="caption-number">Table 46 </span><span class="caption-text">Performance counters tracking <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> coalescing</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">Table 46 </span><span class="caption-text">Performance counters tracking <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> coalescing</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2845,7 +2857,7 @@ macros <code class="xref c c-macro docutils literal notranslate"><span class="pr
 <code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_ACTION_USES_MESSAGE_COALESCING_NOTHROW</span></code>).</p>
 </div>
 <dl class="footnote brackets">
-<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id4">1</a></span></dt>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
 <dd><p>A message can potentially consist of more than one <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a>.</p>
 </dd>
 </dl>
@@ -2894,7 +2906,7 @@ instructions on using <a class="reference external" href="https://khuck.github.i
         &copy; Copyright 2008-2019, The STE||AR Group
       
         <span class="commit">
-          Revision <code>c5b54e7</code>.
+          Revision <code>89325d3</code>.
         </span>
       
 

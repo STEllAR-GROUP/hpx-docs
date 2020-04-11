@@ -1,0 +1,516 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mpi &mdash; HPX master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="command_line_handling" href="../command_line_handling/api.html" />
+    <link rel="prev" title="thread_pools" href="../thread_pools/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> HPX
+          
+
+          
+            
+            <img src="../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../all_modules.html">All modules</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#main-hpx-library-reference">Main <em>HPX</em> library reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#modules-reference">Modules reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../logging/api.html">logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic_execution/api.html">basic_execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/api.html">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">mpi</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-mpi-mpi-future-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/mpi/mpi_future.hpp&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-mpi-force-linking-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/mpi/force_linking.hpp&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-mpi-mpi-executor-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/mpi/mpi_executor.hpp&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../command_line_handling/api.html">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../string_util/api.html">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistics/api.html">statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../local_lcos/api.html">local_lcos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_executors/api.html">thread_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../version/api.html">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collectives/api.html">collectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../affinity/api.html">affinity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../api.html">API reference</a> &raquo;</li>
+        
+      <li>mpi</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/mpi/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="libs-mpi-api">
+<span id="id2"></span><h1>mpi<a class="headerlink" href="#libs-mpi-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="include-hpx-mpi-mpi-future-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/mpi/mpi_future.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-mpi-mpi-future-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="type">
+<dt id="_CPPv4N3hpx3mpiE">
+<span id="_CPPv3N3hpx3mpiE"></span><span id="_CPPv2N3hpx3mpiE"></span><span id="hpx::mpi"></span><span class="target" id="namespacehpx_1_1mpi"></span><em class="property">namespace </em><code class="sig-name descname">mpi</code><a class="headerlink" href="#_CPPv4N3hpx3mpiE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="type">
+<dt id="_CPPv4N3hpx3mpi12experimentalE">
+<span id="_CPPv3N3hpx3mpi12experimentalE"></span><span id="_CPPv2N3hpx3mpi12experimentalE"></span><span id="hpx::mpi::experimental"></span><span class="target" id="namespacehpx_1_1mpi_1_1experimental"></span><em class="property">namespace </em><code class="sig-name descname">experimental</code><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimentalE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Typedefs</p>
+<dl class="type">
+<dt id="_CPPv4N3hpx3mpi12experimental8print_onE">
+<span id="_CPPv3N3hpx3mpi12experimental8print_onE"></span><span id="_CPPv2N3hpx3mpi12experimental8print_onE"></span><span class="target" id="mpi__future_8hpp_1a41fb2721d03214c42ef157f4ea6be37a"></span><em class="property">using </em><code class="sig-name descname">print_on</code> = <a class="reference internal" href="#_CPPv4IDpEN3hpx3mpi12experimental5debugEvDpRR4Args" title="hpx::mpi::experimental::debug">debug</a>::enable_print&lt;false&gt;<a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental8print_onE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="function">
+<dt>
+<span class="target" id="mpi__future_8hpp_1adf7d9bfdd28b9830553c51605bf54084"></span><code class="sig-name descname">static constexpr print_on hpx::mpi::experimental::mpi_debug(&quot;MPI_FUT&quot;)</code></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi12experimental17set_error_handlerEv">
+<span id="_CPPv3N3hpx3mpi12experimental17set_error_handlerEv"></span><span id="_CPPv2N3hpx3mpi12experimental17set_error_handlerEv"></span><span id="hpx::mpi::experimental::set_error_handler"></span><span class="target" id="mpi__future_8hpp_1af154f000d54c37b4dfdcb69062ea45dc"></span>void <code class="sig-name descname">set_error_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental17set_error_handlerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi12experimental10get_futureE11MPI_Request">
+<span id="_CPPv3N3hpx3mpi12experimental10get_futureE11MPI_Request"></span><span id="_CPPv2N3hpx3mpi12experimental10get_futureE11MPI_Request"></span><span id="hpx::mpi::experimental::get_future__MPI_Request"></span><span class="target" id="mpi__future_8hpp_1ae164a7135fb8dc2bb92327081fc0278f"></span><a class="reference internal" href="../../api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt; <code class="sig-name descname">get_future</code><span class="sig-paren">(</span>MPI_Request <em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental10get_futureE11MPI_Request" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi12experimental4pollEv">
+<span id="_CPPv3N3hpx3mpi12experimental4pollEv"></span><span id="_CPPv2N3hpx3mpi12experimental4pollEv"></span><span id="hpx::mpi::experimental::poll"></span><span class="target" id="mpi__future_8hpp_1af3aabcf99ad47c0f083139ce108d4152"></span>void <code class="sig-name descname">poll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental4pollEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi12experimental4waitEv">
+<span id="_CPPv3N3hpx3mpi12experimental4waitEv"></span><span id="_CPPv2N3hpx3mpi12experimental4waitEv"></span><span id="hpx::mpi::experimental::wait"></span><span class="target" id="mpi__future_8hpp_1aa65979539e503551fa8cdb93b60f3095"></span>void <code class="sig-name descname">wait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental4waitEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4I0EN3hpx3mpi12experimental4waitEvRR1F">
+<span id="_CPPv3I0EN3hpx3mpi12experimental4waitERR1F"></span><span id="_CPPv2I0EN3hpx3mpi12experimental4waitERR1F"></span><span class="target" id="mpi__future_8hpp_1a30ac15d3c75812d6aec9310ae4a4cc38"></span>template&lt;typename <code class="sig-name descname">F</code>&gt;<br />void <code class="sig-name descname">wait</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx3mpi12experimental4waitEvRR1F" title="hpx::mpi::experimental::wait::F">F</a> &amp;&amp;<em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx3mpi12experimental4waitEvRR1F" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi12experimental4initEbRKNSt6stringEb">
+<span id="_CPPv3N3hpx3mpi12experimental4initEbRKNSt6stringEb"></span><span id="_CPPv2N3hpx3mpi12experimental4initEbRKNSt6stringEb"></span><span id="hpx::mpi::experimental::init__b.ssCR.b"></span><span class="target" id="mpi__future_8hpp_1a79b93aef81382bb85fd974b6a4e9f9d0"></span>void <code class="sig-name descname">init</code><span class="sig-paren">(</span>bool <em>init_mpi</em> = false, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>pool_name</em> = &quot;&quot;, bool <em>init_errorhandler</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental4initEbRKNSt6stringEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi12experimental8finalizeERKNSt6stringE">
+<span id="_CPPv3N3hpx3mpi12experimental8finalizeERKNSt6stringE"></span><span id="_CPPv2N3hpx3mpi12experimental8finalizeERKNSt6stringE"></span><span id="hpx::mpi::experimental::finalize__ssCR"></span><span class="target" id="mpi__future_8hpp_1af24394b03cd08859a39e0bab91273049"></span>void <code class="sig-name descname">finalize</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>pool_name</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental8finalizeERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4IDpEN3hpx3mpi12experimental5debugEvDpRR4Args">
+<span id="_CPPv3IDpEN3hpx3mpi12experimental5debugEDpRR4Args"></span><span id="_CPPv2IDpEN3hpx3mpi12experimental5debugEDpRR4Args"></span><span class="target" id="mpi__future_8hpp_1a68a44b14409dd1968c732bfb1692f948"></span>template&lt;typename ...<code class="sig-name descname">Args</code>&gt;<br />void <code class="sig-name descname">debug</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IDpEN3hpx3mpi12experimental5debugEvDpRR4Args" title="hpx::mpi::experimental::debug::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx3mpi12experimental5debugEvDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="class">
+<dt id="_CPPv4N3hpx3mpi12experimental19enable_user_pollingE">
+<span id="_CPPv3N3hpx3mpi12experimental19enable_user_pollingE"></span><span id="_CPPv2N3hpx3mpi12experimental19enable_user_pollingE"></span><span id="hpx::mpi::experimental::enable_user_polling"></span><span class="target" id="structhpx_1_1mpi_1_1experimental_1_1enable__user__polling"></span><em class="property">struct </em><code class="sig-name descname">enable_user_polling</code><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental19enable_user_pollingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi12experimental19enable_user_polling19enable_user_pollingERKNSt6stringE">
+<span id="_CPPv3N3hpx3mpi12experimental19enable_user_polling19enable_user_pollingERKNSt6stringE"></span><span id="_CPPv2N3hpx3mpi12experimental19enable_user_polling19enable_user_pollingERKNSt6stringE"></span><span id="hpx::mpi::experimental::enable_user_polling::enable_user_polling__ssCR"></span><span class="target" id="structhpx_1_1mpi_1_1experimental_1_1enable__user__polling_1a0b8859d50175261f9e640c159981d142"></span><code class="sig-name descname">enable_user_polling</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>pool_name</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental19enable_user_polling19enable_user_pollingERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi12experimental19enable_user_pollingD0Ev">
+<span id="_CPPv3N3hpx3mpi12experimental19enable_user_pollingD0Ev"></span><span id="_CPPv2N3hpx3mpi12experimental19enable_user_pollingD0Ev"></span><span id="hpx::mpi::experimental::enable_user_polling::~enable_user_polling"></span><span class="target" id="structhpx_1_1mpi_1_1experimental_1_1enable__user__polling_1a01e3d0f9361bc93dadbc1f72de99fe7f"></span><code class="sig-name descname">~enable_user_polling</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental19enable_user_pollingD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="member">
+<dt id="_CPPv4N3hpx3mpi12experimental19enable_user_polling10pool_name_E">
+<span id="_CPPv3N3hpx3mpi12experimental19enable_user_polling10pool_name_E"></span><span id="_CPPv2N3hpx3mpi12experimental19enable_user_polling10pool_name_E"></span><span id="hpx::mpi::experimental::enable_user_polling::pool_name___ss"></span><span class="target" id="structhpx_1_1mpi_1_1experimental_1_1enable__user__polling_1a48ebe4b001a4e23a668a5eefed79ae32"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">pool_name_</code><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental19enable_user_polling10pool_name_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="include-hpx-mpi-force-linking-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/mpi/force_linking.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-mpi-force-linking-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="type">
+<dt id="_CPPv4N3hpx3mpiE">
+<span id="_CPPv3N3hpx3mpiE"></span><span id="_CPPv2N3hpx3mpiE"></span><span class="target" id="namespacehpx_1_1mpi"></span><em class="property">namespace </em><code class="sig-name descname">mpi</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi13force_linkingEv">
+<span id="_CPPv3N3hpx3mpi13force_linkingEv"></span><span id="_CPPv2N3hpx3mpi13force_linkingEv"></span><span id="hpx::mpi::force_linking"></span><span class="target" id="force__linking_8hpp_1a55f59d246ef48d02544332d6871993dd"></span><a class="reference internal" href="#_CPPv4N3hpx3mpi20force_linking_helperE" title="hpx::mpi::force_linking_helper">force_linking_helper</a> &amp;<code class="sig-name descname">force_linking</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi13force_linkingEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="class">
+<dt id="_CPPv4N3hpx3mpi20force_linking_helperE">
+<span id="_CPPv3N3hpx3mpi20force_linking_helperE"></span><span id="_CPPv2N3hpx3mpi20force_linking_helperE"></span><span id="hpx::mpi::force_linking_helper"></span><span class="target" id="structhpx_1_1mpi_1_1force__linking__helper"></span><em class="property">struct </em><code class="sig-name descname">force_linking_helper</code><a class="headerlink" href="#_CPPv4N3hpx3mpi20force_linking_helperE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="member">
+<dt id="_CPPv4N3hpx3mpi20force_linking_helper14mpi_errhandlerE">
+<span id="_CPPv3N3hpx3mpi20force_linking_helper14mpi_errhandlerE"></span><span id="_CPPv2N3hpx3mpi20force_linking_helper14mpi_errhandlerE"></span><span id="hpx::mpi::force_linking_helper::mpi_errhandler__MPI_ErrhandlerP"></span><span class="target" id="structhpx_1_1mpi_1_1force__linking__helper_1acab654827ae53f8787078abcfe0a3af5"></span>MPI_Errhandler *<code class="sig-name descname">mpi_errhandler</code><a class="headerlink" href="#_CPPv4N3hpx3mpi20force_linking_helper14mpi_errhandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="include-hpx-mpi-mpi-executor-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/mpi/mpi_executor.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-mpi-mpi-executor-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="type">
+<dt id="_CPPv4N3hpx3mpiE">
+<span id="_CPPv3N3hpx3mpiE"></span><span class="target" id="namespacehpx_1_1mpi"></span><em class="property">namespace </em><code class="sig-name descname">mpi</code><br /></dt>
+<dd><dl class="type">
+<dt id="_CPPv4N3hpx3mpi12experimentalE">
+<span id="_CPPv3N3hpx3mpi12experimentalE"></span><span id="_CPPv2N3hpx3mpi12experimentalE"></span><span class="target" id="namespacehpx_1_1mpi_1_1experimental"></span><em class="property">namespace </em><code class="sig-name descname">experimental</code><br /></dt>
+<dd><dl class="class">
+<dt id="_CPPv4N3hpx3mpi12experimental8executorE">
+<span id="_CPPv3N3hpx3mpi12experimental8executorE"></span><span id="_CPPv2N3hpx3mpi12experimental8executorE"></span><span id="hpx::mpi::experimental::executor"></span><span class="target" id="structhpx_1_1mpi_1_1experimental_1_1executor"></span><em class="property">struct </em><code class="sig-name descname">executor</code><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental8executorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="type">
+<dt id="_CPPv4N3hpx3mpi12experimental8executor18execution_categoryE">
+<span id="_CPPv3N3hpx3mpi12experimental8executor18execution_categoryE"></span><span id="_CPPv2N3hpx3mpi12experimental8executor18execution_categoryE"></span><span class="target" id="structhpx_1_1mpi_1_1experimental_1_1executor_1a888a7bafdad7ea6ac42449fe8be3848c"></span><em class="property">using </em><code class="sig-name descname">execution_category</code> = <a class="reference internal" href="../../api.html#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::<a class="reference internal" href="../compute/api.html#_CPPv4N3hpx8parallel9executionE" title="hpx::parallel::execution">execution</a>::<a class="reference internal" href="../execution/api.html#_CPPv4N3hpx8parallel9execution22parallel_execution_tagE" title="hpx::parallel::execution::parallel_execution_tag">parallel_execution_tag</a><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental8executor18execution_categoryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N3hpx3mpi12experimental8executor8executorE8MPI_Comm">
+<span id="_CPPv3N3hpx3mpi12experimental8executor8executorE8MPI_Comm"></span><span id="_CPPv2N3hpx3mpi12experimental8executor8executorE8MPI_Comm"></span><span id="hpx::mpi::experimental::executor::executor__MPI_CommCE"></span><span class="target" id="structhpx_1_1mpi_1_1experimental_1_1executor_1a8651828985f8cb65a8aface4d56de95e"></span><em class="property">constexpr</em> <code class="sig-name descname">executor</code><span class="sig-paren">(</span>MPI_Comm <em>communicator</em> = MPI_COMM_WORLD<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental8executor8executorE8MPI_Comm" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4I0DpENK3hpx3mpi12experimental8executor13async_executeEDcRR1FDpRR2Ts">
+<span id="_CPPv3I0DpENK3hpx3mpi12experimental8executor13async_executeERR1FDpRR2Ts"></span><span id="_CPPv2I0DpENK3hpx3mpi12experimental8executor13async_executeERR1FDpRR2Ts"></span><span class="target" id="structhpx_1_1mpi_1_1experimental_1_1executor_1aac953c7f1d55999a18af655662901c56"></span>template&lt;typename <code class="sig-name descname">F</code>, typename ...<code class="sig-name descname">Ts</code>&gt;<br />decltype(auto) <code class="sig-name descname">async_execute</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpENK3hpx3mpi12experimental8executor13async_executeEDcRR1FDpRR2Ts" title="hpx::mpi::experimental::executor::async_execute::F">F</a> &amp;&amp;<em>f</em>, <a class="reference internal" href="#_CPPv4I0DpENK3hpx3mpi12experimental8executor13async_executeEDcRR1FDpRR2Ts" title="hpx::mpi::experimental::executor::async_execute::Ts">Ts</a>&amp;&amp;... <em>ts</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0DpENK3hpx3mpi12experimental8executor13async_executeEDcRR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="member">
+<dt id="_CPPv4N3hpx3mpi12experimental8executor13communicator_E">
+<span id="_CPPv3N3hpx3mpi12experimental8executor13communicator_E"></span><span id="_CPPv2N3hpx3mpi12experimental8executor13communicator_E"></span><span id="hpx::mpi::experimental::executor::communicator___MPI_Comm"></span><span class="target" id="structhpx_1_1mpi_1_1experimental_1_1executor_1aec340cd9d5f9678098e958f653a5bea6"></span>MPI_Comm <code class="sig-name descname">communicator_</code><a class="headerlink" href="#_CPPv4N3hpx3mpi12experimental8executor13communicator_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../command_line_handling/api.html" class="btn btn-neutral float-right" title="command_line_handling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../thread_pools/api.html" class="btn btn-neutral float-left" title="thread_pools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2020, The STE||AR Group
+      
+        <span class="commit">
+          Revision <code>5aa9f19</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

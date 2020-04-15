@@ -114,7 +114,10 @@
 <li class="toctree-l2"><a class="reference internal" href="testing_hpx.html">Testing <em>HPX</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="docker_image.html">Using docker for development</a></li>
 <li class="toctree-l2"><a class="reference internal" href="documentation.html">Documentation</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Module structure</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Module structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#finding-circular-dependencies">Finding circular dependencies</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -298,6 +301,29 @@ header should be excluded from the API reference, a comment <code class="docutil
 <p>Tests are placed in suitable subdirectories of <code class="docutils literal notranslate"><span class="pre">tests</span></code>.</p>
 <p>When in doubt, consult existing modules for examples on how to structure the
 module.</p>
+<div class="section" id="finding-circular-dependencies">
+<h2>Finding circular dependencies<a class="headerlink" href="#finding-circular-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Our CI will perform a check to see if there are circular dependencies between
+modules. In cases where it’s not clear what is causing the circular dependency,
+running the <a class="reference external" href="https://github.com/tomtom-international/cpp-dependencies">cpp-dependencies</a> tool manually can be helpful. It can give you
+detailed information on exactly which files are causing the circular dependency.
+If you do not have the <code class="docutils literal notranslate"><span class="pre">cpp-dependencies</span></code> tool already installed, one way of
+obtaining it is by using our docker image. This way you will have exactly the
+same environment as on the CI. See <span class="xref std std-ref">docker</span> for details on how to use the
+docker image.</p>
+<p>To produce the graph produced by CI run the following command (<code class="docutils literal notranslate"><span class="pre">HPX_SOURCE</span></code> is
+assumed to hold the path to the <em>HPX</em> source directory):</p>
+<p>This will produce a <code class="docutils literal notranslate"><span class="pre">dot</span></code> file in the current directory. You can inspect this
+manually with a text editor. You can also convert this to an image if you have
+<code class="docutils literal notranslate"><span class="pre">graphviz</span></code> installed:</p>
+<p>This produces an <code class="docutils literal notranslate"><span class="pre">svg</span></code> file in the current directory which shows the circular
+dependencies. Note that if there are no cycles the image will be empty.</p>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">cpp-dependencies</span></code> to print the include paths between two modules.</p>
+<p>prints all possible paths from the module <code class="docutils literal notranslate"><span class="pre">&lt;from&gt;</span></code> to the module <code class="docutils literal notranslate"><span class="pre">&lt;to&gt;</span></code>. For
+example, as most modules depend on <code class="docutils literal notranslate"><span class="pre">config</span></code>, the following should give you a
+long list of paths from <code class="docutils literal notranslate"><span class="pre">algorithms</span></code> to <code class="docutils literal notranslate"><span class="pre">config</span></code>:</p>
+<p>The following should report that it can’t find a path between the two modules:</p>
+</div>
 </div>
 
 
@@ -329,7 +355,7 @@ module.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>ca04ade</code>.
+          Revision <code>eababeb</code>.
         </span>
       
 

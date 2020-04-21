@@ -9,6 +9,6 @@
 HPX documentation
 =================
 
-This repository contains documentation *generated* from the [HPX
-repository](https://github.com/STEllAR-GROUP/hpx). Changes should not be made
+This repository contains documentation *generated* from the `HPX
+repository <https://github.com/STEllAR-GROUP/hpx>`_. Changes should not be made
 directly to this repository.

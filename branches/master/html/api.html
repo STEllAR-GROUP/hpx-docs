@@ -759,175 +759,6 @@ API in terms of our build system are the <code class="docutils literal notransla
 </div>
 </dd></dl>
 
-<dl class="class">
-<dt id="_CPPv4I0EN3hpx8parallel2v210task_blockE">
-<span id="_CPPv3I0EN3hpx8parallel2v210task_blockE"></span><span id="_CPPv2I0EN3hpx8parallel2v210task_blockE"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block"></span>template&lt;typename <code class="sig-name descname">ExPolicy</code> = <a class="reference internal" href="#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::<a class="reference internal" href="libs/compute/api.html#_CPPv4N3hpx8parallel9executionE" title="hpx::parallel::execution">execution</a>::<a class="reference internal" href="libs/execution/api.html#_CPPv4N3hpx8parallel9execution15parallel_policyE" title="hpx::parallel::execution::parallel_policy">parallel_policy</a>&gt;<br /><em class="property">class </em><code class="sig-name descname">task_block</code><a class="headerlink" href="#_CPPv4I0EN3hpx8parallel2v210task_blockE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;task_block.hpp&gt;</em><p>The class <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a> defines an interface for forking and joining parallel tasks. The <em>define_task_block</em> and <em>define_task_block_restore_thread</em> function templates create an object of type <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a> and pass a reference to that object to a user-provided callable object.</p>
-<p>An object of class <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em> cannot be constructed, destroyed, copied, or moved except by the implementation of the task region library. Taking the address of a <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a> object via operator&amp; or addressof is ill formed. The result of obtaining its address by any other means is unspecified.</p>
-<p>A <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em><p> is active if it was created by the nearest enclosing task block, where “task block” refers to an invocation of define_task_block or define_task_block_restore_thread and “nearest</p>
-<p>enclosing” means the most recent invocation that has not yet completed. Code designated for execution in another thread by means other than the facilities in this section (e.g., using thread or async) are not enclosed in the task region and a </p>
-<a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a> passed to (or captured by) such code is not active within that code. Performing any operation on a <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a> that is not active results in undefined behavior.</p>
-<p>The <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em> that is active before a specific call to the run member function is not active within the asynchronous function that invoked run. (The invoked function should not, therefore, capture the <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em> from the surrounding block.)</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">Example</span><span class="p">:</span>
-    <span class="n">define_task_block</span><span class="p">([</span><span class="o">&amp;</span><span class="p">](</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">tr</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">tr</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]</span> <span class="p">{</span>
-            <span class="n">tr</span><span class="p">.</span><span class="n">run</span><span class="p">([]</span> <span class="p">{</span> <span class="n">f</span><span class="p">();</span> <span class="p">});</span>                <span class="c1">// Error: tr is not active</span>
-            <span class="n">define_task_block</span><span class="p">([</span><span class="o">&amp;</span><span class="p">](</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">tr</span><span class="p">)</span> <span class="p">{</span>   <span class="c1">// Nested task block</span>
-                <span class="n">tr</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>                      <span class="c1">// OK: inner tr is active</span>
-                <span class="c1">/// ...</span>
-            <span class="p">});</span>
-        <span class="p">});</span>
-        <span class="c1">/// ...</span>
-    <span class="p">});</span>
-</pre></div>
-</div>
-</p>
-<p><dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ExPolicy</span></code>: The execution policy an instance of a <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em> was created with. This defaults to <em>parallel_policy</em>. </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Types</p>
-<dl class="type">
-<dt id="_CPPv4N3hpx8parallel2v210task_block16execution_policyE">
-<span id="_CPPv3N3hpx8parallel2v210task_block16execution_policyE"></span><span id="_CPPv2N3hpx8parallel2v210task_block16execution_policyE"></span><span id="hpx::parallel::v2::task_block::execution_policy"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1aab56ea8bdf25594112ccab9889c3e294"></span><em class="property">typedef </em>ExPolicy <code class="sig-name descname">execution_policy</code><a class="headerlink" href="#_CPPv4N3hpx8parallel2v210task_block16execution_policyE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Refers to the type of the execution policy used to create the <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em>. </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="function">
-<dt id="_CPPv4NK3hpx8parallel2v210task_block20get_execution_policyEv">
-<span id="_CPPv3NK3hpx8parallel2v210task_block20get_execution_policyEv"></span><span id="_CPPv2NK3hpx8parallel2v210task_block20get_execution_policyEv"></span><span id="hpx::parallel::v2::task_block::get_execution_policyC"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1ac6a81aa62ea26bd2b790b573af04bac6"></span><a class="reference internal" href="#_CPPv4N3hpx8parallel2v210task_block16execution_policyE" title="hpx::parallel::v2::task_block::execution_policy">execution_policy</a> <em class="property">const</em> &amp;<code class="sig-name descname">get_execution_policy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx8parallel2v210task_block20get_execution_policyEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Return the execution policy instance used to create this <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em> </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4I0DpEN3hpx8parallel2v210task_block3runEvRR1FDpRR2Ts">
-<span id="_CPPv3I0DpEN3hpx8parallel2v210task_block3runERR1FDpRR2Ts"></span><span id="_CPPv2I0DpEN3hpx8parallel2v210task_block3runERR1FDpRR2Ts"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1a942ef260b49d3bd93b3f63df973b577b"></span>template&lt;typename <code class="sig-name descname">F</code>, typename ...<code class="sig-name descname">Ts</code>&gt;<br />void <code class="sig-name descname">run</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx8parallel2v210task_block3runEvRR1FDpRR2Ts" title="hpx::parallel::v2::task_block::run::F">F</a> &amp;&amp;<em>f</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx8parallel2v210task_block3runEvRR1FDpRR2Ts" title="hpx::parallel::v2::task_block::run::Ts">Ts</a>&amp;&amp;... <em>ts</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx8parallel2v210task_block3runEvRR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Causes the expression f() to be invoked asynchronously. The invocation of f is permitted to run on an unspecified thread in an unordered fashion relative to the sequence of operations following the call to run(f) (the continuation), or indeterminately sequenced within the same thread as the continuation.</p>
-<p>The call to <em>run</em> synchronizes with the invocation of f. The completion of f() synchronizes with the next invocation of wait on the same <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a> or completion of the nearest enclosing task block (i.e., the <em>define_task_block</em> or <em>define_task_block_restore_thread</em> that created this task block).</p>
-<p>Requires: F shall be MoveConstructible. The expression, (void)f(), shall be well-formed.</p>
-<p>Precondition: this shall be the active <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a>.</p>
-<p>Postconditions: A call to run may return on a different thread than that on which it was called.</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>The call to <em>run</em> is sequenced before the continuation as if <em>run</em> returns on the same thread. The invocation of the user-supplied callable object f may be immediate or may be delayed until compute resources are available. <em>run</em> might or might not return before invocation of f completes.</p>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">This</span></code>: function may throw <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__canceled__exception"><span class="std std-ref">task_canceled_exception</span></a></em>, as described in Exception Handling. </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4I00DpEN3hpx8parallel2v210task_block3runEvR8ExecutorRR1FDpRR2Ts">
-<span id="_CPPv3I00DpEN3hpx8parallel2v210task_block3runER8ExecutorRR1FDpRR2Ts"></span><span id="_CPPv2I00DpEN3hpx8parallel2v210task_block3runER8ExecutorRR1FDpRR2Ts"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1ad19e4cb24036c2adbd421cec62926821"></span>template&lt;typename <code class="sig-name descname">Executor</code>, typename <code class="sig-name descname">F</code>, typename ...<code class="sig-name descname">Ts</code>&gt;<br />void <code class="sig-name descname">run</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00DpEN3hpx8parallel2v210task_block3runEvR8ExecutorRR1FDpRR2Ts" title="hpx::parallel::v2::task_block::run::Executor">Executor</a> &amp;<em>exec</em>, <a class="reference internal" href="#_CPPv4I00DpEN3hpx8parallel2v210task_block3runEvR8ExecutorRR1FDpRR2Ts" title="hpx::parallel::v2::task_block::run::F">F</a> &amp;&amp;<em>f</em>, <a class="reference internal" href="#_CPPv4I00DpEN3hpx8parallel2v210task_block3runEvR8ExecutorRR1FDpRR2Ts" title="hpx::parallel::v2::task_block::run::Ts">Ts</a>&amp;&amp;... <em>ts</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00DpEN3hpx8parallel2v210task_block3runEvR8ExecutorRR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Causes the expression f() to be invoked asynchronously using the given executor. The invocation of f is permitted to run on an unspecified thread associated with the given executor and in an unordered fashion relative to the sequence of operations following the call to run(exec, f) (the continuation), or indeterminately sequenced within the same thread as the continuation.</p>
-<p>The call to <em>run</em> synchronizes with the invocation of f. The completion of f() synchronizes with the next invocation of wait on the same <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a> or completion of the nearest enclosing task block (i.e., the <em>define_task_block</em> or <em>define_task_block_restore_thread</em> that created this task block).</p>
-<p>Requires: Executor shall be a type modeling the Executor concept. F shall be MoveConstructible. The expression, (void)f(), shall be well-formed.</p>
-<p>Precondition: this shall be the active <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a>.</p>
-<p>Postconditions: A call to run may return on a different thread than that on which it was called.</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>The call to <em>run</em> is sequenced before the continuation as if <em>run</em> returns on the same thread. The invocation of the user-supplied callable object f may be immediate or may be delayed until compute resources are available. <em>run</em> might or might not return before invocation of f completes.</p>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">This</span></code>: function may throw <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__canceled__exception"><span class="std std-ref">task_canceled_exception</span></a></em>, as described in Exception Handling. </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3hpx8parallel2v210task_block4waitEv">
-<span id="_CPPv3N3hpx8parallel2v210task_block4waitEv"></span><span id="_CPPv2N3hpx8parallel2v210task_block4waitEv"></span><span id="hpx::parallel::v2::task_block::wait"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1a409b3ac4d95c5f22eaf49a1012d26200"></span>void <code class="sig-name descname">wait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel2v210task_block4waitEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Blocks until the tasks spawned using this <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a> have finished.</p>
-<p>Precondition: this shall be the active <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a>.</p>
-<p>Postcondition: All tasks spawned by the nearest enclosing task region have finished. A call to wait may return on a different thread than that on which it was called.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">Example</span><span class="p">:</span>
-    <span class="n">define_task_block</span><span class="p">([</span><span class="o">&amp;</span><span class="p">](</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">tr</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">tr</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span> <span class="n">process</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="p">});</span> <span class="c1">// Process a[w] through a[x]</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">)</span> <span class="n">tr</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>   <span class="c1">// Wait if overlap between [w, x) and [y, z)</span>
-        <span class="n">process</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>       <span class="c1">// Process a[y] through a[z]</span>
-    <span class="p">});</span>
-</pre></div>
-</div>
- <dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>The call to <em>wait</em> is sequenced before the continuation as if <em>wait</em> returns on the same thread.</p>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">This</span></code>: function may throw <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__canceled__exception"><span class="std std-ref">task_canceled_exception</span></a></em>, as described in Exception Handling.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3hpx8parallel2v210task_block6policyEv">
-<span id="_CPPv3N3hpx8parallel2v210task_block6policyEv"></span><span id="_CPPv2N3hpx8parallel2v210task_block6policyEv"></span><span id="hpx::parallel::v2::task_block::policy"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1a1e54dbb3c28c991b928548366f500455"></span>ExPolicy &amp;<code class="sig-name descname">policy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel2v210task_block6policyEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns a reference to the execution policy used to construct this object.</p>
-<p>Precondition: this shall be the active <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a>. </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4NK3hpx8parallel2v210task_block6policyEv">
-<span id="_CPPv3NK3hpx8parallel2v210task_block6policyEv"></span><span id="_CPPv2NK3hpx8parallel2v210task_block6policyEv"></span><span id="hpx::parallel::v2::task_block::policyC"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1a3a481461d7f33eff0c9b6df4bb093593"></span>ExPolicy <em class="property">const</em> &amp;<code class="sig-name descname">policy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx8parallel2v210task_block6policyEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns a reference to the execution policy used to construct this object.</p>
-<p>Precondition: this shall be the active <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a>. </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Members</p>
-<dl class="member">
-<dt id="_CPPv4N3hpx8parallel2v210task_block4mtx_E">
-<span id="_CPPv3N3hpx8parallel2v210task_block4mtx_E"></span><span id="_CPPv2N3hpx8parallel2v210task_block4mtx_E"></span><span id="hpx::parallel::v2::task_block::mtx___mutex_type"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1a7b2dc2eea923d591eb814e432ec597b2"></span>mutex_type <code class="sig-name descname">mtx_</code><a class="headerlink" href="#_CPPv4N3hpx8parallel2v210task_block4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="member">
-<dt id="_CPPv4N3hpx8parallel2v210task_block6tasks_E">
-<span id="_CPPv3N3hpx8parallel2v210task_block6tasks_E"></span><span id="_CPPv2N3hpx8parallel2v210task_block6tasks_E"></span><span id="hpx::parallel::v2::task_block::tasks___std::vector:hpx::future:void::"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1acf5200a8cf8e8866fcd5885c2de4cfe6"></span><a class="reference internal" href="libs/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt;&gt; <code class="sig-name descname">tasks_</code><a class="headerlink" href="#_CPPv4N3hpx8parallel2v210task_block6tasks_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="member">
-<dt id="_CPPv4N3hpx8parallel2v210task_block7errors_E">
-<span id="_CPPv3N3hpx8parallel2v210task_block7errors_E"></span><span id="_CPPv2N3hpx8parallel2v210task_block7errors_E"></span><span id="hpx::parallel::v2::task_block::errors___parallel::exception_list"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1a01521453dc95bf19d361bd99e2d0c4aa"></span><a class="reference internal" href="#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::exception_list <code class="sig-name descname">errors_</code><a class="headerlink" href="#_CPPv4N3hpx8parallel2v210task_block7errors_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="member">
-<dt id="_CPPv4N3hpx8parallel2v210task_block3id_E">
-<span id="_CPPv3N3hpx8parallel2v210task_block3id_E"></span><span id="_CPPv2N3hpx8parallel2v210task_block3id_E"></span><span id="hpx::parallel::v2::task_block::id___threads::thread_id_type"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1a3ac0cb819cb10fa1847d8207228b81ba"></span><a class="reference internal" href="#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="libs/synchronization/api.html#_CPPv4N3hpx7threads14thread_id_typeE" title="hpx::threads::thread_id_type">thread_id_type</a> <code class="sig-name descname">id_</code><a class="headerlink" href="#_CPPv4N3hpx8parallel2v210task_block3id_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="member">
-<dt id="_CPPv4N3hpx8parallel2v210task_block7policy_E">
-<span id="_CPPv3N3hpx8parallel2v210task_block7policy_E"></span><span id="_CPPv2N3hpx8parallel2v210task_block7policy_E"></span><span id="hpx::parallel::v2::task_block::policy___ExPolicy"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__block_1a4cbbea8135c1507e713de14d0e8be80b"></span>ExPolicy <code class="sig-name descname">policy_</code><a class="headerlink" href="#_CPPv4N3hpx8parallel2v210task_block7policy_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-<dl class="class">
-<dt id="_CPPv4N3hpx8parallel2v223task_canceled_exceptionE">
-<span id="_CPPv3N3hpx8parallel2v223task_canceled_exceptionE"></span><span id="_CPPv2N3hpx8parallel2v223task_canceled_exceptionE"></span><span id="hpx::parallel::v2::task_canceled_exception"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__canceled__exception"></span><em class="property">class </em><code class="sig-name descname">task_canceled_exception</code> : <em class="property">public</em> <a class="reference internal" href="libs/errors/api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a><a class="headerlink" href="#_CPPv4N3hpx8parallel2v223task_canceled_exceptionE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;task_block.hpp&gt;</em><p>The class <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__canceled__exception"><span class="std std-ref">task_canceled_exception</span></a></em> defines the type of objects thrown by <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block_1a942ef260b49d3bd93b3f63df973b577b"><span class="std std-ref">task_block::run</span></a> or <a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block_1a409b3ac4d95c5f22eaf49a1012d26200"><span class="std std-ref">task_block::wait</span></a> if they detect that an exception is pending within the current parallel region. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="function">
-<dt id="_CPPv4N3hpx8parallel2v223task_canceled_exception23task_canceled_exceptionEv">
-<span id="_CPPv3N3hpx8parallel2v223task_canceled_exception23task_canceled_exceptionEv"></span><span id="_CPPv2N3hpx8parallel2v223task_canceled_exception23task_canceled_exceptionEv"></span><span id="hpx::parallel::v2::task_canceled_exception::task_canceled_exception"></span><span class="target" id="classhpx_1_1parallel_1_1v2_1_1task__canceled__exception_1a43819a01d060a4fec05b558537a30db0"></span><code class="sig-name descname">task_canceled_exception</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel2v223task_canceled_exception23task_canceled_exceptionEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
 <dl class="type">
 <dt id="_CPPv43hpx">
 <span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><a class="headerlink" href="#_CPPv43hpx" title="Permalink to this definition">¶</a><br /></dt>
@@ -3003,131 +2834,6 @@ API in terms of our build system are the <code class="docutils literal notransla
 </dd></dl>
 
 <dl class="type">
-<dt id="_CPPv4N3hpx8parallelE">
-<span id="_CPPv3N3hpx8parallelE"></span><span id="_CPPv2N3hpx8parallelE"></span><span id="hpx::parallel"></span><span class="target" id="namespacehpx_1_1parallel"></span><em class="property">namespace </em><code class="sig-name descname">parallel</code><a class="headerlink" href="#_CPPv4N3hpx8parallelE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="type">
-<dt id="_CPPv4N3hpx8parallel2v2E">
-<span id="_CPPv3N3hpx8parallel2v2E"></span><span id="_CPPv2N3hpx8parallel2v2E"></span><span id="hpx::parallel::v2"></span><span class="target" id="namespacehpx_1_1parallel_1_1v2"></span><em class="property">namespace </em><code class="sig-name descname">v2</code><a class="headerlink" href="#_CPPv4N3hpx8parallel2v2E" title="Permalink to this definition">¶</a><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="function">
-<dt id="_CPPv4I00EN3hpx8parallel2v217define_task_blockEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F">
-<span id="_CPPv3I00EN3hpx8parallel2v217define_task_blockERR8ExPolicyRR1F"></span><span id="_CPPv2I00EN3hpx8parallel2v217define_task_blockERR8ExPolicyRR1F"></span><span class="target" id="namespacehpx_1_1parallel_1_1v2_1a542a6d325f132739dbda97b8f09dce4f"></span>template&lt;typename <code class="sig-name descname">ExPolicy</code>, typename <code class="sig-name descname">F</code>&gt;<br /><a class="reference internal" href="libs/algorithms/api.html#_CPPv4N3hpx8parallel4utilE" title="hpx::parallel::util">util</a>::detail::algorithm_result&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx8parallel2v217define_task_blockEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F" title="hpx::parallel::v2::define_task_block::ExPolicy">ExPolicy</a>&gt;::type <code class="sig-name descname">define_task_block</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3hpx8parallel2v217define_task_blockEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F" title="hpx::parallel::v2::define_task_block::ExPolicy">ExPolicy</a> &amp;&amp;<em>policy</em>, <a class="reference internal" href="#_CPPv4I00EN3hpx8parallel2v217define_task_blockEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F" title="hpx::parallel::v2::define_task_block::F">F</a> &amp;&amp;<em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx8parallel2v217define_task_blockEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Constructs a <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em>, <em>tr</em>, using the given execution policy <em>policy</em>,and invokes the expression <em>f(tr)</em> on the user-provided object, <em>f</em>.</p>
-<p><p>Postcondition: All tasks spawned from </p>
-<em>f</em> have finished execution. A call to define_task_block may return on a different thread than that on which it was called.<dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ExPolicy</span></code>: The type of the execution policy to use (deduced). It describes the manner in which the execution of the task block may be parallelized. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">F</span></code>: The type of the user defined function to invoke inside the define_task_block (deduced). <em>F</em> shall be MoveConstructible.</p></li>
-</ul>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">policy</span></code>: The execution policy to use for the scheduling of the iterations. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: The user defined function to invoke inside the task block. Given an lvalue <em>tr</em> of type <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em>, the expression, (void)f(tr), shall be well-formed.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>It is expected (but not mandated) that f will (directly or indirectly) call tr.run(<em>callable_object</em>). </p>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">An</span></code>: <em>exception_list</em>, as specified in Exception Handling.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4I0EN3hpx8parallel2v217define_task_blockEvRR1F">
-<span id="_CPPv3I0EN3hpx8parallel2v217define_task_blockERR1F"></span><span id="_CPPv2I0EN3hpx8parallel2v217define_task_blockERR1F"></span><span class="target" id="namespacehpx_1_1parallel_1_1v2_1aa62d599bbcb85dfa6737f36a80b5555c"></span>template&lt;typename <code class="sig-name descname">F</code>&gt;<br />void <code class="sig-name descname">define_task_block</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx8parallel2v217define_task_blockEvRR1F" title="hpx::parallel::v2::define_task_block::F">F</a> &amp;&amp;<em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx8parallel2v217define_task_blockEvRR1F" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Constructs a <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em>, tr, and invokes the expression <em>f(tr)</em> on the user-provided object, <em>f</em>. This version uses <em>parallel_policy</em> for task scheduling.</p>
-<p><p>Postcondition: All tasks spawned from </p>
-<em>f</em> have finished execution. A call to define_task_block may return on a different thread than that on which it was called.<dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">F</span></code>: The type of the user defined function to invoke inside the define_task_block (deduced). <em>F</em> shall be MoveConstructible.</p></li>
-</ul>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: The user defined function to invoke inside the task block. Given an lvalue <em>tr</em> of type <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em>, the expression, (void)f(tr), shall be well-formed.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>It is expected (but not mandated) that f will (directly or indirectly) call tr.run(<em>callable_object</em>). </p>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">An</span></code>: <em>exception_list</em>, as specified in Exception Handling.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4I00EN3hpx8parallel2v232define_task_block_restore_threadEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F">
-<span id="_CPPv3I00EN3hpx8parallel2v232define_task_block_restore_threadERR8ExPolicyRR1F"></span><span id="_CPPv2I00EN3hpx8parallel2v232define_task_block_restore_threadERR8ExPolicyRR1F"></span><span class="target" id="namespacehpx_1_1parallel_1_1v2_1af89e67c431f71a9ae28e9e80c399c621"></span>template&lt;typename <code class="sig-name descname">ExPolicy</code>, typename <code class="sig-name descname">F</code>&gt;<br /><a class="reference internal" href="libs/algorithms/api.html#_CPPv4N3hpx8parallel4utilE" title="hpx::parallel::util">util</a>::detail::algorithm_result&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx8parallel2v232define_task_block_restore_threadEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F" title="hpx::parallel::v2::define_task_block_restore_thread::ExPolicy">ExPolicy</a>&gt;::type <code class="sig-name descname">define_task_block_restore_thread</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3hpx8parallel2v232define_task_block_restore_threadEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F" title="hpx::parallel::v2::define_task_block_restore_thread::ExPolicy">ExPolicy</a> &amp;&amp;<em>policy</em>, <a class="reference internal" href="#_CPPv4I00EN3hpx8parallel2v232define_task_block_restore_threadEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F" title="hpx::parallel::v2::define_task_block_restore_thread::F">F</a> &amp;&amp;<em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx8parallel2v232define_task_block_restore_threadEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Constructs a <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em>, tr, and invokes the expression <em>f(tr)</em> on the user-provided object, <em>f</em>.</p>
-<p><p>Postcondition: All tasks spawned from </p>
-<em>f</em> have finished execution. A call to <em>define_task_block_restore_thread</em> always returns on the same thread as that on which it was called.<dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ExPolicy</span></code>: The type of the execution policy to use (deduced). It describes the manner in which the execution of the task block may be parallelized. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">F</span></code>: The type of the user defined function to invoke inside the define_task_block (deduced). <em>F</em> shall be MoveConstructible.</p></li>
-</ul>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">policy</span></code>: The execution policy to use for the scheduling of the iterations. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: The user defined function to invoke inside the define_task_block. Given an lvalue <em>tr</em> of type <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em>, the expression, (void)f(tr), shall be well-formed.</p></li>
-</ul>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">An</span></code>: <em>exception_list</em>, as specified in Exception Handling.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>It is expected (but not mandated) that f will (directly or indirectly) call tr.run(<em>callable_object</em>). </p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4I0EN3hpx8parallel2v232define_task_block_restore_threadEvRR1F">
-<span id="_CPPv3I0EN3hpx8parallel2v232define_task_block_restore_threadERR1F"></span><span id="_CPPv2I0EN3hpx8parallel2v232define_task_block_restore_threadERR1F"></span><span class="target" id="namespacehpx_1_1parallel_1_1v2_1ab676349ec457ff94ce4224d3792b72a3"></span>template&lt;typename <code class="sig-name descname">F</code>&gt;<br />void <code class="sig-name descname">define_task_block_restore_thread</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx8parallel2v232define_task_block_restore_threadEvRR1F" title="hpx::parallel::v2::define_task_block_restore_thread::F">F</a> &amp;&amp;<em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx8parallel2v232define_task_block_restore_threadEvRR1F" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Constructs a <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em>, tr, and invokes the expression <em>f(tr)</em> on the user-provided object, <em>f</em>. This version uses <em>parallel_policy</em> for task scheduling.</p>
-<p><p>Postcondition: All tasks spawned from </p>
-<em>f</em> have finished execution. A call to <em>define_task_block_restore_thread</em> always returns on the same thread as that on which it was called.<dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">F</span></code>: The type of the user defined function to invoke inside the define_task_block (deduced). <em>F</em> shall be MoveConstructible.</p></li>
-</ul>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: The user defined function to invoke inside the define_task_block. Given an lvalue <em>tr</em> of type <em><a class="reference internal" href="#classhpx_1_1parallel_1_1v2_1_1task__block"><span class="std std-ref">task_block</span></a></em>, the expression, (void)f(tr), shall be well-formed.</p></li>
-</ul>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">An</span></code>: <em>exception_list</em>, as specified in Exception Handling.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>It is expected (but not mandated) that f will (directly or indirectly) call tr.run(<em>callable_object</em>). </p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-<dl class="type">
 <dt id="_CPPv4N3hpx7threadsE">
 <span id="_CPPv3N3hpx7threadsE"></span><span id="_CPPv2N3hpx7threadsE"></span><span id="hpx::threads"></span><span class="target" id="namespacehpx_1_1threads"></span><em class="property">namespace </em><code class="sig-name descname">threads</code><a class="headerlink" href="#_CPPv4N3hpx7threadsE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
@@ -3154,7 +2860,7 @@ API in terms of our build system are the <code class="docutils literal notransla
 <dl class="file">
 <dt>
 <span class="target" id="migrate__from__storage_8hpp"></span><em>file</em> <code class="sig-name descname">migrate_from_storage.hpp</code></dt>
-<dd><em>#include &lt;hpx/config.hpp&gt;</em><em>#include &lt;hpx/lcos/future.hpp&gt;</em><em>#include &lt;hpx/allocator_support/allocator_deleter.hpp&gt;</em><em>#include &lt;hpx/allocator_support/internal_allocator.hpp&gt;</em><em>#include &lt;hpx/assertion.hpp&gt;</em><em>#include &lt;hpx/concepts/concepts.hpp&gt;</em><em>#include &lt;hpx/errors.hpp&gt;</em><em>#include &lt;hpx/functional/invoke.hpp&gt;</em><em>#include &lt;hpx/functional/traits/is_callable.hpp&gt;</em><em>#include &lt;hpx/lcos/detail/future_data.hpp&gt;</em><em>#include &lt;hpx/coroutines/detail/get_stack_pointer.hpp&gt;</em><em>#include &lt;hpx/functional/bind.hpp&gt;</em><em>#include &lt;hpx/functional/unique_function.hpp&gt;</em><em>#include &lt;hpx/synchronization/condition_variable.hpp&gt;</em><em>#include &lt;hpx/synchronization/spinlock.hpp&gt;</em><em>#include &lt;hpx/memory/intrusive_ptr.hpp&gt;</em><em>#include &lt;hpx/runtime/launch_policy.hpp&gt;</em><em>#include &lt;hpx/coroutines/thread_enums.hpp&gt;</em><em>#include &lt;hpx/serialization/serialization_fwd.hpp&gt;</em><em>#include &lt;type_traits&gt;</em><em>#include &lt;utility&gt;</em><em>#include &lt;hpx/runtime/naming_fwd.hpp&gt;</em><em>#include &lt;hpx/naming_base.hpp&gt;</em><em>#include &lt;hpx/runtime/agas_fwd.hpp&gt;</em><em>#include &lt;hpx/functional/function.hpp&gt;</em><em>#include &lt;hpx/runtime_configuration/agas_service_mode.hpp&gt;</em><em>#include &lt;cstdint&gt;</em><em>#include &lt;string&gt;</em><em>#include &lt;hpx/thread_executors/thread_executor.hpp&gt;</em><em>#include &lt;hpx/threading_base/thread_helpers.hpp&gt;</em><em>#include &lt;hpx/thread_support/assert_owns_lock.hpp&gt;</em><em>#include &lt;hpx/thread_support/atomic_count.hpp&gt;</em><em>#include &lt;hpx/timing/steady_clock.hpp&gt;</em><em>#include &lt;hpx/traits/future_access.hpp&gt;</em><em>#include &lt;hpx/traits/future_traits.hpp&gt;</em><em>#include &lt;hpx/traits/is_future.hpp&gt;</em><em>#include &lt;functional&gt;</em><em>#include &lt;vector&gt;</em><em>#include &lt;hpx/traits/get_remote_result.hpp&gt;</em><em>#include &lt;hpx/type_support/decay.hpp&gt;</em><em>#include &lt;hpx/type_support/unused.hpp&gt;</em><em>#include &lt;hpx/threading_base/annotated_function.hpp&gt;</em><em>#include &lt;boost/container/small_vector.hpp&gt;</em><em>#include &lt;atomic&gt;</em><em>#include &lt;chrono&gt;</em><em>#include &lt;cstddef&gt;</em><em>#include &lt;exception&gt;</em><em>#include &lt;memory&gt;</em><em>#include &lt;mutex&gt;</em><em>#include &lt;hpx/config/warnings_prefix.hpp&gt;</em><em>#include &lt;hpx/config/warnings_suffix.hpp&gt;</em><em>#include &lt;hpx/serialization/detail/polymorphic_nonintrusive_factory.hpp&gt;</em><em>#include &lt;hpx/traits/acquire_shared_state.hpp&gt;</em><em>#include &lt;hpx/iterator_support/traits/is_range.hpp&gt;</em><em>#include &lt;hpx/iterator_support/range.hpp&gt;</em><em>#include &lt;hpx/traits/is_future_range.hpp&gt;</em><em>#include &lt;hpx/util/detail/reserve.hpp&gt;</em><em>#include &lt;algorithm&gt;</em><em>#include &lt;iterator&gt;</em><em>#include &lt;hpx/traits/future_then_result.hpp&gt;</em><em>#include &lt;hpx/functional/result_of.hpp&gt;</em><em>#include &lt;hpx/type_support/always_void.hpp&gt;</em><em>#include &lt;hpx/type_support/identity.hpp&gt;</em><em>#include &lt;hpx/type_support/lazy_conditional.hpp&gt;</em><em>#include &lt;hpx/util/serialize_exception.hpp&gt;</em><em>#include &lt;hpx/lcos/local/packaged_continuation.hpp&gt;</em><em>#include &lt;hpx/lcos/future_exec.hpp&gt;</em><em>#include &lt;hpx/traits/future_then_result_exec.hpp&gt;</em><em>#include &lt;hpx/execution/traits/is_executor.hpp&gt;</em><em>#include &lt;hpx/type_support/pack.hpp&gt;</em><em>#include &lt;hpx/traits/is_launch_policy.hpp&gt;</em><em>#include &lt;hpx/execution/traits/executor_traits.hpp&gt;</em><em>#include &lt;hpx/threading_base/thread_description.hpp&gt;</em><em>#include &lt;hpx/execution/executors/execution.hpp&gt;</em><em>#include &lt;hpx/execution/detail/post_policy_dispatch.hpp&gt;</em><em>#include &lt;hpx/runtime/naming/id_type.hpp&gt;</em><em>#include &lt;iosfwd&gt;</em><em>#include &lt;hpx/traits/is_component.hpp&gt;</em><em>#include &lt;hpx/components/component_storage/server/migrate_from_storage.hpp&gt;</em></dd></dl>
+<dd><em>#include &lt;hpx/config.hpp&gt;</em><em>#include &lt;hpx/lcos/future.hpp&gt;</em><em>#include &lt;hpx/allocator_support/allocator_deleter.hpp&gt;</em><em>#include &lt;hpx/allocator_support/internal_allocator.hpp&gt;</em><em>#include &lt;hpx/assertion.hpp&gt;</em><em>#include &lt;hpx/concepts/concepts.hpp&gt;</em><em>#include &lt;hpx/errors.hpp&gt;</em><em>#include &lt;hpx/functional/invoke.hpp&gt;</em><em>#include &lt;hpx/functional/traits/is_callable.hpp&gt;</em><em>#include &lt;hpx/lcos/detail/future_data.hpp&gt;</em><em>#include &lt;hpx/coroutines/detail/get_stack_pointer.hpp&gt;</em><em>#include &lt;hpx/functional/bind.hpp&gt;</em><em>#include &lt;hpx/functional/unique_function.hpp&gt;</em><em>#include &lt;hpx/synchronization/condition_variable.hpp&gt;</em><em>#include &lt;hpx/synchronization/spinlock.hpp&gt;</em><em>#include &lt;hpx/memory/intrusive_ptr.hpp&gt;</em><em>#include &lt;hpx/runtime/launch_policy.hpp&gt;</em><em>#include &lt;hpx/coroutines/thread_enums.hpp&gt;</em><em>#include &lt;hpx/serialization/serialization_fwd.hpp&gt;</em><em>#include &lt;type_traits&gt;</em><em>#include &lt;utility&gt;</em><em>#include &lt;hpx/threading_base/thread_helpers.hpp&gt;</em><em>#include &lt;hpx/thread_support/assert_owns_lock.hpp&gt;</em><em>#include &lt;hpx/thread_support/atomic_count.hpp&gt;</em><em>#include &lt;hpx/timing/steady_clock.hpp&gt;</em><em>#include &lt;hpx/traits/future_access.hpp&gt;</em><em>#include &lt;hpx/traits/future_traits.hpp&gt;</em><em>#include &lt;hpx/traits/is_future.hpp&gt;</em><em>#include &lt;functional&gt;</em><em>#include &lt;vector&gt;</em><em>#include &lt;hpx/traits/get_remote_result.hpp&gt;</em><em>#include &lt;hpx/type_support/decay.hpp&gt;</em><em>#include &lt;hpx/type_support/unused.hpp&gt;</em><em>#include &lt;hpx/threading_base/annotated_function.hpp&gt;</em><em>#include &lt;boost/container/small_vector.hpp&gt;</em><em>#include &lt;atomic&gt;</em><em>#include &lt;chrono&gt;</em><em>#include &lt;cstddef&gt;</em><em>#include &lt;exception&gt;</em><em>#include &lt;memory&gt;</em><em>#include &lt;mutex&gt;</em><em>#include &lt;string&gt;</em><em>#include &lt;hpx/config/warnings_prefix.hpp&gt;</em><em>#include &lt;hpx/config/warnings_suffix.hpp&gt;</em><em>#include &lt;hpx/serialization/detail/polymorphic_nonintrusive_factory.hpp&gt;</em><em>#include &lt;hpx/traits/acquire_shared_state.hpp&gt;</em><em>#include &lt;hpx/iterator_support/traits/is_range.hpp&gt;</em><em>#include &lt;hpx/iterator_support/range.hpp&gt;</em><em>#include &lt;hpx/traits/is_future_range.hpp&gt;</em><em>#include &lt;hpx/util/detail/reserve.hpp&gt;</em><em>#include &lt;algorithm&gt;</em><em>#include &lt;iterator&gt;</em><em>#include &lt;hpx/traits/future_then_result.hpp&gt;</em><em>#include &lt;hpx/functional/result_of.hpp&gt;</em><em>#include &lt;hpx/type_support/always_void.hpp&gt;</em><em>#include &lt;hpx/type_support/identity.hpp&gt;</em><em>#include &lt;hpx/type_support/lazy_conditional.hpp&gt;</em><em>#include &lt;hpx/util/serialize_exception.hpp&gt;</em><em>#include &lt;hpx/lcos/local/packaged_continuation.hpp&gt;</em><em>#include &lt;hpx/lcos/future_exec.hpp&gt;</em><em>#include &lt;hpx/traits/future_then_result_exec.hpp&gt;</em><em>#include &lt;hpx/execution/traits/is_executor.hpp&gt;</em><em>#include &lt;hpx/type_support/pack.hpp&gt;</em><em>#include &lt;hpx/traits/is_launch_policy.hpp&gt;</em><em>#include &lt;hpx/execution/traits/executor_traits.hpp&gt;</em><em>#include &lt;hpx/threading_base/thread_description.hpp&gt;</em><em>#include &lt;hpx/execution/executors/execution.hpp&gt;</em><em>#include &lt;hpx/execution/detail/post_policy_dispatch.hpp&gt;</em><em>#include &lt;hpx/runtime/naming/id_type.hpp&gt;</em><em>#include &lt;hpx/runtime/naming_fwd.hpp&gt;</em><em>#include &lt;hpx/naming_base.hpp&gt;</em><em>#include &lt;hpx/runtime/agas_fwd.hpp&gt;</em><em>#include &lt;hpx/functional/function.hpp&gt;</em><em>#include &lt;hpx/runtime_configuration/agas_service_mode.hpp&gt;</em><em>#include &lt;cstdint&gt;</em><em>#include &lt;iosfwd&gt;</em><em>#include &lt;hpx/traits/is_component.hpp&gt;</em><em>#include &lt;hpx/components/component_storage/server/migrate_from_storage.hpp&gt;</em></dd></dl>
 
 <dl class="file">
 <dt>
@@ -3185,11 +2891,6 @@ API in terms of our build system are the <code class="docutils literal notransla
 <dt>
 <span class="target" id="hpx__suspend_8hpp"></span><em>file</em> <code class="sig-name descname">hpx_suspend.hpp</code></dt>
 <dd><em>#include &lt;hpx/errors.hpp&gt;</em></dd></dl>
-
-<dl class="file">
-<dt>
-<span class="target" id="task__block_8hpp"></span><em>file</em> <code class="sig-name descname">task_block.hpp</code></dt>
-<dd><em>#include &lt;hpx/config.hpp&gt;</em><em>#include &lt;hpx/errors.hpp&gt;</em><em>#include &lt;hpx/functional/bind.hpp&gt;</em><em>#include &lt;hpx/functional/bind_back.hpp&gt;</em><em>#include &lt;hpx/async/dataflow.hpp&gt;</em><em>#include &lt;hpx/lcos/future.hpp&gt;</em><em>#include &lt;hpx/synchronization/spinlock.hpp&gt;</em><em>#include &lt;hpx/async_combinators/when_all.hpp&gt;</em><em>#include &lt;hpx/traits/is_future.hpp&gt;</em><em>#include &lt;hpx/type_support/decay.hpp&gt;</em><em>#include &lt;hpx/execution/exception_list.hpp&gt;</em><em>#include &lt;hpx/execution/execution_policy.hpp&gt;</em><em>#include &lt;hpx/execution/executors/execution.hpp&gt;</em><em>#include &lt;hpx/parallel/util/detail/algorithm_result.hpp&gt;</em><em>#include &lt;memory&gt;</em><em>#include &lt;exception&gt;</em><em>#include &lt;mutex&gt;</em><em>#include &lt;type_traits&gt;</em><em>#include &lt;utility&gt;</em><em>#include &lt;vector&gt;</em></dd></dl>
 
 <dl class="file">
 <dt>
@@ -3614,12 +3315,12 @@ API in terms of our build system are the <code class="docutils literal notransla
 
 <dl class="dir">
 <dt>
-<span class="target" id="dir_8a539f9d9bd259566146dab760e43903"></span><em>dir</em> <code class="sig-name descname">/hpx/source/components/component_storage/include/hpx/components</code></dt>
+<span class="target" id="dir_045ed2bd62f88f008d73662f4657a02c"></span><em>dir</em> <code class="sig-name descname">/hpx/source/hpx/runtime/components</code></dt>
 <dd></dd></dl>
 
 <dl class="dir">
 <dt>
-<span class="target" id="dir_045ed2bd62f88f008d73662f4657a02c"></span><em>dir</em> <code class="sig-name descname">/hpx/source/hpx/runtime/components</code></dt>
+<span class="target" id="dir_8a539f9d9bd259566146dab760e43903"></span><em>dir</em> <code class="sig-name descname">/hpx/source/components/component_storage/include/hpx/components</code></dt>
 <dd></dd></dl>
 
 <dl class="dir">
@@ -3645,11 +3346,6 @@ API in terms of our build system are the <code class="docutils literal notransla
 <dl class="dir">
 <dt>
 <span class="target" id="dir_03865437766581d160dfc8ecb2cc5222"></span><em>dir</em> <code class="sig-name descname">/hpx/source/hpx/runtime/naming</code></dt>
-<dd></dd></dl>
-
-<dl class="dir">
-<dt>
-<span class="target" id="dir_de9d14669705d811b77110b2aaeb0cca"></span><em>dir</em> <code class="sig-name descname">/hpx/source/hpx/parallel</code></dt>
 <dd></dd></dl>
 
 <dl class="dir">
@@ -3773,7 +3469,7 @@ API in terms of our build system are the <code class="docutils literal notransla
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>76a0982</code>.
+          Revision <code>3df4e44</code>.
         </span>
       
 

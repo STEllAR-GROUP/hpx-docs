@@ -198,10 +198,10 @@
   <div class="section" id="asynchronous-execution-with-hpx-async-and-actions-fibonacci">
 <span id="examples-fibonacci"></span><h1>Asynchronous execution with <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> and actions: Fibonacci<a class="headerlink" href="#asynchronous-execution-with-hpx-async-and-actions-fibonacci" title="Permalink to this headline">¶</a></h1>
 <p>This example extends the <a class="reference internal" href="fibonacci_local.html#examples-fibonacci-local"><span class="std std-ref">previous example</span></a> by
-introducing <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">actions</span></a>: functions that can be run remotely. In this
+introducing <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">actions</span></a>: functions that can be run remotely. In this
 example, however, we will still only run the action locally. The mechanism to
-execute <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">actions</span></a> stays the same: <a class="reference internal" href="../libs/async/api.html#_CPPv4I00DpEN3hpx5asyncEDaRR1FDpRR2Ts" title="hpx::async"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async</span></code></a>. Later
-examples will demonstrate running actions on remote <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">localities</span></a>
+execute <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">actions</span></a> stays the same: <a class="reference internal" href="../libs/async/api.html#_CPPv4I00DpEN3hpx5asyncEDaRR1FDpRR2Ts" title="hpx::async"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async</span></code></a>. Later
+examples will demonstrate running actions on remote <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">localities</span></a>
 (e.g. <a class="reference internal" href="hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions: Hello world</span></a>).</p>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
@@ -261,7 +261,7 @@ elapsed time: 0.233827 [s]
 invokes <code class="docutils literal notranslate"><span class="pre">hpx_main()</span></code> as the first <em>HPX</em>-thread. The command line option
 <code class="docutils literal notranslate"><span class="pre">--n-value</span></code> is read in, a timer
 (<a class="reference internal" href="../libs/timing/api.html#_CPPv4N3hpx4util21high_resolution_timerE" title="hpx::util::high_resolution_timer"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::high_resolution_timer</span></code></a>) is set up to record the time it
-takes to do the computation, the <code class="docutils literal notranslate"><span class="pre">fibonacci</span></code> <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> is invoked
+takes to do the computation, the <code class="docutils literal notranslate"><span class="pre">fibonacci</span></code> <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> is invoked
 synchronously, and the answer is printed out.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//[fib_hpx_main</span>
 <span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">variables_map</span><span class="o">&amp;</span> <span class="n">vm</span><span class="p">)</span>
@@ -285,15 +285,15 @@ synchronously, and the answer is printed out.</p>
 </pre></div>
 </div>
 <p>Upon a closer look we see that we’ve created a <code class="docutils literal notranslate"><span class="pre">std::uint64_t</span></code> to store the
-result of invoking our <code class="docutils literal notranslate"><span class="pre">fibonacci_action</span></code> <code class="docutils literal notranslate"><span class="pre">fib</span></code>. This <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> will
-launch synchronously (as the work done inside of the <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> will be
+result of invoking our <code class="docutils literal notranslate"><span class="pre">fibonacci_action</span></code> <code class="docutils literal notranslate"><span class="pre">fib</span></code>. This <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> will
+launch synchronously (as the work done inside of the <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> will be
 asynchronous itself) and return the result of the Fibonacci sequence. But wait,
-what is an <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a>? And what is this <code class="docutils literal notranslate"><span class="pre">fibonacci_action</span></code>? For starters,
-an <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> is a wrapper for a function. By wrapping functions, <em>HPX</em> can
+what is an <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a>? And what is this <code class="docutils literal notranslate"><span class="pre">fibonacci_action</span></code>? For starters,
+an <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> is a wrapper for a function. By wrapping functions, <em>HPX</em> can
 send packets of work to different processing units. These vehicles allow users
 to calculate work now, later, or on certain nodes. The first argument to our
-<a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> is the location where the <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> should be run. In this
-case, we just want to run the <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> on the machine that we are
+<a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> is the location where the <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> should be run. In this
+case, we just want to run the <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> on the machine that we are
 currently on, so we use <a class="reference internal" href="../api.html#_CPPv4N3hpx9find_hereER10error_code" title="hpx::find_here"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_here</span></code></a>. To
 further understand this we turn to the code to find where <code class="docutils literal notranslate"><span class="pre">fibonacci_action</span></code>
 was defined:</p>
@@ -305,16 +305,16 @@ was defined:</p>
 <span class="c1">// invocation to work.</span>
 </pre></div>
 </div>
-<p>A plain <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> is the most basic form of <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a>. Plain
-<a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a>s wrap simple global functions which are not associated with any
-particular object (we will discuss other types of <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a>s in
+<p>A plain <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> is the most basic form of <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a>. Plain
+<a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a>s wrap simple global functions which are not associated with any
+particular object (we will discuss other types of <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a>s in
 <a class="reference internal" href="accumulator.html#examples-accumulator"><span class="std std-ref">Components and actions: Accumulator</span></a>). In this block of code the function <code class="docutils literal notranslate"><span class="pre">fibonacci()</span></code>
-is declared. After the declaration, the function is wrapped in an <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a>
+is declared. After the declaration, the function is wrapped in an <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a>
 in the declaration <a class="reference internal" href="../api.html#c.HPX_PLAIN_ACTION" title="HPX_PLAIN_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_PLAIN_ACTION</span></code></a>. This function takes two
 arguments: the name of the function that is to be wrapped and the name of the
-<a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> that you are creating.</p>
+<a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> that you are creating.</p>
 <p>This picture should now start making sense. The function <code class="docutils literal notranslate"><span class="pre">fibonacci()</span></code> is
-wrapped in an <a class="reference internal" href="../terminology.html#term-action"><span class="xref std std-term">action</span></a> <code class="docutils literal notranslate"><span class="pre">fibonacci_action</span></code>, which was run synchronously
+wrapped in an <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">action</span></a> <code class="docutils literal notranslate"><span class="pre">fibonacci_action</span></code>, which was run synchronously
 but created asynchronous work, then returns a <code class="docutils literal notranslate"><span class="pre">std::uint64_t</span></code> representing the
 result of the function <code class="docutils literal notranslate"><span class="pre">fibonacci()</span></code>. Now, let’s look at the function
 <code class="docutils literal notranslate"><span class="pre">fibonacci()</span></code>:</p>
@@ -383,7 +383,7 @@ producing the n-th value of the Fibonacci sequence.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>24cbd3c</code>.
+          Revision <code>df09a1a</code>.
         </span>
       
 

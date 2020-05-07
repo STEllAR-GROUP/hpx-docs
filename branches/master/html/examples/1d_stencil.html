@@ -387,11 +387,11 @@ example 4 is to example 2.</p>
 <p>Example 4 finally shows good results. This code scales equivalently to the
 OpenMP version. While these results are promising, there are more opportunities
 to improve the application’s scalability. Currently, this code only runs on one
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>, but to get the full benefit of <em>HPX</em>, we need to be able to
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>, but to get the full benefit of <em>HPX</em>, we need to be able to
 distribute the work to other machines in a cluster. We begin to add this
 functionality in example 5.</p>
 <p>In order to run on a distributed system, a large amount of boilerplate code must
-be added. Fortunately, <em>HPX</em> provides us with the concept of a <a class="reference internal" href="../terminology.html#term-component"><span class="xref std std-term">component</span></a>,
+be added. Fortunately, <em>HPX</em> provides us with the concept of a <a class="reference internal" href="../terminology.html#term-Component"><span class="xref std std-term">component</span></a>,
 which saves us from having to write quite as much code. A component is an object
 that can be remotely accessed using its global address. Components are made of
 two parts: a server and a client class. While the client class is not required,
@@ -422,13 +422,13 @@ to the data in the current and surrounding partitions by calling <code class="do
 on each respective partition. When these futures are ready, dataflow passes them
 to the <code class="docutils literal notranslate"><span class="pre">unwrapping</span></code> function, which extracts the shared_array of doubles and
 passes them to the lambda. The lambda calls <code class="docutils literal notranslate"><span class="pre">heat_part_data</span></code> on the
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>, which the middle partition is on.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>, which the middle partition is on.</p>
 <p>Although this example could run distributed, it only runs on one
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>, as it always uses <code class="docutils literal notranslate"><span class="pre">hpx::find_here()</span></code> as the target for the
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>, as it always uses <code class="docutils literal notranslate"><span class="pre">hpx::find_here()</span></code> as the target for the
 functions to run on.</p>
 <p>In example 6, we begin to distribute the partition data on different nodes. This
 is accomplished in <code class="docutils literal notranslate"><span class="pre">stepper::do_work()</span></code> by passing the GID of the
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> where we wish to create the partition to the partition
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> where we wish to create the partition to the partition
 constructor.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// Initial conditions: f(0, i) = i</span>
     <span class="c1">//[do_work_6</span>
@@ -436,8 +436,8 @@ constructor.</p>
 </div>
 <p>We distribute the partitions evenly based on the number of localities used,
 which is described in the function <code class="docutils literal notranslate"><span class="pre">locidx</span></code>. Because some of the data needed
-to update the partition in <code class="docutils literal notranslate"><span class="pre">heat_part</span></code> could now be on a new <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>,
-we must devise a way of moving data to the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> of the middle
+to update the partition in <code class="docutils literal notranslate"><span class="pre">heat_part</span></code> could now be on a new <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>,
+we must devise a way of moving data to the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> of the middle
 partition. We accomplished this by adding a switch in the function
 <code class="docutils literal notranslate"><span class="pre">get_data()</span></code> that returns the end element of the <code class="docutils literal notranslate"><span class="pre">buffer</span> <span class="pre">data_</span></code> if it is
 from the left partition or the first element of the buffer if the data is from
@@ -509,20 +509,20 @@ This algorithmic change, which was implemented in example 7, can be seen below:<
 <p>Example 8 completes the futurization process and utilizes the full potential of
 <em>HPX</em> by distributing the program flow to multiple localities, usually defined as
 nodes in a cluster. It accomplishes this task by running an instance of <em>HPX</em> main
-on each <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. In order to coordinate the execution of the program,
+on each <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. In order to coordinate the execution of the program,
 the <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">stepper</span></code> is wrapped into a component. In this way, each
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> contains an instance of stepper that executes its own instance
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> contains an instance of stepper that executes its own instance
 of the function <code class="docutils literal notranslate"><span class="pre">do_work()</span></code>. This scheme does create an interesting
 synchronization problem that must be solved. When the program flow was being
 coordinated on the head node, the GID of each component was known. However, when
 we distribute the program flow, each partition has no notion of the GID of its
-neighbor if the next partition is on another <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. In order to make
+neighbor if the next partition is on another <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. In order to make
 the GIDs of neighboring partitions visible to each other, we created two buffers
 to store the GIDs of the remote neighboring partitions on the left and right
 respectively. These buffers are filled by sending the GID of newly created
 edge partitions to the right and left buffers of the neighboring localities.</p>
 <p>In order to finish the simulation, the solution vectors named <code class="docutils literal notranslate"><span class="pre">result</span></code> are then
-gathered together on <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> 0 and added into a vector of spaces
+gathered together on <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> 0 and added into a vector of spaces
 <code class="docutils literal notranslate"><span class="pre">overall_result</span></code> using the <em>HPX</em> functions <code class="docutils literal notranslate"><span class="pre">gather_id</span></code> and <code class="docutils literal notranslate"><span class="pre">gather_here</span></code>.</p>
 <p>Example 8 completes this example series, which takes the serial code of example 1
 and incrementally morphs it into a fully distributed parallel code. This
@@ -560,7 +560,7 @@ facilitates the scalable parallelization of most applications.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>24cbd3c</code>.
+          Revision <code>df09a1a</code>.
         </span>
       
 

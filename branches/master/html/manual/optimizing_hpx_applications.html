@@ -241,8 +241,8 @@ read the counter data, and release instances of Performance Counters.
 Performance Counter instances are accessed by name, and these names have a
 predefined structure which is described in the section
 <a class="reference internal" href="#performance-counter-names"><span class="std std-ref">Performance counter names</span></a>. The advantage of this is that any Performance
-Counter can be accessed remotely (from a different <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>) or locally
-(from the same <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>). Moreover, since all counters expose their data
+Counter can be accessed remotely (from a different <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>) or locally
+(from the same <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>). Moreover, since all counters expose their data
 using the same API, any code consuming counter data can be utilized to access
 arbitrary system information with minimal effort.</p>
 <p>Counter data may be accessed in real time. More information about how to consume
@@ -283,13 +283,13 @@ index is not specified <em>HPX</em> will assume a default of <code class="docuti
 </pre></div>
 </div>
 <p>This counter returns the current cumulative number of executed (retired)
-<em>HPX</em>-threads for the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> <code class="docutils literal notranslate"><span class="pre">0</span></code>. The counter type of this counter
+<em>HPX</em>-threads for the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> <code class="docutils literal notranslate"><span class="pre">0</span></code>. The counter type of this counter
 is <code class="docutils literal notranslate"><span class="pre">/threads/count/cumulative</span></code> and the full instance name is
 <code class="docutils literal notranslate"><span class="pre">locality#0/total</span></code>. This counter type does not require an <code class="docutils literal notranslate"><span class="pre">instanceindex</span></code> or
 <code class="docutils literal notranslate"><span class="pre">parameters</span></code> to be specified.</p>
-<p>In this case, the <code class="docutils literal notranslate"><span class="pre">parentindex</span></code> (the <code class="docutils literal notranslate"><span class="pre">'0'</span></code>) designates the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>
+<p>In this case, the <code class="docutils literal notranslate"><span class="pre">parentindex</span></code> (the <code class="docutils literal notranslate"><span class="pre">'0'</span></code>) designates the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>
 for which the counter instance is created. The counter will return the number of
-<em>HPX</em>-threads retired on that particular <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<em>HPX</em>-threads retired on that particular <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p>Another example for a well formed (aggregate) counter name is:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/statistics{/threads{locality#0/total}/count/cumulative}/average@500
 </pre></div>
@@ -344,11 +344,11 @@ usually are not required as sensible defaults will be chosen. Please refer to
 the documentation of a particular counter for more information about what
 parameters are supported, how to specify them, and what default values are
 assumed (see also <a class="reference internal" href="#counters"><span class="std std-ref">Existing HPX performance counters</span></a>).</p>
-<p>Every <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> of an application exposes its own set of Performance
+<p>Every <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> of an application exposes its own set of Performance
 Counter types and Performance Counter instances. The set of exposed counters is
 determined dynamically at application start based on the execution environment
 of the application. For instance, this set is influenced by the current hardware
-environment for the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (such as whether the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> has
+environment for the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (such as whether the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> has
 access to accelerators), and the software environment of the application (such
 as the number of OS-threads used to execute <em>HPX</em>-threads).</p>
 </div>
@@ -396,7 +396,7 @@ specified within the square brackets.</p></td>
 <td><p>Description</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">*</span></code></p></td>
-<td><p>This wildcard character matches any <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> or any thread,
+<td><p>This wildcard character matches any <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> or any thread,
 depending on whether it is used for <code class="docutils literal notranslate"><span class="pre">locality#*</span></code> or
 <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code>. No other wildcards are allowed in counter instance
 names.</p></td>
@@ -799,10 +799,10 @@ counter type:</p>
 </div>
 <p>Now it is possible to instantiate a new counter instance based on the naming
 scheme <code class="docutils literal notranslate"><span class="pre">&quot;/test{locality#*/total}/data&quot;</span></code> where <code class="docutils literal notranslate"><span class="pre">*</span></code> is a zero based integer
-index identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the counter instance should be
+index identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the counter instance should be
 accessed. The function
 <a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringE12counter_typeR10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a> enables to
-instantiate exactly one counter instance for each <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. Repeated
+instantiate exactly one counter instance for each <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. Repeated
 requests to instantiate such a counter will return the same instance, e.g. the
 instance created for the first request.</p>
 <p>If this counter needs to be accessed using the standard <em>HPX</em> command line
@@ -938,7 +938,7 @@ Counters. These counters expose critical information about different modules of
 the runtime system. They can help determine system bottlenecks and fine-tune
 system and application performance.</p>
 <table class="docutils align-default" id="id11">
-<caption><span class="caption-number">Table 39 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> performance counters</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 39 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> performance counters</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -968,19 +968,19 @@ system and application performance.</p>
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;</span></code> is the name of the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service to query.
+<p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;</span></code> is the name of the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service to query.
 Currently, this value will be <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> where <code class="docutils literal notranslate"><span class="pre">0</span></code> is the root
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (the id of the locality hosting the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (the id of the locality hosting the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
 service).</p>
-<p>The value for <code class="docutils literal notranslate"><span class="pre">*</span></code> can be any <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id for the following
+<p>The value for <code class="docutils literal notranslate"><span class="pre">*</span></code> can be any <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id for the following
 <code class="docutils literal notranslate"><span class="pre">&lt;agas_service&gt;</span></code>: <code class="docutils literal notranslate"><span class="pre">route</span></code>, <code class="docutils literal notranslate"><span class="pre">bind_gid</span></code>, <code class="docutils literal notranslate"><span class="pre">resolve_gid</span></code>,
 <code class="docutils literal notranslate"><span class="pre">unbind_gid</span></code>, <code class="docutils literal notranslate"><span class="pre">increment_credit</span></code>, <code class="docutils literal notranslate"><span class="pre">decrement_credit</span></code>, <code class="docutils literal notranslate"><span class="pre">bin</span></code>,
 <code class="docutils literal notranslate"><span class="pre">resolve</span></code>, <code class="docutils literal notranslate"><span class="pre">unbind</span></code>, and <code class="docutils literal notranslate"><span class="pre">iterate_names</span></code> (only the primary and
-symbol <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service components live on all localities, whereas
-all other <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> services are available on <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> only).</p>
+symbol <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service components live on all localities, whereas
+all other <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> services are available on <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> only).</p>
 </td>
 <td><p>None</p></td>
-<td><p>Returns the total number of invocations of the specified <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
+<td><p>Returns the total number of invocations of the specified <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
 service since its creation.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/agas/&lt;agas_service_category&gt;/count</span></code></p>
@@ -992,18 +992,18 @@ service since its creation.</p></td>
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;</span></code> is the name of the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service to query.
+<p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;</span></code> is the name of the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service to query.
 Currently, this value will be <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> where <code class="docutils literal notranslate"><span class="pre">0</span></code> is the root
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (the id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> hosting the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (the id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> hosting the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
 service). Except for <code class="docutils literal notranslate"><span class="pre">&lt;agas_service_category&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">primary</span></code> or
-<code class="docutils literal notranslate"><span class="pre">symbol</span></code> for which the value for <code class="docutils literal notranslate"><span class="pre">*</span></code> can be any <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id
-(only the primary and symbol <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service components live on all
-localities, whereas all other <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> services are available on
+<code class="docutils literal notranslate"><span class="pre">symbol</span></code> for which the value for <code class="docutils literal notranslate"><span class="pre">*</span></code> can be any <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id
+(only the primary and symbol <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service components live on all
+localities, whereas all other <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> services are available on
 <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> only).</p>
 </td>
 <td><p>None</p></td>
-<td><p>Returns the overall total number of invocations of all <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
-services provided by the given <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service category since its
+<td><p>Returns the overall total number of invocations of all <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
+services provided by the given <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service category since its
 creation.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">agas/time/&lt;agas_service&gt;</span></code></p>
@@ -1023,19 +1023,19 @@ creation.</p></td>
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;</span></code> is the name of the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service to query.
+<p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;</span></code> is the name of the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service to query.
 Currently, this value will be <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> where <code class="docutils literal notranslate"><span class="pre">0</span></code> is the root
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (the id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> hosting the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (the id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> hosting the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
 service).</p>
-<p>The value for <code class="docutils literal notranslate"><span class="pre">*</span></code> can be any <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id for the following
+<p>The value for <code class="docutils literal notranslate"><span class="pre">*</span></code> can be any <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id for the following
 <code class="docutils literal notranslate"><span class="pre">&lt;agas_service&gt;</span></code>: <code class="docutils literal notranslate"><span class="pre">route</span></code>, <code class="docutils literal notranslate"><span class="pre">bind_gid</span></code>, <code class="docutils literal notranslate"><span class="pre">resolve_gid</span></code>,
 <code class="docutils literal notranslate"><span class="pre">unbind_gid</span></code>, <code class="docutils literal notranslate"><span class="pre">increment_credit</span></code>, <code class="docutils literal notranslate"><span class="pre">decrement_credit</span></code>, <code class="docutils literal notranslate"><span class="pre">bin</span></code>,
 <code class="docutils literal notranslate"><span class="pre">resolve</span></code>, <code class="docutils literal notranslate"><span class="pre">unbind</span></code>, and <code class="docutils literal notranslate"><span class="pre">iterate_names</span></code> (only the primary and
-symbol <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service components live on all localities, whereas
-all other <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> services are available on <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> only).</p>
+symbol <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service components live on all localities, whereas
+all other <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> services are available on <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> only).</p>
 </td>
 <td><p>None</p></td>
-<td><p>Returns the overall execution time of the specified <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service
+<td><p>Returns the overall execution time of the specified <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service
 since its creation (in nanoseconds).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/agas/&lt;agas_service_category&gt;/time</span></code></p>
@@ -1045,30 +1045,30 @@ since its creation (in nanoseconds).</p></td>
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;</span></code> is the name of the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service to query.
+<p><code class="docutils literal notranslate"><span class="pre">&lt;agas_instance&gt;</span></code> is the name of the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service to query.
 Currently, this value will be <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> where <code class="docutils literal notranslate"><span class="pre">0</span></code> is the root
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (the id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> hosting the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (the id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> hosting the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
 service). Except for <code class="docutils literal notranslate"><span class="pre">&lt;agas_service_category</span></code> <code class="docutils literal notranslate"><span class="pre">primary</span></code> or <code class="docutils literal notranslate"><span class="pre">symbol</span></code>
-for which the value for <code class="docutils literal notranslate"><span class="pre">*</span></code> can be any <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (only the
-primary and symbol <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service components live on all
-localities, whereas all other <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> services are available on
+for which the value for <code class="docutils literal notranslate"><span class="pre">*</span></code> can be any <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (only the
+primary and symbol <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service components live on all
+localities, whereas all other <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> services are available on
 <code class="docutils literal notranslate"><span class="pre">locality#0</span></code> only).</p>
 </td>
 <td><p>None</p></td>
-<td><p>Returns the overall execution time of all <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> services provided
-by the given <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service category since its creation (in
+<td><p>Returns the overall execution time of all <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> services provided
+by the given <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service category since its creation (in
 nanoseconds).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/agas/count/entries</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
-cache should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
+cache should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>None</p></td>
-<td><p>Returns the number of cache entries resident in the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> cache of
-the specified <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (see <code class="docutils literal notranslate"><span class="pre">&lt;cache_statistics&gt;</span></code>).</p></td>
+<td><p>Returns the number of cache entries resident in the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> cache of
+the specified <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (see <code class="docutils literal notranslate"><span class="pre">&lt;cache_statistics&gt;</span></code>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/agas/count/&lt;cache_statistics&gt;</span></code></p>
 <p>where:</p>
@@ -1077,13 +1077,13 @@ the specified <a class="reference internal" href="../terminology.html#term-local
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
-cache should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
+cache should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>None</p></td>
 <td><p>Returns the number of cache events (evictions, hits, inserts, and misses)
-in the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> cache of the specified <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (see
+in the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> cache of the specified <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (see
 <code class="docutils literal notranslate"><span class="pre">&lt;cache_statistics&gt;</span></code>).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/agas/count/&lt;full_cache_statistics&gt;</span></code></p>
@@ -1093,13 +1093,13 @@ in the <a class="reference internal" href="../terminology.html#term-agas"><span 
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
-cache should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
+cache should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>None</p></td>
 <td><p>Returns the number of invocations of the specified cache API function of
-the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> cache.</p></td>
+the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> cache.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/agas/time/&lt;full_cache_statistics&gt;</span></code></p>
 <p>where:</p>
@@ -1109,18 +1109,18 @@ the <a class="reference internal" href="../terminology.html#term-agas"><span cla
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
-cache should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
+cache should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>None</p></td>
 <td><p>Returns the overall time spent executing of the specified API function of
-the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> cache.</p></td>
+the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> cache.</p></td>
 </tr>
 </tbody>
 </table>
 <table class="docutils align-default" id="id12">
-<caption><span class="caption-number">Table 40 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">Parcel</span></a> layer performance counters</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 40 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">Parcel</span></a> layer performance counters</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -1140,9 +1140,9 @@ the <a class="reference internal" href="../terminology.html#term-agas"><span cla
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the overall
-number of transmitted bytes should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>
-id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the overall
+number of transmitted bytes should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>
+id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall number of raw (uncompressed) bytes sent or received
 (see <code class="docutils literal notranslate"><span class="pre">&lt;operation</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">en</span></code> or <code class="docutils literal notranslate"><span class="pre">eceived</span></code>) for the specified
@@ -1163,14 +1163,14 @@ the corresponding cmake configuration constant is
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the total
-transmission time should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a
-(zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the total
+transmission time should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a
+(zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the total time (in nanoseconds) between the start of each
 asynchronous transmission operation and the end of the corresponding
 operation for the specified <code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> the given
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (see <code class="docutils literal notranslate"><span class="pre">&lt;operation</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">en</span></code> or <code class="docutils literal notranslate"><span class="pre">eceived</span></code>).</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (see <code class="docutils literal notranslate"><span class="pre">&lt;operation</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">en</span></code> or <code class="docutils literal notranslate"><span class="pre">eceived</span></code>).</p>
 <p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
 only if the compile time constant <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_PARCELPORT_MPI</span></code> was defined
 while compiling the <em>HPX</em> core library (which is not defined by default,
@@ -1187,13 +1187,13 @@ the corresponding cmake configuration constant is
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the overall
-number of transmitted bytes should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>
-id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the overall
+number of transmitted bytes should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>
+id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall number of bytes transferred (see <code class="docutils literal notranslate"><span class="pre">&lt;operation&gt;</span></code>,
 e.g. <code class="docutils literal notranslate"><span class="pre">sent</span></code> or <code class="docutils literal notranslate"><span class="pre">received</span></code> possibly compressed) for the specified
-<code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> by the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> by the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
 only if the compile time constant <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_PARCELPORT_MPI</span></code> was defined
 while compiling the <em>HPX</em> core library (which is not defined by default,
@@ -1213,12 +1213,12 @@ bytes transmitted for the given action only.</p></td>
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the
-serialization time should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a
-(zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the
+serialization time should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a
+(zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall time spent performing outgoing data serialization for
-the specified <code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (see
+the specified <code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (see
 <code class="docutils literal notranslate"><span class="pre">&lt;operation</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">sent</span></code> or <code class="docutils literal notranslate"><span class="pre">received</span></code>).</p>
 <p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
 only if the compile time constant <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_PARCELPORT_MPI</span></code> was defined
@@ -1235,18 +1235,18 @@ time for the given action only.</p></td>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/parcels/count/routed</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-routed parcels should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+routed parcels should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall number of routed (outbound) parcels transferred by
-the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p>Routed parcels are those which cannot directly be delivered to its
-destination as the local <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> is not able to resolve the
-destination address. In this case a parcel is sent to the <a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a>
+destination as the local <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> is not able to resolve the
+destination address. In this case a parcel is sent to the <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
 service component which is responsible for creating the destination GID
 (and is responsible for resolving the destination address). This
-<a class="reference internal" href="../terminology.html#term-agas"><span class="xref std std-term">AGAS</span></a> service component will deliver the parcel to its final
+<a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> service component will deliver the parcel to its final
 target.</p>
 </td>
 <td><p>If the configure-time option <code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_PARCELPORT_ACTION_COUNTERS=On</span></code>
@@ -1261,12 +1261,12 @@ parcels for the given action only.</p></td>
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-parcels should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+parcels should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall number of parcels transferred using the specified
-<code class="docutils literal notranslate"><span class="pre">&lt;connection_type</span></code> by the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (see <code class="docutils literal notranslate"><span class="pre">operation&gt;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&lt;connection_type</span></code> by the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (see <code class="docutils literal notranslate"><span class="pre">operation&gt;</span></code>,
 e.g. <code class="docutils literal notranslate"><span class="pre">sent</span></code> or <code class="docutils literal notranslate"><span class="pre">received</span></code>.</p>
 <p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
 only if the compile time constant <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_PARCELPORT_MPI</span></code> was defined
@@ -1284,12 +1284,12 @@ the corresponding cmake configuration constant is
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-messages should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+messages should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall number of messages <a class="footnote-reference brackets" href="#id7" id="id6">1</a> transferred using the
-specified <code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> by the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (see
+specified <code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> by the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (see
 <code class="docutils literal notranslate"><span class="pre">&lt;operation</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">sent</span></code> or <code class="docutils literal notranslate"><span class="pre">received</span></code>)</p>
 <p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
 only if the compile time constant <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_PARCELPORT_MPI</span></code> was defined
@@ -1308,13 +1308,13 @@ the corresponding cmake configuration constant is
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-messages should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+messages should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall number cache events (evictions, hits, inserts,
 misses, and reclaims) for the connection cache of the given connection
-type on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (see <code class="docutils literal notranslate"><span class="pre">&lt;cache_statistics</span></code>, e.g.
+type on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (see <code class="docutils literal notranslate"><span class="pre">&lt;cache_statistics</span></code>, e.g.
 <code class="docutils literal notranslate"><span class="pre">ache/insertions</span></code>, <code class="docutils literal notranslate"><span class="pre">cache/evictions</span></code>, <code class="docutils literal notranslate"><span class="pre">cache/hits</span></code>,
 <code class="docutils literal notranslate"><span class="pre">cache/misses</span></code> or``cache/reclaims``.</p>
 <p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
@@ -1332,11 +1332,11 @@ the corresponding cmake configuration constant is
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> queue
-should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> queue
+should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
-<td><p>Returns the current number of parcels stored in the <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> queue (see
+<td><p>Returns the current number of parcels stored in the <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> queue (see
 <code class="docutils literal notranslate"><span class="pre">&lt;operation</span></code> for which queue to query, e.g. <code class="docutils literal notranslate"><span class="pre">sent</span></code> or <code class="docutils literal notranslate"><span class="pre">received</span></code>).</p></td>
 <td><p>None</p></td>
 </tr>
@@ -1361,10 +1361,10 @@ identifying the <a class="reference internal" href="../terminology.html#term-loc
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the overall
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the overall
 number of retired <em>HPX</em>-threads should be queried for. The
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
-the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
+the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the</dt><dd><p>idle-loop counter should be queried for.</p>
 </dd>
@@ -1378,9 +1378,9 @@ to the ‘default’ pool.</p>
 </dl>
 </td>
 <td><p>Returns the overall number of executed (retired) <em>HPX</em>-threads on the
-given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name is
+given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name is
 <code class="docutils literal notranslate"><span class="pre">total</span></code> the counter returns the accumulated number of retired
-<em>HPX</em>-threads for all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If
+<em>HPX</em>-threads for all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If
 the instance name is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter will return the
 overall number of retired <em>HPX</em>-threads for all worker threads
 separately. This counter is available only if the configuration time
@@ -1393,10 +1393,10 @@ constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_T
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the average
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the average
 time spent executing one <em>HPX</em>-thread should be queried for. The
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
-the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
+the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the average
@@ -1408,9 +1408,9 @@ specified on the command line for the application using the option
 to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the average time spent executing one <em>HPX</em>-thread on the given
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code>
 the counter returns the average time spent executing one <em>HPX</em>-thread for
-all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance name
+all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance name
 is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter will return the average time spent
 executing one <em>HPX</em>-thread for all worker threads separately. This counter
 is available only if the configuration time constants
@@ -1424,10 +1424,10 @@ of measure for this counter is nanosecond [ns].</p></td>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the average
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the average
 overhead spent executing one <em>HPX</em>-thread should be queried for. The
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
-the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
+the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the average
@@ -1439,10 +1439,10 @@ option <a class="reference internal" href="launching_and_configuring_hpx_applica
 refers to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the average time spent on overhead while executing one
-<em>HPX</em>-thread on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start. If
+<em>HPX</em>-thread on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start. If
 the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code> the counter returns the average time spent
 on overhead while executing one <em>HPX</em>-thread for all worker threads
-(cores) on that <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance name is
+(cores) on that <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance name is
 <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter will return the average time spent on
 overhead executing one <em>HPX</em>-thread for all worker threads separately.
 This counter is available only if the configuration time constants
@@ -1456,10 +1456,10 @@ unit of measure for this counter is nanosecond [ns].</p></td>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the overall
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the overall
 number of executed <em>HPX</em>-thread phases (invocations) should be queried
-for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the overall
@@ -1471,10 +1471,10 @@ using the option <a class="reference internal" href="launching_and_configuring_h
 the counter refers to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the overall number of executed <em>HPX</em>-thread phases (invocations)
-on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start. If the instance
+on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start. If the instance
 name is <code class="docutils literal notranslate"><span class="pre">total</span></code> the counter returns the accumulated number of executed
 <em>HPX</em>-thread phases (invocations) for all worker threads (cores) on that
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance name is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance name is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter
 will return the overall number of executed <em>HPX</em>-thread phases for all
 worker threads separately. This counter is available only if the
 configuration time constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_CUMULATIVE_COUNTS</span></code> is set
@@ -1487,10 +1487,10 @@ nanosecond [ns].</p></td>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the average
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the average
 time spent executing one <em>HPX</em>-thread phase (invocation) should be
-queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the average
@@ -1502,10 +1502,10 @@ option <a class="reference internal" href="launching_and_configuring_hpx_applica
 refers to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the average time spent executing one <em>HPX</em>-thread phase
-(invocation) on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start. If
+(invocation) on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start. If
 the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code> the counter returns the average time spent
 executing one <em>HPX</em>-thread phase (invocation) for all worker threads
-(cores) on that <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance name is
+(cores) on that <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance name is
 <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter will return the average time spent
 executing one <em>HPX</em>-thread phase for all worker threads separately. This
 counter is available only if the configuration time constants
@@ -1519,10 +1519,10 @@ unit of measure for this counter is nanosecond [ns].</p></td>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the average
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the average
 time overhead executing one <em>HPX</em>-thread phase (invocation) should be
-queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the average
@@ -1534,10 +1534,10 @@ using the option <a class="reference internal" href="launching_and_configuring_h
 the counter refers to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the average time spent on overhead executing one <em>HPX</em>-thread
-phase (invocation) on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start.
+phase (invocation) on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start.
 If the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code> the counter returns the average time
 spent on overhead while executing one <em>HPX</em>-thread phase (invocation) for
-all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance name
+all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance name
 is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter will return the average time spent on
 overhead executing one <em>HPX</em>-thread phase for all worker threads
 separately. This counter is available only if the configuration time
@@ -1551,10 +1551,10 @@ unit of measure for this counter is nanosecond [ns].</p></td>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the overall
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the overall
 time spent running the scheduler should be queried for. The
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
-the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
+the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the overall
@@ -1566,9 +1566,9 @@ specified on the command line for the application using the option
 to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the overall time spent running the scheduler on the given
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code>
 the counter returns the overall time spent running the scheduler for all
-worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance name is
+worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance name is
 <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter will return the overall time spent running
 the scheduler for all worker threads separately. This counter is available
 only if the configuration time constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_IDLE_RATES</span></code> is
@@ -1581,10 +1581,10 @@ nanosecond [ns].</p></td>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the overall
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the overall
 time spent executing all <em>HPX</em>-threads should be queried for. The
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
-the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
+the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the overall
@@ -1596,9 +1596,9 @@ specified on the command line for the application using the option
 to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the overall time spent executing all <em>HPX</em>-threads on the given
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code>
 the counter returns the overall time spent executing all <em>HPX</em>-threads for
-all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance name
+all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance name
 is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter will return the overall time spent
 executing all <em>HPX</em>-threads for all worker threads separately. This counter
 is available only if the configuration time constants
@@ -1611,10 +1611,10 @@ is available only if the configuration time constants
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the overall
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the overall
 overhead time incurred by executing all <em>HPX</em>-threads should be queried
-for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the the
@@ -1626,10 +1626,10 @@ application using the option <a class="reference internal" href="launching_and_c
 specified the counter refers to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the overall overhead time incurred executing all <em>HPX</em>-threads on
-the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name
+the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name
 is <code class="docutils literal notranslate"><span class="pre">total</span></code> the counter returns the overall overhead time incurred
 executing all <em>HPX</em>-threads for all worker threads (cores) on that
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance name is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance name is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter
 will return the overall overhead time incurred executing all
 <em>HPX</em>-threads for all worker threads separately. This counter is
 available only if the configuration time constants
@@ -1647,10 +1647,10 @@ The unit of measure for this counter is nanosecond [ns].</p></td>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the current
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the current
 number of threads with the given state should be queried for. The
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
-the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
+the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the current
@@ -1664,9 +1664,9 @@ to the ‘default’ pool.</p>
 converted to thread objects.</p>
 </td>
 <td><p>Returns the current number of <em>HPX</em>-threads having the given thread state
-on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code> the
+on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance name is <code class="docutils literal notranslate"><span class="pre">total</span></code> the
 counter returns the current number of <em>HPX</em>-threads of the given state
-for all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If the instance
+for all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If the instance
 name is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter will return the current number of
 <em>HPX</em>-threads in the given state for all worker threads separately.</p></td>
 <td><p>None</p></td>
@@ -1679,10 +1679,10 @@ name is <code class="docutils literal notranslate"><span class="pre">worker-thre
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the average
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the average
 wait time of <em>HPX</em>-threads (pending) or thread descriptions (staged) with
-the given state should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by
-<code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+the given state should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by
+<code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the average
@@ -1699,9 +1699,9 @@ queues.</p>
 </td>
 <td><p>Returns the average wait time of <em>HPX</em>-threads (if the thread state is
 <code class="docutils literal notranslate"><span class="pre">pending</span></code> or of task descriptions (if the thread state is <code class="docutils literal notranslate"><span class="pre">staged</span></code> on
-the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name
+the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> since application start. If the instance name
 is <code class="docutils literal notranslate"><span class="pre">total</span></code> the counter returns the wait time of <em>HPX</em>-threads of the
-given state for all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. If
+given state for all worker threads (cores) on that <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. If
 the instance name is <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> the counter will return the wait
 time of <em>HPX</em>-threads in the given state for all worker threads
 separately.</p>
@@ -1717,10 +1717,10 @@ nanosecond [ns].</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the average
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the average
 idle rate of all (or one) worker threads should be queried for. The
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
-the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a></p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying
+the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a></p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the averaged
@@ -1731,7 +1731,7 @@ the application using the option <a class="reference internal" href="launching_a
 is specified the counter refers to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the average idle rate for the given worker thread(s) on the given
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. The idle rate is defined as the ratio of the time spent
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. The idle rate is defined as the ratio of the time spent
 on scheduling and management tasks and the overall time spent executing
 work since the application started. This counter is available only if the
 configuration time constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_IDLE_RATES</span></code> is set to <code class="docutils literal notranslate"><span class="pre">ON</span></code>
@@ -1743,10 +1743,10 @@ configuration time constant <code class="docutils literal notranslate"><span cla
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the average
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the average
 creation idle rate of all (or one) worker threads should be queried for.
-The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the averaged
@@ -1757,7 +1757,7 @@ the application using the option <a class="reference internal" href="launching_a
 is specified the counter refers to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the average idle rate for the given worker thread(s) on the given
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> which is caused by creating new threads. The creation idle
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> which is caused by creating new threads. The creation idle
 rate is defined as the ratio of the time spent on creating new threads and
 the overall time spent executing work since the application started. This
 counter is available only if the configuration time constants
@@ -1770,10 +1770,10 @@ counter is available only if the configuration time constants
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the average
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the average
 cleanup idle rate of all (or one) worker threads should be queried for.
-The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the averaged
@@ -1784,7 +1784,7 @@ line for the application using the option <a class="reference internal" href="la
 pool-name is specified the counter refers to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the average idle rate for the given worker thread(s) on the given
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> which is caused by cleaning up terminated threads. The
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> which is caused by cleaning up terminated threads. The
 cleanup idle rate is defined as the ratio of the time spent on cleaning up
 terminated thread objects and the overall time spent executing work since
 the application started. This counter is available only if the
@@ -1798,10 +1798,10 @@ configuration time constants <code class="docutils literal notranslate"><span cl
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the current
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the current
 length of all thread queues in the scheduler for all (or one) worker
-threads should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is
-a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+threads should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is
+a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the current
@@ -1813,27 +1813,27 @@ option <a class="reference internal" href="launching_and_configuring_hpx_applica
 refers to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the overall length of all queues for the given worker thread(s)
-on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p></td>
+on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p></td>
 <td><p>None</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/threads/count/stack-unbinds</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the unbind
-(madvise) operations should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a
-(zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the unbind
+(madvise) operations should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a
+(zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the total number of <em>HPX</em>-thread unbind (madvise) operations
-performed for the referenced <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. Note that this counter is
+performed for the referenced <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. Note that this counter is
 not available on Windows based platforms.</p></td>
 <td><p>None</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/threads/count/stack-recycles</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the recycling
-operations should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the recycling
+operations should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the total number of <em>HPX</em>-thread recycling operations performed.</p></td>
 <td><p>None</p></td>
@@ -1843,9 +1843,9 @@ based) number identifying the <a class="reference internal" href="../terminology
 <blockquote>
 <div><p>where:</p>
 </div></blockquote>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-‘stole’ threads should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+‘stole’ threads should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the total number of <em>HPX</em>-threads ‘stolen’ from the pending
 thread queue by a neighboring thread worker thread (these threads are
@@ -1859,10 +1859,10 @@ on). This counter is available only if the configuration time constant
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the number of
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the number of
 pending queue misses of all (or one) worker threads should be queried
-for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a></p>
+for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a></p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the number of
@@ -1874,7 +1874,7 @@ the command line for the application using the option
 to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the total number of times that the referenced worker-thread on
-the referenced <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> failed to find pending <em>HPX</em>-threads in
+the referenced <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> failed to find pending <em>HPX</em>-threads in
 its associated queue. This counter is available only if the configuration
 time constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_STEALING_COUNTS</span></code> is set to <code class="docutils literal notranslate"><span class="pre">ON</span></code>
 (default: <code class="docutils literal notranslate"><span class="pre">ON</span></code>).</p></td>
@@ -1885,10 +1885,10 @@ time constant <code class="docutils literal notranslate"><span class="pre">HPX_W
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the number of
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the number of
 pending queue accesses of all (or one) worker threads should be queried
-for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a></p>
+for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a></p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the number of
@@ -1900,7 +1900,7 @@ the command line for the application using the option
 to the ‘default’ pool.</p>
 </td>
 <td><p>Returns the total number of times that the referenced worker-thread on
-the referenced <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> looked for pending <em>HPX</em>-threads in its
+the referenced <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> looked for pending <em>HPX</em>-threads in its
 associated queue. This counter is available only if the configuration
 time constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_STEALING_COUNTS</span></code> is set to <code class="docutils literal notranslate"><span class="pre">ON</span></code>
 (default: <code class="docutils literal notranslate"><span class="pre">ON</span></code>).</p></td>
@@ -1911,10 +1911,10 @@ time constant <code class="docutils literal notranslate"><span class="pre">HPX_W
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the number of
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the number of
 <em>HPX</em>-threads stolen from the staged queue of all (or one) worker threads
-should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the number of
@@ -1937,10 +1937,10 @@ counter is available only if the configuration time constant
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the number of
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the number of
 <em>HPX</em>-threads stolen to the pending queue of all (or one) worker threads
-should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the number of
@@ -1963,10 +1963,10 @@ available only if the configuration time constant
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the number of
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the number of
 <em>HPX</em>-threads stolen to the staged queue of all (or one) worker threads
-should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the number of
@@ -1989,10 +1989,10 @@ counter is available only if the configuration time constant
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/allocator#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the current
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the current
 (cumulative) number of all created <em>HPX</em>-thread objects should be queried
-for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
-identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">allocator#*</span></code> is defining the number of the allocator instance using
 which the threads have been created. <em>HPX</em> uses a varying number of
 allocators to create (and recycle) <em>HPX</em>-thread objects, most likely
@@ -2008,10 +2008,10 @@ does not reflect the number of actually executed (retired) <em>HPX</em>-threads.
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/scheduler/utilization/instantaneous</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the current
-(instantaneous) scheduler utilization queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the current
+(instantaneous) scheduler utilization queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>
 id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero based) number identifying the
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><dl class="simple">
 <dt>Returns the total (instantaneous) scheduler utilization. This is the</dt><dd><p>current percentage of scheduler threads executing <em>HPX</em> threads.</p>
@@ -2024,10 +2024,10 @@ id (given by <code class="docutils literal notranslate"><span class="pre">*</spa
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the current
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the current
 current accumulated value of all idle-loop counters of all worker threads
-should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the current
@@ -2046,10 +2046,10 @@ pool-name is specified the counter refers to the ‘default’ pool.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/pool#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the current
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the current
 current accumulated value of all busy-loop counters of all worker threads
-should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code> is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pool#*</span></code> is defining the pool for which the current value of the
 idle-loop counter should be queried for.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the current
@@ -2250,12 +2250,12 @@ parcelport only.</p>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/count/component</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-components should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+components should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall number of currently active components of the
-specified type on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p></td>
+specified type on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p></td>
 <td><p>The type of the component. This is the string which has been used while
 registering the component with <em>HPX</em>, e.g. which has been passed as the
 second parameter to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_COMPONENT" title="HPX_REGISTER_COMPONENT"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_COMPONENT</span></code></a>.</p></td>
@@ -2265,12 +2265,12 @@ second parameter to the macro <a class="reference internal" href="../api.html#c.
 <blockquote>
 <div><p>where:</p>
 </div></blockquote>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the locality the number of action
-invocations should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the locality the number of action
+invocations should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall (local) invocation count of the specified action type
-on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p></td>
+on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p></td>
 <td><p>The action type. This is the string which has been used while registering
 the action with <em>HPX</em>, e.g. which has been passed as the second parameter
 to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
@@ -2279,12 +2279,12 @@ to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTI
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/count/remote-action-invocation</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-action invocations should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+action invocations should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall (remote) invocation count of the specified action
-type on the given <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p></td>
+type on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p></td>
 <td><p>The action type. This is the string which has been used while registering
 the action with <em>HPX</em>, e.g. which has been passed as the second parameter
 to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
@@ -2293,46 +2293,46 @@ to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTI
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/uptime</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the system
-uptime should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the system
+uptime should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the overall time since application start on the given
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> in nanoseconds.</p></td>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> in nanoseconds.</p></td>
 <td><p>None</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/memory/virtual</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the allocated
-virtual memory should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the allocated
+virtual memory should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the amount of virtual memory currently allocated by the
-referenced <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (in bytes).</p></td>
+referenced <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (in bytes).</p></td>
 <td><p>None</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/memory/resident</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the allocated
-resident memory should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the allocated
+resident memory should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the amount of resident memory currently allocated by the
-referenced <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (in bytes).</p></td>
+referenced <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (in bytes).</p></td>
 <td><p>None</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/memory/total</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the total
-available memory should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>. Note: only supported in
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the total
+available memory should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. Note: only supported in
 Linux.</p>
 </td>
 <td><dl class="simple">
-<dt>Returns the total available memory for use by the referenced</dt><dd><p><a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> (in bytes). This counter is available on Linux and
+<dt>Returns the total available memory for use by the referenced</dt><dd><p><a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (in bytes). This counter is available on Linux and
 Windows systems only.</p>
 </dd>
 </dl>
@@ -2342,9 +2342,9 @@ Windows systems only.</p>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/io/read_bytes_issued</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-bytes read should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+bytes read should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the number of bytes read by the process (aggregate of count
 arguments passed to read() call or its analogues). This performance
@@ -2355,9 +2355,9 @@ through the /proc file system.</p></td>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/io/write_bytes_issued</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-bytes written should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+bytes written should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the number of bytes written by the process (aggregate of count
 arguments passed to write() call or its analogues). This performance
@@ -2368,9 +2368,9 @@ through the /proc file system.</p></td>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/io/read_syscalls</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-system calls should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+system calls should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the number of system calls that perform I/O reads. This
 performance counter is available only on systems which expose the
@@ -2380,9 +2380,9 @@ related data through the /proc file system.</p></td>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/io/write_syscalls</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-system calls should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
-number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+system calls should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
+number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the number of system calls that perform I/O writes. This
 performance counter is available only on systems which expose the
@@ -2392,9 +2392,9 @@ related data through the /proc file system.</p></td>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/io/read_bytes_transferred</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-bytes transferred should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+bytes transferred should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the number of bytes retrieved from storage by I/O operations.
 This performance counter is available only on systems which expose the
@@ -2404,9 +2404,9 @@ related data through the /proc file system.</p></td>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/io/write_bytes_transferred</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-bytes transferred should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+bytes transferred should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the number of bytes retrieved from storage by I/O operations.
 This performance counter is available only on systems which expose the
@@ -2416,9 +2416,9 @@ related data through the /proc file system.</p></td>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/io/write_bytes_cancelled</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-bytes not being transferred should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is
-a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+bytes not being transferred should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is
+a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the number of bytes accounted by write_bytes_transferred that
 has not been ultimately stored due to truncation or deletion. This
@@ -2454,10 +2454,10 @@ line options.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code> or</p>
 <p><code class="docutils literal notranslate"><span class="pre">locality#*/worker-thread#*</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> for which the current
+<p><code class="docutils literal notranslate"><span class="pre">locality#*</span></code> is defining the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the current
 current accumulated value of all busy-loop counters of all worker threads
-should be queried. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code>) is a (zero
-based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+should be queried. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id (given by <code class="docutils literal notranslate"><span class="pre">*</span></code>) is a (zero
+based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> is defining the worker thread for which the current
 value of the busy-loop counter should be queried for. The worker thread
 number (given by the <code class="docutils literal notranslate"><span class="pre">*</span></code>) is a (zero based) worker thread number (given
@@ -2742,7 +2742,7 @@ equivalent to specifying both counters separately to <code class="docutils liter
 </div>
 </div>
 <table class="docutils align-default" id="id18">
-<caption><span class="caption-number">Table 46 </span><span class="caption-text">Performance counters tracking <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> coalescing</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 46 </span><span class="caption-text">Performance counters tracking <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> coalescing</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2758,9 +2758,9 @@ equivalent to specifying both counters separately to <code class="docutils liter
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/coalescing/count/parcels</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-parcels for the given action should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>
-id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+parcels for the given action should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>
+id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the number of parcels handled by the message handler
 associated with the action which is given by the counter parameter.</p></td>
@@ -2772,9 +2772,9 @@ to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTI
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/coalescing/count/messages</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-messages for the given action should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>
-id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+messages for the given action should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>
+id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the number of messages generated by the message handler
 associated with the action which is given by the counter parameter.</p></td>
@@ -2786,9 +2786,9 @@ to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTI
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/coalescing/count/average-parcels-per-message</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the number of
-messages for the given action should be queried for. The <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>
-id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the number of
+messages for the given action should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>
+id is a (zero based) number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the average number of parcels sent in a message generated by the
 message handler associated with the action which is given by the counter
@@ -2801,10 +2801,10 @@ to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTI
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/coalescing/time/average-parcel-arrival</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the average time
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the average time
 between parcels for the given action should be queried for. The
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number identifying the
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number identifying the
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns the average time between arriving parcels for the
 action which is given by the counter parameter.</p></td>
@@ -2816,10 +2816,10 @@ to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTI
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/coalescing/time/parcel-arrival-histogram</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
 <p>where:</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> the average time
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the average time
 between parcels for the given action should be queried for. The
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number identifying the
-<a class="reference internal" href="../terminology.html#term-locality"><span class="xref std std-term">locality</span></a>.</p>
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number identifying the
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
 <td><p>Returns a histogram representing the times between arriving parcels for
 the action which is given by the counter parameter.</p>
@@ -2849,7 +2849,7 @@ buckets to generate).</p>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The performance counters related to <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a> coalescing are available only if
+<p>The performance counters related to <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> coalescing are available only if
 the configuration time constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_PARCEL_COALESCING</span></code> is set to
 <code class="docutils literal notranslate"><span class="pre">ON</span></code> (default: <code class="docutils literal notranslate"><span class="pre">ON</span></code>). However, even in this case it will be available
 only for those actions, which are enabled for parcel coalescing (see the
@@ -2858,7 +2858,7 @@ macros <code class="xref c c-macro docutils literal notranslate"><span class="pr
 </div>
 <dl class="footnote brackets">
 <dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
-<dd><p>A message can potentially consist of more than one <a class="reference internal" href="../terminology.html#term-parcel"><span class="xref std std-term">parcel</span></a>.</p>
+<dd><p>A message can potentially consist of more than one <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a>.</p>
 </dd>
 </dl>
 </div>
@@ -2867,7 +2867,7 @@ macros <code class="xref c c-macro docutils literal notranslate"><span class="pr
 <h2>APEX integration<a class="headerlink" href="#apex-integration" title="Permalink to this headline">¶</a></h2>
 <p><em>HPX</em> provides integration with <a class="reference external" href="https://khuck.github.io/xpress-apex/">APEX</a>, which is a framework for application
 profiling using task timers and various performance counters. It can be added as
-a <code class="docutils literal notranslate"><span class="pre">git</span></code> submodule by turning on the option <a class="reference internal" href="building_hpx.html#cmdoption-arg-hpx-with-apex-bool"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_APEX:BOOL</span></code></a> during
+a <code class="docutils literal notranslate"><span class="pre">git</span></code> submodule by turning on the option <a class="reference internal" href="building_hpx.html#cmdoption-arg-HPX_WITH_APEX-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_APEX:BOOL</span></code></a> during
 <a class="reference external" href="https://www.cmake.org">CMake</a> configuration. <a class="reference external" href="https://www.cs.uoregon.edu/research/tau/home.php">TAU</a> is an optional dependency when using <a class="reference external" href="https://khuck.github.io/xpress-apex/">APEX</a>.</p>
 <p>To build <em>HPX</em> with <a class="reference external" href="https://khuck.github.io/xpress-apex/">APEX</a> add <code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_APEX</span></code><code class="docutils literal notranslate"><span class="pre">=ON</span></code>, and,
 optionally, <code class="docutils literal notranslate"><span class="pre">TAU_ROOT=$PATH_TO_TAU</span></code> to your <a class="reference external" href="https://www.cmake.org">CMake</a> configuration. In
@@ -2906,7 +2906,7 @@ instructions on using <a class="reference external" href="https://khuck.github.i
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>24cbd3c</code>.
+          Revision <code>df09a1a</code>.
         </span>
       
 

@@ -290,24 +290,23 @@ be implemented by the user. Moreover, an accumulator component is a component
 because it also inherits from <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::components::component_base</span></code> (the
 template argument passed to locking_hook is used as its base class). The
 following snippet shows the corresponding code:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[accumulator_server_inherit</span>
-    <span class="k">class</span> <span class="nc">accumulator</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="k">class</span> <span class="nc">accumulator</span>
       <span class="o">:</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">locking_hook</span><span class="o">&lt;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">accumulator</span><span class="o">&gt;</span> <span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Our accumulator class will need a data member to store its value in, so let’s
 declare a data member:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[accumulator_server_data_member</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="n">argument_type</span> <span class="n">value_</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The constructor for this class simply initializes <code class="docutils literal notranslate"><span class="pre">value_</span></code> to 0:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[accumulator_server_ctor</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="n">accumulator</span><span class="p">()</span> <span class="o">:</span> <span class="n">value_</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
 </pre></div>
 </div>
 <p>Next, let’s look at the three methods of this component that we will be exposing
 as component actions:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[accumulator_methods</span>
-        <span class="c1">/// Reset the components value to 0.</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="c1">/// Reset the components value to 0.</span>
         <span class="kt">void</span> <span class="nf">reset</span><span class="p">()</span>
         <span class="p">{</span>
             <span class="c1">//  set value_ to 0.</span>
@@ -326,20 +325,20 @@ as component actions:</p>
         <span class="p">{</span>
             <span class="c1">// Get the value of value_.</span>
             <span class="k">return</span> <span class="n">value_</span><span class="p">;</span>
+        <span class="p">}</span>
 </pre></div>
 </div>
 <p>Here are the action types. These types wrap the methods we’re exposing. The
 wrapping technique is very similar to the one used in the
 <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> and the <a class="reference internal" href="hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions: Hello world</span></a>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[accumulator_action_types</span>
-        <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">reset</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">reset</span><span class="p">);</span>
         <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">add</span><span class="p">);</span>
+        <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">query</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The last piece of code in the server class header is the declaration of the
 action type registration code:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//[accumulator_registration_declarations</span>
-<span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span>
     <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">reset_action</span><span class="p">,</span>
     <span class="n">accumulator_reset_action</span><span class="p">);</span>
 
@@ -349,6 +348,7 @@ action type registration code:</p>
 
 <span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span>
     <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">query_action</span><span class="p">,</span>
+    <span class="n">accumulator_query_action</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -401,16 +401,16 @@ are used to create components:</p>
 </div>
 <p>Clients, like servers, need to inherit from a base class, this time,
 <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::components::client_base</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[accumulator_client_inherit</span>
-    <span class="k">class</span> <span class="nc">accumulator</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="k">class</span> <span class="nc">accumulator</span>
       <span class="o">:</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span>
             <span class="n">accumulator</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">accumulator</span>
+        <span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>For readability, we typedef the base class like so:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[accumulator_base_type</span>
-        <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span>
             <span class="n">accumulator</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">accumulator</span>
+        <span class="o">&gt;</span> <span class="n">base_type</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Here are examples of how to expose actions through a client class:</p>
@@ -422,13 +422,13 @@ fire-and-forget semantics. This means that once we have asked <em>HPX</em> to co
 the action, we forget about it completely and continue with our computation.
 We use <a class="reference internal" href="../libs/async/api.html#_CPPv4I0DpEN3hpx5applyEbRKN6naming7id_typeEDpRR2Ts" title="hpx::apply"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::apply</span></code></a> to invoke an action in a non-blocking fashion.</p></li>
 </ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[accumulator_client_reset_non_blocking</span>
-        <span class="kt">void</span> <span class="nf">reset</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">apply_policy</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="kt">void</span> <span class="nf">reset</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">apply_policy</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="n">HPX_ASSERT</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">());</span>
 
             <span class="k">typedef</span> <span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">reset_action</span> <span class="n">action_type</span><span class="p">;</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">apply</span><span class="o">&lt;</span><span class="n">action_type</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">());</span>
+        <span class="p">}</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -437,13 +437,13 @@ We use <a class="reference internal" href="../libs/async/api.html#_CPPv4I0DpEN3h
 asynchronous action invocation. Here’s an example from the accumulator client
 class:</p></li>
 </ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[accumulator_client_query_async</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">argument_type</span><span class="o">&gt;</span> <span class="n">query</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async_policy</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">argument_type</span><span class="o">&gt;</span> <span class="n">query</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async_policy</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="n">HPX_ASSERT</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">());</span>
 
             <span class="k">typedef</span> <span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">query_action</span> <span class="n">action_type</span><span class="p">;</span>
             <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="o">&lt;</span><span class="n">action_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">());</span>
+        <span class="p">}</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -452,13 +452,13 @@ simply call <a class="reference internal" href="../libs/async/api.html#_CPPv4I00
 immediately wait on it to be ready). Here’s an example from the accumulator
 client class:</p></li>
 </ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//[accumulator_client_add_sync</span>
-        <span class="kt">void</span> <span class="nf">add</span><span class="p">(</span><span class="n">argument_type</span> <span class="n">arg</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="kt">void</span> <span class="nf">add</span><span class="p">(</span><span class="n">argument_type</span> <span class="n">arg</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="n">HPX_ASSERT</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">());</span>
 
             <span class="k">typedef</span> <span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">add_action</span> <span class="n">action_type</span><span class="p">;</span>
             <span class="n">action_type</span><span class="p">()(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">(),</span> <span class="n">arg</span><span class="p">);</span>
+        <span class="p">}</span>
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">this-&gt;get_id()</span></code> references a data member of the
@@ -501,7 +501,7 @@ returned by <a class="reference internal" href="../api.html#_CPPv4N3hpx9find_her
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>a04b8c1</code>.
+          Revision <code>bede37b</code>.
         </span>
       
 

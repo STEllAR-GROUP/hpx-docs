@@ -133,13 +133,13 @@
 <li class="toctree-l3"><a class="reference internal" href="../debugging/api.html">debugging</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../distributed_executors/api.html">distributed_executors</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">errors</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#include-hpx-errors-throw-exception-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/throw_exception.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-errors-error-code-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/error_code.hpp&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-errors-exception-list-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/exception_list.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-errors-exception-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/exception.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-errors-exception-info-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/exception_info.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-errors-error-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/error.hpp&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-errors-throw-exception-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/throw_exception.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-errors-exception-fwd-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/exception_fwd.hpp&gt;</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#include-hpx-errors-exception-list-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/exception_list.hpp&gt;</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../execution/api.html">execution</a></li>
@@ -272,42 +272,6 @@
             
   <div class="section" id="errors">
 <span id="libs-errors-api"></span><h1>errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="include-hpx-errors-throw-exception-hpp">
-<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/throw_exception.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-errors-throw-exception-hpp" title="Permalink to this headline">¶</a></h2>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Defines</p>
-<dl class="cpp macro">
-<dt id="c.HPX_THROW_EXCEPTION">
-<span class="target" id="throw__exception_8hpp_1a3ada9b97bab2221332a6db245fe2067a"></span><code class="sig-name descname">HPX_THROW_EXCEPTION</code><span class="sig-paren">(</span><em>errcode</em>, <em>f</em>, <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROW_EXCEPTION" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> initialized from the given parameters. </p>
-<p>The macro <em>HPX_THROW_EXCEPTION</em> can be used to throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a>. The purpose of this macro is to prepend the source file name and line number of the position where the exception is thrown to the error message. Moreover, this associates additional diagnostic information with the exception, such as file name and line number, locality id and thread id, and stack backtrace from the point where the exception was thrown.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code the new exception should encapsulate. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">raise_exception</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// Throw a hpx::exception initialized from the given parameters.</span>
-    <span class="c1">// Additionally associate with this exception some detailed</span>
-    <span class="c1">// diagnostic information about the throw-site.</span>
-    <span class="n">HPX_THROW_EXCEPTION</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">no_success</span><span class="p">,</span> <span class="s">&quot;raise_exception&quot;</span><span class="p">,</span> <span class="s">&quot;simulated error&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
- <dl class="simple">
-<dt><strong>Example:</strong></dt><dd><p></p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt id="c.HPX_THROWS_IF">
-<span class="target" id="throw__exception_8hpp_1a81b2aae0c2744fad9953f45a3c90683b"></span><code class="sig-name descname">HPX_THROWS_IF</code><span class="sig-paren">(</span><em>ec</em>, <em>errcode</em>, <em>f</em>, <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROWS_IF" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Either throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> or initialize <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. </p>
-<p>The macro <em>HPX_THROWS_IF</em> can be used to either throw a <em><a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></em> or to initialize a <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. If &amp;ec == &amp;hpx::throws, the semantics of this macro are equivalent to <em>HPX_THROW_EXCEPTION</em>. If &amp;ec != &amp;hpx::throws, the <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> instance <code class="docutils literal notranslate"><span class="pre">ec</span></code> is initialized instead.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code from which the new exception should be initialized. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate. </p>
-</dd></dl>
-
-</div>
-</div>
 <div class="section" id="include-hpx-errors-error-code-hpp">
 <h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/error_code.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-errors-error-code-hpp" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp type">
@@ -610,11 +574,87 @@
 </dd></dl>
 
 </div>
+<div class="section" id="include-hpx-errors-exception-list-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/exception_list.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-errors-exception-list-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp class">
+<dt id="_CPPv4N3hpx14exception_listE">
+<span id="_CPPv3N3hpx14exception_listE"></span><span id="_CPPv2N3hpx14exception_listE"></span><span id="hpx::exception_list"></span><span class="target" id="classhpx_1_1exception__list"></span><em class="property">class </em><code class="sig-name descname">exception_list</code> : <em class="property">public</em> <a class="reference internal" href="../../api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a><a class="headerlink" href="#_CPPv4N3hpx14exception_listE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;exception_list.hpp&gt;</em><p>The class <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a> is a container of exception_ptr objects parallel algorithms may use to communicate uncaught exceptions encountered during parallel execution to the caller of the algorithm</p>
+<p>The type exception_list::const_iterator fulfills the requirements of a forward iterator. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx14exception_list8iteratorE">
+<span id="_CPPv3N3hpx14exception_list8iteratorE"></span><span id="_CPPv2N3hpx14exception_list8iteratorE"></span><span id="hpx::exception_list::iterator"></span><span class="target" id="classhpx_1_1exception__list_1ae0b75a125a76c3156ce3315e86596716"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">iterator</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list8iteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>bidirectional iterator </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx14exception_list4sizeEv">
+<span id="_CPPv3NK3hpx14exception_list4sizeEv"></span><span id="_CPPv2NK3hpx14exception_list4sizeEv"></span><span id="hpx::exception_list::sizeC"></span><span class="target" id="classhpx_1_1exception__list_1ae4e3e1b70e8185033656d891749a234e"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The number of exception_ptr objects contained within the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>Complexity: Constant time. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx14exception_list5beginEv">
+<span id="_CPPv3NK3hpx14exception_list5beginEv"></span><span id="_CPPv2NK3hpx14exception_list5beginEv"></span><span id="hpx::exception_list::beginC"></span><span class="target" id="classhpx_1_1exception__list_1a94a921543c170e5fa21278613e60599a"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An iterator referring to the first exception_ptr object contained within the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx14exception_list3endEv">
+<span id="_CPPv3NK3hpx14exception_list3endEv"></span><span id="_CPPv2NK3hpx14exception_list3endEv"></span><span id="hpx::exception_list::endC"></span><span class="target" id="classhpx_1_1exception__list_1a0ecc17888e5ec79776b45c872bf76584"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An iterator which is the past-the-end value for the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx14exception_list10mutex_typeE">
+<span id="_CPPv3N3hpx14exception_list10mutex_typeE"></span><span id="_CPPv2N3hpx14exception_list10mutex_typeE"></span><span id="hpx::exception_list::mutex_type"></span><span class="target" id="classhpx_1_1exception__list_1a8b10bc1bf19137d747777817e53627f0"></span><em class="property">typedef </em><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::detail::spinlock <code class="sig-name descname">mutex_type</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list10mutex_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx14exception_list19exception_list_typeE">
+<span id="_CPPv3N3hpx14exception_list19exception_list_typeE"></span><span id="_CPPv2N3hpx14exception_list19exception_list_typeE"></span><span id="hpx::exception_list::exception_list_type"></span><span class="target" id="classhpx_1_1exception__list_1acd236cdeb27c48c1e3a126adf95f2201"></span><em class="property">typedef </em><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::exception_ptr&gt; <code class="sig-name descname">exception_list_type</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx14exception_list11exceptions_E">
+<span id="_CPPv3N3hpx14exception_list11exceptions_E"></span><span id="_CPPv2N3hpx14exception_list11exceptions_E"></span><span id="hpx::exception_list::exceptions___exception_list_type"></span><span class="target" id="classhpx_1_1exception__list_1afc8c518f8677ae103839eb4f119e5959"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a> <code class="sig-name descname">exceptions_</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list11exceptions_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx14exception_list4mtx_E">
+<span id="_CPPv3N3hpx14exception_list4mtx_E"></span><span id="_CPPv2N3hpx14exception_list4mtx_E"></span><span id="hpx::exception_list::mtx___mutex_type"></span><span class="target" id="classhpx_1_1exception__list_1ae0639af297017767265b9da164a4faac"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list10mutex_typeE" title="hpx::exception_list::mutex_type">mutex_type</a> <code class="sig-name descname">mtx_</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="include-hpx-errors-exception-hpp">
 <h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/exception.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-errors-exception-hpp" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp type">
 <dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Typedefs</p>
 <dl class="cpp type">
@@ -920,7 +960,7 @@
 </div>
 <dl class="cpp type">
 <dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Functions</p>
 <dl class="cpp function">
@@ -1069,7 +1109,7 @@
 <div class="section" id="include-hpx-errors-error-hpp">
 <h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/error.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-errors-error-hpp" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp type">
-<dt id="_CPPv43hpx">
+<dt>
 <span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Enums</p>
@@ -1409,6 +1449,42 @@
 </dd></dl>
 
 </div>
+<div class="section" id="include-hpx-errors-throw-exception-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/throw_exception.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-errors-throw-exception-hpp" title="Permalink to this headline">¶</a></h2>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="cpp macro">
+<dt id="c.HPX_THROW_EXCEPTION">
+<span class="target" id="throw__exception_8hpp_1a3ada9b97bab2221332a6db245fe2067a"></span><code class="sig-name descname">HPX_THROW_EXCEPTION</code><span class="sig-paren">(</span><em>errcode</em>, <em>f</em>, <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROW_EXCEPTION" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> initialized from the given parameters. </p>
+<p>The macro <em>HPX_THROW_EXCEPTION</em> can be used to throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a>. The purpose of this macro is to prepend the source file name and line number of the position where the exception is thrown to the error message. Moreover, this associates additional diagnostic information with the exception, such as file name and line number, locality id and thread id, and stack backtrace from the point where the exception was thrown.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code the new exception should encapsulate. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">raise_exception</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Throw a hpx::exception initialized from the given parameters.</span>
+    <span class="c1">// Additionally associate with this exception some detailed</span>
+    <span class="c1">// diagnostic information about the throw-site.</span>
+    <span class="n">HPX_THROW_EXCEPTION</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">no_success</span><span class="p">,</span> <span class="s">&quot;raise_exception&quot;</span><span class="p">,</span> <span class="s">&quot;simulated error&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+ <dl class="simple">
+<dt><strong>Example:</strong></dt><dd><p></p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_THROWS_IF">
+<span class="target" id="throw__exception_8hpp_1a81b2aae0c2744fad9953f45a3c90683b"></span><code class="sig-name descname">HPX_THROWS_IF</code><span class="sig-paren">(</span><em>ec</em>, <em>errcode</em>, <em>f</em>, <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROWS_IF" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Either throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> or initialize <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. </p>
+<p>The macro <em>HPX_THROWS_IF</em> can be used to either throw a <em><a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></em> or to initialize a <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. If &amp;ec == &amp;hpx::throws, the semantics of this macro are equivalent to <em>HPX_THROW_EXCEPTION</em>. If &amp;ec != &amp;hpx::throws, the <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> instance <code class="docutils literal notranslate"><span class="pre">ec</span></code> is initialized instead.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code from which the new exception should be initialized. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate. </p>
+</dd></dl>
+
+</div>
+</div>
 <div class="section" id="include-hpx-errors-exception-fwd-hpp">
 <h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/exception_fwd.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-errors-exception-fwd-hpp" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp type">
@@ -1456,82 +1532,6 @@
 </dd></dl>
 
 </div>
-<div class="section" id="include-hpx-errors-exception-list-hpp">
-<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/errors/exception_list.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-errors-exception-list-hpp" title="Permalink to this headline">¶</a></h2>
-<dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp class">
-<dt id="_CPPv4N3hpx14exception_listE">
-<span id="_CPPv3N3hpx14exception_listE"></span><span id="_CPPv2N3hpx14exception_listE"></span><span id="hpx::exception_list"></span><span class="target" id="classhpx_1_1exception__list"></span><em class="property">class </em><code class="sig-name descname">exception_list</code> : <em class="property">public</em> <a class="reference internal" href="../../api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a><a class="headerlink" href="#_CPPv4N3hpx14exception_listE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;exception_list.hpp&gt;</em><p>The class <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a> is a container of exception_ptr objects parallel algorithms may use to communicate uncaught exceptions encountered during parallel execution to the caller of the algorithm</p>
-<p>The type exception_list::const_iterator fulfills the requirements of a forward iterator. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx14exception_list8iteratorE">
-<span id="_CPPv3N3hpx14exception_list8iteratorE"></span><span id="_CPPv2N3hpx14exception_list8iteratorE"></span><span id="hpx::exception_list::iterator"></span><span class="target" id="classhpx_1_1exception__list_1ae0b75a125a76c3156ce3315e86596716"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">iterator</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list8iteratorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>bidirectional iterator </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4NK3hpx14exception_list4sizeEv">
-<span id="_CPPv3NK3hpx14exception_list4sizeEv"></span><span id="_CPPv2NK3hpx14exception_list4sizeEv"></span><span id="hpx::exception_list::sizeC"></span><span class="target" id="classhpx_1_1exception__list_1ae4e3e1b70e8185033656d891749a234e"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The number of exception_ptr objects contained within the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>.</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>Complexity: Constant time. </p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4NK3hpx14exception_list5beginEv">
-<span id="_CPPv3NK3hpx14exception_list5beginEv"></span><span id="_CPPv2NK3hpx14exception_list5beginEv"></span><span id="hpx::exception_list::beginC"></span><span class="target" id="classhpx_1_1exception__list_1a94a921543c170e5fa21278613e60599a"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list5beginEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>An iterator referring to the first exception_ptr object contained within the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4NK3hpx14exception_list3endEv">
-<span id="_CPPv3NK3hpx14exception_list3endEv"></span><span id="_CPPv2NK3hpx14exception_list3endEv"></span><span id="hpx::exception_list::endC"></span><span class="target" id="classhpx_1_1exception__list_1a0ecc17888e5ec79776b45c872bf76584"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list3endEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>An iterator which is the past-the-end value for the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>. </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx14exception_list10mutex_typeE">
-<span id="_CPPv3N3hpx14exception_list10mutex_typeE"></span><span id="_CPPv2N3hpx14exception_list10mutex_typeE"></span><span id="hpx::exception_list::mutex_type"></span><span class="target" id="classhpx_1_1exception__list_1a8b10bc1bf19137d747777817e53627f0"></span><em class="property">typedef </em><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::detail::spinlock <code class="sig-name descname">mutex_type</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list10mutex_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx14exception_list19exception_list_typeE">
-<span id="_CPPv3N3hpx14exception_list19exception_list_typeE"></span><span id="_CPPv2N3hpx14exception_list19exception_list_typeE"></span><span id="hpx::exception_list::exception_list_type"></span><span class="target" id="classhpx_1_1exception__list_1acd236cdeb27c48c1e3a126adf95f2201"></span><em class="property">typedef </em><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::exception_ptr&gt; <code class="sig-name descname">exception_list_type</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Members</p>
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx14exception_list11exceptions_E">
-<span id="_CPPv3N3hpx14exception_list11exceptions_E"></span><span id="_CPPv2N3hpx14exception_list11exceptions_E"></span><span id="hpx::exception_list::exceptions___exception_list_type"></span><span class="target" id="classhpx_1_1exception__list_1afc8c518f8677ae103839eb4f119e5959"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a> <code class="sig-name descname">exceptions_</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list11exceptions_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx14exception_list4mtx_E">
-<span id="_CPPv3N3hpx14exception_list4mtx_E"></span><span id="_CPPv2N3hpx14exception_list4mtx_E"></span><span id="hpx::exception_list::mtx___mutex_type"></span><span class="target" id="classhpx_1_1exception__list_1ae0639af297017767265b9da164a4faac"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list10mutex_typeE" title="hpx::exception_list::mutex_type">mutex_type</a> <code class="sig-name descname">mtx_</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
-</div>
 </div>
 
 
@@ -1563,7 +1563,7 @@
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>61b331f</code>.
+          Revision <code>62c825f</code>.
         </span>
       
 

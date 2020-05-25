@@ -138,6 +138,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../filesystem/api.html">filesystem</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../format/api.html">format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../futures/api.html">futures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hardware/api.html">hardware</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hashing/api.html">hashing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../include/api.html">include</a></li>
@@ -152,9 +153,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../mpi_base/api.html">mpi_base</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../naming_base/api.html">naming_base</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">pack_traversal</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#include-hpx-pack-traversal-unwrap-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/unwrap.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-pack-traversal-pack-traversal-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/pack_traversal.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-pack-traversal-pack-traversal-async-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/pack_traversal_async.hpp&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-pack-traversal-unwrap-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/unwrap.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-pack-traversal-traits-pack-traversal-rebind-container-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/traits/pack_traversal_rebind_container.hpp&gt;</span></code></a></li>
 </ul>
 </li>
@@ -269,14 +270,157 @@
             
   <div class="section" id="pack-traversal">
 <span id="libs-pack-traversal-api"></span><h1>pack_traversal<a class="headerlink" href="#pack-traversal" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="include-hpx-pack-traversal-unwrap-hpp">
-<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/unwrap.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-pack-traversal-unwrap-hpp" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="include-hpx-pack-traversal-pack-traversal-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/pack_traversal.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-pack-traversal-pack-traversal-hpp" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp type">
 <dt id="_CPPv43hpx">
 <span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><dl class="cpp type">
 <dt id="_CPPv4N3hpx4utilE">
 <span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span id="hpx::util"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="pack__traversal_8hpp_1a00dc09958eb28cdf31d74de35cb54b68"></span><code class="sig-name descname">template&lt;typename Mapper, typename... T&gt;&lt;unspecified&gt; hpx::util::map_pack(Mapper &amp;&amp; mapper, T &amp;&amp;... pack)</code></dt>
+<dd><p>Maps the pack with the given mapper.</p>
+<p>This function tries to visit all plain elements which may be wrapped in:<ul class="simple">
+<li><p>homogeneous containers (<code class="docutils literal notranslate"><span class="pre">std::vector</span></code>, <code class="docutils literal notranslate"><span class="pre">std::list</span></code>)</p></li>
+<li><p>heterogeneous containers <code class="docutils literal notranslate"><span class="pre">(hpx::tuple</span></code>, <code class="docutils literal notranslate"><span class="pre">std::pair</span></code>, <code class="docutils literal notranslate"><span class="pre">std::array</span></code>) and re-assembles the pack with the result of the mapper. Mapping from one type to a different one is supported.</p></li>
+</ul>
+</p>
+<p>Elements that aren’t accepted by the mapper are routed through and preserved through the hierarchy.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Maps all integers to floats</span>
+<span class="n">map_pack</span><span class="p">([](</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">float</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+<span class="p">},</span>
+<span class="mi">1</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}),</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The mapped element or in case the pack contains multiple elements, the pack is wrapped into a <code class="docutils literal notranslate"><span class="pre">hpx::tuple</span></code>. </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::exception</span></code>: like objects which are thrown by an invocation to the mapper.</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mapper</span></code>: A callable object, which accept an arbitrary type and maps it to another type or the same one.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: An arbitrary variadic pack which may contain any type.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="include-hpx-pack-traversal-pack-traversal-async-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/pack_traversal_async.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-pack-traversal-pack-traversal-async-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T">
+<span id="_CPPv3I0DpEN3hpx4util19traverse_pack_asyncERR7VisitorDpRR1T"></span><span id="_CPPv2I0DpEN3hpx4util19traverse_pack_asyncERR7VisitorDpRR1T"></span><span class="target" id="pack__traversal__async_8hpp_1a1f6868cf0eddd78ed96b2f12edf69624"></span>template&lt;typename <code class="sig-name descname">Visitor</code>, typename ...<code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">traverse_pack_async</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async::Visitor">Visitor</a> &amp;&amp;<em>visitor</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async::T">T</a>&amp;&amp;... <em>pack</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Traverses the pack with the given visitor in an asynchronous way.</p>
+<p>This function works in the same way as <code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code>, however, we are able to suspend and continue the traversal at later time. Thus we require a visitor callable object which provides three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads as depicted by the code sample below: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">my_async_visitor</span>
+<span class="p">{</span>
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+    <span class="kt">bool</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_visit_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_detach_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">,</span> <span class="n">N</span><span class="o">&amp;&amp;</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_complete_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">pack</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</p>
+<p><p>See </p>
+<code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code> for a detailed description about the traversal behavior and capabilities. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>A hpx::intrusive_ptr that references an instance of the given visitor object.</p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">visitor</span></code>: A visitor object which provides the three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads that were described above. Additionally the visitor must be compatible for referencing it from a <code class="docutils literal notranslate"><span class="pre">hpx::intrusive_ptr</span></code>. The visitor should must have a virtual destructor!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: The arbitrary parameter pack which is traversed asynchronously. Nested objects inside containers and tuple like types are traversed recursively.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T">
+<span id="_CPPv3I00DpEN3hpx4util29traverse_pack_async_allocatorERK9AllocatorRR7VisitorDpRR1T"></span><span id="_CPPv2I00DpEN3hpx4util29traverse_pack_async_allocatorERK9AllocatorRR7VisitorDpRR1T"></span><span class="target" id="pack__traversal__async_8hpp_1aca39208be80bca9134517d844d412936"></span>template&lt;typename <code class="sig-name descname">Allocator</code>, typename <code class="sig-name descname">Visitor</code>, typename ...<code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">traverse_pack_async_allocator</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async_allocator::Allocator">Allocator</a> <em class="property">const</em> &amp;<em>alloc</em>, <a class="reference internal" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async_allocator::Visitor">Visitor</a> &amp;&amp;<em>visitor</em>, <a class="reference internal" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async_allocator::T">T</a>&amp;&amp;... <em>pack</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Traverses the pack with the given visitor in an asynchronous way.</p>
+<p>This function works in the same way as <code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code>, however, we are able to suspend and continue the traversal at later time. Thus we require a visitor callable object which provides three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads as depicted by the code sample below: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">my_async_visitor</span>
+<span class="p">{</span>
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+    <span class="kt">bool</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_visit_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_detach_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">,</span> <span class="n">N</span><span class="o">&amp;&amp;</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_complete_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">pack</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</p>
+<p><p>See </p>
+<code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code> for a detailed description about the traversal behavior and capabilities. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>A hpx::intrusive_ptr that references an instance of the given visitor object.</p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">visitor</span></code>: A visitor object which provides the three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads that were described above. Additionally the visitor must be compatible for referencing it from a <code class="docutils literal notranslate"><span class="pre">hpx::intrusive_ptr</span></code>. The visitor should must have a virtual destructor!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: The arbitrary parameter pack which is traversed asynchronously. Nested objects inside containers and tuple like types are traversed recursively. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alloc</span></code>: Allocator instance to use to create the traversal frame.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="include-hpx-pack-traversal-unwrap-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/unwrap.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-pack-traversal-unwrap-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Functions</p>
 <dl class="cpp function">
@@ -399,149 +543,6 @@
 
 </dd></dl>
 
-</dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="include-hpx-pack-traversal-pack-traversal-hpp">
-<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/pack_traversal.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-pack-traversal-pack-traversal-hpp" title="Permalink to this headline">¶</a></h2>
-<dl class="cpp type">
-<dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx4utilE">
-<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="cpp function">
-<dt>
-<span class="target" id="pack__traversal_8hpp_1a00dc09958eb28cdf31d74de35cb54b68"></span><code class="sig-name descname">template&lt;typename Mapper, typename... T&gt;&lt;unspecified&gt; hpx::util::map_pack(Mapper &amp;&amp; mapper, T &amp;&amp;... pack)</code></dt>
-<dd><p>Maps the pack with the given mapper.</p>
-<p>This function tries to visit all plain elements which may be wrapped in:<ul class="simple">
-<li><p>homogeneous containers (<code class="docutils literal notranslate"><span class="pre">std::vector</span></code>, <code class="docutils literal notranslate"><span class="pre">std::list</span></code>)</p></li>
-<li><p>heterogeneous containers <code class="docutils literal notranslate"><span class="pre">(hpx::tuple</span></code>, <code class="docutils literal notranslate"><span class="pre">std::pair</span></code>, <code class="docutils literal notranslate"><span class="pre">std::array</span></code>) and re-assembles the pack with the result of the mapper. Mapping from one type to a different one is supported.</p></li>
-</ul>
-</p>
-<p>Elements that aren’t accepted by the mapper are routed through and preserved through the hierarchy.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Maps all integers to floats</span>
-<span class="n">map_pack</span><span class="p">([](</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="kt">float</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-<span class="p">},</span>
-<span class="mi">1</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}),</span> <span class="mi">5</span><span class="p">);</span>
-</pre></div>
-</div>
-</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>The mapped element or in case the pack contains multiple elements, the pack is wrapped into a <code class="docutils literal notranslate"><span class="pre">hpx::tuple</span></code>. </p>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">std::exception</span></code>: like objects which are thrown by an invocation to the mapper.</p></li>
-</ul>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">mapper</span></code>: A callable object, which accept an arbitrary type and maps it to another type or the same one.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: An arbitrary variadic pack which may contain any type.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="include-hpx-pack-traversal-pack-traversal-async-hpp">
-<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/pack_traversal/pack_traversal_async.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-pack-traversal-pack-traversal-async-hpp" title="Permalink to this headline">¶</a></h2>
-<dl class="cpp type">
-<dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx4utilE">
-<span id="_CPPv3N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T">
-<span id="_CPPv3I0DpEN3hpx4util19traverse_pack_asyncERR7VisitorDpRR1T"></span><span id="_CPPv2I0DpEN3hpx4util19traverse_pack_asyncERR7VisitorDpRR1T"></span><span class="target" id="pack__traversal__async_8hpp_1a1f6868cf0eddd78ed96b2f12edf69624"></span>template&lt;typename <code class="sig-name descname">Visitor</code>, typename ...<code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">traverse_pack_async</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async::Visitor">Visitor</a> &amp;&amp;<em>visitor</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async::T">T</a>&amp;&amp;... <em>pack</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Traverses the pack with the given visitor in an asynchronous way.</p>
-<p>This function works in the same way as <code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code>, however, we are able to suspend and continue the traversal at later time. Thus we require a visitor callable object which provides three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads as depicted by the code sample below: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">my_async_visitor</span>
-<span class="p">{</span>
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-    <span class="kt">bool</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_visit_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>
-    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_detach_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">,</span> <span class="n">N</span><span class="o">&amp;&amp;</span> <span class="n">next</span><span class="p">)</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_complete_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">pack</span><span class="p">)</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-<span class="p">};</span>
-</pre></div>
-</div>
-</p>
-<p><p>See </p>
-<code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code> for a detailed description about the traversal behavior and capabilities. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>A hpx::intrusive_ptr that references an instance of the given visitor object.</p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">visitor</span></code>: A visitor object which provides the three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads that were described above. Additionally the visitor must be compatible for referencing it from a <code class="docutils literal notranslate"><span class="pre">hpx::intrusive_ptr</span></code>. The visitor should must have a virtual destructor!</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: The arbitrary parameter pack which is traversed asynchronously. Nested objects inside containers and tuple like types are traversed recursively.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T">
-<span id="_CPPv3I00DpEN3hpx4util29traverse_pack_async_allocatorERK9AllocatorRR7VisitorDpRR1T"></span><span id="_CPPv2I00DpEN3hpx4util29traverse_pack_async_allocatorERK9AllocatorRR7VisitorDpRR1T"></span><span class="target" id="pack__traversal__async_8hpp_1aca39208be80bca9134517d844d412936"></span>template&lt;typename <code class="sig-name descname">Allocator</code>, typename <code class="sig-name descname">Visitor</code>, typename ...<code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">traverse_pack_async_allocator</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async_allocator::Allocator">Allocator</a> <em class="property">const</em> &amp;<em>alloc</em>, <a class="reference internal" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async_allocator::Visitor">Visitor</a> &amp;&amp;<em>visitor</em>, <a class="reference internal" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async_allocator::T">T</a>&amp;&amp;... <em>pack</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Traverses the pack with the given visitor in an asynchronous way.</p>
-<p>This function works in the same way as <code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code>, however, we are able to suspend and continue the traversal at later time. Thus we require a visitor callable object which provides three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads as depicted by the code sample below: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">my_async_visitor</span>
-<span class="p">{</span>
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-    <span class="kt">bool</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_visit_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>
-    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_detach_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">,</span> <span class="n">N</span><span class="o">&amp;&amp;</span> <span class="n">next</span><span class="p">)</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-
-    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_complete_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">pack</span><span class="p">)</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-<span class="p">};</span>
-</pre></div>
-</div>
-</p>
-<p><p>See </p>
-<code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code> for a detailed description about the traversal behavior and capabilities. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>A hpx::intrusive_ptr that references an instance of the given visitor object.</p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">visitor</span></code>: A visitor object which provides the three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads that were described above. Additionally the visitor must be compatible for referencing it from a <code class="docutils literal notranslate"><span class="pre">hpx::intrusive_ptr</span></code>. The visitor should must have a virtual destructor!</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: The arbitrary parameter pack which is traversed asynchronously. Nested objects inside containers and tuple like types are traversed recursively. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">alloc</span></code>: Allocator instance to use to create the traversal frame.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-</div>
 </dd></dl>
 
 </dd></dl>
@@ -701,7 +702,7 @@
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>120c6c1</code>.
+          Revision <code>d3bc537</code>.
         </span>
       
 

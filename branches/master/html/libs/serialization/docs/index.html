@@ -263,8 +263,28 @@
             
   <div class="section" id="serialization">
 <span id="libs-serialization"></span><h1>serialization<a class="headerlink" href="#serialization" title="Permalink to this headline">¶</a></h1>
-<p>This module provides serialization primitives and support for many C++ standard
-library and Boost types.</p>
+<p>This module provides serialization primitives and support for all built-in
+types as well as all C++ Standard Library collection and utility types. This
+list is extended by <em>HPX</em> vocabulary types with proper support for global
+reference counting. <em>HPX</em>’s mode of serialization is dervied from <a class="reference external" href="https://www.boost.org/doc/libs/1_72_0/libs/serialization/doc/index.html">Boost’s
+serialization model</a>
+and, as such, is mostly interface compatible with
+its Boost counterpart.</p>
+<p>The purest form of serializing data is to copy the content of the payload bit
+by bit; however, this method is impractical for generic C++ types, which might
+be composed of more than just regular built-in types. Instead, <em>HPX</em>’s approach
+to serialization is derived from the Boost Serialization library, and is geared
+towards allowing the programmer of a given class explicit control and syntax of
+what to serialize. It is based on operator overloading of two special archive
+types that hold a buffer or stream to store the serialized data and is
+responsible for dispatching the serialization mechanism to the intrusive or
+non-intrusive version. The serialization process is recursive. Each member that
+needs to be serialized must be specified explicitly. The advantage of this
+approach is that the serialization code is written in C++ and leverages all
+necessary programming techniques. The generic, user-facing interface allows
+for effective application of the serialization process without obstructing the
+algorithms that need special code for packing and unpacking. It also allows for
+optimizations in the implementation of the archives.</p>
 <p>See the <a class="reference internal" href="../api.html#libs-serialization-api"><span class="std std-ref">API reference</span></a> of the module for more
 details.</p>
 </div>
@@ -298,7 +318,7 @@ details.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>0c2e030</code>.
+          Revision <code>70b391e</code>.
         </span>
       
 

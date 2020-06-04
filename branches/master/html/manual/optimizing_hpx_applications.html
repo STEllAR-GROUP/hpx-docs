@@ -108,7 +108,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Optimizing <em>HPX</em> applications</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#performance-counters">Performance counters</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#performance-counter-names">Performance counter names</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#two-counter-name-examples">Two counter name examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-simple-examples">Two simple examples</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#performance-counter-types">Performance counter types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#performance-counter-instances">Performance counter instances</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#using-wildcards-in-performance-counter-names">Using wildcards in performance counter names</a></li>
@@ -223,21 +223,21 @@
 <h1>Optimizing <em>HPX</em> applications<a class="headerlink" href="#optimizing-hpx-applications" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="performance-counters">
 <span id="id2"></span><h2>Performance counters<a class="headerlink" href="#performance-counters" title="Permalink to this headline">¶</a></h2>
-<p>Performance counters in <em>HPX</em> are used to provide information as to how well the
+<p>Performance Counters in <em>HPX</em> are used to provide information as to how well the
 runtime system or an application is performing. The counter data can help
-determine system bottlenecks, and fine-tune system and application performance.
+determine system bottlenecks and fine-tune system and application performance.
 The <em>HPX</em> runtime system, its networking, and other layers provide counter data
-that an application can consume to provide users with information about how
-well the application is performing.</p>
+that an application can consume to provide users with information of how well
+the application is performing.</p>
 <p>Applications can also use counter data to determine how much system resources to
 consume. For example, an application that transfers data over the network could
 consume counter data from a network switch to determine how much data to
 transfer without competing for network bandwidth with other network traffic. The
 application could use the counter data to adjust its transfer rate as the
 bandwidth usage from other network traffic increases or decreases.</p>
-<p>Performance counters are <em>HPX</em> parallel processes that expose a predefined
+<p>Performance Counters are <em>HPX</em> parallel processes which expose a predefined
 interface. <em>HPX</em> exposes special API functions that allow one to create, manage,
-and read the counter data, and release instances of performance counters.
+read the counter data, and release instances of Performance Counters.
 Performance Counter instances are accessed by name, and these names have a
 predefined structure which is described in the section
 <a class="reference internal" href="#performance-counter-names"><span class="std std-ref">Performance counter names</span></a>. The advantage of this is that any Performance
@@ -253,7 +253,7 @@ query specific counters to be printed to the screen or save them in a file. For
 more information, please refer to the section <a class="reference internal" href="launching_and_configuring_hpx_applications.html#commandline"><span class="std std-ref">HPX Command Line Options</span></a>.</p>
 <div class="section" id="performance-counter-names">
 <span id="id3"></span><h3>Performance counter names<a class="headerlink" href="#performance-counter-names" title="Permalink to this headline">¶</a></h3>
-<p>All Performance Counter instances have a name uniquely identifying each
+<p>All Performance Counter instances have a name uniquely identifying this
 instance. This name can be used to access the counter, retrieve all related meta
 data, and to query the counter data (as described in the section
 <a class="reference internal" href="#consuming"><span class="std std-ref">Consuming performance counter data</span></a>). Counter names are strings with a predefined structure. The
@@ -266,7 +266,7 @@ string formatted as:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>parentinstancename#parentindex/instancename#instanceindex
 </pre></div>
 </div>
-<p>Each separate part of a countername (e.g., <code class="docutils literal notranslate"><span class="pre">objectname</span></code>, <code class="docutils literal notranslate"><span class="pre">countername</span></code>
+<p>Each separate part of a countername (e.g. <code class="docutils literal notranslate"><span class="pre">objectname</span></code>, <code class="docutils literal notranslate"><span class="pre">countername</span></code>
 <code class="docutils literal notranslate"><span class="pre">parentinstancename</span></code>, <code class="docutils literal notranslate"><span class="pre">instancename</span></code>, and <code class="docutils literal notranslate"><span class="pre">parameters</span></code>) should start with
 a letter (<code class="docutils literal notranslate"><span class="pre">'a'</span></code>…<code class="docutils literal notranslate"><span class="pre">'z'</span></code>, <code class="docutils literal notranslate"><span class="pre">'A'</span></code>…<code class="docutils literal notranslate"><span class="pre">'Z'</span></code>) or an underscore
 character (<code class="docutils literal notranslate"><span class="pre">'_'</span></code>), optionally followed by letters, digits (<code class="docutils literal notranslate"><span class="pre">'0'</span></code>…<code class="docutils literal notranslate"><span class="pre">'9'</span></code>), hyphen (<code class="docutils literal notranslate"><span class="pre">'-'</span></code>), or underscore characters. Whitespace is not allowed
@@ -274,25 +274,22 @@ inside a counter name. The characters <code class="docutils literal notranslate"
 <code class="docutils literal notranslate"><span class="pre">'&#64;'</span></code> have a special meaning and are used to delimit the different parts of
 the counter name.</p>
 <p>The parts <code class="docutils literal notranslate"><span class="pre">parentinstanceindex</span></code> and <code class="docutils literal notranslate"><span class="pre">instanceindex</span></code> are integers. If an
-index is not specified, <em>HPX</em> will assume a default of <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p>
+index is not specified <em>HPX</em> will assume a default of <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p>
 </div>
-<div class="section" id="two-counter-name-examples">
-<span id="example"></span><h3>Two counter name examples<a class="headerlink" href="#two-counter-name-examples" title="Permalink to this headline">¶</a></h3>
-<p>This section gives examples of both simple counter names and aggregate
-counter names. For more information on simple and aggregate counter
-names, please see <span class="xref std std-ref">performance_counter_instances</span>.</p>
-<p>An example of a well-formed (and meaningful) simple counter name would be:</p>
+<div class="section" id="two-simple-examples">
+<span id="example"></span><h3>Two simple examples<a class="headerlink" href="#two-simple-examples" title="Permalink to this headline">¶</a></h3>
+<p>An instance for a well formed (and meaningful) simple counter name would be:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/threads{locality#0/total}/count/cumulative
 </pre></div>
 </div>
 <p>This counter returns the current cumulative number of executed (retired)
-<em>HPX</em> threads for the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> <code class="docutils literal notranslate"><span class="pre">0</span></code>. The counter type of this counter
+<em>HPX</em>-threads for the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> <code class="docutils literal notranslate"><span class="pre">0</span></code>. The counter type of this counter
 is <code class="docutils literal notranslate"><span class="pre">/threads/count/cumulative</span></code> and the full instance name is
 <code class="docutils literal notranslate"><span class="pre">locality#0/total</span></code>. This counter type does not require an <code class="docutils literal notranslate"><span class="pre">instanceindex</span></code> or
 <code class="docutils literal notranslate"><span class="pre">parameters</span></code> to be specified.</p>
 <p>In this case, the <code class="docutils literal notranslate"><span class="pre">parentindex</span></code> (the <code class="docutils literal notranslate"><span class="pre">'0'</span></code>) designates the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>
 for which the counter instance is created. The counter will return the number of
-<em>HPX</em> threads retired on that particular <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
+<em>HPX</em>-threads retired on that particular <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 <p>Another example for a well formed (aggregate) counter name is:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/statistics{/threads{locality#0/total}/count/cumulative}/average@500
 </pre></div>
@@ -307,15 +304,15 @@ milliseconds).</p>
 </div>
 <div class="section" id="performance-counter-types">
 <span id="types"></span><h3>Performance counter types<a class="headerlink" href="#performance-counter-types" title="Permalink to this headline">¶</a></h3>
-<p>Every performance counter belongs to a specific performance counter type which
+<p>Every Performance Counter belongs to a specific Performance Counter type which
 classifies the counters into groups of common semantics. The type of a counter
 is identified by the <code class="docutils literal notranslate"><span class="pre">objectname</span></code> and the <code class="docutils literal notranslate"><span class="pre">countername</span></code> parts of the name.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/objectname/countername
 </pre></div>
 </div>
 <p>When an application starts <em>HPX</em> will register all available counter types on each of
-the localities. These counter types are held in a special performance counter
-registration database, which can be used to retrieve the meta data related
+the localities. These counter types are held in a special Performance Counter
+registration database which can be later used to retrieve the meta data related
 to a counter type and to create counter instances based on a given counter
 instance name.</p>
 </div>
@@ -323,50 +320,50 @@ instance name.</p>
 <span id="instances"></span><h3>Performance counter instances<a class="headerlink" href="#performance-counter-instances" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">full_instancename</span></code> distinguishes different counter instances of the same
 counter type. The formatting of the <code class="docutils literal notranslate"><span class="pre">full_instancename</span></code> depends on the counter
-type. There are two types of counters: simple counters, which usually generate
-the counter values based on direct measurements, and aggregate counters, which
+type. There are two types of counters: simple counters which usually generate
+the counter values based on direct measurements, and aggregate counters which
 take another counter and transform its values before generating their own
 counter values. An example for a simple counter is given <a class="reference internal" href="#example"><span class="std std-ref">above</span></a>:
-counting retired <em>HPX</em> threads. An aggregate counter is shown as an example
+counting retired <em>HPX</em>-threads. An aggregate counter is shown as an example
 <a class="reference internal" href="#example"><span class="std std-ref">above</span></a> as well: calculating the average of the underlying
 counter values sampled at constant time intervals.</p>
 <p>While simple counters use instance names formatted as
 <code class="docutils literal notranslate"><span class="pre">parentinstancename#parentindex/instancename#instanceindex</span></code>, most aggregate
-counters have the full counter name of the embedded counter as their instance
+counters have the full counter name of the embedded counter as its instance
 name.</p>
-<p>Not all simple counter types require specifying all four elements of a full counter
-instance name; some of the parts (<code class="docutils literal notranslate"><span class="pre">parentinstancename</span></code>, <code class="docutils literal notranslate"><span class="pre">parentindex</span></code>,
+<p>Not all simple counter types require specifying all 4 elements of a full counter
+instance name, some of the parts (<code class="docutils literal notranslate"><span class="pre">parentinstancename</span></code>, <code class="docutils literal notranslate"><span class="pre">parentindex</span></code>,
 <code class="docutils literal notranslate"><span class="pre">instancename</span></code>, and <code class="docutils literal notranslate"><span class="pre">instanceindex</span></code>) are optional for specific counters.
 Please refer to the documentation of a particular counter for more information
 about the formatting requirements for the name of this counter (see
 <a class="reference internal" href="#counters"><span class="std std-ref">Existing HPX performance counters</span></a>).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">parameters</span></code> are used to pass additional information to a counter at
-creation time. They are optional, and they fully depend on the concrete counter.
+creation time. They are optional and they fully depend on the concrete counter.
 Even if a specific counter type allows additional parameters to be given, those
 usually are not required as sensible defaults will be chosen. Please refer to
 the documentation of a particular counter for more information about what
 parameters are supported, how to specify them, and what default values are
 assumed (see also <a class="reference internal" href="#counters"><span class="std std-ref">Existing HPX performance counters</span></a>).</p>
-<p>Every <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> of an application exposes its own set of performance
-counter types and performance counter instances. The set of exposed counters is
+<p>Every <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> of an application exposes its own set of Performance
+Counter types and Performance Counter instances. The set of exposed counters is
 determined dynamically at application start based on the execution environment
 of the application. For instance, this set is influenced by the current hardware
 environment for the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (such as whether the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> has
 access to accelerators), and the software environment of the application (such
-as the number of OS threads used to execute <em>HPX</em> threads).</p>
+as the number of OS-threads used to execute <em>HPX</em>-threads).</p>
 </div>
 <div class="section" id="using-wildcards-in-performance-counter-names">
 <span id="wildcards"></span><h3>Using wildcards in performance counter names<a class="headerlink" href="#using-wildcards-in-performance-counter-names" title="Permalink to this headline">¶</a></h3>
 <p>It is possible to use wildcard characters when specifying performance counter
-names. Performance counter names can contain two types of wildcard characters:</p>
+names. Performance counter names can contain 2 types of wildcard characters:</p>
 <ul class="simple">
 <li><p>Wildcard characters in the performance counter type</p></li>
 <li><p>Wildcard characters in the performance counter instance name</p></li>
 </ul>
-<p>A wildcard character has a meaning which is very close to usual file name
+<p>Wildcard character have a meaning which is very close to usual file name
 wildcard matching rules implemented by common shells (like bash).</p>
-<table class="docutils align-default" id="id10">
-<caption><span class="caption-number">Table 36 </span><span class="caption-text">Wildcard characters in the performance counter type</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">Table 36 </span><span class="caption-text">Wildcard characters in the performance counter type</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -388,8 +385,8 @@ specified within the square brackets.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id11">
-<caption><span class="caption-number">Table 37 </span><span class="caption-text">Wildcard characters in the performance counter instance name</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">Table 37 </span><span class="caption-text">Wildcard characters in the performance counter instance name</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -409,7 +406,7 @@ names.</p></td>
 </div>
 <div class="section" id="consuming-performance-counter-data">
 <span id="consuming"></span><h3>Consuming performance counter data<a class="headerlink" href="#consuming-performance-counter-data" title="Permalink to this headline">¶</a></h3>
-<p>You can consume performance data using either the command line interface,
+<p>You can consume performance data using either the command line interface or via
 the <em>HPX</em> application or the <em>HPX</em> API. The command line interface is easier to
 use, but it is less flexible and does not allow one to adjust the behaviour of
 your application at runtime. The command line interface provides a convenience
@@ -419,14 +416,14 @@ counter data for a set of performance counters.</p>
 <div class="section" id="consuming-performance-counter-data-from-the-command-line">
 <span id="performance-counters-commandline"></span><h3>Consuming performance counter data from the command line<a class="headerlink" href="#consuming-performance-counter-data-from-the-command-line" title="Permalink to this headline">¶</a></h3>
 <p><em>HPX</em> provides a set of predefined command line options for every application
-that uses <code class="docutils literal notranslate"><span class="pre">hpx::init</span></code> for its initialization. While there are many more
+which uses <code class="docutils literal notranslate"><span class="pre">hpx::init</span></code> for its initialization. While there are much more
 command line options available (see <a class="reference internal" href="launching_and_configuring_hpx_applications.html#commandline"><span class="std std-ref">HPX Command Line Options</span></a>), the set of options related
-to performance counters allows one to list existing counters, and query existing
+to Performance Counters allow one to list existing counters, query existing
 counters once at application termination or repeatedly after a constant time
 interval.</p>
 <p>The following table summarizes the available command line options:</p>
-<table class="docutils align-default" id="id12">
-<caption><span class="caption-number">Table 38 </span><span class="caption-text"><em>HPX</em> Command Line Options Related to Performance Counters</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">Table 38 </span><span class="caption-text"><em>HPX</em> Command Line Options Related to Performance Counters</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -436,68 +433,68 @@ interval.</p>
 <td><p>Description</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code></p></td>
-<td><p>Prints the specified performance counter either repeatedly and/or at the
+<td><p>print the specified performance counter either repeatedly and/or at the
 times specified by <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-at</span></code> (see also option
 <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-interval</span></code>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-reset</span></code></p></td>
-<td><p>Prints the specified performance counter either repeatedly and/or at the
-times specified by <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-at</span></code>. Reset the counter after the
-value is queried (see also option <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-interval</span></code>).</p></td>
+<td><p>print the specified performance counter either repeatedly and/or at the
+times specified by <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-at</span></code> reset the counter after the
+value is queried. (see also option <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-interval</span></code>).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-interval</span></code></p></td>
-<td><p>Prints the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
+<td><p>print the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
 repeatedly after the time interval (specified in milliseconds)
 (default:<code class="docutils literal notranslate"><span class="pre">0</span></code> which means print once at shutdown).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-destination</span></code></p></td>
-<td><p>Prints the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
-to the given file (default: console).</p></td>
+<td><p>print the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
+to the given file (default: console)).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:list-counters</span></code></p></td>
-<td><p>Lists the names of all registered performance counters.</p></td>
+<td><p>list the names of all registered performance counters.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:list-counter-infos</span></code></p></td>
-<td><p>Lists the description of all registered performance counters.</p></td>
+<td><p>list the description of all registered performance counters.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-format</span></code></p></td>
-<td><p>Prints the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>.
-Possible formats in CVS format with header or without any header (see
+<td><p>print the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
+possible formats in csv format with header or without any header (see
 option <code class="docutils literal notranslate"><span class="pre">--hpx:no-csv-header</span></code>), possible values: <code class="docutils literal notranslate"><span class="pre">csv</span></code> (prints counter
 values in CSV format with full names as header) <code class="docutils literal notranslate"><span class="pre">csv-short</span></code> (prints
 counter values in CSV format with shortnames provided with
 <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code> as <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span>
-<span class="pre">shortname,full-countername</span></code>).</p></td>
+<span class="pre">shortname,full-countername</span></code>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:no-csv-header</span></code></p></td>
-<td><p>Prints the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
+<td><p>print the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
 and <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">csv-short</span></code> format specified with
 <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-format</span></code> without header.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-at</span> <span class="pre">arg</span></code></p></td>
-<td><p>Prints the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
-(or <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-reset</span></code>) at the given point in time. Possible
+<td><p>print the performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
+(or <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-reset</span></code>) at the given point in time, possible
 argument values: <code class="docutils literal notranslate"><span class="pre">startup</span></code>, <code class="docutils literal notranslate"><span class="pre">shutdown</span></code> (default), <code class="docutils literal notranslate"><span class="pre">noshutdown</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:reset-counters</span></code></p></td>
-<td><p>Resets all performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
-after they have been evaluated.</p></td>
+<td><p>reset all performance counter(s) specified with <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter</span></code>
+after they have been evaluated)</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-types</span></code></p></td>
-<td><p>Appends counter type description to generated output.</p></td>
+<td><p>each locality prints only its own local counters</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--hpx:print-counters-locally</span></code></p></td>
-<td><p>Each locality prints only its own local counters.</p></td>
+<td><p>append counter type description to generated output</p></td>
 </tr>
 </tbody>
 </table>
 <p>While the options <code class="docutils literal notranslate"><span class="pre">--hpx:list-counters</span></code> and <code class="docutils literal notranslate"><span class="pre">--hpx:list-counter-infos</span></code> give
-a short list of all available counters, the full documentation for those can
+a short listing of all available counters, the full documentation for those can
 be found in the section <a class="reference internal" href="#counters"><span class="std std-ref">Existing HPX performance counters</span></a>.</p>
 </div>
 <div class="section" id="a-simple-example">
 <h3>A simple example<a class="headerlink" href="#a-simple-example" title="Permalink to this headline">¶</a></h3>
-<p>All of the commandline options mentioned above can be tested using
+<p>All of the commandline options mentioned above can be for instance tested using
 the <code class="docutils literal notranslate"><span class="pre">hello_world_distributed</span></code> example.</p>
 <p>Listing all available counters <code class="docutils literal notranslate"><span class="pre">hello_world_distributed</span> <span class="pre">--hpx:list-counters</span></code>
 yields:</p>
@@ -511,7 +508,7 @@ sequence number)
 /threads{locality#*/worker-thread#*}/idle-rate
 </pre></div>
 </div>
-<p>Providing more information about all available counters,
+<p>Providing more information about all available counters
 <code class="docutils literal notranslate"><span class="pre">hello_world_distributed</span> <span class="pre">--hpx:list-counter-infos</span></code> yields:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Information about available counter instances (replace * below with the
 appropriate sequence number)
@@ -555,10 +552,10 @@ by invoking <code class="docutils literal notranslate"><span class="pre">hello_w
 </div>
 <p>The first line is the normal output generated by <code class="docutils literal notranslate"><span class="pre">hello_world_distributed</span></code> and
 has no relation to the counter data listed. The last two lines contain the
-counter data as gathered at application shutdown. These lines have six fields, the
+counter data as gathered at application shutdown. These lines have 6 fields, the
 counter name, the sequence number of the counter invocation, the time stamp at
 which this information has been sampled, the unit of measure for the time stamp,
-the actual counter value and an optional unit of measure for the counter value.</p>
+the actual counter value, and an optional unit of measure for the counter value.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The command line option <a href="#id4"><span class="problematic" id="id5">``</span></a>–hpx:print-counter-types` will append a seventh
@@ -599,7 +596,7 @@ wildcards for a (very limited) set of use cases. In particular, all occurrences
 of <code class="docutils literal notranslate"><span class="pre">#*</span></code> as in <code class="docutils literal notranslate"><span class="pre">locality#*</span></code> and in <code class="docutils literal notranslate"><span class="pre">worker-thread#*</span></code> will be automatically
 expanded to the proper set of performance counter names representing the actual
 environment for the executed program. For instance, if your program is utilizing
-four worker threads for the execution of <em>HPX</em> threads (see command line option
+4 worker threads for the execution of HPX threads (see command line option
 <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-threads"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:threads</span></code></a>) the following command line</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hello_world_distributed <span class="se">\</span>
     --hpx:threads<span class="o">=</span><span class="m">4</span> <span class="se">\</span>
@@ -619,7 +616,7 @@ hello world from OS-thread 2 on locality 0
 </pre></div>
 </div>
 <p>The command <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-format</span></code> takes values <code class="docutils literal notranslate"><span class="pre">csv</span></code> and
-<code class="docutils literal notranslate"><span class="pre">csv-short</span></code> to generate CSV formatted counter values with a header.</p>
+<code class="docutils literal notranslate"><span class="pre">csv-short</span></code> to generate CSV formatted counter values with header.</p>
 <p>With format as csv:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hello_world_distributed <span class="se">\</span>
     --hpx:threads<span class="o">=</span><span class="m">2</span> <span class="se">\</span>
@@ -628,8 +625,8 @@ hello world from OS-thread 2 on locality 0
     --hpx:print-counter /threads<span class="o">{</span>locality#*/total<span class="o">}</span>/count/cumulative-phases
 </pre></div>
 </div>
-<p>will print the values of performance counters in CSV format with the full
-countername as a header:</p>
+<p>will print the values of performance counters in CSV format with full
+countername as header:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hello world from OS-thread 1 on locality 0
 hello world from OS-thread 0 on locality 0
 /threads{locality#*/total}/count/cumulative,/threads{locality#*/total}/count/cumulative-phases
@@ -644,8 +641,8 @@ hello world from OS-thread 0 on locality 0
     --hpx:print-counter phases,/threads<span class="o">{</span>locality#*/total<span class="o">}</span>/count/cumulative-phases
 </pre></div>
 </div>
-<p>will print the values of performance counters in CSV format with the short countername
-as a header:</p>
+<p>will print the values of performance counters in CSV format with short countername
+as header:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hello world from OS-thread 1 on locality 0
 hello world from OS-thread 0 on locality 0
 cumulative,phases
@@ -669,7 +666,7 @@ hello world from OS-thread 0 on locality 0
 44,95
 </pre></div>
 </div>
-<p>The command <code class="docutils literal notranslate"><span class="pre">--hpx:no-csv-header</span></code> can be used with
+<p>The command <code class="docutils literal notranslate"><span class="pre">--hpx:no-csv-header</span></code> to be used with
 <code class="docutils literal notranslate"><span class="pre">--hpx:print-counter-format</span></code> to print performance counter values in CSV format
 without any header:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hello_world_distributed <span class="se">\</span>
@@ -689,8 +686,8 @@ hello world from OS-thread 0 on locality 0
 </div>
 <div class="section" id="consuming-performance-counter-data-using-the-hpx-api">
 <span id="api"></span><h3>Consuming performance counter data using the <em>HPX</em> API<a class="headerlink" href="#consuming-performance-counter-data-using-the-hpx-api" title="Permalink to this headline">¶</a></h3>
-<p><em>HPX</em> provides an API that allows users to discover performance counters and
-to retrieve the current value of any existing performance counter from any application.</p>
+<p><em>HPX</em> provides an API allowing to discover performance counters and to retrieve
+the current value of any existing performance counter from any application.</p>
 </div>
 <div class="section" id="discover-existing-performance-counters">
 <h3>Discover existing performance counters<a class="headerlink" href="#discover-existing-performance-counters" title="Permalink to this headline">¶</a></h3>
@@ -705,11 +702,11 @@ client component object for this purpose:</p>
 </div>
 <p>Instantiating an instance of this type will create the performance counter
 identified by the given <code class="docutils literal notranslate"><span class="pre">name</span></code>. Only the first invocation for any given counter
-name will create a new instance of that counter. All following invocations for a
-given counter name will reference the initially created instance. This ensures
-that at any point in time there is never more than one active instance of
+name will create a new instance of that counter, all following invocations for a
+given counter name will reference the initially created instance. This ensures,
+that at any point in time there is always not more than one active instance of
 any of the existing performance counters.</p>
-<p>In order to access the counter value (or to invoke any of the other functionality
+<p>In order to access the counter value (or invoking any of the other functionality
 related to a performance counter, like <code class="docutils literal notranslate"><span class="pre">start</span></code>, <code class="docutils literal notranslate"><span class="pre">stop</span></code> or <code class="docutils literal notranslate"><span class="pre">reset</span></code>) member
 functions of the created client component instance should be called:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// print the current number of threads created on locality 0</span>
@@ -718,7 +715,8 @@ functions of the created client component instance should be called:</p>
 <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">count</span><span class="p">.</span><span class="n">get_value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">().</span><span class="n">get</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>For more information about the client component type, see <a href="#id6"><span class="problematic" id="id7">|</span></a><a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters19performance_counterE" title="hpx::performance_counters::performance_counter"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::performance_counters::performance_counter</span></code></a></p>
+<p>For more information about the client component type see [classref
+hpx::performance_counters::performance_counter].</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the above example <code class="docutils literal notranslate"><span class="pre">count.get_value()</span></code> returns a future. In order to print
@@ -737,22 +735,22 @@ above example like this for more clarity:</p>
 <span id="providing"></span><h3>Providing performance counter data<a class="headerlink" href="#providing-performance-counter-data" title="Permalink to this headline">¶</a></h3>
 <p><em>HPX</em> offers several ways by which you may provide your own data as a
 performance counter. This has the benefit of exposing additional, possibly
-application-specific information using the existing Performance Counter
+application specific information using the existing Performance Counter
 framework, unifying the process of gathering data about your application.</p>
-<p>An application that wants to provide counter data can implement a performance
-counter to provide the data. When a consumer queries performance data, the <em>HPX</em>
+<p>An application that wants to provide counter data can implement a Performance
+Counter to provide the data. When a consumer queries performance data, the <em>HPX</em>
 runtime system calls the provider to collect the data. The runtime system uses
 an internal registry to determine which provider to call.</p>
-<p>Generally, there are two ways of exposing your own performance counter data: a
-simple, function-based way and a more complex, but more powerful way of
-implementing a full performance counter. Both alternatives are described in the
+<p>Generally, there are two ways of exposing your own Performance Counter data: a
+simple, function based way and a more complex, but more powerful way of
+implementing a full Performance Counter. Both alternatives are described in the
 following sections.</p>
 </div>
 <div class="section" id="exposing-performance-counter-data-using-a-simple-function">
 <span id="simple-counters"></span><h3>Exposing performance counter data using a simple function<a class="headerlink" href="#exposing-performance-counter-data-using-a-simple-function" title="Permalink to this headline">¶</a></h3>
 <p>The simplest way to expose arbitrary numeric data is to write a function which
 will then be called whenever a consumer queries this counter. Currently, this
-type of performance counter can only be used to expose integer values. The
+type of Performance Counter can only be used to expose integer values. The
 expected signature of this function is:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">int64_t</span> <span class="n">some_performance_data</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset</span><span class="p">);</span>
 </pre></div>
@@ -773,17 +771,17 @@ evaluating the current value (if applicable).</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This example function exposes a linearly-increasing value as our performance
-data. The value is incremented on each invocation, i.e., each time a consumer
-requests the counter data of this performance counter.</p>
+<p>This example function exposes a linearly increasing value as our performance
+data. The value is incremented on each invocation, e.g. each time a consumer
+requests the counter data of this Performance Counter.</p>
 <p>The next step in exposing this counter to the runtime system is to register the
 function as a new raw counter type using the <em>HPX</em> API function
 <a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringE12counter_typeR10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a>. A counter type
 represents certain common characteristics of counters, like their counter type
-name and any associated description information. The following snippet shows an
-example of how to register the function <code class="docutils literal notranslate"><span class="pre">some_performance_data</span></code>, which is shown
-above, for a counter type named <code class="docutils literal notranslate"><span class="pre">&quot;/test/data&quot;</span></code>. This registration has to be
-executed before any consumer instantiates, and queries an instance of this
+name, and any associated description information. The following snippet shows an
+example of how to register the function <code class="docutils literal notranslate"><span class="pre">some_performance_data</span></code> which is shown
+above for a counter type named <code class="docutils literal notranslate"><span class="pre">&quot;/test/data&quot;</span></code>. This registration has to be
+executed before any consumer instantiates and queries an instance of this
 counter type:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/include/performance_counters.hpp&gt;</span><span class="cp"></span>
 
@@ -800,12 +798,12 @@ counter type:</p>
 </pre></div>
 </div>
 <p>Now it is possible to instantiate a new counter instance based on the naming
-scheme <code class="docutils literal notranslate"><span class="pre">&quot;/test{locality#*/total}/data&quot;</span></code> where <code class="docutils literal notranslate"><span class="pre">*</span></code> is a zero-based integer
+scheme <code class="docutils literal notranslate"><span class="pre">&quot;/test{locality#*/total}/data&quot;</span></code> where <code class="docutils literal notranslate"><span class="pre">*</span></code> is a zero based integer
 index identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> for which the counter instance should be
 accessed. The function
-<a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringE12counter_typeR10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a> enables users to
+<a class="reference internal" href="../libs/performance_counters/api.html#_CPPv4N3hpx20performance_counters20install_counter_typeERKNSt6stringERKN3hpx4util15function_nonserIFNSt7int64_tEbEEERKNSt6stringERKNSt6stringE12counter_typeR10error_code" title="hpx::performance_counters::install_counter_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::performance_counters::install_counter_type</span></code></a> enables to
 instantiate exactly one counter instance for each <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. Repeated
-requests to instantiate such a counter will return the same instance, i.e., the
+requests to instantiate such a counter will return the same instance, e.g. the
 instance created for the first request.</p>
 <p>If this counter needs to be accessed using the standard <em>HPX</em> command line
 options, the registration has to be performed during application startup, before
@@ -828,34 +826,35 @@ initialize the runtime system:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Please see the code in <a class="reference download internal" download="" href="../_downloads/6ced513da39d279ac20afcd856494b77/simplest_performance_counter.cpp"><code class="xref download docutils literal notranslate"><span class="pre">simplest_performance_counter.cpp</span></code></a>
+<p>Please see the code in [hpx_link
+examples/performance_counters/simplest_performance_counter.cpp..simplest_performance_counter.cpp]
 for a full example demonstrating this functionality.</p>
 </div>
 <div class="section" id="implementing-a-full-performance-counter">
 <span id="full-counters"></span><h3>Implementing a full performance counter<a class="headerlink" href="#implementing-a-full-performance-counter" title="Permalink to this headline">¶</a></h3>
-<p>Sometimes, the simple way of exposing a single value as a performance counter is
+<p>Sometimes, the simple way of exposing a single value as a Performance Counter is
 not sufficient. For that reason, <em>HPX</em> provides a means of implementing full
-performance counters which support:</p>
+Performance Counters which support:</p>
 <ul class="simple">
-<li><p>Retrieving the descriptive information about the performance counter</p></li>
+<li><p>Retrieving the descriptive information about the Performance Counter</p></li>
 <li><p>Retrieving the current counter value</p></li>
-<li><p>Resetting the performance counter (value)</p></li>
-<li><p>Starting the performance counter</p></li>
-<li><p>Stopping the performance counter</p></li>
-<li><p>Setting the (initial) value of the performance counter</p></li>
+<li><p>Resetting the Performance Counter (value)</p></li>
+<li><p>Starting the Performance Counter</p></li>
+<li><p>Stopping the Performance Counter</p></li>
+<li><p>Setting the (initial) value of the Performance Counter</p></li>
 </ul>
-<p>Every full performance counter will implement a predefined interface:</p>
-<p>In order to implement a full performance counter, you have to create an <em>HPX</em>
-component exposing this interface. To simplify this task, <em>HPX</em> provides a
-ready-made base class which handles all the boiler plate of creating
-a component for you. The remainder of this section will explain the process of creating a full
-performance counter based on the Sine example, which you can find in the
+<p>Every full Performance Counter will implement a predefined interface:</p>
+<p>In order to implement a full Performance Counter you have to create an <em>HPX</em>
+component exposing this interface. To simplify this task, <em>HPX</em> provides a ready
+made base class which handles all the boiler plate of creating a component for
+you. The remainder of this section will explain the process of creating a full
+Performance Counter based on the Sine example which you can find in the
 directory <code class="docutils literal notranslate"><span class="pre">examples/performance_counters/sine/</span></code>.</p>
 <p>The base class is defined in the header file [hpx_link
 hpx/performance_counters/base_performance_counter.hpp..hpx/performance_counters/base_performance_counter.hpp]
 as:</p>
 <p>The single template parameter is expected to receive the type of the
-derived class implementing the performance counter. In the Sine example
+derived class implementing the Performance Counter. In the Sine example
 this looks like:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//  Copyright (c) 2007-2012 Hartmut Kaiser</span>
 <span class="c1">//</span>
@@ -911,31 +910,32 @@ this looks like:</p>
 <span class="p">}}}</span>
 </pre></div>
 </div>
-<p>i.e., the type <code class="docutils literal notranslate"><span class="pre">sine_counter</span></code> is derived from the base class passing the type
-as a template argument (please see <a class="reference download internal" download="" href="../_downloads/6ced513da39d279ac20afcd856494b77/simplest_performance_counter.cpp"><code class="xref download docutils literal notranslate"><span class="pre">simplest_performance_counter.cpp</span></code></a>
-for the full source code of the counter definition). For more information about this
+<p>i.e. the type <code class="docutils literal notranslate"><span class="pre">sine_counter</span></code> is derived from the base class passing the type
+as a template argument (please see [hpx_link
+examples/performance_counters/sine/server/sine.hpp..sine.hpp] for the full
+source code of the counter definition). For more information about this
 technique (called Curiously Recurring Template Pattern - CRTP), please see for
 instance the corresponding <a class="reference external" href="http://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">Wikipedia article</a>. This base
 class itself is derived from the <code class="docutils literal notranslate"><span class="pre">performance_counter</span></code> interface described
 above.</p>
-<p>Additionally, a full performance counter implementation not only exposes the
-actual value but also provides information about:</p>
+<p>Additionally, a full Performance Counter implementation not only exposes the
+actual value but also provides information about</p>
 <ul class="simple">
-<li><p>The point in time a particular value was retrieved.</p></li>
-<li><p>A (sequential) invocation count.</p></li>
-<li><p>The actual counter value.</p></li>
-<li><p>An optional scaling coefficient.</p></li>
-<li><p>Information about the counter status.</p></li>
+<li><p>The point in time a particular value was retrieved</p></li>
+<li><p>A (sequential) invocation count</p></li>
+<li><p>The actual counter value</p></li>
+<li><p>An optional scaling coefficient</p></li>
+<li><p>Information about the counter status</p></li>
 </ul>
 </div>
 <div class="section" id="existing-hpx-performance-counters">
 <span id="counters"></span><h3>Existing <em>HPX</em> performance counters<a class="headerlink" href="#existing-hpx-performance-counters" title="Permalink to this headline">¶</a></h3>
-<p>The <em>HPX</em> runtime system exposes a wide variety of predefined performance
-counters. These counters expose critical information about different modules of
+<p>The <em>HPX</em> runtime system exposes a wide variety of predefined Performance
+Counters. These counters expose critical information about different modules of
 the runtime system. They can help determine system bottlenecks and fine-tune
 system and application performance.</p>
-<table class="docutils align-default" id="id13">
-<caption><span class="caption-number">Table 39 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> performance counters</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">Table 39 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> performance counters</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -1116,8 +1116,8 @@ the <a class="reference internal" href="../terminology.html#term-AGAS"><span cla
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id14">
-<caption><span class="caption-number">Table 40 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">Parcel</span></a> layer performance counters</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">Table 40 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">Parcel</span></a> layer performance counters</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -1285,7 +1285,7 @@ the corresponding cmake configuration constant is
 messages should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based)
 number identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
 </td>
-<td><p>Returns the overall number of messages <a class="footnote-reference brackets" href="#id9" id="id8">1</a> transferred using the
+<td><p>Returns the overall number of messages <a class="footnote-reference brackets" href="#id7" id="id6">1</a> transferred using the
 specified <code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> by the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> (see
 <code class="docutils literal notranslate"><span class="pre">&lt;operation</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">sent</span></code> or <code class="docutils literal notranslate"><span class="pre">received</span></code>)</p>
 <p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
@@ -1339,8 +1339,8 @@ identifying the <a class="reference internal" href="../terminology.html#term-Loc
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id15">
-<caption><span class="caption-number">Table 41 </span><span class="caption-text">Thread manager performance counters</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">Table 41 </span><span class="caption-text">Thread manager performance counters</span><a class="headerlink" href="#id13" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2230,8 +2230,8 @@ parcelport only.</p>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id16">
-<caption><span class="caption-number">Table 42 </span><span class="caption-text">General performance counters exposing characteristics of localities</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">Table 42 </span><span class="caption-text">General performance counters exposing characteristics of localities</span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2425,8 +2425,8 @@ related data through the /proc file system.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id17">
-<caption><span class="caption-number">Table 43 </span><span class="caption-text">Performance counters exposing PAPI hardware counters</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">Table 43 </span><span class="caption-text">Performance counters exposing PAPI hardware counters</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2469,8 +2469,8 @@ constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_P
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id18">
-<caption><span class="caption-number">Table 44 </span><span class="caption-text">Performance counters for general statistics</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-number">Table 44 </span><span class="caption-text">Performance counters for general statistics</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2617,8 +2617,8 @@ during evaluation <code class="docutils literal notranslate"><span class="pre">1
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id19">
-<caption><span class="caption-number">Table 45 </span><span class="caption-text">Performance counters for elementary arithmetic operations</span><a class="headerlink" href="#id19" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-number">Table 45 </span><span class="caption-text">Performance counters for elementary arithmetic operations</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2717,7 +2717,7 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 <p class="admonition-title">Note</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">/arithmetics</span></code> counters can consume an arbitrary number of other
 counters. For this reason those have to be specified as parameters (a comma
-separated list of counters appended after a <code class="docutils literal notranslate"><span class="pre">'&#64;'</span></code>). For instance:</p>
+separated list of counters appended after a <code class="docutils literal notranslate"><span class="pre">'&#64;'</span></code>. For instance:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./bin/hello_world_distributed -t2 <span class="se">\</span>
     --hpx:print-counter<span class="o">=</span>/threads<span class="o">{</span>locality#0/worker-thread#*<span class="o">}</span>/count/cumulative <span class="se">\</span>
     --hpx:print-counter<span class="o">=</span>/arithmetics/add@/threads<span class="o">{</span>locality#0/worker-thread#*<span class="o">}</span>/count/cumulative
@@ -2738,8 +2738,8 @@ equivalent to specifying both counters separately to <code class="docutils liter
 </pre></div>
 </div>
 </div>
-<table class="docutils align-default" id="id20">
-<caption><span class="caption-number">Table 46 </span><span class="caption-text">Performance counters tracking <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> coalescing</span><a class="headerlink" href="#id20" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-number">Table 46 </span><span class="caption-text">Performance counters tracking <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> coalescing</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 25%" />
 <col style="width: 25%" />
@@ -2849,12 +2849,12 @@ buckets to generate).</p>
 <p>The performance counters related to <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> coalescing are available only if
 the configuration time constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_PARCEL_COALESCING</span></code> is set to
 <code class="docutils literal notranslate"><span class="pre">ON</span></code> (default: <code class="docutils literal notranslate"><span class="pre">ON</span></code>). However, even in this case it will be available
-only for actions that are enabled for parcel coalescing (see the
+only for those actions, which are enabled for parcel coalescing (see the
 macros <code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_ACTION_USES_MESSAGE_COALESCING</span></code> and
 <code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_ACTION_USES_MESSAGE_COALESCING_NOTHROW</span></code>).</p>
 </div>
 <dl class="footnote brackets">
-<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id8">1</a></span></dt>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
 <dd><p>A message can potentially consist of more than one <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a>.</p>
 </dd>
 </dl>
@@ -2865,12 +2865,12 @@ macros <code class="xref c c-macro docutils literal notranslate"><span class="pr
 <p><em>HPX</em> provides integration with <a class="reference external" href="https://khuck.github.io/xpress-apex/">APEX</a>, which is a framework for application
 profiling using task timers and various performance counters. It can be added as
 a <code class="docutils literal notranslate"><span class="pre">git</span></code> submodule by turning on the option <a class="reference internal" href="building_hpx.html#cmdoption-arg-HPX_WITH_APEX-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_APEX:BOOL</span></code></a> during
-CMake configuration. <a class="reference external" href="https://www.cs.uoregon.edu/research/tau/home.php">TAU</a> is an optional dependency when using APEX.</p>
-<p>To build <em>HPX</em> with APEX, add <code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_APEX</span></code><code class="docutils literal notranslate"><span class="pre">=ON</span></code>, and,
-optionally, <code class="docutils literal notranslate"><span class="pre">TAU_ROOT=$PATH_TO_TAU</span></code> to your CMake configuration. In
-addition, you can override the tag used for APEX with the
+<a class="reference external" href="https://www.cmake.org">CMake</a> configuration. <a class="reference external" href="https://www.cs.uoregon.edu/research/tau/home.php">TAU</a> is an optional dependency when using <a class="reference external" href="https://khuck.github.io/xpress-apex/">APEX</a>.</p>
+<p>To build <em>HPX</em> with <a class="reference external" href="https://khuck.github.io/xpress-apex/">APEX</a> add <code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_APEX</span></code><code class="docutils literal notranslate"><span class="pre">=ON</span></code>, and,
+optionally, <code class="docutils literal notranslate"><span class="pre">TAU_ROOT=$PATH_TO_TAU</span></code> to your <a class="reference external" href="https://www.cmake.org">CMake</a> configuration. In
+addition, you can override the tag used for <a class="reference external" href="https://khuck.github.io/xpress-apex/">APEX</a> with the
 <code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_APEX_TAG</span></code> option. Please see the <a class="reference external" href="https://khuck.github.io/xpress-apex/usage/#hpx-louisiana-state-university">APEX <em>HPX</em> documentation</a> for detailed
-instructions on using APEX with <em>HPX</em>.</p>
+instructions on using <a class="reference external" href="https://khuck.github.io/xpress-apex/">APEX</a> with <em>HPX</em>.</p>
 </div>
 </div>
 
@@ -2903,7 +2903,7 @@ instructions on using APEX with <em>HPX</em>.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>64f36d5</code>.
+          Revision <code>344933c</code>.
         </span>
       
 

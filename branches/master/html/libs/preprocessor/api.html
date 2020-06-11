@@ -159,11 +159,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../plugin/api.html">plugin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prefix/api.html">prefix</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">preprocessor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-expand-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/expand.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-nargs-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/nargs.hpp&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-stringize-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/stringize.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-cat-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/cat.hpp&gt;</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-strip-parens-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/strip_parens.hpp&gt;</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-stringize-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/stringize.hpp&gt;</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#include-hpx-preprocessor-expand-hpp"><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/expand.hpp&gt;</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../program_options/api.html">program_options</a></li>
@@ -274,6 +274,32 @@
             
   <div class="section" id="preprocessor">
 <span id="libs-preprocessor-api"></span><h1>preprocessor<a class="headerlink" href="#preprocessor" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="include-hpx-preprocessor-expand-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/expand.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-preprocessor-expand-hpp" title="Permalink to this headline">¶</a></h2>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="cpp macro">
+<dt id="c.HPX_PP_EXPAND">
+<span class="target" id="expand_8hpp_1ac495ac928734ee357b5a251d03ed7fd6"></span><code class="sig-name descname">HPX_PP_EXPAND</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_EXPAND" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The HPX_PP_EXPAND macro performs a double macro-expansion on its argument. <p>This macro can be used to produce a delayed preprocessor expansion.</p>
+<dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>: Token to be expanded twice</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Example: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define MACRO(a, b, c) (a)(b)(c)</span>
+<span class="cp">#define ARGS() (1, 2, 3)</span>
+
+<span class="n">HPX_PP_EXPAND</span><span class="p">(</span><span class="n">MACRO</span> <span class="n">ARGS</span><span class="p">())</span> <span class="c1">// expands to (1)(2)(3)</span>
+</pre></div>
+</div>
+ </p>
+</dd></dl>
+
+</div>
+</div>
 <div class="section" id="include-hpx-preprocessor-nargs-hpp">
 <h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/nargs.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-preprocessor-nargs-hpp" title="Permalink to this headline">¶</a></h2>
 <div class="breathe-sectiondef docutils container">
@@ -301,6 +327,26 @@
 </pre></div>
 </div>
  </p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="include-hpx-preprocessor-stringize-hpp">
+<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/stringize.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-preprocessor-stringize-hpp" title="Permalink to this headline">¶</a></h2>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="cpp macro">
+<dt id="c.HPX_PP_STRINGIZE">
+<span class="target" id="stringize_8hpp_1a2a968cc9de4ad057917d1db5b7b862b7"></span><code class="sig-name descname">HPX_PP_STRINGIZE</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_STRINGIZE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The <em>HPX_PP_STRINGIZE</em> macro stringizes its argument after it has been expanded.</p>
+<p><p>The passed argument </p>
+<code class="docutils literal notranslate"><span class="pre">X</span></code> will expand to <code class="docutils literal notranslate"><span class="pre">&quot;X&quot;</span></code>. Note that the stringizing operator (#) prevents arguments from expanding. This macro circumvents this shortcoming. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>: The text to be converted to a string literal</p></li>
+</ul>
+</dd>
+</dl>
+</p>
 </dd></dl>
 
 </div>
@@ -355,52 +401,6 @@
 
 </div>
 </div>
-<div class="section" id="include-hpx-preprocessor-stringize-hpp">
-<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/stringize.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-preprocessor-stringize-hpp" title="Permalink to this headline">¶</a></h2>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Defines</p>
-<dl class="cpp macro">
-<dt id="c.HPX_PP_STRINGIZE">
-<span class="target" id="stringize_8hpp_1a2a968cc9de4ad057917d1db5b7b862b7"></span><code class="sig-name descname">HPX_PP_STRINGIZE</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_STRINGIZE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The <em>HPX_PP_STRINGIZE</em> macro stringizes its argument after it has been expanded.</p>
-<p><p>The passed argument </p>
-<code class="docutils literal notranslate"><span class="pre">X</span></code> will expand to <code class="docutils literal notranslate"><span class="pre">&quot;X&quot;</span></code>. Note that the stringizing operator (#) prevents arguments from expanding. This macro circumvents this shortcoming. <dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>: The text to be converted to a string literal</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-</div>
-</div>
-<div class="section" id="include-hpx-preprocessor-expand-hpp">
-<h2><code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;hpx/preprocessor/expand.hpp&gt;</span></code><a class="headerlink" href="#include-hpx-preprocessor-expand-hpp" title="Permalink to this headline">¶</a></h2>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Defines</p>
-<dl class="cpp macro">
-<dt id="c.HPX_PP_EXPAND">
-<span class="target" id="expand_8hpp_1ac495ac928734ee357b5a251d03ed7fd6"></span><code class="sig-name descname">HPX_PP_EXPAND</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PP_EXPAND" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The HPX_PP_EXPAND macro performs a double macro-expansion on its argument. <p>This macro can be used to produce a delayed preprocessor expansion.</p>
-<dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>: Token to be expanded twice</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-<p>Example: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define MACRO(a, b, c) (a)(b)(c)</span>
-<span class="cp">#define ARGS() (1, 2, 3)</span>
-
-<span class="n">HPX_PP_EXPAND</span><span class="p">(</span><span class="n">MACRO</span> <span class="n">ARGS</span><span class="p">())</span> <span class="c1">// expands to (1)(2)(3)</span>
-</pre></div>
-</div>
- </p>
-</dd></dl>
-
-</div>
-</div>
 </div>
 
 
@@ -432,7 +432,7 @@
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>054a0b4</code>.
+          Revision <code>1ade191</code>.
         </span>
       
 

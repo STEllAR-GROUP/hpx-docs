@@ -329,6 +329,22 @@ priority instead of using a separate thread pool.</p>
 <p>In order to create custom thread pools the resource partitioner needs to be set
 up before <em>HPX</em> is initialized by creating an instance of
 <a class="reference internal" href="../libs/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitionerE" title="hpx::resource::partitioner"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::resource::partitioner</span></code></a>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_init.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/resource_partitioner/partitioner.hpp&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Setup the init parameters</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>Note that we have to pass <code class="docutils literal notranslate"><span class="pre">argc</span></code> and <code class="docutils literal notranslate"><span class="pre">argv</span></code> to the resource partitioner to
 be able to parse thread binding options passed on the command line. You should
 pass the same arguments to the <a class="reference internal" href="../libs/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitionerE" title="hpx::resource::partitioner"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::resource::partitioner</span></code></a>
@@ -349,6 +365,50 @@ iterate through the topology to add the wanted processing units to the thread
 pool. Below is an example of adding all processing units from the first NUMA
 domain to a custom thread pool, unless there is only one NUMA domain in which
 case we leave the first processing unit for the default thread pool:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_init.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/resource_partitioner/partitioner.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">init_resource_partitioner_handler</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">partitioner</span><span class="o">&amp;</span> <span class="n">rp</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">rp</span><span class="p">.</span><span class="n">create_thread_pool</span><span class="p">(</span><span class="s">&quot;my-thread-pool&quot;</span><span class="p">);</span>
+
+    <span class="kt">bool</span> <span class="n">one_numa_domain</span> <span class="o">=</span> <span class="n">rp</span><span class="p">.</span><span class="n">numa_domains</span><span class="p">().</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">skipped_first_pu</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">numa_domain</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">rp</span><span class="p">.</span><span class="n">numa_domains</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">core</span><span class="o">&amp;</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">d</span><span class="p">.</span><span class="n">cores</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">pu</span><span class="o">&amp;</span> <span class="nl">p</span> <span class="p">:</span> <span class="n">c</span><span class="p">.</span><span class="n">pus</span><span class="p">())</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">one_numa_domain</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">skipped_first_pu</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">skipped_first_pu</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="k">continue</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">rp</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s">&quot;my-thread-pool&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="c1">// Set the callback to init the thread_pools</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
+    <span class="n">init_args</span><span class="p">.</span><span class="n">rp_callback</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">init_resource_partitioner_handler</span><span class="p">;</span>
+
+    <span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Whatever processing units not assigned to a thread pool by the time
@@ -425,7 +485,7 @@ folder for examples of advanced resource partitioner usage:
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>b06637a</code>.
+          Revision <code>64244bf</code>.
         </span>
       
 

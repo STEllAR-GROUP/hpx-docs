@@ -845,6 +845,142 @@ performance counters which support:</p>
 <li><p>Setting the (initial) value of the performance counter</p></li>
 </ul>
 <p>Every full performance counter will implement a predefined interface:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//  Copyright (c) 2007-2020 Hartmut Kaiser</span>
+<span class="c1">//</span>
+<span class="c1">//  SPDX-License-Identifier: BSL-1.0</span>
+<span class="c1">//  Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
+<span class="c1">//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
+
+<span class="cp">#pragma once</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/async_base/launch_policy.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/functional/bind_front.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/futures/future.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/modules/execution.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/runtime/components/client_base.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/performance_counters/counters_fwd.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/performance_counters/server/base_performance_counter.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
+<span class="k">namespace</span> <span class="n">hpx</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">performance_counters</span> <span class="p">{</span>
+
+    <span class="c1">///////////////////////////////////////////////////////////////////////////</span>
+    <span class="k">struct</span> <span class="n">HPX_EXPORT</span> <span class="nl">performance_counter</span>
+      <span class="p">:</span> <span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span><span class="n">performance_counter</span><span class="p">,</span>
+            <span class="n">server</span><span class="o">::</span><span class="n">base_performance_counter</span><span class="o">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">using</span> <span class="n">base_type</span> <span class="o">=</span> <span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span><span class="n">performance_counter</span><span class="p">,</span>
+            <span class="n">server</span><span class="o">::</span><span class="n">base_performance_counter</span><span class="o">&gt;</span><span class="p">;</span>
+
+        <span class="n">performance_counter</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="n">performance_counter</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">);</span>
+
+        <span class="n">performance_counter</span><span class="p">(</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">locality</span><span class="p">);</span>
+
+        <span class="n">performance_counter</span><span class="p">(</span><span class="n">id_type</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">id</span><span class="p">)</span>
+          <span class="o">:</span> <span class="n">base_type</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+
+        <span class="n">performance_counter</span><span class="p">(</span><span class="n">future</span><span class="o">&lt;</span><span class="n">id_type</span><span class="o">&gt;&amp;&amp;</span> <span class="n">id</span><span class="p">)</span>
+          <span class="o">:</span> <span class="n">base_type</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+
+        <span class="n">performance_counter</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">performance_counter</span><span class="o">&gt;&amp;&amp;</span> <span class="n">c</span><span class="p">)</span>
+          <span class="o">:</span> <span class="n">base_type</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+
+        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
+        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_info</span><span class="o">&gt;</span> <span class="n">get_info</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+        <span class="n">counter_info</span> <span class="nf">get_info</span><span class="p">(</span>
+            <span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_value</span><span class="o">&gt;</span> <span class="n">get_counter_value</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+        <span class="n">counter_value</span> <span class="nf">get_counter_value</span><span class="p">(</span>
+            <span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
+
+        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_value</span><span class="o">&gt;</span> <span class="n">get_counter_value</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+        <span class="n">counter_value</span> <span class="nf">get_counter_value</span><span class="p">(</span>
+            <span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_values_array</span><span class="o">&gt;</span> <span class="n">get_counter_values_array</span><span class="p">(</span>
+            <span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+        <span class="n">counter_values_array</span> <span class="nf">get_counter_values_array</span><span class="p">(</span>
+            <span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
+
+        <span class="n">future</span><span class="o">&lt;</span><span class="n">counter_values_array</span><span class="o">&gt;</span> <span class="n">get_counter_values_array</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+        <span class="n">counter_values_array</span> <span class="nf">get_counter_values_array</span><span class="p">(</span>
+            <span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
+        <span class="n">future</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">();</span>
+        <span class="kt">bool</span> <span class="nf">start</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
+
+        <span class="n">future</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">stop</span><span class="p">();</span>
+        <span class="kt">bool</span> <span class="nf">stop</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
+
+        <span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">reset</span><span class="p">();</span>
+        <span class="kt">void</span> <span class="nf">reset</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
+
+        <span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">reinit</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">true</span><span class="p">);</span>
+        <span class="kt">void</span> <span class="nf">reinit</span><span class="p">(</span>
+            <span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">true</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
+
+        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
+        <span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">get_name</span><span class="p">(</span>
+            <span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="k">private</span><span class="o">:</span>
+        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+        <span class="k">static</span> <span class="n">T</span> <span class="n">extract_value</span><span class="p">(</span><span class="n">future</span><span class="o">&lt;</span><span class="n">counter_value</span><span class="o">&gt;&amp;&amp;</span> <span class="n">value</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">value</span><span class="p">.</span><span class="n">get</span><span class="p">().</span><span class="n">get_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="p">}</span>
+
+    <span class="k">public</span><span class="o">:</span>
+        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+        <span class="n">future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">get_value</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">get_counter_value</span><span class="p">(</span><span class="n">reset</span><span class="p">).</span><span class="n">then</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span>
+                <span class="n">util</span><span class="o">::</span><span class="n">bind_front</span><span class="p">(</span><span class="o">&amp;</span><span class="n">performance_counter</span><span class="o">::</span><span class="n">extract_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+        <span class="n">T</span> <span class="n">get_value</span><span class="p">(</span>
+            <span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">reset</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">get_counter_value</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span> <span class="n">reset</span><span class="p">).</span><span class="n">get_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+        <span class="n">future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">get_value</span><span class="p">()</span> <span class="k">const</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">get_counter_value</span><span class="p">().</span><span class="n">then</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span>
+                <span class="n">util</span><span class="o">::</span><span class="n">bind_front</span><span class="p">(</span><span class="o">&amp;</span><span class="n">performance_counter</span><span class="o">::</span><span class="n">extract_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+        <span class="n">T</span> <span class="n">get_value</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync_policy</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">)</span> <span class="k">const</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">get_counter_value</span><span class="p">(</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">).</span><span class="n">get_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="c1">// Return all counters matching the given name (with optional wild cards).</span>
+    <span class="n">HPX_EXPORT</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">performance_counter</span><span class="o">&gt;</span> <span class="n">discover_counters</span><span class="p">(</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">throws</span><span class="p">);</span>
+<span class="p">}}</span>    <span class="c1">// namespace hpx::performance_counters</span>
+</pre></div>
+</div>
 <p>In order to implement a full performance counter, you have to create an <em>HPX</em>
 component exposing this interface. To simplify this task, <em>HPX</em> provides a
 ready-made base class which handles all the boiler plate of creating
@@ -854,6 +990,62 @@ directory <code class="docutils literal notranslate"><span class="pre">examples/
 <p>The base class is defined in the header file [hpx_link
 hpx/performance_counters/base_performance_counter.hpp..hpx/performance_counters/base_performance_counter.hpp]
 as:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//  Copyright (c) 2007-2018 Hartmut Kaiser</span>
+<span class="c1">//</span>
+<span class="c1">//  SPDX-License-Identifier: BSL-1.0</span>
+<span class="c1">//  Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
+<span class="c1">//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
+
+<span class="cp">#pragma once</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/performance_counters/counters.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/performance_counters/server/base_performance_counter.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/runtime/actions/component_action.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/runtime/components/component_type.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/runtime/components/server/component_base.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">//[performance_counter_base_class</span>
+<span class="k">namespace</span> <span class="n">hpx</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">performance_counters</span> <span class="p">{</span>
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Derived</span><span class="o">&gt;</span>
+    <span class="k">class</span> <span class="nc">base_performance_counter</span><span class="p">;</span>
+<span class="p">}}</span>    <span class="c1">// namespace hpx::performance_counters</span>
+<span class="c1">//]</span>
+
+<span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
+<span class="k">namespace</span> <span class="n">hpx</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">performance_counters</span> <span class="p">{</span>
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Derived</span><span class="o">&gt;</span>
+    <span class="k">class</span> <span class="nc">base_performance_counter</span>
+      <span class="o">:</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">base_performance_counter</span>
+      <span class="p">,</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">&gt;</span>
+    <span class="p">{</span>
+    <span class="k">private</span><span class="o">:</span>
+        <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">&gt;</span> <span class="n">base_type</span><span class="p">;</span>
+
+    <span class="k">public</span><span class="o">:</span>
+        <span class="k">typedef</span> <span class="n">Derived</span> <span class="n">type_holder</span><span class="p">;</span>
+        <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">base_performance_counter</span>
+            <span class="n">base_type_holder</span><span class="p">;</span>
+
+        <span class="n">base_performance_counter</span><span class="p">()</span> <span class="p">{}</span>
+
+        <span class="n">base_performance_counter</span><span class="p">(</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">counter_info</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">info</span><span class="p">)</span>
+          <span class="o">:</span> <span class="n">base_type_holder</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Disambiguate finalize() which is implemented in both base classes</span>
+        <span class="kt">void</span> <span class="n">finalize</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">base_type_holder</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
+            <span class="n">base_type</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">}}</span>    <span class="c1">// namespace hpx::performance_counters</span>
+</pre></div>
+</div>
 <p>The single template parameter is expected to receive the type of the
 derived class implementing the performance counter. In the Sine example
 this looks like:</p>
@@ -2256,7 +2448,7 @@ number identifying the <a class="reference internal" href="../terminology.html#t
 specified type on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p></td>
 <td><p>The type of the component. This is the string which has been used while
 registering the component with <em>HPX</em>, e.g. which has been passed as the
-second parameter to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_COMPONENT" title="HPX_REGISTER_COMPONENT"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_COMPONENT</span></code></a>.</p></td>
+second parameter to the macro <a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_COMPONENT" title="HPX_REGISTER_COMPONENT"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_COMPONENT</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/count/action-invocation</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
@@ -2271,8 +2463,8 @@ number identifying the <a class="reference internal" href="../terminology.html#t
 on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p></td>
 <td><p>The action type. This is the string which has been used while registering
 the action with <em>HPX</em>, e.g. which has been passed as the second parameter
-to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
-<a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p></td>
+to the macro <a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
+<a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/count/remote-action-invocation</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
@@ -2285,8 +2477,8 @@ based) number identifying the <a class="reference internal" href="../terminology
 type on the given <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p></td>
 <td><p>The action type. This is the string which has been used while registering
 the action with <em>HPX</em>, e.g. which has been passed as the second parameter
-to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
-<a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p></td>
+to the macro <a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
+<a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/runtime/uptime</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
@@ -2764,8 +2956,8 @@ id is a (zero based) number identifying the <a class="reference internal" href="
 associated with the action which is given by the counter parameter.</p></td>
 <td><p>The action type. This is the string which has been used while registering
 the action with <em>HPX</em>, e.g. which has been passed as the second parameter
-to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
-<a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p></td>
+to the macro <a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
+<a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/coalescing/count/messages</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
@@ -2778,8 +2970,8 @@ id is a (zero based) number identifying the <a class="reference internal" href="
 associated with the action which is given by the counter parameter.</p></td>
 <td><p>The action type. This is the string which has been used while registering
 the action with <em>HPX</em>, e.g. which has been passed as the second parameter
-to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
-<a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p></td>
+to the macro <a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
+<a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/coalescing/count/average-parcels-per-message</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
@@ -2793,8 +2985,8 @@ message handler associated with the action which is given by the counter
 parameter.</p></td>
 <td><p>The action type. This is the string which has been used while registering
 the action with <em>HPX</em>, e.g. which has been passed as the second parameter
-to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
-<a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a></p></td>
+to the macro <a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
+<a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/coalescing/time/average-parcel-arrival</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
@@ -2808,8 +3000,8 @@ between parcels for the given action should be queried for. The
 action which is given by the counter parameter.</p></td>
 <td><p>The action type. This is the string which has been used while registering
 the action with <em>HPX</em>, e.g. which has been passed as the second parameter
-to the macro <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
-<a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a></p></td>
+to the macro <a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or
+<a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/coalescing/time/parcel-arrival-histogram</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
@@ -2834,7 +3026,7 @@ which corresponds to a percentage value between <code class="docutils literal no
 <td><p>The action type and optional histogram parameters. The action type is
 the string which has been used while registering the action with <em>HPX</em>,
 e.g. which has been passed as the second parameter to the macro
-<a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or <a class="reference internal" href="../api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p>
+<a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION" title="HPX_REGISTER_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code></a> or <a class="reference internal" href="../api/full_api.html#c.HPX_REGISTER_ACTION_ID" title="HPX_REGISTER_ACTION_ID"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION_ID</span></code></a>.</p>
 <p>The action type may be followed by a comma separated list of up-to three
 numbers: the lower and upper boundaries for the collected histogram, and
 the number of buckets for the histogram to generate. By default these
@@ -2904,7 +3096,7 @@ instructions on using APEX with <em>HPX</em>.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>b06637a</code>.
+          Revision <code>64244bf</code>.
         </span>
       
 

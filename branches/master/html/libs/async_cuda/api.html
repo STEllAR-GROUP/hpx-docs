@@ -1,0 +1,1077 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>async_cuda &mdash; HPX master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="async_distributed" href="../async_distributed/api.html" />
+    <link rel="prev" title="async_combinators" href="../async_combinators/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> HPX
+          
+
+          
+            
+            <img src="../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../all_modules.html">All modules</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../api/public_api.html">Public API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../affinity/api.html">affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">async_cuda</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-async-cuda-cublas-executor-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cublas_executor.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-async-cuda-cuda-event-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cuda_event.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-async-cuda-cuda-exception-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cuda_exception.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-async-cuda-cuda-executor-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cuda_executor.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-async-cuda-cuda-future-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cuda_future.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-async-cuda-get-targets-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/get_targets.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-async-cuda-target-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/target.hpp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../async_distributed/api.html">async_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_mpi/api.html">async_mpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collectives/api.html">collectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../command_line_handling/api.html">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config_registry/api.html">config_registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../distributed_executors/api.html">distributed_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution_base/api.html">execution_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../init_runtime/api.html">init_runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../itt_notify/api.html">itt_notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_distributed/api.html">lcos_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logging/api.html">logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpi_base/api.html">mpi_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pack_traversal/api.html">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_local/api.html">runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistics/api.html">statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../string_util/api.html">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/api.html">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_executors/api.html">thread_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timed_execution/api.html">timed_execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../version/api.html">version</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../api.html">API reference</a> &raquo;</li>
+        
+      <li>async_cuda</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/async_cuda/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="async-cuda">
+<span id="libs-async-cuda-api"></span><h1>async_cuda<a class="headerlink" href="#async-cuda" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this module can be included with the header
+<code class="docutils literal notranslate"><span class="pre">hpx/modules/async_cuda.hpp</span></code>. These headers may be used by user-code but are not
+guaranteed stable (neither header location nor contents). You are using these at
+your own risk. If you wish to use non-public functionality from a module we
+<em>strongly</em> suggest only including the module header <code class="docutils literal notranslate"><span class="pre">hpx/modules/async_cuda.hpp</span></code>, not
+the particular header in which the functionality you would like to use is
+defined. See <a class="reference internal" href="../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names that are part of the public
+<em>HPX</em> API.</p>
+<div class="section" id="header-hpx-async-cuda-cublas-executor-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cublas_executor.hpp</span></code><a class="headerlink" href="#header-hpx-async-cuda-cublas-executor-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4cudaE">
+<span id="_CPPv3N3hpx4cudaE"></span><span id="_CPPv2N3hpx4cudaE"></span><span id="hpx::cuda"></span><span class="target" id="namespacehpx_1_1cuda"></span><em class="property">namespace </em><code class="sig-name descname">cuda</code><a class="headerlink" href="#_CPPv4N3hpx4cudaE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda18check_cublas_errorE14cublasStatus_t">
+<span id="_CPPv3N3hpx4cuda18check_cublas_errorE14cublasStatus_t"></span><span id="_CPPv2N3hpx4cuda18check_cublas_errorE14cublasStatus_t"></span><span id="hpx::cuda::check_cublas_error__cublasStatus_t"></span><span class="target" id="namespacehpx_1_1cuda_1aa16ef7739d138f0f6bc6d15ce26ab240"></span>cublasStatus_t <code class="sig-name descname">check_cublas_error</code><span class="sig-paren">(</span>cublasStatus_t <em>err</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda18check_cublas_errorE14cublasStatus_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4cuda16cublas_exceptionE">
+<span id="_CPPv3N3hpx4cuda16cublas_exceptionE"></span><span id="_CPPv2N3hpx4cuda16cublas_exceptionE"></span><span id="hpx::cuda::cublas_exception"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__exception"></span><em class="property">struct </em><code class="sig-name descname">cublas_exception</code> : <em class="property">public</em> <a class="reference internal" href="../errors/api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a><a class="headerlink" href="#_CPPv4N3hpx4cuda16cublas_exceptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;cublas_executor.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda16cublas_exception16cublas_exceptionERKNSt6stringE14cublasStatus_t">
+<span id="_CPPv3N3hpx4cuda16cublas_exception16cublas_exceptionERKNSt6stringE14cublasStatus_t"></span><span id="_CPPv2N3hpx4cuda16cublas_exception16cublas_exceptionERKNSt6stringE14cublasStatus_t"></span><span id="hpx::cuda::cublas_exception::cublas_exception__ssCR.cublasStatus_t"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__exception_1a31bbba2c2cfea382bd2cbd24a60a0866"></span><code class="sig-name descname">cublas_exception</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string &amp;<em>msg</em>, cublasStatus_t <em>err</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda16cublas_exception16cublas_exceptionERKNSt6stringE14cublasStatus_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda16cublas_exception20get_cublas_errorcodeEv">
+<span id="_CPPv3N3hpx4cuda16cublas_exception20get_cublas_errorcodeEv"></span><span id="_CPPv2N3hpx4cuda16cublas_exception20get_cublas_errorcodeEv"></span><span id="hpx::cuda::cublas_exception::get_cublas_errorcode"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__exception_1a3bb5483bf30ab2b7db61cad954ae3f29"></span>cublasStatus_t <code class="sig-name descname">get_cublas_errorcode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda16cublas_exception20get_cublas_errorcodeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda16cublas_exception4err_E">
+<span id="_CPPv3N3hpx4cuda16cublas_exception4err_E"></span><span id="_CPPv2N3hpx4cuda16cublas_exception4err_E"></span><span id="hpx::cuda::cublas_exception::err___cublasStatus_t"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__exception_1a69a90747c2a1ef587f3183de96b9d3db"></span>cublasStatus_t <code class="sig-name descname">err_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda16cublas_exception4err_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4cuda15cublas_executorE">
+<span id="_CPPv3N3hpx4cuda15cublas_executorE"></span><span id="_CPPv2N3hpx4cuda15cublas_executorE"></span><span id="hpx::cuda::cublas_executor"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor"></span><em class="property">struct </em><code class="sig-name descname">cublas_executor</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx4cudaE" title="hpx::cuda">cuda</a>::<a class="reference internal" href="#_CPPv4N3hpx4cuda13cuda_executorE" title="hpx::cuda::cuda_executor">cuda_executor</a><a class="headerlink" href="#_CPPv4N3hpx4cuda15cublas_executorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;cublas_executor.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4cuda15cublas_executor10handle_ptrE">
+<span id="_CPPv3N3hpx4cuda15cublas_executor10handle_ptrE"></span><span id="_CPPv2N3hpx4cuda15cublas_executor10handle_ptrE"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1ad504f70317cf73b9874d0dcb491d4d0d"></span><em class="property">using </em><code class="sig-name descname">handle_ptr</code> = <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::shared_ptr&lt;<em class="property">struct</em> cublasContext&gt;<a class="headerlink" href="#_CPPv4N3hpx4cuda15cublas_executor10handle_ptrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda15cublas_executor15cublas_executorENSt6size_tE19cublasPointerMode_tb">
+<span id="_CPPv3N3hpx4cuda15cublas_executor15cublas_executorENSt6size_tE19cublasPointerMode_tb"></span><span id="_CPPv2N3hpx4cuda15cublas_executor15cublas_executorENSt6size_tE19cublasPointerMode_tb"></span><span id="hpx::cuda::cublas_executor::cublas_executor__std::s.cublasPointerMode_t.b"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1a500ff8183503ad3872064b640a8acd6a"></span><code class="sig-name descname">cublas_executor</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>device</em>, cublasPointerMode_t <em>pointer_mode</em> = CUBLAS_POINTER_MODE_HOST, bool <em>event_mode</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda15cublas_executor15cublas_executorENSt6size_tE19cublasPointerMode_tb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda15cublas_executorD0Ev">
+<span id="_CPPv3N3hpx4cuda15cublas_executorD0Ev"></span><span id="_CPPv2N3hpx4cuda15cublas_executorD0Ev"></span><span id="hpx::cuda::cublas_executor::~cublas_executor"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1a16ea30ce43c272db1d7f620cb2645f46"></span><code class="sig-name descname">~cublas_executor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda15cublas_executorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx4cuda15cublas_executor4postEDcRR1FDpRR2Ts">
+<span id="_CPPv3I0DpEN3hpx4cuda15cublas_executor4postERR1FDpRR2Ts"></span><span id="_CPPv2I0DpEN3hpx4cuda15cublas_executor4postERR1FDpRR2Ts"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1ae2ffe1d7f305ff405247947ab65513b4"></span>template&lt;typename <code class="sig-name descname">F</code>, typename ...<code class="sig-name descname">Ts</code>&gt;<br />decltype(auto) <code class="sig-name descname">post</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx4cuda15cublas_executor4postEDcRR1FDpRR2Ts" title="hpx::cuda::cublas_executor::post::F">F</a> &amp;&amp;<em>f</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4cuda15cublas_executor4postEDcRR1FDpRR2Ts" title="hpx::cuda::cublas_executor::post::Ts">Ts</a>&amp;&amp;... <em>ts</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4cuda15cublas_executor4postEDcRR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx4cuda15cublas_executor13async_executeEDcRR1FDpRR2Ts">
+<span id="_CPPv3I0DpEN3hpx4cuda15cublas_executor13async_executeERR1FDpRR2Ts"></span><span id="_CPPv2I0DpEN3hpx4cuda15cublas_executor13async_executeERR1FDpRR2Ts"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1a1c0b0802423145d6ffe5a7b860fe19e4"></span>template&lt;typename <code class="sig-name descname">F</code>, typename ...<code class="sig-name descname">Ts</code>&gt;<br />decltype(auto) <code class="sig-name descname">async_execute</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx4cuda15cublas_executor13async_executeEDcRR1FDpRR2Ts" title="hpx::cuda::cublas_executor::async_execute::F">F</a> &amp;&amp;<em>f</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4cuda15cublas_executor13async_executeEDcRR1FDpRR2Ts" title="hpx::cuda::cublas_executor::async_execute::Ts">Ts</a>&amp;&amp;... <em>ts</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4cuda15cublas_executor13async_executeEDcRR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueE1RE4typeEPF1RDp6ParamsEDpRR4Args">
+<span id="_CPPv3I0DpDpEN3hpx4cuda15cublas_executor5applyEPF1RDp6ParamsEDpRR4Args"></span><span id="_CPPv2I0DpDpEN3hpx4cuda15cublas_executor5applyEPF1RDp6ParamsEDpRR4Args"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1a196fb0932d46d7f6da0364320b2c968c"></span>template&lt;typename <code class="sig-name descname">R</code>, typename ...<code class="sig-name descname">Params</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br /><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::is_same&lt;cublasStatus_t, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueE1RE4typeEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::apply::R">R</a>&gt;::value, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueE1RE4typeEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::apply::R">R</a>&gt;::type <code class="sig-name descname">apply</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueE1RE4typeEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::apply::R">R</a> (*<em>cublas_function</em>)<span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueE1RE4typeEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::apply::Params">Params</a>...<span class="sig-paren">)</span>, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueE1RE4typeEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::apply::Args">Args</a>&amp;&amp;... <em>args</em>, <span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueE1RE4typeEPF1RDp6ParamsEDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEPF1RDp6ParamsEDpRR4Args">
+<span id="_CPPv3I0DpDpEN3hpx4cuda15cublas_executor5applyEPF1RDp6ParamsEDpRR4Args"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1affa7625823b27126c627a469fa81dd4a"></span>template&lt;typename <code class="sig-name descname">R</code>, typename ...<code class="sig-name descname">Params</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br /><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::is_same&lt;cudaError_t, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::apply::R">R</a>&gt;::value, void&gt;::type <code class="sig-name descname">apply</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::apply::R">R</a> (*<em>cuda_function</em>)<span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::apply::Params">Params</a>...<span class="sig-paren">)</span>, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::apply::Args">Args</a>&amp;&amp;... <em>args</em>, <span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5applyENSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEPF1RDp6ParamsEDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args">
+<span id="_CPPv3I0DpDpEN3hpx4cuda15cublas_executor5asyncEPF1RDp6ParamsEDpRR4Args"></span><span id="_CPPv2I0DpDpEN3hpx4cuda15cublas_executor5asyncEPF1RDp6ParamsEDpRR4Args"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1ab5d48ba2d9231544f6fd613bd5b94beb"></span>template&lt;typename <code class="sig-name descname">R</code>, typename ...<code class="sig-name descname">Params</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br /><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;<em class="property">typename</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::is_same&lt;cublasStatus_t, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::async::R">R</a>&gt;::value, void&gt;::type&gt; <code class="sig-name descname">async</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::async::R">R</a> (*<em>cublas_function</em>)<span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::async::Params">Params</a>...<span class="sig-paren">)</span>, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::async::Args">Args</a>&amp;&amp;... <em>args</em>, <span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI14cublasStatus_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args">
+<span id="_CPPv3I0DpDpEN3hpx4cuda15cublas_executor5asyncEPF1RDp6ParamsEDpRR4Args"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1a0cb162e8d400b6159baacaa301f9ca96"></span>template&lt;typename <code class="sig-name descname">R</code>, typename ...<code class="sig-name descname">Params</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br /><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;<em class="property">typename</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::is_same&lt;cudaError_t, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::async::R">R</a>&gt;::value, void&gt;::type&gt; <code class="sig-name descname">async</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::async::R">R</a> (*<em>cuda_function</em>)<span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::async::Params">Params</a>...<span class="sig-paren">)</span>, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cublas_executor::async::Args">Args</a>&amp;&amp;... <em>args</em>, <span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpDpEN3hpx4cuda15cublas_executor5asyncEN3hpx6futureINSt9enable_ifINSt7is_sameI11cudaError_t1RE5valueEvE4typeEEEPF1RDp6ParamsEDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda15cublas_executor10get_handleEv">
+<span id="_CPPv3N3hpx4cuda15cublas_executor10get_handleEv"></span><span id="_CPPv2N3hpx4cuda15cublas_executor10get_handleEv"></span><span id="hpx::cuda::cublas_executor::get_handle"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1a122ce39bfab3d8ef140f37f1bcbe0da3"></span>cublasHandle_t <code class="sig-name descname">get_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda15cublas_executor10get_handleEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda15cublas_executor7handle_E">
+<span id="_CPPv3N3hpx4cuda15cublas_executor7handle_E"></span><span id="_CPPv2N3hpx4cuda15cublas_executor7handle_E"></span><span id="hpx::cuda::cublas_executor::handle___handle_ptr"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1a069e11879c56400e0efb42db4b1f2761"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda15cublas_executor10handle_ptrE" title="hpx::cuda::cublas_executor::handle_ptr">handle_ptr</a> <code class="sig-name descname">handle_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda15cublas_executor7handle_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda15cublas_executor13pointer_mode_E">
+<span id="_CPPv3N3hpx4cuda15cublas_executor13pointer_mode_E"></span><span id="_CPPv2N3hpx4cuda15cublas_executor13pointer_mode_E"></span><span id="hpx::cuda::cublas_executor::pointer_mode___cublasPointerMode_t"></span><span class="target" id="structhpx_1_1cuda_1_1cublas__executor_1a4aa55623e49f168bb813db51a657ac54"></span>cublasPointerMode_t <code class="sig-name descname">pointer_mode_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda15cublas_executor13pointer_mode_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-async-cuda-cuda-event-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cuda_event.hpp</span></code><a class="headerlink" href="#header-hpx-async-cuda-cuda-event-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4cudaE">
+<span id="_CPPv3N3hpx4cudaE"></span><span id="_CPPv2N3hpx4cudaE"></span><span class="target" id="namespacehpx_1_1cuda"></span><em class="property">namespace </em><code class="sig-name descname">cuda</code><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4N3hpx4cuda15cuda_event_poolE">
+<span id="_CPPv3N3hpx4cuda15cuda_event_poolE"></span><span id="_CPPv2N3hpx4cuda15cuda_event_poolE"></span><span id="hpx::cuda::cuda_event_pool"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__event__pool"></span><em class="property">struct </em><code class="sig-name descname">cuda_event_pool</code><a class="headerlink" href="#_CPPv4N3hpx4cuda15cuda_event_poolE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;cuda_event.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda15cuda_event_pool15cuda_event_poolEv">
+<span id="_CPPv3N3hpx4cuda15cuda_event_pool15cuda_event_poolEv"></span><span id="_CPPv2N3hpx4cuda15cuda_event_pool15cuda_event_poolEv"></span><span id="hpx::cuda::cuda_event_pool::cuda_event_pool"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__event__pool_1a4d2c51ec7531c9453e02c6cd87c1e619"></span><code class="sig-name descname">cuda_event_pool</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda15cuda_event_pool15cuda_event_poolEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda15cuda_event_poolD0Ev">
+<span id="_CPPv3N3hpx4cuda15cuda_event_poolD0Ev"></span><span id="_CPPv2N3hpx4cuda15cuda_event_poolD0Ev"></span><span id="hpx::cuda::cuda_event_pool::~cuda_event_pool"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__event__pool_1a0589847cae3c83d80bce4abb051bd245"></span><code class="sig-name descname">~cuda_event_pool</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda15cuda_event_poolD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda15cuda_event_pool3popER11cudaEvent_t">
+<span id="_CPPv3N3hpx4cuda15cuda_event_pool3popER11cudaEvent_t"></span><span id="_CPPv2N3hpx4cuda15cuda_event_pool3popER11cudaEvent_t"></span><span id="hpx::cuda::cuda_event_pool::pop__cudaEvent_tR"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__event__pool_1a50f61ee32857e84527d60dd9aced616c"></span>bool <code class="sig-name descname">pop</code><span class="sig-paren">(</span>cudaEvent_t &amp;<em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda15cuda_event_pool3popER11cudaEvent_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda15cuda_event_pool4pushE11cudaEvent_t">
+<span id="_CPPv3N3hpx4cuda15cuda_event_pool4pushE11cudaEvent_t"></span><span id="_CPPv2N3hpx4cuda15cuda_event_pool4pushE11cudaEvent_t"></span><span id="hpx::cuda::cuda_event_pool::push__cudaEvent_t"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__event__pool_1ac4516e44bbfb68ad814b504360e16f09"></span>bool <code class="sig-name descname">push</code><span class="sig-paren">(</span>cudaEvent_t <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda15cuda_event_pool4pushE11cudaEvent_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda15cuda_event_pool14get_event_poolEv">
+<span id="_CPPv3N3hpx4cuda15cuda_event_pool14get_event_poolEv"></span><span id="_CPPv2N3hpx4cuda15cuda_event_pool14get_event_poolEv"></span><span id="hpx::cuda::cuda_event_pool::get_event_pool"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__event__pool_1a82a92debbc9bf82ca6d1a3df1948e27c"></span><em class="property">static</em> <a class="reference internal" href="#_CPPv4N3hpx4cuda15cuda_event_poolE" title="hpx::cuda::cuda_event_pool">cuda_event_pool</a> &amp;<code class="sig-name descname">get_event_pool</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda15cuda_event_pool14get_event_poolEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda15cuda_event_pool18max_events_in_poolE">
+<span id="_CPPv3N3hpx4cuda15cuda_event_pool18max_events_in_poolE"></span><span id="_CPPv2N3hpx4cuda15cuda_event_pool18max_events_in_poolE"></span><span id="hpx::cuda::cuda_event_pool::max_events_in_pool__i"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__event__pool_1ac994e5a06c66e6372cad288901a2f3ab"></span><em class="property">constexpr</em> int <code class="sig-name descname">max_events_in_pool</code> = 64<a class="headerlink" href="#_CPPv4N3hpx4cuda15cuda_event_pool18max_events_in_poolE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda15cuda_event_pool10free_list_E">
+<span id="_CPPv3N3hpx4cuda15cuda_event_pool10free_list_E"></span><span id="_CPPv2N3hpx4cuda15cuda_event_pool10free_list_E"></span><span id="hpx::cuda::cuda_event_pool::free_list___boost::lockfree::stack:cudaEvent_t.boost::lockfree::capacity:max_events_in_pool::"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__event__pool_1adcb07e21f044e7facd7b3b9df7a0c15a"></span><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::<a class="reference internal" href="../concurrency/api.html#_CPPv4N5boost8lockfreeE" title="boost::lockfree">lockfree</a>::stack&lt;cudaEvent_t, <a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::<a class="reference internal" href="../concurrency/api.html#_CPPv4N5boost8lockfreeE" title="boost::lockfree">lockfree</a>::capacity&lt;<a class="reference internal" href="#_CPPv4N3hpx4cuda15cuda_event_pool18max_events_in_poolE" title="hpx::cuda::cuda_event_pool::max_events_in_pool">max_events_in_pool</a>&gt;&gt; <code class="sig-name descname">free_list_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda15cuda_event_pool10free_list_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-async-cuda-cuda-exception-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cuda_exception.hpp</span></code><a class="headerlink" href="#header-hpx-async-cuda-cuda-exception-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4cudaE">
+<span id="_CPPv3N3hpx4cudaE"></span><span class="target" id="namespacehpx_1_1cuda"></span><em class="property">namespace </em><code class="sig-name descname">cuda</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda16check_cuda_errorE11cudaError_t">
+<span id="_CPPv3N3hpx4cuda16check_cuda_errorE11cudaError_t"></span><span id="_CPPv2N3hpx4cuda16check_cuda_errorE11cudaError_t"></span><span id="hpx::cuda::check_cuda_error__cudaError_t"></span><span class="target" id="namespacehpx_1_1cuda_1ac242a550372b3e4ae1171dd67f263d38"></span>cudaError_t <code class="sig-name descname">check_cuda_error</code><span class="sig-paren">(</span>cudaError_t <em>err</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda16check_cuda_errorE11cudaError_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4cuda14cuda_exceptionE">
+<span id="_CPPv3N3hpx4cuda14cuda_exceptionE"></span><span id="_CPPv2N3hpx4cuda14cuda_exceptionE"></span><span id="hpx::cuda::cuda_exception"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__exception"></span><em class="property">struct </em><code class="sig-name descname">cuda_exception</code> : <em class="property">public</em> <a class="reference internal" href="../errors/api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a><a class="headerlink" href="#_CPPv4N3hpx4cuda14cuda_exceptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;cuda_exception.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda14cuda_exception14cuda_exceptionERKNSt6stringE11cudaError_t">
+<span id="_CPPv3N3hpx4cuda14cuda_exception14cuda_exceptionERKNSt6stringE11cudaError_t"></span><span id="_CPPv2N3hpx4cuda14cuda_exception14cuda_exceptionERKNSt6stringE11cudaError_t"></span><span id="hpx::cuda::cuda_exception::cuda_exception__ssCR.cudaError_t"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__exception_1ae5ec40749dfc02ebdb085da4353d33e9"></span><code class="sig-name descname">cuda_exception</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string &amp;<em>msg</em>, cudaError_t <em>err</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda14cuda_exception14cuda_exceptionERKNSt6stringE11cudaError_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda14cuda_exception18get_cuda_errorcodeEv">
+<span id="_CPPv3N3hpx4cuda14cuda_exception18get_cuda_errorcodeEv"></span><span id="_CPPv2N3hpx4cuda14cuda_exception18get_cuda_errorcodeEv"></span><span id="hpx::cuda::cuda_exception::get_cuda_errorcode"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__exception_1a37904556e93344e64e9a05b3529cd5ac"></span>cudaError_t <code class="sig-name descname">get_cuda_errorcode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda14cuda_exception18get_cuda_errorcodeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda14cuda_exception4err_E">
+<span id="_CPPv3N3hpx4cuda14cuda_exception4err_E"></span><span id="_CPPv2N3hpx4cuda14cuda_exception4err_E"></span><span id="hpx::cuda::cuda_exception::err___cudaError_t"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__exception_1ad8cc8a8ebc6e085ab42bbe304443fd63"></span>cudaError_t <code class="sig-name descname">err_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda14cuda_exception4err_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-async-cuda-cuda-executor-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cuda_executor.hpp</span></code><a class="headerlink" href="#header-hpx-async-cuda-cuda-executor-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4cudaE">
+<span class="target" id="namespacehpx_1_1cuda"></span><em class="property">namespace </em><code class="sig-name descname">cuda</code><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4N3hpx4cuda13cuda_executorE">
+<span id="_CPPv3N3hpx4cuda13cuda_executorE"></span><span id="_CPPv2N3hpx4cuda13cuda_executorE"></span><span id="hpx::cuda::cuda_executor"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor"></span><em class="property">struct </em><code class="sig-name descname">cuda_executor</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx4cudaE" title="hpx::cuda">cuda</a>::<a class="reference internal" href="#_CPPv4N3hpx4cuda18cuda_executor_baseE" title="hpx::cuda::cuda_executor_base">cuda_executor_base</a><a class="headerlink" href="#_CPPv4N3hpx4cuda13cuda_executorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;cuda_executor.hpp&gt;</em><p>Subclassed by <a class="reference internal" href="#structhpx_1_1cuda_1_1cublas__executor"><span class="std std-ref">hpx::cuda::cublas_executor</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda13cuda_executor13cuda_executorENSt6size_tEb">
+<span id="_CPPv3N3hpx4cuda13cuda_executor13cuda_executorENSt6size_tEb"></span><span id="_CPPv2N3hpx4cuda13cuda_executor13cuda_executorENSt6size_tEb"></span><span id="hpx::cuda::cuda_executor::cuda_executor__std::s.b"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor_1ae6fb08399a0105544a046dc30d3194ec"></span><code class="sig-name descname">cuda_executor</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>device</em>, bool <em>event_mode</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda13cuda_executor13cuda_executorENSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda13cuda_executorD0Ev">
+<span id="_CPPv3N3hpx4cuda13cuda_executorD0Ev"></span><span id="_CPPv2N3hpx4cuda13cuda_executorD0Ev"></span><span id="hpx::cuda::cuda_executor::~cuda_executor"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor_1a04617ae7d84889617f9f7ff7b5462be1"></span><code class="sig-name descname">~cuda_executor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda13cuda_executorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx4cuda13cuda_executor4postEDcRR1FDpRR2Ts">
+<span id="_CPPv3I0DpEN3hpx4cuda13cuda_executor4postERR1FDpRR2Ts"></span><span id="_CPPv2I0DpEN3hpx4cuda13cuda_executor4postERR1FDpRR2Ts"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor_1a59ce85f847fa291040b7d00de38f2cbb"></span>template&lt;typename <code class="sig-name descname">F</code>, typename ...<code class="sig-name descname">Ts</code>&gt;<br />decltype(auto) <code class="sig-name descname">post</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx4cuda13cuda_executor4postEDcRR1FDpRR2Ts" title="hpx::cuda::cuda_executor::post::F">F</a> &amp;&amp;<em>f</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4cuda13cuda_executor4postEDcRR1FDpRR2Ts" title="hpx::cuda::cuda_executor::post::Ts">Ts</a>&amp;&amp;... <em>ts</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4cuda13cuda_executor4postEDcRR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx4cuda13cuda_executor13async_executeEDcRR1FDpRR2Ts">
+<span id="_CPPv3I0DpEN3hpx4cuda13cuda_executor13async_executeERR1FDpRR2Ts"></span><span id="_CPPv2I0DpEN3hpx4cuda13cuda_executor13async_executeERR1FDpRR2Ts"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor_1ad86bbca9efe6a8343e551be16d449566"></span>template&lt;typename <code class="sig-name descname">F</code>, typename ...<code class="sig-name descname">Ts</code>&gt;<br />decltype(auto) <code class="sig-name descname">async_execute</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx4cuda13cuda_executor13async_executeEDcRR1FDpRR2Ts" title="hpx::cuda::cuda_executor::async_execute::F">F</a> &amp;&amp;<em>f</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4cuda13cuda_executor13async_executeEDcRR1FDpRR2Ts" title="hpx::cuda::cuda_executor::async_execute::Ts">Ts</a>&amp;&amp;... <em>ts</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4cuda13cuda_executor13async_executeEDcRR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5applyEvPF1RDp6ParamsEDpRR4Args">
+<span id="_CPPv3I0DpDpEN3hpx4cuda13cuda_executor5applyEPF1RDp6ParamsEDpRR4Args"></span><span id="_CPPv2I0DpDpEN3hpx4cuda13cuda_executor5applyEPF1RDp6ParamsEDpRR4Args"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor_1aa06596425d6f4279e8aa314f3fc82bda"></span>template&lt;typename <code class="sig-name descname">R</code>, typename ...<code class="sig-name descname">Params</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br />void <code class="sig-name descname">apply</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5applyEvPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cuda_executor::apply::R">R</a> (*<em>cuda_function</em>)<span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5applyEvPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cuda_executor::apply::Params">Params</a>...<span class="sig-paren">)</span>, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5applyEvPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cuda_executor::apply::Args">Args</a>&amp;&amp;... <em>args</em>, <span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5applyEvPF1RDp6ParamsEDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5asyncEN3hpx6futureIvEEPF1RDp6ParamsEDpRR4Args">
+<span id="_CPPv3I0DpDpEN3hpx4cuda13cuda_executor5asyncEPF1RDp6ParamsEDpRR4Args"></span><span id="_CPPv2I0DpDpEN3hpx4cuda13cuda_executor5asyncEPF1RDp6ParamsEDpRR4Args"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor_1a1aabefc221035c2edf1bf8de1e830066"></span>template&lt;typename <code class="sig-name descname">R</code>, typename ...<code class="sig-name descname">Params</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br /><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt; <code class="sig-name descname">async</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5asyncEN3hpx6futureIvEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cuda_executor::async::R">R</a> (*<em>cuda_kernel</em>)<span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5asyncEN3hpx6futureIvEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cuda_executor::async::Params">Params</a>...<span class="sig-paren">)</span>, <a class="reference internal" href="#_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5asyncEN3hpx6futureIvEEPF1RDp6ParamsEDpRR4Args" title="hpx::cuda::cuda_executor::async::Args">Args</a>&amp;&amp;... <em>args</em>, <span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpDpEN3hpx4cuda13cuda_executor5asyncEN3hpx6futureIvEEPF1RDp6ParamsEDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4cuda18cuda_executor_baseE">
+<span id="_CPPv3N3hpx4cuda18cuda_executor_baseE"></span><span id="_CPPv2N3hpx4cuda18cuda_executor_baseE"></span><span id="hpx::cuda::cuda_executor_base"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor__base"></span><em class="property">struct </em><code class="sig-name descname">cuda_executor_base</code><a class="headerlink" href="#_CPPv4N3hpx4cuda18cuda_executor_baseE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;cuda_executor.hpp&gt;</em><p>Subclassed by <a class="reference internal" href="#structhpx_1_1cuda_1_1cuda__executor"><span class="std std-ref">hpx::cuda::cuda_executor</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4cuda18cuda_executor_base11future_typeE">
+<span id="_CPPv3N3hpx4cuda18cuda_executor_base11future_typeE"></span><span id="_CPPv2N3hpx4cuda18cuda_executor_base11future_typeE"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor__base_1a532f160c4bcb6e7e4f845c51f28134ac"></span><em class="property">using </em><code class="sig-name descname">future_type</code> = <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt;<a class="headerlink" href="#_CPPv4N3hpx4cuda18cuda_executor_base11future_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda18cuda_executor_base18cuda_executor_baseENSt6size_tEb">
+<span id="_CPPv3N3hpx4cuda18cuda_executor_base18cuda_executor_baseENSt6size_tEb"></span><span id="_CPPv2N3hpx4cuda18cuda_executor_base18cuda_executor_baseENSt6size_tEb"></span><span id="hpx::cuda::cuda_executor_base::cuda_executor_base__std::s.b"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor__base_1a524377e6439179c9ebf1bb99853c1998"></span><code class="sig-name descname">cuda_executor_base</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>device</em>, bool <em>event_mode</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda18cuda_executor_base18cuda_executor_baseENSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda18cuda_executor_base10get_futureEv">
+<span id="_CPPv3N3hpx4cuda18cuda_executor_base10get_futureEv"></span><span id="_CPPv2N3hpx4cuda18cuda_executor_base10get_futureEv"></span><span id="hpx::cuda::cuda_executor_base::get_future"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor__base_1afb46591c9a1831f4f6225c4f5c1e119a"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda18cuda_executor_base11future_typeE" title="hpx::cuda::cuda_executor_base::future_type">future_type</a> <code class="sig-name descname">get_future</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda18cuda_executor_base10get_futureEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda18cuda_executor_base7device_E">
+<span id="_CPPv3N3hpx4cuda18cuda_executor_base7device_E"></span><span id="_CPPv2N3hpx4cuda18cuda_executor_base7device_E"></span><span id="hpx::cuda::cuda_executor_base::device___i"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor__base_1ace888ded4468c9aa25fad332a3e2cda9"></span>int <code class="sig-name descname">device_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda18cuda_executor_base7device_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda18cuda_executor_base11event_mode_E">
+<span id="_CPPv3N3hpx4cuda18cuda_executor_base11event_mode_E"></span><span id="_CPPv2N3hpx4cuda18cuda_executor_base11event_mode_E"></span><span id="hpx::cuda::cuda_executor_base::event_mode___b"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor__base_1ae774cec0be540046136e911c26b1819d"></span>bool <code class="sig-name descname">event_mode_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda18cuda_executor_base11event_mode_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda18cuda_executor_base7stream_E">
+<span id="_CPPv3N3hpx4cuda18cuda_executor_base7stream_E"></span><span id="_CPPv2N3hpx4cuda18cuda_executor_base7stream_E"></span><span id="hpx::cuda::cuda_executor_base::stream___cudaStream_t"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor__base_1a9543f760453c18243cf8805061a600d7"></span>cudaStream_t <code class="sig-name descname">stream_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda18cuda_executor_base7stream_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda18cuda_executor_base7target_E">
+<span id="_CPPv3N3hpx4cuda18cuda_executor_base7target_E"></span><span id="_CPPv2N3hpx4cuda18cuda_executor_base7target_E"></span><span id="hpx::cuda::cuda_executor_base::target___std::shared_ptr:hpx::cuda::target:"></span><span class="target" id="structhpx_1_1cuda_1_1cuda__executor__base_1a57e46332e1cdad6a81ac3331d197a411"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::shared_ptr&lt;<a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx4cudaE" title="hpx::cuda">cuda</a>::<a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a>&gt; <code class="sig-name descname">target_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda18cuda_executor_base7target_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-async-cuda-cuda-future-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/cuda_future.hpp</span></code><a class="headerlink" href="#header-hpx-async-cuda-cuda-future-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1cuda"></span><em class="property">namespace </em><code class="sig-name descname">cuda</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Typedefs</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4cuda8print_onE">
+<span id="_CPPv3N3hpx4cuda8print_onE"></span><span id="_CPPv2N3hpx4cuda8print_onE"></span><span class="target" id="namespacehpx_1_1cuda_1a5d0deafeabb5b5dfc833d28b7d5aa779"></span><em class="property">using </em><code class="sig-name descname">print_on</code> = debug::enable_print&lt;false&gt;<a class="headerlink" href="#_CPPv4N3hpx4cuda8print_onE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4cuda10event_modeE">
+<span id="_CPPv3N3hpx4cuda10event_modeE"></span><span id="_CPPv2N3hpx4cuda10event_modeE"></span><span class="target" id="namespacehpx_1_1cuda_1a5b0e9bd3f690902deb76febec40cbd90"></span><em class="property">using </em><code class="sig-name descname">event_mode</code> = <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::true_type<a class="headerlink" href="#_CPPv4N3hpx4cuda10event_modeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4cuda13callback_modeE">
+<span id="_CPPv3N3hpx4cuda13callback_modeE"></span><span id="_CPPv2N3hpx4cuda13callback_modeE"></span><span class="target" id="namespacehpx_1_1cuda_1ab3ec1a387cb624a76553b16181cb44c2"></span><em class="property">using </em><code class="sig-name descname">callback_mode</code> = <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::false_type<a class="headerlink" href="#_CPPv4N3hpx4cuda13callback_modeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="namespacehpx_1_1cuda_1ad404510cccf6a0324f9910c97e4983c4"></span><code class="sig-name descname">static constexpr print_on hpx::cuda::cud_debug(&quot;CUDAFUT&quot;)</code></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4cuda19enable_user_pollingE">
+<span id="_CPPv3N3hpx4cuda19enable_user_pollingE"></span><span id="_CPPv2N3hpx4cuda19enable_user_pollingE"></span><span id="hpx::cuda::enable_user_polling"></span><span class="target" id="structhpx_1_1cuda_1_1enable__user__polling"></span><em class="property">struct </em><code class="sig-name descname">enable_user_polling</code><a class="headerlink" href="#_CPPv4N3hpx4cuda19enable_user_pollingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;cuda_future.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda19enable_user_polling19enable_user_pollingERKNSt6stringE">
+<span id="_CPPv3N3hpx4cuda19enable_user_polling19enable_user_pollingERKNSt6stringE"></span><span id="_CPPv2N3hpx4cuda19enable_user_polling19enable_user_pollingERKNSt6stringE"></span><span id="hpx::cuda::enable_user_polling::enable_user_polling__ssCR"></span><span class="target" id="structhpx_1_1cuda_1_1enable__user__polling_1a2e9418dbb7363536951f07e4d96e6040"></span><code class="sig-name descname">enable_user_polling</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>pool_name</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda19enable_user_polling19enable_user_pollingERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda19enable_user_pollingD0Ev">
+<span id="_CPPv3N3hpx4cuda19enable_user_pollingD0Ev"></span><span id="_CPPv2N3hpx4cuda19enable_user_pollingD0Ev"></span><span id="hpx::cuda::enable_user_polling::~enable_user_polling"></span><span class="target" id="structhpx_1_1cuda_1_1enable__user__polling_1af469a3799914d0b75cdffe29673911d8"></span><code class="sig-name descname">~enable_user_polling</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda19enable_user_pollingD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda19enable_user_polling10pool_name_E">
+<span id="_CPPv3N3hpx4cuda19enable_user_polling10pool_name_E"></span><span id="_CPPv2N3hpx4cuda19enable_user_polling10pool_name_E"></span><span id="hpx::cuda::enable_user_polling::pool_name___ss"></span><span class="target" id="structhpx_1_1cuda_1_1enable__user__polling_1a02d00a1a91dbe23a98bb48e1312168d7"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">pool_name_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda19enable_user_polling10pool_name_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-async-cuda-get-targets-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/get_targets.hpp</span></code><a class="headerlink" href="#header-hpx-async-cuda-get-targets-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1cuda"></span><em class="property">namespace </em><code class="sig-name descname">cuda</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda17get_local_targetsEv">
+<span id="_CPPv3N3hpx4cuda17get_local_targetsEv"></span><span id="_CPPv2N3hpx4cuda17get_local_targetsEv"></span><span id="hpx::cuda::get_local_targets"></span><span class="target" id="namespacehpx_1_1cuda_1a0abd7b167d981f704e686a31d8b1e58d"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a>&gt; <code class="sig-name descname">get_local_targets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda17get_local_targetsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda11get_targetsERKN3hpx7id_typeE">
+<span id="_CPPv3N3hpx4cuda11get_targetsERKN3hpx7id_typeE"></span><span id="_CPPv2N3hpx4cuda11get_targetsERKN3hpx7id_typeE"></span><span id="hpx::cuda::get_targets__hpx::id_typeCR"></span><span class="target" id="namespacehpx_1_1cuda_1a4c06a1cd65ae63e1ca8f3acf329c7118"></span><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a>&gt;&gt; <code class="sig-name descname">get_targets</code><span class="sig-paren">(</span><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::id_type <em class="property">const</em> &amp;<em>locality</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda11get_targetsERKN3hpx7id_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda19print_local_targetsEv">
+<span id="_CPPv3N3hpx4cuda19print_local_targetsEv"></span><span id="_CPPv2N3hpx4cuda19print_local_targetsEv"></span><span id="hpx::cuda::print_local_targets"></span><span class="target" id="namespacehpx_1_1cuda_1a6daa60780e7dfc28e4b14c86be58a0e0"></span>void <code class="sig-name descname">print_local_targets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda19print_local_targetsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-async-cuda-target-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/async_cuda/target.hpp</span></code><a class="headerlink" href="#header-hpx-async-cuda-target-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1cuda"></span><em class="property">namespace </em><code class="sig-name descname">cuda</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda18get_default_targetEv">
+<span id="_CPPv3N3hpx4cuda18get_default_targetEv"></span><span id="_CPPv2N3hpx4cuda18get_default_targetEv"></span><span id="hpx::cuda::get_default_target"></span><span class="target" id="namespacehpx_1_1cuda_1af98b2e5cb71685217f13bbbc9c2ad39e"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a> &amp;<code class="sig-name descname">get_default_target</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda18get_default_targetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4cuda6targetE">
+<span id="_CPPv3N3hpx4cuda6targetE"></span><span id="_CPPv2N3hpx4cuda6targetE"></span><span id="hpx::cuda::target"></span><span class="target" id="structhpx_1_1cuda_1_1target"></span><em class="property">struct </em><code class="sig-name descname">target</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6targetE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;target.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target6targetEv">
+<span id="_CPPv3N3hpx4cuda6target6targetEv"></span><span id="_CPPv2N3hpx4cuda6target6targetEv"></span><span id="hpx::cuda::target::target"></span><span class="target" id="structhpx_1_1cuda_1_1target_1acdd0d28aed513b2c77b45bbf6369c078"></span><code class="sig-name descname">target</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target6targetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target6targetEi">
+<span id="_CPPv3N3hpx4cuda6target6targetEi"></span><span id="_CPPv2N3hpx4cuda6target6targetEi"></span><span id="hpx::cuda::target::target__i"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ab089f4ed7c81b65f31ad3b4da954dfc9"></span><code class="sig-name descname">target</code><span class="sig-paren">(</span>int <em>device</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target6targetEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target6targetERKN3hpx7id_typeEi">
+<span id="_CPPv3N3hpx4cuda6target6targetERKN3hpx7id_typeEi"></span><span id="_CPPv2N3hpx4cuda6target6targetERKN3hpx7id_typeEi"></span><span id="hpx::cuda::target::target__hpx::id_typeCR.i"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ac3d7db73f17efcb72fb54bc1fee4a6f9"></span><code class="sig-name descname">target</code><span class="sig-paren">(</span><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::id_type <em class="property">const</em> &amp;<em>locality</em>, int <em>device</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target6targetERKN3hpx7id_typeEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target6targetERK6target">
+<span id="_CPPv3N3hpx4cuda6target6targetERK6target"></span><span id="_CPPv2N3hpx4cuda6target6targetERK6target"></span><span id="hpx::cuda::target::target__targetCR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ac4406cf4187154e5c72e245cc8a88dff"></span><code class="sig-name descname">target</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target6targetERK6target" title="hpx::cuda::target::target">target</a> <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target6targetERK6target" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target6targetERR6target">
+<span id="_CPPv3N3hpx4cuda6target6targetERR6target"></span><span id="_CPPv2N3hpx4cuda6target6targetERR6target"></span><span id="hpx::cuda::target::target__targetRR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ab5ccba4246295c8886d8c6660f21c9fc"></span><code class="sig-name descname">target</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target6targetERR6target" title="hpx::cuda::target::target">target</a> &amp;&amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target6targetERR6target" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6targetaSERK6target">
+<span id="_CPPv3N3hpx4cuda6targetaSERK6target"></span><span id="_CPPv2N3hpx4cuda6targetaSERK6target"></span><span id="hpx::cuda::target::assign-operator__targetCR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1a590e0aa390eb7b6fa4a4ca93dd5f9b64"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a> <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6targetaSERK6target" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6targetaSERR6target">
+<span id="_CPPv3N3hpx4cuda6targetaSERR6target"></span><span id="_CPPv2N3hpx4cuda6targetaSERR6target"></span><span id="hpx::cuda::target::assign-operator__targetRR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1a42e64eac64e71235e5cf4e12858de09a"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a> &amp;&amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6targetaSERR6target" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target13native_handleEv">
+<span id="_CPPv3N3hpx4cuda6target13native_handleEv"></span><span id="_CPPv2N3hpx4cuda6target13native_handleEv"></span><span id="hpx::cuda::target::native_handle"></span><span class="target" id="structhpx_1_1cuda_1_1target_1a2758b464e79cc922f723be6cc099d6db"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_typeE" title="hpx::cuda::target::native_handle_type">native_handle_type</a> &amp;<code class="sig-name descname">native_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target13native_handleEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target13native_handleEv">
+<span id="_CPPv3NK3hpx4cuda6target13native_handleEv"></span><span id="_CPPv2NK3hpx4cuda6target13native_handleEv"></span><span id="hpx::cuda::target::native_handleC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1a3bdc6d95690604d3bc711f82c869bc45"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_typeE" title="hpx::cuda::target::native_handle_type">native_handle_type</a> <em class="property">const</em> &amp;<code class="sig-name descname">native_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target13native_handleEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target11synchronizeEv">
+<span id="_CPPv3NK3hpx4cuda6target11synchronizeEv"></span><span id="_CPPv2NK3hpx4cuda6target11synchronizeEv"></span><span id="hpx::cuda::target::synchronizeC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1aa4058c3ead2e2ed42a85d6df6ba07586"></span>void <code class="sig-name descname">synchronize</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target11synchronizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target12get_localityEv">
+<span id="_CPPv3NK3hpx4cuda6target12get_localityEv"></span><span id="_CPPv2NK3hpx4cuda6target12get_localityEv"></span><span id="hpx::cuda::target::get_localityC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1a4f8f22e2885b7654107e8da3a1234ca2"></span><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::id_type <em class="property">const</em> &amp;<code class="sig-name descname">get_locality</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target12get_localityEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target21get_future_with_eventEv">
+<span id="_CPPv3NK3hpx4cuda6target21get_future_with_eventEv"></span><span id="_CPPv2NK3hpx4cuda6target21get_future_with_eventEv"></span><span id="hpx::cuda::target::get_future_with_eventC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1a588f89d618bb6d7602b2eb6b60a66fbc"></span><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt; <code class="sig-name descname">get_future_with_event</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target21get_future_with_eventEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target24get_future_with_callbackEv">
+<span id="_CPPv3NK3hpx4cuda6target24get_future_with_callbackEv"></span><span id="_CPPv2NK3hpx4cuda6target24get_future_with_callbackEv"></span><span id="hpx::cuda::target::get_future_with_callbackC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1a3f21d88c6bcfa281f66a94dcd021c662"></span><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt; <code class="sig-name descname">get_future_with_callback</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target24get_future_with_callbackEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0ENK3hpx4cuda6target21get_future_with_eventEN3hpx6futureIvEERK9Allocator">
+<span id="_CPPv3I0ENK3hpx4cuda6target21get_future_with_eventERK9Allocator"></span><span id="_CPPv2I0ENK3hpx4cuda6target21get_future_with_eventERK9Allocator"></span><span class="target" id="structhpx_1_1cuda_1_1target_1a46a8d3e0db6db11d18108ade75373d2d"></span>template&lt;typename <code class="sig-name descname">Allocator</code>&gt;<br /><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt; <code class="sig-name descname">get_future_with_event</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0ENK3hpx4cuda6target21get_future_with_eventEN3hpx6futureIvEERK9Allocator" title="hpx::cuda::target::get_future_with_event::Allocator">Allocator</a> <em class="property">const</em> &amp;<em>alloc</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3hpx4cuda6target21get_future_with_eventEN3hpx6futureIvEERK9Allocator" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0ENK3hpx4cuda6target24get_future_with_callbackEN3hpx6futureIvEERK9Allocator">
+<span id="_CPPv3I0ENK3hpx4cuda6target24get_future_with_callbackERK9Allocator"></span><span id="_CPPv2I0ENK3hpx4cuda6target24get_future_with_callbackERK9Allocator"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ac1b83a52860fe122e2f06c194a75eea0"></span>template&lt;typename <code class="sig-name descname">Allocator</code>&gt;<br /><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt; <code class="sig-name descname">get_future_with_callback</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0ENK3hpx4cuda6target24get_future_with_callbackEN3hpx6futureIvEERK9Allocator" title="hpx::cuda::target::get_future_with_callback::Allocator">Allocator</a> <em class="property">const</em> &amp;<em>alloc</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3hpx4cuda6target24get_future_with_callbackEN3hpx6futureIvEERK9Allocator" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target17get_local_targetsEv">
+<span id="_CPPv3N3hpx4cuda6target17get_local_targetsEv"></span><span id="_CPPv2N3hpx4cuda6target17get_local_targetsEv"></span><span id="hpx::cuda::target::get_local_targets"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ab6e0ca1beb84c38d1d3c34ed5386fccd"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a>&gt; <code class="sig-name descname">get_local_targets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target17get_local_targetsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target11get_targetsERKN3hpx7id_typeE">
+<span id="_CPPv3N3hpx4cuda6target11get_targetsERKN3hpx7id_typeE"></span><span id="_CPPv2N3hpx4cuda6target11get_targetsERKN3hpx7id_typeE"></span><span id="hpx::cuda::target::get_targets__hpx::id_typeCR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ab7330b3a48d0429fa615e49e1d09e935"></span><em class="property">static</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4N3hpx4cuda6targetE" title="hpx::cuda::target">target</a>&gt;&gt; <code class="sig-name descname">get_targets</code><span class="sig-paren">(</span><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::id_type <em class="property">const</em> &amp;<em>locality</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target11get_targetsERKN3hpx7id_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target9serializeERN13serialization13input_archiveEKj">
+<span id="_CPPv3N3hpx4cuda6target9serializeERN13serialization13input_archiveEKj"></span><span id="_CPPv2N3hpx4cuda6target9serializeERN13serialization13input_archiveEKj"></span><span id="hpx::cuda::target::serialize__serialization::input_archiveR.unsigned-iC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ab790b3d01eb77f8d87fe78bdc257cf0e"></span>void <code class="sig-name descname">serialize</code><span class="sig-paren">(</span><a class="reference internal" href="../compute/api.html#_CPPv4N3hpx13serializationE" title="hpx::serialization">serialization</a>::<a class="reference internal" href="../serialization/api.html#_CPPv4N3hpx13serialization13input_archiveE" title="hpx::serialization::input_archive">input_archive</a> &amp;<em>ar</em>, <em class="property">const</em> unsigned int<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target9serializeERN13serialization13input_archiveEKj" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target9serializeERN13serialization14output_archiveEKj">
+<span id="_CPPv3N3hpx4cuda6target9serializeERN13serialization14output_archiveEKj"></span><span id="_CPPv2N3hpx4cuda6target9serializeERN13serialization14output_archiveEKj"></span><span id="hpx::cuda::target::serialize__serialization::output_archiveR.unsigned-iC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1a36f216354a63dce89d8049ce9d6432a9"></span>void <code class="sig-name descname">serialize</code><span class="sig-paren">(</span><a class="reference internal" href="../compute/api.html#_CPPv4N3hpx13serializationE" title="hpx::serialization">serialization</a>::<a class="reference internal" href="../serialization/api.html#_CPPv4N3hpx13serialization14output_archiveE" title="hpx::serialization::output_archive">output_archive</a> &amp;<em>ar</em>, <em class="property">const</em> unsigned int<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target9serializeERN13serialization14output_archiveEKj" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda6target7handle_E">
+<span id="_CPPv3N3hpx4cuda6target7handle_E"></span><span id="_CPPv2N3hpx4cuda6target7handle_E"></span><span id="hpx::cuda::target::handle___native_handle_type"></span><span class="target" id="structhpx_1_1cuda_1_1target_1afc5ba58c49cbb79102f71a15a8101585"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_typeE" title="hpx::cuda::target::native_handle_type">native_handle_type</a> <code class="sig-name descname">handle_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target7handle_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda6target9locality_E">
+<span id="_CPPv3N3hpx4cuda6target9locality_E"></span><span id="_CPPv2N3hpx4cuda6target9locality_E"></span><span id="hpx::cuda::target::locality___hpx::id_type"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ab88febe4643bd081091083d21c5e0bf1"></span><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::id_type <code class="sig-name descname">locality_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target9locality_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="structhpx_1_1cuda_1_1target_1add50dcae00a1300662d4d2f8c52c804f"></span><em class="property">friend </em><code class="sig-name descname">hpx::cuda::hpx::serialization::access</code></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4eqRK6targetRK6target">
+<span id="_CPPv3eqRK6targetRK6target"></span><span id="_CPPv2eqRK6targetRK6target"></span><span id="eq-operator__targetCR.targetCR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1ac6cc37adb39c6b0152b2c30167d3877f"></span>bool <code class="sig-name descname">operator==</code><span class="sig-paren">(</span>target <em class="property">const</em> &amp;<em>lhs</em>, target <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4eqRK6targetRK6target" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_typeE">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_typeE"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_typeE"></span><span id="hpx::cuda::target::native_handle_type"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type"></span><em class="property">struct </em><code class="sig-name descname">native_handle_type</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;target.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type10mutex_typeE">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type10mutex_typeE"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type10mutex_typeE"></span><span id="hpx::cuda::target::native_handle_type::mutex_type"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a5f4bbeeabca29f18707f98da87cf85fc"></span><em class="property">typedef </em><a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../collectives/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos">lcos</a>::<a class="reference internal" href="../futures/api.html#_CPPv4N3hpx4lcos5localE" title="hpx::lcos::local">local</a>::<a class="reference internal" href="../synchronization/api.html#_CPPv4N3hpx4lcos5local8spinlockE" title="hpx::lcos::local::spinlock">spinlock</a> <code class="sig-name descname">mutex_type</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type10mutex_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type18native_handle_typeEi">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type18native_handle_typeEi"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type18native_handle_typeEi"></span><span id="hpx::cuda::target::native_handle_type::native_handle_type__i"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1ae718983ca190268b28dda13fe159feb6"></span><code class="sig-name descname">native_handle_type</code><span class="sig-paren">(</span>int <em>device</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type18native_handle_typeEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_typeD0Ev">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_typeD0Ev"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_typeD0Ev"></span><span id="hpx::cuda::target::native_handle_type::~native_handle_type"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a6bbf9a8b5c0d618e63e544113cba8117"></span><code class="sig-name descname">~native_handle_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_typeD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type18native_handle_typeERK18native_handle_type">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type18native_handle_typeERK18native_handle_type"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type18native_handle_typeERK18native_handle_type"></span><span id="hpx::cuda::target::native_handle_type::native_handle_type__native_handle_typeCR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a9398754f5599cb75c2967a2c9883db9a"></span><code class="sig-name descname">native_handle_type</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_type18native_handle_typeERK18native_handle_type" title="hpx::cuda::target::native_handle_type::native_handle_type">native_handle_type</a> <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type18native_handle_typeERK18native_handle_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type18native_handle_typeERR18native_handle_type">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type18native_handle_typeERR18native_handle_type"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type18native_handle_typeERR18native_handle_type"></span><span id="hpx::cuda::target::native_handle_type::native_handle_type__native_handle_typeRR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a2ff9f25768365067853b041781b8a83e"></span><code class="sig-name descname">native_handle_type</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_type18native_handle_typeERR18native_handle_type" title="hpx::cuda::target::native_handle_type::native_handle_type">native_handle_type</a> &amp;&amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type18native_handle_typeERR18native_handle_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_typeaSERK18native_handle_type">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_typeaSERK18native_handle_type"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_typeaSERK18native_handle_type"></span><span id="hpx::cuda::target::native_handle_type::assign-operator__native_handle_typeCR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a3c5b82255f8344795c3538f8e71fcdd7"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_typeE" title="hpx::cuda::target::native_handle_type">native_handle_type</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_typeE" title="hpx::cuda::target::native_handle_type">native_handle_type</a> <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_typeaSERK18native_handle_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_typeaSERR18native_handle_type">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_typeaSERR18native_handle_type"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_typeaSERR18native_handle_type"></span><span id="hpx::cuda::target::native_handle_type::assign-operator__native_handle_typeRR"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1ac6502d58c7f541c2a7f5f00129b2475a"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_typeE" title="hpx::cuda::target::native_handle_type">native_handle_type</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_typeE" title="hpx::cuda::target::native_handle_type">native_handle_type</a> &amp;&amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_typeaSERR18native_handle_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target18native_handle_type10get_streamEv">
+<span id="_CPPv3NK3hpx4cuda6target18native_handle_type10get_streamEv"></span><span id="_CPPv2NK3hpx4cuda6target18native_handle_type10get_streamEv"></span><span id="hpx::cuda::target::native_handle_type::get_streamC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1abdec2c00fc30b4d347027003daedb994"></span>cudaStream_t <code class="sig-name descname">get_stream</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target18native_handle_type10get_streamEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target18native_handle_type10get_deviceEv">
+<span id="_CPPv3NK3hpx4cuda6target18native_handle_type10get_deviceEv"></span><span id="_CPPv2NK3hpx4cuda6target18native_handle_type10get_deviceEv"></span><span id="hpx::cuda::target::native_handle_type::get_deviceC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a01c780b5cc8fe9f1133026c9fca51f63"></span>int <code class="sig-name descname">get_device</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target18native_handle_type10get_deviceEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target18native_handle_type16processing_unitsEv">
+<span id="_CPPv3NK3hpx4cuda6target18native_handle_type16processing_unitsEv"></span><span id="_CPPv2NK3hpx4cuda6target18native_handle_type16processing_unitsEv"></span><span id="hpx::cuda::target::native_handle_type::processing_unitsC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1ade5af65bef7022e125a897b759e4934d"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">processing_units</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target18native_handle_type16processing_unitsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target18native_handle_type16processor_familyEv">
+<span id="_CPPv3NK3hpx4cuda6target18native_handle_type16processor_familyEv"></span><span id="_CPPv2NK3hpx4cuda6target18native_handle_type16processor_familyEv"></span><span id="hpx::cuda::target::native_handle_type::processor_familyC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1abcb2aa1f34e5bf1a614d3e2bd218afdf"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">processor_family</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target18native_handle_type16processor_familyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4cuda6target18native_handle_type14processor_nameEv">
+<span id="_CPPv3NK3hpx4cuda6target18native_handle_type14processor_nameEv"></span><span id="_CPPv2NK3hpx4cuda6target18native_handle_type14processor_nameEv"></span><span id="hpx::cuda::target::native_handle_type::processor_nameC"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1aefc0f677e1106cc0acd31bc3646740c0"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">processor_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4cuda6target18native_handle_type14processor_nameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type5resetEv">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type5resetEv"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type5resetEv"></span><span id="hpx::cuda::target::native_handle_type::reset"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a033997e68e28404d940d44b569e73c22"></span>void <code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type21init_processing_unitsEv">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type21init_processing_unitsEv"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type21init_processing_unitsEv"></span><span id="hpx::cuda::target::native_handle_type::init_processing_units"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a453de3aa06c496840b060068eb06f8d5"></span>void <code class="sig-name descname">init_processing_units</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type21init_processing_unitsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type4mtx_E">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type4mtx_E"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type4mtx_E"></span><span id="hpx::cuda::target::native_handle_type::mtx___mutex_type"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a4662fb92c0a00201a69478de37297905"></span><a class="reference internal" href="#_CPPv4N3hpx4cuda6target18native_handle_type10mutex_typeE" title="hpx::cuda::target::native_handle_type::mutex_type">mutex_type</a> <code class="sig-name descname">mtx_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type7device_E">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type7device_E"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type7device_E"></span><span id="hpx::cuda::target::native_handle_type::device___i"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a393b3252d38163b29ed11e29e92a840c"></span>int <code class="sig-name descname">device_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type7device_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type17processing_units_E">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type17processing_units_E"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type17processing_units_E"></span><span id="hpx::cuda::target::native_handle_type::processing_units___std::s"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a3431e26289850400e9cc8be281106ba8"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">processing_units_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type17processing_units_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type17processor_family_E">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type17processor_family_E"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type17processor_family_E"></span><span id="hpx::cuda::target::native_handle_type::processor_family___std::s"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a72e1f5a81a96ba9df1a395d296987a5d"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">processor_family_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type17processor_family_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type15processor_name_E">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type15processor_name_E"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type15processor_name_E"></span><span id="hpx::cuda::target::native_handle_type::processor_name___ss"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1ae87fcb69e9bdebcd157a57d43c8f940d"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">processor_name_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type15processor_name_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4cuda6target18native_handle_type7stream_E">
+<span id="_CPPv3N3hpx4cuda6target18native_handle_type7stream_E"></span><span id="_CPPv2N3hpx4cuda6target18native_handle_type7stream_E"></span><span id="hpx::cuda::target::native_handle_type::stream___cudaStream_t"></span><span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1aab2982c88425407379194b3322f499db"></span>cudaStream_t <code class="sig-name descname">stream_</code><a class="headerlink" href="#_CPPv4N3hpx4cuda6target18native_handle_type7stream_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="structhpx_1_1cuda_1_1target_1_1native__handle__type_1a76ceec067bbe2be207d5f842ad828fbc"></span><em class="property">friend </em><code class="sig-name descname">hpx::cuda::target</code></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../async_distributed/api.html" class="btn btn-neutral float-right" title="async_distributed" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../async_combinators/api.html" class="btn btn-neutral float-left" title="async_combinators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2020, The STE||AR Group
+      
+        <span class="commit">
+          Revision <code>15b0b39</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

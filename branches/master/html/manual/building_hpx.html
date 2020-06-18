@@ -2315,6 +2315,7 @@ generate your specific makefiles/project files.</p>
 <span id="generic"></span><h3>Generic options<a class="headerlink" href="#generic-options" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_ACTION_BASE_COMPATIBILITY-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_ACTION_BASE_COMPATIBILITY:BOOL</span></code></a></p></li>
+<li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_ASYNC_CUDA-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_ASYNC_CUDA:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_AUTOMATIC_SERIALIZATION_REGISTRATION-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_AUTOMATIC_SERIALIZATION_REGISTRATION:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_BENCHMARK_SCRIPTS_PATH-PATH"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_BENCHMARK_SCRIPTS_PATH:PATH</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_BUILD_BINARY_PACKAGE-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_BUILD_BINARY_PACKAGE:BOOL</span></code></a></p></li>
@@ -2325,6 +2326,7 @@ generate your specific makefiles/project files.</p>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_COMPRESSION_ZLIB-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_COMPRESSION_ZLIB:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_CUDA-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_CUDA:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_CUDA_CLANG-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_CUDA_CLANG:BOOL</span></code></a></p></li>
+<li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_CUDA_COMPUTE-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_CUDA_COMPUTE:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_DATAPAR_VC-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DATAPAR_VC:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_DEPRECATION_WARNINGS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DEPRECATION_WARNINGS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS:BOOL</span></code></a></p></li>
@@ -2361,6 +2363,12 @@ generate your specific makefiles/project files.</p>
 <dt id="cmdoption-arg-HPX_WITH_ACTION_BASE_COMPATIBILITY-BOOL">
 <code class="sig-name descname">HPX_WITH_ACTION_BASE_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_ACTION_BASE_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable deprecated action bases (default: ON)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_ASYNC_CUDA-BOOL">
+<code class="sig-name descname">HPX_WITH_ASYNC_CUDA:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_ASYNC_CUDA-BOOL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable HPX CUDA compute capability (parallel algorithms) module (default: OFF) - note: CUDA futures may be used without CUDA Compute</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2414,13 +2422,19 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_CUDA-BOOL">
 <code class="sig-name descname">HPX_WITH_CUDA:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_CUDA-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable CUDA support (default: OFF)</p>
+<dd><p>Enable HPX_WITH_ASYNC_CUDA (CUDA futures) and HPX_WITH_CUDA_COMPUTE (CUDA enabled parallel algorithms) (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_CUDA_CLANG-BOOL">
 <code class="sig-name descname">HPX_WITH_CUDA_CLANG:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_CUDA_CLANG-BOOL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use clang to compile CUDA code (default: OFF)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_CUDA_COMPUTE-BOOL">
+<code class="sig-name descname">HPX_WITH_CUDA_COMPUTE:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_CUDA_COMPUTE-BOOL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable HPX CUDA compute capability (parallel algorithms) module (default: OFF) - note: enabling this also enables CUDA futures via HPX_WITH_ASYNC_CUDA</p>
 </dd></dl>
 
 <dl class="std option">
@@ -3195,8 +3209,6 @@ generate your specific makefiles/project files.</p>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_COMMAND_LINE_HANDLING_WITH_COMPATIBILITY_HEADERS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_COMMAND_LINE_HANDLING_WITH_COMPATIBILITY_HEADERS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_COMMAND_LINE_HANDLING_WITH_DEPRECATION_WARNINGS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_COMMAND_LINE_HANDLING_WITH_DEPRECATION_WARNINGS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_COMMAND_LINE_HANDLING_WITH_TESTS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_COMMAND_LINE_HANDLING_WITH_TESTS:BOOL</span></code></a></p></li>
-<li><p><a class="reference internal" href="#cmdoption-arg-HPX_COMPUTE_CUDA_WITH_DEPRECATION_WARNINGS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_COMPUTE_CUDA_WITH_DEPRECATION_WARNINGS:BOOL</span></code></a></p></li>
-<li><p><a class="reference internal" href="#cmdoption-arg-HPX_COMPUTE_CUDA_WITH_TESTS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_COMPUTE_CUDA_WITH_TESTS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_COMPUTE_WITH_COMPATIBILITY_HEADERS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_COMPUTE_WITH_COMPATIBILITY_HEADERS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_COMPUTE_WITH_DEPRECATION_WARNINGS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_COMPUTE_WITH_DEPRECATION_WARNINGS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_COMPUTE_WITH_TESTS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_COMPUTE_WITH_TESTS:BOOL</span></code></a></p></li>
@@ -3619,18 +3631,6 @@ generate your specific makefiles/project files.</p>
 <dt id="cmdoption-arg-HPX_COMMAND_LINE_HANDLING_WITH_TESTS-BOOL">
 <code class="sig-name descname">HPX_COMMAND_LINE_HANDLING_WITH_TESTS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_COMMAND_LINE_HANDLING_WITH_TESTS-BOOL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build HPX command_line_handling module tests. (default: ON)</p>
-</dd></dl>
-
-<dl class="std option">
-<dt id="cmdoption-arg-HPX_COMPUTE_CUDA_WITH_DEPRECATION_WARNINGS-BOOL">
-<code class="sig-name descname">HPX_COMPUTE_CUDA_WITH_DEPRECATION_WARNINGS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_COMPUTE_CUDA_WITH_DEPRECATION_WARNINGS-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable warnings for deprecated facilities. (default: On)</p>
-</dd></dl>
-
-<dl class="std option">
-<dt id="cmdoption-arg-HPX_COMPUTE_CUDA_WITH_TESTS-BOOL">
-<code class="sig-name descname">HPX_COMPUTE_CUDA_WITH_TESTS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_COMPUTE_CUDA_WITH_TESTS-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Build HPX compute_cuda module tests. (default: ON)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -4786,7 +4786,7 @@ improves the generated diagnostics.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>d87ee23</code>.
+          Revision <code>15b0b39</code>.
         </span>
       
 

@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="collectives" href="../../collectives/docs/index.html" />
+    <link rel="next" title="checkpoint_base" href="../../checkpoint_base/docs/index.html" />
     <link rel="prev" title="cache" href="../../cache/docs/index.html" /> 
 </head>
 
@@ -112,13 +112,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../async_cuda/docs/index.html">async_cuda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../async_distributed/docs/index.html">async</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../async_local/docs/index.html">async_local</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../execution_base/docs/index.html">execution_base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../batch_environments/docs/index.html">batch_environments</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cache/docs/index.html">cache</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">checkpoint</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#checkpointing-components">Checkpointing components</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../checkpoint_base/docs/index.html">checkpoint_base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../collectives/docs/index.html">collectives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../command_line_handling/docs/index.html">command_line_handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../compute/docs/index.html">compute</a></li>
@@ -133,6 +133,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../distributed_executors/docs/index.html">distributed_executors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../errors/docs/index.html">errors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../execution/docs/index.html">execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../execution_base/docs/index.html">execution_base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../executors/docs/index.html">executors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../filesystem/docs/index.html">filesystem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../format/docs/index.html">format</a></li>
@@ -291,6 +292,22 @@ newly created <code class="docutils literal notranslate"><span class="pre">check
 </div>
 <p>Once the future is ready, the checkpoint object will contain the <code class="docutils literal notranslate"><span class="pre">vector</span></code>
 <code class="docutils literal notranslate"><span class="pre">vec</span></code> and its five elements.</p>
+<p><code class="docutils literal notranslate"><span class="pre">prepare_checkpoint</span></code> takes arbitrary data containers (same as for
+<code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>), , such as <code class="docutils literal notranslate"><span class="pre">int</span></code>,
+<code class="docutils literal notranslate"><span class="pre">double</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">vector</span></code>, and <code class="docutils literal notranslate"><span class="pre">future</span></code>, and calculates the necessary
+buffer space for the checkpoint that would be created if <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>
+was called with the same arguments. This function returns a <code class="docutils literal notranslate"><span class="pre">future</span></code> to a
+<code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> that is appropriately initialized. Here’s an example of a
+simple use case:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">checkpoint</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">prepare_checkpoint</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">};</span>
+<span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">prepare_checkpoint</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once the future is ready, the checkpoint object will be initialized with an
+appropriately sized internal buffer.</p>
 <p>It is also possible to modify the launch policy used by <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>.
 This is accomplished by passing a launch policy as the first argument. It is
 important to note that passing <code class="docutils literal notranslate"><span class="pre">hpx::launch::sync</span></code> will cause
@@ -329,8 +346,7 @@ containers must be ordered in the same way they were placed into the
     <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str2</span><span class="p">;</span>
     <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">vec2</span><span class="p">;</span>
 
-    <span class="n">restore_checkpoint</span><span class="p">(</span>
-        <span class="n">f_archive</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">character2</span><span class="p">,</span> <span class="n">integer2</span><span class="p">,</span> <span class="n">flt2</span><span class="p">,</span> <span class="n">boolean2</span><span class="p">,</span> <span class="n">str2</span><span class="p">,</span> <span class="n">vec2</span><span class="p">);</span>
+    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">character2</span><span class="p">,</span> <span class="n">integer2</span><span class="p">,</span> <span class="n">flt2</span><span class="p">,</span> <span class="n">boolean2</span><span class="p">,</span> <span class="n">str2</span><span class="p">,</span> <span class="n">vec2</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The core utility of <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> is in its ability to make certain data
@@ -436,11 +452,16 @@ instance to <code class="docutils literal notranslate"><span class="pre">restore
         <span class="n">hpx</span><span class="o">::</span><span class="n">get_ptr</span><span class="o">&lt;</span><span class="n">data_server</span><span class="o">&gt;</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">get_id</span><span class="p">());</span>
     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">data_server</span><span class="o">&gt;</span> <span class="n">a_ptr</span> <span class="o">=</span> <span class="n">f_a_ptr</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">a_ptr</span><span class="p">);</span>
+    <span class="k">auto</span><span class="o">&amp;&amp;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+
+    <span class="c1">// test prepare_checkpoint API</span>
+    <span class="n">checkpoint</span> <span class="n">c</span> <span class="o">=</span> <span class="n">prepare_checkpoint</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span> <span class="n">a_ptr</span><span class="p">);</span>
+    <span class="n">HPX_TEST</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
 
     <span class="c1">// Restore Server</span>
     <span class="c1">// Create a new server instance</span>
     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">data_server</span><span class="o">&gt;</span> <span class="n">b_server</span><span class="p">;</span>
-    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">b_server</span><span class="p">);</span>
+    <span class="n">restore_checkpoint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">b_server</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -460,7 +481,7 @@ instance to <code class="docutils literal notranslate"><span class="pre">restore
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../collectives/docs/index.html" class="btn btn-neutral float-right" title="collectives" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../../checkpoint_base/docs/index.html" class="btn btn-neutral float-right" title="checkpoint_base" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../../cache/docs/index.html" class="btn btn-neutral float-left" title="cache" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -475,7 +496,7 @@ instance to <code class="docutils literal notranslate"><span class="pre">restore
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>ffca328</code>.
+          Revision <code>ad804fe</code>.
         </span>
       
 

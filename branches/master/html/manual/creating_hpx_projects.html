@@ -107,6 +107,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#using-hpx-with-cmake-based-projects">Using <em>HPX</em> with CMake-based projects</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#using-hpx-targets">Using <em>HPX</em> targets</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#using-macros-to-create-new-targets">Using macros to create new targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-the-hpx-compiler-wrapper-hpxcxx">Using the <em>HPX</em> compiler wrapper <code class="docutils literal notranslate"><span class="pre">hpxcxx</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#using-macros-to-set-up-existing-targets-to-use-hpx">Using macros to set up existing targets to use <em>HPX</em></a></li>
 </ul>
 </li>
@@ -584,6 +585,29 @@ in your targets. The <em>HPX</em> include directories are available with the
 <code class="docutils literal notranslate"><span class="pre">HPX_INCLUDE_DIRS</span></code> CMake variable.</p>
 </div>
 </div>
+<div class="section" id="using-the-hpx-compiler-wrapper-hpxcxx">
+<span id="hpxcxx-documentation"></span><h3>Using the <em>HPX</em> compiler wrapper <code class="docutils literal notranslate"><span class="pre">hpxcxx</span></code><a class="headerlink" href="#using-the-hpx-compiler-wrapper-hpxcxx" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">hpxcxx</span></code> compiler wrapper helps to compile a <em>HPX</em> component, application,
+or object file, based on the arguments passed to it.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hpxcxx <span class="o">[</span>--exe<span class="o">=</span>&lt;APPLICATION_NAME&gt; <span class="p">|</span> --comp<span class="o">=</span>&lt;COMPONENT_NAME&gt; <span class="p">|</span> -c<span class="o">]</span> FLAGS FILES
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">hpxcxx</span></code> command <strong>requires</strong> that either an application or a component is
+built or <code class="docutils literal notranslate"><span class="pre">-c</span></code> flag is specified. If the build is against a debug build, the
+<code class="docutils literal notranslate"><span class="pre">-g</span></code> is to be specified while building.</p>
+<div class="section" id="optional-flags">
+<h4>Optional <code class="docutils literal notranslate"><span class="pre">FLAGS</span></code><a class="headerlink" href="#optional-flags" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">&lt;LIBRARY&gt;</span> <span class="pre">|</span> <span class="pre">-l&lt;LIBRARY&gt;</span></code>: Links <code class="docutils literal notranslate"><span class="pre">&lt;LIBRARY&gt;</span></code> to the build</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code>: Specifies that the application or component build is against a debug
+build</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-rd</span></code>: Sets <code class="docutils literal notranslate"><span class="pre">release-with-debug-info</span></code> option</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-mr</span></code>: Sets <code class="docutils literal notranslate"><span class="pre">minsize-release</span></code> option</p></li>
+</ul>
+<p>All other flags (like <code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">OUTPUT_FILE</span></code>) are directly passed to the underlying
+C++ compiler.</p>
+</div>
+</div>
 <div class="section" id="using-macros-to-set-up-existing-targets-to-use-hpx">
 <span id="cmake-integrate-hpx"></span><h3>Using macros to set up existing targets to use <em>HPX</em><a class="headerlink" href="#using-macros-to-set-up-existing-targets-to-use-hpx" title="Permalink to this headline">¶</a></h3>
 <p>In addition to the <code class="docutils literal notranslate"><span class="pre">add_hpx_component</span></code> and <code class="docutils literal notranslate"><span class="pre">add_hpx_executable</span></code>, you can use
@@ -858,7 +882,7 @@ pkg-config files and CMake systems are configured with CMake build of
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>736b374</code>.
+          Revision <code>b8668e4</code>.
         </span>
       
 

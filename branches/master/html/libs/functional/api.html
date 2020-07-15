@@ -1067,6 +1067,12 @@ defined. See <a class="reference internal" href="../../api/public_api.html#publi
 <dd><em>#include &lt;tag_invoke.hpp&gt;</em><p><code class="docutils literal notranslate"><a class="reference internal" href="#structhpx_1_1functional_1_1is__tag__invocable"><span class="std std-ref"><span class="pre">hpx::functional::is_tag_invocable</span></span></a><span class="pre">&lt;Tag,</span> <span class="pre">Args...&gt;</span></code> is std::true_type if an overload of <code class="docutils literal notranslate"><span class="pre">tag_invoke(tag,</span> <span class="pre">args...)</span></code> can be found via ADL. </p>
 </dd></dl>
 
+<dl class="cpp struct">
+<dt id="_CPPv4I0EN3hpx10functional3tagE">
+<span id="_CPPv3I0EN3hpx10functional3tagE"></span><span id="_CPPv2I0EN3hpx10functional3tagE"></span><span class="target" id="structhpx_1_1functional_1_1tag"></span>template&lt;typename <code class="sig-name descname">Tag</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">tag</code><a class="headerlink" href="#_CPPv4I0EN3hpx10functional3tagE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;tag_invoke.hpp&gt;</em><p><code class="docutils literal notranslate"><a class="reference internal" href="#structhpx_1_1functional_1_1tag"><span class="std std-ref"><span class="pre">hpx::functional::tag</span></span></a><span class="pre">&lt;Tag&gt;</span></code> defines a base class that implements the necessary tag dispatching functionality for a given type <code class="docutils literal notranslate"><span class="pre">Tag</span></code> </p>
+</dd></dl>
+
 <dl class="cpp type">
 <dt id="_CPPv4N3hpx10functional11unspecifiedE">
 <span id="_CPPv3N3hpx10functional11unspecifiedE"></span><span id="_CPPv2N3hpx10functional11unspecifiedE"></span><span id="hpx::functional::unspecified"></span><span class="target" id="namespacehpx_1_1functional_1_1unspecified"></span><em class="property">namespace </em><code class="sig-name descname">unspecified</code><a class="headerlink" href="#_CPPv4N3hpx10functional11unspecifiedE" title="Permalink to this definition">¶</a><br /></dt>
@@ -1075,19 +1081,14 @@ defined. See <a class="reference internal" href="../../api/public_api.html#publi
 <dl class="cpp member">
 <dt id="_CPPv4N3hpx10functional11unspecified10tag_invokeE">
 <span id="_CPPv3N3hpx10functional11unspecified10tag_invokeE"></span><span id="_CPPv2N3hpx10functional11unspecified10tag_invokeE"></span><span id="hpx::functional::unspecified::tag_invoke__unspecified"></span><span class="target" id="namespacehpx_1_1functional_1_1unspecified_1aed87a445fe6c5ffe7b2b6cea232f4b6e"></span><em class="property">constexpr</em> <a class="reference internal" href="#_CPPv4N3hpx10functional11unspecifiedE" title="hpx::functional::unspecified">unspecified</a> <code class="sig-name descname">tag_invoke</code> = <a class="reference internal" href="#_CPPv4N3hpx10functional11unspecifiedE" title="hpx::functional::unspecified">unspecified</a><a class="headerlink" href="#_CPPv4N3hpx10functional11unspecified10tag_invokeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The <code class="docutils literal notranslate"><span class="pre">hpx::functional::tag_invoke</span></code> name defines a constexpr opbject that is invocable with one or more arguments. The first argument is a ‘tag’ (typically a CPO). It is only invocable if an overload of <a class="reference internal" href="#namespacehpx_1_1functional_1_1unspecified_1aed87a445fe6c5ffe7b2b6cea232f4b6e"><span class="std std-ref">tag_invoke()</span></a> that accepts the same arguments could be found via ADL.</p>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">hpx::functional::tag_invoke</span></code> name defines a constexpr object that is invocable with one or more arguments. The first argument is a ‘tag’ (typically a CPO). It is only invocable if an overload of <a class="reference internal" href="#namespacehpx_1_1functional_1_1unspecified_1aed87a445fe6c5ffe7b2b6cea232f4b6e"><span class="std std-ref">tag_invoke()</span></a> that accepts the same arguments could be found via ADL.</p>
 <p>The evaluation of the expression <code class="docutils literal notranslate"><span class="pre">hpx::tag_invoke(tag,</span> <span class="pre">args...)</span></code> is equivalent to evaluating the unqualified call to <code class="docutils literal notranslate"><span class="pre">tag_invoke(decay-copy(tag),</span> <span class="pre">std::forward&lt;Args&gt;(args)...)</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">hpx::functional::tag_invoke</span></code> is implemented against P1895.</p>
 <p>Example: Defining a new customization point <code class="docutils literal notranslate"><span class="pre">foo</span></code>: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">mylib</span> <span class="p">{</span>
-    <span class="kr">inline</span> <span class="k">constexpr</span> <span class="k">struct</span> <span class="n">foo_fn</span> <span class="p">{</span>
-        <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-        <span class="k">constexpr</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span><span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span>
-        <span class="k">noexcept</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">functional</span><span class="o">::</span><span class="n">tag_invoke</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
-            <span class="o">-&gt;</span> <span class="k">decltype</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">functional</span><span class="o">::</span><span class="n">tag_invoke</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span>  <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+    <span class="kr">inline</span> <span class="k">constexpr</span>
+        <span class="k">struct</span> <span class="n">foo_fn</span> <span class="k">final</span> <span class="o">:</span> <span class="n">hpx</span><span class="o">::</span><span class="n">functional</span><span class="o">::</span><span class="n">tag</span><span class="o">&lt;</span><span class="n">foo_fn</span><span class="o">&gt;</span>
         <span class="p">{</span>
-            <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">functional</span><span class="o">::</span><span class="n">tag_invoke</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span>  <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span> <span class="n">foo</span><span class="p">{};</span>
+        <span class="p">}</span> <span class="n">foo</span><span class="p">{};</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1417,7 +1418,7 @@ defined. See <a class="reference internal" href="../../api/public_api.html#publi
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>28e7e78</code>.
+          Revision <code>75884de</code>.
         </span>
       
 

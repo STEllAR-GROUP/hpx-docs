@@ -105,7 +105,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#using-hpx-with-cmake-based-projects">Using <em>HPX</em> with CMake-based projects</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#using-hpx-targets">Using <em>HPX</em> targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-cmake-targets">Using CMake targets</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#using-macros-to-create-new-targets">Using macros to create new targets</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#using-the-hpx-compiler-wrapper-hpxcxx">Using the <em>HPX</em> compiler wrapper <code class="docutils literal notranslate"><span class="pre">hpxcxx</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#using-macros-to-set-up-existing-targets-to-use-hpx">Using macros to set up existing targets to use <em>HPX</em></a></li>
@@ -485,10 +485,10 @@ instead of the command line.</p></li>
 <p>Additionally, if you wish to require <em>HPX</em> for your project, replace the
 <code class="docutils literal notranslate"><span class="pre">find_package(HPX)</span></code> line with <code class="docutils literal notranslate"><span class="pre">find_package(HPX</span> <span class="pre">REQUIRED)</span></code>.</p>
 <p>You can check if <em>HPX</em> was successfully found with the <code class="docutils literal notranslate"><span class="pre">HPX_FOUND</span></code> CMake variable.</p>
-<div class="section" id="using-hpx-targets">
-<h3>Using <em>HPX</em> targets<a class="headerlink" href="#using-hpx-targets" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="using-cmake-targets">
+<span id="using-hpx-cmake-targets"></span><h3>Using CMake targets<a class="headerlink" href="#using-cmake-targets" title="Permalink to this headline">¶</a></h3>
 <p>The recommended way of setting up your targets to use <em>HPX</em> is to link to the
-<code class="docutils literal notranslate"><span class="pre">HPX::hpx</span></code> target:</p>
+<code class="docutils literal notranslate"><span class="pre">HPX::hpx</span></code> CMake target:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">hello_world_component</span> <span class="s">PUBLIC</span> <span class="s">HPX::hpx</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -497,9 +497,14 @@ instead of the command line.</p></li>
 <span class="nb">target_include_directories</span><span class="p">(</span><span class="s">hello_world_component</span> <span class="s">PUBLIC</span> <span class="o">${</span><span class="nv">CMAKE_CURRENT_SOURCE_DIR</span><span class="o">}</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>When you link your library to <code class="docutils literal notranslate"><span class="pre">HPX::hpx</span></code> you will be able use <em>HPX</em>
-functionality in your library. To create a component, however, requires setting
-two additional compile definitions:</p>
+<p>When you link your library to the <code class="docutils literal notranslate"><span class="pre">HPX::hpx</span></code> CMake target you will be able
+use <em>HPX</em> functionality in your library. To use <code class="docutils literal notranslate"><span class="pre">main</span></code> as the implicit entry
+point in your application you must additionally link your application to the
+CMake target <code class="docutils literal notranslate"><span class="pre">HPX::wrap_main</span></code>. <code class="docutils literal notranslate"><span class="pre">HPX::wrap_main</span></code> is automatically linked to
+executables if you are using the macros described below
+(<a class="reference internal" href="#using-hpx-cmake-macros"><span class="std std-ref">Using macros to create new targets</span></a>). See <a class="reference internal" href="starting_the_hpx_runtime.html#minimal"><span class="std std-ref">Re-use the main() function as the main HPX entry point</span></a> for more information on
+implicitly using <code class="docutils literal notranslate"><span class="pre">main</span></code> as the entry point.</p>
+<p>Creating a component requires setting two additional compile definitions:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_compile_options</span><span class="p">(</span><span class="s">hello_world_component</span>
   <span class="s">HPX_COMPONENT_NAME=hello_world</span>
   <span class="s">HPX_COMPONENT_EXPORTS</span><span class="p">)</span>
@@ -528,7 +533,7 @@ find it at runtime. You can do this either by setting the environment variable
 <a class="reference internal" href="launching_and_configuring_hpx_applications.html#cmdoption-hpx-ini"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:ini</span></code></a>) to the directory containing your plugin.</p>
 </div>
 <div class="section" id="using-macros-to-create-new-targets">
-<h3>Using macros to create new targets<a class="headerlink" href="#using-macros-to-create-new-targets" title="Permalink to this headline">¶</a></h3>
+<span id="using-hpx-cmake-macros"></span><h3>Using macros to create new targets<a class="headerlink" href="#using-macros-to-create-new-targets" title="Permalink to this headline">¶</a></h3>
 <p>In addition to the targets described above, <em>HPX</em> provides convenience macros
 to hide optional boilerplate code that may be useful for your project. The link
 to the targets described above. We recommend that you use the targets directly
@@ -882,7 +887,7 @@ pkg-config files and CMake systems are configured with CMake build of
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>68c0883</code>.
+          Revision <code>f71c527</code>.
         </span>
       
 

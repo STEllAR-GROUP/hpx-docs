@@ -182,6 +182,7 @@ The ``hpx`` configuration section
    max_idle_loop_count = ${HPX_MAX_IDLE_LOOP_COUNT:<hpx_idle_loop_count_max>}
    max_busy_loop_count = ${HPX_MAX_BUSY_LOOP_COUNT:<hpx_busy_loop_count_max>}
    max_idle_backoff_time = ${HPX_MAX_IDLE_BACKOFF_TIME:<hpx_idle_backoff_time_max>}
+   exception_verbosity = ${HPX_EXCEPTION_VERBOSITY:2}
 
    [hpx.stacks]
    small_size = ${HPX_SMALL_STACK_SIZE:<hpx_small_stack_size>}
@@ -272,6 +273,14 @@ The ``hpx`` configuration section
        |cmake|. By default this is defined by the preprocessor constant
        ``HPX_IDLE_BACKOFF_TIME_MAX``. This is an internal setting which you
        should change only if you know exactly what you are doing.
+   * * ``hpx.exception_verbosity``
+     * This setting defines the verbosity of exceptions. Valid values are
+       integers. A setting of ``2`` or higher prints all available information.
+       A setting of ``1`` leaves out the build configuration and environment
+       variables. A setting of ``0`` or lower prints only the description of the
+       thrown exception and the file name, function, and line number where the
+       exception was thrown. The default value is ``2`` or the value of the
+       environment variable ``HPX_EXCEPTION_VERBOSITY``.
    * * ``hpx.stacks.small_size``
      * This is initialized to the small stack size to be used by |hpx|-threads.
        Set by default to the value of the compile time preprocessor constant
@@ -366,8 +375,8 @@ The ``hpx.thread_queue`` configuration section
        converted into |hpx| threads whenever the thread queues for a core have
        run empty.
    * * ``hpx.thread_queue.max_delete_count``
-     * The value of this property defines the number number of terminated |hpx|
-       threads to discard during each invocation of the corresponding function.
+     * The value of this property defines the number of terminated |hpx| threads
+       to discard during each invocation of the corresponding function.
 
 The ``hpx.components`` configuration section
 ............................................
@@ -598,7 +607,7 @@ equivalent cmake variable is ``HPX_WITH_PARCELPORT_MPI`` and has to be set to
    * * ``hpx.parcel.mpi.enable``
      * Enable the use of the MPI parcelport. HPX tries to detect if the
        application was started within a parallel MPI environment. If the
-       detection was succesful, the MPI parcelport is enabled by default. To
+       detection was successful, the MPI parcelport is enabled by default. To
        explicitly disable the MPI parcelport, set to 0. Note that the initial
        bootstrap of the overall |hpx| application will be performed using MPI as
        well.
@@ -1497,8 +1506,8 @@ The predefined command line options for any application using
    makes the scheduler NUMA sensitive
 
 
-|hpx| configuraton options
---------------------------
+|hpx| configuration options
+---------------------------
 
 .. option:: --hpx:app-config arg
 

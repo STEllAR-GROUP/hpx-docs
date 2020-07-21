@@ -11,8 +11,8 @@
 
 #include <hpx/hpx_init.hpp>
 #include <hpx/hpx.hpp>
-#include <hpx/serialization/serialize.hpp>
-#include <hpx/type_support/unused.hpp>
+#include <hpx/serialization.hpp>
+#include <hpx/modules/type_support.hpp>
 
 #include <boost/shared_array.hpp>
 
@@ -45,7 +45,7 @@ inline std::size_t idx(std::size_t i, int dir, std::size_t size)
 
 inline std::size_t locidx(std::size_t i, std::size_t np, std::size_t nl)
 {
-    return i / (np/nl);
+    return (i * nl) / np;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ public:
     {}
 
     // Create a new (uninitialized) partition of the given size.
-    partition_data(std::size_t size)
+    explicit partition_data(std::size_t size)
       : data_(std::allocator<double>().allocate(size), size, buffer_type::take)
       , size_(size)
       , min_index_(0)

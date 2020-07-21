@@ -187,8 +187,90 @@
 async_mpi
 ===</p>
 <p>The MPI library is intended to simplify the process of integrating MPI based
-codes with the HPX runtime. The library is intended to be used with the
-asynchronous API of MPI using requests.</p>
+codes with the <em>HPX</em> runtime. Any MPI function that is asynchronous and uses an
+MPI_Request may be converted into an hpx::future.
+The syntax is designed to allow a simple replacement of the MPI call with a futurized
+async version that accepts an executor instead of a communicator,
+and returns a future instead of assigning a request.
+Typically, an MPI call of the form</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">MPI_Isend</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">datatype</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">comm</span><span class="p">,</span> <span class="n">request</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>becomes</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">executor</span><span class="p">,</span> <span class="n">MPI_Isend</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">datatype</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">tag</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When the MPI operation is complete, the future will become ready.
+This allows communication to integrated cleanly with the rest of HPX, in particular
+the continuation style of programming may be used to build up more
+complex code. Consider the following example, that chains user processing,
+sends and receives using continuations…</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// create an executor for MPI dispatch</span>
+<span class="n">hpx</span><span class="o">::</span><span class="n">mpi</span><span class="o">::</span><span class="n">experimental</span><span class="o">::</span><span class="n">executor</span> <span class="n">exec</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+
+<span class="c1">// post an asynchronous receive using MPI_Irecv</span>
+<span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">f_recv</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span>
+    <span class="n">exec</span><span class="p">,</span> <span class="n">MPI_Irecv</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">MPI_INT</span><span class="p">,</span> <span class="n">rank_from</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+
+<span class="c1">// attach a continuation to run when the recv completes,</span>
+<span class="n">f_recv</span><span class="p">.</span><span class="n">then</span><span class="p">([</span><span class="o">=</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tokens</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">counter</span><span class="p">](</span><span class="k">auto</span><span class="o">&amp;&amp;</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// call an application specific function</span>
+    <span class="n">msg_recv</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">rank_to</span><span class="p">,</span> <span class="n">rank_from</span><span class="p">,</span> <span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">);</span>
+
+    <span class="c1">// send a new message</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">f_send</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span>
+        <span class="n">exec</span><span class="p">,</span> <span class="n">MPI_Isend</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">MPI_INT</span><span class="p">,</span> <span class="n">rank_to</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+
+    <span class="c1">// when that send completes</span>
+    <span class="n">f_send</span><span class="p">.</span><span class="n">then</span><span class="p">([</span><span class="o">=</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tokens</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">counter</span><span class="p">](</span><span class="k">auto</span><span class="o">&amp;&amp;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// call an application specific function</span>
+        <span class="n">msg_send</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">rank_to</span><span class="p">,</span> <span class="n">rank_from</span><span class="p">,</span> <span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The example above makes use of <code class="docutils literal notranslate"><span class="pre">MPI_Isend</span></code> and <code class="docutils literal notranslate"><span class="pre">MPI_Irecv</span></code>, but <em>any</em> MPI function
+that uses requests may be futurized in this manner.
+The following is a (non exhaustive) list of MPI functions that <em>should</em> be supported,
+though not all have been tested at the time of writing
+(please report any problems to the issue tracker).</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">MPI_Isend</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ibsend</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Issend</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Irsend</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Irecv</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Imrecv</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ibarrier</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ibcast</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Igather</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Igatherv</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Iscatter</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Iscatterv</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Iallgather</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Iallgatherv</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ialltoall</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ialltoallv</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ialltoallw</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ireduce</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Iallreduce</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ireduce_scatter</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ireduce_scatter_block</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Iscan</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Iexscan</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ineighbor_allgather</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ineighbor_allgatherv</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ineighbor_alltoall</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ineighbor_alltoallv</span><span class="p">(...);</span>
+<span class="kt">int</span> <span class="nf">MPI_Ineighbor_alltoallw</span><span class="p">(...);</span>
+</pre></div>
+</div>
+<p>Note that the <em>HPX</em> mpi futurization wrapper should work with <em>any</em> asynchronous
+<cite>MPI</cite> call, as long as the function signature has the last two arguments
+<cite>MPI_xxx(…, MPI_Comm comm, MPI_Request *request)</cite>
+- internally these two parameters will be substituted by the executor and future data
+parameters that are supplied by template instantiations inside the <cite>hpx::mpi</cite> code.</p>
 <p>See the <span class="xref std std-ref">API reference</span> of this module for more
 details.</p>
 
@@ -221,7 +303,7 @@ details.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>872cd2e</code>.
+          Revision <code>5c3691b</code>.
         </span>
       
 

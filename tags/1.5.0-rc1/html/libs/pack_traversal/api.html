@@ -1,0 +1,761 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pack_traversal &mdash; HPX 1.5.0-rc1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="performance_counters" href="../performance_counters/api.html" />
+    <link rel="prev" title="naming_base" href="../naming_base/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> HPX
+          
+
+          
+            
+            <img src="../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.5.0-rc1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../all_modules.html">All modules</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../api/public_api.html">Public API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions/api.html">actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions_base/api.html">actions_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../affinity/api.html">affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_cuda/api.html">async_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_distributed/api.html">async_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_mpi/api.html">async_mpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint_base/api.html">checkpoint_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collectives/api.html">collectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../command_line_handling/api.html">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../components_base/api.html">components_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config_registry/api.html">config_registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../distributed_executors/api.html">distributed_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution_base/api.html">execution_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../init_runtime/api.html">init_runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../itt_notify/api.html">itt_notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_distributed/api.html">lcos_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logging/api.html">logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpi_base/api.html">mpi_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pack_traversal</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-pack-traversal-pack-traversal-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/pack_traversal/pack_traversal.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-pack-traversal-pack-traversal-async-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/pack_traversal/pack_traversal_async.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-pack-traversal-traits-pack-traversal-rebind-container-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/pack_traversal/traits/pack_traversal_rebind_container.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-pack-traversal-unwrap-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/pack_traversal/unwrap.hpp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_local/api.html">runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistics/api.html">statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../string_util/api.html">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/api.html">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_executors/api.html">thread_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timed_execution/api.html">timed_execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../version/api.html">version</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../api.html">API reference</a> &raquo;</li>
+        
+      <li>pack_traversal</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/pack_traversal/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pack-traversal">
+<span id="libs-pack-traversal-api"></span><h1>pack_traversal<a class="headerlink" href="#pack-traversal" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this module can be included with the header
+<code class="docutils literal notranslate"><span class="pre">hpx/modules/pack_traversal.hpp</span></code>. These headers may be used by user-code but are not
+guaranteed stable (neither header location nor contents). You are using these at
+your own risk. If you wish to use non-public functionality from a module we
+<em>strongly</em> suggest only including the module header <code class="docutils literal notranslate"><span class="pre">hpx/modules/pack_traversal.hpp</span></code>, not
+the particular header in which the functionality you would like to use is
+defined. See <a class="reference internal" href="../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names that are part of the public
+<em>HPX</em> API.</p>
+<div class="section" id="header-hpx-pack-traversal-pack-traversal-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/pack_traversal/pack_traversal.hpp</span></code><a class="headerlink" href="#header-hpx-pack-traversal-pack-traversal-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span id="hpx::util"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="namespacehpx_1_1util_1a00dc09958eb28cdf31d74de35cb54b68"></span><code class="sig-name descname">template&lt;typename Mapper, typename... T&gt;&lt;unspecified&gt; hpx::util::map_pack(Mapper &amp;&amp; mapper, T &amp;&amp;... pack)</code></dt>
+<dd><p>Maps the pack with the given mapper.</p>
+<p>This function tries to visit all plain elements which may be wrapped in:<ul class="simple">
+<li><p>homogeneous containers (<code class="docutils literal notranslate"><span class="pre">std::vector</span></code>, <code class="docutils literal notranslate"><span class="pre">std::list</span></code>)</p></li>
+<li><p>heterogeneous containers <code class="docutils literal notranslate"><span class="pre">(hpx::tuple</span></code>, <code class="docutils literal notranslate"><span class="pre">std::pair</span></code>, <code class="docutils literal notranslate"><span class="pre">std::array</span></code>) and re-assembles the pack with the result of the mapper. Mapping from one type to a different one is supported.</p></li>
+</ul>
+</p>
+<p>Elements that aren’t accepted by the mapper are routed through and preserved through the hierarchy.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Maps all integers to floats</span>
+<span class="n">map_pack</span><span class="p">([](</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">float</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+<span class="p">},</span>
+<span class="mi">1</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}),</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The mapped element or in case the pack contains multiple elements, the pack is wrapped into a <code class="docutils literal notranslate"><span class="pre">hpx::tuple</span></code>. </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::exception</span></code>: like objects which are thrown by an invocation to the mapper.</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mapper</span></code>: A callable object, which accept an arbitrary type and maps it to another type or the same one.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: An arbitrary variadic pack which may contain any type.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-pack-traversal-pack-traversal-async-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/pack_traversal/pack_traversal_async.hpp</span></code><a class="headerlink" href="#header-hpx-pack-traversal-pack-traversal-async-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T">
+<span id="_CPPv3I0DpEN3hpx4util19traverse_pack_asyncERR7VisitorDpRR1T"></span><span id="_CPPv2I0DpEN3hpx4util19traverse_pack_asyncERR7VisitorDpRR1T"></span><span class="target" id="namespacehpx_1_1util_1a1f6868cf0eddd78ed96b2f12edf69624"></span>template&lt;typename <code class="sig-name descname">Visitor</code>, typename ...<code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">traverse_pack_async</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async::Visitor">Visitor</a> &amp;&amp;<em>visitor</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async::T">T</a>&amp;&amp;... <em>pack</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Traverses the pack with the given visitor in an asynchronous way.</p>
+<p>This function works in the same way as <code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code>, however, we are able to suspend and continue the traversal at later time. Thus we require a visitor callable object which provides three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads as depicted by the code sample below: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">my_async_visitor</span>
+<span class="p">{</span>
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+    <span class="kt">bool</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_visit_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_detach_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">,</span> <span class="n">N</span><span class="o">&amp;&amp;</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_complete_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">pack</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</p>
+<p><p>See </p>
+<code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code> for a detailed description about the traversal behavior and capabilities. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>A hpx::intrusive_ptr that references an instance of the given visitor object.</p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">visitor</span></code>: A visitor object which provides the three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads that were described above. Additionally the visitor must be compatible for referencing it from a <code class="docutils literal notranslate"><span class="pre">hpx::intrusive_ptr</span></code>. The visitor should must have a virtual destructor!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: The arbitrary parameter pack which is traversed asynchronously. Nested objects inside containers and tuple like types are traversed recursively.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T">
+<span id="_CPPv3I00DpEN3hpx4util29traverse_pack_async_allocatorERK9AllocatorRR7VisitorDpRR1T"></span><span id="_CPPv2I00DpEN3hpx4util29traverse_pack_async_allocatorERK9AllocatorRR7VisitorDpRR1T"></span><span class="target" id="namespacehpx_1_1util_1aca39208be80bca9134517d844d412936"></span>template&lt;typename <code class="sig-name descname">Allocator</code>, typename <code class="sig-name descname">Visitor</code>, typename ...<code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">traverse_pack_async_allocator</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async_allocator::Allocator">Allocator</a> <em class="property">const</em> &amp;<em>alloc</em>, <a class="reference internal" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async_allocator::Visitor">Visitor</a> &amp;&amp;<em>visitor</em>, <a class="reference internal" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async_allocator::T">T</a>&amp;&amp;... <em>pack</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00DpEN3hpx4util29traverse_pack_async_allocatorEDaRK9AllocatorRR7VisitorDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Traverses the pack with the given visitor in an asynchronous way.</p>
+<p>This function works in the same way as <code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code>, however, we are able to suspend and continue the traversal at later time. Thus we require a visitor callable object which provides three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads as depicted by the code sample below: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">my_async_visitor</span>
+<span class="p">{</span>
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+    <span class="kt">bool</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_visit_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_detach_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">element</span><span class="p">,</span> <span class="n">N</span><span class="o">&amp;&amp;</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">async_traverse_complete_tag</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">pack</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</p>
+<p><p>See </p>
+<code class="docutils literal notranslate"><span class="pre">traverse_pack</span></code> for a detailed description about the traversal behavior and capabilities. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>A hpx::intrusive_ptr that references an instance of the given visitor object.</p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">visitor</span></code>: A visitor object which provides the three <code class="docutils literal notranslate"><span class="pre">operator()</span></code> overloads that were described above. Additionally the visitor must be compatible for referencing it from a <code class="docutils literal notranslate"><span class="pre">hpx::intrusive_ptr</span></code>. The visitor should must have a virtual destructor!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: The arbitrary parameter pack which is traversed asynchronously. Nested objects inside containers and tuple like types are traversed recursively. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alloc</span></code>: Allocator instance to use to create the traversal frame.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-pack-traversal-traits-pack-traversal-rebind-container-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/pack_traversal/traits/pack_traversal_rebind_container.hpp</span></code><a class="headerlink" href="#header-hpx-pack-traversal-traits-pack-traversal-rebind-container-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp struct">
+<dt id="_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE">
+<span id="_CPPv3I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE"></span><span id="_CPPv2I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1vector_3_01_b3bb40f3d3d7d3e2bcb2b7936be568e2"></span>template&lt;typename <code class="sig-name descname">NewType</code>, typename <code class="sig-name descname">OldType</code>, typename <code class="sig-name descname">OldAllocator</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">pack_traversal_rebind_container</code>&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::vector&lt;OldType, OldAllocator&gt;&gt;::NewType">NewType</a>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::vector&lt;OldType, OldAllocator&gt;&gt;::OldType">OldType</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::vector&lt;OldType, OldAllocator&gt;&gt;::OldAllocator">OldAllocator</a>&gt;&gt;<a class="headerlink" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;pack_traversal_rebind_container.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEE12NewAllocatorE">
+<span id="_CPPv3IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEE12NewAllocatorE"></span><span id="_CPPv2IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEE12NewAllocatorE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1vector_3_01_b3bb40f3d3d7d3e2bcb2b7936be568e2_1a3bac557c3f22973396affb16dccaf2b3"></span><em class="property">using </em><code class="sig-name descname">NewAllocator</code> = <em class="property">typename</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::allocator_traits&lt;OldAllocator&gt;::template rebind_alloc&lt;NewType&gt;<a class="headerlink" href="#_CPPv4IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEE12NewAllocatorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6traits31pack_traversal_rebind_container4callERKNSt6vectorI7OldType12OldAllocatorEE">
+<span id="_CPPv3N3hpx6traits31pack_traversal_rebind_container4callERKNSt6vectorI7OldType12OldAllocatorEE"></span><span id="_CPPv2N3hpx6traits31pack_traversal_rebind_container4callERKNSt6vectorI7OldType12OldAllocatorEE"></span><span id="hpx::traits::pack_traversal_rebind_container::call__std::vector:OldType.OldAllocator:CR"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1vector_3_01_b3bb40f3d3d7d3e2bcb2b7936be568e2_1afc3a1d16b386e8db0843e857b0007716"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;NewType, NewAllocator&gt; <code class="sig-name descname">call</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;OldType, OldAllocator&gt; <em class="property">const</em> &amp;<em>container</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6traits31pack_traversal_rebind_container4callERKNSt6vectorI7OldType12OldAllocatorEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE">
+<span id="_CPPv3I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE"></span><span id="_CPPv2I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1list_3_01_ol83fa58c2eef40806c5641308abe7a7ae"></span>template&lt;typename <code class="sig-name descname">NewType</code>, typename <code class="sig-name descname">OldType</code>, typename <code class="sig-name descname">OldAllocator</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">pack_traversal_rebind_container</code>&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::list&lt;OldType, OldAllocator&gt;&gt;::NewType">NewType</a>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::list&lt;OldType, OldAllocator&gt;&gt;::OldType">OldType</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::list&lt;OldType, OldAllocator&gt;&gt;::OldAllocator">OldAllocator</a>&gt;&gt;<a class="headerlink" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;pack_traversal_rebind_container.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEE12NewAllocatorE">
+<span id="_CPPv3IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEE12NewAllocatorE"></span><span id="_CPPv2IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEE12NewAllocatorE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1list_3_01_ol83fa58c2eef40806c5641308abe7a7ae_1acceda9e8f8467975eec712681266561c"></span><em class="property">using </em><code class="sig-name descname">NewAllocator</code> = <em class="property">typename</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::allocator_traits&lt;OldAllocator&gt;::template rebind_alloc&lt;NewType&gt;<a class="headerlink" href="#_CPPv4IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEE12NewAllocatorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6traits31pack_traversal_rebind_container4callERKNSt4listI7OldType12OldAllocatorEE">
+<span id="_CPPv3N3hpx6traits31pack_traversal_rebind_container4callERKNSt4listI7OldType12OldAllocatorEE"></span><span id="_CPPv2N3hpx6traits31pack_traversal_rebind_container4callERKNSt4listI7OldType12OldAllocatorEE"></span><span id="hpx::traits::pack_traversal_rebind_container::call__std::list:OldType.OldAllocator:CR"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1list_3_01_ol83fa58c2eef40806c5641308abe7a7ae_1a86cb4830a53f8c1a0ed9f6d43b051206"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;NewType, NewAllocator&gt; <code class="sig-name descname">call</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;OldType, OldAllocator&gt; <em class="property">const</em> &amp;<em>container</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6traits31pack_traversal_rebind_container4callERKNSt4listI7OldType12OldAllocatorEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE">
+<span id="_CPPv3I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE"></span><span id="_CPPv2I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1array_3_01_old_type_00_01_n_01_4_01_4"></span>template&lt;typename <code class="sig-name descname">NewType</code>, typename <code class="sig-name descname">OldType</code>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">N</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">pack_traversal_rebind_container</code>&lt;<a class="reference internal" href="#_CPPv4I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::array&lt;OldType, N&gt;&gt;::NewType">NewType</a>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::array&lt;<a class="reference internal" href="#_CPPv4I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::array&lt;OldType, N&gt;&gt;::OldType">OldType</a>, <a class="reference internal" href="#_CPPv4I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::array&lt;OldType, N&gt;&gt;::N">N</a>&gt;&gt;<a class="headerlink" href="#_CPPv4I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;pack_traversal_rebind_container.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6traits31pack_traversal_rebind_container4callERKNSt5arrayI7OldType1NEE">
+<span id="_CPPv3N3hpx6traits31pack_traversal_rebind_container4callERKNSt5arrayI7OldType1NEE"></span><span id="_CPPv2N3hpx6traits31pack_traversal_rebind_container4callERKNSt5arrayI7OldType1NEE"></span><span id="hpx::traits::pack_traversal_rebind_container::call__std::array:OldType.N:CR"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1array_3_01_old_type_00_01_n_01_4_01_4_1a44e6233e63a9b5df0a094c55b808bde4"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::array&lt;NewType, N&gt; <code class="sig-name descname">call</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::array&lt;OldType, N&gt; <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6traits31pack_traversal_rebind_container4callERKNSt5arrayI7OldType1NEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx6traitsE">
+<span id="_CPPv3N3hpx6traitsE"></span><span id="_CPPv2N3hpx6traitsE"></span><span id="hpx::traits"></span><span class="target" id="namespacehpx_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE">
+<span id="_CPPv3I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1array_3_01_old_type_00_01_n_01_4_01_4"></span>template&lt;typename <code class="sig-name descname">NewType</code>, typename <code class="sig-name descname">OldType</code>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">N</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">pack_traversal_rebind_container</code>&lt;<a class="reference internal" href="#_CPPv4I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::array&lt;OldType, N&gt;&gt;::NewType">NewType</a>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::array&lt;<a class="reference internal" href="#_CPPv4I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::array&lt;OldType, N&gt;&gt;::OldType">OldType</a>, <a class="reference internal" href="#_CPPv4I00_NSt6size_tEEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt5arrayI7OldType1NEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::array&lt;OldType, N&gt;&gt;::N">N</a>&gt;&gt;<br /></dt>
+<dd><em>#include &lt;pack_traversal_rebind_container.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6traits31pack_traversal_rebind_container4callERKNSt5arrayI7OldType1NEE">
+<span id="_CPPv3N3hpx6traits31pack_traversal_rebind_container4callERKNSt5arrayI7OldType1NEE"></span><span id="_CPPv2N3hpx6traits31pack_traversal_rebind_container4callERKNSt5arrayI7OldType1NEE"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1array_3_01_old_type_00_01_n_01_4_01_4_1a44e6233e63a9b5df0a094c55b808bde4"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::array&lt;NewType, N&gt; <code class="sig-name descname">call</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::array&lt;OldType, N&gt; <em class="property">const</em>&amp;<span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE">
+<span id="_CPPv3I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1list_3_01_ol83fa58c2eef40806c5641308abe7a7ae"></span>template&lt;typename <code class="sig-name descname">NewType</code>, typename <code class="sig-name descname">OldType</code>, typename <code class="sig-name descname">OldAllocator</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">pack_traversal_rebind_container</code>&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::list&lt;OldType, OldAllocator&gt;&gt;::NewType">NewType</a>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::list&lt;OldType, OldAllocator&gt;&gt;::OldType">OldType</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::list&lt;OldType, OldAllocator&gt;&gt;::OldAllocator">OldAllocator</a>&gt;&gt;<br /></dt>
+<dd><em>#include &lt;pack_traversal_rebind_container.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEE12NewAllocatorE">
+<span id="_CPPv3IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt4listI7OldType12OldAllocatorEEE12NewAllocatorE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1list_3_01_ol83fa58c2eef40806c5641308abe7a7ae_1acceda9e8f8467975eec712681266561c"></span><em class="property">using </em><code class="sig-name descname">NewAllocator</code> = <em class="property">typename</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::allocator_traits&lt;OldAllocator&gt;::template rebind_alloc&lt;NewType&gt;<br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6traits31pack_traversal_rebind_container4callERKNSt4listI7OldType12OldAllocatorEE">
+<span id="_CPPv3N3hpx6traits31pack_traversal_rebind_container4callERKNSt4listI7OldType12OldAllocatorEE"></span><span id="_CPPv2N3hpx6traits31pack_traversal_rebind_container4callERKNSt4listI7OldType12OldAllocatorEE"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1list_3_01_ol83fa58c2eef40806c5641308abe7a7ae_1a86cb4830a53f8c1a0ed9f6d43b051206"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;NewType, NewAllocator&gt; <code class="sig-name descname">call</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;OldType, OldAllocator&gt; <em class="property">const</em> &amp;<em>container</em><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE">
+<span id="_CPPv3I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1vector_3_01_b3bb40f3d3d7d3e2bcb2b7936be568e2"></span>template&lt;typename <code class="sig-name descname">NewType</code>, typename <code class="sig-name descname">OldType</code>, typename <code class="sig-name descname">OldAllocator</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">pack_traversal_rebind_container</code>&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::vector&lt;OldType, OldAllocator&gt;&gt;::NewType">NewType</a>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::vector&lt;OldType, OldAllocator&gt;&gt;::OldType">OldType</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEEE" title="hpx::traits::pack_traversal_rebind_container&lt;NewType, std::vector&lt;OldType, OldAllocator&gt;&gt;::OldAllocator">OldAllocator</a>&gt;&gt;<br /></dt>
+<dd><em>#include &lt;pack_traversal_rebind_container.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEE12NewAllocatorE">
+<span id="_CPPv3IEN3hpx6traits31pack_traversal_rebind_containerI7NewTypeNSt6vectorI7OldType12OldAllocatorEEE12NewAllocatorE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1vector_3_01_b3bb40f3d3d7d3e2bcb2b7936be568e2_1a3bac557c3f22973396affb16dccaf2b3"></span><em class="property">using </em><code class="sig-name descname">NewAllocator</code> = <em class="property">typename</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::allocator_traits&lt;OldAllocator&gt;::template rebind_alloc&lt;NewType&gt;<br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6traits31pack_traversal_rebind_container4callERKNSt6vectorI7OldType12OldAllocatorEE">
+<span id="_CPPv3N3hpx6traits31pack_traversal_rebind_container4callERKNSt6vectorI7OldType12OldAllocatorEE"></span><span id="_CPPv2N3hpx6traits31pack_traversal_rebind_container4callERKNSt6vectorI7OldType12OldAllocatorEE"></span><span class="target" id="structhpx_1_1traits_1_1pack__traversal__rebind__container_3_01_new_type_00_01std_1_1vector_3_01_b3bb40f3d3d7d3e2bcb2b7936be568e2_1afc3a1d16b386e8db0843e857b0007716"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;NewType, NewAllocator&gt; <code class="sig-name descname">call</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;OldType, OldAllocator&gt; <em class="property">const</em> &amp;<em>container</em><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-pack-traversal-unwrap-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/pack_traversal/unwrap.hpp</span></code><a class="headerlink" href="#header-hpx-pack-traversal-unwrap-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4IDpEN3hpx4util6unwrapEDaDpRR4Args">
+<span id="_CPPv3IDpEN3hpx4util6unwrapEDpRR4Args"></span><span id="_CPPv2IDpEN3hpx4util6unwrapEDpRR4Args"></span><span class="target" id="namespacehpx_1_1util_1a687bc9b163ccbdaaa82764b171b7f0c0"></span>template&lt;typename ...<code class="sig-name descname">Args</code>&gt;<br />auto <code class="sig-name descname">unwrap</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IDpEN3hpx4util6unwrapEDaDpRR4Args" title="hpx::util::unwrap::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx4util6unwrapEDaDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A helper function for retrieving the actual result of any hpx::lcos::future like type which is wrapped in an arbitrary way.</p>
+<p>Unwraps the given pack of arguments, so that any hpx::lcos::future object is replaced by its future result type in the argument pack:<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::future&lt;int&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">int</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::future&lt;std::vector&lt;float&gt;&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">std::vector&lt;float&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::vector&lt;future&lt;float&gt;&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">std::vector&lt;float&gt;</span></code></p></li>
+</ul>
+</p>
+<p>The function is capable of unwrapping hpx::lcos::future like objects that are wrapped inside any container or tuple like type, see <a class="reference internal" href="#namespacehpx_1_1util_1a00dc09958eb28cdf31d74de35cb54b68"><span class="std std-ref">hpx::util::map_pack()</span></a> for a detailed description about which surrounding types are supported. Non hpx::lcos::future like types are permitted as arguments and passed through.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Single arguments</span>
+<span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="nl">hpx</span><span class="p">:</span><span class="n">util</span><span class="o">::</span><span class="n">unwrap</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+
+<span class="c1">// Multiple arguments</span>
+<span class="n">hpx</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">i2</span> <span class="o">=</span>
+    <span class="nl">hpx</span><span class="p">:</span><span class="n">util</span><span class="o">::</span><span class="n">unwrap</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                     <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>This function unwraps the given arguments until the first traversed nested hpx::lcos::future which corresponds to an unwrapping depth of one. See <a class="reference internal" href="#namespacehpx_1_1util_1a916ca91b9993c4f1e77feeed738631bb"><span class="std std-ref">hpx::util::unwrap_n()</span></a> for a function which unwraps the given arguments to a particular depth or <a class="reference internal" href="#namespacehpx_1_1util_1a72dc824c1b2fe406b75984d0f3c131d5"><span class="std std-ref">hpx::util::unwrap_all()</span></a> that unwraps all future like objects recursively which are contained in the arguments.</p>
+</dd>
+<dt><strong>Return</strong></dt><dd><p>Depending on the count of arguments this function returns a hpx::util::tuple containing the unwrapped arguments if multiple arguments are given. In case the function is called with a single argument, the argument is unwrapped and returned.</p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: the arguments that are unwrapped which may contain any arbitrary future or non future type.</p></li>
+</ul>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::exception</span></code>: like objects in case any of the given wrapped hpx::lcos::future objects were resolved through an exception. See hpx::lcos::future::get() for details. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I_NSt6size_tEDpEN3hpx4util8unwrap_nEDaDpRR4Args">
+<span id="_CPPv3I_NSt6size_tEDpEN3hpx4util8unwrap_nEDpRR4Args"></span><span id="_CPPv2I_NSt6size_tEDpEN3hpx4util8unwrap_nEDpRR4Args"></span><span class="target" id="namespacehpx_1_1util_1a916ca91b9993c4f1e77feeed738631bb"></span>template&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">Depth</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br />auto <code class="sig-name descname">unwrap_n</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I_NSt6size_tEDpEN3hpx4util8unwrap_nEDaDpRR4Args" title="hpx::util::unwrap_n::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I_NSt6size_tEDpEN3hpx4util8unwrap_nEDaDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An alterntive version of <a class="reference internal" href="#namespacehpx_1_1util_1a687bc9b163ccbdaaa82764b171b7f0c0"><span class="std std-ref">hpx::util::unwrap()</span></a>, which unwraps the given arguments to a certain depth of hpx::lcos::future like objects.</p>
+<p><p>See unwrap for a detailed description. </p>
+<dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Depth</span></code>: The count of hpx::lcos::future like objects which are unwrapped maximally.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IDpEN3hpx4util10unwrap_allEDaDpRR4Args">
+<span id="_CPPv3IDpEN3hpx4util10unwrap_allEDpRR4Args"></span><span id="_CPPv2IDpEN3hpx4util10unwrap_allEDpRR4Args"></span><span class="target" id="namespacehpx_1_1util_1a72dc824c1b2fe406b75984d0f3c131d5"></span>template&lt;typename ...<code class="sig-name descname">Args</code>&gt;<br />auto <code class="sig-name descname">unwrap_all</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IDpEN3hpx4util10unwrap_allEDaDpRR4Args" title="hpx::util::unwrap_all::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx4util10unwrap_allEDaDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An alterntive version of <a class="reference internal" href="#namespacehpx_1_1util_1a687bc9b163ccbdaaa82764b171b7f0c0"><span class="std std-ref">hpx::util::unwrap()</span></a>, which unwraps the given arguments recursively so that all contained hpx::lcos::future like objects are replaced by their actual value.</p>
+<p>See <a class="reference internal" href="#namespacehpx_1_1util_1a687bc9b163ccbdaaa82764b171b7f0c0"><span class="std std-ref">hpx::util::unwrap()</span></a> for a detailed description. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4util10unwrappingEDaRR1T">
+<span id="_CPPv3I0EN3hpx4util10unwrappingERR1T"></span><span id="_CPPv2I0EN3hpx4util10unwrappingERR1T"></span><span class="target" id="namespacehpx_1_1util_1a7529d9ac687684c33403cdd1f9cef8e4"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">unwrapping</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx4util10unwrappingEDaRR1T" title="hpx::util::unwrapping::T">T</a> &amp;&amp;<em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4util10unwrappingEDaRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns a callable object which unwraps its arguments upon invocation using the <a class="reference internal" href="#namespacehpx_1_1util_1a687bc9b163ccbdaaa82764b171b7f0c0"><span class="std std-ref">hpx::util::unwrap()</span></a> function and then passes the result to the given callable object.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">callable</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">unwrapping</span><span class="p">([](</span><span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="n">callable</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                  <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+</pre></div>
+</div>
+</p>
+<p>See <a class="reference internal" href="#namespacehpx_1_1util_1a687bc9b163ccbdaaa82764b171b7f0c0"><span class="std std-ref">hpx::util::unwrap()</span></a> for a detailed description.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">callable</span></code>: the callable object which which is called with the result of the corresponding unwrap function. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I_NSt6size_tE0EN3hpx4util12unwrapping_nEDaRR1T">
+<span id="_CPPv3I_NSt6size_tE0EN3hpx4util12unwrapping_nERR1T"></span><span id="_CPPv2I_NSt6size_tE0EN3hpx4util12unwrapping_nERR1T"></span><span class="target" id="namespacehpx_1_1util_1a66e52fc8f88ccfb7d9215836eab5249e"></span>template&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">Depth</code>, typename <code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">unwrapping_n</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I_NSt6size_tE0EN3hpx4util12unwrapping_nEDaRR1T" title="hpx::util::unwrapping_n::T">T</a> &amp;&amp;<em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I_NSt6size_tE0EN3hpx4util12unwrapping_nEDaRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns a callable object which unwraps its arguments upon invocation using the <a class="reference internal" href="#namespacehpx_1_1util_1a916ca91b9993c4f1e77feeed738631bb"><span class="std std-ref">hpx::util::unwrap_n()</span></a> function and then passes the result to the given callable object.</p>
+<p>See <a class="reference internal" href="#namespacehpx_1_1util_1a7529d9ac687684c33403cdd1f9cef8e4"><span class="std std-ref">hpx::util::unwrapping()</span></a> for a detailed description. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4util14unwrapping_allEDaRR1T">
+<span id="_CPPv3I0EN3hpx4util14unwrapping_allERR1T"></span><span id="_CPPv2I0EN3hpx4util14unwrapping_allERR1T"></span><span class="target" id="namespacehpx_1_1util_1ad32bada7cd9794dcb256df84610733f8"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">unwrapping_all</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx4util14unwrapping_allEDaRR1T" title="hpx::util::unwrapping_all::T">T</a> &amp;&amp;<em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4util14unwrapping_allEDaRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns a callable object which unwraps its arguments upon invocation using the <a class="reference internal" href="#namespacehpx_1_1util_1a72dc824c1b2fe406b75984d0f3c131d5"><span class="std std-ref">hpx::util::unwrap_all()</span></a> function and then passes the result to the given callable object.</p>
+<p>See <a class="reference internal" href="#namespacehpx_1_1util_1a7529d9ac687684c33403cdd1f9cef8e4"><span class="std std-ref">hpx::util::unwrapping()</span></a> for a detailed description. </p>
+</dd></dl>
+
+</div>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4util10functionalE">
+<span id="_CPPv3N3hpx4util10functionalE"></span><span id="_CPPv2N3hpx4util10functionalE"></span><span id="hpx::util::functional"></span><span class="target" id="namespacehpx_1_1util_1_1functional"></span><em class="property">namespace </em><code class="sig-name descname">functional</code><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util10functional6unwrapE">
+<span id="_CPPv3N3hpx4util10functional6unwrapE"></span><span id="_CPPv2N3hpx4util10functional6unwrapE"></span><span id="hpx::util::functional::unwrap"></span><span class="target" id="structhpx_1_1util_1_1functional_1_1unwrap"></span><em class="property">struct </em><code class="sig-name descname">unwrap</code><a class="headerlink" href="#_CPPv4N3hpx4util10functional6unwrapE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;unwrap.hpp&gt;</em><p>A helper function object for functionally invoking <code class="docutils literal notranslate"><a class="reference internal" href="#namespacehpx_1_1util_1a687bc9b163ccbdaaa82764b171b7f0c0"><span class="std std-ref"><span class="pre">hpx::util::unwrap</span></span></a></code>. For more information please refer to its documentation. </p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util10functional10unwrap_allE">
+<span id="_CPPv3N3hpx4util10functional10unwrap_allE"></span><span id="_CPPv2N3hpx4util10functional10unwrap_allE"></span><span id="hpx::util::functional::unwrap_all"></span><span class="target" id="structhpx_1_1util_1_1functional_1_1unwrap__all"></span><em class="property">struct </em><code class="sig-name descname">unwrap_all</code><a class="headerlink" href="#_CPPv4N3hpx4util10functional10unwrap_allE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;unwrap.hpp&gt;</em><p>A helper function object for functionally invoking <code class="docutils literal notranslate"><a class="reference internal" href="#namespacehpx_1_1util_1a72dc824c1b2fe406b75984d0f3c131d5"><span class="std std-ref"><span class="pre">hpx::util::unwrap_all</span></span></a></code>. For more information please refer to its documentation. </p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4I_NSt6size_tEEN3hpx4util10functional8unwrap_nE">
+<span id="_CPPv3I_NSt6size_tEEN3hpx4util10functional8unwrap_nE"></span><span id="_CPPv2I_NSt6size_tEEN3hpx4util10functional8unwrap_nE"></span><span class="target" id="structhpx_1_1util_1_1functional_1_1unwrap__n"></span>template&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">Depth</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">unwrap_n</code><a class="headerlink" href="#_CPPv4I_NSt6size_tEEN3hpx4util10functional8unwrap_nE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;unwrap.hpp&gt;</em><p>A helper function object for functionally invoking <code class="docutils literal notranslate"><a class="reference internal" href="#namespacehpx_1_1util_1a916ca91b9993c4f1e77feeed738631bb"><span class="std std-ref"><span class="pre">hpx::util::unwrap_n</span></span></a></code>. For more information please refer to its documentation. </p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../performance_counters/api.html" class="btn btn-neutral float-right" title="performance_counters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../naming_base/api.html" class="btn btn-neutral float-left" title="naming_base" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2020, The STE||AR Group
+      
+        <span class="commit">
+          Revision <code>2145d63</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

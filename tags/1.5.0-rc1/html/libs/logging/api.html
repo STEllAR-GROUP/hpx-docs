@@ -1,0 +1,1402 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>logging &mdash; HPX 1.5.0-rc1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="memory" href="../memory/api.html" />
+    <link rel="prev" title="lcos_local" href="../lcos_local/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> HPX
+          
+
+          
+            
+            <img src="../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.5.0-rc1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../all_modules.html">All modules</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../api/public_api.html">Public API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions/api.html">actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions_base/api.html">actions_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../affinity/api.html">affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_cuda/api.html">async_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_distributed/api.html">async_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_mpi/api.html">async_mpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint_base/api.html">checkpoint_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collectives/api.html">collectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../command_line_handling/api.html">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../components_base/api.html">components_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config_registry/api.html">config_registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../distributed_executors/api.html">distributed_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution_base/api.html">execution_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../init_runtime/api.html">init_runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../itt_notify/api.html">itt_notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_distributed/api.html">lcos_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">logging</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-logging-format-destinations-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/format/destinations.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-logging-format-formatters-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/format/formatters.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-logging-format-named-write-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/format/named_write.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-logging-level-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/level.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-logging-logging-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/logging.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-logging-manipulator-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/manipulator.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-logging-message-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/message.hpp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-hpx-modules-logging-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/modules/logging.hpp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpi_base/api.html">mpi_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pack_traversal/api.html">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_local/api.html">runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistics/api.html">statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../string_util/api.html">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/api.html">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_executors/api.html">thread_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timed_execution/api.html">timed_execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../version/api.html">version</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../api.html">API reference</a> &raquo;</li>
+        
+      <li>logging</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/logging/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="logging">
+<span id="libs-logging-api"></span><h1>logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this module can be included with the header
+<code class="docutils literal notranslate"><span class="pre">hpx/modules/logging.hpp</span></code>. These headers may be used by user-code but are not
+guaranteed stable (neither header location nor contents). You are using these at
+your own risk. If you wish to use non-public functionality from a module we
+<em>strongly</em> suggest only including the module header <code class="docutils literal notranslate"><span class="pre">hpx/modules/logging.hpp</span></code>, not
+the particular header in which the functionality you would like to use is
+defined. See <a class="reference internal" href="../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names that are part of the public
+<em>HPX</em> API.</p>
+<div class="section" id="header-hpx-logging-format-destinations-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/format/destinations.hpp</span></code><a class="headerlink" href="#header-hpx-logging-format-destinations-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span id="hpx::util"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4util7loggingE">
+<span id="_CPPv3N3hpx4util7loggingE"></span><span id="_CPPv2N3hpx4util7loggingE"></span><span id="hpx::util::logging"></span><span class="target" id="namespacehpx_1_1util_1_1logging"></span><em class="property">namespace </em><code class="sig-name descname">logging</code><a class="headerlink" href="#_CPPv4N3hpx4util7loggingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4util7logging11destinationE">
+<span id="_CPPv3N3hpx4util7logging11destinationE"></span><span id="_CPPv2N3hpx4util7logging11destinationE"></span><span id="hpx::util::logging::destination"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1_1destination"></span><em class="property">namespace </em><code class="sig-name descname">destination</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destinationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Destination is a manipulator. It contains a place where the message, after being formatted, is to be written to. </p>
+<p>Some viable destinations are : <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1cout"><span class="std std-ref">the console</span></a>, <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1file"><span class="std std-ref">a file</span></a>, a socket, etc. </p>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging11destination4cerrE">
+<span id="_CPPv3N3hpx4util7logging11destination4cerrE"></span><span id="_CPPv2N3hpx4util7logging11destination4cerrE"></span><span id="hpx::util::logging::destination::cerr"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1cerr"></span><em class="property">struct </em><code class="sig-name descname">cerr</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7loggingE" title="hpx::util::logging">logging</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destinationE" title="hpx::util::logging::destination">destination</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination11manipulatorE" title="hpx::util::logging::destination::manipulator">manipulator</a><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4cerrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;destinations.hpp&gt;</em><p>Writes the string to cerr. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4cerrD0Ev">
+<span id="_CPPv3N3hpx4util7logging11destination4cerrD0Ev"></span><span id="_CPPv2N3hpx4util7logging11destination4cerrD0Ev"></span><span id="hpx::util::logging::destination::cerr::~cerr"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1cerr_1a2cf68f4ac69204f65a5d8cf31d283eb1"></span><code class="sig-name descname">~cerr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4cerrD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4cerr4makeEv">
+<span id="_CPPv3N3hpx4util7logging11destination4cerr4makeEv"></span><span id="_CPPv2N3hpx4util7logging11destination4cerr4makeEv"></span><span id="hpx::util::logging::destination::cerr::make"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1cerr_1af7f780d5bda24d04ac0f4ad0f82b381c"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::unique_ptr&lt;<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination4cerrE" title="hpx::util::logging::destination::cerr">cerr</a>&gt; <code class="sig-name descname">make</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4cerr4makeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4cerr4cerrEv">
+<span id="_CPPv3N3hpx4util7logging11destination4cerr4cerrEv"></span><span id="_CPPv2N3hpx4util7logging11destination4cerr4cerrEv"></span><span id="hpx::util::logging::destination::cerr::cerr"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1cerr_1abca1d25e89e336e8a697f4f05658fa1d"></span><code class="sig-name descname">cerr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4cerr4cerrEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging11destination4coutE">
+<span id="_CPPv3N3hpx4util7logging11destination4coutE"></span><span id="_CPPv2N3hpx4util7logging11destination4coutE"></span><span id="hpx::util::logging::destination::cout"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1cout"></span><em class="property">struct </em><code class="sig-name descname">cout</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7loggingE" title="hpx::util::logging">logging</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destinationE" title="hpx::util::logging::destination">destination</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination11manipulatorE" title="hpx::util::logging::destination::manipulator">manipulator</a><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4coutE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;destinations.hpp&gt;</em><p>Writes the string to console. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4coutD0Ev">
+<span id="_CPPv3N3hpx4util7logging11destination4coutD0Ev"></span><span id="_CPPv2N3hpx4util7logging11destination4coutD0Ev"></span><span id="hpx::util::logging::destination::cout::~cout"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1cout_1a6f782b19a384da32a3249751940a7ece"></span><code class="sig-name descname">~cout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4coutD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4cout4makeEv">
+<span id="_CPPv3N3hpx4util7logging11destination4cout4makeEv"></span><span id="_CPPv2N3hpx4util7logging11destination4cout4makeEv"></span><span id="hpx::util::logging::destination::cout::make"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1cout_1aa876de120155deb4217bd6aa002e88c9"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::unique_ptr&lt;<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination4coutE" title="hpx::util::logging::destination::cout">cout</a>&gt; <code class="sig-name descname">make</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4cout4makeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4cout4coutEv">
+<span id="_CPPv3N3hpx4util7logging11destination4cout4coutEv"></span><span id="_CPPv2N3hpx4util7logging11destination4cout4coutEv"></span><span id="hpx::util::logging::destination::cout::cout"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1cout_1a3e10633b2464a246b162be2fbf271d03"></span><code class="sig-name descname">cout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4cout4coutEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging11destination10dbg_windowE">
+<span id="_CPPv3N3hpx4util7logging11destination10dbg_windowE"></span><span id="_CPPv2N3hpx4util7logging11destination10dbg_windowE"></span><span id="hpx::util::logging::destination::dbg_window"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1dbg__window"></span><em class="property">struct </em><code class="sig-name descname">dbg_window</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7loggingE" title="hpx::util::logging">logging</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destinationE" title="hpx::util::logging::destination">destination</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination11manipulatorE" title="hpx::util::logging::destination::manipulator">manipulator</a><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination10dbg_windowE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;destinations.hpp&gt;</em><p>Writes the string to output debug window. </p>
+<p>For non-Windows systems, this is the console. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination10dbg_windowD0Ev">
+<span id="_CPPv3N3hpx4util7logging11destination10dbg_windowD0Ev"></span><span id="_CPPv2N3hpx4util7logging11destination10dbg_windowD0Ev"></span><span id="hpx::util::logging::destination::dbg_window::~dbg_window"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1dbg__window_1a501f4487a851e4d3ff4574a5e1f93dbe"></span><code class="sig-name descname">~dbg_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination10dbg_windowD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination10dbg_window4makeEv">
+<span id="_CPPv3N3hpx4util7logging11destination10dbg_window4makeEv"></span><span id="_CPPv2N3hpx4util7logging11destination10dbg_window4makeEv"></span><span id="hpx::util::logging::destination::dbg_window::make"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1dbg__window_1a74a46305d5874f9b98d5c99bed9041b8"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::unique_ptr&lt;<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination10dbg_windowE" title="hpx::util::logging::destination::dbg_window">dbg_window</a>&gt; <code class="sig-name descname">make</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination10dbg_window4makeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination10dbg_window10dbg_windowEv">
+<span id="_CPPv3N3hpx4util7logging11destination10dbg_window10dbg_windowEv"></span><span id="_CPPv2N3hpx4util7logging11destination10dbg_window10dbg_windowEv"></span><span id="hpx::util::logging::destination::dbg_window::dbg_window"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1dbg__window_1a0090df80c1a36eba57981ee4a2d678ce"></span><code class="sig-name descname">dbg_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination10dbg_window10dbg_windowEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging11destination4fileE">
+<span id="_CPPv3N3hpx4util7logging11destination4fileE"></span><span id="_CPPv2N3hpx4util7logging11destination4fileE"></span><span id="hpx::util::logging::destination::file"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file"></span><em class="property">struct </em><code class="sig-name descname">file</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7loggingE" title="hpx::util::logging">logging</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destinationE" title="hpx::util::logging::destination">destination</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination11manipulatorE" title="hpx::util::logging::destination::manipulator">manipulator</a><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4fileE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;destinations.hpp&gt;</em><p>Writes the string to a file. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4fileD0Ev">
+<span id="_CPPv3N3hpx4util7logging11destination4fileD0Ev"></span><span id="_CPPv2N3hpx4util7logging11destination4fileD0Ev"></span><span id="hpx::util::logging::destination::file::~file"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1a86d309da86336e0f037cb39259de890e"></span><code class="sig-name descname">~file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4fileD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4file4makeERKNSt6stringE13file_settings">
+<span id="_CPPv3N3hpx4util7logging11destination4file4makeERKNSt6stringE13file_settings"></span><span id="_CPPv2N3hpx4util7logging11destination4file4makeERKNSt6stringE13file_settings"></span><span id="hpx::util::logging::destination::file::make__ssCR.file_settings"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1a4d048ef68d49d2894f12f5a30b73e2ac"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::unique_ptr&lt;<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination4fileE" title="hpx::util::logging::destination::file">file</a>&gt; <code class="sig-name descname">make</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>file_name</em>, <a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination4file13file_settingsE" title="hpx::util::logging::destination::file::file_settings">file_settings</a> <em>set</em> = {}<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file4makeERKNSt6stringE13file_settings" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructs the file destination </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">file_name</span></code>: name of the file </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span></code>: [optional] file settings - see <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1file_1_1file__settings"><span class="std std-ref">file_settings</span></a> class, and dealing_with_flags </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4file4fileERKNSt6stringE13file_settings">
+<span id="_CPPv3N3hpx4util7logging11destination4file4fileERKNSt6stringE13file_settings"></span><span id="_CPPv2N3hpx4util7logging11destination4file4fileERKNSt6stringE13file_settings"></span><span id="hpx::util::logging::destination::file::file__ssCR.file_settings"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1aa958ab4dea08134d3bc0a1efe895e8f3"></span><code class="sig-name descname">file</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>file_name</em>, <a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination4file13file_settingsE" title="hpx::util::logging::destination::file::file_settings">file_settings</a> <em>set</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file4fileERKNSt6stringE13file_settings" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging11destination4file4nameE">
+<span id="_CPPv3N3hpx4util7logging11destination4file4nameE"></span><span id="_CPPv2N3hpx4util7logging11destination4file4nameE"></span><span id="hpx::util::logging::destination::file::name__ss"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1aa8a24f86f7c717ddeb798ee18ad608e6"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">name</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file4nameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging11destination4file8settingsE">
+<span id="_CPPv3N3hpx4util7logging11destination4file8settingsE"></span><span id="_CPPv2N3hpx4util7logging11destination4file8settingsE"></span><span id="hpx::util::logging::destination::file::settings__file_settings"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1a651640cc8e87d4520a2c08c5b403f26a"></span><a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination4file13file_settingsE" title="hpx::util::logging::destination::file::file_settings">file_settings</a> <code class="sig-name descname">settings</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file8settingsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging11destination4file13file_settingsE">
+<span id="_CPPv3N3hpx4util7logging11destination4file13file_settingsE"></span><span id="_CPPv2N3hpx4util7logging11destination4file13file_settingsE"></span><span id="hpx::util::logging::destination::file::file_settings"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1_1file__settings"></span><em class="property">struct </em><code class="sig-name descname">file_settings</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file13file_settingsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;destinations.hpp&gt;</em><p>settings for when constructing a file class. To see how it’s used, see dealing_with_flags. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination4file13file_settings13file_settingsEv">
+<span id="_CPPv3N3hpx4util7logging11destination4file13file_settings13file_settingsEv"></span><span id="_CPPv2N3hpx4util7logging11destination4file13file_settings13file_settingsEv"></span><span id="hpx::util::logging::destination::file::file_settings::file_settings"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1_1file__settings_1ab9d7a4fc0138167e50899ee133e58d88"></span><code class="sig-name descname">file_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file13file_settings13file_settingsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging11destination4file13file_settings15flush_each_timeE">
+<span id="_CPPv3N3hpx4util7logging11destination4file13file_settings15flush_each_timeE"></span><span id="_CPPv2N3hpx4util7logging11destination4file13file_settings15flush_each_timeE"></span><span id="hpx::util::logging::destination::file::file_settings::flush_each_time__b"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1_1file__settings_1a5bf26420e41c72827704de800e0d7268"></span>bool <code class="sig-name descname">flush_each_time</code> : 1<a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file13file_settings15flush_each_timeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>if true (default), flushes after each write </p>
+</dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging11destination4file13file_settings17initial_overwriteE">
+<span id="_CPPv3N3hpx4util7logging11destination4file13file_settings17initial_overwriteE"></span><span id="_CPPv2N3hpx4util7logging11destination4file13file_settings17initial_overwriteE"></span><span id="hpx::util::logging::destination::file::file_settings::initial_overwrite__b"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1_1file__settings_1ad72fdc5aced05c80fb2b0adbccd33d06"></span>bool <code class="sig-name descname">initial_overwrite</code> : 1<a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file13file_settings17initial_overwriteE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging11destination4file13file_settings9do_appendE">
+<span id="_CPPv3N3hpx4util7logging11destination4file13file_settings9do_appendE"></span><span id="_CPPv2N3hpx4util7logging11destination4file13file_settings9do_appendE"></span><span id="hpx::util::logging::destination::file::file_settings::do_append__b"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1_1file__settings_1a7743065efd8bc1e0f5d3ad06e56a25e6"></span>bool <code class="sig-name descname">do_append</code> : 1<a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file13file_settings9do_appendE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging11destination4file13file_settings11extra_flagsE">
+<span id="_CPPv3N3hpx4util7logging11destination4file13file_settings11extra_flagsE"></span><span id="_CPPv2N3hpx4util7logging11destination4file13file_settings11extra_flagsE"></span><span id="hpx::util::logging::destination::file::file_settings::extra_flags__std::ios_base::openmode"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1file_1_1file__settings_1aae6073216715f359cadf9123af6b5d33"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ios_base::openmode <code class="sig-name descname">extra_flags</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination4file13file_settings11extra_flagsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>just in case you have some extra flags to pass, when opening the file </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging11destination6streamE">
+<span id="_CPPv3N3hpx4util7logging11destination6streamE"></span><span id="_CPPv2N3hpx4util7logging11destination6streamE"></span><span id="hpx::util::logging::destination::stream"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1stream"></span><em class="property">struct </em><code class="sig-name descname">stream</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7loggingE" title="hpx::util::logging">logging</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destinationE" title="hpx::util::logging::destination">destination</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination11manipulatorE" title="hpx::util::logging::destination::manipulator">manipulator</a><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination6streamE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;destinations.hpp&gt;</em><p>writes to stream. </p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>: The stream must outlive this object! Or, <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1stream_1a2decdb055ed2a130fbdf4d164a5aae28"><span class="std std-ref">clear()</span></a> the stream, before the stream is deleted. </p>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination6streamD0Ev">
+<span id="_CPPv3N3hpx4util7logging11destination6streamD0Ev"></span><span id="_CPPv2N3hpx4util7logging11destination6streamD0Ev"></span><span id="hpx::util::logging::destination::stream::~stream"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1stream_1ae4d7774036e89bc8c9792d70e23e6c92"></span><code class="sig-name descname">~stream</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination6streamD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination6stream10set_streamEPNSt7ostreamE">
+<span id="_CPPv3N3hpx4util7logging11destination6stream10set_streamEPNSt7ostreamE"></span><span id="_CPPv2N3hpx4util7logging11destination6stream10set_streamEPNSt7ostreamE"></span><span id="hpx::util::logging::destination::stream::set_stream__osP"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1stream_1a3cc7161a6d173fbd5b7db35d5c7fbc67"></span>void <code class="sig-name descname">set_stream</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ostream *<em>stream_ptr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination6stream10set_streamEPNSt7ostreamE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>resets the stream. Further output will be written to this stream </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination6stream5clearEv">
+<span id="_CPPv3N3hpx4util7logging11destination6stream5clearEv"></span><span id="_CPPv2N3hpx4util7logging11destination6stream5clearEv"></span><span id="hpx::util::logging::destination::stream::clear"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1stream_1a2decdb055ed2a130fbdf4d164a5aae28"></span>void <code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination6stream5clearEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>clears the stream. Further output will be ignored </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination6stream4makeEPNSt7ostreamE">
+<span id="_CPPv3N3hpx4util7logging11destination6stream4makeEPNSt7ostreamE"></span><span id="_CPPv2N3hpx4util7logging11destination6stream4makeEPNSt7ostreamE"></span><span id="hpx::util::logging::destination::stream::make__osP"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1stream_1a25db0a70dddb7beb0e63ad8bfd3fa915"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::unique_ptr&lt;<a class="reference internal" href="#_CPPv4N3hpx4util7logging11destination6streamE" title="hpx::util::logging::destination::stream">stream</a>&gt; <code class="sig-name descname">make</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ostream *<em>stream_ptr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination6stream4makeEPNSt7ostreamE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination6stream6streamEPNSt7ostreamE">
+<span id="_CPPv3N3hpx4util7logging11destination6stream6streamEPNSt7ostreamE"></span><span id="_CPPv2N3hpx4util7logging11destination6stream6streamEPNSt7ostreamE"></span><span id="hpx::util::logging::destination::stream::stream__osP"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1stream_1ae9b9e4fa822103df96bb55868a7f83f4"></span><code class="sig-name descname">stream</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ostream *<em>stream_ptr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination6stream6streamEPNSt7ostreamE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging11destination6stream3ptrE">
+<span id="_CPPv3N3hpx4util7logging11destination6stream3ptrE"></span><span id="_CPPv2N3hpx4util7logging11destination6stream3ptrE"></span><span id="hpx::util::logging::destination::stream::ptr__osP"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1stream_1a3d0e12c747c5db813d7722ff760c3fff"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ostream *<code class="sig-name descname">ptr</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination6stream3ptrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-logging-format-formatters-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/format/formatters.hpp</span></code><a class="headerlink" href="#header-hpx-logging-format-formatters-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4util7loggingE">
+<span id="_CPPv3N3hpx4util7loggingE"></span><span id="_CPPv2N3hpx4util7loggingE"></span><span class="target" id="namespacehpx_1_1util_1_1logging"></span><em class="property">namespace </em><code class="sig-name descname">logging</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4util7logging9formatterE">
+<span id="_CPPv3N3hpx4util7logging9formatterE"></span><span id="_CPPv2N3hpx4util7logging9formatterE"></span><span id="hpx::util::logging::formatter"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1_1formatter"></span><em class="property">namespace </em><code class="sig-name descname">formatter</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Formatter is a manipulator. It allows you to format the message before writing it to the destination(s) </p>
+<p>Examples of formatters are : prepend the time, prepend high-precision time, prepend the index of the message, etc. </p>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging9formatter19high_precision_timeE">
+<span id="_CPPv3N3hpx4util7logging9formatter19high_precision_timeE"></span><span id="_CPPv2N3hpx4util7logging9formatter19high_precision_timeE"></span><span id="hpx::util::logging::formatter::high_precision_time"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1high__precision__time"></span><em class="property">struct </em><code class="sig-name descname">high_precision_time</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7loggingE" title="hpx::util::logging">logging</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging9formatterE" title="hpx::util::logging::formatter">formatter</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging9formatter11manipulatorE" title="hpx::util::logging::formatter::manipulator">manipulator</a><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter19high_precision_timeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;formatters.hpp&gt;</em><p>Prefixes the message with a high-precision time (. You pass the format string at construction. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/logging/format/formatter/high_precision_time.hpp&gt;</span><span class="cp"></span>
+</pre></div>
+</div>
+</p>
+<p>Internally, it uses hpx::util::date_time::microsec_time_clock. So, our precision matches this class.</p>
+<p>The format can contain escape sequences: $dd - day, 2 digits $MM - month, 2 digits $yy - year, 2 digits $yyyy - year, 4 digits $hh - hour, 2 digits $mm - minute, 2 digits $ss - second, 2 digits $mili - milliseconds $micro - microseconds (if the high precision clock allows; otherwise, it pads zeros) $nano - nanoseconds (if the high precision clock allows; otherwise, it pads zeros)</p>
+<p>Example:</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">high_precision_time</span><span class="p">(</span><span class="s">&quot;$mm:$ss:$micro&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">convert</span></code>: [optional] In case there needs to be a conversion between std::(w)string and the string that holds your logged message. See convert_format. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter19high_precision_timeD0Ev">
+<span id="_CPPv3N3hpx4util7logging9formatter19high_precision_timeD0Ev"></span><span id="_CPPv2N3hpx4util7logging9formatter19high_precision_timeD0Ev"></span><span id="hpx::util::logging::formatter::high_precision_time::~high_precision_time"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1high__precision__time_1a5ade01ce34e6a379d03ed47c046f4305"></span><code class="sig-name descname">~high_precision_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter19high_precision_timeD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter19high_precision_time4makeERKNSt6stringE">
+<span id="_CPPv3N3hpx4util7logging9formatter19high_precision_time4makeERKNSt6stringE"></span><span id="_CPPv2N3hpx4util7logging9formatter19high_precision_time4makeERKNSt6stringE"></span><span id="hpx::util::logging::formatter::high_precision_time::make__ssCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1high__precision__time_1aeb9d97b2891b3afefbfdb18052079726"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::unique_ptr&lt;<a class="reference internal" href="#_CPPv4N3hpx4util7logging9formatter19high_precision_timeE" title="hpx::util::logging::formatter::high_precision_time">high_precision_time</a>&gt; <code class="sig-name descname">make</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>format</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter19high_precision_time4makeERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter19high_precision_time19high_precision_timeERKNSt6stringE">
+<span id="_CPPv3N3hpx4util7logging9formatter19high_precision_time19high_precision_timeERKNSt6stringE"></span><span id="_CPPv2N3hpx4util7logging9formatter19high_precision_time19high_precision_timeERKNSt6stringE"></span><span id="hpx::util::logging::formatter::high_precision_time::high_precision_time__ssCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1high__precision__time_1a606d406beccc21921dca509f9f0e4f3c"></span><code class="sig-name descname">high_precision_time</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>format</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter19high_precision_time19high_precision_timeERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging9formatter3idxE">
+<span id="_CPPv3N3hpx4util7logging9formatter3idxE"></span><span id="_CPPv2N3hpx4util7logging9formatter3idxE"></span><span id="hpx::util::logging::formatter::idx"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1idx"></span><em class="property">struct </em><code class="sig-name descname">idx</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7loggingE" title="hpx::util::logging">logging</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging9formatterE" title="hpx::util::logging::formatter">formatter</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging9formatter11manipulatorE" title="hpx::util::logging::formatter::manipulator">manipulator</a><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter3idxE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;formatters.hpp&gt;</em><p>prefixes each message with an index. </p>
+<p>Example: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">L_</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;my message&quot;</span><span class="p">;</span>
+<span class="n">L_</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;my 2nd message&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</p>
+<p>This will output something similar to:</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">my</span> <span class="n">message</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">my</span> <span class="mi">2</span><span class="n">nd</span> <span class="n">message</span>
+</pre></div>
+</div>
+ </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter3idxD0Ev">
+<span id="_CPPv3N3hpx4util7logging9formatter3idxD0Ev"></span><span id="_CPPv2N3hpx4util7logging9formatter3idxD0Ev"></span><span id="hpx::util::logging::formatter::idx::~idx"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1idx_1a046aa1ae9175717c96779dd684f4cdec"></span><code class="sig-name descname">~idx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter3idxD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter3idx4makeEv">
+<span id="_CPPv3N3hpx4util7logging9formatter3idx4makeEv"></span><span id="_CPPv2N3hpx4util7logging9formatter3idx4makeEv"></span><span id="hpx::util::logging::formatter::idx::make"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1idx_1a5ab691f7b091ca7cc83861125c08efc7"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::unique_ptr&lt;<a class="reference internal" href="#_CPPv4N3hpx4util7logging9formatter3idxE" title="hpx::util::logging::formatter::idx">idx</a>&gt; <code class="sig-name descname">make</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter3idx4makeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter3idx3idxEv">
+<span id="_CPPv3N3hpx4util7logging9formatter3idx3idxEv"></span><span id="_CPPv2N3hpx4util7logging9formatter3idx3idxEv"></span><span id="hpx::util::logging::formatter::idx::idx"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1idx_1ac8abee1f08f4b0608b6a49fcf0e9f167"></span><code class="sig-name descname">idx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter3idx3idxEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging9formatter9thread_idE">
+<span id="_CPPv3N3hpx4util7logging9formatter9thread_idE"></span><span id="_CPPv2N3hpx4util7logging9formatter9thread_idE"></span><span id="hpx::util::logging::formatter::thread_id"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1thread__id"></span><em class="property">struct </em><code class="sig-name descname">thread_id</code> : <em class="property">public</em> <a class="reference internal" href="../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7loggingE" title="hpx::util::logging">logging</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging9formatterE" title="hpx::util::logging::formatter">formatter</a>::<a class="reference internal" href="#_CPPv4N3hpx4util7logging9formatter11manipulatorE" title="hpx::util::logging::formatter::manipulator">manipulator</a><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter9thread_idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;formatters.hpp&gt;</em><p>Writes the <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1formatter_1_1thread__id"><span class="std std-ref">thread_id</span></a> to the log. </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">convert</span></code>: [optional] In case there needs to be a conversion between std::(w)string and the string that holds your logged message. See convert_format. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter9thread_idD0Ev">
+<span id="_CPPv3N3hpx4util7logging9formatter9thread_idD0Ev"></span><span id="_CPPv2N3hpx4util7logging9formatter9thread_idD0Ev"></span><span id="hpx::util::logging::formatter::thread_id::~thread_id"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1thread__id_1a3222f98600bfafaf3e0637ff0a01591f"></span><code class="sig-name descname">~thread_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter9thread_idD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter9thread_id4makeEv">
+<span id="_CPPv3N3hpx4util7logging9formatter9thread_id4makeEv"></span><span id="_CPPv2N3hpx4util7logging9formatter9thread_id4makeEv"></span><span id="hpx::util::logging::formatter::thread_id::make"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1thread__id_1a8d5efcc35b0981e3a05521717e7787ff"></span><em class="property">static</em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::unique_ptr&lt;<a class="reference internal" href="#_CPPv4N3hpx4util7logging9formatter9thread_idE" title="hpx::util::logging::formatter::thread_id">thread_id</a>&gt; <code class="sig-name descname">make</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter9thread_id4makeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter9thread_id9thread_idEv">
+<span id="_CPPv3N3hpx4util7logging9formatter9thread_id9thread_idEv"></span><span id="_CPPv2N3hpx4util7logging9formatter9thread_id9thread_idEv"></span><span id="hpx::util::logging::formatter::thread_id::thread_id"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1thread__id_1a86d184e1744477e7db2a0316e25ded34"></span><code class="sig-name descname">thread_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter9thread_id9thread_idEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-logging-format-named-write-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/format/named_write.hpp</span></code><a class="headerlink" href="#header-hpx-logging-format-named-write-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4util7loggingE">
+<span id="_CPPv3N3hpx4util7loggingE"></span><span class="target" id="namespacehpx_1_1util_1_1logging"></span><em class="property">namespace </em><code class="sig-name descname">logging</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4util7logging6writerE">
+<span id="_CPPv3N3hpx4util7logging6writerE"></span><span id="_CPPv2N3hpx4util7logging6writerE"></span><span id="hpx::util::logging::writer"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1_1writer"></span><em class="property">namespace </em><code class="sig-name descname">writer</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_writeE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_writeE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_writeE"></span><span id="hpx::util::logging::writer::named_write"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write"></span><em class="property">struct </em><code class="sig-name descname">named_write</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_writeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;named_write.hpp&gt;</em><p>Composed of a named formatter and a named destinations. Thus, you can specify the formatting and destinations as strings. </p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/logging/format/named_write.hpp&gt;</span><span class="cp"></span>
+</pre></div>
+</div>
+</p>
+<p>Contains a very easy interface for using formatters and destinations:<ul class="simple">
+<li><p>at construction, specify 2 params: the formatter string and the destinations string</p></li>
+</ul>
+</p>
+<p>Setting the formatters and destinations to write to is extremely simple:</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Set the formatters (first param) and destinatins (second step) in one step</span>
+<span class="n">g_l</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">writer</span><span class="p">().</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;%time%($hh:$mm.$ss.$mili) [%idx%] |</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="s">&quot;cout file(out.txt) debug&quot;</span><span class="p">);</span>
+
+<span class="c1">// set the formatter(s)</span>
+<span class="n">g_l</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">writer</span><span class="p">().</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;%time%($hh:$mm.$ss.$mili) [%idx%] |</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="c1">// set the destination(s)</span>
+<span class="n">g_l</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">writer</span><span class="p">().</span><span class="n">destination</span><span class="p">(</span><span class="s">&quot;cout file(out.txt) debug&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write11named_writeEv">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write11named_writeEv"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write11named_writeEv"></span><span id="hpx::util::logging::writer::named_write::named_write"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a7a1dc838ca6f4d4a11749f3a4f88e4d3"></span><code class="sig-name descname">named_write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write11named_writeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write6formatERKNSt6stringE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write6formatERKNSt6stringE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write6formatERKNSt6stringE"></span><span id="hpx::util::logging::writer::named_write::format__ssCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a5919d63301f45382cc8abd2a1efda35a"></span>void <code class="sig-name descname">format</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>format_str</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write6formatERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>sets the format string: what should be before, and what after the original message, separated by “|” </p>
+<p>Example: <p>“[%idx%] |\n” - this writes “[%idx%] ” before the message, and “\n” after the message</p>
+</p>
+<p>If “|” is not present, the whole message is prepended to the message </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write11destinationERKNSt6stringE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write11destinationERKNSt6stringE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write11destinationERKNSt6stringE"></span><span id="hpx::util::logging::writer::named_write::destination__ssCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a4da416b56f15e3807f322488065469d3"></span>void <code class="sig-name descname">destination</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>destination_str</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write11destinationERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>sets the destinations string - where should logged messages be outputted </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write5writeERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write5writeERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write5writeERKNSt6stringERKNSt6stringE"></span><span id="hpx::util::logging::writer::named_write::write__ssCR.ssCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a4f5cb6bd4c9ee7c63547ed811f78309f"></span>void <code class="sig-name descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>format_str</em>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>destination_str</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write5writeERKNSt6stringERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Specifies the formats and destinations in one step. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4util7logging6writer11named_writeclERK7message">
+<span id="_CPPv3NK3hpx4util7logging6writer11named_writeclERK7message"></span><span id="_CPPv2NK3hpx4util7logging6writer11named_writeclERK7message"></span><span id="hpx::util::logging::writer::named_write::call-operator__messageCRC"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1ad348352a46a03109251af2ce87749bef"></span>void <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4util7logging7messageE" title="hpx::util::logging::message">message</a> <em class="property">const</em> &amp;<em>msg</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4util7logging6writer11named_writeclERK7message" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4util7logging6writer11named_write13set_formatterEvRKNSt6stringE9Formatter">
+<span id="_CPPv3I0EN3hpx4util7logging6writer11named_write13set_formatterERKNSt6stringE9Formatter"></span><span id="_CPPv2I0EN3hpx4util7logging6writer11named_write13set_formatterERKNSt6stringE9Formatter"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a1cb0e1aab59c19c8e245801cf54935e5"></span>template&lt;typename <code class="sig-name descname">Formatter</code>&gt;<br />void <code class="sig-name descname">set_formatter</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>name</em>, <a class="reference internal" href="#_CPPv4I0EN3hpx4util7logging6writer11named_write13set_formatterEvRKNSt6stringE9Formatter" title="hpx::util::logging::writer::named_write::set_formatter::Formatter">Formatter</a> <em>fmt</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4util7logging6writer11named_write13set_formatterEvRKNSt6stringE9Formatter" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Replaces a formatter from the named formatter. </p>
+<p>You can use this, for instance, when you want to share a formatter between multiple named writers. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx4util7logging6writer11named_write13set_formatterEvRKNSt6stringEDpRR4Args">
+<span id="_CPPv3I0DpEN3hpx4util7logging6writer11named_write13set_formatterERKNSt6stringEDpRR4Args"></span><span id="_CPPv2I0DpEN3hpx4util7logging6writer11named_write13set_formatterERKNSt6stringEDpRR4Args"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a2a95dbbc5daff86e956d96ebe5c05233"></span>template&lt;typename <code class="sig-name descname">Formatter</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br />void <code class="sig-name descname">set_formatter</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>name</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4util7logging6writer11named_write13set_formatterEvRKNSt6stringEDpRR4Args" title="hpx::util::logging::writer::named_write::set_formatter::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4util7logging6writer11named_write13set_formatterEvRKNSt6stringEDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4util7logging6writer11named_write15set_destinationEvRKNSt6stringE11Destination">
+<span id="_CPPv3I0EN3hpx4util7logging6writer11named_write15set_destinationERKNSt6stringE11Destination"></span><span id="_CPPv2I0EN3hpx4util7logging6writer11named_write15set_destinationERKNSt6stringE11Destination"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1ade470dcf502a1c921fff43050e454788"></span>template&lt;typename <code class="sig-name descname">Destination</code>&gt;<br />void <code class="sig-name descname">set_destination</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>name</em>, <a class="reference internal" href="#_CPPv4I0EN3hpx4util7logging6writer11named_write15set_destinationEvRKNSt6stringE11Destination" title="hpx::util::logging::writer::named_write::set_destination::Destination">Destination</a> <em>dest</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4util7logging6writer11named_write15set_destinationEvRKNSt6stringE11Destination" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Replaces a destination from the named destination. </p>
+<p>You can use this, for instance, when you want to share a destination between multiple named writers. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx4util7logging6writer11named_write15set_destinationEvRKNSt6stringEDpRR4Args">
+<span id="_CPPv3I0DpEN3hpx4util7logging6writer11named_write15set_destinationERKNSt6stringEDpRR4Args"></span><span id="_CPPv2I0DpEN3hpx4util7logging6writer11named_write15set_destinationERKNSt6stringEDpRR4Args"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a89561bc78db6119c9402b845e503fe0b"></span>template&lt;typename <code class="sig-name descname">Destination</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br />void <code class="sig-name descname">set_destination</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>name</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4util7logging6writer11named_write15set_destinationEvRKNSt6stringEDpRR4Args" title="hpx::util::logging::writer::named_write::set_destination::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4util7logging6writer11named_write15set_destinationEvRKNSt6stringEDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write19configure_formatterERKNSt6stringE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write19configure_formatterERKNSt6stringE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write19configure_formatterERKNSt6stringE"></span><span id="hpx::util::logging::writer::named_write::configure_formatter__ssCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a71244bac33e75f079e9f5a262eb7ae88"></span>void <code class="sig-name descname">configure_formatter</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>format</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write19configure_formatterERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write21configure_destinationERKNSt6stringE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write21configure_destinationERKNSt6stringE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write21configure_destinationERKNSt6stringE"></span><span id="hpx::util::logging::writer::named_write::configure_destination__ssCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1ad961380c5524bbb251142b5d8b3ede09"></span>void <code class="sig-name descname">configure_destination</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>format</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write21configure_destinationERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write8m_formatE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write8m_formatE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write8m_formatE"></span><span id="hpx::util::logging::writer::named_write::m_format__detail::named_formatters"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1ad79093cc3de12401f600ae35f5cb4339"></span>detail::named_formatters <code class="sig-name descname">m_format</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write8m_formatE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write13m_destinationE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write13m_destinationE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write13m_destinationE"></span><span id="hpx::util::logging::writer::named_write::m_destination__detail::named_destinations"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a4c8722b6023a11f744478c81f9346b22"></span>detail::named_destinations <code class="sig-name descname">m_destination</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write13m_destinationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write12m_format_strE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write12m_format_strE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write12m_format_strE"></span><span id="hpx::util::logging::writer::named_write::m_format_str__ss"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a592f7ff320e62d06d0ef2e76cb77c2e4"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">m_format_str</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write12m_format_strE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging6writer11named_write17m_destination_strE">
+<span id="_CPPv3N3hpx4util7logging6writer11named_write17m_destination_strE"></span><span id="_CPPv2N3hpx4util7logging6writer11named_write17m_destination_strE"></span><span id="hpx::util::logging::writer::named_write::m_destination_str__ss"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1writer_1_1named__write_1a3da5f5edebd318e3428d60f7dcd9a2f7"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">m_destination_str</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging6writer11named_write17m_destination_strE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-logging-level-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/level.hpp</span></code><a class="headerlink" href="#header-hpx-logging-level-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4util7loggingE">
+<span class="target" id="namespacehpx_1_1util_1_1logging"></span><em class="property">namespace </em><code class="sig-name descname">logging</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Enums</p>
+<dl class="cpp enum">
+<dt id="_CPPv4N3hpx4util7logging5levelE">
+<span id="_CPPv3N3hpx4util7logging5levelE"></span><span id="_CPPv2N3hpx4util7logging5levelE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a2bbf25b7ced787b4ead3ce0f2cc24529"></span><em class="property">enum </em><code class="sig-name descname">level</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging5levelE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Handling levels - classes that can hold and/or deal with levels. </p>
+<p><ul class="simple">
+<li><p>filters and level holders</p></li>
+</ul>
+</p>
+<p>By default we have these levels: <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">debug</span> <span class="p">(</span><span class="n">smallest</span> <span class="n">level</span><span class="p">),</span>
+<span class="o">-</span> <span class="n">info</span><span class="p">,</span>
+<span class="o">-</span> <span class="n">warning</span> <span class="p">,</span>
+<span class="o">-</span> <span class="n">error</span> <span class="p">,</span>
+<span class="o">-</span> <span class="n">fatal</span> <span class="p">(</span><span class="n">highest</span> <span class="n">level</span><span class="p">)</span>
+</pre></div>
+</div>
+</p>
+<p>Depending on which level is enabled for your application, some messages will reach the log: those messages having at least that level. For instance, if info level is enabled, all logged messages will reach the log. If warning level is enabled, all messages are logged, but the warnings. If debug level is enabled, messages that have levels debug, error, fatal will be logged. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util7logging11disable_allE">
+<span id="_CPPv3N3hpx4util7logging11disable_allE"></span><span id="_CPPv2N3hpx4util7logging11disable_allE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a2bbf25b7ced787b4ead3ce0f2cc24529a224d2866348de193b0858aac768fee99"></span><code class="sig-name descname">disable_all</code> = static_cast&lt;unsigned int&gt;(-1)<a class="headerlink" href="#_CPPv4N3hpx4util7logging11disable_allE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util7logging10enable_allE">
+<span id="_CPPv3N3hpx4util7logging10enable_allE"></span><span id="_CPPv2N3hpx4util7logging10enable_allE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a2bbf25b7ced787b4ead3ce0f2cc24529a0fca4d02f9d469ca8d2ed942e5cd0516"></span><code class="sig-name descname">enable_all</code> = 0<a class="headerlink" href="#_CPPv4N3hpx4util7logging10enable_allE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util7logging5debugE">
+<span id="_CPPv3N3hpx4util7logging5debugE"></span><span id="_CPPv2N3hpx4util7logging5debugE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a2bbf25b7ced787b4ead3ce0f2cc24529aad42f6697b035b7580e4fef93be20b4d"></span><code class="sig-name descname">debug</code> = 1000<a class="headerlink" href="#_CPPv4N3hpx4util7logging5debugE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util7logging4infoE">
+<span id="_CPPv3N3hpx4util7logging4infoE"></span><span id="_CPPv2N3hpx4util7logging4infoE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a2bbf25b7ced787b4ead3ce0f2cc24529acaf9b6b99962bf5c2264824231d7a40c"></span><code class="sig-name descname">info</code> = 2000<a class="headerlink" href="#_CPPv4N3hpx4util7logging4infoE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util7logging7warningE">
+<span id="_CPPv3N3hpx4util7logging7warningE"></span><span id="_CPPv2N3hpx4util7logging7warningE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a2bbf25b7ced787b4ead3ce0f2cc24529a7b83d3f08fa392b79e3f553b585971cd"></span><code class="sig-name descname">warning</code> = 3000<a class="headerlink" href="#_CPPv4N3hpx4util7logging7warningE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util7logging5errorE">
+<span id="_CPPv3N3hpx4util7logging5errorE"></span><span id="_CPPv2N3hpx4util7logging5errorE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a2bbf25b7ced787b4ead3ce0f2cc24529acb5e100e5a9a3e7f6d1fd97512215282"></span><code class="sig-name descname">error</code> = 4000<a class="headerlink" href="#_CPPv4N3hpx4util7logging5errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util7logging5fatalE">
+<span id="_CPPv3N3hpx4util7logging5fatalE"></span><span id="_CPPv2N3hpx4util7logging5fatalE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a2bbf25b7ced787b4ead3ce0f2cc24529adf6402fd9ecc60f5a2159fdf45711cd4"></span><code class="sig-name descname">fatal</code> = 5000<a class="headerlink" href="#_CPPv4N3hpx4util7logging5fatalE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util7logging6alwaysE">
+<span id="_CPPv3N3hpx4util7logging6alwaysE"></span><span id="_CPPv2N3hpx4util7logging6alwaysE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a2bbf25b7ced787b4ead3ce0f2cc24529af9f90eeaf400d228facde6bc48da5cfb"></span><code class="sig-name descname">always</code> = 6000<a class="headerlink" href="#_CPPv4N3hpx4util7logging6alwaysE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging12format_valueERNSt7ostreamEN5boost10string_refE5level">
+<span id="_CPPv3N3hpx4util7logging12format_valueERNSt7ostreamEN5boost10string_refE5level"></span><span id="_CPPv2N3hpx4util7logging12format_valueERNSt7ostreamEN5boost10string_refE5level"></span><span id="hpx::util::logging::format_value__osR.boost::string_ref.level"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1a8bb9e3eb68576ca39b71852b002903ee"></span>void <code class="sig-name descname">format_value</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ostream &amp;<em>os</em>, <a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::string_ref <em>spec</em>, <a class="reference internal" href="#_CPPv4N3hpx4util7logging5levelE" title="hpx::util::logging::level">level</a> <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging12format_valueERNSt7ostreamEN5boost10string_refE5level" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-logging-logging-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/logging.hpp</span></code><a class="headerlink" href="#header-hpx-logging-logging-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Include this file when you’re using the logging lib, but don’t necessarily want to use formatters and destinations. If you want to use formatters and destinations, then you can include this one instead:</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/logging/format.hpp&gt;</span><span class="cp"></span>
+</pre></div>
+</div>
+ </p>
+</div>
+<div class="section" id="header-hpx-logging-manipulator-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/manipulator.hpp</span></code><a class="headerlink" href="#header-hpx-logging-manipulator-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1util_1_1logging"></span><em class="property">namespace </em><code class="sig-name descname">logging</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4util7logging11destinationE">
+<span id="_CPPv3N3hpx4util7logging11destinationE"></span><span id="_CPPv2N3hpx4util7logging11destinationE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1_1destination"></span><em class="property">namespace </em><code class="sig-name descname">destination</code><br /></dt>
+<dd><p>Destination is a manipulator. It contains a place where the message, after being formatted, is to be written to. </p>
+<p>Some viable destinations are : <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1cout"><span class="std std-ref">the console</span></a>, <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1file"><span class="std std-ref">a file</span></a>, a socket, etc. </p>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging11destination11manipulatorE">
+<span id="_CPPv3N3hpx4util7logging11destination11manipulatorE"></span><span id="_CPPv2N3hpx4util7logging11destination11manipulatorE"></span><span id="hpx::util::logging::destination::manipulator"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1manipulator"></span><em class="property">struct </em><code class="sig-name descname">manipulator</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination11manipulatorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;manipulator.hpp&gt;</em><p>What to use as base class, for your destination classes. </p>
+<p>Subclassed by <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1cerr"><span class="std std-ref">hpx::util::logging::destination::cerr</span></a>, <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1cout"><span class="std std-ref">hpx::util::logging::destination::cout</span></a>, <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1dbg__window"><span class="std std-ref">hpx::util::logging::destination::dbg_window</span></a>, <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1file"><span class="std std-ref">hpx::util::logging::destination::file</span></a>, <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1destination_1_1stream"><span class="std std-ref">hpx::util::logging::destination::stream</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination11manipulatorclERK7message">
+<span id="_CPPv3N3hpx4util7logging11destination11manipulatorclERK7message"></span><span id="_CPPv2N3hpx4util7logging11destination11manipulatorclERK7message"></span><span id="hpx::util::logging::destination::manipulator::call-operator__messageCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1manipulator_1ae297293af2b0d65b8a11ab7a5a677332"></span><em class="property">virtual</em> void <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4util7logging7messageE" title="hpx::util::logging::message">message</a> <em class="property">const</em> &amp;<em>val</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination11manipulatorclERK7message" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination11manipulator9configureERKNSt6stringE">
+<span id="_CPPv3N3hpx4util7logging11destination11manipulator9configureERKNSt6stringE"></span><span id="_CPPv2N3hpx4util7logging11destination11manipulator9configureERKNSt6stringE"></span><span id="hpx::util::logging::destination::manipulator::configure__ssCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1manipulator_1a109be4d837ab26452ec122e96e5094bd"></span><em class="property">virtual</em> void <code class="sig-name descname">configure</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination11manipulator9configureERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Override this if you want to allow configuration through scripting. </p>
+<p>That is, this allows configuration of your manipulator at run-time. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination11manipulatorD0Ev">
+<span id="_CPPv3N3hpx4util7logging11destination11manipulatorD0Ev"></span><span id="_CPPv2N3hpx4util7logging11destination11manipulatorD0Ev"></span><span id="hpx::util::logging::destination::manipulator::~manipulator"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1manipulator_1acd9e217e212c95652b0dd4b8d0a42c67"></span><em class="property">virtual</em> <code class="sig-name descname">~manipulator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination11manipulatorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging11destination11manipulator11manipulatorEv">
+<span id="_CPPv3N3hpx4util7logging11destination11manipulator11manipulatorEv"></span><span id="_CPPv2N3hpx4util7logging11destination11manipulator11manipulatorEv"></span><span id="hpx::util::logging::destination::manipulator::manipulator"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1destination_1_1manipulator_1aef84cdaad8f4b7a9288e314127285675"></span><code class="sig-name descname">manipulator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging11destination11manipulator11manipulatorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4util7logging9formatterE">
+<span id="_CPPv3N3hpx4util7logging9formatterE"></span><span id="_CPPv2N3hpx4util7logging9formatterE"></span><span class="target" id="namespacehpx_1_1util_1_1logging_1_1formatter"></span><em class="property">namespace </em><code class="sig-name descname">formatter</code><br /></dt>
+<dd><p>Formatter is a manipulator. It allows you to format the message before writing it to the destination(s) </p>
+<p>Examples of formatters are : prepend the time, prepend high-precision time, prepend the index of the message, etc. </p>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util7logging9formatter11manipulatorE">
+<span id="_CPPv3N3hpx4util7logging9formatter11manipulatorE"></span><span id="_CPPv2N3hpx4util7logging9formatter11manipulatorE"></span><span id="hpx::util::logging::formatter::manipulator"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1manipulator"></span><em class="property">struct </em><code class="sig-name descname">manipulator</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter11manipulatorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;manipulator.hpp&gt;</em><p>What to use as base class, for your formatter classes. </p>
+<p>Subclassed by <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1formatter_1_1high__precision__time"><span class="std std-ref">hpx::util::logging::formatter::high_precision_time</span></a>, <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1formatter_1_1idx"><span class="std std-ref">hpx::util::logging::formatter::idx</span></a>, <a class="reference internal" href="#structhpx_1_1util_1_1logging_1_1formatter_1_1thread__id"><span class="std std-ref">hpx::util::logging::formatter::thread_id</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4util7logging9formatter11manipulatorclERNSt7ostreamE">
+<span id="_CPPv3NK3hpx4util7logging9formatter11manipulatorclERNSt7ostreamE"></span><span id="_CPPv2NK3hpx4util7logging9formatter11manipulatorclERNSt7ostreamE"></span><span id="hpx::util::logging::formatter::manipulator::call-operator__osRC"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1manipulator_1a17aed56b89c2b652562fe62357c52f9d"></span><em class="property">virtual</em> void <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ostream &amp;<em>to</em><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK3hpx4util7logging9formatter11manipulatorclERNSt7ostreamE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter11manipulator9configureERKNSt6stringE">
+<span id="_CPPv3N3hpx4util7logging9formatter11manipulator9configureERKNSt6stringE"></span><span id="_CPPv2N3hpx4util7logging9formatter11manipulator9configureERKNSt6stringE"></span><span id="hpx::util::logging::formatter::manipulator::configure__ssCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1manipulator_1aa463b72e36fe4380d7180e969263d598"></span><em class="property">virtual</em> void <code class="sig-name descname">configure</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter11manipulator9configureERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Override this if you want to allow configuration through scripting. </p>
+<p>That is, this allows configuration of your manipulator at run-time. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter11manipulatorD0Ev">
+<span id="_CPPv3N3hpx4util7logging9formatter11manipulatorD0Ev"></span><span id="_CPPv2N3hpx4util7logging9formatter11manipulatorD0Ev"></span><span id="hpx::util::logging::formatter::manipulator::~manipulator"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1manipulator_1a73ceecfc3165cb10af79b2ee6a9aab5e"></span><em class="property">virtual</em> <code class="sig-name descname">~manipulator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter11manipulatorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging9formatter11manipulator11manipulatorEv">
+<span id="_CPPv3N3hpx4util7logging9formatter11manipulator11manipulatorEv"></span><span id="_CPPv2N3hpx4util7logging9formatter11manipulator11manipulatorEv"></span><span id="hpx::util::logging::formatter::manipulator::manipulator"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1manipulator_1af4fa75537e0c7bce8097dd1efddd5935"></span><code class="sig-name descname">manipulator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging9formatter11manipulator11manipulatorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt id="_CPPv412format_valueRNSt7ostreamEN5boost10string_refERK11manipulator">
+<span id="_CPPv312format_valueRNSt7ostreamEN5boost10string_refERK11manipulator"></span><span id="_CPPv212format_valueRNSt7ostreamEN5boost10string_refERK11manipulator"></span><span id="format_value__osR.boost::string_ref.manipulatorCR"></span><span class="target" id="structhpx_1_1util_1_1logging_1_1formatter_1_1manipulator_1a670b35bc5d714a8b45af6d7592e265ea"></span>void <code class="sig-name descname">format_value</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ostream &amp;<em>os</em>, <a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::string_ref, manipulator <em class="property">const</em> &amp;<em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412format_valueRNSt7ostreamEN5boost10string_refERK11manipulator" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-logging-message-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/logging/message.hpp</span></code><a class="headerlink" href="#header-hpx-logging-message-hpp" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1util_1_1logging"></span><em class="property">namespace </em><code class="sig-name descname">logging</code><br /></dt>
+<dd><dl class="cpp class">
+<dt id="_CPPv4N3hpx4util7logging7messageE">
+<span id="_CPPv3N3hpx4util7logging7messageE"></span><span id="_CPPv2N3hpx4util7logging7messageE"></span><span id="hpx::util::logging::message"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message"></span><em class="property">class </em><code class="sig-name descname">message</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging7messageE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;message.hpp&gt;</em><p>Optimizes the formatting for prepending and/or appending strings to the original message. </p>
+<p>It keeps all the modified message in one string. Useful if some formatter needs to access the whole string at once.</p>
+<p>reserve() - the size that is reserved for prepending (similar to string::reserve function)</p>
+<p>Note : as strings are prepended, reserve() shrinks. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging7message7messageEv">
+<span id="_CPPv3N3hpx4util7logging7message7messageEv"></span><span id="_CPPv2N3hpx4util7logging7message7messageEv"></span><span id="hpx::util::logging::message::message"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1aa4f235d9a38812d9a59b3bc7f6d4280c"></span><code class="sig-name descname">message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging7message7messageEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging7message7messageENSt12stringstreamE">
+<span id="_CPPv3N3hpx4util7logging7message7messageENSt12stringstreamE"></span><span id="_CPPv2N3hpx4util7logging7message7messageENSt12stringstreamE"></span><span id="hpx::util::logging::message::message__std::stringstream"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1af3837851b454ae4599ec45dfdda6a947"></span><code class="sig-name descname">message</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::stringstream <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging7message7messageENSt12stringstreamE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">msg</span></code>: - the message that is originally cached </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util7logging7message7messageERR7message">
+<span id="_CPPv3N3hpx4util7logging7message7messageERR7message"></span><span id="_CPPv2N3hpx4util7logging7message7messageERR7message"></span><span id="hpx::util::logging::message::message__messageRR"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1ae5e5871220b688b37bfcf118d921cb71"></span><code class="sig-name descname">message</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4util7logging7message7messageERR7message" title="hpx::util::logging::message::message">message</a> &amp;&amp;<em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util7logging7message7messageERR7message" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4util7logging7messagelsER7messageRR1T">
+<span id="_CPPv3I0EN3hpx4util7logging7messagelsERR1T"></span><span id="_CPPv2I0EN3hpx4util7logging7messagelsERR1T"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1a87dfa68857bf1adce645ba920d0517ab"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br /><a class="reference internal" href="#_CPPv4N3hpx4util7logging7messageE" title="hpx::util::logging::message">message</a> &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx4util7logging7messagelsER7messageRR1T" title="hpx::util::logging::message::operator&lt;&lt;::T">T</a> &amp;&amp;<em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4util7logging7messagelsER7messageRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IDpEN3hpx4util7logging7message6formatER7messageN5boost10string_refEDpRK4Args">
+<span id="_CPPv3IDpEN3hpx4util7logging7message6formatEN5boost10string_refEDpRK4Args"></span><span id="_CPPv2IDpEN3hpx4util7logging7message6formatEN5boost10string_refEDpRK4Args"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1ae61fbdeab5d856be048e8816494d3e5b"></span>template&lt;typename ...<code class="sig-name descname">Args</code>&gt;<br /><a class="reference internal" href="#_CPPv4N3hpx4util7logging7messageE" title="hpx::util::logging::message">message</a> &amp;<code class="sig-name descname">format</code><span class="sig-paren">(</span><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::string_ref <em>format_str</em>, <a class="reference internal" href="#_CPPv4IDpEN3hpx4util7logging7message6formatER7messageN5boost10string_refEDpRK4Args" title="hpx::util::logging::message::format::Args">Args</a> <em class="property">const</em>&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx4util7logging7message6formatER7messageN5boost10string_refEDpRK4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4util7logging7message11full_stringEv">
+<span id="_CPPv3NK3hpx4util7logging7message11full_stringEv"></span><span id="_CPPv2NK3hpx4util7logging7message11full_stringEv"></span><span id="hpx::util::logging::message::full_stringC"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1a9d9d49fea211cefc5a495603de708728"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<code class="sig-name descname">full_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4util7logging7message11full_stringEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>returns the full string </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4util7logging7message5emptyEv">
+<span id="_CPPv3NK3hpx4util7logging7message5emptyEv"></span><span id="_CPPv2NK3hpx4util7logging7message5emptyEv"></span><span id="hpx::util::logging::message::emptyC"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1a98661ac0986001e919cdc07c0c445d47"></span>bool <code class="sig-name descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4util7logging7message5emptyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging7message5m_strE">
+<span id="_CPPv3N3hpx4util7logging7message5m_strE"></span><span id="_CPPv2N3hpx4util7logging7message5m_strE"></span><span id="hpx::util::logging::message::m_str__std::stringstream"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1abb04597259981e358b7b52d3606e19bd"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::stringstream <code class="sig-name descname">m_str</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging7message5m_strE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging7message19m_full_msg_computedE">
+<span id="_CPPv3N3hpx4util7logging7message19m_full_msg_computedE"></span><span id="_CPPv2N3hpx4util7logging7message19m_full_msg_computedE"></span><span id="hpx::util::logging::message::m_full_msg_computed__b"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1a5e8f798bf5182a245d821c6fae0a6afd"></span>bool <code class="sig-name descname">m_full_msg_computed</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging7message19m_full_msg_computedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util7logging7message10m_full_msgE">
+<span id="_CPPv3N3hpx4util7logging7message10m_full_msgE"></span><span id="_CPPv2N3hpx4util7logging7message10m_full_msgE"></span><span id="hpx::util::logging::message::m_full_msg__ss"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1a7d5d87885ac77a3e5a60dcc0da38d3a5"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">m_full_msg</code><a class="headerlink" href="#_CPPv4N3hpx4util7logging7message10m_full_msgE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt id="_CPPv4lsRNSt7ostreamERK7message">
+<span id="_CPPv3lsRNSt7ostreamERK7message"></span><span id="_CPPv2lsRNSt7ostreamERK7message"></span><span id="lshift-operator__osR.messageCR"></span><span class="target" id="classhpx_1_1util_1_1logging_1_1message_1af9b813bed4b86e06ed07e7bd7bb0a7b2"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ostream &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::ostream &amp;<em>os</em>, message <em class="property">const</em> &amp;<em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4lsRNSt7ostreamERK7message" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="header-hpx-modules-logging-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/modules/logging.hpp</span></code><a class="headerlink" href="#header-hpx-modules-logging-hpp" title="Permalink to this headline">¶</a></h2>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="cpp macro">
+<dt id="c.LAGAS_">
+<span class="target" id="modules_2logging_8hpp_1a742eedb64ba94cfc6a265d78ada6c13d"></span><code class="sig-name descname">LAGAS_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LAGAS_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LPT_">
+<span class="target" id="modules_2logging_8hpp_1a68733d17de2bd8a399eb01e0a9eab576"></span><code class="sig-name descname">LPT_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LPT_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LTIM_">
+<span class="target" id="modules_2logging_8hpp_1a933a472aedcd80b65015832ae14a5345"></span><code class="sig-name descname">LTIM_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LTIM_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LPROGRESS_">
+<span class="target" id="modules_2logging_8hpp_1af28f56be09b79be8c5711333b7250362"></span><code class="sig-name descname">LPROGRESS_</code><a class="headerlink" href="#c.LPROGRESS_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LHPX_">
+<span class="target" id="modules_2logging_8hpp_1a770aec0d0fbf25f9428fc178e2717ff8"></span><code class="sig-name descname">LHPX_</code><span class="sig-paren">(</span><em>lvl</em>, <em>cat</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LHPX_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LAPP_">
+<span class="target" id="modules_2logging_8hpp_1a4259c4c0dfd30dd9276ad70da09a820a"></span><code class="sig-name descname">LAPP_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LAPP_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LDEB_">
+<span class="target" id="modules_2logging_8hpp_1ae5a49ad0514bb9c0953dfa3edd61234f"></span><code class="sig-name descname">LDEB_</code><a class="headerlink" href="#c.LDEB_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LTM_">
+<span class="target" id="modules_2logging_8hpp_1a47c3908913d5d2756c6c9da62d5ce685"></span><code class="sig-name descname">LTM_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LTM_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LRT_">
+<span class="target" id="modules_2logging_8hpp_1a2c70a35cf859d0cb3fe4b75cc16c63c6"></span><code class="sig-name descname">LRT_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LRT_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LOSH_">
+<span class="target" id="modules_2logging_8hpp_1a5a60bff2cba8bcee8d3763ac63ef57e9"></span><code class="sig-name descname">LOSH_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LOSH_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LERR_">
+<span class="target" id="modules_2logging_8hpp_1aeaefb0a2e3eaa73d217532cde038047c"></span><code class="sig-name descname">LERR_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LERR_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LLCO_">
+<span class="target" id="modules_2logging_8hpp_1aa897990f0168e39fd94fd9d4d9a0967c"></span><code class="sig-name descname">LLCO_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LLCO_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LPCS_">
+<span class="target" id="modules_2logging_8hpp_1ab188bfe5200f48f1479e023cac02c1f6"></span><code class="sig-name descname">LPCS_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LPCS_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LAS_">
+<span class="target" id="modules_2logging_8hpp_1a203de60572e50e3bfc70f4d2f1954e07"></span><code class="sig-name descname">LAS_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LAS_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LBT_">
+<span class="target" id="modules_2logging_8hpp_1a77f09f337957e792a05a9dcd0c3c40cb"></span><code class="sig-name descname">LBT_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LBT_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LFATAL_">
+<span class="target" id="modules_2logging_8hpp_1afcaebbc1b897372115c2e8d07b99ffb7"></span><code class="sig-name descname">LFATAL_</code><a class="headerlink" href="#c.LFATAL_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LAGAS_CONSOLE_">
+<span class="target" id="modules_2logging_8hpp_1a6f6c3bb89dcefb6aaae09325bf005329"></span><code class="sig-name descname">LAGAS_CONSOLE_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LAGAS_CONSOLE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LPT_CONSOLE_">
+<span class="target" id="modules_2logging_8hpp_1a5a593dff91ccdc59ddcffb31e4593dc0"></span><code class="sig-name descname">LPT_CONSOLE_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LPT_CONSOLE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LTIM_CONSOLE_">
+<span class="target" id="modules_2logging_8hpp_1a4b7eb2029ad04e0bf32a88e45e11c846"></span><code class="sig-name descname">LTIM_CONSOLE_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LTIM_CONSOLE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LHPX_CONSOLE_">
+<span class="target" id="modules_2logging_8hpp_1a897d0731b4fc6be78db376b81fd59def"></span><code class="sig-name descname">LHPX_CONSOLE_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LHPX_CONSOLE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LAPP_CONSOLE_">
+<span class="target" id="modules_2logging_8hpp_1a5a14dc7c0cd0607564ae8e1390cd60c8"></span><code class="sig-name descname">LAPP_CONSOLE_</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LAPP_CONSOLE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LDEB_CONSOLE_">
+<span class="target" id="modules_2logging_8hpp_1a4a13b1cbae5c0fd474f138cd789ce232"></span><code class="sig-name descname">LDEB_CONSOLE_</code><a class="headerlink" href="#c.LDEB_CONSOLE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LAGAS_ENABLED">
+<span class="target" id="modules_2logging_8hpp_1a58af2cadc889a683599ba18102723e69"></span><code class="sig-name descname">LAGAS_ENABLED</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LAGAS_ENABLED" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LPT_ENABLED">
+<span class="target" id="modules_2logging_8hpp_1abf25fc9ee4c0258cce10bb01992f654b"></span><code class="sig-name descname">LPT_ENABLED</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LPT_ENABLED" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LTIM_ENABLED">
+<span class="target" id="modules_2logging_8hpp_1a063eb274f7f46a9007048df3ec023398"></span><code class="sig-name descname">LTIM_ENABLED</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LTIM_ENABLED" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LHPX_ENABLED">
+<span class="target" id="modules_2logging_8hpp_1ac68158f1363de3f8eeb79454e23e61d1"></span><code class="sig-name descname">LHPX_ENABLED</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LHPX_ENABLED" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LAPP_ENABLED">
+<span class="target" id="modules_2logging_8hpp_1a6d47a5b8ee3a84e41fd982546c6eb2ae"></span><code class="sig-name descname">LAPP_ENABLED</code><span class="sig-paren">(</span><em>lvl</em><span class="sig-paren">)</span><a class="headerlink" href="#c.LAPP_ENABLED" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.LDEB_ENABLED">
+<span class="target" id="modules_2logging_8hpp_1aec4159a44db597c6047378f3256315d7"></span><code class="sig-name descname">LDEB_ENABLED</code><a class="headerlink" href="#c.LDEB_ENABLED" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0ElsRK17bootstrap_loggingRK17bootstrap_loggingRR1T">
+<span id="_CPPv3I0ElsRK17bootstrap_loggingRR1T"></span><span id="_CPPv2I0ElsRK17bootstrap_loggingRR1T"></span><span class="target" id="modules_2logging_8hpp_1aef2c913d6dffd4f51f064c49bee7c0e2"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br /><a class="reference internal" href="#_CPPv417bootstrap_logging" title="bootstrap_logging">bootstrap_logging</a> <em class="property">const</em> &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv417bootstrap_logging" title="bootstrap_logging">bootstrap_logging</a> <em class="property">const</em> &amp;<em>l</em>, <a class="reference internal" href="#_CPPv4I0ElsRK17bootstrap_loggingRK17bootstrap_loggingRR1T" title="operator&lt;&lt;::T">T</a>&amp;&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0ElsRK17bootstrap_loggingRK17bootstrap_loggingRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Variables</p>
+<dl class="cpp member">
+<dt id="_CPPv44lbt_">
+<span id="_CPPv34lbt_"></span><span id="_CPPv24lbt_"></span><span id="lbt___bootstrap_logging"></span><span class="target" id="modules_2logging_8hpp_1af2e30e01c5a48959f5554eacd4e45f21"></span><em class="property">constexpr</em> <a class="reference internal" href="#_CPPv417bootstrap_logging" title="bootstrap_logging">bootstrap_logging</a> <code class="sig-name descname">lbt_</code><a class="headerlink" href="#_CPPv44lbt_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv417bootstrap_logging">
+<span id="_CPPv317bootstrap_logging"></span><span id="_CPPv217bootstrap_logging"></span><span id="bootstrap_logging"></span><span class="target" id="structbootstrap__logging"></span><em class="property">struct </em><code class="sig-name descname">bootstrap_logging</code><a class="headerlink" href="#_CPPv417bootstrap_logging" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;logging.hpp&gt;</em><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N17bootstrap_logging17bootstrap_loggingEv">
+<span id="_CPPv3N17bootstrap_logging17bootstrap_loggingEv"></span><span id="_CPPv2N17bootstrap_logging17bootstrap_loggingEv"></span><span id="bootstrap_logging::bootstrap_loggingCE"></span><span class="target" id="structbootstrap__logging_1a868345705cc28eacad85cda399532bf9"></span><em class="property">constexpr</em> <code class="sig-name descname">bootstrap_logging</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17bootstrap_logging17bootstrap_loggingEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../memory/api.html" class="btn btn-neutral float-right" title="memory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../lcos_local/api.html" class="btn btn-neutral float-left" title="lcos_local" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2020, The STE||AR Group
+      
+        <span class="commit">
+          Revision <code>2145d63</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Testing HPX" href="testing_hpx.html" />
-    <link rel="prev" title="Contributing to HPX" href="../contributing.html" /> 
+    <link rel="prev" title="HPX governance model" href="governance.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -110,6 +110,8 @@
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../contributing.html">Contributing to <em>HPX</em></a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to <em>HPX</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="governance.html"><em>HPX</em> governance model</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Release procedure for <em>HPX</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing_hpx.html">Testing <em>HPX</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="docker_image.html">Using docker for development</a></li>
@@ -201,19 +203,6 @@ as appropriate.</p>
 are completed to avoid confusion.</p>
 <ol class="arabic">
 <li><p>Notify developers that a release is imminent.</p></li>
-<li><p>Make a list of examples and benchmarks that should not go into the release.
-Build all examples and benchmarks that will go in the release and make sure
-they build and run as expected.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Make sure all examples and benchmarks have example input files, and usage
-documentation, either in the form of comments or a readme.</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>Send the list of examples and benchmarks that will be included in the release
-to <a class="reference external" href="mailto:hpx-users&#37;&#52;&#48;stellar&#46;cct&#46;lsu&#46;edu">hpx-users<span>&#64;</span>stellar<span>&#46;</span>cct<span>&#46;</span>lsu<span>&#46;</span>edu</a> and <a class="reference external" href="mailto:stellar&#37;&#52;&#48;cct&#46;lsu&#46;edu">stellar<span>&#64;</span>cct<span>&#46;</span>lsu<span>&#46;</span>edu</a>, and ask for
-feedback. Update the list as necessary.</p></li>
 <li><p>Write release notes in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases/whats_new_$VERSION.rst</span></code>. Keep
 adding merged PRs and closed issues to this until just before the release is
 made. Use <code class="docutils literal notranslate"><span class="pre">tools/generate_pr_issue_list.sh</span></code> to generate the lists. Add the
@@ -235,32 +224,30 @@ changed, and correct any typos. Pay special attention to:</p>
 </li>
 </ul>
 </li>
-<li><p>This step does not apply to patch releases. For both APEX and hpxMP:</p>
+<li><p>This step does not apply to patch releases. For both APEX and libCDS:</p>
 <ul class="simple">
 <li><p>Change the release branch to be the most current release tag available in
-the APEX/hpxMP <code class="docutils literal notranslate"><span class="pre">git_external</span></code> section in the main <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.
+the APEX/libCDS <code class="docutils literal notranslate"><span class="pre">git_external</span></code> section in the main <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.
 Please contact the maintainers of the respective packages to generate a new
-release to synchronize with the <em>HPX</em> release (<a class="reference external" href="http://github.com/khuck/xpress-apex">APEX</a>, <a class="reference external" href="https://github.com/STEllAR-GROUP/hpxMP">hpxMP</a>).</p></li>
+release to synchronize with the <em>HPX</em> release (<a class="reference external" href="http://github.com/khuck/xpress-apex">APEX</a>, <a class="reference external" href="https://github.com/STEllAR-GROUP/libcds">libCDS</a>).</p></li>
 </ul>
 </li>
 <li><p>If there have been any commits to the release branch since the last release,
 create a tag from the old release branch before deleting the old release
 branch in the next step.</p></li>
 <li><p>Unprotect the release branch in the github repository settings so that it can
-be deleted and recreated.</p></li>
-<li><p>Delete the old release branch, and create a new one by branching a stable
-point from master. If you are creating a patch release, branch from the
+be deleted and recreated (tick “Allow force pushes” in the release branch
+settings of the repository).</p></li>
+<li><p>Reset the release branch to the latest stable state on master and force push
+to origin/release. If you are creating a patch release, branch from the
 release tag for which you want to create a patch release.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">--delete</span> <span class="pre">release</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">-D</span> <span class="pre">release</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">[stable</span> <span class="pre">point</span> <span class="pre">in</span> <span class="pre">master]</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">release</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">release</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">--set-upstream-to=origin/release</span> <span class="pre">release</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">release</span></code> (or just <code class="docutils literal notranslate"><span class="pre">checkout</span></code> in case the it exists)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span> <span class="pre">stable</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--force</span> <span class="pre">origin</span> <span class="pre">release</span></code></p></li>
 </ul>
 </li>
-<li><p>Protect the release branch again to disable deleting and force pushes.</p></li>
+<li><p>Protect the release branch again to disable force pushes.</p></li>
 <li><p>Check out the release branch.</p></li>
 <li><p>Make sure <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_MAJOR/MINOR/SUBMINOR</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> contain
 the correct values. Change them if needed.</p></li>
@@ -277,23 +264,21 @@ any old (now deprecated) code.</p></li>
 <li><p>Third release cycle: completely remove the old code.</p></li>
 </ol>
 <p>The main CMakeLists.txt contains a comment indicating for which version
-the breaking change was introduced first.</p>
+the breaking change was introduced first.
+In the case of deprecated features which don’t have a replacement yet, we
+keep them around in case (like Vc for example).</p>
 </li>
 <li><p>Update the minimum required versions if necessary (compilers, dependencies,
-etc.).</p></li>
-<li><p>Switch Buildbot over to test the release branch.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">https://github.com/STEllAR-GROUP/hermione-buildbot/blob/rostam/master/master.cfg</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">branch</span></code> field in <code class="docutils literal notranslate"><span class="pre">c['change_source']</span> <span class="pre">=</span>&#160; <span class="pre">GitPoller</span></code></p></li>
-</ul>
-</li>
+etc.) in <code class="docutils literal notranslate"><span class="pre">building_hpx.rst</span></code>.</p></li>
+<li><p>Verify that the jenkins setup for the release branch on rostam is running
+and does not display any errors.</p></li>
 <li><p>Repeat the following steps until satisfied with the release.</p>
 <ol class="arabic simple">
 <li><p>Change <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_TAG</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to <code class="docutils literal notranslate"><span class="pre">-rcN</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code>
 is the current iteration of this step. Start with <code class="docutils literal notranslate"><span class="pre">-rc1</span></code>.</p></li>
-<li><p>Tag and create a pre-release on GitHub using the script
-<code class="docutils literal notranslate"><span class="pre">tools/roll_release.sh</span></code>. The script requires that you have the STE||AR
-Group signing key.</p></li>
+<li><p>Create a pre-release on GitHub using the script <code class="docutils literal notranslate"><span class="pre">tools/roll_release.sh</span></code>.
+This script automatically tag with the corresponding release number.
+The script requires that you have the STE||AR Group signing key.</p></li>
 <li><p>This step is not necessary for patch releases. Notify
 <code class="docutils literal notranslate"><span class="pre">hpx-users&#64;stellar.cct.lsu.edu</span></code> and <code class="docutils literal notranslate"><span class="pre">stellar&#64;cct.lsu.edu</span></code> of the
 availability of the release candidate. Ask users to test the candidate by
@@ -319,9 +304,9 @@ with the new version number and a link to the corresponding changelog.</p></li>
 <li><p>Add the release date to the caption of the current “What’s New” section in
 the docs, and change the value of <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_DATE</span></code> in
 <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.</p></li>
-<li><p>Tag and create a release on GitHub using the script
-<code class="docutils literal notranslate"><span class="pre">tools/roll_release.sh</span></code>. The script requires that you have the STE||AR
-Group signing key.</p></li>
+<li><p>Create a release on GitHub using the script <code class="docutils literal notranslate"><span class="pre">tools/roll_release.sh</span></code>. This
+script automatically tag the with the corresponding release number. The
+script requires that you have the STE||AR Group signing key.</p></li>
 <li><p>Update the websites (<a class="reference external" href="https://stellar-group.org">stellar-group.org</a> and
 <a class="reference external" href="https://stellar.cct.lsu.edu">stellar.cct.lsu.edu</a>) with the following:</p>
 <ul class="simple">
@@ -340,12 +325,6 @@ following changes:</p>
 <li><p>Modify the release procedure if necessary.</p></li>
 <li><p>Change <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_TAG</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> back to <code class="docutils literal notranslate"><span class="pre">-trunk</span></code>.</p></li>
 </ol>
-</li>
-<li><p>Switch Buildbot back to test the main branch</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">https://github.com/STEllAR-GROUP/hermione-buildbot/blob/rostam/master/master.cfg</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">branch</span></code> field in <code class="docutils literal notranslate"><span class="pre">c['change_source']</span> <span class="pre">=</span>&#160; <span class="pre">GitPoller</span></code></p></li>
-</ul>
 </li>
 <li><p>Update Vcpkg (<code class="docutils literal notranslate"><span class="pre">https://github.com/Microsoft/vcpkg</span></code>) to pull from latest release.</p>
 <ul class="simple">
@@ -379,7 +358,7 @@ HPC, Heise Online, and a CCT press release.</p></li>
         <a href="testing_hpx.html" class="btn btn-neutral float-right" title="Testing HPX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../contributing.html" class="btn btn-neutral float-left" title="Contributing to HPX" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="governance.html" class="btn btn-neutral float-left" title="HPX governance model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -391,7 +370,7 @@ HPC, Heise Online, and a CCT press release.</p></li>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>2145d63</code>.
+          Revision <code>f3596a6</code>.
         </span>
       
 

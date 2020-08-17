@@ -472,15 +472,16 @@ like <code class="docutils literal notranslate"><span class="pre">when_all</span
 <p>The following example is a collection of the most commonly used functionality in
 <em>HPX</em>:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/lcos.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/parallel_generate.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/parallel_sort.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
 
-<span class="kt">void</span> <span class="nf">final_task</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;&gt;&gt;</span><span class="p">)</span>
+<span class="kt">void</span> <span class="nf">final_task</span><span class="p">(</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;&gt;&gt;</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;in final_task&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
@@ -509,12 +510,11 @@ like <code class="docutils literal notranslate"><span class="pre">when_all</span
 
     <span class="c1">// Tasks can be chained using the then method. The continuation takes the</span>
     <span class="c1">// future as an argument.</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">g</span><span class="p">.</span><span class="n">then</span><span class="p">([](</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&amp;&amp;</span> <span class="n">gg</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">// This function will be called once g is ready. gg is g moved</span>
-            <span class="c1">// into the continuation.</span>
-            <span class="k">return</span> <span class="n">gg</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">*</span> <span class="mf">42.0</span> <span class="o">*</span> <span class="mf">42.0</span><span class="p">;</span>
-        <span class="p">});</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">g</span><span class="p">.</span><span class="n">then</span><span class="p">([](</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&amp;&amp;</span> <span class="n">gg</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// This function will be called once g is ready. gg is g moved</span>
+        <span class="c1">// into the continuation.</span>
+        <span class="k">return</span> <span class="n">gg</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">*</span> <span class="mf">42.0</span> <span class="o">*</span> <span class="mf">42.0</span><span class="p">;</span>
+    <span class="p">});</span>
 
     <span class="c1">// You can check if a future is ready with the is_ready method.</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Result is ready? &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">result</span><span class="p">.</span><span class="n">is_ready</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
@@ -523,16 +523,14 @@ like <code class="docutils literal notranslate"><span class="pre">when_all</span
     <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">(</span><span class="mi">1000000</span><span class="p">);</span>
 
     <span class="c1">// We fill the vector synchronously and sequentially.</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">generate</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">seq</span><span class="p">,</span>
-                  <span class="n">std</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">rand_wrapper</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">generate</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">seq</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+        <span class="o">&amp;</span><span class="n">rand_wrapper</span><span class="p">);</span>
 
     <span class="c1">// We can launch the sort in parallel and asynchronously.</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">done_sorting</span> <span class="o">=</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">par</span><span class="p">(</span> <span class="c1">// In parallel.</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">task</span><span class="p">),</span> <span class="c1">// Asynchronously.</span>
-            <span class="n">std</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
-            <span class="n">std</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">done_sorting</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">par</span><span class="p">(</span>          <span class="c1">// In parallel.</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">task</span><span class="p">),</span>    <span class="c1">// Asynchronously.</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
 
     <span class="c1">// We launch the final task when the vector has been sorted and result is</span>
     <span class="c1">// ready using when_all.</span>
@@ -542,8 +540,8 @@ like <code class="docutils literal notranslate"><span class="pre">when_all</span
     <span class="n">all</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
 
     <span class="c1">// all must be ready at this point because we waited for it to be ready.</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span>
-        <span class="p">(</span><span class="n">all</span><span class="p">.</span><span class="n">is_ready</span><span class="p">()</span> <span class="o">?</span> <span class="s">&quot;all is ready!&quot;</span> <span class="o">:</span> <span class="s">&quot;all is not ready...&quot;</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">all</span><span class="p">.</span><span class="n">is_ready</span><span class="p">()</span> <span class="o">?</span> <span class="s">&quot;all is ready!&quot;</span> <span class="o">:</span> <span class="s">&quot;all is not ready...&quot;</span><span class="p">)</span>
+              <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 
     <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
 <span class="p">}</span>
@@ -619,7 +617,7 @@ to a distributed implementation.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>3d68a02</code>.
+          Revision <code>1693099</code>.
         </span>
       
 

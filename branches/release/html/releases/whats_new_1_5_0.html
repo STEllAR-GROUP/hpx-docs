@@ -221,38 +221,47 @@ conformant. As part of the modularization we have begun specifying the public
 API of <em>HPX</em> in terms of headers and functionality, and aligning it more closely
 to the C++ standard. All non-distributed modules are now in place, along with an
 experimental option to completely disable distributed features in <em>HPX</em>. We have
-also added an experimental asynchronous MPI executor. Lastly this release
-contains official CMake targets, performance improvements, and many bug fixes.</p>
+also added experimental asynchronous MPI and CUDA executors. Lastly this release
+introduces CMake targets for depending projects, performance improvements,
+and many bug fixes.</p>
 <ul class="simple">
-<li><p>We have added the C++20 features <code class="docutils literal notranslate"><span class="pre">hpx::jthread</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx::stop_token</span></code>. We
-have also added <code class="docutils literal notranslate"><span class="pre">hpx::stable_sort</span></code> based on Francisco Tapia’s
+<li><p>We have added the C++20 features <code class="docutils literal notranslate"><span class="pre">hpx::jthread</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx::stop_token</span></code>.
+<code class="docutils literal notranslate"><span class="pre">hpx::condition_variable_any</span></code> now exposes new functions supporting
+<code class="docutils literal notranslate"><span class="pre">hpx::stop_token</span></code>.</p></li>
+<li><p>We have added <code class="docutils literal notranslate"><span class="pre">hpx::stable_sort</span></code> based on Francisco Tapia’s
 implementation.</p></li>
 <li><p>We have adapted existing sychronization primitives to be fully conformant
-C++20: <code class="docutils literal notranslate"><span class="pre">barrier</span></code>, <code class="docutils literal notranslate"><span class="pre">latch</span></code>, <code class="docutils literal notranslate"><span class="pre">counting_semaphore</span></code>.</p></li>
-<li><p>We have started using customization point objects to make the corresponding
+C++20: <code class="docutils literal notranslate"><span class="pre">hpx::barrier</span></code>, <code class="docutils literal notranslate"><span class="pre">hpx::latch</span></code>, <code class="docutils literal notranslate"><span class="pre">hpx::counting_semaphore</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">hpx::binary_semaphore</span></code>.</p></li>
+<li><p>We have started using customization point objects (CPOs) to make the corresponding
 algorithms fully conformant to C++20 as well as to make algorithm extension
 easier for the user. <code class="docutils literal notranslate"><span class="pre">all_of</span></code>/<code class="docutils literal notranslate"><span class="pre">any_of</span></code>/<code class="docutils literal notranslate"><span class="pre">none_of</span></code>, <code class="docutils literal notranslate"><span class="pre">copy</span></code>, <code class="docutils literal notranslate"><span class="pre">count</span></code>,
 <code class="docutils literal notranslate"><span class="pre">destroy</span></code>, <code class="docutils literal notranslate"><span class="pre">equal</span></code>, <code class="docutils literal notranslate"><span class="pre">fill</span></code>, <code class="docutils literal notranslate"><span class="pre">mismatch</span></code>, <code class="docutils literal notranslate"><span class="pre">move</span></code>, <code class="docutils literal notranslate"><span class="pre">reduce</span></code> are using
-those CPOs.  We also have adapted their corresponding <code class="docutils literal notranslate"><span class="pre">hpx::ranges</span></code> versions
-in this release.</p></li>
-<li><p>We have adapted support for <code class="docutils literal notranslate"><span class="pre">co_await</span></code> to C++20, it now supports
-<code class="docutils literal notranslate"><span class="pre">shared_future</span></code> and have added allocator support for futures returned by
-<code class="docutils literal notranslate"><span class="pre">co_return</span></code>. It is no longer in the <code class="docutils literal notranslate"><span class="pre">experimental</span></code> namespace.</p></li>
+those CPOs (all in namespace <code class="docutils literal notranslate"><span class="pre">hpx</span></code>).  We also have adapted their
+corresponding <code class="docutils literal notranslate"><span class="pre">hpx::ranges</span></code> versions to be conforming to C++20 in this
+release.</p></li>
+<li><p>We have adapted support for <code class="docutils literal notranslate"><span class="pre">co_await</span></code> to C++20, in addition to
+<code class="docutils literal notranslate"><span class="pre">hpx::future</span></code> it now also supports <code class="docutils literal notranslate"><span class="pre">hpx::shared_future</span></code>. We have also
+added allocator support for futures returned by <code class="docutils literal notranslate"><span class="pre">co_return</span></code>. It is no longer
+in the <code class="docutils literal notranslate"><span class="pre">experimental</span></code> namespace.</p></li>
 <li><p>We added serialization support for <code class="docutils literal notranslate"><span class="pre">std::variant</span></code> and <code class="docutils literal notranslate"><span class="pre">std::tuple</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">result_of</span></code> and <code class="docutils literal notranslate"><span class="pre">is_callable</span></code> are now deprecated and replaced by
 <code class="docutils literal notranslate"><span class="pre">invoke_result</span></code> and <code class="docutils literal notranslate"><span class="pre">is_invocable</span></code> to conform to C++20.</p></li>
 <li><p>We continued with the modularization, making it easier for us to add the new
 experimental <code class="docutils literal notranslate"><span class="pre">HPX_WITH_DISTRIBUTED_RUNTIME</span></code> CMake option (see below) . An
-important amount of headers have been deprecated. We adapted the namespaces
-and headers we could to be closer to the standard ones (<span class="xref std std-ref">api</span>).</p></li>
+significant amount of headers have been deprecated. We adapted the namespaces
+and headers we could to be closer to the standard ones (<span class="xref std std-ref">api</span>). Depending code should still compile, however warnings are now
+generated instructing to change the include statements accordingly.</p></li>
 <li><p>It is now possible to have a basic CUDA support including a helper function to
 get a future from a CUDA stream and target handling. They are available under
 the <code class="docutils literal notranslate"><span class="pre">hpx::cuda::experimental</span></code> namespace and they can be enabled with the
-<code class="docutils literal notranslate"><span class="pre">HPX_WITH_ASYNC_CUDA=ON</span></code> cmake option.</p></li>
+<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_ASYNC_CUDA=ON</span></code> CMake option.</p></li>
 <li><p>We added a new <code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental</span></code> namespace for getting futures from
-an asynchronous MPI call and a new minimal MPI executor (add the name).</p></li>
+an asynchronous MPI call and a new minimal MPI executor
+<code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental::executor</span></code>. These can be enabled with the
+<a href="#id2"><span class="problematic" id="id3">``</span></a>-DHPX_WITH_ASYNC_MPI=On` CMake option.</p></li>
 <li><p>A polymorphic executor has been implemented to reduce compile times as a
-function accepting executor can potentially be instantiated only once instead
+function accepting executors can potentially be instantiated only once instead
 of multiple times with different executors. It accepts the function signature
 as a template argument. It needs to be constructed from any other executor.
 Please note, that the function signatures that can be scheduled using
@@ -267,23 +276,30 @@ This will allow to deprecate the <code class="docutils literal notranslate"><spa
 policies in the future. This is also a first step towards simplifying our
 executor APIs in preparation for the upcoming C++23 executors
 (senders/receivers).</p></li>
-<li><p>We have added performance counters type information (aggregating,
-monotonically increasing, average count, average timer, etc.).</p></li>
-<li><p>The tasks are now re-scheduled on the same worker thread they were suspended
+<li><p>We have moved all of the existing APIs related to resiliency into the
+namespace <code class="docutils literal notranslate"><span class="pre">hpx::resiliency::experimental</span></code>. Please note this is a breaking
+change without backwards-compatibility option. We have converted all of those
+APIs to be based on customization point objects. Two new executors have been
+added to enable easy integration of the existing resiliency features with
+other facilities (like the parallel algorithms): <code class="docutils literal notranslate"><span class="pre">replay_executor</span></code> and
+<code class="docutils literal notranslate"><span class="pre">replicate_executor</span></code>.</p></li>
+<li><p>We have added performance counters type information (<code class="docutils literal notranslate"><span class="pre">aggregating</span></code>,
+<code class="docutils literal notranslate"><span class="pre">monotonically</span> <span class="pre">increasing</span></code>, <code class="docutils literal notranslate"><span class="pre">average</span> <span class="pre">count</span></code>, <code class="docutils literal notranslate"><span class="pre">average</span> <span class="pre">timer</span></code>, etc.).</p></li>
+<li><p>HPX threads are now re-scheduled on the same worker thread they were suspended
 on to avoid cache misses from moving from one thread to the other. This
-behavior doesn’t prevent the task from being stolen.</p></li>
+behavior doesn’t prevent the thread from being stolen, however.</p></li>
 <li><p>We have added a new configuration option <code class="docutils literal notranslate"><span class="pre">hpx.exception_verbosity</span></code> to allow
 to control the level of verbosity of the exceptions (3 levels available).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">broadcast_to</span></code>, <code class="docutils literal notranslate"><span class="pre">broadcast_from</span></code>, <code class="docutils literal notranslate"><span class="pre">scatter_to</span></code> and <code class="docutils literal notranslate"><span class="pre">scatter_from</span></code> have
 been added to the collectives, modernization of <code class="docutils literal notranslate"><span class="pre">gather_here</span></code> and
 <code class="docutils literal notranslate"><span class="pre">gather_there</span></code> with futures taken by rvalue references. See the breaking
-change on <code class="docutils literal notranslate"><span class="pre">all_to_all</span></code> in the next section. All the collectives do not need
+change on <code class="docutils literal notranslate"><span class="pre">all_to_all</span></code> in the next section. None of the collectives need
 supporting macros anymore (e.g. specifying the data types used for a
-collective operation using <code class="docutils literal notranslate"><span class="pre">HPX_REGISTER_ALLGATHER</span></code> and similar are not
+collective operation using <code class="docutils literal notranslate"><span class="pre">HPX_REGISTER_ALLGATHER</span></code> and similar is not
 needed anymore).</p></li>
-<li><p>A new API function to get the number of cores which are idle
-(<code class="docutils literal notranslate"><span class="pre">hpx::get_idle_core_count</span></code>) and another one returning a bitmask
-representing the currently idle cores (<code class="docutils literal notranslate"><span class="pre">get_idle_core_mask</span></code>).</p></li>
+<li><p>New API functions have been added: a) to get the number of cores which are idle
+(<code class="docutils literal notranslate"><span class="pre">hpx::get_idle_core_count</span></code>) and b) returning a bitmask
+representing the currently idle cores (<code class="docutils literal notranslate"><span class="pre">hpx::get_idle_core_mask</span></code>).</p></li>
 <li><p>We have added an experimental option to only enable the local runtime, you can
 disable the distributed runtime with <code class="docutils literal notranslate"><span class="pre">HPX_WITH_DISTRIBUTED_RUNTIME=OFF</span></code>. You
 can also enable the local runtime by using the <code class="docutils literal notranslate"><span class="pre">--hpx:local</span></code> runtime option.</p></li>
@@ -291,9 +307,11 @@ can also enable the local runtime by using the <code class="docutils literal not
 <li><p>The alias <code class="docutils literal notranslate"><span class="pre">hpx::promise</span></code> to <code class="docutils literal notranslate"><span class="pre">hpx::lcos::promise</span></code> is now deprecated. You
 can use <code class="docutils literal notranslate"><span class="pre">hpx::lcos::promise</span></code> directly instead. <code class="docutils literal notranslate"><span class="pre">hpx::promise</span></code> will refer
 to the local-only promise in the future.</p></li>
-<li><p>We have added a <code class="docutils literal notranslate"><span class="pre">prepare_checkpoint</span></code> API function which calculates the
-amount of necessary buffer space for a particular set of argumnets
+<li><p>We have added a <code class="docutils literal notranslate"><span class="pre">prepare_checkpoint</span></code> API function that calculates the
+amount of necessary buffer space for a particular set of arguments
 checkpointed.</p></li>
+<li><p>We have added <code class="docutils literal notranslate"><span class="pre">hpx::upgrade_lock</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx::upgrade_to_unique_lock</span></code>, which
+make <code class="docutils literal notranslate"><span class="pre">hpx::shared_mutex</span></code> (and similar) usable in more flexible ways.</p></li>
 <li><p>We have changed the CMake targets exposed to the user, it now includes
 <code class="docutils literal notranslate"><span class="pre">HPX::hpx</span></code>, <code class="docutils literal notranslate"><span class="pre">HPX::wrap_main</span></code> (<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">main</span></code> as the first <em>HPX</em> thread of
 the application, see <span class="xref std std-ref">starting HPX runtime</span>),
@@ -306,6 +324,11 @@ target.</p></li>
 <li><p>A new example is demonstrating how to disable thread stealing during the
 execution of parallel algorithms
 (<code class="docutils literal notranslate"><span class="pre">quickstart/disable_thread_stealing_executor.cpp</span></code>)</p></li>
+<li><p>We now require for our CMake build system configuration files to be
+formatted using cmake-format.</p></li>
+<li><p>We have removed more dependencies on various Boost libraries.</p></li>
+<li><p>We have added an experimental option enabling unity builds of HPX using the
+<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_UNITY_BUILD=On</span></code> CMake option.</p></li>
 <li><p>Many bug fixes.</p></li>
 </ul>
 </div>
@@ -314,13 +337,19 @@ execution of parallel algorithms
 <ul class="simple">
 <li><p><em>HPX</em> now requires a C++14 capable compiler. We have set the <em>HPX</em> C++
 standard automatically to C++14 and if it needs to be set explicitly, it
-should be through the <code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_STANDARD</span></code>. The <code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX*</span></code> variables
-are now deprecated.</p></li>
+should be specified through the <code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_STANDARD</span></code> setting as mandated
+by CMake. The <code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX*</span></code> variables are now deprecated and will be
+removed in the future.</p></li>
+<li><p>Building and using HPX is now supported only when using CMake V3.13 or later,
+Boost V1.64 or newer, and when compiling with clang V5, gcc V7, or VS2019, or
+later. Other compilers might still work but have not been tested thoroughly.</p></li>
 <li><p>We have added a <code class="docutils literal notranslate"><span class="pre">hpx::init_params</span></code> struct to pass parameters for <em>HPX</em>
 initialization e.g. the resource partitioner callback to initialize thread
 pools (<span class="xref std std-ref">using the resource partitioner</span>).</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">all_to_all</span></code> algorithm is renamed to <code class="docutils literal notranslate"><span class="pre">all_gather</span></code>, and the new
 <code class="docutils literal notranslate"><span class="pre">all_to_all</span></code> algorithm is not compatible with the old one.</p></li>
+<li><p>We have moved all of the existing APIs related to resiliency into the
+namespace <code class="docutils literal notranslate"><span class="pre">hpx::resiliency::experimental</span></code>.</p></li>
 </ul>
 </div>
 <div class="section" id="closed-issues">
@@ -470,7 +499,7 @@ pools (<span class="xref std std-ref">using the resource partitioner</span>).</p
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/4797">PR #4797</a> - Change cmake targets</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/4794">PR #4794</a> - Removing 128bit integer emulation</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/4793">PR #4793</a> - Make sure global variable is handled properly</p></li>
-<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/4792">PR #4792</a> - Replace enable_if with <a href="#id2"><span class="problematic" id="id3">HPX_CONCEPT_REQUIRES_</span></a> and add is_sentinel_for constraint</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/4792">PR #4792</a> - Replace enable_if with <a href="#id4"><span class="problematic" id="id5">HPX_CONCEPT_REQUIRES_</span></a> and add is_sentinel_for constraint</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/4790">PR #4790</a> - Move deprecation warnings from base template to template specializations for result_of etc. structs</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/4789">PR #4789</a> - Fix hangs during assertion handling and distributed runtime construction</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/4788">PR #4788</a> - Fixing inclusive transform scan algorithm to properly handle initial value</p></li>
@@ -811,7 +840,7 @@ pools (<span class="xref std std-ref">using the resource partitioner</span>).</p
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>f3596a6</code>.
+          Revision <code>3cccc40</code>.
         </span>
       
 

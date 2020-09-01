@@ -311,20 +311,35 @@ running the <a class="reference external" href="https://github.com/tomtom-intern
 detailed information on exactly which files are causing the circular dependency.
 If you do not have the <code class="docutils literal notranslate"><span class="pre">cpp-dependencies</span></code> tool already installed, one way of
 obtaining it is by using our docker image. This way you will have exactly the
-same environment as on the CI. See <span class="xref std std-ref">docker</span> for details on how to use the
-docker image.</p>
+same environment as on the CI. See <a class="reference internal" href="docker_image.html#using-docker"><span class="std std-ref">Using docker for development</span></a> for details on how to use
+the docker image.</p>
 <p>To produce the graph produced by CI run the following command (<code class="docutils literal notranslate"><span class="pre">HPX_SOURCE</span></code> is
 assumed to hold the path to the <em>HPX</em> source directory):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cpp-dependencies --dir <span class="nv">$HPX_SOURCE</span>/libs --graph-cycles circular_dependencies.dot
+</pre></div>
+</div>
 <p>This will produce a <code class="docutils literal notranslate"><span class="pre">dot</span></code> file in the current directory. You can inspect this
 manually with a text editor. You can also convert this to an image if you have
 <code class="docutils literal notranslate"><span class="pre">graphviz</span></code> installed:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dot circular_dependencies.dot -Tsvg -o circular_dependencies.svg
+</pre></div>
+</div>
 <p>This produces an <code class="docutils literal notranslate"><span class="pre">svg</span></code> file in the current directory which shows the circular
 dependencies. Note that if there are no cycles the image will be empty.</p>
 <p>You can use <code class="docutils literal notranslate"><span class="pre">cpp-dependencies</span></code> to print the include paths between two modules.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cpp-dependencies --dir <span class="nv">$HPX_SOURCE</span>/libs --shortest &lt;from&gt; &lt;to&gt;
+</pre></div>
+</div>
 <p>prints all possible paths from the module <code class="docutils literal notranslate"><span class="pre">&lt;from&gt;</span></code> to the module <code class="docutils literal notranslate"><span class="pre">&lt;to&gt;</span></code>. For
 example, as most modules depend on <code class="docutils literal notranslate"><span class="pre">config</span></code>, the following should give you a
 long list of paths from <code class="docutils literal notranslate"><span class="pre">algorithms</span></code> to <code class="docutils literal notranslate"><span class="pre">config</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cpp-dependencies --dir <span class="nv">$HPX_SOURCE</span>/libs --shortest algorithms config
+</pre></div>
+</div>
 <p>The following should report that it can’t find a path between the two modules:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cpp-dependencies --dir <span class="nv">$HPX_SOURCE</span>/libs --shortest config algorithms
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -357,7 +372,7 @@ long list of paths from <code class="docutils literal notranslate"><span class="
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>f770fe4</code>.
+          Revision <code>6f99f57</code>.
         </span>
       
 

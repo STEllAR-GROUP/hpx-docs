@@ -11,8 +11,8 @@
 
 #include <hpx/hpx_init.hpp>
 #include <hpx/hpx.hpp>
-#include <hpx/serialization/serialize.hpp>
-#include <hpx/type_support/unused.hpp>
+#include <hpx/serialization.hpp>
+#include <hpx/modules/type_support.hpp>
 
 #include <boost/shared_array.hpp>
 
@@ -33,9 +33,9 @@ double dx = 1.;     // grid spacing
 
 inline std::size_t idx(std::size_t i, int dir, std::size_t size)
 {
-    if(i == 0 && dir == -1)
-        return size-1;
-    if(i == size-1 && dir == +1)
+    if (i == 0 && dir == -1)
+        return size - 1;
+    if (i == size - 1 && dir == +1)
         return 0;
 
     HPX_ASSERT((i + dir) < size);
@@ -45,7 +45,7 @@ inline std::size_t idx(std::size_t i, int dir, std::size_t size)
 
 inline std::size_t locidx(std::size_t i, std::size_t np, std::size_t nl)
 {
-    return i / (np/nl);
+    return (i * nl) / np;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ public:
     {}
 
     // Create a new (uninitialized) partition of the given size.
-    partition_data(std::size_t size)
+    explicit partition_data(std::size_t size)
       : data_(std::allocator<double>().allocate(size), size, buffer_type::take)
       , size_(size)
       , min_index_(0)
@@ -301,7 +301,7 @@ struct stepper
 
                     // The new partition_data will be allocated on the same locality
                     // as 'middle'.
-                    return partition(middle.get_id(), next);
+                    return partition(middle.get_id(), std::move(next));
                 }
             ),
             std::move(next_middle),
@@ -342,6 +342,10 @@ stepper::space stepper::do_work(std::size_t np, std::size_t nx, std::size_t nt)
     for (std::size_t i = 0; i != np; ++i)
         U[0][i] = partition(localities[locidx(i, np, nl)], nx, double(i));
 
+    // limit depth of dependency tree
+    std::size_t nd = 3;
+    hpx::lcos::local::sliding_semaphore sem(nd);
+
     heat_part_action act;
     for (std::size_t t = 0; t != nt; ++t)
     {
@@ -351,15 +355,26 @@ stepper::space stepper::do_work(std::size_t np, std::size_t nx, std::size_t nt)
         for (std::size_t i = 0; i != np; ++i)
         {
             // we execute the action on the locality of the middle partition
-            using hpx::util::placeholders::_1;
-            using hpx::util::placeholders::_2;
-            using hpx::util::placeholders::_3;
-            auto Op = hpx::util::bind(act, localities[locidx(i, np, nl)], _1, _2, _3);
+            auto Op = hpx::util::bind_front(act, localities[locidx(i, np, nl)]);
             next[i] = dataflow(
                     hpx::launch::async, Op,
                     current[idx(i, -1, np)], current[i], current[idx(i, +1, np)]
                 );
         }
+
+        if ((t % nd) == 0)
+        {
+            next[0].then(
+                [&sem, t](partition&&)
+                {
+                    // inform semaphore about new lower limit
+                    sem.signal(t);
+                });
+        }
+
+        // suspend if the tree has become too deep, the continuation above
+        // will resume this thread once the computation has caught up
+        sem.wait(t);
     }
 
     // Return the solution at time-step 'nt'.
@@ -405,13 +420,16 @@ int hpx_main(hpx::program_options::variables_map& vm)
         for (std::size_t i = 0; i != np; ++i)
         {
             std::cout << "U[" << i << "] = "
-                      << solution[i].get_data(partition_server::middle_partition).get()
+                      << solution[i]
+                             .get_data(partition_server::middle_partition)
+                             .get()
                       << std::endl;
         }
     }
     std::uint64_t const num_worker_threads = hpx::get_num_worker_threads();
     hpx::future<std::uint32_t> locs = hpx::get_num_localities();
-    print_time_results(locs.get(),num_worker_threads, elapsed, nx, np, nt, header);
+    print_time_results(
+        locs.get(), num_worker_threads, elapsed, nx, np, nt, header);
 
     return hpx::finalize();
 }

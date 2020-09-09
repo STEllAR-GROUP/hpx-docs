@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>command_line_handling &mdash; HPX master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="components_base" href="../components_base/api.html" />
+    <link rel="prev" title="collectives" href="../collectives/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> HPX
+          
+
+          
+            
+            <img src="../../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api/public_api.html">Public API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions/api.html">actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions_base/api.html">actions_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_cuda/api.html">async_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_distributed/api.html">async_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_mpi/api.html">async_mpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint_base/api.html">checkpoint_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collectives/api.html">collectives</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../components_base/api.html">components_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../executors_distributed/api.html">executors_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../init_runtime/api.html">init_runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_distributed/api.html">lcos_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpi_base/api.html">mpi_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_local/api.html">runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_executors/api.html">thread_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/affinity/api.html">affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/config_registry/api.html">config_registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/execution_base/api.html">execution_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/itt_notify/api.html">itt_notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/logging/api.html">logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/statistics/api.html">statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/string_util/api.html">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/testing/api.html">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/version/api.html">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/pack_traversal/api.html">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/timed_execution/api.html">timed_execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../api.html">API reference</a> &raquo;</li>
+        
+      <li>command_line_handling</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/full/command_line_handling/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="command-line-handling">
+<span id="modules-command-line-handling-api"></span><h1>command_line_handling<a class="headerlink" href="#command-line-handling" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this module can be included with the header
+<code class="docutils literal notranslate"><span class="pre">hpx/modules/command_line_handling.hpp</span></code>. These headers may be used by user-code but are not
+guaranteed stable (neither header location nor contents). You are using these at
+your own risk. If you wish to use non-public functionality from a module we
+<em>strongly</em> suggest only including the module header <code class="docutils literal notranslate"><span class="pre">hpx/modules/command_line_handling.hpp</span></code>, not
+the particular header in which the functionality you would like to use is
+defined. See <a class="reference internal" href="../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names that are part of the public
+<em>HPX</em> API.</p>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span id="hpx::util"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util28get_num_high_priority_queuesERKN4util21command_line_handlingENSt6size_tE">
+<span id="_CPPv3N3hpx4util28get_num_high_priority_queuesERKN4util21command_line_handlingENSt6size_tE"></span><span id="_CPPv2N3hpx4util28get_num_high_priority_queuesERKN4util21command_line_handlingENSt6size_tE"></span><span id="hpx::util::get_num_high_priority_queues__util::command_line_handlingCR.std::s"></span><span class="target" id="command__line__handling_8hpp_1ad1a2176800245bc6d62d76ea1e4e7d96"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">get_num_high_priority_queues</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util21command_line_handlingE" title="hpx::util::command_line_handling">command_line_handling</a> <em class="property">const</em> &amp;<em>cfg</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>num_threads</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util28get_num_high_priority_queuesERKN4util21command_line_handlingENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util19get_affinity_domainERKN4util21command_line_handlingE">
+<span id="_CPPv3N3hpx4util19get_affinity_domainERKN4util21command_line_handlingE"></span><span id="_CPPv2N3hpx4util19get_affinity_domainERKN4util21command_line_handlingE"></span><span id="hpx::util::get_affinity_domain__util::command_line_handlingCR"></span><span class="target" id="command__line__handling_8hpp_1a16d5e92c13fd86efbedc1c59a4093d3d"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">get_affinity_domain</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util21command_line_handlingE" title="hpx::util::command_line_handling">command_line_handling</a> <em class="property">const</em> &amp;<em>cfg</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util19get_affinity_domainERKN4util21command_line_handlingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util24get_affinity_descriptionERKN4util21command_line_handlingERNSt6stringE">
+<span id="_CPPv3N3hpx4util24get_affinity_descriptionERKN4util21command_line_handlingERNSt6stringE"></span><span id="_CPPv2N3hpx4util24get_affinity_descriptionERKN4util21command_line_handlingERNSt6stringE"></span><span id="hpx::util::get_affinity_description__util::command_line_handlingCR.ssR"></span><span class="target" id="command__line__handling_8hpp_1a4668b6179b31e6efcc100e713d2c4926"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">get_affinity_description</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util21command_line_handlingE" title="hpx::util::command_line_handling">command_line_handling</a> <em class="property">const</em> &amp;<em>cfg</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string &amp;<em>affinity_desc</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util24get_affinity_descriptionERKN4util21command_line_handlingERNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util13get_pu_offsetERKN4util21command_line_handlingE">
+<span id="_CPPv3N3hpx4util13get_pu_offsetERKN4util21command_line_handlingE"></span><span id="_CPPv2N3hpx4util13get_pu_offsetERKN4util21command_line_handlingE"></span><span id="hpx::util::get_pu_offset__util::command_line_handlingCR"></span><span class="target" id="command__line__handling_8hpp_1a25bd3301886e6a67f2ec8da8dd24133f"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">get_pu_offset</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util21command_line_handlingE" title="hpx::util::command_line_handling">command_line_handling</a> <em class="property">const</em> &amp;<em>cfg</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util13get_pu_offsetERKN4util21command_line_handlingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util11get_pu_stepERKN4util21command_line_handlingE">
+<span id="_CPPv3N3hpx4util11get_pu_stepERKN4util21command_line_handlingE"></span><span id="_CPPv2N3hpx4util11get_pu_stepERKN4util21command_line_handlingE"></span><span id="hpx::util::get_pu_step__util::command_line_handlingCR"></span><span class="target" id="command__line__handling_8hpp_1ab85af15b1ae3e96cefc7943a03cb194c"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">get_pu_step</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="#_CPPv4N3hpx4util21command_line_handlingE" title="hpx::util::command_line_handling">command_line_handling</a> <em class="property">const</em> &amp;<em>cfg</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util11get_pu_stepERKN4util21command_line_handlingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util21command_line_handlingE">
+<span id="_CPPv3N3hpx4util21command_line_handlingE"></span><span id="_CPPv2N3hpx4util21command_line_handlingE"></span><span id="hpx::util::command_line_handling"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling"></span><em class="property">struct </em><code class="sig-name descname">command_line_handling</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handlingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util21command_line_handling21command_line_handlingEv">
+<span id="_CPPv3N3hpx4util21command_line_handling21command_line_handlingEv"></span><span id="_CPPv2N3hpx4util21command_line_handling21command_line_handlingEv"></span><span id="hpx::util::command_line_handling::command_line_handling"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a41c8e4f57b82b9f0357d259c70d11527"></span><code class="sig-name descname">command_line_handling</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling21command_line_handlingEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util21command_line_handling4callERKN3hpx15program_options19options_descriptionEiPPcRNSt6vectorINSt10shared_ptrIN10components23component_registry_baseEEEEE">
+<span id="_CPPv3N3hpx4util21command_line_handling4callERKN3hpx15program_options19options_descriptionEiPPcRNSt6vectorINSt10shared_ptrIN10components23component_registry_baseEEEEE"></span><span id="_CPPv2N3hpx4util21command_line_handling4callERKN3hpx15program_options19options_descriptionEiPPcRNSt6vectorINSt10shared_ptrIN10components23component_registry_baseEEEEE"></span><span id="hpx::util::command_line_handling::call__hpx::program_options::options_descriptionCR.i.cPP.std::vector:std::shared_ptr:components::component_registry_base::R"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1ada672b02df9f43407546012d9cb39007"></span>int <code class="sig-name descname">call</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options19options_descriptionE" title="hpx::program_options::options_description">options_description</a> <em class="property">const</em> &amp;<em>desc_cmdline</em>, int <em>argc</em>, char **<em>argv</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::shared_ptr&lt;<a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx10components23component_registry_baseE" title="hpx::components::component_registry_base">component_registry_base</a>&gt;&gt; &amp;<em>component_registries</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling4callERKN3hpx15program_options19options_descriptionEiPPcRNSt6vectorINSt10shared_ptrIN10components23component_registry_baseEEEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling3vm_E">
+<span id="_CPPv3N3hpx4util21command_line_handling3vm_E"></span><span id="_CPPv2N3hpx4util21command_line_handling3vm_E"></span><span id="hpx::util::command_line_handling::vm___hpx::program_options::variables_map"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a9b4518ef385c0e3dcc5b71afd950e8b9"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options13variables_mapE" title="hpx::program_options::variables_map">variables_map</a> <code class="sig-name descname">vm_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling3vm_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling6rtcfg_E">
+<span id="_CPPv3N3hpx4util21command_line_handling6rtcfg_E"></span><span id="_CPPv2N3hpx4util21command_line_handling6rtcfg_E"></span><span id="hpx::util::command_line_handling::rtcfg___util::runtime_configuration"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1ae0bad598f305cb9a87c307d0063a7d18"></span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx4util21runtime_configurationE" title="hpx::util::runtime_configuration">runtime_configuration</a> <code class="sig-name descname">rtcfg_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling6rtcfg_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling11ini_config_E">
+<span id="_CPPv3N3hpx4util21command_line_handling11ini_config_E"></span><span id="_CPPv2N3hpx4util21command_line_handling11ini_config_E"></span><span id="hpx::util::command_line_handling::ini_config___std::vector:ss:"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1ace92d0a36318eb9d6761f7421be3429c"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string&gt; <code class="sig-name descname">ini_config_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling11ini_config_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling11hpx_main_f_E">
+<span id="_CPPv3N3hpx4util21command_line_handling11hpx_main_f_E"></span><span id="_CPPv2N3hpx4util21command_line_handling11hpx_main_f_E"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1abf69f03c3b04e0721913be8e7cfcaaab"></span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../../core/functional/api.html#_CPPv4N3hpx4util15function_nonserE" title="hpx::util::function_nonser">function_nonser</a>&lt;int<span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options13variables_mapE" title="hpx::program_options::variables_map">variables_map</a> &amp;vm<span class="sig-paren">)</span>&gt; <code class="sig-name descname">hpx_main_f_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling11hpx_main_f_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling5node_E">
+<span id="_CPPv3N3hpx4util21command_line_handling5node_E"></span><span id="_CPPv2N3hpx4util21command_line_handling5node_E"></span><span id="hpx::util::command_line_handling::node___std::s"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a90e30febc71d7742a576a7ee75649daa"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">node_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling5node_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling12num_threads_E">
+<span id="_CPPv3N3hpx4util21command_line_handling12num_threads_E"></span><span id="_CPPv2N3hpx4util21command_line_handling12num_threads_E"></span><span id="hpx::util::command_line_handling::num_threads___std::s"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a644e4a15a08d552ff576cffc38186fc6"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">num_threads_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling12num_threads_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling10num_cores_E">
+<span id="_CPPv3N3hpx4util21command_line_handling10num_cores_E"></span><span id="_CPPv2N3hpx4util21command_line_handling10num_cores_E"></span><span id="hpx::util::command_line_handling::num_cores___std::s"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a1f70346d1a1874adfc4307e428622aab"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">num_cores_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling10num_cores_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling15num_localities_E">
+<span id="_CPPv3N3hpx4util21command_line_handling15num_localities_E"></span><span id="_CPPv2N3hpx4util21command_line_handling15num_localities_E"></span><span id="hpx::util::command_line_handling::num_localities___std::s"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1ae1ee4250eeb21feca0d2a8b46463093a"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">num_localities_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling15num_localities_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling8pu_step_E">
+<span id="_CPPv3N3hpx4util21command_line_handling8pu_step_E"></span><span id="_CPPv2N3hpx4util21command_line_handling8pu_step_E"></span><span id="hpx::util::command_line_handling::pu_step___std::s"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1acd68e3fa2f9b942b25005a54441101bf"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">pu_step_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling8pu_step_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling10pu_offset_E">
+<span id="_CPPv3N3hpx4util21command_line_handling10pu_offset_E"></span><span id="_CPPv2N3hpx4util21command_line_handling10pu_offset_E"></span><span id="hpx::util::command_line_handling::pu_offset___std::s"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1abe64648ad0f571579c6966ced2f23c63"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">pu_offset_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling10pu_offset_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling8queuing_E">
+<span id="_CPPv3N3hpx4util21command_line_handling8queuing_E"></span><span id="_CPPv2N3hpx4util21command_line_handling8queuing_E"></span><span id="hpx::util::command_line_handling::queuing___ss"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1aedf5b7960efc39cf24724e95f7927b9b"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">queuing_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling8queuing_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling16affinity_domain_E">
+<span id="_CPPv3N3hpx4util21command_line_handling16affinity_domain_E"></span><span id="_CPPv2N3hpx4util21command_line_handling16affinity_domain_E"></span><span id="hpx::util::command_line_handling::affinity_domain___ss"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a3e7031df6bcef89882006b1b074f2f39"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">affinity_domain_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling16affinity_domain_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling14affinity_bind_E">
+<span id="_CPPv3N3hpx4util21command_line_handling14affinity_bind_E"></span><span id="_CPPv2N3hpx4util21command_line_handling14affinity_bind_E"></span><span id="hpx::util::command_line_handling::affinity_bind___ss"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1af2e290b643c4012d7a16ca46a391b73b"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">affinity_bind_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling14affinity_bind_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling15numa_sensitive_E">
+<span id="_CPPv3N3hpx4util21command_line_handling15numa_sensitive_E"></span><span id="_CPPv2N3hpx4util21command_line_handling15numa_sensitive_E"></span><span id="hpx::util::command_line_handling::numa_sensitive___std::s"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1af5344aaac00972b54bbcd65ecad6c345"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">numa_sensitive_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling15numa_sensitive_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling17use_process_mask_E">
+<span id="_CPPv3N3hpx4util21command_line_handling17use_process_mask_E"></span><span id="_CPPv2N3hpx4util21command_line_handling17use_process_mask_E"></span><span id="hpx::util::command_line_handling::use_process_mask___b"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a6862f77c99d494bdd0297bce23c8eb6f"></span>bool <code class="sig-name descname">use_process_mask_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling17use_process_mask_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling16cmd_line_parsed_E">
+<span id="_CPPv3N3hpx4util21command_line_handling16cmd_line_parsed_E"></span><span id="_CPPv2N3hpx4util21command_line_handling16cmd_line_parsed_E"></span><span id="hpx::util::command_line_handling::cmd_line_parsed___b"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1afaebdc67b6b449b28e3aeb0693a66c28"></span>bool <code class="sig-name descname">cmd_line_parsed_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling16cmd_line_parsed_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling13info_printed_E">
+<span id="_CPPv3N3hpx4util21command_line_handling13info_printed_E"></span><span id="_CPPv2N3hpx4util21command_line_handling13info_printed_E"></span><span id="hpx::util::command_line_handling::info_printed___b"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a317353b8f9c889d8dcaf3353b5826a0c"></span>bool <code class="sig-name descname">info_printed_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling13info_printed_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling16version_printed_E">
+<span id="_CPPv3N3hpx4util21command_line_handling16version_printed_E"></span><span id="_CPPv2N3hpx4util21command_line_handling16version_printed_E"></span><span id="hpx::util::command_line_handling::version_printed___b"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1af9c456fb136bfac406edf97a19fe9a0f"></span>bool <code class="sig-name descname">version_printed_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling16version_printed_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4util21command_line_handling13parse_result_E">
+<span id="_CPPv3N3hpx4util21command_line_handling13parse_result_E"></span><span id="_CPPv2N3hpx4util21command_line_handling13parse_result_E"></span><span id="hpx::util::command_line_handling::parse_result___i"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a052cbcf1df56edd699a63c1c8322cc34"></span>int <code class="sig-name descname">parse_result_</code><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling13parse_result_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util21command_line_handling16handle_argumentsERN4util13manage_configERN3hpx15program_options13variables_mapERNSt6vectorINSt6stringEEERNSt6size_tEb">
+<span id="_CPPv3N3hpx4util21command_line_handling16handle_argumentsERN4util13manage_configERN3hpx15program_options13variables_mapERNSt6vectorINSt6stringEEERNSt6size_tEb"></span><span id="_CPPv2N3hpx4util21command_line_handling16handle_argumentsERN4util13manage_configERN3hpx15program_options13variables_mapERNSt6vectorINSt6stringEEERNSt6size_tEb"></span><span id="hpx::util::command_line_handling::handle_arguments__util::manage_configR.hpx::program_options::variables_mapR.std::vector:ss:R.std::sR.b"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1ab2507fcb0690574ce2a241fb72e8ed87"></span>bool <code class="sig-name descname">handle_arguments</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../../core/util/api.html#_CPPv4N3hpx4util13manage_configE" title="hpx::util::manage_config">manage_config</a> &amp;<em>cfgmap</em>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options13variables_mapE" title="hpx::program_options::variables_map">variables_map</a> &amp;<em>vm</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string&gt; &amp;<em>ini_config</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t &amp;<em>node</em>, bool <em>initial</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling16handle_argumentsERN4util13manage_configERN3hpx15program_options13variables_mapERNSt6vectorINSt6stringEEERNSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util21command_line_handling23enable_logging_settingsERN3hpx15program_options13variables_mapERNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N3hpx4util21command_line_handling23enable_logging_settingsERN3hpx15program_options13variables_mapERNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N3hpx4util21command_line_handling23enable_logging_settingsERN3hpx15program_options13variables_mapERNSt6vectorINSt6stringEEE"></span><span id="hpx::util::command_line_handling::enable_logging_settings__hpx::program_options::variables_mapR.std::vector:ss:R"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1aac4ee8130487720ad1bf76cf54a29f23"></span>void <code class="sig-name descname">enable_logging_settings</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options13variables_mapE" title="hpx::program_options::variables_map">variables_map</a> &amp;<em>vm</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string&gt; &amp;<em>ini_config</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling23enable_logging_settingsERN3hpx15program_options13variables_mapERNSt6vectorINSt6stringEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util21command_line_handling18store_command_lineEiPPc">
+<span id="_CPPv3N3hpx4util21command_line_handling18store_command_lineEiPPc"></span><span id="_CPPv2N3hpx4util21command_line_handling18store_command_lineEiPPc"></span><span id="hpx::util::command_line_handling::store_command_line__i.cPP"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a640c6f892511075ba05fc07550978d89"></span>void <code class="sig-name descname">store_command_line</code><span class="sig-paren">(</span>int <em>argc</em>, char **<em>argv</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling18store_command_lineEiPPc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util21command_line_handling26store_unregistered_optionsERKNSt6stringERKNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N3hpx4util21command_line_handling26store_unregistered_optionsERKNSt6stringERKNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N3hpx4util21command_line_handling26store_unregistered_optionsERKNSt6stringERKNSt6vectorINSt6stringEEE"></span><span id="hpx::util::command_line_handling::store_unregistered_options__ssCR.std::vector:ss:CR"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1ae87176ec5ea060932ae8c5cb8e35b71c"></span>void <code class="sig-name descname">store_unregistered_options</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>cmd_name</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string&gt; <em class="property">const</em> &amp;<em>unregistered_options</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling26store_unregistered_optionsERKNSt6stringERKNSt6vectorINSt6stringEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util21command_line_handling19handle_help_optionsERKN3hpx15program_options19options_descriptionE">
+<span id="_CPPv3N3hpx4util21command_line_handling19handle_help_optionsERKN3hpx15program_options19options_descriptionE"></span><span id="_CPPv2N3hpx4util21command_line_handling19handle_help_optionsERKN3hpx15program_options19options_descriptionE"></span><span id="hpx::util::command_line_handling::handle_help_options__hpx::program_options::options_descriptionCR"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a0df247a2d0bf8827a60aaf20c2cf2fe7"></span>bool <code class="sig-name descname">handle_help_options</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options19options_descriptionE" title="hpx::program_options::options_description">options_description</a> <em class="property">const</em> &amp;<em>help</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling19handle_help_optionsERKN3hpx15program_options19options_descriptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util21command_line_handling22handle_attach_debuggerEv">
+<span id="_CPPv3N3hpx4util21command_line_handling22handle_attach_debuggerEv"></span><span id="_CPPv2N3hpx4util21command_line_handling22handle_attach_debuggerEv"></span><span id="hpx::util::command_line_handling::handle_attach_debugger"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1ae8163b563d79e71fd4a62eb19be542c7"></span>void <code class="sig-name descname">handle_attach_debugger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling22handle_attach_debuggerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util21command_line_handling26preprocess_config_settingsEiPPc">
+<span id="_CPPv3N3hpx4util21command_line_handling26preprocess_config_settingsEiPPc"></span><span id="_CPPv2N3hpx4util21command_line_handling26preprocess_config_settingsEiPPc"></span><span id="hpx::util::command_line_handling::preprocess_config_settings__i.cPP"></span><span class="target" id="structhpx_1_1util_1_1command__line__handling_1a772404065b958d8ff252b9f4dfac3ff0"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string&gt; <code class="sig-name descname">preprocess_config_settings</code><span class="sig-paren">(</span>int <em>argc</em>, char **<em>argv</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util21command_line_handling26preprocess_config_settingsEiPPc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Enums</p>
+<dl class="cpp enum">
+<dt id="_CPPv4N3hpx4util22commandline_error_modeE">
+<span id="_CPPv3N3hpx4util22commandline_error_modeE"></span><span id="_CPPv2N3hpx4util22commandline_error_modeE"></span><span class="target" id="parse__command__line_8hpp_1ad689a41d4a0a2b6df5e0767c785d84ba"></span><em class="property">enum </em><code class="sig-name descname">commandline_error_mode</code><a class="headerlink" href="#_CPPv4N3hpx4util22commandline_error_modeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util15return_on_errorE">
+<span id="_CPPv3N3hpx4util15return_on_errorE"></span><span id="_CPPv2N3hpx4util15return_on_errorE"></span><span class="target" id="parse__command__line_8hpp_1ad689a41d4a0a2b6df5e0767c785d84baa3ea5ca31fcc7d5a0a26d133cf3e2432b"></span><code class="sig-name descname">return_on_error</code><a class="headerlink" href="#_CPPv4N3hpx4util15return_on_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util16rethrow_on_errorE">
+<span id="_CPPv3N3hpx4util16rethrow_on_errorE"></span><span id="_CPPv2N3hpx4util16rethrow_on_errorE"></span><span class="target" id="parse__command__line_8hpp_1ad689a41d4a0a2b6df5e0767c785d84baafe45dee0dc4b0bfb5bc03b411884ed5a"></span><code class="sig-name descname">rethrow_on_error</code><a class="headerlink" href="#_CPPv4N3hpx4util16rethrow_on_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util18allow_unregisteredE">
+<span id="_CPPv3N3hpx4util18allow_unregisteredE"></span><span id="_CPPv2N3hpx4util18allow_unregisteredE"></span><span class="target" id="parse__command__line_8hpp_1ad689a41d4a0a2b6df5e0767c785d84baa407c66aae334ed9a0b154d21ff0a0603"></span><code class="sig-name descname">allow_unregistered</code><a class="headerlink" href="#_CPPv4N3hpx4util18allow_unregisteredE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util26report_missing_config_fileE">
+<span id="_CPPv3N3hpx4util26report_missing_config_fileE"></span><span id="_CPPv2N3hpx4util26report_missing_config_fileE"></span><span class="target" id="parse__command__line_8hpp_1ad689a41d4a0a2b6df5e0767c785d84baabf1d41d0d32a77f9dac911b13913e848"></span><code class="sig-name descname">report_missing_config_file</code> = 0x80<a class="headerlink" href="#_CPPv4N3hpx4util26report_missing_config_fileE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util17parse_commandlineERKN3hpx4util7sectionERKN3hpx15program_options19options_descriptionERKNSt6stringERN3hpx15program_options13variables_mapENSt6size_tEiN3hpx12runtime_modeEPN3hpx15program_options19options_descriptionEPNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N3hpx4util17parse_commandlineERKN3hpx4util7sectionERKN3hpx15program_options19options_descriptionERKNSt6stringERN3hpx15program_options13variables_mapENSt6size_tEiN3hpx12runtime_modeEPN3hpx15program_options19options_descriptionEPNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N3hpx4util17parse_commandlineERKN3hpx4util7sectionERKN3hpx15program_options19options_descriptionERKNSt6stringERN3hpx15program_options13variables_mapENSt6size_tEiN3hpx12runtime_modeEPN3hpx15program_options19options_descriptionEPNSt6vectorINSt6stringEEE"></span><span id="hpx::util::parse_commandline__hpx::util::sectionCR.hpx::program_options::options_descriptionCR.ssCR.hpx::program_options::variables_mapR.std::s.i.hpx::runtime_mode.hpx::program_options::options_descriptionP.std::vector:ss:P"></span><span class="target" id="parse__command__line_8hpp_1adb0d70a105c0b38a454f24a7500ae5a0"></span>bool <code class="sig-name descname">parse_commandline</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx4util7sectionE" title="hpx::util::section">section</a> <em class="property">const</em> &amp;<em>rtcfg</em>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options19options_descriptionE" title="hpx::program_options::options_description">options_description</a> <em class="property">const</em> &amp;<em>app_options</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>cmdline</em>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options13variables_mapE" title="hpx::program_options::variables_map">variables_map</a> &amp;<em>vm</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>node</em>, int <em>error_mode</em> = <a class="reference internal" href="#_CPPv4N3hpx4util15return_on_errorE" title="hpx::util::return_on_error">return_on_error</a>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx12runtime_modeE" title="hpx::runtime_mode">runtime_mode</a> <em>mode</em> = <a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx12runtime_modeE" title="hpx::runtime_mode">runtime_mode</a>::default_, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options19options_descriptionE" title="hpx::program_options::options_description">options_description</a> *<em>visible</em> = nullptr, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string&gt; *<em>unregistered_options</em> = nullptr<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util17parse_commandlineERKN3hpx4util7sectionERKN3hpx15program_options19options_descriptionERKNSt6stringERN3hpx15program_options13variables_mapENSt6size_tEiN3hpx12runtime_modeEPN3hpx15program_options19options_descriptionEPNSt6vectorINSt6stringEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util17parse_commandlineERKN3hpx4util7sectionERKN3hpx15program_options19options_descriptionERKNSt6stringERKNSt6vectorINSt6stringEEERN3hpx15program_options13variables_mapENSt6size_tEiN3hpx12runtime_modeEPN3hpx15program_options19options_descriptionEPNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N3hpx4util17parse_commandlineERKN3hpx4util7sectionERKN3hpx15program_options19options_descriptionERKNSt6stringERKNSt6vectorINSt6stringEEERN3hpx15program_options13variables_mapENSt6size_tEiN3hpx12runtime_modeEPN3hpx15program_options19options_descriptionEPNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N3hpx4util17parse_commandlineERKN3hpx4util7sectionERKN3hpx15program_options19options_descriptionERKNSt6stringERKNSt6vectorINSt6stringEEERN3hpx15program_options13variables_mapENSt6size_tEiN3hpx12runtime_modeEPN3hpx15program_options19options_descriptionEPNSt6vectorINSt6stringEEE"></span><span id="hpx::util::parse_commandline__hpx::util::sectionCR.hpx::program_options::options_descriptionCR.ssCR.std::vector:ss:CR.hpx::program_options::variables_mapR.std::s.i.hpx::runtime_mode.hpx::program_options::options_descriptionP.std::vector:ss:P"></span><span class="target" id="parse__command__line_8hpp_1a2d382e480ada58be421c1061b57d7031"></span>bool <code class="sig-name descname">parse_commandline</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx4util7sectionE" title="hpx::util::section">section</a> <em class="property">const</em> &amp;<em>rtcfg</em>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options19options_descriptionE" title="hpx::program_options::options_description">options_description</a> <em class="property">const</em> &amp;<em>app_options</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>arg0</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string&gt; <em class="property">const</em> &amp;<em>args</em>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options13variables_mapE" title="hpx::program_options::variables_map">variables_map</a> &amp;<em>vm</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>node</em>, int <em>error_mode</em> = <a class="reference internal" href="#_CPPv4N3hpx4util15return_on_errorE" title="hpx::util::return_on_error">return_on_error</a>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx12runtime_modeE" title="hpx::runtime_mode">runtime_mode</a> <em>mode</em> = <a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx12runtime_modeE" title="hpx::runtime_mode">runtime_mode</a>::default_, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options19options_descriptionE" title="hpx::program_options::options_description">options_description</a> *<em>visible</em> = nullptr, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string&gt; *<em>unregistered_options</em> = nullptr<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util17parse_commandlineERKN3hpx4util7sectionERKN3hpx15program_options19options_descriptionERKNSt6stringERKNSt6vectorINSt6stringEEERN3hpx15program_options13variables_mapENSt6size_tEiN3hpx12runtime_modeEPN3hpx15program_options19options_descriptionEPNSt6vectorINSt6stringEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util24reconstruct_command_lineERKN3hpx15program_options13variables_mapE">
+<span id="_CPPv3N3hpx4util24reconstruct_command_lineERKN3hpx15program_options13variables_mapE"></span><span id="_CPPv2N3hpx4util24reconstruct_command_lineERKN3hpx15program_options13variables_mapE"></span><span id="hpx::util::reconstruct_command_line__hpx::program_options::variables_mapCR"></span><span class="target" id="parse__command__line_8hpp_1a017fe4d8915b82d4e767f69db99cf288"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">reconstruct_command_line</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_optionsE" title="hpx::program_options">program_options</a>::<a class="reference internal" href="../program_options/api.html#_CPPv4N3hpx15program_options13variables_mapE" title="hpx::program_options::variables_map">variables_map</a> <em class="property">const</em> &amp;<em>vm</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util24reconstruct_command_lineERKN3hpx15program_options13variables_mapE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../components_base/api.html" class="btn btn-neutral float-right" title="components_base" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../collectives/api.html" class="btn btn-neutral float-left" title="collectives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2020, The STE||AR Group
+      
+        <span class="commit">
+          Revision <code>ffbcbc5</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

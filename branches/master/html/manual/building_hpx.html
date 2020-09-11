@@ -2731,6 +2731,7 @@ generate your specific makefiles/project files.</p>
 <div class="section" id="thread-manager-options">
 <span id="thread-manager"></span><h3>Thread Manager options<a class="headerlink" href="#thread-manager-options" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
+<li><p><a class="reference internal" href="#cmdoption-arg-HPX_COROUTINES_WITH_SWAP_CONTEXT_EMULATION-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_COROUTINES_WITH_SWAP_CONTEXT_EMULATION:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_SCHEDULER_MAX_TERMINATED_THREADS-STRING"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_SCHEDULER_MAX_TERMINATED_THREADS:STRING</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_COROUTINE_COUNTERS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_COROUTINE_COUNTERS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_IO_POOL-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_IO_POOL:BOOL</span></code></a></p></li>
@@ -2743,7 +2744,6 @@ generate your specific makefiles/project files.</p>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_STACKTRACES-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_STACKTRACES:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_STACKTRACES_DEMANGLE_SYMBOLS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_STACKTRACES_DEMANGLE_SYMBOLS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_STACKTRACES_STATIC_SYMBOLS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_STACKTRACES_STATIC_SYMBOLS:BOOL</span></code></a></p></li>
-<li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_SWAP_CONTEXT_EMULATION-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_SWAP_CONTEXT_EMULATION:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_THREAD_BACKTRACE_DEPTH-STRING"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_BACKTRACE_DEPTH:STRING</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_THREAD_BACKTRACE_ON_SUSPENSION-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_BACKTRACE_ON_SUSPENSION:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_THREAD_CREATION_AND_CLEANUP_RATES-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_CREATION_AND_CLEANUP_RATES:BOOL</span></code></a></p></li>
@@ -2758,6 +2758,12 @@ generate your specific makefiles/project files.</p>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_THREAD_TARGET_ADDRESS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_TARGET_ADDRESS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_TIMER_POOL-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_TIMER_POOL:BOOL</span></code></a></p></li>
 </ul>
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_COROUTINES_WITH_SWAP_CONTEXT_EMULATION-BOOL">
+<code class="sig-name descname">HPX_COROUTINES_WITH_SWAP_CONTEXT_EMULATION:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_COROUTINES_WITH_SWAP_CONTEXT_EMULATION-BOOL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emulate SwapContext API for coroutines (Windows only, default: OFF)</p>
+</dd></dl>
+
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_SCHEDULER_MAX_TERMINATED_THREADS-STRING">
 <code class="sig-name descname">HPX_SCHEDULER_MAX_TERMINATED_THREADS:STRING</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_SCHEDULER_MAX_TERMINATED_THREADS-STRING" title="Permalink to this definition">¶</a></dt>
@@ -2828,12 +2834,6 @@ generate your specific makefiles/project files.</p>
 <dt id="cmdoption-arg-HPX_WITH_STACKTRACES_STATIC_SYMBOLS-BOOL">
 <code class="sig-name descname">HPX_WITH_STACKTRACES_STATIC_SYMBOLS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_STACKTRACES_STATIC_SYMBOLS-BOOL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thread stack back trace will resolve static symbols (default: OFF)</p>
-</dd></dl>
-
-<dl class="std option">
-<dt id="cmdoption-arg-HPX_WITH_SWAP_CONTEXT_EMULATION-BOOL">
-<code class="sig-name descname">HPX_WITH_SWAP_CONTEXT_EMULATION:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_SWAP_CONTEXT_EMULATION-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Emulate SwapContext API for coroutines (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -4787,7 +4787,7 @@ improves the generated diagnostics.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>63b68b0</code>.
+          Revision <code>fabd8b0</code>.
         </span>
       
 

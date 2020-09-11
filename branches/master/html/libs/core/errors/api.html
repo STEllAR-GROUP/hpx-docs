@@ -108,17 +108,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api/public_api.html">Public API</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../../api.html#full-api">Full API</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../../api/full_api.html">Main <em>HPX</em> library</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/algorithms/api.html">algorithms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_base/api.html">async_base</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_combinators/api.html">async_combinators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_local/api.html">async_local</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/execution/api.html">execution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/executors/api.html">executors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/futures/api.html">futures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/lcos_local/api.html">lcos_local</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/pack_traversal/api.html">pack_traversal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/threading/api.html">threading</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../parallelism/timed_execution/api.html">timed_execution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../affinity/api.html">affinity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../allocator_support/api.html">allocator_support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../asio/api.html">asio</a></li>
@@ -162,6 +151,17 @@
 <li class="toctree-l3"><a class="reference internal" href="../type_support/api.html">type_support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../util/api.html">util</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../version/api.html">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/pack_traversal/api.html">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/timed_execution/api.html">timed_execution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../full/actions/api.html">actions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../full/actions_base/api.html">actions_base</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../full/async_cuda/api.html">async_cuda</a></li>
@@ -283,334 +283,6 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Defines</p>
 <dl class="cpp macro">
-<dt id="c.HPX_THROW_EXCEPTION">
-<span class="target" id="throw__exception_8hpp_1a3ada9b97bab2221332a6db245fe2067a"></span><code class="sig-name descname">HPX_THROW_EXCEPTION</code><span class="sig-paren">(</span><em>errcode</em>, <em>f</em>, <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROW_EXCEPTION" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> initialized from the given parameters. </p>
-<p>The macro <em>HPX_THROW_EXCEPTION</em> can be used to throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a>. The purpose of this macro is to prepend the source file name and line number of the position where the exception is thrown to the error message. Moreover, this associates additional diagnostic information with the exception, such as file name and line number, locality id and thread id, and stack backtrace from the point where the exception was thrown.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code the new exception should encapsulate. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">raise_exception</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// Throw a hpx::exception initialized from the given parameters.</span>
-    <span class="c1">// Additionally associate with this exception some detailed</span>
-    <span class="c1">// diagnostic information about the throw-site.</span>
-    <span class="n">HPX_THROW_EXCEPTION</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">no_success</span><span class="p">,</span> <span class="s">&quot;raise_exception&quot;</span><span class="p">,</span> <span class="s">&quot;simulated error&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
- <dl class="simple">
-<dt><strong>Example:</strong></dt><dd><p></p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt id="c.HPX_THROWS_IF">
-<span class="target" id="throw__exception_8hpp_1a81b2aae0c2744fad9953f45a3c90683b"></span><code class="sig-name descname">HPX_THROWS_IF</code><span class="sig-paren">(</span><em>ec</em>, <em>errcode</em>, <em>f</em>, <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROWS_IF" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Either throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> or initialize <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. </p>
-<p>The macro <em>HPX_THROWS_IF</em> can be used to either throw a <em><a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></em> or to initialize a <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. If &amp;ec == &amp;hpx::throws, the semantics of this macro are equivalent to <em>HPX_THROW_EXCEPTION</em>. If &amp;ec != &amp;hpx::throws, the <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> instance <code class="docutils literal notranslate"><span class="pre">ec</span></code> is initialized instead.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code from which the new exception should be initialized. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate. </p>
-</dd></dl>
-
-</div>
-<dl class="cpp type">
-<dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Typedefs</p>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx34custom_exception_info_handler_typeE">
-<span id="_CPPv3N3hpx34custom_exception_info_handler_typeE"></span><span id="_CPPv2N3hpx34custom_exception_info_handler_typeE"></span><span class="target" id="errors_2exception_8hpp_1ae87157cfcb7c164d0d6ae3245b046bed"></span><em class="property">using </em><code class="sig-name descname">custom_exception_info_handler_type</code> = <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::function&lt;<a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em>&amp;, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em>&amp;, long, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em>&amp;<span class="sig-paren">)</span>&gt;<a class="headerlink" href="#_CPPv4N3hpx34custom_exception_info_handler_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx26pre_exception_handler_typeE">
-<span id="_CPPv3N3hpx26pre_exception_handler_typeE"></span><span id="_CPPv2N3hpx26pre_exception_handler_typeE"></span><span class="target" id="errors_2exception_8hpp_1ad9160c2938fee0aa9515228d172251cf"></span><em class="property">using </em><code class="sig-name descname">pre_exception_handler_type</code> = <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::function&lt;void<span class="sig-paren">(</span><span class="sig-paren">)</span>&gt;<a class="headerlink" href="#_CPPv4N3hpx26pre_exception_handler_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx33set_custom_exception_info_handlerE34custom_exception_info_handler_type">
-<span id="_CPPv3N3hpx33set_custom_exception_info_handlerE34custom_exception_info_handler_type"></span><span id="_CPPv2N3hpx33set_custom_exception_info_handlerE34custom_exception_info_handler_type"></span><span id="hpx::set_custom_exception_info_handler__custom_exception_info_handler_type"></span><span class="target" id="errors_2exception_8hpp_1a9ffb2074fff8364079a75b53eaa4d374"></span>void <code class="sig-name descname">set_custom_exception_info_handler</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx34custom_exception_info_handler_typeE" title="hpx::custom_exception_info_handler_type">custom_exception_info_handler_type</a> <em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx33set_custom_exception_info_handlerE34custom_exception_info_handler_type" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx25set_pre_exception_handlerE26pre_exception_handler_type">
-<span id="_CPPv3N3hpx25set_pre_exception_handlerE26pre_exception_handler_type"></span><span id="_CPPv2N3hpx25set_pre_exception_handlerE26pre_exception_handler_type"></span><span id="hpx::set_pre_exception_handler__pre_exception_handler_type"></span><span class="target" id="errors_2exception_8hpp_1a98c2385f91ecef937a34f09eec8817a5"></span>void <code class="sig-name descname">set_pre_exception_handler</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx26pre_exception_handler_typeE" title="hpx::pre_exception_handler_type">pre_exception_handler_type</a> <em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx25set_pre_exception_handlerE26pre_exception_handler_type" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx14get_error_whatERK14exception_info">
-<span id="_CPPv3N3hpx14get_error_whatERK14exception_info"></span><span id="_CPPv2N3hpx14get_error_whatERK14exception_info"></span><span id="hpx::get_error_what__exception_infoCR"></span><span class="target" id="errors_2exception_8hpp_1ad28bf0e2a07a99c4d3eedaf1339af32c"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">get_error_what</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a> <em class="property">const</em> &amp;<em>xi</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx14get_error_whatERK14exception_info" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Return the error message of the thrown exception. </p>
-<p>The function <em>hpx::get_error_what</em> can be used to extract the diagnostic information element representing the error message as stored in the given exception instance.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>The error message stored in the exception If the exception instance does not hold this information, the function will return an empty string.</p>
-</dd>
-<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em>, <em>hpx::get_error_function_name()</em>, <em>hpx::get_error_file_name()</em>, <em>hpx::get_error_line_number()</em>, <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error()</em> <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">xi</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception__info"><span class="std std-ref">hpx::exception_info</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, <em>std::exception</em>, or <em>std::exception_ptr</em>.</p></li>
-</ul>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code>: (if one of the required allocations fails)</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx9get_errorERKN3hpx9exceptionE">
-<span id="_CPPv3N3hpx9get_errorERKN3hpx9exceptionE"></span><span id="_CPPv2N3hpx9get_errorERKN3hpx9exceptionE"></span><span id="hpx::get_error__hpx::exceptionCR"></span><span class="target" id="errors_2exception_8hpp_1af6349dbd4e6dd99a3dfd5ff6e4e74c21"></span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <code class="sig-name descname">get_error</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a> <em class="property">const</em> &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9get_errorERKN3hpx9exceptionE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Return the error code value of the exception thrown. </p>
-<p>The function <em>hpx::get_error</em> can be used to extract the diagnostic information element representing the error value code as stored in the given exception instance.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>The error value code of the locality where the exception was thrown. If the exception instance does not hold this information, the function will return <em>hpx::naming::invalid_locality_id</em>.</p>
-</dd>
-<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em>, <em>hpx::get_error_function_name()</em>, <em>hpx::get_error_file_name()</em>, <em>hpx::get_error_line_number()</em>, <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_what()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, or <em>std::exception_ptr</em>.</p></li>
-</ul>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">nothing</span></code>: </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx9get_errorERKN3hpx10error_codeE">
-<span id="_CPPv3N3hpx9get_errorERKN3hpx10error_codeE"></span><span id="_CPPv2N3hpx9get_errorERKN3hpx10error_codeE"></span><span id="hpx::get_error__hpx::error_codeCR"></span><span class="target" id="errors_2exception_8hpp_1a68dd22b15b787540208e0977a2e4b53d"></span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <code class="sig-name descname">get_error</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> <em class="property">const</em> &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9get_errorERKN3hpx10error_codeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx23get_error_function_nameERKN3hpx14exception_infoE">
-<span id="_CPPv3N3hpx23get_error_function_nameERKN3hpx14exception_infoE"></span><span id="_CPPv2N3hpx23get_error_function_nameERKN3hpx14exception_infoE"></span><span id="hpx::get_error_function_name__hpx::exception_infoCR"></span><span class="target" id="errors_2exception_8hpp_1a754d205ce3b220a254c65f3d124ac405"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">get_error_function_name</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a> <em class="property">const</em> &amp;<em>xi</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx23get_error_function_nameERKN3hpx14exception_infoE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Return the function name from which the exception was thrown. </p>
-<p>The function <em>hpx::get_error_function_name</em> can be used to extract the diagnostic information element representing the name of the function as stored in the given exception instance.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>The name of the function from which the exception was thrown. If the exception instance does not hold this information, the function will return an empty string.</p>
-</dd>
-<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em> <em>hpx::get_error_file_name()</em>, <em>hpx::get_error_line_number()</em>, <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error()</em>, <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_what()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">xi</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception__info"><span class="std std-ref">hpx::exception_info</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, <em>std::exception</em>, or <em>std::exception_ptr</em>.</p></li>
-</ul>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code>: (if one of the required allocations fails)</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx19get_error_file_nameERKN3hpx14exception_infoE">
-<span id="_CPPv3N3hpx19get_error_file_nameERKN3hpx14exception_infoE"></span><span id="_CPPv2N3hpx19get_error_file_nameERKN3hpx14exception_infoE"></span><span id="hpx::get_error_file_name__hpx::exception_infoCR"></span><span class="target" id="errors_2exception_8hpp_1a0af92c8ff70bbc40c078ef06a2ff4647"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">get_error_file_name</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a> <em class="property">const</em> &amp;<em>xi</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19get_error_file_nameERKN3hpx14exception_infoE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Return the (source code) file name of the function from which the exception was thrown. </p>
-<p>The function <em>hpx::get_error_file_name</em> can be used to extract the diagnostic information element representing the name of the source file as stored in the given exception instance.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>The name of the source file of the function from which the exception was thrown. If the exception instance does not hold this information, the function will return an empty string.</p>
-</dd>
-<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em>, <em>hpx::get_error_function_name()</em>, <em>hpx::get_error_line_number()</em>, <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error()</em>, <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_what()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">xi</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception__info"><span class="std std-ref">hpx::exception_info</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, <em>std::exception</em>, or <em>std::exception_ptr</em>.</p></li>
-</ul>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code>: (if one of the required allocations fails)</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx21get_error_line_numberERKN3hpx14exception_infoE">
-<span id="_CPPv3N3hpx21get_error_line_numberERKN3hpx14exception_infoE"></span><span id="_CPPv2N3hpx21get_error_line_numberERKN3hpx14exception_infoE"></span><span id="hpx::get_error_line_number__hpx::exception_infoCR"></span><span class="target" id="errors_2exception_8hpp_1ae0112fceccd5a51798ed81d88906468e"></span>long <code class="sig-name descname">get_error_line_number</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a> <em class="property">const</em> &amp;<em>xi</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx21get_error_line_numberERKN3hpx14exception_infoE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Return the line number in the (source code) file of the function from which the exception was thrown. </p>
-<p>The function <em>hpx::get_error_line_number</em> can be used to extract the diagnostic information element representing the line number as stored in the given exception instance.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>The line number of the place where the exception was thrown. If the exception instance does not hold this information, the function will return -1.</p>
-</dd>
-<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em>, <em>hpx::get_error_function_name()</em>, <em>hpx::get_error_file_name()</em> <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error()</em>, <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_what()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">xi</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception__info"><span class="std std-ref">hpx::exception_info</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, <em>std::exception</em>, or <em>std::exception_ptr</em>.</p></li>
-</ul>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">nothing</span></code>: </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-</div>
-<dl class="cpp class">
-<dt id="_CPPv4N3hpx9exceptionE">
-<span id="_CPPv3N3hpx9exceptionE"></span><span id="_CPPv2N3hpx9exceptionE"></span><span id="hpx::exception"></span><span class="target" id="classhpx_1_1exception"></span><em class="property">class </em><code class="sig-name descname">exception</code> : <em class="property">public</em> system_error<a class="headerlink" href="#_CPPv4N3hpx9exceptionE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;exception.hpp&gt;</em><p>A <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> is the main exception type used by HPX to report errors. </p>
-<p>The <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> type is the main exception type used by HPX to report errors. Any exceptions thrown by functions in the HPX library are either of this type or of a type derived from it. This implies that it is always safe to use this type only in catch statements guarding HPX library calls. </p>
-<p>Subclassed by <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">hpx::exception_list</span></a></p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx9exception9exceptionE5error">
-<span id="_CPPv3N3hpx9exception9exceptionE5error"></span><span id="_CPPv2N3hpx9exception9exceptionE5error"></span><span id="hpx::exception::exception__error"></span><span class="target" id="classhpx_1_1exception_1a13610d02885fc91e014fdb58debe996b"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <em>e</em> = <a class="reference internal" href="#_CPPv4N3hpx7successE" title="hpx::success">success</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionE5error" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a <em>hpx::error</em>.</p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> holds the hpx::error code the new exception should encapsulate. </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx9exception9exceptionERKN5boost6system12system_errorE">
-<span id="_CPPv3N3hpx9exception9exceptionERKN5boost6system12system_errorE"></span><span id="_CPPv2N3hpx9exception9exceptionERKN5boost6system12system_errorE"></span><span id="hpx::exception::exception__boost::system::system_errorCR"></span><span class="target" id="classhpx_1_1exception_1afa51e14009dcdcd574b86794771314f3"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::system::system_error <em class="property">const</em> &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionERKN5boost6system12system_errorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a boost::system_error. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx9exception9exceptionERKN5boost6system10error_codeE">
-<span id="_CPPv3N3hpx9exception9exceptionERKN5boost6system10error_codeE"></span><span id="_CPPv2N3hpx9exception9exceptionERKN5boost6system10error_codeE"></span><span id="hpx::exception::exception__boost::system::error_codeCR"></span><span class="target" id="classhpx_1_1exception_1afbf231449a2ee653cb03ad3efed381e8"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::system::error_code <em class="property">const</em> &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionERKN5boost6system10error_codeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a boost::system::error_code (this is new for Boost V1.69). This constructor is required to compensate for the changes introduced as a resolution to LWG3162 (<a class="reference external" href="https://cplusplus.github.io/LWG/issue3162">https://cplusplus.github.io/LWG/issue3162</a>). </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx9exception9exceptionE5errorPKc9throwmode">
-<span id="_CPPv3N3hpx9exception9exceptionE5errorPKc9throwmode"></span><span id="_CPPv2N3hpx9exception9exceptionE5errorPKc9throwmode"></span><span id="hpx::exception::exception__error.cCP.throwmode"></span><span class="target" id="classhpx_1_1exception_1a06bc6239c2b0a4222d72e088a56c6146"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <em>e</em>, char <em class="property">const</em> *<em>msg</em>, <a class="reference internal" href="#_CPPv4N3hpx9throwmodeE" title="hpx::throwmode">throwmode</a> <em>mode</em> = <a class="reference internal" href="#_CPPv4N3hpx5plainE" title="hpx::plain">plain</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionE5errorPKc9throwmode" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a <em>hpx::error</em> and an error message.</p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> holds the hpx::error code the new exception should encapsulate. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">msg</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">mode</span></code> specifies whether the returned <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> belongs to the error category <em>hpx_category</em> (if mode is <em>plain</em>, this is the default) or to the category <em>hpx_category_rethrow</em> (if mode is <em>rethrow</em>). </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx9exception9exceptionE5errorRKNSt6stringE9throwmode">
-<span id="_CPPv3N3hpx9exception9exceptionE5errorRKNSt6stringE9throwmode"></span><span id="_CPPv2N3hpx9exception9exceptionE5errorRKNSt6stringE9throwmode"></span><span id="hpx::exception::exception__error.ssCR.throwmode"></span><span class="target" id="classhpx_1_1exception_1a25070a178aea9151b3ee9c853112a900"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <em>e</em>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>msg</em>, <a class="reference internal" href="#_CPPv4N3hpx9throwmodeE" title="hpx::throwmode">throwmode</a> <em>mode</em> = <a class="reference internal" href="#_CPPv4N3hpx5plainE" title="hpx::plain">plain</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionE5errorRKNSt6stringE9throwmode" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a <em>hpx::error</em> and an error message.</p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> holds the hpx::error code the new exception should encapsulate. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">msg</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">mode</span></code> specifies whether the returned <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> belongs to the error category <em>hpx_category</em> (if mode is <em>plain</em>, this is the default) or to the category <em>hpx_category_rethrow</em> (if mode is <em>rethrow</em>). </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx9exceptionD0Ev">
-<span id="_CPPv3N3hpx9exceptionD0Ev"></span><span id="_CPPv2N3hpx9exceptionD0Ev"></span><span id="hpx::exception::~exception"></span><span class="target" id="classhpx_1_1exception_1a46c5fc788045ba94e8e03d7d88db7440"></span><code class="sig-name descname">~exception</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exceptionD0Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Destruct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></p>
-<p><dl class="simple">
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">nothing</span></code>: </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4NK3hpx9exception9get_errorEv">
-<span id="_CPPv3NK3hpx9exception9get_errorEv"></span><span id="_CPPv2NK3hpx9exception9get_errorEv"></span><span id="hpx::exception::get_errorC"></span><span class="target" id="classhpx_1_1exception_1a24a553bfeb6e4a31090d81cde1cd0834"></span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <code class="sig-name descname">get_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx9exception9get_errorEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The function <em><a class="reference internal" href="#classhpx_1_1exception_1a24a553bfeb6e4a31090d81cde1cd0834"><span class="std std-ref">get_error()</span></a></em> returns the hpx::error code stored in the referenced instance of a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a>. It returns the hpx::error code this exception instance was constructed from.</p>
-<p><dl class="simple">
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">nothing</span></code>: </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4NK3hpx9exception14get_error_codeE9throwmode">
-<span id="_CPPv3NK3hpx9exception14get_error_codeE9throwmode"></span><span id="_CPPv2NK3hpx9exception14get_error_codeE9throwmode"></span><span id="hpx::exception::get_error_code__throwmodeC"></span><span class="target" id="classhpx_1_1exception_1af1e2fd7574114a23cb9cd4d366d5ad30"></span><a class="reference internal" href="#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> <code class="sig-name descname">get_error_code</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx9throwmodeE" title="hpx::throwmode">throwmode</a> <em>mode</em> = <a class="reference internal" href="#_CPPv4N3hpx5plainE" title="hpx::plain">plain</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx9exception14get_error_codeE9throwmode" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The function <em><a class="reference internal" href="#classhpx_1_1exception_1af1e2fd7574114a23cb9cd4d366d5ad30"><span class="std std-ref">get_error_code()</span></a></em> returns a <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> which represents the same error condition as this <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> instance.</p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">mode</span></code> specifies whether the returned <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> belongs to the error category <em>hpx_category</em> (if mode is <em>plain</em>, this is the default) or to the category <em>hpx_category_rethrow</em> (if mode is <em>rethrow</em>). </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-<dl class="cpp struct">
-<dt id="_CPPv4N3hpx18thread_interruptedE">
-<span id="_CPPv3N3hpx18thread_interruptedE"></span><span id="_CPPv2N3hpx18thread_interruptedE"></span><span id="hpx::thread_interrupted"></span><span class="target" id="structhpx_1_1thread__interrupted"></span><em class="property">struct </em><code class="sig-name descname">thread_interrupted</code> : <em class="property">public</em> <a class="reference internal" href="#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a><a class="headerlink" href="#_CPPv4N3hpx18thread_interruptedE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;exception.hpp&gt;</em><p>A <a class="reference internal" href="#structhpx_1_1thread__interrupted"><span class="std std-ref">hpx::thread_interrupted</span></a> is the exception type used by HPX to interrupt a running HPX thread. </p>
-<p>The <em><a class="reference internal" href="#structhpx_1_1thread__interrupted"><span class="std std-ref">hpx::thread_interrupted</span></a></em> type is the exception type used by HPX to interrupt a running thread.</p>
-<p>A running thread can be interrupted by invoking the interrupt() member function of the corresponding hpx::thread object. When the interrupted thread next executes one of the specified interruption points (or if it is currently blocked whilst executing one) with interruption enabled, then a <a class="reference internal" href="#structhpx_1_1thread__interrupted"><span class="std std-ref">hpx::thread_interrupted</span></a> exception will be thrown in the interrupted thread. If not caught, this will cause the execution of the interrupted thread to terminate. As with any other exception, the stack will be unwound, and destructors for objects of automatic storage duration will be executed.</p>
-<p>If a thread wishes to avoid being interrupted, it can create an instance of <em>hpx::this_thread::disable_interruption</em>. Objects of this class disable interruption for the thread that created them on construction, and restore the interruption state to whatever it was before on destruction.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">f</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// interruption enabled here</span>
-    <span class="p">{</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">disable_interruption</span> <span class="n">di</span><span class="p">;</span>
-        <span class="c1">// interruption disabled</span>
-        <span class="p">{</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">disable_interruption</span> <span class="n">di2</span><span class="p">;</span>
-            <span class="c1">// interruption still disabled</span>
-        <span class="p">}</span> <span class="c1">// di2 destroyed, interruption state restored</span>
-        <span class="c1">// interruption still disabled</span>
-    <span class="p">}</span> <span class="c1">// di destroyed, interruption state restored</span>
-    <span class="c1">// interruption now enabled</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</p>
-<p>The effects of an instance of <em>hpx::this_thread::disable_interruption</em> can be temporarily reversed by constructing an instance of <em>hpx::this_thread::restore_interruption</em>, passing in the <em>hpx::this_thread::disable_interruption</em> object in question. This will restore the interruption state to what it was when the <em>hpx::this_thread::disable_interruption</em> object was constructed, and then disable interruption again when the <em>hpx::this_thread::restore_interruption</em> object is destroyed.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">g</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// interruption enabled here</span>
-    <span class="p">{</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">disable_interruption</span> <span class="n">di</span><span class="p">;</span>
-        <span class="c1">// interruption disabled</span>
-        <span class="p">{</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">restore_interruption</span> <span class="n">ri</span><span class="p">(</span><span class="n">di</span><span class="p">);</span>
-            <span class="c1">// interruption now enabled</span>
-        <span class="p">}</span> <span class="c1">// ri destroyed, interruption disable again</span>
-    <span class="p">}</span> <span class="c1">// di destroyed, interruption state restored</span>
-    <span class="c1">// interruption now enabled</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</p>
-<p>At any point, the interruption state for the current thread can be queried by calling <em>hpx::this_thread::interruption_enabled()</em>. </p>
-</dd></dl>
-
-</dd></dl>
-
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Defines</p>
-<dl class="cpp macro">
 <dt id="c.HPX_DEFINE_ERROR_INFO">
 <span class="target" id="exception__info_8hpp_1aee8d74fa2a4704dd214ba5761dc4c2a7"></span><code class="sig-name descname">HPX_DEFINE_ERROR_INFO</code><span class="sig-paren">(</span><em>NAME</em>, <em>TYPE</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_DEFINE_ERROR_INFO" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
@@ -618,7 +290,7 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 </div>
 <dl class="cpp type">
 <dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Functions</p>
 <dl class="cpp function">
@@ -763,53 +435,42 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 
 </dd></dl>
 
-<dl class="cpp type">
-<dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Enums</p>
-<dl class="cpp enum">
-<dt id="_CPPv4N3hpx9throwmodeE">
-<span id="_CPPv3N3hpx9throwmodeE"></span><span id="_CPPv2N3hpx9throwmodeE"></span><span class="target" id="exception__fwd_8hpp_1afe4f36b1e296ae734bcfa9f552b4af94"></span><em class="property">enum </em><code class="sig-name descname">throwmode</code><a class="headerlink" href="#_CPPv4N3hpx9throwmodeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Encode error category for new <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">error_code</span></a>. </p>
-<p><em>Values:</em></p>
-<dl class="cpp enumerator">
-<dt id="_CPPv4N3hpx5plainE">
-<span id="_CPPv3N3hpx5plainE"></span><span id="_CPPv2N3hpx5plainE"></span><span class="target" id="exception__fwd_8hpp_1afe4f36b1e296ae734bcfa9f552b4af94a4bb503f987a72e31443aa44bf9a9714c"></span><code class="sig-name descname">plain</code> = 0<a class="headerlink" href="#_CPPv4N3hpx5plainE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp enumerator">
-<dt id="_CPPv4N3hpx7rethrowE">
-<span id="_CPPv3N3hpx7rethrowE"></span><span id="_CPPv2N3hpx7rethrowE"></span><span class="target" id="exception__fwd_8hpp_1afe4f36b1e296ae734bcfa9f552b4af94ab5f8a596fef817e576a4d1277466544c"></span><code class="sig-name descname">rethrow</code> = 1<a class="headerlink" href="#_CPPv4N3hpx7rethrowE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp enumerator">
-<dt id="_CPPv4N3hpx11lightweightE">
-<span id="_CPPv3N3hpx11lightweightE"></span><span id="_CPPv2N3hpx11lightweightE"></span><span class="target" id="exception__fwd_8hpp_1afe4f36b1e296ae734bcfa9f552b4af94a056bfaf2e600091151e27eb7a0809eb9"></span><code class="sig-name descname">lightweight</code> = 0x80<a class="headerlink" href="#_CPPv4N3hpx11lightweightE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Variables</p>
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx6throwsE">
-<span id="_CPPv3N3hpx6throwsE"></span><span id="_CPPv2N3hpx6throwsE"></span><span id="hpx::throws__error_code"></span><span class="target" id="exception__fwd_8hpp_1a3c805fbcc4bc26b262633b5134b42014"></span><a class="reference internal" href="#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> <code class="sig-name descname">throws</code><a class="headerlink" href="#_CPPv4N3hpx6throwsE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Predefined <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">error_code</span></a> object used as “throw on error” tag. </p>
-<p>The predefined <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> object <em>hpx::throws</em> is supplied for use as a “throw on error” tag.</p>
-<p>Functions that specify an argument in the form ‘<a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">error_code</span></a>&amp; ec=throws’ (with appropriate namespace qualifiers), have the following error handling semantics:</p>
-<p>If &amp;ec != &amp;throws and an error occurred: ec.value() returns the implementation specific error number for the particular error that occurred and ec.category() returns the error_category for ec.value().</p>
-<p>If &amp;ec != &amp;throws and an error did not occur, ec.clear().</p>
-<p>If an error occurs and &amp;ec == &amp;throws, the function throws an exception of type <em><a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></em> or of a type derived from it. The exception’s <em>get_errorcode()</em> member function returns a reference to an <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> object with the behavior as specified above. </p>
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="cpp macro">
+<dt id="c.HPX_THROW_EXCEPTION">
+<span class="target" id="throw__exception_8hpp_1a3ada9b97bab2221332a6db245fe2067a"></span><code class="sig-name descname">HPX_THROW_EXCEPTION</code><span class="sig-paren">(</span><em>errcode</em>, <em>f</em>, <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROW_EXCEPTION" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> initialized from the given parameters. </p>
+<p>The macro <em>HPX_THROW_EXCEPTION</em> can be used to throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a>. The purpose of this macro is to prepend the source file name and line number of the position where the exception is thrown to the error message. Moreover, this associates additional diagnostic information with the exception, such as file name and line number, locality id and thread id, and stack backtrace from the point where the exception was thrown.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code the new exception should encapsulate. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">raise_exception</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Throw a hpx::exception initialized from the given parameters.</span>
+    <span class="c1">// Additionally associate with this exception some detailed</span>
+    <span class="c1">// diagnostic information about the throw-site.</span>
+    <span class="n">HPX_THROW_EXCEPTION</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">no_success</span><span class="p">,</span> <span class="s">&quot;raise_exception&quot;</span><span class="p">,</span> <span class="s">&quot;simulated error&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+ <dl class="simple">
+<dt><strong>Example:</strong></dt><dd><p></p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_THROWS_IF">
+<span class="target" id="throw__exception_8hpp_1a81b2aae0c2744fad9953f45a3c90683b"></span><code class="sig-name descname">HPX_THROWS_IF</code><span class="sig-paren">(</span><em>ec</em>, <em>errcode</em>, <em>f</em>, <em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROWS_IF" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Either throw a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> or initialize <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. </p>
+<p>The macro <em>HPX_THROWS_IF</em> can be used to either throw a <em><a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></em> or to initialize a <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. If &amp;ec == &amp;hpx::throws, the semantics of this macro are equivalent to <em>HPX_THROW_EXCEPTION</em>. If &amp;ec != &amp;hpx::throws, the <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> instance <code class="docutils literal notranslate"><span class="pre">ec</span></code> is initialized instead.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code from which the new exception should be initialized. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate. </p>
 </dd></dl>
 
 </div>
-</dd></dl>
-
 <dl class="cpp type">
 <dt id="_CPPv43hpx">
-<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Enums</p>
 <dl class="cpp enum">
@@ -1148,6 +809,418 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 </dd></dl>
 
 <dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Enums</p>
+<dl class="cpp enum">
+<dt id="_CPPv4N3hpx9throwmodeE">
+<span id="_CPPv3N3hpx9throwmodeE"></span><span id="_CPPv2N3hpx9throwmodeE"></span><span class="target" id="exception__fwd_8hpp_1afe4f36b1e296ae734bcfa9f552b4af94"></span><em class="property">enum </em><code class="sig-name descname">throwmode</code><a class="headerlink" href="#_CPPv4N3hpx9throwmodeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Encode error category for new <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">error_code</span></a>. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx5plainE">
+<span id="_CPPv3N3hpx5plainE"></span><span id="_CPPv2N3hpx5plainE"></span><span class="target" id="exception__fwd_8hpp_1afe4f36b1e296ae734bcfa9f552b4af94a4bb503f987a72e31443aa44bf9a9714c"></span><code class="sig-name descname">plain</code> = 0<a class="headerlink" href="#_CPPv4N3hpx5plainE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx7rethrowE">
+<span id="_CPPv3N3hpx7rethrowE"></span><span id="_CPPv2N3hpx7rethrowE"></span><span class="target" id="exception__fwd_8hpp_1afe4f36b1e296ae734bcfa9f552b4af94ab5f8a596fef817e576a4d1277466544c"></span><code class="sig-name descname">rethrow</code> = 1<a class="headerlink" href="#_CPPv4N3hpx7rethrowE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx11lightweightE">
+<span id="_CPPv3N3hpx11lightweightE"></span><span id="_CPPv2N3hpx11lightweightE"></span><span class="target" id="exception__fwd_8hpp_1afe4f36b1e296ae734bcfa9f552b4af94a056bfaf2e600091151e27eb7a0809eb9"></span><code class="sig-name descname">lightweight</code> = 0x80<a class="headerlink" href="#_CPPv4N3hpx11lightweightE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Variables</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx6throwsE">
+<span id="_CPPv3N3hpx6throwsE"></span><span id="_CPPv2N3hpx6throwsE"></span><span id="hpx::throws__error_code"></span><span class="target" id="exception__fwd_8hpp_1a3c805fbcc4bc26b262633b5134b42014"></span><a class="reference internal" href="#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> <code class="sig-name descname">throws</code><a class="headerlink" href="#_CPPv4N3hpx6throwsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Predefined <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">error_code</span></a> object used as “throw on error” tag. </p>
+<p>The predefined <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> object <em>hpx::throws</em> is supplied for use as a “throw on error” tag.</p>
+<p>Functions that specify an argument in the form ‘<a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">error_code</span></a>&amp; ec=throws’ (with appropriate namespace qualifiers), have the following error handling semantics:</p>
+<p>If &amp;ec != &amp;throws and an error occurred: ec.value() returns the implementation specific error number for the particular error that occurred and ec.category() returns the error_category for ec.value().</p>
+<p>If &amp;ec != &amp;throws and an error did not occur, ec.clear().</p>
+<p>If an error occurs and &amp;ec == &amp;throws, the function throws an exception of type <em><a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></em> or of a type derived from it. The exception’s <em>get_errorcode()</em> member function returns a reference to an <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> object with the behavior as specified above. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Typedefs</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx34custom_exception_info_handler_typeE">
+<span id="_CPPv3N3hpx34custom_exception_info_handler_typeE"></span><span id="_CPPv2N3hpx34custom_exception_info_handler_typeE"></span><span class="target" id="errors_2exception_8hpp_1ae87157cfcb7c164d0d6ae3245b046bed"></span><em class="property">using </em><code class="sig-name descname">custom_exception_info_handler_type</code> = <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::function&lt;<a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em>&amp;, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em>&amp;, long, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em>&amp;<span class="sig-paren">)</span>&gt;<a class="headerlink" href="#_CPPv4N3hpx34custom_exception_info_handler_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx26pre_exception_handler_typeE">
+<span id="_CPPv3N3hpx26pre_exception_handler_typeE"></span><span id="_CPPv2N3hpx26pre_exception_handler_typeE"></span><span class="target" id="errors_2exception_8hpp_1ad9160c2938fee0aa9515228d172251cf"></span><em class="property">using </em><code class="sig-name descname">pre_exception_handler_type</code> = <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::function&lt;void<span class="sig-paren">(</span><span class="sig-paren">)</span>&gt;<a class="headerlink" href="#_CPPv4N3hpx26pre_exception_handler_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx33set_custom_exception_info_handlerE34custom_exception_info_handler_type">
+<span id="_CPPv3N3hpx33set_custom_exception_info_handlerE34custom_exception_info_handler_type"></span><span id="_CPPv2N3hpx33set_custom_exception_info_handlerE34custom_exception_info_handler_type"></span><span id="hpx::set_custom_exception_info_handler__custom_exception_info_handler_type"></span><span class="target" id="errors_2exception_8hpp_1a9ffb2074fff8364079a75b53eaa4d374"></span>void <code class="sig-name descname">set_custom_exception_info_handler</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx34custom_exception_info_handler_typeE" title="hpx::custom_exception_info_handler_type">custom_exception_info_handler_type</a> <em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx33set_custom_exception_info_handlerE34custom_exception_info_handler_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx25set_pre_exception_handlerE26pre_exception_handler_type">
+<span id="_CPPv3N3hpx25set_pre_exception_handlerE26pre_exception_handler_type"></span><span id="_CPPv2N3hpx25set_pre_exception_handlerE26pre_exception_handler_type"></span><span id="hpx::set_pre_exception_handler__pre_exception_handler_type"></span><span class="target" id="errors_2exception_8hpp_1a98c2385f91ecef937a34f09eec8817a5"></span>void <code class="sig-name descname">set_pre_exception_handler</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx26pre_exception_handler_typeE" title="hpx::pre_exception_handler_type">pre_exception_handler_type</a> <em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx25set_pre_exception_handlerE26pre_exception_handler_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx14get_error_whatERK14exception_info">
+<span id="_CPPv3N3hpx14get_error_whatERK14exception_info"></span><span id="_CPPv2N3hpx14get_error_whatERK14exception_info"></span><span id="hpx::get_error_what__exception_infoCR"></span><span class="target" id="errors_2exception_8hpp_1ad28bf0e2a07a99c4d3eedaf1339af32c"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">get_error_what</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a> <em class="property">const</em> &amp;<em>xi</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx14get_error_whatERK14exception_info" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the error message of the thrown exception. </p>
+<p>The function <em>hpx::get_error_what</em> can be used to extract the diagnostic information element representing the error message as stored in the given exception instance.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The error message stored in the exception If the exception instance does not hold this information, the function will return an empty string.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em>, <em>hpx::get_error_function_name()</em>, <em>hpx::get_error_file_name()</em>, <em>hpx::get_error_line_number()</em>, <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error()</em> <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xi</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception__info"><span class="std std-ref">hpx::exception_info</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, <em>std::exception</em>, or <em>std::exception_ptr</em>.</p></li>
+</ul>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code>: (if one of the required allocations fails)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx9get_errorERKN3hpx9exceptionE">
+<span id="_CPPv3N3hpx9get_errorERKN3hpx9exceptionE"></span><span id="_CPPv2N3hpx9get_errorERKN3hpx9exceptionE"></span><span id="hpx::get_error__hpx::exceptionCR"></span><span class="target" id="errors_2exception_8hpp_1af6349dbd4e6dd99a3dfd5ff6e4e74c21"></span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <code class="sig-name descname">get_error</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a> <em class="property">const</em> &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9get_errorERKN3hpx9exceptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the error code value of the exception thrown. </p>
+<p>The function <em>hpx::get_error</em> can be used to extract the diagnostic information element representing the error value code as stored in the given exception instance.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The error value code of the locality where the exception was thrown. If the exception instance does not hold this information, the function will return <em>hpx::naming::invalid_locality_id</em>.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em>, <em>hpx::get_error_function_name()</em>, <em>hpx::get_error_file_name()</em>, <em>hpx::get_error_line_number()</em>, <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_what()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, or <em>std::exception_ptr</em>.</p></li>
+</ul>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nothing</span></code>: </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx9get_errorERKN3hpx10error_codeE">
+<span id="_CPPv3N3hpx9get_errorERKN3hpx10error_codeE"></span><span id="_CPPv2N3hpx9get_errorERKN3hpx10error_codeE"></span><span id="hpx::get_error__hpx::error_codeCR"></span><span class="target" id="errors_2exception_8hpp_1a68dd22b15b787540208e0977a2e4b53d"></span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <code class="sig-name descname">get_error</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> <em class="property">const</em> &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9get_errorERKN3hpx10error_codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx23get_error_function_nameERKN3hpx14exception_infoE">
+<span id="_CPPv3N3hpx23get_error_function_nameERKN3hpx14exception_infoE"></span><span id="_CPPv2N3hpx23get_error_function_nameERKN3hpx14exception_infoE"></span><span id="hpx::get_error_function_name__hpx::exception_infoCR"></span><span class="target" id="errors_2exception_8hpp_1a754d205ce3b220a254c65f3d124ac405"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">get_error_function_name</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a> <em class="property">const</em> &amp;<em>xi</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx23get_error_function_nameERKN3hpx14exception_infoE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the function name from which the exception was thrown. </p>
+<p>The function <em>hpx::get_error_function_name</em> can be used to extract the diagnostic information element representing the name of the function as stored in the given exception instance.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The name of the function from which the exception was thrown. If the exception instance does not hold this information, the function will return an empty string.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em> <em>hpx::get_error_file_name()</em>, <em>hpx::get_error_line_number()</em>, <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error()</em>, <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_what()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xi</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception__info"><span class="std std-ref">hpx::exception_info</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, <em>std::exception</em>, or <em>std::exception_ptr</em>.</p></li>
+</ul>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code>: (if one of the required allocations fails)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19get_error_file_nameERKN3hpx14exception_infoE">
+<span id="_CPPv3N3hpx19get_error_file_nameERKN3hpx14exception_infoE"></span><span id="_CPPv2N3hpx19get_error_file_nameERKN3hpx14exception_infoE"></span><span id="hpx::get_error_file_name__hpx::exception_infoCR"></span><span class="target" id="errors_2exception_8hpp_1a0af92c8ff70bbc40c078ef06a2ff4647"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">get_error_file_name</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a> <em class="property">const</em> &amp;<em>xi</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19get_error_file_nameERKN3hpx14exception_infoE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the (source code) file name of the function from which the exception was thrown. </p>
+<p>The function <em>hpx::get_error_file_name</em> can be used to extract the diagnostic information element representing the name of the source file as stored in the given exception instance.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The name of the source file of the function from which the exception was thrown. If the exception instance does not hold this information, the function will return an empty string.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em>, <em>hpx::get_error_function_name()</em>, <em>hpx::get_error_line_number()</em>, <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error()</em>, <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_what()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xi</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception__info"><span class="std std-ref">hpx::exception_info</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, <em>std::exception</em>, or <em>std::exception_ptr</em>.</p></li>
+</ul>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::bad_alloc</span></code>: (if one of the required allocations fails)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx21get_error_line_numberERKN3hpx14exception_infoE">
+<span id="_CPPv3N3hpx21get_error_line_numberERKN3hpx14exception_infoE"></span><span id="_CPPv2N3hpx21get_error_line_numberERKN3hpx14exception_infoE"></span><span id="hpx::get_error_line_number__hpx::exception_infoCR"></span><span class="target" id="errors_2exception_8hpp_1ae0112fceccd5a51798ed81d88906468e"></span>long <code class="sig-name descname">get_error_line_number</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx14exception_infoE" title="hpx::exception_info">exception_info</a> <em class="property">const</em> &amp;<em>xi</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx21get_error_line_numberERKN3hpx14exception_infoE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the line number in the (source code) file of the function from which the exception was thrown. </p>
+<p>The function <em>hpx::get_error_line_number</em> can be used to extract the diagnostic information element representing the line number as stored in the given exception instance.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The line number of the place where the exception was thrown. If the exception instance does not hold this information, the function will return -1.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::diagnostic_information()</em>, <em>hpx::get_error_host_name()</em>, <em>hpx::get_error_process_id()</em>, <em>hpx::get_error_function_name()</em>, <em>hpx::get_error_file_name()</em> <em>hpx::get_error_os_thread()</em>, <em>hpx::get_error_thread_id()</em>, <em>hpx::get_error_thread_description()</em>, <em>hpx::get_error()</em>, <em>hpx::get_error_backtrace()</em>, <em>hpx::get_error_env()</em>, <em>hpx::get_error_what()</em>, <em>hpx::get_error_config()</em>, <em>hpx::get_error_state()</em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xi</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> will be inspected for the requested diagnostic information elements which have been stored at the point where the exception was thrown. This parameter can be one of the following types: <em><a class="reference internal" href="#classhpx_1_1exception__info"><span class="std std-ref">hpx::exception_info</span></a></em>, <em><a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em>, <em>std::exception</em>, or <em>std::exception_ptr</em>.</p></li>
+</ul>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nothing</span></code>: </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt id="_CPPv4N3hpx9exceptionE">
+<span id="_CPPv3N3hpx9exceptionE"></span><span id="_CPPv2N3hpx9exceptionE"></span><span id="hpx::exception"></span><span class="target" id="classhpx_1_1exception"></span><em class="property">class </em><code class="sig-name descname">exception</code> : <em class="property">public</em> system_error<a class="headerlink" href="#_CPPv4N3hpx9exceptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;exception.hpp&gt;</em><p>A <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> is the main exception type used by HPX to report errors. </p>
+<p>The <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> type is the main exception type used by HPX to report errors. Any exceptions thrown by functions in the HPX library are either of this type or of a type derived from it. This implies that it is always safe to use this type only in catch statements guarding HPX library calls. </p>
+<p>Subclassed by <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">hpx::exception_list</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx9exception9exceptionE5error">
+<span id="_CPPv3N3hpx9exception9exceptionE5error"></span><span id="_CPPv2N3hpx9exception9exceptionE5error"></span><span id="hpx::exception::exception__error"></span><span class="target" id="classhpx_1_1exception_1a13610d02885fc91e014fdb58debe996b"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <em>e</em> = <a class="reference internal" href="#_CPPv4N3hpx7successE" title="hpx::success">success</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionE5error" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a <em>hpx::error</em>.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> holds the hpx::error code the new exception should encapsulate. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx9exception9exceptionERKN5boost6system12system_errorE">
+<span id="_CPPv3N3hpx9exception9exceptionERKN5boost6system12system_errorE"></span><span id="_CPPv2N3hpx9exception9exceptionERKN5boost6system12system_errorE"></span><span id="hpx::exception::exception__boost::system::system_errorCR"></span><span class="target" id="classhpx_1_1exception_1afa51e14009dcdcd574b86794771314f3"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::system::system_error <em class="property">const</em> &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionERKN5boost6system12system_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a boost::system_error. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx9exception9exceptionERKN5boost6system10error_codeE">
+<span id="_CPPv3N3hpx9exception9exceptionERKN5boost6system10error_codeE"></span><span id="_CPPv2N3hpx9exception9exceptionERKN5boost6system10error_codeE"></span><span id="hpx::exception::exception__boost::system::error_codeCR"></span><span class="target" id="classhpx_1_1exception_1afbf231449a2ee653cb03ad3efed381e8"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::system::error_code <em class="property">const</em> &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionERKN5boost6system10error_codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a boost::system::error_code (this is new for Boost V1.69). This constructor is required to compensate for the changes introduced as a resolution to LWG3162 (<a class="reference external" href="https://cplusplus.github.io/LWG/issue3162">https://cplusplus.github.io/LWG/issue3162</a>). </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx9exception9exceptionE5errorPKc9throwmode">
+<span id="_CPPv3N3hpx9exception9exceptionE5errorPKc9throwmode"></span><span id="_CPPv2N3hpx9exception9exceptionE5errorPKc9throwmode"></span><span id="hpx::exception::exception__error.cCP.throwmode"></span><span class="target" id="classhpx_1_1exception_1a06bc6239c2b0a4222d72e088a56c6146"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <em>e</em>, char <em class="property">const</em> *<em>msg</em>, <a class="reference internal" href="#_CPPv4N3hpx9throwmodeE" title="hpx::throwmode">throwmode</a> <em>mode</em> = <a class="reference internal" href="#_CPPv4N3hpx5plainE" title="hpx::plain">plain</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionE5errorPKc9throwmode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a <em>hpx::error</em> and an error message.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> holds the hpx::error code the new exception should encapsulate. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">msg</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">mode</span></code> specifies whether the returned <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> belongs to the error category <em>hpx_category</em> (if mode is <em>plain</em>, this is the default) or to the category <em>hpx_category_rethrow</em> (if mode is <em>rethrow</em>). </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx9exception9exceptionE5errorRKNSt6stringE9throwmode">
+<span id="_CPPv3N3hpx9exception9exceptionE5errorRKNSt6stringE9throwmode"></span><span id="_CPPv2N3hpx9exception9exceptionE5errorRKNSt6stringE9throwmode"></span><span id="hpx::exception::exception__error.ssCR.throwmode"></span><span class="target" id="classhpx_1_1exception_1a25070a178aea9151b3ee9c853112a900"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <em>e</em>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>msg</em>, <a class="reference internal" href="#_CPPv4N3hpx9throwmodeE" title="hpx::throwmode">throwmode</a> <em>mode</em> = <a class="reference internal" href="#_CPPv4N3hpx5plainE" title="hpx::plain">plain</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exception9exceptionE5errorRKNSt6stringE9throwmode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> from a <em>hpx::error</em> and an error message.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">e</span></code> holds the hpx::error code the new exception should encapsulate. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">msg</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">mode</span></code> specifies whether the returned <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> belongs to the error category <em>hpx_category</em> (if mode is <em>plain</em>, this is the default) or to the category <em>hpx_category_rethrow</em> (if mode is <em>rethrow</em>). </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx9exceptionD0Ev">
+<span id="_CPPv3N3hpx9exceptionD0Ev"></span><span id="_CPPv2N3hpx9exceptionD0Ev"></span><span id="hpx::exception::~exception"></span><span class="target" id="classhpx_1_1exception_1a46c5fc788045ba94e8e03d7d88db7440"></span><code class="sig-name descname">~exception</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx9exceptionD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Destruct a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nothing</span></code>: </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx9exception9get_errorEv">
+<span id="_CPPv3NK3hpx9exception9get_errorEv"></span><span id="_CPPv2NK3hpx9exception9get_errorEv"></span><span id="hpx::exception::get_errorC"></span><span class="target" id="classhpx_1_1exception_1a24a553bfeb6e4a31090d81cde1cd0834"></span><a class="reference internal" href="#_CPPv4N3hpx5errorE" title="hpx::error">error</a> <code class="sig-name descname">get_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx9exception9get_errorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The function <em><a class="reference internal" href="#classhpx_1_1exception_1a24a553bfeb6e4a31090d81cde1cd0834"><span class="std std-ref">get_error()</span></a></em> returns the hpx::error code stored in the referenced instance of a <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a>. It returns the hpx::error code this exception instance was constructed from.</p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nothing</span></code>: </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx9exception14get_error_codeE9throwmode">
+<span id="_CPPv3NK3hpx9exception14get_error_codeE9throwmode"></span><span id="_CPPv2NK3hpx9exception14get_error_codeE9throwmode"></span><span id="hpx::exception::get_error_code__throwmodeC"></span><span class="target" id="classhpx_1_1exception_1af1e2fd7574114a23cb9cd4d366d5ad30"></span><a class="reference internal" href="#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> <code class="sig-name descname">get_error_code</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx9throwmodeE" title="hpx::throwmode">throwmode</a> <em>mode</em> = <a class="reference internal" href="#_CPPv4N3hpx5plainE" title="hpx::plain">plain</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx9exception14get_error_codeE9throwmode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The function <em><a class="reference internal" href="#classhpx_1_1exception_1af1e2fd7574114a23cb9cd4d366d5ad30"><span class="std std-ref">get_error_code()</span></a></em> returns a <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> which represents the same error condition as this <a class="reference internal" href="#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> instance.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: The parameter <code class="docutils literal notranslate"><span class="pre">mode</span></code> specifies whether the returned <a class="reference internal" href="#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a> belongs to the error category <em>hpx_category</em> (if mode is <em>plain</em>, this is the default) or to the category <em>hpx_category_rethrow</em> (if mode is <em>rethrow</em>). </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx18thread_interruptedE">
+<span id="_CPPv3N3hpx18thread_interruptedE"></span><span id="_CPPv2N3hpx18thread_interruptedE"></span><span id="hpx::thread_interrupted"></span><span class="target" id="structhpx_1_1thread__interrupted"></span><em class="property">struct </em><code class="sig-name descname">thread_interrupted</code> : <em class="property">public</em> <a class="reference internal" href="#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a><a class="headerlink" href="#_CPPv4N3hpx18thread_interruptedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;exception.hpp&gt;</em><p>A <a class="reference internal" href="#structhpx_1_1thread__interrupted"><span class="std std-ref">hpx::thread_interrupted</span></a> is the exception type used by HPX to interrupt a running HPX thread. </p>
+<p>The <em><a class="reference internal" href="#structhpx_1_1thread__interrupted"><span class="std std-ref">hpx::thread_interrupted</span></a></em> type is the exception type used by HPX to interrupt a running thread.</p>
+<p>A running thread can be interrupted by invoking the interrupt() member function of the corresponding hpx::thread object. When the interrupted thread next executes one of the specified interruption points (or if it is currently blocked whilst executing one) with interruption enabled, then a <a class="reference internal" href="#structhpx_1_1thread__interrupted"><span class="std std-ref">hpx::thread_interrupted</span></a> exception will be thrown in the interrupted thread. If not caught, this will cause the execution of the interrupted thread to terminate. As with any other exception, the stack will be unwound, and destructors for objects of automatic storage duration will be executed.</p>
+<p>If a thread wishes to avoid being interrupted, it can create an instance of <em>hpx::this_thread::disable_interruption</em>. Objects of this class disable interruption for the thread that created them on construction, and restore the interruption state to whatever it was before on destruction.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">f</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// interruption enabled here</span>
+    <span class="p">{</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">disable_interruption</span> <span class="n">di</span><span class="p">;</span>
+        <span class="c1">// interruption disabled</span>
+        <span class="p">{</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">disable_interruption</span> <span class="n">di2</span><span class="p">;</span>
+            <span class="c1">// interruption still disabled</span>
+        <span class="p">}</span> <span class="c1">// di2 destroyed, interruption state restored</span>
+        <span class="c1">// interruption still disabled</span>
+    <span class="p">}</span> <span class="c1">// di destroyed, interruption state restored</span>
+    <span class="c1">// interruption now enabled</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+<p>The effects of an instance of <em>hpx::this_thread::disable_interruption</em> can be temporarily reversed by constructing an instance of <em>hpx::this_thread::restore_interruption</em>, passing in the <em>hpx::this_thread::disable_interruption</em> object in question. This will restore the interruption state to what it was when the <em>hpx::this_thread::disable_interruption</em> object was constructed, and then disable interruption again when the <em>hpx::this_thread::restore_interruption</em> object is destroyed.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">g</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// interruption enabled here</span>
+    <span class="p">{</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">disable_interruption</span> <span class="n">di</span><span class="p">;</span>
+        <span class="c1">// interruption disabled</span>
+        <span class="p">{</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">restore_interruption</span> <span class="n">ri</span><span class="p">(</span><span class="n">di</span><span class="p">);</span>
+            <span class="c1">// interruption now enabled</span>
+        <span class="p">}</span> <span class="c1">// ri destroyed, interruption disable again</span>
+    <span class="p">}</span> <span class="c1">// di destroyed, interruption state restored</span>
+    <span class="c1">// interruption now enabled</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+<p>At any point, the interruption state for the current thread can be queried by calling <em>hpx::this_thread::interruption_enabled()</em>. </p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp class">
+<dt id="_CPPv4N3hpx14exception_listE">
+<span id="_CPPv3N3hpx14exception_listE"></span><span id="_CPPv2N3hpx14exception_listE"></span><span id="hpx::exception_list"></span><span class="target" id="classhpx_1_1exception__list"></span><em class="property">class </em><code class="sig-name descname">exception_list</code> : <em class="property">public</em> <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a><a class="headerlink" href="#_CPPv4N3hpx14exception_listE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;exception_list.hpp&gt;</em><p>The class <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a> is a container of exception_ptr objects parallel algorithms may use to communicate uncaught exceptions encountered during parallel execution to the caller of the algorithm</p>
+<p>The type exception_list::const_iterator fulfills the requirements of a forward iterator. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx14exception_list8iteratorE">
+<span id="_CPPv3N3hpx14exception_list8iteratorE"></span><span id="_CPPv2N3hpx14exception_list8iteratorE"></span><span id="hpx::exception_list::iterator"></span><span class="target" id="classhpx_1_1exception__list_1ae0b75a125a76c3156ce3315e86596716"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">iterator</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list8iteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>bidirectional iterator </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx14exception_list4sizeEv">
+<span id="_CPPv3NK3hpx14exception_list4sizeEv"></span><span id="_CPPv2NK3hpx14exception_list4sizeEv"></span><span id="hpx::exception_list::sizeC"></span><span class="target" id="classhpx_1_1exception__list_1ae4e3e1b70e8185033656d891749a234e"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The number of exception_ptr objects contained within the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>Complexity: Constant time. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx14exception_list5beginEv">
+<span id="_CPPv3NK3hpx14exception_list5beginEv"></span><span id="_CPPv2NK3hpx14exception_list5beginEv"></span><span id="hpx::exception_list::beginC"></span><span class="target" id="classhpx_1_1exception__list_1a94a921543c170e5fa21278613e60599a"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An iterator referring to the first exception_ptr object contained within the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx14exception_list3endEv">
+<span id="_CPPv3NK3hpx14exception_list3endEv"></span><span id="_CPPv2NK3hpx14exception_list3endEv"></span><span id="hpx::exception_list::endC"></span><span class="target" id="classhpx_1_1exception__list_1a0ecc17888e5ec79776b45c872bf76584"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An iterator which is the past-the-end value for the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx14exception_list10mutex_typeE">
+<span id="_CPPv3N3hpx14exception_list10mutex_typeE"></span><span id="_CPPv2N3hpx14exception_list10mutex_typeE"></span><span id="hpx::exception_list::mutex_type"></span><span class="target" id="classhpx_1_1exception__list_1a8b10bc1bf19137d747777817e53627f0"></span><em class="property">typedef </em><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::detail::spinlock <code class="sig-name descname">mutex_type</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list10mutex_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx14exception_list19exception_list_typeE">
+<span id="_CPPv3N3hpx14exception_list19exception_list_typeE"></span><span id="_CPPv2N3hpx14exception_list19exception_list_typeE"></span><span id="hpx::exception_list::exception_list_type"></span><span class="target" id="classhpx_1_1exception__list_1acd236cdeb27c48c1e3a126adf95f2201"></span><em class="property">typedef </em><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::exception_ptr&gt; <code class="sig-name descname">exception_list_type</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx14exception_list11exceptions_E">
+<span id="_CPPv3N3hpx14exception_list11exceptions_E"></span><span id="_CPPv2N3hpx14exception_list11exceptions_E"></span><span id="hpx::exception_list::exceptions___exception_list_type"></span><span class="target" id="classhpx_1_1exception__list_1afc8c518f8677ae103839eb4f119e5959"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a> <code class="sig-name descname">exceptions_</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list11exceptions_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx14exception_list4mtx_E">
+<span id="_CPPv3N3hpx14exception_list4mtx_E"></span><span id="_CPPv2N3hpx14exception_list4mtx_E"></span><span id="hpx::exception_list::mtx___mutex_type"></span><span class="target" id="classhpx_1_1exception__list_1ae0639af297017767265b9da164a4faac"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list10mutex_typeE" title="hpx::exception_list::mutex_type">mutex_type</a> <code class="sig-name descname">mtx_</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
 <dt>
 <span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
@@ -1446,79 +1519,6 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 
 </dd></dl>
 
-<dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp class">
-<dt id="_CPPv4N3hpx14exception_listE">
-<span id="_CPPv3N3hpx14exception_listE"></span><span id="_CPPv2N3hpx14exception_listE"></span><span id="hpx::exception_list"></span><span class="target" id="classhpx_1_1exception__list"></span><em class="property">class </em><code class="sig-name descname">exception_list</code> : <em class="property">public</em> <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx9exceptionE" title="hpx::exception">exception</a><a class="headerlink" href="#_CPPv4N3hpx14exception_listE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;exception_list.hpp&gt;</em><p>The class <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a> is a container of exception_ptr objects parallel algorithms may use to communicate uncaught exceptions encountered during parallel execution to the caller of the algorithm</p>
-<p>The type exception_list::const_iterator fulfills the requirements of a forward iterator. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx14exception_list8iteratorE">
-<span id="_CPPv3N3hpx14exception_list8iteratorE"></span><span id="_CPPv2N3hpx14exception_list8iteratorE"></span><span id="hpx::exception_list::iterator"></span><span class="target" id="classhpx_1_1exception__list_1ae0b75a125a76c3156ce3315e86596716"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">iterator</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list8iteratorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>bidirectional iterator </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4NK3hpx14exception_list4sizeEv">
-<span id="_CPPv3NK3hpx14exception_list4sizeEv"></span><span id="_CPPv2NK3hpx14exception_list4sizeEv"></span><span id="hpx::exception_list::sizeC"></span><span class="target" id="classhpx_1_1exception__list_1ae4e3e1b70e8185033656d891749a234e"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The number of exception_ptr objects contained within the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>.</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>Complexity: Constant time. </p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4NK3hpx14exception_list5beginEv">
-<span id="_CPPv3NK3hpx14exception_list5beginEv"></span><span id="_CPPv2NK3hpx14exception_list5beginEv"></span><span id="hpx::exception_list::beginC"></span><span class="target" id="classhpx_1_1exception__list_1a94a921543c170e5fa21278613e60599a"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list5beginEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>An iterator referring to the first exception_ptr object contained within the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4NK3hpx14exception_list3endEv">
-<span id="_CPPv3NK3hpx14exception_list3endEv"></span><span id="_CPPv2NK3hpx14exception_list3endEv"></span><span id="hpx::exception_list::endC"></span><span class="target" id="classhpx_1_1exception__list_1a0ecc17888e5ec79776b45c872bf76584"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a>::const_iterator <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx14exception_list3endEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>An iterator which is the past-the-end value for the <a class="reference internal" href="#classhpx_1_1exception__list"><span class="std std-ref">exception_list</span></a>. </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx14exception_list10mutex_typeE">
-<span id="_CPPv3N3hpx14exception_list10mutex_typeE"></span><span id="_CPPv2N3hpx14exception_list10mutex_typeE"></span><span id="hpx::exception_list::mutex_type"></span><span class="target" id="classhpx_1_1exception__list_1a8b10bc1bf19137d747777817e53627f0"></span><em class="property">typedef </em><a class="reference internal" href="../concurrency/api.html#_CPPv45boost" title="boost">boost</a>::detail::spinlock <code class="sig-name descname">mutex_type</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list10mutex_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx14exception_list19exception_list_typeE">
-<span id="_CPPv3N3hpx14exception_list19exception_list_typeE"></span><span id="_CPPv2N3hpx14exception_list19exception_list_typeE"></span><span id="hpx::exception_list::exception_list_type"></span><span class="target" id="classhpx_1_1exception__list_1acd236cdeb27c48c1e3a126adf95f2201"></span><em class="property">typedef </em><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::list&lt;<a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::exception_ptr&gt; <code class="sig-name descname">exception_list_type</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Members</p>
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx14exception_list11exceptions_E">
-<span id="_CPPv3N3hpx14exception_list11exceptions_E"></span><span id="_CPPv2N3hpx14exception_list11exceptions_E"></span><span id="hpx::exception_list::exceptions___exception_list_type"></span><span class="target" id="classhpx_1_1exception__list_1afc8c518f8677ae103839eb4f119e5959"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list19exception_list_typeE" title="hpx::exception_list::exception_list_type">exception_list_type</a> <code class="sig-name descname">exceptions_</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list11exceptions_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx14exception_list4mtx_E">
-<span id="_CPPv3N3hpx14exception_list4mtx_E"></span><span id="_CPPv2N3hpx14exception_list4mtx_E"></span><span id="hpx::exception_list::mtx___mutex_type"></span><span class="target" id="classhpx_1_1exception__list_1ae0639af297017767265b9da164a4faac"></span><a class="reference internal" href="#_CPPv4N3hpx14exception_list10mutex_typeE" title="hpx::exception_list::mutex_type">mutex_type</a> <code class="sig-name descname">mtx_</code><a class="headerlink" href="#_CPPv4N3hpx14exception_list4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 
 
@@ -1550,7 +1550,7 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>63b68b0</code>.
+          Revision <code>fabd8b0</code>.
         </span>
       
 

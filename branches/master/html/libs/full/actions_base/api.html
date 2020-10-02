@@ -284,153 +284,6 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Defines</p>
 <dl class="cpp macro">
-<dt id="c.HPX_REGISTER_ACTION_DECLARATION">
-<span class="target" id="basic__action_8hpp_1ac13b639396c1d3476c04033b29ae3835"></span><code class="sig-name descname">HPX_REGISTER_ACTION_DECLARATION</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION_DECLARATION" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Declare the necessary component action boilerplate code. </p>
-<p>The macro <em>HPX_REGISTER_ACTION_DECLARATION</em> can be used to declare all the boilerplate code which is required for proper functioning of component actions in the context of HPX.</p>
-<p>The parameter <em>action</em> is the type of the action to declare the boilerplate for.</p>
-<p>This macro can be invoked with an optional second parameter. This parameter specifies a unique name of the action to be used for serialization purposes. The second parameter has to be specified if the first parameter is not usable as a plain (non-qualified) C++ identifier, i.e. the first parameter contains special characters which cannot be part of a C++ identifier, such as ‘&lt;’, ‘&gt;’, or ‘:’.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">app</span>
-<span class="p">{</span>
-    <span class="c1">// Define a simple component exposing one action &#39;print_greeting&#39;</span>
-    <span class="k">class</span> <span class="nc">HPX_COMPONENT_EXPORT</span> <span class="nl">server</span>
-      <span class="p">:</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">simple_component_base</span><span class="o">&lt;</span><span class="n">server</span><span class="o">&gt;</span>
-    <span class="p">{</span>
-        <span class="kt">void</span> <span class="n">print_greeting</span> <span class="p">()</span>
-        <span class="p">{</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hey, how are you?</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="c1">// Component actions need to be declared, this also defines the</span>
-        <span class="c1">// type &#39;print_greeting_action&#39; representing the action.</span>
-        <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">server</span><span class="p">,</span>
-            <span class="n">print_greeting</span><span class="p">,</span> <span class="n">print_greeting_action</span><span class="p">);</span>
-    <span class="p">};</span>
-<span class="p">}</span>
-
-<span class="c1">// Declare boilerplate code required for each of the component actions.</span>
-<span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span><span class="n">app</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">print_greeting_action</span><span class="p">);</span>
-</pre></div>
-</div>
-<dl class="simple">
-<dt><strong>Example:</strong></dt><dd><p></p>
-</dd>
-</dl>
-</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>This macro has to be used once for each of the component actions defined using one of the <em>HPX_DEFINE_COMPONENT_ACTION</em> macros. It has to be visible in all translation units using the action, thus it is recommended to place it into the header file defining the component. </p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt id="c.HPX_REGISTER_ACTION_DECLARATION_">
-<span class="target" id="basic__action_8hpp_1aacfd9af407e84bd5713efe34000a0a87"></span><code class="sig-name descname">HPX_REGISTER_ACTION_DECLARATION_</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION_DECLARATION_" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp macro">
-<dt id="c.HPX_REGISTER_ACTION_DECLARATION_1">
-<span class="target" id="basic__action_8hpp_1a90c04c41dbd8b0470e6ce8e4f07ae8b4"></span><code class="sig-name descname">HPX_REGISTER_ACTION_DECLARATION_1</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION_DECLARATION_1" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp macro">
-<dt id="c.HPX_REGISTER_ACTION">
-<span class="target" id="basic__action_8hpp_1ad240c212ef96c34ca97009cba49d8c72"></span><code class="sig-name descname">HPX_REGISTER_ACTION</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Define the necessary component action boilerplate code. </p>
-<p>The macro <em>HPX_REGISTER_ACTION</em> can be used to define all the boilerplate code which is required for proper functioning of component actions in the context of HPX.</p>
-<p>The parameter <em>action</em> is the type of the action to define the boilerplate for.</p>
-<p>This macro can be invoked with an optional second parameter. This parameter specifies a unique name of the action to be used for serialization purposes. The second parameter has to be specified if the first parameter is not usable as a plain (non-qualified) C++ identifier, i.e. the first parameter contains special characters which cannot be part of a C++ identifier, such as ‘&lt;’, ‘&gt;’, or ‘:’.</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>This macro has to be used once for each of the component actions defined using one of the <em>HPX_DEFINE_COMPONENT_ACTION</em> or <em>HPX_DEFINE_PLAIN_ACTION</em> macros. It has to occur exactly once for each of the actions, thus it is recommended to place it into the source file defining the component.</p>
-</dd>
-<dt><strong>Note</strong></dt><dd><p>Only one of the forms of this macro <em>HPX_REGISTER_ACTION</em> or <em>HPX_REGISTER_ACTION_ID</em> should be used for a particular action, never both. </p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt id="c.HPX_REGISTER_ACTION_ID">
-<span class="target" id="basic__action_8hpp_1aea27e008c9f5d2191177431c5b351841"></span><code class="sig-name descname">HPX_REGISTER_ACTION_ID</code><span class="sig-paren">(</span><em>action</em>, <em>actionname</em>, <em>actionid</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION_ID" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Define the necessary component action boilerplate code and assign a predefined unique id to the action. </p>
-<p>The macro <em>HPX_REGISTER_ACTION</em> can be used to define all the boilerplate code which is required for proper functioning of component actions in the context of HPX.</p>
-<p>The parameter <em>action</em> is the type of the action to define the boilerplate for.</p>
-<p>The parameter <em>actionname</em> specifies an unique name of the action to be used for serialization purposes. The second parameter has to be usable as a plain (non-qualified) C++ identifier, it should not contain special characters which cannot be part of a C++ identifier, such as ‘&lt;’, ‘&gt;’, or ‘:’.</p>
-<p>The parameter <em>actionid</em> specifies an unique integer value which will be used to represent the action during serialization.</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>This macro has to be used once for each of the component actions defined using one of the <em>HPX_DEFINE_COMPONENT_ACTION</em> or global actions <em>HPX_DEFINE_PLAIN_ACTION</em> macros. It has to occur exactly once for each of the actions, thus it is recommended to place it into the source file defining the component.</p>
-</dd>
-<dt><strong>Note</strong></dt><dd><p>Only one of the forms of this macro <em>HPX_REGISTER_ACTION</em> or <em>HPX_REGISTER_ACTION_ID</em> should be used for a particular action, never both. </p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-</div>
-<dl class="cpp type">
-<dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx7actionsE">
-<span id="_CPPv3N3hpx7actionsE"></span><span id="_CPPv2N3hpx7actionsE"></span><span id="hpx::actions"></span><span class="target" id="namespacehpx_1_1actions"></span><em class="property">namespace </em><code class="sig-name descname">actions</code><a class="headerlink" href="#_CPPv4N3hpx7actionsE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><dl class="cpp struct">
-<dt id="_CPPv4I000EN3hpx7actions12basic_actionE">
-<span id="_CPPv3I000EN3hpx7actions12basic_actionE"></span><span id="_CPPv2I000EN3hpx7actions12basic_actionE"></span><span class="target" id="structhpx_1_1actions_1_1basic__action"></span>template&lt;typename <code class="sig-name descname">Component</code>, typename <code class="sig-name descname">Signature</code>, typename <code class="sig-name descname">Derived</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">basic_action</code><a class="headerlink" href="#_CPPv4I000EN3hpx7actions12basic_actionE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;basic_action_fwd.hpp&gt;</em><p><dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Component</span></code>: component type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Signature</span></code>: return type and arguments </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Derived</span></code>: derived action class </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-</dd></dl>
-
-</dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx7actionsE">
-<span id="_CPPv3N3hpx7actionsE"></span><span id="_CPPv2N3hpx7actionsE"></span><span class="target" id="namespacehpx_1_1actions"></span><em class="property">namespace </em><code class="sig-name descname">actions</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4I0EN3hpx7actions15action_priorityEN7threads15thread_priorityEv">
-<span id="_CPPv3I0EN3hpx7actions15action_priorityEv"></span><span id="_CPPv2I0EN3hpx7actions15action_priorityEv"></span><span class="target" id="action__priority_8hpp_1a37222160fccc88078ea689abd6ec6dc8"></span>template&lt;typename <code class="sig-name descname">Action</code>&gt;<br /><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/coroutines/api.html#_CPPv4N3hpx7threads15thread_priorityE" title="hpx::threads::thread_priority">thread_priority</a> <code class="sig-name descname">action_priority</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx7actions15action_priorityEN7threads15thread_priorityEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx7actionsE">
-<span id="_CPPv3N3hpx7actionsE"></span><span class="target" id="namespacehpx_1_1actions"></span><em class="property">namespace </em><code class="sig-name descname">actions</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts">
-<span id="_CPPv3I000DpEN3hpx7actions7triggerERR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts"></span><span id="_CPPv2I000DpEN3hpx7actions7triggerERR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts"></span><span class="target" id="continuation__fwd_8hpp_1a500f95d762713823aa3fc2220d325df2"></span>template&lt;typename <code class="sig-name descname">Result</code>, typename <code class="sig-name descname">RemoteResult</code>, typename <code class="sig-name descname">F</code>, typename ...<code class="sig-name descname">Ts</code>&gt;<br />void <code class="sig-name descname">trigger</code><span class="sig-paren">(</span>typed_continuation&lt;<a class="reference internal" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="hpx::actions::trigger::Result">Result</a>, <a class="reference internal" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="hpx::actions::trigger::RemoteResult">RemoteResult</a>&gt; &amp;&amp;<em>cont</em>, <a class="reference internal" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="hpx::actions::trigger::F">F</a> &amp;&amp;<em>f</em>, <a class="reference internal" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="hpx::actions::trigger::Ts">Ts</a>&amp;&amp;... <em>vs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Defines</p>
-<dl class="cpp macro">
 <dt id="c.HPX_DEFINE_PLAIN_ACTION">
 <span class="target" id="plain__action_8hpp_1a8c78d9a115479f073aac617f2020956e"></span><code class="sig-name descname">HPX_DEFINE_PLAIN_ACTION</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_DEFINE_PLAIN_ACTION" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Defines a plain action type. </p>
@@ -542,6 +395,93 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Defines</p>
 <dl class="cpp macro">
+<dt id="c.HPX_REGISTER_ACTION_DECLARATION">
+<span class="target" id="basic__action_8hpp_1ac13b639396c1d3476c04033b29ae3835"></span><code class="sig-name descname">HPX_REGISTER_ACTION_DECLARATION</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION_DECLARATION" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Declare the necessary component action boilerplate code. </p>
+<p>The macro <em>HPX_REGISTER_ACTION_DECLARATION</em> can be used to declare all the boilerplate code which is required for proper functioning of component actions in the context of HPX.</p>
+<p>The parameter <em>action</em> is the type of the action to declare the boilerplate for.</p>
+<p>This macro can be invoked with an optional second parameter. This parameter specifies a unique name of the action to be used for serialization purposes. The second parameter has to be specified if the first parameter is not usable as a plain (non-qualified) C++ identifier, i.e. the first parameter contains special characters which cannot be part of a C++ identifier, such as ‘&lt;’, ‘&gt;’, or ‘:’.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">app</span>
+<span class="p">{</span>
+    <span class="c1">// Define a simple component exposing one action &#39;print_greeting&#39;</span>
+    <span class="k">class</span> <span class="nc">HPX_COMPONENT_EXPORT</span> <span class="nl">server</span>
+      <span class="p">:</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">simple_component_base</span><span class="o">&lt;</span><span class="n">server</span><span class="o">&gt;</span>
+    <span class="p">{</span>
+        <span class="kt">void</span> <span class="n">print_greeting</span> <span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hey, how are you?</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Component actions need to be declared, this also defines the</span>
+        <span class="c1">// type &#39;print_greeting_action&#39; representing the action.</span>
+        <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">server</span><span class="p">,</span>
+            <span class="n">print_greeting</span><span class="p">,</span> <span class="n">print_greeting_action</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// Declare boilerplate code required for each of the component actions.</span>
+<span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span><span class="n">app</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">print_greeting_action</span><span class="p">);</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Example:</strong></dt><dd><p></p>
+</dd>
+</dl>
+</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>This macro has to be used once for each of the component actions defined using one of the <em>HPX_DEFINE_COMPONENT_ACTION</em> macros. It has to be visible in all translation units using the action, thus it is recommended to place it into the header file defining the component. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_ACTION_DECLARATION_">
+<span class="target" id="basic__action_8hpp_1aacfd9af407e84bd5713efe34000a0a87"></span><code class="sig-name descname">HPX_REGISTER_ACTION_DECLARATION_</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION_DECLARATION_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_ACTION_DECLARATION_1">
+<span class="target" id="basic__action_8hpp_1a90c04c41dbd8b0470e6ce8e4f07ae8b4"></span><code class="sig-name descname">HPX_REGISTER_ACTION_DECLARATION_1</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION_DECLARATION_1" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_ACTION">
+<span class="target" id="basic__action_8hpp_1ad240c212ef96c34ca97009cba49d8c72"></span><code class="sig-name descname">HPX_REGISTER_ACTION</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Define the necessary component action boilerplate code. </p>
+<p>The macro <em>HPX_REGISTER_ACTION</em> can be used to define all the boilerplate code which is required for proper functioning of component actions in the context of HPX.</p>
+<p>The parameter <em>action</em> is the type of the action to define the boilerplate for.</p>
+<p>This macro can be invoked with an optional second parameter. This parameter specifies a unique name of the action to be used for serialization purposes. The second parameter has to be specified if the first parameter is not usable as a plain (non-qualified) C++ identifier, i.e. the first parameter contains special characters which cannot be part of a C++ identifier, such as ‘&lt;’, ‘&gt;’, or ‘:’.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>This macro has to be used once for each of the component actions defined using one of the <em>HPX_DEFINE_COMPONENT_ACTION</em> or <em>HPX_DEFINE_PLAIN_ACTION</em> macros. It has to occur exactly once for each of the actions, thus it is recommended to place it into the source file defining the component.</p>
+</dd>
+<dt><strong>Note</strong></dt><dd><p>Only one of the forms of this macro <em>HPX_REGISTER_ACTION</em> or <em>HPX_REGISTER_ACTION_ID</em> should be used for a particular action, never both. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_ACTION_ID">
+<span class="target" id="basic__action_8hpp_1aea27e008c9f5d2191177431c5b351841"></span><code class="sig-name descname">HPX_REGISTER_ACTION_ID</code><span class="sig-paren">(</span><em>action</em>, <em>actionname</em>, <em>actionid</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_ACTION_ID" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Define the necessary component action boilerplate code and assign a predefined unique id to the action. </p>
+<p>The macro <em>HPX_REGISTER_ACTION</em> can be used to define all the boilerplate code which is required for proper functioning of component actions in the context of HPX.</p>
+<p>The parameter <em>action</em> is the type of the action to define the boilerplate for.</p>
+<p>The parameter <em>actionname</em> specifies an unique name of the action to be used for serialization purposes. The second parameter has to be usable as a plain (non-qualified) C++ identifier, it should not contain special characters which cannot be part of a C++ identifier, such as ‘&lt;’, ‘&gt;’, or ‘:’.</p>
+<p>The parameter <em>actionid</em> specifies an unique integer value which will be used to represent the action during serialization.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>This macro has to be used once for each of the component actions defined using one of the <em>HPX_DEFINE_COMPONENT_ACTION</em> or global actions <em>HPX_DEFINE_PLAIN_ACTION</em> macros. It has to occur exactly once for each of the actions, thus it is recommended to place it into the source file defining the component.</p>
+</dd>
+<dt><strong>Note</strong></dt><dd><p>Only one of the forms of this macro <em>HPX_REGISTER_ACTION</em> or <em>HPX_REGISTER_ACTION_ID</em> should be used for a particular action, never both. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="cpp macro">
 <dt id="c.HPX_DEFINE_COMPONENT_ACTION">
 <span class="target" id="component__action_8hpp_1a155152f9f75f6aa5cae3f0434b84540f"></span><code class="sig-name descname">HPX_DEFINE_COMPONENT_ACTION</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_DEFINE_COMPONENT_ACTION" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Registers a member function of a component as an action type with HPX. </p>
@@ -584,56 +524,70 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 </div>
 <dl class="cpp type">
 <dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx7actionsE">
+<span id="_CPPv3N3hpx7actionsE"></span><span id="_CPPv2N3hpx7actionsE"></span><span id="hpx::actions"></span><span class="target" id="namespacehpx_1_1actions"></span><em class="property">namespace </em><code class="sig-name descname">actions</code><a class="headerlink" href="#_CPPv4N3hpx7actionsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts">
+<span id="_CPPv3I000DpEN3hpx7actions7triggerERR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts"></span><span id="_CPPv2I000DpEN3hpx7actions7triggerERR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts"></span><span class="target" id="continuation__fwd_8hpp_1a500f95d762713823aa3fc2220d325df2"></span>template&lt;typename <code class="sig-name descname">Result</code>, typename <code class="sig-name descname">RemoteResult</code>, typename <code class="sig-name descname">F</code>, typename ...<code class="sig-name descname">Ts</code>&gt;<br />void <code class="sig-name descname">trigger</code><span class="sig-paren">(</span>typed_continuation&lt;<a class="reference internal" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="hpx::actions::trigger::Result">Result</a>, <a class="reference internal" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="hpx::actions::trigger::RemoteResult">RemoteResult</a>&gt; &amp;&amp;<em>cont</em>, <a class="reference internal" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="hpx::actions::trigger::F">F</a> &amp;&amp;<em>f</em>, <a class="reference internal" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="hpx::actions::trigger::Ts">Ts</a>&amp;&amp;... <em>vs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000DpEN3hpx7actions7triggerEvRR18typed_continuationI6Result12RemoteResultERR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx7actionsE">
+<span id="_CPPv3N3hpx7actionsE"></span><span id="_CPPv2N3hpx7actionsE"></span><span class="target" id="namespacehpx_1_1actions"></span><em class="property">namespace </em><code class="sig-name descname">actions</code><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4I000EN3hpx7actions12basic_actionE">
+<span id="_CPPv3I000EN3hpx7actions12basic_actionE"></span><span id="_CPPv2I000EN3hpx7actions12basic_actionE"></span><span class="target" id="structhpx_1_1actions_1_1basic__action"></span>template&lt;typename <code class="sig-name descname">Component</code>, typename <code class="sig-name descname">Signature</code>, typename <code class="sig-name descname">Derived</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">basic_action</code><a class="headerlink" href="#_CPPv4I000EN3hpx7actions12basic_actionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;basic_action_fwd.hpp&gt;</em><p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Component</span></code>: component type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Signature</span></code>: return type and arguments </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Derived</span></code>: derived action class </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx7actionsE">
+<span id="_CPPv3N3hpx7actionsE"></span><span class="target" id="namespacehpx_1_1actions"></span><em class="property">namespace </em><code class="sig-name descname">actions</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx7actions15action_priorityEN7threads15thread_priorityEv">
+<span id="_CPPv3I0EN3hpx7actions15action_priorityEv"></span><span id="_CPPv2I0EN3hpx7actions15action_priorityEv"></span><span class="target" id="action__priority_8hpp_1a37222160fccc88078ea689abd6ec6dc8"></span>template&lt;typename <code class="sig-name descname">Action</code>&gt;<br /><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/coroutines/api.html#_CPPv4N3hpx7threads15thread_priorityE" title="hpx::threads::thread_priority">thread_priority</a> <code class="sig-name descname">action_priority</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx7actions15action_priorityEN7threads15thread_priorityEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
 <span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><dl class="cpp type">
 <dt id="_CPPv4N3hpx6traitsE">
 <span id="_CPPv3N3hpx6traitsE"></span><span id="_CPPv2N3hpx6traitsE"></span><span id="hpx::traits"></span><span class="target" id="namespacehpx_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
-<dd><dl class="cpp struct">
-<dt id="_CPPv4I00EN3hpx6traits30action_select_direct_executionE">
-<span id="_CPPv3I00EN3hpx6traits30action_select_direct_executionE"></span><span id="_CPPv2I00EN3hpx6traits30action_select_direct_executionE"></span><span class="target" id="structhpx_1_1traits_1_1action__select__direct__execution"></span>template&lt;typename <code class="sig-name descname">Action</code>, typename <code class="sig-name descname">Enable</code> = void&gt;<br /><em class="property">struct </em><code class="sig-name descname">action_select_direct_execution</code><a class="headerlink" href="#_CPPv4I00EN3hpx6traits30action_select_direct_executionE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx6traits30action_select_direct_execution4callE6launchN6naming12address_typeE">
-<span id="_CPPv3N3hpx6traits30action_select_direct_execution4callE6launchN6naming12address_typeE"></span><span id="_CPPv2N3hpx6traits30action_select_direct_execution4callE6launchN6naming12address_typeE"></span><span id="hpx::traits::action_select_direct_execution::call__launch.naming::address_typeCE"></span><span class="target" id="structhpx_1_1traits_1_1action__select__direct__execution_1a5875474200801f4f057210a21f489036"></span><em class="property">static</em> <em class="property">constexpr</em> <a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a> <code class="sig-name descname">call</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a> <em>policy</em>, <a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../../core/naming_base/api.html#_CPPv4N3hpx6naming12address_typeE" title="hpx::naming::address_type">address_type</a> <em>lva</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6traits30action_select_direct_execution4callE6launchN6naming12address_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
-</dd></dl>
-
-<dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx6traitsE">
-<span id="_CPPv3N3hpx6traitsE"></span><span id="_CPPv2N3hpx6traitsE"></span><span class="target" id="namespacehpx_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
-<dd><dl class="cpp struct">
-<dt id="_CPPv4I00EN3hpx6traits15action_priorityE">
-<span id="_CPPv3I00EN3hpx6traits15action_priorityE"></span><span id="_CPPv2I00EN3hpx6traits15action_priorityE"></span><span class="target" id="structhpx_1_1traits_1_1action__priority"></span>template&lt;typename <code class="sig-name descname">Action</code>, typename <code class="sig-name descname">Enable</code> = void&gt;<br /><em class="property">struct </em><code class="sig-name descname">action_priority</code><a class="headerlink" href="#_CPPv4I00EN3hpx6traits15action_priorityE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Static Attributes</p>
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx6traits15action_priority5valueE">
-<span id="_CPPv3N3hpx6traits15action_priority5valueE"></span><span id="_CPPv2N3hpx6traits15action_priority5valueE"></span><span id="hpx::traits::action_priority::value__threads::thread_priority"></span><span class="target" id="structhpx_1_1traits_1_1action__priority_1a98ff71f3b11691d063f07b95ae574829"></span><em class="property">constexpr</em> <a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/coroutines/api.html#_CPPv4N3hpx7threads15thread_priorityE" title="hpx::threads::thread_priority">thread_priority</a> <code class="sig-name descname">value</code> = <a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/coroutines/api.html#_CPPv4N3hpx7threads23thread_priority_defaultE" title="hpx::threads::thread_priority_default">thread_priority_default</a><a class="headerlink" href="#_CPPv4N3hpx6traits15action_priority5valueE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
-</dd></dl>
-
-<dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx6traitsE">
-<span id="_CPPv3N3hpx6traitsE"></span><span class="target" id="namespacehpx_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
 <dd><dl class="cpp struct">
 <dt id="_CPPv4I00EN3hpx6traits19action_continuationE">
 <span id="_CPPv3I00EN3hpx6traits19action_continuationE"></span><span id="_CPPv2I00EN3hpx6traits19action_continuationE"></span><span class="target" id="structhpx_1_1traits_1_1action__continuation"></span>template&lt;typename <code class="sig-name descname">Action</code>, typename <code class="sig-name descname">Enable</code> = void&gt;<br /><em class="property">struct </em><code class="sig-name descname">action_continuation</code><a class="headerlink" href="#_CPPv4I00EN3hpx6traits19action_continuationE" title="Permalink to this definition">¶</a><br /></dt>
@@ -656,7 +610,7 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><dl class="cpp type">
 <dt id="_CPPv4N3hpx6traitsE">
-<span class="target" id="namespacehpx_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
+<span id="_CPPv3N3hpx6traitsE"></span><span id="_CPPv2N3hpx6traitsE"></span><span class="target" id="namespacehpx_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
 <dd><dl class="cpp struct">
 <dt id="_CPPv4I00EN3hpx6traits14extract_actionE">
 <span id="_CPPv3I00EN3hpx6traits14extract_actionE"></span><span id="_CPPv2I00EN3hpx6traits14extract_actionE"></span><span class="target" id="structhpx_1_1traits_1_1extract__action"></span>template&lt;typename <code class="sig-name descname">Action</code>, typename <code class="sig-name descname">Enable</code> = void&gt;<br /><em class="property">struct </em><code class="sig-name descname">extract_action</code><a class="headerlink" href="#_CPPv4I00EN3hpx6traits14extract_actionE" title="Permalink to this definition">¶</a><br /></dt>
@@ -680,6 +634,52 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <dl class="cpp type">
 <dt id="_CPPv4IEN3hpx6traits14extract_actionI6Action6EnableE18remote_result_typeE">
 <span id="_CPPv3IEN3hpx6traits14extract_actionI6Action6EnableE18remote_result_typeE"></span><span id="_CPPv2IEN3hpx6traits14extract_actionI6Action6EnableE18remote_result_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1traits_1_1extract__action_1ab2afe71f9c0480299dfd782210739cba"></span><em class="property">using </em><code class="sig-name descname">remote_result_type</code> = <em class="property">typename</em> <a class="reference internal" href="#_CPPv4IEN3hpx6traits14extract_actionI6Action6EnableE4typeE" title="hpx::traits::extract_action&lt;Action, Enable&gt;::type">type</a>::remote_result_type<a class="headerlink" href="#_CPPv4IEN3hpx6traits14extract_actionI6Action6EnableE18remote_result_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx6traitsE">
+<span id="_CPPv3N3hpx6traitsE"></span><span class="target" id="namespacehpx_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4I00EN3hpx6traits30action_select_direct_executionE">
+<span id="_CPPv3I00EN3hpx6traits30action_select_direct_executionE"></span><span id="_CPPv2I00EN3hpx6traits30action_select_direct_executionE"></span><span class="target" id="structhpx_1_1traits_1_1action__select__direct__execution"></span>template&lt;typename <code class="sig-name descname">Action</code>, typename <code class="sig-name descname">Enable</code> = void&gt;<br /><em class="property">struct </em><code class="sig-name descname">action_select_direct_execution</code><a class="headerlink" href="#_CPPv4I00EN3hpx6traits30action_select_direct_executionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6traits30action_select_direct_execution4callE6launchN6naming12address_typeE">
+<span id="_CPPv3N3hpx6traits30action_select_direct_execution4callE6launchN6naming12address_typeE"></span><span id="_CPPv2N3hpx6traits30action_select_direct_execution4callE6launchN6naming12address_typeE"></span><span id="hpx::traits::action_select_direct_execution::call__launch.naming::address_typeCE"></span><span class="target" id="structhpx_1_1traits_1_1action__select__direct__execution_1a5875474200801f4f057210a21f489036"></span><em class="property">static</em> <em class="property">constexpr</em> <a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a> <code class="sig-name descname">call</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a> <em>policy</em>, <a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../../core/naming_base/api.html#_CPPv4N3hpx6naming12address_typeE" title="hpx::naming::address_type">address_type</a> <em>lva</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6traits30action_select_direct_execution4callE6launchN6naming12address_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx6traitsE">
+<span class="target" id="namespacehpx_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4I00EN3hpx6traits15action_priorityE">
+<span id="_CPPv3I00EN3hpx6traits15action_priorityE"></span><span id="_CPPv2I00EN3hpx6traits15action_priorityE"></span><span class="target" id="structhpx_1_1traits_1_1action__priority"></span>template&lt;typename <code class="sig-name descname">Action</code>, typename <code class="sig-name descname">Enable</code> = void&gt;<br /><em class="property">struct </em><code class="sig-name descname">action_priority</code><a class="headerlink" href="#_CPPv4I00EN3hpx6traits15action_priorityE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx6traits15action_priority5valueE">
+<span id="_CPPv3N3hpx6traits15action_priority5valueE"></span><span id="_CPPv2N3hpx6traits15action_priority5valueE"></span><span id="hpx::traits::action_priority::value__threads::thread_priority"></span><span class="target" id="structhpx_1_1traits_1_1action__priority_1a98ff71f3b11691d063f07b95ae574829"></span><em class="property">constexpr</em> <a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/coroutines/api.html#_CPPv4N3hpx7threads15thread_priorityE" title="hpx::threads::thread_priority">thread_priority</a> <code class="sig-name descname">value</code> = <a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/coroutines/api.html#_CPPv4N3hpx7threads23thread_priority_defaultE" title="hpx::threads::thread_priority_default">thread_priority_default</a><a class="headerlink" href="#_CPPv4N3hpx6traits15action_priority5valueE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -743,7 +743,7 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>0ca43ae</code>.
+          Revision <code>8228c38</code>.
         </span>
       
 

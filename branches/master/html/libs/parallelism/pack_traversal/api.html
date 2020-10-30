@@ -294,53 +294,6 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Functions</p>
 <dl class="cpp function">
-<dt>
-<span class="target" id="pack__traversal_8hpp_1a00dc09958eb28cdf31d74de35cb54b68"></span><code class="sig-name descname">template&lt;typename Mapper, typename... T&gt;&lt;unspecified&gt; hpx::util::map_pack(Mapper &amp;&amp; mapper, T &amp;&amp;... pack)</code></dt>
-<dd><p>Maps the pack with the given mapper.</p>
-<p>This function tries to visit all plain elements which may be wrapped in:<ul class="simple">
-<li><p>homogeneous containers (<code class="docutils literal notranslate"><span class="pre">std::vector</span></code>, <code class="docutils literal notranslate"><span class="pre">std::list</span></code>)</p></li>
-<li><p>heterogeneous containers <code class="docutils literal notranslate"><span class="pre">(hpx::tuple</span></code>, <code class="docutils literal notranslate"><span class="pre">std::pair</span></code>, <code class="docutils literal notranslate"><span class="pre">std::array</span></code>) and re-assembles the pack with the result of the mapper. Mapping from one type to a different one is supported.</p></li>
-</ul>
-</p>
-<p>Elements that aren’t accepted by the mapper are routed through and preserved through the hierarchy.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Maps all integers to floats</span>
-<span class="n">map_pack</span><span class="p">([](</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="kt">float</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-<span class="p">},</span>
-<span class="mi">1</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}),</span> <span class="mi">5</span><span class="p">);</span>
-</pre></div>
-</div>
-</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>The mapped element or in case the pack contains multiple elements, the pack is wrapped into a <code class="docutils literal notranslate"><span class="pre">hpx::tuple</span></code>. </p>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">std::exception</span></code>: like objects which are thrown by an invocation to the mapper.</p></li>
-</ul>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">mapper</span></code>: A callable object, which accept an arbitrary type and maps it to another type or the same one.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: An arbitrary variadic pack which may contain any type.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx4utilE">
-<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="cpp function">
 <dt id="_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T">
 <span id="_CPPv3I0DpEN3hpx4util19traverse_pack_asyncERR7VisitorDpRR1T"></span><span id="_CPPv2I0DpEN3hpx4util19traverse_pack_asyncERR7VisitorDpRR1T"></span><span class="target" id="pack__traversal__async_8hpp_1a1f6868cf0eddd78ed96b2f12edf69624"></span>template&lt;typename <code class="sig-name descname">Visitor</code>, typename ...<code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">traverse_pack_async</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async::Visitor">Visitor</a> &amp;&amp;<em>visitor</em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="hpx::util::traverse_pack_async::T">T</a>&amp;&amp;... <em>pack</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx4util19traverse_pack_asyncEDaRR7VisitorDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Traverses the pack with the given visitor in an asynchronous way.</p>
@@ -424,10 +377,10 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 
 <dl class="cpp type">
 <dt id="_CPPv43hpx">
-<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
 <dd><dl class="cpp type">
 <dt id="_CPPv4N3hpx4utilE">
-<span id="_CPPv3N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Functions</p>
 <dl class="cpp function">
@@ -550,6 +503,53 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 
 </dd></dl>
 
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="pack__traversal_8hpp_1a00dc09958eb28cdf31d74de35cb54b68"></span><code class="sig-name descname">template&lt;typename Mapper, typename... T&gt;&lt;unspecified&gt; hpx::util::map_pack(Mapper &amp;&amp; mapper, T &amp;&amp;... pack)</code></dt>
+<dd><p>Maps the pack with the given mapper.</p>
+<p>This function tries to visit all plain elements which may be wrapped in:<ul class="simple">
+<li><p>homogeneous containers (<code class="docutils literal notranslate"><span class="pre">std::vector</span></code>, <code class="docutils literal notranslate"><span class="pre">std::list</span></code>)</p></li>
+<li><p>heterogeneous containers <code class="docutils literal notranslate"><span class="pre">(hpx::tuple</span></code>, <code class="docutils literal notranslate"><span class="pre">std::pair</span></code>, <code class="docutils literal notranslate"><span class="pre">std::array</span></code>) and re-assembles the pack with the result of the mapper. Mapping from one type to a different one is supported.</p></li>
+</ul>
+</p>
+<p>Elements that aren’t accepted by the mapper are routed through and preserved through the hierarchy.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Maps all integers to floats</span>
+<span class="n">map_pack</span><span class="p">([](</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">float</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+<span class="p">},</span>
+<span class="mi">1</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}),</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The mapped element or in case the pack contains multiple elements, the pack is wrapped into a <code class="docutils literal notranslate"><span class="pre">hpx::tuple</span></code>. </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::exception</span></code>: like objects which are thrown by an invocation to the mapper.</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mapper</span></code>: A callable object, which accept an arbitrary type and maps it to another type or the same one.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>: An arbitrary variadic pack which may contain any type.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -705,7 +705,7 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>131daea</code>.
+          Revision <code>8f608a9</code>.
         </span>
       
 

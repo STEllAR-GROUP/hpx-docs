@@ -227,6 +227,8 @@
 program. It prints <code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">World!</span></code> on the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> you run it on.</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Including &#39;hpx/hpx_main.hpp&#39; instead of the usual &#39;hpx/hpx_init.hpp&#39; enables</span>
 <span class="c1">// to use the plain C-main below as the direct main HPX entry point.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
 
@@ -282,7 +284,9 @@ component is a class that exposes <em>HPX</em> actions. <em>HPX</em> components 
 into dynamically loaded modules called component libraries. Here’s the source
 code:</p>
 <p><strong>hello_world_component.cpp</strong></p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
+<span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
@@ -305,11 +309,14 @@ code:</p>
 
 <span class="n">HPX_REGISTER_ACTION</span><span class="p">(</span>
     <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">::</span><span class="n">invoke_action</span><span class="p">,</span> <span class="n">hello_world_invoke_action</span><span class="p">);</span>
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 <p><strong>hello_world_component.hpp</strong></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
 
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/actions.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/lcos.hpp&gt;</span><span class="cp"></span>
@@ -353,10 +360,14 @@ code:</p>
         <span class="p">}</span>
     <span class="p">};</span>
 <span class="p">}</span>
+
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 <p><strong>hello_world_client.cpp</strong></p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
+<span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
@@ -372,6 +383,7 @@ code:</p>
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 <p>Copy the three source files above into three files (called
@@ -658,6 +670,8 @@ Hello World program. It prints <code class="docutils literal notranslate"><span 
 run it on.</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Including &#39;hpx/hpx_main.hpp&#39; instead of the usual &#39;hpx/hpx_init.hpp&#39; enables</span>
 <span class="c1">// to use the plain C-main below as the direct main HPX entry point.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
 
@@ -716,7 +730,9 @@ component is a class that exposes <em>HPX</em> actions. <em>HPX</em> components 
 into dynamically-loaded modules called component libraries. Here’s the source
 code:</p>
 <p><strong>hello_world_component.cpp</strong></p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
+<span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
@@ -739,11 +755,14 @@ code:</p>
 
 <span class="n">HPX_REGISTER_ACTION</span><span class="p">(</span>
     <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">::</span><span class="n">invoke_action</span><span class="p">,</span> <span class="n">hello_world_invoke_action</span><span class="p">);</span>
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 <p><strong>hello_world_component.hpp</strong></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
 
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/actions.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/lcos.hpp&gt;</span><span class="cp"></span>
@@ -787,10 +806,14 @@ code:</p>
         <span class="p">}</span>
     <span class="p">};</span>
 <span class="p">}</span>
+
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 <p><strong>hello_world_client.cpp</strong></p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
+<span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
@@ -806,6 +829,7 @@ code:</p>
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 <p>Now, in the directory, create a Makefile. Add the following code:</p>
@@ -887,7 +911,7 @@ pkg-config files and CMake systems are configured with CMake build of
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>d3ef56a</code>.
+          Revision <code>eeb07d8</code>.
         </span>
       
 

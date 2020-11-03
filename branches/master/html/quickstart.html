@@ -355,6 +355,8 @@ functionality in our application.</p>
 Also create a <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> with the contents below.</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Including &#39;hpx/hpx_main.hpp&#39; instead of the usual &#39;hpx/hpx_init.hpp&#39; enables</span>
 <span class="c1">// to use the plain C-main below as the direct main HPX entry point.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
 
@@ -404,6 +406,8 @@ runtime. In that case you start the <em>HPX</em> runtime explicitly by calling
 <span class="c1">// execute a HPX-thread printing &quot;Hello World!&quot; once. That&#39;s all.</span>
 
 <span class="c1">//[hello_world_2_getting_started</span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_init.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
 
@@ -419,6 +423,7 @@ runtime. In that case you start the <em>HPX</em> runtime explicitly by calling
     <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="c1">//]</span>
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 <p>You can also use <a class="reference internal" href="libs/full/init_runtime/api.html#_CPPv4N3hpx5startERKN4util15function_nonserIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::start"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::start</span></code></a> and <a class="reference internal" href="libs/full/init_runtime/api.html#_CPPv4N3hpx4stopER10error_code" title="hpx::stop"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::stop</span></code></a> for a
@@ -471,7 +476,9 @@ like <code class="docutils literal notranslate"><span class="pre">when_all</span
 </ul>
 <p>The following example is a collection of the most commonly used functionality in
 <em>HPX</em>:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/lcos.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/parallel_generate.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/parallel_sort.hpp&gt;</span><span class="cp"></span>
@@ -545,6 +552,7 @@ like <code class="docutils literal notranslate"><span class="pre">when_all</span
 
     <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
 <span class="p">}</span>
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 <p>Try copying the contents to your <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> file and look at the output. It can
@@ -617,7 +625,7 @@ to a distributed implementation.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>d3ef56a</code>.
+          Revision <code>eeb07d8</code>.
         </span>
       
 

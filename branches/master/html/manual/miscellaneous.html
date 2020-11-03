@@ -227,11 +227,10 @@ where it will be rethrown during synchronization with the calling thread.</p>
 <span id="exceptions"></span><h3>Working with exceptions<a class="headerlink" href="#working-with-exceptions" title="Permalink to this headline">¶</a></h3>
 <p>For the following description assume that the function <code class="docutils literal notranslate"><span class="pre">raise_exception()</span></code>
 is executed by invoking the plain action <code class="docutils literal notranslate"><span class="pre">raise_exception_type</span></code>.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/modules/runtime_local.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/modules/runtime_local.hpp&gt;</span><span class="cp"></span>
 
 <span class="c1">//[error_handling_raise_exception</span>
-<span class="kt">void</span> <span class="nf">raise_exception</span><span class="p">()</span>
-<span class="p">{</span>
 </pre></div>
 </div>
 <p>The exception is thrown using the macro <a class="reference internal" href="../libs/core/errors/api.html#c.HPX_THROW_EXCEPTION" title="HPX_THROW_EXCEPTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_THROW_EXCEPTION</span></code></a>. The type
@@ -243,7 +242,9 @@ where the exception was thrown.</p>
 the (asynchronous) invocation site. It will be rethrown in this context when the
 calling thread tries to wait for the result of the action by invoking either
 <code class="docutils literal notranslate"><span class="pre">future&lt;&gt;::get()</span></code> or the synchronous action invocation wrapper as shown here:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="p">{</span>
+        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
         <span class="c1">// Error reporting using exceptions</span>
         <span class="c1">//[exception_diagnostic_information</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
@@ -257,8 +258,6 @@ calling thread tries to wait for the result of the action by invoking either
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;caught exception: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
 
             <span class="c1">// Print all of the available diagnostic information as stored with</span>
-            <span class="c1">// the exception.</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;diagnostic information:&quot;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -277,7 +276,10 @@ backtrace of the point where the original exception was thrown.</p>
 diagnostics, or to output those using different formatting. For this case, <em>HPX</em>
 exposes a set of lower-level functions as demonstrated in the following code
 snippet:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">// Detailed error reporting using exceptions</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+        <span class="c1">//]</span>
+
+        <span class="c1">// Detailed error reporting using exceptions</span>
         <span class="c1">//[exception_diagnostic_elements</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
         <span class="k">try</span> <span class="p">{</span>
@@ -300,8 +302,6 @@ snippet:</p>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{thread-description}: &quot;</span>
                 <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_description</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{state}: &quot;</span>       <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_state</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{stack-trace}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_backtrace</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -315,7 +315,8 @@ type can be passed as the last argument to the API function. In case of an error
 the error condition will be returned in that <a class="reference internal" href="../libs/core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a>
 instance. The following example demonstrates extracting the full diagnostic
 information without exception handling:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">// Error reporting using error code</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
+        <span class="c1">// Error reporting using error code</span>
         <span class="p">{</span>
             <span class="c1">//[error_handling_diagnostic_information</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
@@ -335,8 +336,6 @@ information without exception handling:</p>
 
                 <span class="c1">// Print all of the available diagnostic information as stored with</span>
                 <span class="c1">// the exception.</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;diagnostic information:&quot;</span>
-                    <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">diagnostic_information</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -355,7 +354,9 @@ circumstances it is desirable to output only some of the diagnostics, or to
 output those using different formatting. For this case, <em>HPX</em> exposes a set of
 lower-level functions usable with error codes as demonstrated in the following
 code snippet:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">// Detailed error reporting using error code</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="p">}</span>
+
+        <span class="c1">// Detailed error reporting using error code</span>
         <span class="p">{</span>
             <span class="c1">//[error_handling_diagnostic_elements</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
@@ -386,8 +387,6 @@ code snippet:</p>
                     <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_description</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
                 <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{state}: &quot;</span>       <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_state</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
                     <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{stack-trace}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_backtrace</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{env}: &quot;</span>         <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_env</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>For more information please refer to the documentation of
@@ -406,7 +405,9 @@ code snippet:</p>
 error at the point where it happened as this might impose too much overhead for
 simple scenarios. In this case, <em>HPX</em> provides a lightweight error code facility
 that will hold the error code only. The following snippet demonstrates its use:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">// Error reporting using lightweight error code</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="p">}</span>
+
+        <span class="c1">// Error reporting using lightweight error code</span>
         <span class="p">{</span>
             <span class="c1">//[lightweight_error_handling_diagnostic_information</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using an lightweight error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
@@ -425,8 +426,6 @@ that will hold the error code only. The following snippet demonstrates its use:<
                 <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;returned error: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">get_message</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
                 <span class="c1">// Print all of the available diagnostic information as stored with</span>
-                <span class="c1">// the exception.</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;error code:&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>All functions that retrieve other diagnostic elements from the
@@ -474,6 +473,8 @@ following ‘Hello world’ program:</p>
 <span class="c1">//[hello_world_1_getting_started</span>
 <span class="c1">// Including &#39;hpx/hpx_main.hpp&#39; instead of the usual &#39;hpx/hpx_init.hpp&#39; enables</span>
 <span class="c1">// to use the plain C-main below as the direct main HPX entry point.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
 
@@ -484,6 +485,8 @@ following ‘Hello world’ program:</p>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="c1">//]</span>
+
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 <p>Additionally, those applications need to link with the iostreams component. When
@@ -536,7 +539,7 @@ will appear on the console as long as either of these is explicitly used.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>d3ef56a</code>.
+          Revision <code>eeb07d8</code>.
         </span>
       
 

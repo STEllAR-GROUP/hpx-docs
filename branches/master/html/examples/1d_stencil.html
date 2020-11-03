@@ -430,8 +430,7 @@ functions to run on.</p>
 is accomplished in <code class="docutils literal notranslate"><span class="pre">stepper::do_work()</span></code> by passing the GID of the
 <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> where we wish to create the partition to the partition
 constructor.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// Initial conditions: f(0, i) = i</span>
-    <span class="c1">//[do_work_6</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="n">s</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">np</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>We distribute the partitions evenly based on the number of localities used,
@@ -451,10 +450,13 @@ retrieving remote data and working on the data in the middle partition. Because
 we know that the data for the middle partition is local, we can overlap the work
 on the middle partition with that of the possibly remote call of <code class="docutils literal notranslate"><span class="pre">get_data()</span></code>.
 This algorithmic change, which was implemented in example 7, can be seen below:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>    <span class="c1">//[stepper_7</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>        <span class="k">return</span> <span class="n">middle</span> <span class="o">+</span> <span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">dt</span><span class="o">/</span><span class="p">(</span><span class="n">dx</span><span class="o">*</span><span class="n">dx</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">left</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">middle</span> <span class="o">+</span> <span class="n">right</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">//[stepper_7</span>
     <span class="c1">// The partitioned operator, it invokes the heat operator above on all elements</span>
     <span class="c1">// of a partition.</span>
-    <span class="k">static</span> <span class="n">partition</span> <span class="nf">heat_part</span><span class="p">(</span><span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">left</span><span class="p">,</span>
+    <span class="k">static</span> <span class="n">partition</span> <span class="n">heat_part</span><span class="p">(</span><span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">left</span><span class="p">,</span>
         <span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">middle</span><span class="p">,</span> <span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">right</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">dataflow</span><span class="p">;</span>
@@ -472,7 +474,7 @@ This algorithmic change, which was implemented in example 7, can be seen below:<
                     <span class="c1">// All local operations are performed once the middle data of</span>
                     <span class="c1">// the previous time step becomes available.</span>
                     <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">size</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-                    <span class="n">partition_data</span> <span class="n">next</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+                    <span class="n">partition_data</span> <span class="nf">next</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
                     <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
                         <span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">heat</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
                     <span class="k">return</span> <span class="n">next</span><span class="p">;</span>
@@ -480,7 +482,7 @@ This algorithmic change, which was implemented in example 7, can be seen below:<
             <span class="p">)</span>
         <span class="p">);</span>
 
-        <span class="k">return</span> <span class="n">dataflow</span><span class="p">(</span>
+        <span class="k">return</span> <span class="nf">dataflow</span><span class="p">(</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async</span><span class="p">,</span>
             <span class="n">unwrapping</span><span class="p">(</span>
                 <span class="p">[</span><span class="n">left</span><span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="n">right</span><span class="p">](</span><span class="n">partition_data</span> <span class="n">next</span><span class="p">,</span> <span class="n">partition_data</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">l</span><span class="p">,</span>
@@ -502,8 +504,6 @@ This algorithmic change, which was implemented in example 7, can be seen below:<
             <span class="p">),</span>
             <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">next_middle</span><span class="p">),</span>
             <span class="n">left</span><span class="p">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">partition_server</span><span class="o">::</span><span class="n">left_partition</span><span class="p">),</span>
-            <span class="n">middle_data</span><span class="p">,</span>
-            <span class="n">right</span><span class="p">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">partition_server</span><span class="o">::</span><span class="n">right_partition</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Example 8 completes the futurization process and utilizes the full potential of
@@ -560,7 +560,7 @@ facilitates the scalable parallelization of most applications.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       
         <span class="commit">
-          Revision <code>d3ef56a</code>.
+          Revision <code>eeb07d8</code>.
         </span>
       
 

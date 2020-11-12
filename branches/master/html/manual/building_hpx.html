@@ -1032,10 +1032,7 @@ tar xjf boost_1_69_0.tar.bz2
 mkdir hpx-build
 <span class="nb">pushd</span> hpx-build
 <span class="nb">export</span> <span class="nv">HPX_ROOT</span><span class="o">=</span><span class="nv">$HOME</span>/hpx
-cmake -DCMAKE_C_COMPILER<span class="o">=</span>gcc <span class="se">\</span>
-    -DCMAKE_CXX_COMPILER<span class="o">=</span>g++ <span class="se">\</span>
-    -DCMAKE_FORTRAN_COMPILER<span class="o">=</span>gfortran <span class="se">\</span>
-    -DCMAKE_C_FLAGS<span class="o">=</span><span class="s2">&quot;-Wno-unused-local-typedefs&quot;</span> <span class="se">\</span>
+cmake -DCMAKE_CXX_COMPILER<span class="o">=</span>g++ <span class="se">\</span>
     -DCMAKE_CXX_FLAGS<span class="o">=</span><span class="s2">&quot;-Wno-unused-local-typedefs&quot;</span> <span class="se">\</span>
     -DBOOST_ROOT<span class="o">=</span><span class="nv">$BOOST_ROOT</span> <span class="se">\</span>
     -DHWLOC_ROOT<span class="o">=</span>/opt/local <span class="se">\</span>
@@ -1058,13 +1055,8 @@ MacOS.</p></li>
 also specify the location of the MPI wrapper scripts. This can be done using
 the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DHPX_WITH_PARCELPORT_MPI<span class="o">=</span>ON <span class="se">\</span>
-     -DCMAKE_C_COMPILER<span class="o">=</span>gcc <span class="se">\</span>
      -DCMAKE_CXX_COMPILER<span class="o">=</span>g++ <span class="se">\</span>
-     -DCMAKE_FORTRAN_COMPILER<span class="o">=</span>gfortran <span class="se">\</span>
-     -DMPI_C_COMPILER<span class="o">=</span>openmpicc <span class="se">\</span>
      -DMPI_CXX_COMPILER<span class="o">=</span>openmpic++ <span class="se">\</span>
-     -DMPI_FORTRAN_COMPILER<span class="o">=</span>openmpif90 <span class="se">\</span>
-     -DCMAKE_C_FLAGS<span class="o">=</span><span class="s2">&quot;-Wno-unused-local-typedefs&quot;</span> <span class="se">\</span>
      -DCMAKE_CXX_FLAGS<span class="o">=</span><span class="s2">&quot;-Wno-unused-local-typedefs&quot;</span> <span class="se">\</span>
      -DBOOST_ROOT<span class="o">=</span><span class="nv">$BOOST_DIR</span> <span class="se">\</span>
      -DHWLOC_ROOT<span class="o">=</span>/opt/local <span class="se">\</span>
@@ -1245,7 +1237,7 @@ blog post <a class="reference external" href="http://diehlpk.github.io/2015/08/0
 <ul>
 <li><p>Install all packages for minimal installation:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo dnf install gcc-c++ cmake boost-build boost boost-devel hwloc-devel <span class="se">\</span>
-  hwloc gcc-gfortran papi-devel gperftools-devel docbook-dtds <span class="se">\</span>
+  hwloc papi-devel gperftools-devel docbook-dtds <span class="se">\</span>
   docbook-style-xsl libsodium-devel doxygen boost-doc hdf5-devel <span class="se">\</span>
   fop boost-devel boost-openmpi-devel boost-mpich-devel
 </pre></div>
@@ -1359,7 +1351,6 @@ CMake invocation.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span> <span class="s">ON</span><span class="p">)</span>
 <span class="c"># Set the gcc Compiler</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">arm-linux-gnueabihf-g++-4.8</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span> <span class="s">arm-linux-gnueabihf-gcc-4.8</span><span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_GENERIC_CONTEXT_COROUTINES</span>
     <span class="s">ON</span>
     <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;enable generic coroutines&quot;</span>
@@ -1389,8 +1380,6 @@ CMake invocation.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span> <span class="s">Linux</span><span class="p">)</span>
 <span class="c"># Set the gcc Compiler</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">g++</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span> <span class="s">gcc</span><span class="p">)</span>
-<span class="c"># set(CMAKE_Fortran_COMPILER)</span>
 <span class="c"># Add flags we need for BGAS compilation</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
     <span class="s2">&quot;-D__powerpc__ -D__bgion__ -I/gpfs/bbp.cscs.ch/home/biddisco/src/bgas/rdmahelper &quot;</span>
@@ -1405,10 +1394,6 @@ CMake invocation.</p>
 <span class="c"># cmake-format: on</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_EXE_LINKER_FLAGS_INIT</span>
     <span class="s2">&quot;-L/gpfs/bbp.cscs.ch/apps/bgas/tools/gcc/gcc-4.8.2/install/lib64 -latomic -lrt&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;BGAS flags&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_INIT</span>
-    <span class="s2">&quot;-D__powerpc__ -I/gpfs/bbp.cscs.ch/home/biddisco/src/bgas/rdmahelper&quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;BGAS flags&quot;</span>
 <span class="p">)</span>
 <span class="c"># We do not perform cross compilation here ...</span>
@@ -1516,27 +1501,7 @@ CMake invocation.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span> <span class="s">Linux</span><span class="p">)</span>
 <span class="c"># Set the Intel Compiler</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">bgclang++11</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span> <span class="s">bgclang</span><span class="p">)</span>
-<span class="c"># set(CMAKE_Fortran_COMPILER)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">MPI_CXX_COMPILER</span> <span class="s">mpiclang++11</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">MPI_C_COMPILER</span> <span class="s">mpiclang</span><span class="p">)</span>
-<span class="c"># set(MPI_Fortran_COMPILER)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -fPIC &lt;DEFINES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -fPIC -dynamic &lt;FLAGS&gt; &lt;CMAKE_C_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_CREATE_SHARED_LIBRARY</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_CXX_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt; &quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
     <span class="s2">&quot;&quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
@@ -1551,21 +1516,6 @@ CMake invocation.</p>
 <span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_CREATE_SHARED_LIBRARY</span>
     <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_CXX_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -fPIC &lt;DEFINES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -fPIC -dynamic &lt;FLAGS&gt; &lt;CMAKE_Fortran_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_CREATE_SHARED_LIBRARY</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_Fortran_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_Fortran_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt; &quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span>
 <span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
@@ -1617,32 +1567,6 @@ CMake invocation.</p>
 <span class="nb">endif</span><span class="p">()</span>
 <span class="c"># Set the Cray Compiler Wrapper</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">CC</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span> <span class="s">cc</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILER</span> <span class="s">ftn</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_C_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -shared -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -fPIC -dynamic &lt;FLAGS&gt; &lt;CMAKE_C_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_CREATE_SHARED_LIBRARY</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_CXX_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt; &quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
     <span class="s2">&quot;&quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
@@ -1669,29 +1593,6 @@ CMake invocation.</p>
 <span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_CREATE_SHARED_LIBRARY</span>
     <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_CXX_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_Fortran_FLAGS</span>
-    <span class="s2">&quot;-fPIC&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CREATE_Fortran_FLAGS</span>
-    <span class="s2">&quot;-shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -shared -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -fPIC -dynamic &lt;FLAGS&gt; &lt;CMAKE_Fortran_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_CREATE_SHARED_LIBRARY</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_Fortran_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_Fortran_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt; &quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span>
 <span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
@@ -1765,33 +1666,6 @@ CMake invocation.</p>
 <span class="nb">endif</span><span class="p">()</span>
 <span class="c"># Set the Cray Compiler Wrapper</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">CC</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span> <span class="s">cc</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILER</span> <span class="s">ftn</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_C_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -shared -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_C_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_CREATE_SHARED_LIBRARY</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_CXX_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt; &quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c">#</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
     <span class="s2">&quot;&quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
@@ -1818,30 +1692,6 @@ CMake invocation.</p>
 <span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_CREATE_SHARED_LIBRARY</span>
     <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_CXX_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c">#</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_Fortran_FLAGS</span>
-    <span class="s2">&quot;-fPIC&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CREATE_Fortran_FLAGS</span>
-    <span class="s2">&quot;-shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -shared -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_Fortran_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_CREATE_SHARED_LIBRARY</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_Fortran_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_Fortran_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt; &quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span>
 <span class="c">#</span>
@@ -1932,20 +1782,6 @@ CMake invocation.</p>
 <span class="nb">set_property</span><span class="p">(</span><span class="s">GLOBAL</span> <span class="s">PROPERTY</span> <span class="s">TARGET_SUPPORTS_SHARED_LIBS</span> <span class="s">FALSE</span><span class="p">)</span>
 <span class="c"># Set the Cray Compiler Wrapper</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">CC</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span> <span class="s">cc</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILER</span> <span class="s">ftn</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -static -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_C_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
     <span class="s2">&quot;&quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
@@ -1957,17 +1793,6 @@ CMake invocation.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_LINK_EXECUTABLE</span>
     <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_CXX_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -static -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_Fortran_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
 <span class="p">)</span>
 <span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
 <span class="c"># and cmake might pick up wrong libraries that way</span>
@@ -2056,20 +1881,6 @@ CMake invocation.</p>
 <span class="nb">set_property</span><span class="p">(</span><span class="s">GLOBAL</span> <span class="s">PROPERTY</span> <span class="s">TARGET_SUPPORTS_SHARED_LIBS</span> <span class="s">FALSE</span><span class="p">)</span>
 <span class="c"># Set the Cray Compiler Wrapper</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">CC</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span> <span class="s">cc</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILER</span> <span class="s">ftn</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -static -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_C_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_C_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
     <span class="s2">&quot;&quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
@@ -2081,17 +1892,6 @@ CMake invocation.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_LINK_EXECUTABLE</span>
     <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_CXX_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -static -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_Fortran_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_Fortran_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
 <span class="p">)</span>
 <span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
 <span class="c"># and cmake might pick up wrong libraries that way</span>
@@ -2166,19 +1966,9 @@ CMake invocation.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span> <span class="s">Linux</span><span class="p">)</span>
 <span class="c"># Set the Intel Compiler</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">icpc</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span> <span class="s">icc</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_COMPILER</span> <span class="s">ifort</span><span class="p">)</span>
 <span class="c"># Add the -mmic compile flag such that everything will be compiled for the</span>
 <span class="c"># correct platform</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
-    <span class="s2">&quot;-mmic&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Initial compiler flags used to compile for the Xeon Phi&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS_INIT</span>
-    <span class="s2">&quot;-mmic&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Initial compiler flags used to compile for the Xeon Phi&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_Fortran_FLAGS_INIT</span>
     <span class="s2">&quot;-mmic&quot;</span>
     <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Initial compiler flags used to compile for the Xeon Phi&quot;</span>
 <span class="p">)</span>
@@ -2275,7 +2065,6 @@ generate your specific makefiles/project files.</p>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_DYNAMIC_HPX_MAIN-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DYNAMIC_HPX_MAIN:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_EMBEDDED_THREAD_POOLS_COMPATIBILITY-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_EMBEDDED_THREAD_POOLS_COMPATIBILITY:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_FAULT_TOLERANCE-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_FAULT_TOLERANCE:BOOL</span></code></a></p></li>
-<li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_FORTRAN-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_FORTRAN:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_FULL_RPATH-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_FULL_RPATH:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_GCC_VERSION_CHECK-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_GCC_VERSION_CHECK:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_GENERIC_CONTEXT_COROUTINES-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_GENERIC_CONTEXT_COROUTINES:BOOL</span></code></a></p></li>
@@ -2414,12 +2203,6 @@ generate your specific makefiles/project files.</p>
 <dt id="cmdoption-arg-HPX_WITH_FAULT_TOLERANCE-BOOL">
 <span id="cmdoption-arg-hpx-with-fault-tolerance-bool"></span><code class="sig-name descname">HPX_WITH_FAULT_TOLERANCE:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_FAULT_TOLERANCE-BOOL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build HPX to tolerate failures of nodes, i.e. ignore errors in active communication channels (default: OFF)</p>
-</dd></dl>
-
-<dl class="std option">
-<dt id="cmdoption-arg-HPX_WITH_FORTRAN-BOOL">
-<span id="cmdoption-arg-hpx-with-fortran-bool"></span><code class="sig-name descname">HPX_WITH_FORTRAN:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_FORTRAN-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable or disable the compilation of Fortran examples using HPX</p>
 </dd></dl>
 
 <dl class="std option">
@@ -4883,7 +4666,7 @@ improves the generated diagnostics.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       <span class="commit">
         
-        Revision <code>27133f7</code>.
+        Revision <code>fd38620</code>.
       </span>
 
     </p>

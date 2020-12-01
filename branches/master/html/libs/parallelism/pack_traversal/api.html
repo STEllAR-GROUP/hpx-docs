@@ -110,6 +110,17 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api/public_api.html">Public API</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../../api.html#full-api">Full API</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timed_execution/api.html">timed_execution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../core/affinity/api.html">affinity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../core/allocator_support/api.html">allocator_support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../core/asio/api.html">asio</a></li>
@@ -184,17 +195,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../full/segmented_algorithms/api.html">segmented_algorithms</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../full/thread_executors/api.html">thread_executors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../full/threadmanager/api.html">threadmanager</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../algorithms/api.html">algorithms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../async_base/api.html">async_base</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../async_combinators/api.html">async_combinators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../async_local/api.html">async_local</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../execution/api.html">execution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../executors/api.html">executors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../futures/api.html">futures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lcos_local/api.html">lcos_local</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">pack_traversal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../threading/api.html">threading</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../timed_execution/api.html">timed_execution</a></li>
 </ul>
 </li>
 </ul>
@@ -295,6 +295,138 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <dd><dl class="cpp type">
 <dt id="_CPPv4N3hpx4utilE">
 <span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span id="hpx::util"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4IDpEN3hpx4util6unwrapEDaDpRR4Args">
+<span id="_CPPv3IDpEN3hpx4util6unwrapEDpRR4Args"></span><span id="_CPPv2IDpEN3hpx4util6unwrapEDpRR4Args"></span><span class="target" id="unwrap_8hpp_1a687bc9b163ccbdaaa82764b171b7f0c0"></span>template&lt;typename ...<code class="sig-name descname">Args</code>&gt;<br />auto <code class="sig-name descname">unwrap</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IDpEN3hpx4util6unwrapEDaDpRR4Args" title="hpx::util::unwrap::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx4util6unwrapEDaDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A helper function for retrieving the actual result of any hpx::lcos::future like type which is wrapped in an arbitrary way.</p>
+<p>Unwraps the given pack of arguments, so that any hpx::lcos::future object is replaced by its future result type in the argument pack:<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::future&lt;int&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">int</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::future&lt;std::vector&lt;float&gt;&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">std::vector&lt;float&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std::vector&lt;future&lt;float&gt;&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">std::vector&lt;float&gt;</span></code></p></li>
+</ul>
+</p>
+<p>The function is capable of unwrapping hpx::lcos::future like objects that are wrapped inside any container or tuple like type, see hpx::util::map_pack() for a detailed description about which surrounding types are supported. Non hpx::lcos::future like types are permitted as arguments and passed through.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Single arguments</span>
+<span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="nl">hpx</span><span class="p">:</span><span class="n">util</span><span class="o">::</span><span class="n">unwrap</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+
+<span class="c1">// Multiple arguments</span>
+<span class="n">hpx</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">i2</span> <span class="o">=</span>
+    <span class="nl">hpx</span><span class="p">:</span><span class="n">util</span><span class="o">::</span><span class="n">unwrap</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                     <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>This function unwraps the given arguments until the first traversed nested hpx::lcos::future which corresponds to an unwrapping depth of one. See hpx::util::unwrap_n() for a function which unwraps the given arguments to a particular depth or hpx::util::unwrap_all() that unwraps all future like objects recursively which are contained in the arguments.</p>
+</dd>
+<dt><strong>Return</strong></dt><dd><p>Depending on the count of arguments this function returns a hpx::tuple containing the unwrapped arguments if multiple arguments are given. In case the function is called with a single argument, the argument is unwrapped and returned.</p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: the arguments that are unwrapped which may contain any arbitrary future or non future type.</p></li>
+</ul>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::exception</span></code>: like objects in case any of the given wrapped hpx::lcos::future objects were resolved through an exception. See hpx::lcos::future::get() for details. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I_NSt6size_tEDpEN3hpx4util8unwrap_nEDaDpRR4Args">
+<span id="_CPPv3I_NSt6size_tEDpEN3hpx4util8unwrap_nEDpRR4Args"></span><span id="_CPPv2I_NSt6size_tEDpEN3hpx4util8unwrap_nEDpRR4Args"></span><span class="target" id="unwrap_8hpp_1a916ca91b9993c4f1e77feeed738631bb"></span>template&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">Depth</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br />auto <code class="sig-name descname">unwrap_n</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I_NSt6size_tEDpEN3hpx4util8unwrap_nEDaDpRR4Args" title="hpx::util::unwrap_n::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I_NSt6size_tEDpEN3hpx4util8unwrap_nEDaDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An alterntive version of hpx::util::unwrap(), which unwraps the given arguments to a certain depth of hpx::lcos::future like objects.</p>
+<p><p>See unwrap for a detailed description. </p>
+<dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Depth</span></code>: The count of hpx::lcos::future like objects which are unwrapped maximally.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IDpEN3hpx4util10unwrap_allEDaDpRR4Args">
+<span id="_CPPv3IDpEN3hpx4util10unwrap_allEDpRR4Args"></span><span id="_CPPv2IDpEN3hpx4util10unwrap_allEDpRR4Args"></span><span class="target" id="unwrap_8hpp_1a72dc824c1b2fe406b75984d0f3c131d5"></span>template&lt;typename ...<code class="sig-name descname">Args</code>&gt;<br />auto <code class="sig-name descname">unwrap_all</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IDpEN3hpx4util10unwrap_allEDaDpRR4Args" title="hpx::util::unwrap_all::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx4util10unwrap_allEDaDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An alterntive version of hpx::util::unwrap(), which unwraps the given arguments recursively so that all contained hpx::lcos::future like objects are replaced by their actual value.</p>
+<p>See hpx::util::unwrap() for a detailed description. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4util10unwrappingEDaRR1T">
+<span id="_CPPv3I0EN3hpx4util10unwrappingERR1T"></span><span id="_CPPv2I0EN3hpx4util10unwrappingERR1T"></span><span class="target" id="unwrap_8hpp_1a7529d9ac687684c33403cdd1f9cef8e4"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">unwrapping</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx4util10unwrappingEDaRR1T" title="hpx::util::unwrapping::T">T</a> &amp;&amp;<em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4util10unwrappingEDaRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns a callable object which unwraps its arguments upon invocation using the hpx::util::unwrap() function and then passes the result to the given callable object.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">callable</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">unwrapping</span><span class="p">([](</span><span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="n">callable</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                  <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+</pre></div>
+</div>
+</p>
+<p>See hpx::util::unwrap() for a detailed description.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">callable</span></code>: the callable object which which is called with the result of the corresponding unwrap function. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I_NSt6size_tE0EN3hpx4util12unwrapping_nEDaRR1T">
+<span id="_CPPv3I_NSt6size_tE0EN3hpx4util12unwrapping_nERR1T"></span><span id="_CPPv2I_NSt6size_tE0EN3hpx4util12unwrapping_nERR1T"></span><span class="target" id="unwrap_8hpp_1a66e52fc8f88ccfb7d9215836eab5249e"></span>template&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">Depth</code>, typename <code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">unwrapping_n</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I_NSt6size_tE0EN3hpx4util12unwrapping_nEDaRR1T" title="hpx::util::unwrapping_n::T">T</a> &amp;&amp;<em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I_NSt6size_tE0EN3hpx4util12unwrapping_nEDaRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns a callable object which unwraps its arguments upon invocation using the hpx::util::unwrap_n() function and then passes the result to the given callable object.</p>
+<p>See hpx::util::unwrapping() for a detailed description. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4util14unwrapping_allEDaRR1T">
+<span id="_CPPv3I0EN3hpx4util14unwrapping_allERR1T"></span><span id="_CPPv2I0EN3hpx4util14unwrapping_allERR1T"></span><span class="target" id="unwrap_8hpp_1ad32bada7cd9794dcb256df84610733f8"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">unwrapping_all</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx4util14unwrapping_allEDaRR1T" title="hpx::util::unwrapping_all::T">T</a> &amp;&amp;<em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4util14unwrapping_allEDaRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns a callable object which unwraps its arguments upon invocation using the hpx::util::unwrap_all() function and then passes the result to the given callable object.</p>
+<p>See hpx::util::unwrapping() for a detailed description. </p>
+</dd></dl>
+
+</div>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4util10functionalE">
+<span id="_CPPv3N3hpx4util10functionalE"></span><span id="_CPPv2N3hpx4util10functionalE"></span><span id="hpx::util::functional"></span><span class="target" id="namespacehpx_1_1util_1_1functional"></span><em class="property">namespace </em><code class="sig-name descname">functional</code><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util10functional6unwrapE">
+<span id="_CPPv3N3hpx4util10functional6unwrapE"></span><span id="_CPPv2N3hpx4util10functional6unwrapE"></span><span id="hpx::util::functional::unwrap"></span><span class="target" id="structhpx_1_1util_1_1functional_1_1unwrap"></span><em class="property">struct </em><code class="sig-name descname">unwrap</code><a class="headerlink" href="#_CPPv4N3hpx4util10functional6unwrapE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;unwrap.hpp&gt;</em><p>A helper function object for functionally invoking <code class="docutils literal notranslate"><span class="pre">hpx::util::unwrap</span></code>. For more information please refer to its documentation. </p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx4util10functional10unwrap_allE">
+<span id="_CPPv3N3hpx4util10functional10unwrap_allE"></span><span id="_CPPv2N3hpx4util10functional10unwrap_allE"></span><span id="hpx::util::functional::unwrap_all"></span><span class="target" id="structhpx_1_1util_1_1functional_1_1unwrap__all"></span><em class="property">struct </em><code class="sig-name descname">unwrap_all</code><a class="headerlink" href="#_CPPv4N3hpx4util10functional10unwrap_allE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;unwrap.hpp&gt;</em><p>A helper function object for functionally invoking <code class="docutils literal notranslate"><span class="pre">hpx::util::unwrap_all</span></code>. For more information please refer to its documentation. </p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4I_NSt6size_tEEN3hpx4util10functional8unwrap_nE">
+<span id="_CPPv3I_NSt6size_tEEN3hpx4util10functional8unwrap_nE"></span><span id="_CPPv2I_NSt6size_tEEN3hpx4util10functional8unwrap_nE"></span><span class="target" id="structhpx_1_1util_1_1functional_1_1unwrap__n"></span>template&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">Depth</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">unwrap_n</code><a class="headerlink" href="#_CPPv4I_NSt6size_tEEN3hpx4util10functional8unwrap_nE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;unwrap.hpp&gt;</em><p>A helper function object for functionally invoking <code class="docutils literal notranslate"><span class="pre">hpx::util::unwrap_n</span></code>. For more information please refer to its documentation. </p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Functions</p>
 <dl class="cpp function">
@@ -422,138 +554,6 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 </dd></dl>
 
 </div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4IDpEN3hpx4util6unwrapEDaDpRR4Args">
-<span id="_CPPv3IDpEN3hpx4util6unwrapEDpRR4Args"></span><span id="_CPPv2IDpEN3hpx4util6unwrapEDpRR4Args"></span><span class="target" id="unwrap_8hpp_1a687bc9b163ccbdaaa82764b171b7f0c0"></span>template&lt;typename ...<code class="sig-name descname">Args</code>&gt;<br />auto <code class="sig-name descname">unwrap</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IDpEN3hpx4util6unwrapEDaDpRR4Args" title="hpx::util::unwrap::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx4util6unwrapEDaDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A helper function for retrieving the actual result of any hpx::lcos::future like type which is wrapped in an arbitrary way.</p>
-<p>Unwraps the given pack of arguments, so that any hpx::lcos::future object is replaced by its future result type in the argument pack:<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">hpx::future&lt;int&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">int</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hpx::future&lt;std::vector&lt;float&gt;&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">std::vector&lt;float&gt;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">std::vector&lt;future&lt;float&gt;&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">std::vector&lt;float&gt;</span></code></p></li>
-</ul>
-</p>
-<p>The function is capable of unwrapping hpx::lcos::future like objects that are wrapped inside any container or tuple like type, see hpx::util::map_pack() for a detailed description about which surrounding types are supported. Non hpx::lcos::future like types are permitted as arguments and passed through.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Single arguments</span>
-<span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="nl">hpx</span><span class="p">:</span><span class="n">util</span><span class="o">::</span><span class="n">unwrap</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-
-<span class="c1">// Multiple arguments</span>
-<span class="n">hpx</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">i2</span> <span class="o">=</span>
-    <span class="nl">hpx</span><span class="p">:</span><span class="n">util</span><span class="o">::</span><span class="n">unwrap</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-                     <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
-</pre></div>
-</div>
-</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>This function unwraps the given arguments until the first traversed nested hpx::lcos::future which corresponds to an unwrapping depth of one. See hpx::util::unwrap_n() for a function which unwraps the given arguments to a particular depth or hpx::util::unwrap_all() that unwraps all future like objects recursively which are contained in the arguments.</p>
-</dd>
-<dt><strong>Return</strong></dt><dd><p>Depending on the count of arguments this function returns a hpx::tuple containing the unwrapped arguments if multiple arguments are given. In case the function is called with a single argument, the argument is unwrapped and returned.</p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: the arguments that are unwrapped which may contain any arbitrary future or non future type.</p></li>
-</ul>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">std::exception</span></code>: like objects in case any of the given wrapped hpx::lcos::future objects were resolved through an exception. See hpx::lcos::future::get() for details. </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4I_NSt6size_tEDpEN3hpx4util8unwrap_nEDaDpRR4Args">
-<span id="_CPPv3I_NSt6size_tEDpEN3hpx4util8unwrap_nEDpRR4Args"></span><span id="_CPPv2I_NSt6size_tEDpEN3hpx4util8unwrap_nEDpRR4Args"></span><span class="target" id="unwrap_8hpp_1a916ca91b9993c4f1e77feeed738631bb"></span>template&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">Depth</code>, typename ...<code class="sig-name descname">Args</code>&gt;<br />auto <code class="sig-name descname">unwrap_n</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I_NSt6size_tEDpEN3hpx4util8unwrap_nEDaDpRR4Args" title="hpx::util::unwrap_n::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I_NSt6size_tEDpEN3hpx4util8unwrap_nEDaDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>An alterntive version of hpx::util::unwrap(), which unwraps the given arguments to a certain depth of hpx::lcos::future like objects.</p>
-<p><p>See unwrap for a detailed description. </p>
-<dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Depth</span></code>: The count of hpx::lcos::future like objects which are unwrapped maximally.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4IDpEN3hpx4util10unwrap_allEDaDpRR4Args">
-<span id="_CPPv3IDpEN3hpx4util10unwrap_allEDpRR4Args"></span><span id="_CPPv2IDpEN3hpx4util10unwrap_allEDpRR4Args"></span><span class="target" id="unwrap_8hpp_1a72dc824c1b2fe406b75984d0f3c131d5"></span>template&lt;typename ...<code class="sig-name descname">Args</code>&gt;<br />auto <code class="sig-name descname">unwrap_all</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IDpEN3hpx4util10unwrap_allEDaDpRR4Args" title="hpx::util::unwrap_all::Args">Args</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx4util10unwrap_allEDaDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>An alterntive version of hpx::util::unwrap(), which unwraps the given arguments recursively so that all contained hpx::lcos::future like objects are replaced by their actual value.</p>
-<p>See hpx::util::unwrap() for a detailed description. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4I0EN3hpx4util10unwrappingEDaRR1T">
-<span id="_CPPv3I0EN3hpx4util10unwrappingERR1T"></span><span id="_CPPv2I0EN3hpx4util10unwrappingERR1T"></span><span class="target" id="unwrap_8hpp_1a7529d9ac687684c33403cdd1f9cef8e4"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">unwrapping</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx4util10unwrappingEDaRR1T" title="hpx::util::unwrapping::T">T</a> &amp;&amp;<em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4util10unwrappingEDaRR1T" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns a callable object which unwraps its arguments upon invocation using the hpx::util::unwrap() function and then passes the result to the given callable object.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">callable</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">unwrapping</span><span class="p">([](</span><span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">;</span>
-<span class="p">});</span>
-
-<span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="n">callable</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-                  <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
-</pre></div>
-</div>
-</p>
-<p>See hpx::util::unwrap() for a detailed description.</p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">callable</span></code>: the callable object which which is called with the result of the corresponding unwrap function. </p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4I_NSt6size_tE0EN3hpx4util12unwrapping_nEDaRR1T">
-<span id="_CPPv3I_NSt6size_tE0EN3hpx4util12unwrapping_nERR1T"></span><span id="_CPPv2I_NSt6size_tE0EN3hpx4util12unwrapping_nERR1T"></span><span class="target" id="unwrap_8hpp_1a66e52fc8f88ccfb7d9215836eab5249e"></span>template&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">Depth</code>, typename <code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">unwrapping_n</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I_NSt6size_tE0EN3hpx4util12unwrapping_nEDaRR1T" title="hpx::util::unwrapping_n::T">T</a> &amp;&amp;<em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I_NSt6size_tE0EN3hpx4util12unwrapping_nEDaRR1T" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns a callable object which unwraps its arguments upon invocation using the hpx::util::unwrap_n() function and then passes the result to the given callable object.</p>
-<p>See hpx::util::unwrapping() for a detailed description. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4I0EN3hpx4util14unwrapping_allEDaRR1T">
-<span id="_CPPv3I0EN3hpx4util14unwrapping_allERR1T"></span><span id="_CPPv2I0EN3hpx4util14unwrapping_allERR1T"></span><span class="target" id="unwrap_8hpp_1ad32bada7cd9794dcb256df84610733f8"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br />auto <code class="sig-name descname">unwrapping_all</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx4util14unwrapping_allEDaRR1T" title="hpx::util::unwrapping_all::T">T</a> &amp;&amp;<em>callable</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4util14unwrapping_allEDaRR1T" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns a callable object which unwraps its arguments upon invocation using the hpx::util::unwrap_all() function and then passes the result to the given callable object.</p>
-<p>See hpx::util::unwrapping() for a detailed description. </p>
-</dd></dl>
-
-</div>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx4util10functionalE">
-<span id="_CPPv3N3hpx4util10functionalE"></span><span id="_CPPv2N3hpx4util10functionalE"></span><span id="hpx::util::functional"></span><span class="target" id="namespacehpx_1_1util_1_1functional"></span><em class="property">namespace </em><code class="sig-name descname">functional</code><br /></dt>
-<dd><dl class="cpp struct">
-<dt id="_CPPv4N3hpx4util10functional6unwrapE">
-<span id="_CPPv3N3hpx4util10functional6unwrapE"></span><span id="_CPPv2N3hpx4util10functional6unwrapE"></span><span id="hpx::util::functional::unwrap"></span><span class="target" id="structhpx_1_1util_1_1functional_1_1unwrap"></span><em class="property">struct </em><code class="sig-name descname">unwrap</code><a class="headerlink" href="#_CPPv4N3hpx4util10functional6unwrapE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;unwrap.hpp&gt;</em><p>A helper function object for functionally invoking <code class="docutils literal notranslate"><span class="pre">hpx::util::unwrap</span></code>. For more information please refer to its documentation. </p>
-</dd></dl>
-
-<dl class="cpp struct">
-<dt id="_CPPv4N3hpx4util10functional10unwrap_allE">
-<span id="_CPPv3N3hpx4util10functional10unwrap_allE"></span><span id="_CPPv2N3hpx4util10functional10unwrap_allE"></span><span id="hpx::util::functional::unwrap_all"></span><span class="target" id="structhpx_1_1util_1_1functional_1_1unwrap__all"></span><em class="property">struct </em><code class="sig-name descname">unwrap_all</code><a class="headerlink" href="#_CPPv4N3hpx4util10functional10unwrap_allE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;unwrap.hpp&gt;</em><p>A helper function object for functionally invoking <code class="docutils literal notranslate"><span class="pre">hpx::util::unwrap_all</span></code>. For more information please refer to its documentation. </p>
-</dd></dl>
-
-<dl class="cpp struct">
-<dt id="_CPPv4I_NSt6size_tEEN3hpx4util10functional8unwrap_nE">
-<span id="_CPPv3I_NSt6size_tEEN3hpx4util10functional8unwrap_nE"></span><span id="_CPPv2I_NSt6size_tEEN3hpx4util10functional8unwrap_nE"></span><span class="target" id="structhpx_1_1util_1_1functional_1_1unwrap__n"></span>template&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">Depth</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">unwrap_n</code><a class="headerlink" href="#_CPPv4I_NSt6size_tEEN3hpx4util10functional8unwrap_nE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;unwrap.hpp&gt;</em><p>A helper function object for functionally invoking <code class="docutils literal notranslate"><span class="pre">hpx::util::unwrap_n</span></code>. For more information please refer to its documentation. </p>
-</dd></dl>
-
-</dd></dl>
-
 </dd></dl>
 
 </dd></dl>
@@ -710,7 +710,7 @@ template&lt;&gt;<br /><span class="target" id="structhpx_1_1traits_1_1pack__trav
         &copy; Copyright 2008-2020, The STE||AR Group
       <span class="commit">
         
-        Revision <code>9048fce</code>.
+        Revision <code>e9d1808</code>.
       </span>
 
     </p>

@@ -6,6 +6,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 //  This example is documented in the Manual under the title "Error Handling"
+#include <hpx/config.hpp>
 #include <hpx/hpx.hpp>
 #include <hpx/hpx_init.hpp>
 

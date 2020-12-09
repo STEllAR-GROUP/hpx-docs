@@ -31,7 +31,7 @@ Classes
 Functions
 ---------
 
-- :cpp:func:`hpx::parallel::v1::adjacent_find`
+- :cpp:func:`hpx::adjacent_find`
 - :cpp:func:`hpx::all_of`
 - :cpp:func:`hpx::any_of`
 - :cpp:func:`hpx::copy`
@@ -51,21 +51,23 @@ Functions
 - :cpp:func:`hpx::for_each_n`
 - :cpp:func:`hpx::generate`
 - :cpp:func:`hpx::generate_n`
-- :cpp:func:`hpx::parallel::v1::includes`
-- :cpp:func:`hpx::parallel::v1::inplace_merge`
-- :cpp:func:`hpx::parallel::v1::is_heap`
-- :cpp:func:`hpx::parallel::v1::is_heap_until`
-- :cpp:func:`hpx::parallel::v1::is_partitioned`
-- :cpp:func:`hpx::parallel::v1::is_sorted`
-- :cpp:func:`hpx::parallel::v1::is_sorted_until`
+- :cpp:func:`hpx::includes`
+- :cpp:func:`hpx::inplace_merge`
+- :cpp:func:`hpx::is_heap`
+- :cpp:func:`hpx::is_heap_until`
+- :cpp:func:`hpx::is_partitioned`
+- :cpp:func:`hpx::is_sorted`
+- :cpp:func:`hpx::is_sorted_until`
 - :cpp:func:`hpx::parallel::v1::lexicographical_compare`
+- :cpp:func:`hpx::make_heap`
 - :cpp:func:`hpx::parallel::v1::max_element`
-- :cpp:func:`hpx::parallel::v1::merge`
+- :cpp:func:`hpx::merge`
 - :cpp:func:`hpx::parallel::v1::min_element`
 - :cpp:func:`hpx::parallel::v1::minmax_element`
 - :cpp:func:`hpx::parallel::v1::mismatch`
 - :cpp:func:`hpx::move`
 - :cpp:func:`hpx::none_of`
+- :cpp:func:`hpx::partial_sort`
 - :cpp:func:`hpx::parallel::v1::partition`
 - :cpp:func:`hpx::parallel::v1::partition_copy`
 - :cpp:func:`hpx::parallel::v1::remove`
@@ -82,10 +84,10 @@ Functions
 - :cpp:func:`hpx::parallel::v1::rotate_copy`
 - :cpp:func:`hpx::parallel::v1::search`
 - :cpp:func:`hpx::parallel::v1::search_n`
-- :cpp:func:`hpx::parallel::v1::set_difference`
-- :cpp:func:`hpx::parallel::v1::set_intersection`
-- :cpp:func:`hpx::parallel::v1::set_symmetric_difference`
-- :cpp:func:`hpx::parallel::v1::set_union`
+- :cpp:func:`hpx::set_difference`
+- :cpp:func:`hpx::set_intersection`
+- :cpp:func:`hpx::set_symmetric_difference`
+- :cpp:func:`hpx::set_union`
 - :cpp:func:`hpx::parallel::v1::sort`
 - :cpp:func:`hpx::parallel::v1::stable_partition`
 - :cpp:func:`hpx::parallel::v1::stable_sort`
@@ -97,6 +99,7 @@ Functions
 - :cpp:func:`hpx::for_loop_n`
 - :cpp:func:`hpx::for_loop_n_strided`
 
+- :cpp:func:`hpx::ranges::adjacent_find`
 - :cpp:func:`hpx::ranges::all_of`
 - :cpp:func:`hpx::ranges::any_of`
 - :cpp:func:`hpx::ranges::copy`
@@ -116,8 +119,23 @@ Functions
 - :cpp:func:`hpx::ranges::for_each_n`
 - :cpp:func:`hpx::ranges::generate`
 - :cpp:func:`hpx::ranges::generate_n`
+- :cpp:func:`hpx::ranges::includes`
+- :cpp:func:`hpx::ranges::inplace_merge`
+- :cpp:func:`hpx::ranges::is_heap`
+- :cpp:func:`hpx::ranges::is_heap_until`
+- :cpp:func:`hpx::ranges::is_partitioned`
+- :cpp:func:`hpx::ranges::is_sorted`
+- :cpp:func:`hpx::ranges::is_sorted_until`
+- :cpp:func:`hpx::ranges::make_heap`
+- :cpp:func:`hpx::ranges::merge`
 - :cpp:func:`hpx::ranges::move`
 - :cpp:func:`hpx::ranges::none_of`
+- :cpp:func:`hpx::ranges::set_difference`
+- :cpp:func:`hpx::ranges::set_intersection`
+- :cpp:func:`hpx::ranges::set_symmetric_difference`
+- :cpp:func:`hpx::ranges::set_union`
+- :cpp:func:`hpx::ranges::for_loop`
+- :cpp:func:`hpx::ranges::for_loop_strided`
 
 Header ``hpx/any.hpp``
 ======================
@@ -128,17 +146,18 @@ Corresponds to the C++ standard library header :cppreference-header:`any`.
 Classes
 -------
 
-- :cpp:type:`hpx::util::any`
-- :cpp:type:`hpx::util::any_nonser`
-- :cpp:type:`hpx::util::bad_any_cast`
-- :cpp:type:`hpx::util::unique_any_nonser`
+- :cpp:type:`hpx::any`
+- :cpp:type:`hpx::any_nonser`
+- :cpp:type:`hpx::bad_any_cast`
+- :cpp:type:`hpx::unique_any_nonser`
 
 Functions
 ---------
 
-- :cpp:func:`hpx::util::make_any`
-- :cpp:func:`hpx::util::make_any_nonser`
-- :cpp:func:`hpx::util::make_unique_any_nonser`
+- :cpp:func:`hpx::any_cast`
+- :cpp:func:`hpx::make_any`
+- :cpp:func:`hpx::make_any_nonser`
+- :cpp:func:`hpx::make_unique_any_nonser`
 
 Header ``hpx/assert.hpp``
 =========================
@@ -272,30 +291,30 @@ for more information about execution policies and executor parameters.
 
 .. note::
 
-   These names are also available in the ``hpx::execution`` namespace, but not
-   in the top-level ``hpx`` namespace.
+   These names are only available in the ``hpx::execution`` namespace, not in
+   the top-level ``hpx`` namespace.
 
 Constants
 ---------
 
-- :cpp:var:`hpx::parallel::execution::seq`
-- :cpp:var:`hpx::parallel::execution::par`
-- :cpp:var:`hpx::parallel::execution::par_unseq`
-- :cpp:var:`hpx::parallel::execution::task`
+- :cpp:var:`hpx::execution::seq`
+- :cpp:var:`hpx::execution::par`
+- :cpp:var:`hpx::execution::par_unseq`
+- :cpp:var:`hpx::execution::task`
 
 Classes
 -------
 
-- :cpp:class:`hpx::parallel::execution::sequenced_policy`
-- :cpp:class:`hpx::parallel::execution::parallel_policy`
-- :cpp:class:`hpx::parallel::execution::parallel_unsequenced_policy`
-- :cpp:class:`hpx::parallel::execution::sequenced_task_policy`
-- :cpp:class:`hpx::parallel::execution::parallel_task_policy`
-- :cpp:class:`hpx::parallel::execution::auto_chunk_size`
-- :cpp:class:`hpx::parallel::execution::dynamic_chunk_size`
-- :cpp:class:`hpx::parallel::execution::guided_chunk_size`
-- :cpp:class:`hpx::parallel::execution::persistent_auto_chunk_size`
-- :cpp:class:`hpx::parallel::execution::static_chunk_size`
+- :cpp:class:`hpx::execution::sequenced_policy`
+- :cpp:class:`hpx::execution::parallel_policy`
+- :cpp:class:`hpx::execution::parallel_unsequenced_policy`
+- :cpp:class:`hpx::execution::sequenced_task_policy`
+- :cpp:class:`hpx::execution::parallel_task_policy`
+- :cpp:class:`hpx::execution::auto_chunk_size`
+- :cpp:class:`hpx::execution::dynamic_chunk_size`
+- :cpp:class:`hpx::execution::guided_chunk_size`
+- :cpp:class:`hpx::execution::persistent_auto_chunk_size`
+- :cpp:class:`hpx::execution::static_chunk_size`
 
 Header ``hpx/functional.hpp``
 =============================
@@ -389,7 +408,7 @@ Functions
 Examples
 --------
 
-.. literalinclude:: ../../libs/include/tests/unit/api_future.cpp
+.. literalinclude:: ../../libs/full/include/tests/unit/api_future.cpp
    :language: c++
    :lines: 7-
 
@@ -707,42 +726,40 @@ Header ``hpx/tuple.hpp``
 ========================
 
 Corresponds to the C++ standard library header :cppreference-header:`tuple`.
-:cpp:class:`hpx::util::tuple` can be used in CUDA device code, unlike
-``std::tuple``.
+:cpp:class:`hpx::tuple` can be used in CUDA device code, unlike ``std::tuple``.
 
 Constants
 ---------
 
-- :cpp:var:`hpx::util::ignore`
+- :cpp:var:`hpx::ignore`
 
 Classes
 -------
 
-- :cpp:struct:`hpx::util::tuple`
-- :cpp:struct:`hpx::util::tuple_size`
-- :cpp:struct:`hpx::util::tuple_element`
+- :cpp:struct:`hpx::tuple`
+- :cpp:struct:`hpx::tuple_size`
+- :cpp:struct:`hpx::tuple_element`
 
 Functions
 ---------
 
-- :cpp:func:`hpx::util::make_tuple`
-- :cpp:func:`hpx::util::tie`
-- :cpp:func:`hpx::util::forward_as_tuple`
-- :cpp:func:`hpx::util::tuple_cat`
-- :cpp:func:`hpx::util::get`
+- :cpp:func:`hpx::make_tuple`
+- :cpp:func:`hpx::tie`
+- :cpp:func:`hpx::forward_as_tuple`
+- :cpp:func:`hpx::tuple_cat`
+- :cpp:func:`hpx::get`
 
 Header ``hpx/type_traits.hpp``
 ==============================
 
 Corresponds to the C++ standard library header
-:cppreference-header:`type_traits`. Provides
-:cpp:class:`hpx::util::invoke_result` as a replacement for
-``std::invoke_result``.
+:cppreference-header:`type_traits`.
 
 Classes
 -------
 
-- :cpp:struct:`hpx::util::invoke_result`
+- :cpp:struct:`hpx::is_invocable`
+- :cpp:struct:`hpx::is_invocable_r`
 
 Header ``hpx/version.hpp``
 ==========================

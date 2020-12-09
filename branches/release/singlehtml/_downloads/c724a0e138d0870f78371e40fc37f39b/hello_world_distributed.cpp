@@ -9,6 +9,8 @@
 
 // Including 'hpx/hpx_main.hpp' instead of the usual 'hpx/hpx_init.hpp' enables
 // to use the plain C-main below as the direct main HPX entry point.
+#include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/hpx_main.hpp>
 #include <hpx/include/actions.hpp>
 #include <hpx/include/components.hpp>
@@ -93,7 +95,7 @@ void hello_world_foreman()
             // task will actually run on that worker thread.
             hpx::parallel::execution::default_executor exec(
                 hpx::threads::thread_schedule_hint(
-                    hpx::threads::thread_schedule_hint_mode_thread, worker));
+                    hpx::threads::thread_schedule_hint_mode::thread, worker));
             futures.push_back(hpx::async(exec, hello_world_worker, worker));
         }
 
@@ -153,3 +155,4 @@ int main()
     return 0;
 }
 //]
+#endif

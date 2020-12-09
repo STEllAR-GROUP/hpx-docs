@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,19 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -30,11 +36,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Asynchronous execution with hpx::async and actions: Fibonacci" href="fibonacci.html" />
@@ -52,7 +53,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> HPX
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> HPX
           
 
           
@@ -82,6 +83,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -113,7 +115,6 @@
 <p class="caption"><span class="caption-text">Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../libs/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../libs/all_modules.html">All modules</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -127,12 +128,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing <em>HPX</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../users.html"><em>HPX</em> users</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about_hpx.html">About <em>HPX</em></a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -171,7 +174,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../examples.html">Examples</a> &raquo;</li>
         
@@ -279,7 +282,7 @@ currently being compiled.</p>
 command line arguments to the program. If you wish to add command line options
 to your program you would add them here using the instance of the Boost class
 <code class="docutils literal notranslate"><span class="pre">options_description</span></code>, and invoking the public member function
-<code class="docutils literal notranslate"><span class="pre">.add_options()</span></code> (see <a class="reference external" href="https://www.boost.org/doc/">Boost Documentation</a> for more details). <a class="reference internal" href="../libs/init_runtime/api.html#_CPPv4N3hpx4initERKN4util15function_nonserIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init</span></code></a>
+<code class="docutils literal notranslate"><span class="pre">.add_options()</span></code> (see <a class="reference external" href="https://www.boost.org/doc/">Boost Documentation</a> for more details). <a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx4initERKN4util15function_nonserIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init</span></code></a>
 calls <code class="docutils literal notranslate"><span class="pre">hpx_main()</span></code> after setting up <em>HPX</em>, which is where the logic of our
 program is encoded.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
@@ -295,14 +298,17 @@ program is encoded.</p>
         <span class="p">;</span>
 
     <span class="c1">// Initialize and run HPX</span>
-    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">desc_commandline</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
+    <span class="n">init_args</span><span class="p">.</span><span class="n">desc_cmdline</span> <span class="o">=</span> <span class="n">desc_commandline</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The <a class="reference internal" href="../libs/init_runtime/api.html#_CPPv4N3hpx4initERKN4util15function_nonserIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init</span></code></a> function in <code class="docutils literal notranslate"><span class="pre">main()</span></code> starts the runtime system, and
+<p>The <a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx4initERKN4util15function_nonserIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init</span></code></a> function in <code class="docutils literal notranslate"><span class="pre">main()</span></code> starts the runtime system, and
 invokes <code class="docutils literal notranslate"><span class="pre">hpx_main()</span></code> as the first <em>HPX</em>-thread. Below we can see that the
 basic program is simple. The command line option <code class="docutils literal notranslate"><span class="pre">--n-value</span></code> is read in, a
-timer (<a class="reference internal" href="../libs/timing/api.html#_CPPv4N3hpx4util21high_resolution_timerE" title="hpx::util::high_resolution_timer"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::high_resolution_timer</span></code></a>) is set up to record the
+timer (<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::high_resolution_timer</span></code>) is set up to record the
 time it takes to do the computation, the <code class="docutils literal notranslate"><span class="pre">fibonacci</span></code> function is invoked
 synchronously, and the answer is printed out.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">variables_map</span><span class="o">&amp;</span> <span class="n">vm</span><span class="p">)</span>
@@ -312,7 +318,7 @@ synchronously, and the answer is printed out.</p>
 
     <span class="p">{</span>
         <span class="c1">// Keep track of the time required to execute.</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">high_resolution_timer</span> <span class="n">t</span><span class="p">;</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_timer</span> <span class="n">t</span><span class="p">;</span>
 
         <span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span> <span class="n">r</span> <span class="o">=</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
 
@@ -347,7 +353,7 @@ asynchronous. To understand what is happening we have to look inside the
 meaning n is 0 or 1, then we return 0 or 1 (recall the first element of the
 Fibonacci sequence is 0 and the second is 1). If n is larger than 1 we spawn two
 new tasks whose results are contained in <code class="docutils literal notranslate"><span class="pre">n1</span></code> and <code class="docutils literal notranslate"><span class="pre">n2</span></code>. This is done using
-<a class="reference internal" href="../libs/async_base/api.html#_CPPv4I0DpEN3hpx5asyncEDcRR1FDpRR2Ts" title="hpx::async"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async</span></code></a> which takes as arguments a function (function pointer,
+<a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00DpEN3hpx5asyncEDaRR1FDpRR2Ts" title="hpx::async"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async</span></code></a> which takes as arguments a function (function pointer,
 object or lambda) and the arguments to the function. Instead of returning a
 <code class="docutils literal notranslate"><span class="pre">std::uint64_t</span></code> like <code class="docutils literal notranslate"><span class="pre">fibonacci</span></code> does, <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> returns a future of a
 <code class="docutils literal notranslate"><span class="pre">std::uint64_t</span></code>, i.e. <code class="docutils literal notranslate"><span class="pre">hpx::future&lt;std::uint64_t&gt;</span></code>. Each of these futures
@@ -396,16 +402,23 @@ efficiently chain together multiple tasks.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2008-2020, The STE||AR Group
-      
-        <span class="commit">
-          Revision <code>137d94b</code>.
-        </span>
-      
+      <span class="commit">
+        
+        Revision <code>74a5b79</code>.
+      </span>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
  
 
 SPDX-License-Identifier: BSL-1.0
@@ -424,7 +437,6 @@ LICENSE_1_0.txt or copy at
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

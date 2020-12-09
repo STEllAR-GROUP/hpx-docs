@@ -8,6 +8,8 @@
 
 // Naive SMP version implemented with futures.
 
+#include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/hpx_init.hpp>
 #include <hpx/include/actions.hpp>
 #include <hpx/include/async.hpp>
@@ -59,7 +61,7 @@ int hpx_main(hpx::program_options::variables_map& vm)
 
     {
         // Keep track of the time required to execute.
-        hpx::util::high_resolution_timer t;
+        hpx::chrono::high_resolution_timer t;
 
         // Wait for fib() to return the value
         fibonacci_action fib;
@@ -88,6 +90,10 @@ int main(int argc, char* argv[])
         ;
 
     // Initialize and run HPX
-    return hpx::init(desc_commandline, argc, argv);
+    hpx::init_params init_args;
+    init_args.desc_cmdline = desc_commandline;
+
+    return hpx::init(argc, argv, init_args);
 }
 //]
+#endif

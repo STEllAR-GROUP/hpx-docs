@@ -156,7 +156,7 @@ struct stepper
         // Initial conditions: f(0, i) = i
         std::size_t b = 0;
         auto range = boost::irange(b, np);
-        using hpx::parallel::execution::par;
+        using hpx::execution::par;
         hpx::ranges::for_each(par, range, [&U, nx](std::size_t i) {
             U[0][i] = hpx::make_ready_future(partition_data(nx, double(i)));
         });
@@ -216,7 +216,7 @@ int hpx_main(hpx::program_options::variables_map& vm)
     stepper step;
 
     // Measure execution time.
-    std::uint64_t t = hpx::util::high_resolution_clock::now();
+    std::uint64_t t = hpx::chrono::high_resolution_clock::now();
 
     // Execute nt time steps on nx grid points and print the final solution.
     hpx::future<stepper::space> result = step.do_work(np, nx, nt, nd);
@@ -224,7 +224,7 @@ int hpx_main(hpx::program_options::variables_map& vm)
     stepper::space solution = result.get();
     hpx::wait_all(solution);
 
-    std::uint64_t elapsed = hpx::util::high_resolution_clock::now() - t;
+    std::uint64_t elapsed = hpx::chrono::high_resolution_clock::now() - t;
 
     // Print the final solution
     if (vm.count("results"))
@@ -268,5 +268,8 @@ int main(int argc, char* argv[])
     // clang-format on
 
     // Initialize and run HPX
-    return hpx::init(desc_commandline, argc, argv);
+    hpx::init_params init_args;
+    init_args.desc_cmdline = desc_commandline;
+
+    return hpx::init(argc, argv, init_args);
 }

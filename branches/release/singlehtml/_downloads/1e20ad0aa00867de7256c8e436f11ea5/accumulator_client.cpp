@@ -8,6 +8,8 @@
 
 // hpxinspect:noinclude:hpx::util::from_string
 
+#include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/hpx_init.hpp>
 #include <hpx/include/util.hpp>
 
@@ -99,6 +101,10 @@ int main(int argc, char* argv[])
     };
 
     // Initialize and run HPX.
-    return hpx::init(argc, argv, cfg);
+    hpx::init_params init_args;
+    init_args.cfg = cfg;
+
+    return hpx::init(argc, argv, init_args);
 }
 
+#endif

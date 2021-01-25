@@ -596,57 +596,63 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <dt>
 <span class="target" id="namespacehpx_1_1compute"></span><em class="property">namespace </em><code class="sig-name descname">compute</code><br /></dt>
 <dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx7compute6traitsE">
-<span id="_CPPv3N3hpx7compute6traitsE"></span><span id="_CPPv2N3hpx7compute6traitsE"></span><span id="hpx::compute::traits"></span><span class="target" id="namespacehpx_1_1compute_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traitsE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7compute4hostE">
+<span id="_CPPv3N3hpx7compute4hostE"></span><span id="_CPPv2N3hpx7compute4hostE"></span><span id="hpx::compute::host"></span><span class="target" id="namespacehpx_1_1compute_1_1host"></span><em class="property">namespace </em><code class="sig-name descname">host</code><a class="headerlink" href="#_CPPv4N3hpx7compute4hostE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="cpp struct">
-<dt id="_CPPv4I0EN3hpx7compute6traits16allocator_traitsE">
-<span id="_CPPv3I0EN3hpx7compute6traits16allocator_traitsE"></span><span id="_CPPv2I0EN3hpx7compute6traits16allocator_traitsE"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits"></span>template&lt;typename <code class="sig-name descname">Allocator</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">allocator_traits</code><a class="headerlink" href="#_CPPv4I0EN3hpx7compute6traits16allocator_traitsE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
+<dt id="_CPPv4I00EN3hpx7compute4host15block_allocatorE">
+<span id="_CPPv3I00EN3hpx7compute4host15block_allocatorE"></span><span id="_CPPv2I00EN3hpx7compute4host15block_allocatorE"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">Executor</code> = <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallel9executionE" title="hpx::parallel::execution">execution</a>::<a class="reference internal" href="../../parallelism/executors/api.html#_CPPv4N3hpx8parallel9execution31restricted_thread_pool_executorE" title="hpx::parallel::execution::restricted_thread_pool_executor">restricted_thread_pool_executor</a>&gt;<br /><em class="property">struct </em><code class="sig-name descname">block_allocator</code> : <em class="property">public</em> <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../async_cuda/api.html#_CPPv4N3hpx7computeE" title="hpx::compute">compute</a>::<a class="reference internal" href="#_CPPv4N3hpx7compute4hostE" title="hpx::compute::host">host</a>::detail::policy_allocator&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx7compute4host15block_allocatorE" title="hpx::compute::host::block_allocator::T">T</a>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/execution_base/api.html#_CPPv4N3hpx9executionE" title="hpx::execution">execution</a>::parallel_policy_shim&lt;block_executor&lt;<a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallel9executionE" title="hpx::parallel::execution">execution</a>::<a class="reference internal" href="../../parallelism/executors/api.html#_CPPv4N3hpx8parallel9execution31restricted_thread_pool_executorE" title="hpx::parallel::execution::restricted_thread_pool_executor">restricted_thread_pool_executor</a>&gt;, block_executor&lt;<a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallel9executionE" title="hpx::parallel::execution">execution</a>::<a class="reference internal" href="../../parallelism/executors/api.html#_CPPv4N3hpx8parallel9execution31restricted_thread_pool_executorE" title="hpx::parallel::execution::restricted_thread_pool_executor">restricted_thread_pool_executor</a>&gt;::executor_parameters_type&gt;&gt;<a class="headerlink" href="#_CPPv4I00EN3hpx7compute4host15block_allocatorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;block_allocator.hpp&gt;</em><p>The <a class="reference internal" href="#structhpx_1_1compute_1_1host_1_1block__allocator"><span class="std std-ref">block_allocator</span></a> allocates blocks of memory evenly divided onto the passed vector of targets. This is done by using first touch memory placement.</p>
+<p>This allocator can be used to write NUMA aware algorithms:</p>
+<p>using allocator_type = hpx::compute::host::block_allocator&lt;int&gt;; using vector_type = hpx::compute::vector&lt;int, allocator_type&gt;;</p>
+<p>auto numa_nodes = hpx::compute::host::numa_domains(); std::size_t N = 2048; vector_type v(N, allocator_type(numa_nodes)); </p>
+<div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Public Types</p>
 <dl class="cpp type">
-<dt id="_CPPv4N3hpx7compute6traits16allocator_traits9referenceE">
-<span id="_CPPv3N3hpx7compute6traits16allocator_traits9referenceE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits9referenceE"></span><span id="hpx::compute::traits::allocator_traits::reference"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a31543618aa761217c1b5bc5dfadbc5d5"></span><em class="property">typedef </em>detail::get_reference_type&lt;Allocator&gt;::type <code class="sig-name descname">reference</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits9referenceE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE">
+<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1acae243f8271337c597551518e45864c7"></span><em class="property">using </em><code class="sig-name descname">executor_type</code> = block_executor&lt;Executor&gt;<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4N3hpx7compute6traits16allocator_traits15const_referenceE">
-<span id="_CPPv3N3hpx7compute6traits16allocator_traits15const_referenceE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits15const_referenceE"></span><span id="hpx::compute::traits::allocator_traits::const_reference"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a462c2709896073fd2d819fd79170f157"></span><em class="property">typedef </em>detail::get_const_reference_type&lt;Allocator&gt;::type <code class="sig-name descname">const_reference</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits15const_referenceE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE">
+<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a8da607d2f177eeb4d6c11e77de923906"></span><em class="property">using </em><code class="sig-name descname">executor_parameters_type</code> = <em class="property">typename</em> <a class="reference internal" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE" title="hpx::compute::host::block_allocator&lt;T, Executor&gt;::executor_type">executor_type</a>::executor_parameters_type<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4N3hpx7compute6traits16allocator_traits13access_targetE">
-<span id="_CPPv3N3hpx7compute6traits16allocator_traits13access_targetE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits13access_targetE"></span><span id="hpx::compute::traits::allocator_traits::access_target"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1ace1ec95750148fc4c9532f9e6d6670f8"></span><em class="property">typedef </em>detail::get_target_traits&lt;Allocator&gt;::type <code class="sig-name descname">access_target</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits13access_targetE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE">
+<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a041ab656a9d1beedf71234f1c81e6421"></span><em class="property">using </em><code class="sig-name descname">policy_type</code> = <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/execution_base/api.html#_CPPv4N3hpx9executionE" title="hpx::execution">execution</a>::parallel_policy_shim&lt;<a class="reference internal" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE" title="hpx::compute::host::block_allocator&lt;T, Executor&gt;::executor_type">executor_type</a>, <a class="reference internal" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE" title="hpx::compute::host::block_allocator&lt;T, Executor&gt;::executor_parameters_type">executor_parameters_type</a>&gt;<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4N3hpx7compute6traits16allocator_traits11target_typeE">
-<span id="_CPPv3N3hpx7compute6traits16allocator_traits11target_typeE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits11target_typeE"></span><span id="hpx::compute::traits::allocator_traits::target_type"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a72eca04b35ba69f4b3dfa3a1f4ca5751"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx7compute6traits16allocator_traits13access_targetE" title="hpx::compute::traits::allocator_traits::access_target">access_target</a>::target_type <code class="sig-name descname">target_type</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits11target_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE9base_typeE">
+<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE9base_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE9base_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1ae712096d0ed93b3e96db5469f926fc1f"></span><em class="property">using </em><code class="sig-name descname">base_type</code> = detail::policy_allocator&lt;T, <a class="reference internal" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE" title="hpx::compute::host::block_allocator&lt;T, Executor&gt;::policy_type">policy_type</a>&gt;<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE9base_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11target_typeE">
+<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11target_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11target_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a0450fca58f730eaebc7078560328bcb1"></span><em class="property">using </em><code class="sig-name descname">target_type</code> = <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4N3hpx7compute4hostE" title="hpx::compute::host">host</a>::<a class="reference internal" href="#_CPPv4N3hpx7compute4host6targetE" title="hpx::compute::host::target">target</a>&gt;<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11target_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N3hpx7compute6traits16allocator_traits6targetERK9Allocator">
-<span id="_CPPv3N3hpx7compute6traits16allocator_traits6targetERK9Allocator"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits6targetERK9Allocator"></span><span id="hpx::compute::traits::allocator_traits::target__AllocatorCR"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a364da260f171bc47838b39f59e0c50fe"></span><em class="property">static</em> auto <code class="sig-name descname">target</code><span class="sig-paren">(</span>Allocator <em class="property">const</em> &amp;<em>alloc</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits6targetERK9Allocator" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7compute4host15block_allocator15block_allocatorEv">
+<span id="_CPPv3N3hpx7compute4host15block_allocator15block_allocatorEv"></span><span id="_CPPv2N3hpx7compute4host15block_allocator15block_allocatorEv"></span><span id="hpx::compute::host::block_allocator::block_allocator"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a0f5194eca8f1ee365e8659d4cf1b3e96"></span><code class="sig-name descname">block_allocator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute4host15block_allocator15block_allocatorEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4IDpEN3hpx7compute6traits16allocator_traits14bulk_constructEvR9Allocator7pointer9size_typeDpRR2Ts">
-<span id="_CPPv3IDpEN3hpx7compute6traits16allocator_traits14bulk_constructER9Allocator7pointer9size_typeDpRR2Ts"></span><span id="_CPPv2IDpEN3hpx7compute6traits16allocator_traits14bulk_constructER9Allocator7pointer9size_typeDpRR2Ts"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1aae119ca32d73194ae5cca31272a4c0df"></span>template&lt;typename ...<code class="sig-name descname">Ts</code>&gt;<br /><em class="property">static</em> void <code class="sig-name descname">bulk_construct</code><span class="sig-paren">(</span>Allocator &amp;<em>alloc</em>, pointer <em>p</em>, size_type <em>count</em>, <a class="reference internal" href="#_CPPv4IDpEN3hpx7compute6traits16allocator_traits14bulk_constructEvR9Allocator7pointer9size_typeDpRR2Ts" title="hpx::compute::traits::allocator_traits::bulk_construct::Ts">Ts</a>&amp;&amp;... <em>vs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx7compute6traits16allocator_traits14bulk_constructEvR9Allocator7pointer9size_typeDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7compute4host15block_allocator15block_allocatorERK11target_type">
+<span id="_CPPv3N3hpx7compute4host15block_allocator15block_allocatorERK11target_type"></span><span id="_CPPv2N3hpx7compute4host15block_allocator15block_allocatorERK11target_type"></span><span id="hpx::compute::host::block_allocator::block_allocator__target_typeCR"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1ac9987fa634be0b3f5e0864c844955683"></span><code class="sig-name descname">block_allocator</code><span class="sig-paren">(</span>target_type <em class="property">const</em> &amp;<em>targets</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute4host15block_allocator15block_allocatorERK11target_type" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3hpx7compute6traits16allocator_traits12bulk_destroyER9Allocator7pointer9size_type">
-<span id="_CPPv3N3hpx7compute6traits16allocator_traits12bulk_destroyER9Allocator7pointer9size_type"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits12bulk_destroyER9Allocator7pointer9size_type"></span><span id="hpx::compute::traits::allocator_traits::bulk_destroy__AllocatorR.pointer.size_type"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a55133e17371080668ed919c954a6c4a5"></span><em class="property">static</em> void <code class="sig-name descname">bulk_destroy</code><span class="sig-paren">(</span>Allocator &amp;<em>alloc</em>, pointer <em>p</em>, size_type <em>count</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits12bulk_destroyER9Allocator7pointer9size_type" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7compute4host15block_allocator15block_allocatorERR11target_type">
+<span id="_CPPv3N3hpx7compute4host15block_allocator15block_allocatorERR11target_type"></span><span id="_CPPv2N3hpx7compute4host15block_allocator15block_allocatorERR11target_type"></span><span id="hpx::compute::host::block_allocator::block_allocator__target_typeRR"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a1fcd320c1783f21e0a7f70c218368592"></span><code class="sig-name descname">block_allocator</code><span class="sig-paren">(</span>target_type &amp;&amp;<em>targets</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute4host15block_allocator15block_allocatorERR11target_type" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx7compute6traits16allocator_traits9base_typeE">
-<span id="_CPPv3N3hpx7compute6traits16allocator_traits9base_typeE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits9base_typeE"></span><span id="hpx::compute::traits::allocator_traits::base_type"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a641bec4be16d0376b8980df5a58473f5"></span><em class="property">typedef </em><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::allocator_traits&lt;Allocator&gt; <code class="sig-name descname">base_type</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits9base_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx7compute4host15block_allocator6targetEv">
+<span id="_CPPv3NK3hpx7compute4host15block_allocator6targetEv"></span><span id="_CPPv2NK3hpx7compute4host15block_allocator6targetEv"></span><span id="hpx::compute::host::block_allocator::targetC"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1ac23b5f7fcec2ddb6b27799186da812f9"></span>target_type <em class="property">const</em> &amp;<code class="sig-name descname">target</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx7compute4host15block_allocator6targetEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -654,29 +660,6 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 
 </dd></dl>
 
-</dd></dl>
-
-</dd></dl>
-
-<dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx13serializationE">
-<span id="_CPPv3N3hpx13serializationE"></span><span id="_CPPv2N3hpx13serializationE"></span><span id="hpx::serialization"></span><span class="target" id="namespacehpx_1_1serialization"></span><em class="property">namespace </em><code class="sig-name descname">serialization</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4I00EN3hpx13serialization9serializeEvR13input_archiveRN7compute6vectorI1T9AllocatorEEj">
-<span id="_CPPv3I00EN3hpx13serialization9serializeER13input_archiveRN7compute6vectorI1T9AllocatorEEj"></span><span id="_CPPv2I00EN3hpx13serialization9serializeER13input_archiveRN7compute6vectorI1T9AllocatorEEj"></span><span class="target" id="serialization_2vector_8hpp_1a9b1611bfc67fde6a1c768fc99011e91d"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">Allocator</code>&gt;<br />void <code class="sig-name descname">serialize</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/serialization/api.html#_CPPv4N3hpx13serialization13input_archiveE" title="hpx::serialization::input_archive">input_archive</a> &amp;<em>ar</em>, <a class="reference internal" href="../async_cuda/api.html#_CPPv4N3hpx7computeE" title="hpx::compute">compute</a>::vector&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx13serialization9serializeEvR13input_archiveRN7compute6vectorI1T9AllocatorEEj" title="hpx::serialization::serialize::T">T</a>, <a class="reference internal" href="#_CPPv4I00EN3hpx13serialization9serializeEvR13input_archiveRN7compute6vectorI1T9AllocatorEEj" title="hpx::serialization::serialize::Allocator">Allocator</a>&gt; &amp;<em>v</em>, unsigned<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx13serialization9serializeEvR13input_archiveRN7compute6vectorI1T9AllocatorEEj" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4I00EN3hpx13serialization9serializeEvR14output_archiveRKN7compute6vectorI1T9AllocatorEEj">
-<span id="_CPPv3I00EN3hpx13serialization9serializeER14output_archiveRKN7compute6vectorI1T9AllocatorEEj"></span><span id="_CPPv2I00EN3hpx13serialization9serializeER14output_archiveRKN7compute6vectorI1T9AllocatorEEj"></span><span class="target" id="serialization_2vector_8hpp_1ab11e1b8d3ecc4898a4f706af61e39b75"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">Allocator</code>&gt;<br />void <code class="sig-name descname">serialize</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/serialization/api.html#_CPPv4N3hpx13serialization14output_archiveE" title="hpx::serialization::output_archive">output_archive</a> &amp;<em>ar</em>, <a class="reference internal" href="../async_cuda/api.html#_CPPv4N3hpx7computeE" title="hpx::compute">compute</a>::vector&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx13serialization9serializeEvR14output_archiveRKN7compute6vectorI1T9AllocatorEEj" title="hpx::serialization::serialize::T">T</a>, <a class="reference internal" href="#_CPPv4I00EN3hpx13serialization9serializeEvR14output_archiveRKN7compute6vectorI1T9AllocatorEEj" title="hpx::serialization::serialize::Allocator">Allocator</a>&gt; <em class="property">const</em> &amp;<em>v</em>, unsigned<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx13serialization9serializeEvR14output_archiveRKN7compute6vectorI1T9AllocatorEEj" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
 </dd></dl>
 
 </dd></dl>
@@ -701,8 +684,8 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <dt>
 <span class="target" id="namespacehpx_1_1compute"></span><em class="property">namespace </em><code class="sig-name descname">compute</code><br /></dt>
 <dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx7compute4hostE">
-<span id="_CPPv3N3hpx7compute4hostE"></span><span id="_CPPv2N3hpx7compute4hostE"></span><span id="hpx::compute::host"></span><span class="target" id="namespacehpx_1_1compute_1_1host"></span><em class="property">namespace </em><code class="sig-name descname">host</code><a class="headerlink" href="#_CPPv4N3hpx7compute4hostE" title="Permalink to this definition">¶</a><br /></dt>
+<dt>
+<span class="target" id="namespacehpx_1_1compute_1_1host"></span><em class="property">namespace </em><code class="sig-name descname">host</code><br /></dt>
 <dd><dl class="cpp struct">
 <dt id="_CPPv4I0EN3hpx7compute4host14block_executorE">
 <span id="_CPPv3I0EN3hpx7compute4host14block_executorE"></span><span id="_CPPv2I0EN3hpx7compute4host14block_executorE"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__executor"></span>template&lt;typename <code class="sig-name descname">Executor</code> = <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallel9executionE" title="hpx::parallel::execution">execution</a>::<a class="reference internal" href="../../parallelism/executors/api.html#_CPPv4N3hpx8parallel9execution31restricted_thread_pool_executorE" title="hpx::parallel::execution::restricted_thread_pool_executor">restricted_thread_pool_executor</a>&gt;<br /><em class="property">struct </em><code class="sig-name descname">block_executor</code><a class="headerlink" href="#_CPPv4I0EN3hpx7compute4host14block_executorE" title="Permalink to this definition">¶</a><br /></dt>
@@ -866,64 +849,175 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <dd><dl class="cpp type">
 <dt>
 <span class="target" id="namespacehpx_1_1compute_1_1host"></span><em class="property">namespace </em><code class="sig-name descname">host</code><br /></dt>
-<dd><dl class="cpp struct">
-<dt id="_CPPv4I00EN3hpx7compute4host15block_allocatorE">
-<span id="_CPPv3I00EN3hpx7compute4host15block_allocatorE"></span><span id="_CPPv2I00EN3hpx7compute4host15block_allocatorE"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">Executor</code> = <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallel9executionE" title="hpx::parallel::execution">execution</a>::<a class="reference internal" href="../../parallelism/executors/api.html#_CPPv4N3hpx8parallel9execution31restricted_thread_pool_executorE" title="hpx::parallel::execution::restricted_thread_pool_executor">restricted_thread_pool_executor</a>&gt;<br /><em class="property">struct </em><code class="sig-name descname">block_allocator</code> : <em class="property">public</em> <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../async_cuda/api.html#_CPPv4N3hpx7computeE" title="hpx::compute">compute</a>::<a class="reference internal" href="#_CPPv4N3hpx7compute4hostE" title="hpx::compute::host">host</a>::detail::policy_allocator&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx7compute4host15block_allocatorE" title="hpx::compute::host::block_allocator::T">T</a>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/execution_base/api.html#_CPPv4N3hpx9executionE" title="hpx::execution">execution</a>::<a class="reference internal" href="../../parallelism/executors/api.html#_CPPv4I00EN3hpx9execution20parallel_policy_shimE" title="hpx::execution::parallel_policy_shim">parallel_policy_shim</a>&lt;block_executor&lt;<a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallel9executionE" title="hpx::parallel::execution">execution</a>::<a class="reference internal" href="../../parallelism/executors/api.html#_CPPv4N3hpx8parallel9execution31restricted_thread_pool_executorE" title="hpx::parallel::execution::restricted_thread_pool_executor">restricted_thread_pool_executor</a>&gt;, block_executor&lt;<a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallelE" title="hpx::parallel">parallel</a>::<a class="reference internal" href="#_CPPv4N3hpx8parallel9executionE" title="hpx::parallel::execution">execution</a>::<a class="reference internal" href="../../parallelism/executors/api.html#_CPPv4N3hpx8parallel9execution31restricted_thread_pool_executorE" title="hpx::parallel::execution::restricted_thread_pool_executor">restricted_thread_pool_executor</a>&gt;::executor_parameters_type&gt;&gt;<a class="headerlink" href="#_CPPv4I00EN3hpx7compute4host15block_allocatorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;block_allocator.hpp&gt;</em><p>The <a class="reference internal" href="#structhpx_1_1compute_1_1host_1_1block__allocator"><span class="std std-ref">block_allocator</span></a> allocates blocks of memory evenly divided onto the passed vector of targets. This is done by using first touch memory placement.</p>
-<p>This allocator can be used to write NUMA aware algorithms:</p>
-<p>using allocator_type = hpx::compute::host::block_allocator&lt;int&gt;; using vector_type = hpx::compute::vector&lt;int, allocator_type&gt;;</p>
-<p>auto numa_nodes = hpx::compute::host::numa_domains(); std::size_t N = 2048; vector_type v(N, allocator_type(numa_nodes)); </p>
-<div class="breathe-sectiondef docutils container">
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7compute4host17get_local_targetsEv">
+<span id="_CPPv3N3hpx7compute4host17get_local_targetsEv"></span><span id="_CPPv2N3hpx7compute4host17get_local_targetsEv"></span><span id="hpx::compute::host::get_local_targets"></span><span class="target" id="get__targets_8hpp_1aa46d2b2db940865841d04c769a41145f"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4N3hpx7compute4host6targetE" title="hpx::compute::host::target">target</a>&gt; <code class="sig-name descname">get_local_targets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute4host17get_local_targetsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1parallel"></span><em class="property">namespace </em><code class="sig-name descname">parallel</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx8parallel4utilE">
+<span id="_CPPv3N3hpx8parallel4utilE"></span><span id="_CPPv2N3hpx8parallel4utilE"></span><span id="hpx::parallel::util"></span><span class="target" id="namespacehpx_1_1parallel_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4utilE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="cpp class">
+<dt id="_CPPv4I00EN3hpx8parallel4util14numa_allocatorE">
+<span id="_CPPv3I00EN3hpx8parallel4util14numa_allocatorE"></span><span id="_CPPv2I00EN3hpx8parallel4util14numa_allocatorE"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">Executors</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">numa_allocator</code><a class="headerlink" href="#_CPPv4I00EN3hpx8parallel4util14numa_allocatorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Public Types</p>
 <dl class="cpp type">
-<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE">
-<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1acae243f8271337c597551518e45864c7"></span><em class="property">using </em><code class="sig-name descname">executor_type</code> = block_executor&lt;Executor&gt;<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator10value_typeE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator10value_typeE"></span><span id="hpx::parallel::util::numa_allocator::value_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1abbfcd74c786f20273f430a9a0c4b25d5"></span><em class="property">typedef </em>T <code class="sig-name descname">value_type</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE">
-<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a8da607d2f177eeb4d6c11e77de923906"></span><em class="property">using </em><code class="sig-name descname">executor_parameters_type</code> = <em class="property">typename</em> <a class="reference internal" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE" title="hpx::compute::host::block_allocator&lt;T, Executor&gt;::executor_type">executor_type</a>::executor_parameters_type<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator7pointerE">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator7pointerE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator7pointerE"></span><span id="hpx::parallel::util::numa_allocator::pointer"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a8daf650d5cecbfd49f05dcfc3f3c2631"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="hpx::parallel::util::numa_allocator::value_type">value_type</a> *<code class="sig-name descname">pointer</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE">
-<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a041ab656a9d1beedf71234f1c81e6421"></span><em class="property">using </em><code class="sig-name descname">policy_type</code> = <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/execution_base/api.html#_CPPv4N3hpx9executionE" title="hpx::execution">execution</a>::<a class="reference internal" href="../../parallelism/executors/api.html#_CPPv4I00EN3hpx9execution20parallel_policy_shimE" title="hpx::execution::parallel_policy_shim">parallel_policy_shim</a>&lt;<a class="reference internal" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE13executor_typeE" title="hpx::compute::host::block_allocator&lt;T, Executor&gt;::executor_type">executor_type</a>, <a class="reference internal" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE24executor_parameters_typeE" title="hpx::compute::host::block_allocator&lt;T, Executor&gt;::executor_parameters_type">executor_parameters_type</a>&gt;<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator13const_pointerE">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator13const_pointerE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator13const_pointerE"></span><span id="hpx::parallel::util::numa_allocator::const_pointer"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ac693f8c6c9cadfb46cd5d5c75599fcb4"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="hpx::parallel::util::numa_allocator::value_type">value_type</a> <em class="property">const</em> *<code class="sig-name descname">const_pointer</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator13const_pointerE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE9base_typeE">
-<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE9base_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE9base_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1ae712096d0ed93b3e96db5469f926fc1f"></span><em class="property">using </em><code class="sig-name descname">base_type</code> = detail::policy_allocator&lt;T, <a class="reference internal" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11policy_typeE" title="hpx::compute::host::block_allocator&lt;T, Executor&gt;::policy_type">policy_type</a>&gt;<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE9base_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator9referenceE">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator9referenceE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator9referenceE"></span><span id="hpx::parallel::util::numa_allocator::reference"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a85b2e863cf2380d7bda45efe9c876d49"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="hpx::parallel::util::numa_allocator::value_type">value_type</a> &amp;<code class="sig-name descname">reference</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator9referenceE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11target_typeE">
-<span id="_CPPv3IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11target_typeE"></span><span id="_CPPv2IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11target_typeE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a0450fca58f730eaebc7078560328bcb1"></span><em class="property">using </em><code class="sig-name descname">target_type</code> = <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4N3hpx7compute4hostE" title="hpx::compute::host">host</a>::<a class="reference internal" href="#_CPPv4N3hpx7compute4host6targetE" title="hpx::compute::host::target">target</a>&gt;<a class="headerlink" href="#_CPPv4IEN3hpx7compute4host15block_allocatorI1T8ExecutorE11target_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator15const_referenceE">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator15const_referenceE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator15const_referenceE"></span><span id="hpx::parallel::util::numa_allocator::const_reference"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1acfa20c573c1c19511ae743b24ff9f7e1"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="hpx::parallel::util::numa_allocator::value_type">value_type</a> <em class="property">const</em> &amp;<code class="sig-name descname">const_reference</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator15const_referenceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator9size_typeE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator9size_typeE"></span><span id="hpx::parallel::util::numa_allocator::size_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1aed1ffca885c06768fd87d12e8e101991"></span><em class="property">typedef </em><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">size_type</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator15difference_typeE">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator15difference_typeE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator15difference_typeE"></span><span id="hpx::parallel::util::numa_allocator::difference_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ada8690ead21907a4efbe3bddeba4f1dc"></span><em class="property">typedef </em><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::ptrdiff_t <code class="sig-name descname">difference_type</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator15difference_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N3hpx7compute4host15block_allocator15block_allocatorEv">
-<span id="_CPPv3N3hpx7compute4host15block_allocator15block_allocatorEv"></span><span id="_CPPv2N3hpx7compute4host15block_allocator15block_allocatorEv"></span><span id="hpx::compute::host::block_allocator::block_allocator"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a0f5194eca8f1ee365e8659d4cf1b3e96"></span><code class="sig-name descname">block_allocator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute4host15block_allocator15block_allocatorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK9ExecutorsRN3hpx7threads8topologyE">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator14numa_allocatorERK9ExecutorsRN3hpx7threads8topologyE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator14numa_allocatorERK9ExecutorsRN3hpx7threads8topologyE"></span><span id="hpx::parallel::util::numa_allocator::numa_allocator__ExecutorsCR.hpx::threads::topologyR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a85809b45b3c37317b91be5fa62455b15"></span><code class="sig-name descname">numa_allocator</code><span class="sig-paren">(</span>Executors <em class="property">const</em> &amp;<em>executors</em>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/topology/api.html#_CPPv4N3hpx7threads8topologyE" title="hpx::threads::topology">topology</a> &amp;<em>topo</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK9ExecutorsRN3hpx7threads8topologyE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3hpx7compute4host15block_allocator15block_allocatorERK11target_type">
-<span id="_CPPv3N3hpx7compute4host15block_allocator15block_allocatorERK11target_type"></span><span id="_CPPv2N3hpx7compute4host15block_allocator15block_allocatorERK11target_type"></span><span id="hpx::compute::host::block_allocator::block_allocator__target_typeCR"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1ac9987fa634be0b3f5e0864c844955683"></span><code class="sig-name descname">block_allocator</code><span class="sig-paren">(</span>target_type <em class="property">const</em> &amp;<em>targets</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute4host15block_allocator15block_allocatorERK11target_type" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator"></span><span id="hpx::parallel::util::numa_allocator::numa_allocator__numa_allocatorCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a67f9409d5c975bfad12bf47d3f26631b"></span><code class="sig-name descname">numa_allocator</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator" title="hpx::parallel::util::numa_allocator::numa_allocator">numa_allocator</a> <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3hpx7compute4host15block_allocator15block_allocatorERR11target_type">
-<span id="_CPPv3N3hpx7compute4host15block_allocator15block_allocatorERR11target_type"></span><span id="_CPPv2N3hpx7compute4host15block_allocator15block_allocatorERR11target_type"></span><span id="hpx::compute::host::block_allocator::block_allocator__target_typeRR"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1a1fcd320c1783f21e0a7f70c218368592"></span><code class="sig-name descname">block_allocator</code><span class="sig-paren">(</span>target_type &amp;&amp;<em>targets</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute4host15block_allocator15block_allocatorERR11target_type" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE">
+<span id="_CPPv3I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE"></span><span id="_CPPv2I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ab8d8d294becdf072175f763286bebd6d"></span>template&lt;typename <code class="sig-name descname">U</code>&gt;<br /><code class="sig-name descname">numa_allocator</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE" title="hpx::parallel::util::numa_allocator::numa_allocator">numa_allocator</a>&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE" title="hpx::parallel::util::numa_allocator::numa_allocator::U">U</a>, Executors&gt; <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3hpx7compute4host15block_allocator6targetEv">
-<span id="_CPPv3NK3hpx7compute4host15block_allocator6targetEv"></span><span id="_CPPv2NK3hpx7compute4host15block_allocator6targetEv"></span><span id="hpx::compute::host::block_allocator::targetC"></span><span class="target" id="structhpx_1_1compute_1_1host_1_1block__allocator_1ac23b5f7fcec2ddb6b27799186da812f9"></span>target_type <em class="property">const</em> &amp;<code class="sig-name descname">target</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx7compute4host15block_allocator6targetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator7addressE9reference">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator7addressE9reference"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator7addressE9reference"></span><span id="hpx::parallel::util::numa_allocator::address__reference"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a5de4e4269dfe014380d2f2161ff34f36"></span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <code class="sig-name descname">address</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator9referenceE" title="hpx::parallel::util::numa_allocator::reference">reference</a> <em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator7addressE9reference" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator7addressE15const_reference">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator7addressE15const_reference"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator7addressE15const_reference"></span><span id="hpx::parallel::util::numa_allocator::address__const_reference"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a1b68b6385f16a22f04aec67106a7f86f"></span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator13const_pointerE" title="hpx::parallel::util::numa_allocator::const_pointer">const_pointer</a> <code class="sig-name descname">address</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator15const_referenceE" title="hpx::parallel::util::numa_allocator::const_reference">const_reference</a> <em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator7addressE15const_reference" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator8allocateE9size_typePKv">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator8allocateE9size_typePKv"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator8allocateE9size_typePKv"></span><span id="hpx::parallel::util::numa_allocator::allocate__size_type.voidCP"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a3ea07a6fb9ef64d66f7657aec43040d4"></span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <code class="sig-name descname">allocate</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE" title="hpx::parallel::util::numa_allocator::size_type">size_type</a> <em>cnt</em>, <em class="property">const</em> void* = nullptr<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator8allocateE9size_typePKv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator10deallocateE7pointer9size_type">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator10deallocateE7pointer9size_type"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator10deallocateE7pointer9size_type"></span><span id="hpx::parallel::util::numa_allocator::deallocate__pointer.size_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1aaf893438bf3e19ac2dfafdc4c7b67739"></span>void <code class="sig-name descname">deallocate</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <em>p</em>, <a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE" title="hpx::parallel::util::numa_allocator::size_type">size_type</a> <em>cnt</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator10deallocateE7pointer9size_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx8parallel4util14numa_allocator8max_sizeEv">
+<span id="_CPPv3NK3hpx8parallel4util14numa_allocator8max_sizeEv"></span><span id="_CPPv2NK3hpx8parallel4util14numa_allocator8max_sizeEv"></span><span id="hpx::parallel::util::numa_allocator::max_sizeC"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ae991c6acd39e26ccfa21d833c9e5d6d8"></span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE" title="hpx::parallel::util::numa_allocator::size_type">size_type</a> <code class="sig-name descname">max_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx8parallel4util14numa_allocator8max_sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator9constructE7pointerRK1T">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator9constructE7pointerRK1T"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator9constructE7pointerRK1T"></span><span id="hpx::parallel::util::numa_allocator::construct__pointer.TCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1aa9fd0401ab4c86ecd516b3b82db8ea3a"></span>void <code class="sig-name descname">construct</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <em>p</em>, <em class="property">const</em> T &amp;<em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator9constructE7pointerRK1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator7destroyE7pointer">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator7destroyE7pointer"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator7destroyE7pointer"></span><span id="hpx::parallel::util::numa_allocator::destroy__pointer"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ababc1fcf3ce9f6b5dbcc5bf7c601b32e"></span>void <code class="sig-name descname">destroy</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator7destroyE7pointer" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator13executor_typeE">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator13executor_typeE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator13executor_typeE"></span><span id="hpx::parallel::util::numa_allocator::executor_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ac526d4f63fa939f8549619926de2f8d7"></span><em class="property">typedef </em>Executors::value_type <code class="sig-name descname">executor_type</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator13executor_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator10executors_E">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator10executors_E"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator10executors_E"></span><span id="hpx::parallel::util::numa_allocator::executors___ExecutorsCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1aa4747410e33aa19ccbdfd5a5d2c08be8"></span>Executors <em class="property">const</em> &amp;<code class="sig-name descname">executors_</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator10executors_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx8parallel4util14numa_allocator5topo_E">
+<span id="_CPPv3N3hpx8parallel4util14numa_allocator5topo_E"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator5topo_E"></span><span id="hpx::parallel::util::numa_allocator::topo___hpx::threads::topologyR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1adb23cc7b5e0c73161cfadfeb04e6f51e"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/topology/api.html#_CPPv4N3hpx7threads8topologyE" title="hpx::threads::topology">topology</a> &amp;<code class="sig-name descname">topo_</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator5topo_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a20ac8cc8d94ad6236b80c6708b7b53df"></span><em class="property">friend </em><code class="sig-name descname">hpx::parallel::util::numa_allocator</code></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4eqRK14numa_allocatorRK14numa_allocator">
+<span id="_CPPv3eqRK14numa_allocatorRK14numa_allocator"></span><span id="_CPPv2eqRK14numa_allocatorRK14numa_allocator"></span><span id="eq-operator__numa_allocatorCR.numa_allocatorCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a6b9eb9fbcb38528c1809596849ea7c63"></span>bool <code class="sig-name descname">operator==</code><span class="sig-paren">(</span>numa_allocator <em class="property">const</em>&amp;, numa_allocator <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4eqRK14numa_allocatorRK14numa_allocator" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4neRK14numa_allocatorRK14numa_allocator">
+<span id="_CPPv3neRK14numa_allocatorRK14numa_allocator"></span><span id="_CPPv2neRK14numa_allocatorRK14numa_allocator"></span><span id="neq-operator__numa_allocatorCR.numa_allocatorCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a1736f9e77573941ec2195b8c4565b1c8"></span>bool <code class="sig-name descname">operator!=</code><span class="sig-paren">(</span>numa_allocator <em class="property">const</em> &amp;<em>l</em>, numa_allocator <em class="property">const</em> &amp;<em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4neRK14numa_allocatorRK14numa_allocator" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4I0EN3hpx8parallel4util14numa_allocator6rebindE">
+<span id="_CPPv3I0EN3hpx8parallel4util14numa_allocator6rebindE"></span><span id="_CPPv2I0EN3hpx8parallel4util14numa_allocator6rebindE"></span><span class="target" id="structhpx_1_1parallel_1_1util_1_1numa__allocator_1_1rebind"></span>template&lt;typename <code class="sig-name descname">U</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">rebind</code><a class="headerlink" href="#_CPPv4I0EN3hpx8parallel4util14numa_allocator6rebindE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx8parallel4util14numa_allocatorI1T9ExecutorsE6rebind5otherE">
+<span id="_CPPv3IEN3hpx8parallel4util14numa_allocatorI1T9ExecutorsE6rebind5otherE"></span><span id="_CPPv2IEN3hpx8parallel4util14numa_allocatorI1T9ExecutorsE6rebind5otherE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1parallel_1_1util_1_1numa__allocator_1_1rebind_1a3ba4f0214889f5b7f174bb8a2e6e5ee6"></span><em class="property">typedef </em>numa_allocator&lt;U, Executors&gt; <code class="sig-name descname">other</code><a class="headerlink" href="#_CPPv4IEN3hpx8parallel4util14numa_allocatorI1T9ExecutorsE6rebind5otherE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </dd></dl>
@@ -1431,192 +1525,6 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 
 </dd></dl>
 
-<dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx_1_1compute"></span><em class="property">namespace </em><code class="sig-name descname">compute</code><br /></dt>
-<dd><dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx_1_1compute_1_1host"></span><em class="property">namespace </em><code class="sig-name descname">host</code><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx7compute4host17get_local_targetsEv">
-<span id="_CPPv3N3hpx7compute4host17get_local_targetsEv"></span><span id="_CPPv2N3hpx7compute4host17get_local_targetsEv"></span><span id="hpx::compute::host::get_local_targets"></span><span class="target" id="get__targets_8hpp_1aa46d2b2db940865841d04c769a41145f"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="#_CPPv4N3hpx7compute4host6targetE" title="hpx::compute::host::target">target</a>&gt; <code class="sig-name descname">get_local_targets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute4host17get_local_targetsEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
-</dd></dl>
-
-<dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
-<dd><dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx_1_1parallel"></span><em class="property">namespace </em><code class="sig-name descname">parallel</code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx8parallel4utilE">
-<span id="_CPPv3N3hpx8parallel4utilE"></span><span id="_CPPv2N3hpx8parallel4utilE"></span><span id="hpx::parallel::util"></span><span class="target" id="namespacehpx_1_1parallel_1_1util"></span><em class="property">namespace </em><code class="sig-name descname">util</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4utilE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><dl class="cpp class">
-<dt id="_CPPv4I00EN3hpx8parallel4util14numa_allocatorE">
-<span id="_CPPv3I00EN3hpx8parallel4util14numa_allocatorE"></span><span id="_CPPv2I00EN3hpx8parallel4util14numa_allocatorE"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">Executors</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">numa_allocator</code><a class="headerlink" href="#_CPPv4I00EN3hpx8parallel4util14numa_allocatorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator10value_typeE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator10value_typeE"></span><span id="hpx::parallel::util::numa_allocator::value_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1abbfcd74c786f20273f430a9a0c4b25d5"></span><em class="property">typedef </em>T <code class="sig-name descname">value_type</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator7pointerE">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator7pointerE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator7pointerE"></span><span id="hpx::parallel::util::numa_allocator::pointer"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a8daf650d5cecbfd49f05dcfc3f3c2631"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="hpx::parallel::util::numa_allocator::value_type">value_type</a> *<code class="sig-name descname">pointer</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator13const_pointerE">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator13const_pointerE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator13const_pointerE"></span><span id="hpx::parallel::util::numa_allocator::const_pointer"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ac693f8c6c9cadfb46cd5d5c75599fcb4"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="hpx::parallel::util::numa_allocator::value_type">value_type</a> <em class="property">const</em> *<code class="sig-name descname">const_pointer</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator13const_pointerE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator9referenceE">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator9referenceE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator9referenceE"></span><span id="hpx::parallel::util::numa_allocator::reference"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a85b2e863cf2380d7bda45efe9c876d49"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="hpx::parallel::util::numa_allocator::value_type">value_type</a> &amp;<code class="sig-name descname">reference</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator9referenceE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator15const_referenceE">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator15const_referenceE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator15const_referenceE"></span><span id="hpx::parallel::util::numa_allocator::const_reference"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1acfa20c573c1c19511ae743b24ff9f7e1"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator10value_typeE" title="hpx::parallel::util::numa_allocator::value_type">value_type</a> <em class="property">const</em> &amp;<code class="sig-name descname">const_reference</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator15const_referenceE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator9size_typeE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator9size_typeE"></span><span id="hpx::parallel::util::numa_allocator::size_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1aed1ffca885c06768fd87d12e8e101991"></span><em class="property">typedef </em><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">size_type</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator15difference_typeE">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator15difference_typeE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator15difference_typeE"></span><span id="hpx::parallel::util::numa_allocator::difference_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ada8690ead21907a4efbe3bddeba4f1dc"></span><em class="property">typedef </em><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::ptrdiff_t <code class="sig-name descname">difference_type</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator15difference_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK9ExecutorsRN3hpx7threads8topologyE">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator14numa_allocatorERK9ExecutorsRN3hpx7threads8topologyE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator14numa_allocatorERK9ExecutorsRN3hpx7threads8topologyE"></span><span id="hpx::parallel::util::numa_allocator::numa_allocator__ExecutorsCR.hpx::threads::topologyR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a85809b45b3c37317b91be5fa62455b15"></span><code class="sig-name descname">numa_allocator</code><span class="sig-paren">(</span>Executors <em class="property">const</em> &amp;<em>executors</em>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/topology/api.html#_CPPv4N3hpx7threads8topologyE" title="hpx::threads::topology">topology</a> &amp;<em>topo</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK9ExecutorsRN3hpx7threads8topologyE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator"></span><span id="hpx::parallel::util::numa_allocator::numa_allocator__numa_allocatorCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a67f9409d5c975bfad12bf47d3f26631b"></span><code class="sig-name descname">numa_allocator</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator" title="hpx::parallel::util::numa_allocator::numa_allocator">numa_allocator</a> <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocator" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE">
-<span id="_CPPv3I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE"></span><span id="_CPPv2I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ab8d8d294becdf072175f763286bebd6d"></span>template&lt;typename <code class="sig-name descname">U</code>&gt;<br /><code class="sig-name descname">numa_allocator</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE" title="hpx::parallel::util::numa_allocator::numa_allocator">numa_allocator</a>&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE" title="hpx::parallel::util::numa_allocator::numa_allocator::U">U</a>, Executors&gt; <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx8parallel4util14numa_allocator14numa_allocatorERK14numa_allocatorI1U9ExecutorsE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator7addressE9reference">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator7addressE9reference"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator7addressE9reference"></span><span id="hpx::parallel::util::numa_allocator::address__reference"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a5de4e4269dfe014380d2f2161ff34f36"></span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <code class="sig-name descname">address</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator9referenceE" title="hpx::parallel::util::numa_allocator::reference">reference</a> <em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator7addressE9reference" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator7addressE15const_reference">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator7addressE15const_reference"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator7addressE15const_reference"></span><span id="hpx::parallel::util::numa_allocator::address__const_reference"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a1b68b6385f16a22f04aec67106a7f86f"></span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator13const_pointerE" title="hpx::parallel::util::numa_allocator::const_pointer">const_pointer</a> <code class="sig-name descname">address</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator15const_referenceE" title="hpx::parallel::util::numa_allocator::const_reference">const_reference</a> <em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator7addressE15const_reference" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator8allocateE9size_typePKv">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator8allocateE9size_typePKv"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator8allocateE9size_typePKv"></span><span id="hpx::parallel::util::numa_allocator::allocate__size_type.voidCP"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a3ea07a6fb9ef64d66f7657aec43040d4"></span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <code class="sig-name descname">allocate</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE" title="hpx::parallel::util::numa_allocator::size_type">size_type</a> <em>cnt</em>, <em class="property">const</em> void* = nullptr<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator8allocateE9size_typePKv" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator10deallocateE7pointer9size_type">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator10deallocateE7pointer9size_type"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator10deallocateE7pointer9size_type"></span><span id="hpx::parallel::util::numa_allocator::deallocate__pointer.size_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1aaf893438bf3e19ac2dfafdc4c7b67739"></span>void <code class="sig-name descname">deallocate</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <em>p</em>, <a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE" title="hpx::parallel::util::numa_allocator::size_type">size_type</a> <em>cnt</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator10deallocateE7pointer9size_type" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4NK3hpx8parallel4util14numa_allocator8max_sizeEv">
-<span id="_CPPv3NK3hpx8parallel4util14numa_allocator8max_sizeEv"></span><span id="_CPPv2NK3hpx8parallel4util14numa_allocator8max_sizeEv"></span><span id="hpx::parallel::util::numa_allocator::max_sizeC"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ae991c6acd39e26ccfa21d833c9e5d6d8"></span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator9size_typeE" title="hpx::parallel::util::numa_allocator::size_type">size_type</a> <code class="sig-name descname">max_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx8parallel4util14numa_allocator8max_sizeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator9constructE7pointerRK1T">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator9constructE7pointerRK1T"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator9constructE7pointerRK1T"></span><span id="hpx::parallel::util::numa_allocator::construct__pointer.TCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1aa9fd0401ab4c86ecd516b3b82db8ea3a"></span>void <code class="sig-name descname">construct</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <em>p</em>, <em class="property">const</em> T &amp;<em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator9constructE7pointerRK1T" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator7destroyE7pointer">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator7destroyE7pointer"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator7destroyE7pointer"></span><span id="hpx::parallel::util::numa_allocator::destroy__pointer"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ababc1fcf3ce9f6b5dbcc5bf7c601b32e"></span>void <code class="sig-name descname">destroy</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx8parallel4util14numa_allocator7pointerE" title="hpx::parallel::util::numa_allocator::pointer">pointer</a> <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator7destroyE7pointer" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator13executor_typeE">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator13executor_typeE"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator13executor_typeE"></span><span id="hpx::parallel::util::numa_allocator::executor_type"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1ac526d4f63fa939f8549619926de2f8d7"></span><em class="property">typedef </em>Executors::value_type <code class="sig-name descname">executor_type</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator13executor_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Members</p>
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator10executors_E">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator10executors_E"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator10executors_E"></span><span id="hpx::parallel::util::numa_allocator::executors___ExecutorsCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1aa4747410e33aa19ccbdfd5a5d2c08be8"></span>Executors <em class="property">const</em> &amp;<code class="sig-name descname">executors_</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator10executors_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx8parallel4util14numa_allocator5topo_E">
-<span id="_CPPv3N3hpx8parallel4util14numa_allocator5topo_E"></span><span id="_CPPv2N3hpx8parallel4util14numa_allocator5topo_E"></span><span id="hpx::parallel::util::numa_allocator::topo___hpx::threads::topologyR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1adb23cc7b5e0c73161cfadfeb04e6f51e"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../../core/topology/api.html#_CPPv4N3hpx7threads8topologyE" title="hpx::threads::topology">topology</a> &amp;<code class="sig-name descname">topo_</code><a class="headerlink" href="#_CPPv4N3hpx8parallel4util14numa_allocator5topo_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Friends</p>
-<dl class="cpp function">
-<dt>
-<span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a20ac8cc8d94ad6236b80c6708b7b53df"></span><em class="property">friend </em><code class="sig-name descname">hpx::parallel::util::numa_allocator</code></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4eqRK14numa_allocatorRK14numa_allocator">
-<span id="_CPPv3eqRK14numa_allocatorRK14numa_allocator"></span><span id="_CPPv2eqRK14numa_allocatorRK14numa_allocator"></span><span id="eq-operator__numa_allocatorCR.numa_allocatorCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a6b9eb9fbcb38528c1809596849ea7c63"></span>bool <code class="sig-name descname">operator==</code><span class="sig-paren">(</span>numa_allocator <em class="property">const</em>&amp;, numa_allocator <em class="property">const</em>&amp;<span class="sig-paren">)</span><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4neRK14numa_allocatorRK14numa_allocator">
-<span id="_CPPv3neRK14numa_allocatorRK14numa_allocator"></span><span id="_CPPv2neRK14numa_allocatorRK14numa_allocator"></span><span id="neq-operator__numa_allocatorCR.numa_allocatorCR"></span><span class="target" id="classhpx_1_1parallel_1_1util_1_1numa__allocator_1a1736f9e77573941ec2195b8c4565b1c8"></span>bool <code class="sig-name descname">operator!=</code><span class="sig-paren">(</span>numa_allocator <em class="property">const</em> &amp;<em>l</em>, numa_allocator <em class="property">const</em> &amp;<em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4neRK14numa_allocatorRK14numa_allocator" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<dl class="cpp struct">
-<dt id="_CPPv4I0EN3hpx8parallel4util14numa_allocator6rebindE">
-<span id="_CPPv3I0EN3hpx8parallel4util14numa_allocator6rebindE"></span><span id="_CPPv2I0EN3hpx8parallel4util14numa_allocator6rebindE"></span><span class="target" id="structhpx_1_1parallel_1_1util_1_1numa__allocator_1_1rebind"></span>template&lt;typename <code class="sig-name descname">U</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">rebind</code><a class="headerlink" href="#_CPPv4I0EN3hpx8parallel4util14numa_allocator6rebindE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4IEN3hpx8parallel4util14numa_allocatorI1T9ExecutorsE6rebind5otherE">
-<span id="_CPPv3IEN3hpx8parallel4util14numa_allocatorI1T9ExecutorsE6rebind5otherE"></span><span id="_CPPv2IEN3hpx8parallel4util14numa_allocatorI1T9ExecutorsE6rebind5otherE"></span>template&lt;&gt;<br /><span class="target" id="structhpx_1_1parallel_1_1util_1_1numa__allocator_1_1rebind_1a3ba4f0214889f5b7f174bb8a2e6e5ee6"></span><em class="property">typedef </em>numa_allocator&lt;U, Executors&gt; <code class="sig-name descname">other</code><a class="headerlink" href="#_CPPv4IEN3hpx8parallel4util14numa_allocatorI1T9ExecutorsE6rebind5otherE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-</dd></dl>
-
-</dd></dl>
-
-</dd></dl>
-
-</dd></dl>
-
 <dl class="cpp struct">
 <dt id="_CPPv4IEN3hpx7compute6traits13access_targetIN4host6targetEEE">
 <span id="_CPPv3IEN3hpx7compute6traits13access_targetIN4host6targetEEE"></span><span id="_CPPv2IEN3hpx7compute6traits13access_targetIN4host6targetEEE"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1access__target_3_01host_1_1target_01_4"></span>template&lt;&gt;<br /><em class="property">struct </em><code class="sig-name descname">access_target</code>&lt;<a class="reference internal" href="#_CPPv4N3hpx7compute4hostE" title="hpx::compute::host">host</a>::<a class="reference internal" href="#_CPPv4N3hpx7compute4host6targetE" title="hpx::compute::host::target">target</a>&gt;<a class="headerlink" href="#_CPPv4IEN3hpx7compute6traits13access_targetIN4host6targetEEE" title="Permalink to this definition">¶</a><br /></dt>
@@ -1676,8 +1584,8 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <dt>
 <span class="target" id="namespacehpx_1_1compute"></span><em class="property">namespace </em><code class="sig-name descname">compute</code><br /></dt>
 <dd><dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx_1_1compute_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
+<dt id="_CPPv4N3hpx7compute6traitsE">
+<span id="_CPPv3N3hpx7compute6traitsE"></span><span id="_CPPv2N3hpx7compute6traitsE"></span><span id="hpx::compute::traits"></span><span class="target" id="namespacehpx_1_1compute_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traitsE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="cpp struct">
 <dt>
 <span class="target" id="structhpx_1_1compute_1_1traits_1_1access__target_3_01host_1_1target_01_4"></span>template&lt;&gt;<br /><em class="property">struct </em><code class="sig-name descname">access_target</code>&lt;<a class="reference internal" href="#_CPPv4N3hpx7compute4hostE" title="hpx::compute::host">host</a>::<a class="reference internal" href="#_CPPv4N3hpx7compute4host6targetE" title="hpx::compute::host::target">target</a>&gt;<br /></dt>
@@ -1736,6 +1644,98 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 
 </dd></dl>
 
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx13serializationE">
+<span id="_CPPv3N3hpx13serializationE"></span><span id="_CPPv2N3hpx13serializationE"></span><span id="hpx::serialization"></span><span class="target" id="namespacehpx_1_1serialization"></span><em class="property">namespace </em><code class="sig-name descname">serialization</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx13serialization9serializeEvR13input_archiveRN7compute6vectorI1T9AllocatorEEj">
+<span id="_CPPv3I00EN3hpx13serialization9serializeER13input_archiveRN7compute6vectorI1T9AllocatorEEj"></span><span id="_CPPv2I00EN3hpx13serialization9serializeER13input_archiveRN7compute6vectorI1T9AllocatorEEj"></span><span class="target" id="serialization_2vector_8hpp_1a9b1611bfc67fde6a1c768fc99011e91d"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">Allocator</code>&gt;<br />void <code class="sig-name descname">serialize</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/serialization/api.html#_CPPv4N3hpx13serialization13input_archiveE" title="hpx::serialization::input_archive">input_archive</a> &amp;<em>ar</em>, <a class="reference internal" href="../async_cuda/api.html#_CPPv4N3hpx7computeE" title="hpx::compute">compute</a>::vector&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx13serialization9serializeEvR13input_archiveRN7compute6vectorI1T9AllocatorEEj" title="hpx::serialization::serialize::T">T</a>, <a class="reference internal" href="#_CPPv4I00EN3hpx13serialization9serializeEvR13input_archiveRN7compute6vectorI1T9AllocatorEEj" title="hpx::serialization::serialize::Allocator">Allocator</a>&gt; &amp;<em>v</em>, unsigned<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx13serialization9serializeEvR13input_archiveRN7compute6vectorI1T9AllocatorEEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx13serialization9serializeEvR14output_archiveRKN7compute6vectorI1T9AllocatorEEj">
+<span id="_CPPv3I00EN3hpx13serialization9serializeER14output_archiveRKN7compute6vectorI1T9AllocatorEEj"></span><span id="_CPPv2I00EN3hpx13serialization9serializeER14output_archiveRKN7compute6vectorI1T9AllocatorEEj"></span><span class="target" id="serialization_2vector_8hpp_1ab11e1b8d3ecc4898a4f706af61e39b75"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">Allocator</code>&gt;<br />void <code class="sig-name descname">serialize</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/serialization/api.html#_CPPv4N3hpx13serialization14output_archiveE" title="hpx::serialization::output_archive">output_archive</a> &amp;<em>ar</em>, <a class="reference internal" href="../async_cuda/api.html#_CPPv4N3hpx7computeE" title="hpx::compute">compute</a>::vector&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx13serialization9serializeEvR14output_archiveRKN7compute6vectorI1T9AllocatorEEj" title="hpx::serialization::serialize::T">T</a>, <a class="reference internal" href="#_CPPv4I00EN3hpx13serialization9serializeEvR14output_archiveRKN7compute6vectorI1T9AllocatorEEj" title="hpx::serialization::serialize::Allocator">Allocator</a>&gt; <em class="property">const</em> &amp;<em>v</em>, unsigned<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx13serialization9serializeEvR14output_archiveRKN7compute6vectorI1T9AllocatorEEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1compute"></span><em class="property">namespace </em><code class="sig-name descname">compute</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1compute_1_1traits"></span><em class="property">namespace </em><code class="sig-name descname">traits</code><br /></dt>
+<dd><dl class="cpp struct">
+<dt id="_CPPv4I0EN3hpx7compute6traits16allocator_traitsE">
+<span id="_CPPv3I0EN3hpx7compute6traits16allocator_traitsE"></span><span id="_CPPv2I0EN3hpx7compute6traits16allocator_traitsE"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits"></span>template&lt;typename <code class="sig-name descname">Allocator</code>&gt;<br /><em class="property">struct </em><code class="sig-name descname">allocator_traits</code><a class="headerlink" href="#_CPPv4I0EN3hpx7compute6traits16allocator_traitsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx7compute6traits16allocator_traits9referenceE">
+<span id="_CPPv3N3hpx7compute6traits16allocator_traits9referenceE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits9referenceE"></span><span id="hpx::compute::traits::allocator_traits::reference"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a31543618aa761217c1b5bc5dfadbc5d5"></span><em class="property">typedef </em>detail::get_reference_type&lt;Allocator&gt;::type <code class="sig-name descname">reference</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits9referenceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx7compute6traits16allocator_traits15const_referenceE">
+<span id="_CPPv3N3hpx7compute6traits16allocator_traits15const_referenceE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits15const_referenceE"></span><span id="hpx::compute::traits::allocator_traits::const_reference"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a462c2709896073fd2d819fd79170f157"></span><em class="property">typedef </em>detail::get_const_reference_type&lt;Allocator&gt;::type <code class="sig-name descname">const_reference</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits15const_referenceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx7compute6traits16allocator_traits13access_targetE">
+<span id="_CPPv3N3hpx7compute6traits16allocator_traits13access_targetE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits13access_targetE"></span><span id="hpx::compute::traits::allocator_traits::access_target"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1ace1ec95750148fc4c9532f9e6d6670f8"></span><em class="property">typedef </em>detail::get_target_traits&lt;Allocator&gt;::type <code class="sig-name descname">access_target</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits13access_targetE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx7compute6traits16allocator_traits11target_typeE">
+<span id="_CPPv3N3hpx7compute6traits16allocator_traits11target_typeE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits11target_typeE"></span><span id="hpx::compute::traits::allocator_traits::target_type"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a72eca04b35ba69f4b3dfa3a1f4ca5751"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx7compute6traits16allocator_traits13access_targetE" title="hpx::compute::traits::allocator_traits::access_target">access_target</a>::target_type <code class="sig-name descname">target_type</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits11target_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7compute6traits16allocator_traits6targetERK9Allocator">
+<span id="_CPPv3N3hpx7compute6traits16allocator_traits6targetERK9Allocator"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits6targetERK9Allocator"></span><span id="hpx::compute::traits::allocator_traits::target__AllocatorCR"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a364da260f171bc47838b39f59e0c50fe"></span><em class="property">static</em> auto <code class="sig-name descname">target</code><span class="sig-paren">(</span>Allocator <em class="property">const</em> &amp;<em>alloc</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits6targetERK9Allocator" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IDpEN3hpx7compute6traits16allocator_traits14bulk_constructEvR9Allocator7pointer9size_typeDpRR2Ts">
+<span id="_CPPv3IDpEN3hpx7compute6traits16allocator_traits14bulk_constructER9Allocator7pointer9size_typeDpRR2Ts"></span><span id="_CPPv2IDpEN3hpx7compute6traits16allocator_traits14bulk_constructER9Allocator7pointer9size_typeDpRR2Ts"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1aae119ca32d73194ae5cca31272a4c0df"></span>template&lt;typename ...<code class="sig-name descname">Ts</code>&gt;<br /><em class="property">static</em> void <code class="sig-name descname">bulk_construct</code><span class="sig-paren">(</span>Allocator &amp;<em>alloc</em>, pointer <em>p</em>, size_type <em>count</em>, <a class="reference internal" href="#_CPPv4IDpEN3hpx7compute6traits16allocator_traits14bulk_constructEvR9Allocator7pointer9size_typeDpRR2Ts" title="hpx::compute::traits::allocator_traits::bulk_construct::Ts">Ts</a>&amp;&amp;... <em>vs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpEN3hpx7compute6traits16allocator_traits14bulk_constructEvR9Allocator7pointer9size_typeDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7compute6traits16allocator_traits12bulk_destroyER9Allocator7pointer9size_type">
+<span id="_CPPv3N3hpx7compute6traits16allocator_traits12bulk_destroyER9Allocator7pointer9size_type"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits12bulk_destroyER9Allocator7pointer9size_type"></span><span id="hpx::compute::traits::allocator_traits::bulk_destroy__AllocatorR.pointer.size_type"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a55133e17371080668ed919c954a6c4a5"></span><em class="property">static</em> void <code class="sig-name descname">bulk_destroy</code><span class="sig-paren">(</span>Allocator &amp;<em>alloc</em>, pointer <em>p</em>, size_type <em>count</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits12bulk_destroyER9Allocator7pointer9size_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx7compute6traits16allocator_traits9base_typeE">
+<span id="_CPPv3N3hpx7compute6traits16allocator_traits9base_typeE"></span><span id="_CPPv2N3hpx7compute6traits16allocator_traits9base_typeE"></span><span id="hpx::compute::traits::allocator_traits::base_type"></span><span class="target" id="structhpx_1_1compute_1_1traits_1_1allocator__traits_1a641bec4be16d0376b8980df5a58473f5"></span><em class="property">typedef </em><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::allocator_traits&lt;Allocator&gt; <code class="sig-name descname">base_type</code><a class="headerlink" href="#_CPPv4N3hpx7compute6traits16allocator_traits9base_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -1768,7 +1768,7 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
         &copy; Copyright 2008-2020, The STE||AR Group
       <span class="commit">
         
-        Revision <code>1f4b348</code>.
+        Revision <code>dc201b6</code>.
       </span>
 
     </p>

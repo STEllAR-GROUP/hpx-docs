@@ -400,7 +400,7 @@ work, but we do not test <em>HPX</em> with other platforms, so please be warned.
 <h3>Software and libraries<a class="headerlink" href="#software-and-libraries" title="Permalink to this headline">¶</a></h3>
 <p>In the simplest case, <em>HPX</em> depends on <a class="reference external" href="https://www.boost.org/">Boost</a> and <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a>. So, before you
 read further, please make sure you have a recent version of <a class="reference external" href="https://www.boost.org/">Boost</a> installed
-on your target machine. <em>HPX</em> currently requires at least Boost V1.65.0 to work
+on your target machine. <em>HPX</em> currently requires at least Boost V1.66.0 to work
 properly. It may build and run with older versions, but we do not test <em>HPX</em>
 with those versions, so please be warned.</p>
 <p>The installation of Boost is described in detail in Boost’s <a class="reference external" href="https://www.boost.org/more/getting_started/index.html">Getting Started</a>
@@ -441,31 +441,27 @@ favorite compiler with <em>HPX</em> visit <a class="reference external" href="ht
 <td><p>7.0</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://software.intel.com/en-us/intel-composer-xe/">Intel Composer XE Suites</a></p></td>
-<td><p>2014</p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://clang.llvm.org/">clang: a C language family frontend for LLVM</a></p></td>
+<td><p>7.0</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://clang.llvm.org/">clang: a C language family frontend for LLVM</a></p></td>
-<td><p>5.0</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>Build System</strong></p></td>
+<tr class="row-odd"><td><p><strong>Build System</strong></p></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.cmake.org">CMake</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.cmake.org">CMake</a></p></td>
 <td><p>3.13</p></td>
 <td><p>Cuda support 3.9</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Required Libraries</strong></p></td>
+<tr class="row-odd"><td><p><strong>Required Libraries</strong></p></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.boost.org/">Boost C++ Libraries</a></p></td>
-<td><p>1.65.0</p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.boost.org/">Boost C++ Libraries</a></p></td>
+<td><p>1.66.0</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a></p></td>
 <td><p>1.5</p></td>
 <td></td>
 </tr>
@@ -509,7 +505,7 @@ favorite compiler with <em>HPX</em> visit <a class="reference external" href="ht
 <td></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://www.boost.org/">Boost</a></p></td>
-<td><p>1.65.0</p></td>
+<td><p>1.66.0</p></td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a></p></td>
@@ -1406,11 +1402,6 @@ CMake invocation.</p>
     <span class="s">OFF</span>
     <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;disable generic coroutines&quot;</span>
 <span class="p">)</span>
-<span class="c"># BGAS nodes support ibverbs, but it is deprecated</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_VERBS</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
 <span class="c"># Always disable the tcp parcelport as it is non-functional on the BGQ.</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span>
     <span class="s">ON</span>
@@ -1529,8 +1520,6 @@ CMake invocation.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span> <span class="s">ON</span><span class="p">)</span>
 <span class="c"># Set our platform name</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_PLATFORM</span> <span class="s2">&quot;BlueGeneQ&quot;</span><span class="p">)</span>
-<span class="c"># Always disable the ibverbs parcelport as it is non-functional on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_VERBS</span> <span class="s">OFF</span><span class="p">)</span>
 <span class="c"># Always disable the tcp parcelport as it is non-functional on the BGQ.</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span> <span class="s">OFF</span><span class="p">)</span>
 <span class="c"># Always enable the mpi parcelport as it is currently the only way to</span>
@@ -1983,13 +1972,6 @@ CMake invocation.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span> <span class="s">ON</span><span class="p">)</span>
 <span class="c"># Set our platform name</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_PLATFORM</span> <span class="s2">&quot;XeonPhi&quot;</span><span class="p">)</span>
-<span class="c"># Always disable the ibverbs parcelport as it is non-functional on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_VERBS</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span>
-      <span class="s">BOOL</span>
-      <span class="s2">&quot;Enable the ibverbs based parcelport. This is currently an experimental feature&quot;</span>
-<span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span>
     <span class="s">ON</span>
     <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Enable the MPI based parcelport.&quot;</span>
@@ -2095,7 +2077,7 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_ACTION_BASE_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-with-action-base-compatibility-bool"></span><code class="sig-name descname">HPX_WITH_ACTION_BASE_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_ACTION_BASE_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable deprecated action bases (default: ON)</p>
+<dd><p>Enable deprecated action bases (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2197,7 +2179,7 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_EMBEDDED_THREAD_POOLS_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-with-embedded-thread-pools-compatibility-bool"></span><code class="sig-name descname">HPX_WITH_EMBEDDED_THREAD_POOLS_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_EMBEDDED_THREAD_POOLS_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable deprecated embedded thread pools (default: ON)</p>
+<dd><p>Enable deprecated embedded thread pools (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2275,19 +2257,19 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_POOL_EXECUTOR_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-with-pool-executor-compatibility-bool"></span><code class="sig-name descname">HPX_WITH_POOL_EXECUTOR_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_POOL_EXECUTOR_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable deprecated pool executor (default: ON)</p>
+<dd><p>Enable deprecated pool executor (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_PROMISE_ALIAS_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-with-promise-alias-compatibility-bool"></span><code class="sig-name descname">HPX_WITH_PROMISE_ALIAS_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_PROMISE_ALIAS_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable deprecated alias of hpx::promise to hpx::lcos::promise (default: ON)</p>
+<dd><p>Enable deprecated alias of hpx::promise to hpx::lcos::promise (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_REGISTER_THREAD_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-with-register-thread-compatibility-bool"></span><code class="sig-name descname">HPX_WITH_REGISTER_THREAD_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_REGISTER_THREAD_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable deprecated register_thread/work functions in the hpx::applier namespace (default: ON)</p>
+<dd><p>Enable deprecated register_thread/work functions in the hpx::applier namespace (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2317,19 +2299,19 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_THREAD_AWARE_TIMER_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-with-thread-aware-timer-compatibility-bool"></span><code class="sig-name descname">HPX_WITH_THREAD_AWARE_TIMER_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_THREAD_AWARE_TIMER_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable deprecated thread_aware_timer (default: ON)</p>
+<dd><p>Enable deprecated thread_aware_timer (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_THREAD_EXECUTORS_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-with-thread-executors-compatibility-bool"></span><code class="sig-name descname">HPX_WITH_THREAD_EXECUTORS_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_THREAD_EXECUTORS_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable deprecated thread executors (default: ON)</p>
+<dd><p>Enable deprecated thread executors (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_THREAD_POOL_OS_EXECUTOR_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-with-thread-pool-os-executor-compatibility-bool"></span><code class="sig-name descname">HPX_WITH_THREAD_POOL_OS_EXECUTOR_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_THREAD_POOL_OS_EXECUTOR_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable deprecated thread pool executors (default: ON)</p>
+<dd><p>Enable deprecated thread pool executors (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2341,7 +2323,7 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_UNSCOPED_ENUM_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-with-unscoped-enum-compatibility-bool"></span><code class="sig-name descname">HPX_WITH_UNSCOPED_ENUM_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_UNSCOPED_ENUM_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable deprecated unscoped enums (default: ON)</p>
+<dd><p>Enable deprecated unscoped enums (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2730,7 +2712,6 @@ generate your specific makefiles/project files.</p>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_PARCELPORT_LIBFABRIC-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_PARCELPORT_LIBFABRIC:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_PARCELPORT_MPI-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_PARCELPORT_MPI:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_PARCELPORT_TCP-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_PARCELPORT_TCP:BOOL</span></code></a></p></li>
-<li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_PARCELPORT_VERBS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_PARCELPORT_VERBS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_PARCEL_PROFILING-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_PARCEL_PROFILING:BOOL</span></code></a></p></li>
 </ul>
 <dl class="std option">
@@ -2761,12 +2742,6 @@ generate your specific makefiles/project files.</p>
 <dt id="cmdoption-arg-HPX_WITH_PARCELPORT_TCP-BOOL">
 <span id="cmdoption-arg-hpx-with-parcelport-tcp-bool"></span><code class="sig-name descname">HPX_WITH_PARCELPORT_TCP:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_PARCELPORT_TCP-BOOL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable the TCP based parcelport.</p>
-</dd></dl>
-
-<dl class="std option">
-<dt id="cmdoption-arg-HPX_WITH_PARCELPORT_VERBS-BOOL">
-<span id="cmdoption-arg-hpx-with-parcelport-verbs-bool"></span><code class="sig-name descname">HPX_WITH_PARCELPORT_VERBS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_PARCELPORT_VERBS-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable the ibverbs based parcelport. This is currently an experimental feature</p>
 </dd></dl>
 
 <dl class="std option">
@@ -3072,6 +3047,10 @@ generate your specific makefiles/project files.</p>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_PROGRAM_OPTIONS_WITH_BOOST_PROGRAM_OPTIONS_COMPATIBILITY-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_PROGRAM_OPTIONS_WITH_BOOST_PROGRAM_OPTIONS_COMPATIBILITY:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_PROGRAM_OPTIONS_WITH_DEPRECATION_WARNINGS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_PROGRAM_OPTIONS_WITH_DEPRECATION_WARNINGS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_PROGRAM_OPTIONS_WITH_TESTS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_PROGRAM_OPTIONS_WITH_TESTS:BOOL</span></code></a></p></li>
+<li><p><a class="reference internal" href="#cmdoption-arg-HPX_PROPERTIES_WITH_DEPRECATION_WARNINGS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_PROPERTIES_WITH_DEPRECATION_WARNINGS:BOOL</span></code></a></p></li>
+<li><p><a class="reference internal" href="#cmdoption-arg-HPX_PROPERTIES_WITH_TESTS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_PROPERTIES_WITH_TESTS:BOOL</span></code></a></p></li>
+<li><p><a class="reference internal" href="#cmdoption-arg-HPX_RESILIENCY_DISTRIBUTED_WITH_DEPRECATION_WARNINGS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_RESILIENCY_DISTRIBUTED_WITH_DEPRECATION_WARNINGS:BOOL</span></code></a></p></li>
+<li><p><a class="reference internal" href="#cmdoption-arg-HPX_RESILIENCY_DISTRIBUTED_WITH_TESTS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_RESILIENCY_DISTRIBUTED_WITH_TESTS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_RESILIENCY_WITH_DEPRECATION_WARNINGS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_RESILIENCY_WITH_DEPRECATION_WARNINGS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_RESILIENCY_WITH_TESTS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_RESILIENCY_WITH_TESTS:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_RESOURCE_PARTITIONER_WITH_COMPATIBILITY_HEADERS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_RESOURCE_PARTITIONER_WITH_COMPATIBILITY_HEADERS:BOOL</span></code></a></p></li>
@@ -4116,7 +4095,7 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_PROGRAM_OPTIONS_WITH_BOOST_PROGRAM_OPTIONS_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-program-options-with-boost-program-options-compatibility-bool"></span><code class="sig-name descname">HPX_PROGRAM_OPTIONS_WITH_BOOST_PROGRAM_OPTIONS_COMPATIBILITY:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_PROGRAM_OPTIONS_WITH_BOOST_PROGRAM_OPTIONS_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable Boost.ProgramOptions compatibility. (default: ON)</p>
+<dd><p>Enable Boost.ProgramOptions compatibility. (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -4129,6 +4108,30 @@ generate your specific makefiles/project files.</p>
 <dt id="cmdoption-arg-HPX_PROGRAM_OPTIONS_WITH_TESTS-BOOL">
 <span id="cmdoption-arg-hpx-program-options-with-tests-bool"></span><code class="sig-name descname">HPX_PROGRAM_OPTIONS_WITH_TESTS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_PROGRAM_OPTIONS_WITH_TESTS-BOOL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build HPX program_options module tests. (default: ON)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_PROPERTIES_WITH_DEPRECATION_WARNINGS-BOOL">
+<span id="cmdoption-arg-hpx-properties-with-deprecation-warnings-bool"></span><code class="sig-name descname">HPX_PROPERTIES_WITH_DEPRECATION_WARNINGS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_PROPERTIES_WITH_DEPRECATION_WARNINGS-BOOL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable warnings for deprecated facilities. (default: On)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_PROPERTIES_WITH_TESTS-BOOL">
+<span id="cmdoption-arg-hpx-properties-with-tests-bool"></span><code class="sig-name descname">HPX_PROPERTIES_WITH_TESTS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_PROPERTIES_WITH_TESTS-BOOL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build HPX properties module tests. (default: ON)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_RESILIENCY_DISTRIBUTED_WITH_DEPRECATION_WARNINGS-BOOL">
+<span id="cmdoption-arg-hpx-resiliency-distributed-with-deprecation-warnings-bool"></span><code class="sig-name descname">HPX_RESILIENCY_DISTRIBUTED_WITH_DEPRECATION_WARNINGS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_RESILIENCY_DISTRIBUTED_WITH_DEPRECATION_WARNINGS-BOOL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable warnings for deprecated facilities. (default: On)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_RESILIENCY_DISTRIBUTED_WITH_TESTS-BOOL">
+<span id="cmdoption-arg-hpx-resiliency-distributed-with-tests-bool"></span><code class="sig-name descname">HPX_RESILIENCY_DISTRIBUTED_WITH_TESTS:BOOL</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_RESILIENCY_DISTRIBUTED_WITH_TESTS-BOOL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build HPX resiliency_distributed module tests. (default: ON)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -4667,7 +4670,7 @@ improves the generated diagnostics.</p>
         &copy; Copyright 2008-2020, The STE||AR Group
       <span class="commit">
         
-        Revision <code>74a5b79</code>.
+        Revision <code>405b198</code>.
       </span>
 
     </p>

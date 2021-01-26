@@ -123,7 +123,7 @@ program is encoded.
 The :cpp:func:`hpx::init` function in ``main()`` starts the runtime system, and
 invokes ``hpx_main()`` as the first |hpx|-thread. Below we can see that the
 basic program is simple. The command line option ``--n-value`` is read in, a
-timer (:cpp:class:`hpx::util::high_resolution_timer`) is set up to record the
+timer (:cpp:class:`hpx::chrono::high_resolution_timer`) is set up to record the
 time it takes to do the computation, the ``fibonacci`` function is invoked
 synchronously, and the answer is printed out.
 
@@ -139,7 +139,7 @@ asynchronous. To understand what is happening we have to look inside the
    :start-after: //[fibonacci
    :end-before: //fibonacci]
 
-This block of code is looks similar to regular C++ code. First, ``if (n < 2)``,
+This block of code looks similar to regular C++ code. First, ``if (n < 2)``,
 meaning n is 0 or 1, then we return 0 or 1 (recall the first element of the
 Fibonacci sequence is 0 and the second is 1). If n is larger than 1 we spawn two
 new tasks whose results are contained in ``n1`` and ``n2``. This is done using

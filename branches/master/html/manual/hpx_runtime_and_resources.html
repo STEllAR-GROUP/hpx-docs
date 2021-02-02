@@ -377,7 +377,8 @@ case we leave the first processing unit for the default thread pool:</p>
     <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="nf">init_resource_partitioner_handler</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">partitioner</span><span class="o">&amp;</span> <span class="n">rp</span><span class="p">)</span>
+<span class="kt">void</span> <span class="nf">init_resource_partitioner_handler</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">partitioner</span><span class="o">&amp;</span> <span class="n">rp</span><span class="p">,</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">variables_map</span> <span class="k">const</span><span class="o">&amp;</span> <span class="cm">/*vm*/</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">rp</span><span class="p">.</span><span class="n">create_thread_pool</span><span class="p">(</span><span class="s">&quot;my-thread-pool&quot;</span><span class="p">);</span>
 
@@ -386,9 +387,9 @@ case we leave the first processing unit for the default thread pool:</p>
 
     <span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">numa_domain</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">rp</span><span class="p">.</span><span class="n">numa_domains</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">core</span><span class="o">&amp;</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">d</span><span class="p">.</span><span class="n">cores</span><span class="p">())</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">core</span> <span class="k">const</span><span class="o">&amp;</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">d</span><span class="p">.</span><span class="n">cores</span><span class="p">())</span>
     <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">pu</span><span class="o">&amp;</span> <span class="nl">p</span> <span class="p">:</span> <span class="n">c</span><span class="p">.</span><span class="n">pus</span><span class="p">())</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">pu</span> <span class="k">const</span><span class="o">&amp;</span> <span class="nl">p</span> <span class="p">:</span> <span class="n">c</span><span class="p">.</span><span class="n">pus</span><span class="p">())</span>
         <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">one_numa_domain</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">skipped_first_pu</span><span class="p">)</span>
             <span class="p">{</span>
@@ -576,7 +577,7 @@ folder for examples of advanced resource partitioner usage:
         &copy; Copyright 2008-2020, The STE||AR Group
       <span class="commit">
         
-        Revision <code>f31505e</code>.
+        Revision <code>74e2bb9</code>.
       </span>
 
     </p>

@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>string_util &mdash; HPX 1.6.0-rc2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="synchronization" href="../synchronization/api.html" />
+    <link rel="prev" title="statistics" href="../statistics/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> HPX
+          
+
+          
+            
+            <img src="../../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.0-rc2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api/public_api.html">Public API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../affinity/api.html">affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config_registry/api.html">config_registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution_base/api.html">execution_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../itt_notify/api.html">itt_notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logging/api.html">logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../properties/api.html">properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistics/api.html">statistics</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../testing/api.html">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../version/api.html">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/actions/api.html">actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/actions_base/api.html">actions_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/agas/api.html">agas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_colocated/api.html">async_colocated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_cuda/api.html">async_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_distributed/api.html">async_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_mpi/api.html">async_mpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/checkpoint_base/api.html">checkpoint_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/collectives/api.html">collectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/command_line_handling/api.html">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/components_base/api.html">components_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/executors_distributed/api.html">executors_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/init_runtime/api.html">init_runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/lcos_distributed/api.html">lcos_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/mpi_base/api.html">mpi_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/naming/api.html">naming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/resiliency_distributed/api.html">resiliency_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_distributed/api.html">runtime_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_local/api.html">runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/thread_executors/api.html">thread_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/pack_traversal/api.html">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/timed_execution/api.html">timed_execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">Citing <em>HPX</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users.html"><em>HPX</em> users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../api.html">API reference</a> &raquo;</li>
+        
+      <li>string_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/core/string_util/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="string-util">
+<span id="modules-string-util-api"></span><h1>string_util<a class="headerlink" href="#string-util" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this module can be included with the header
+<code class="docutils literal notranslate"><span class="pre">hpx/modules/string_util.hpp</span></code>. These headers may be used by user-code but are not
+guaranteed stable (neither header location nor contents). You are using these at
+your own risk. If you wish to use non-public functionality from a module we
+<em>strongly</em> suggest only including the module header <code class="docutils literal notranslate"><span class="pre">hpx/modules/string_util.hpp</span></code>, not
+the particular header in which the functionality you would like to use is
+defined. See <a class="reference internal" href="../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names that are part of the public
+<em>HPX</em> API.</p>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx11string_utilE">
+<span id="_CPPv3N3hpx11string_utilE"></span><span id="_CPPv2N3hpx11string_utilE"></span><span id="hpx::string_util"></span><span class="target" id="namespacehpx_1_1string__util"></span><em class="property">namespace </em><code class="sig-name descname">string_util</code><a class="headerlink" href="#_CPPv4N3hpx11string_utilE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I000EN3hpx11string_util8to_lowerEvRNSt12basic_stringI5CharT6Traits5AllocEE">
+<span id="_CPPv3I000EN3hpx11string_util8to_lowerERNSt12basic_stringI5CharT6Traits5AllocEE"></span><span id="_CPPv2I000EN3hpx11string_util8to_lowerERNSt12basic_stringI5CharT6Traits5AllocEE"></span><span class="target" id="case__conv_8hpp_1ad567a1b60d9d6f1176377c7fc09f3d4d"></span>template&lt;typename <code class="sig-name descname">CharT</code>, class <code class="sig-name descname">Traits</code>, class <code class="sig-name descname">Alloc</code>&gt;<br />void <code class="sig-name descname">to_lower</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::basic_string&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx11string_util8to_lowerEvRNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::to_lower::CharT">CharT</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util8to_lowerEvRNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::to_lower::Traits">Traits</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util8to_lowerEvRNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::to_lower::Alloc">Alloc</a>&gt; &amp;<em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000EN3hpx11string_util8to_lowerEvRNSt12basic_stringI5CharT6Traits5AllocEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1string__util"></span><em class="property">namespace </em><code class="sig-name descname">string_util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I000EN3hpx11string_util9is_any_ofEN6detail14is_any_of_predI5CharT6Traits9AllocatorEERKNSt12basic_stringI5CharT6Traits9AllocatorEE">
+<span id="_CPPv3I000EN3hpx11string_util9is_any_ofERKNSt12basic_stringI5CharT6Traits9AllocatorEE"></span><span id="_CPPv2I000EN3hpx11string_util9is_any_ofERKNSt12basic_stringI5CharT6Traits9AllocatorEE"></span><span class="target" id="classification_8hpp_1ae998d13bdc6846b3bba24671236e6c2d"></span>template&lt;typename <code class="sig-name descname">CharT</code>, typename <code class="sig-name descname">Traits</code>, typename <code class="sig-name descname">Allocator</code>&gt;<br />detail::is_any_of_pred&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9is_any_ofEN6detail14is_any_of_predI5CharT6Traits9AllocatorEERKNSt12basic_stringI5CharT6Traits9AllocatorEE" title="hpx::string_util::is_any_of::CharT">CharT</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9is_any_ofEN6detail14is_any_of_predI5CharT6Traits9AllocatorEERKNSt12basic_stringI5CharT6Traits9AllocatorEE" title="hpx::string_util::is_any_of::Traits">Traits</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9is_any_ofEN6detail14is_any_of_predI5CharT6Traits9AllocatorEERKNSt12basic_stringI5CharT6Traits9AllocatorEE" title="hpx::string_util::is_any_of::Allocator">Allocator</a>&gt; <code class="sig-name descname">is_any_of</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::basic_string&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9is_any_ofEN6detail14is_any_of_predI5CharT6Traits9AllocatorEERKNSt12basic_stringI5CharT6Traits9AllocatorEE" title="hpx::string_util::is_any_of::CharT">CharT</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9is_any_ofEN6detail14is_any_of_predI5CharT6Traits9AllocatorEERKNSt12basic_stringI5CharT6Traits9AllocatorEE" title="hpx::string_util::is_any_of::Traits">Traits</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9is_any_ofEN6detail14is_any_of_predI5CharT6Traits9AllocatorEERKNSt12basic_stringI5CharT6Traits9AllocatorEE" title="hpx::string_util::is_any_of::Allocator">Allocator</a>&gt; <em class="property">const</em> &amp;<em>chars</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000EN3hpx11string_util9is_any_ofEN6detail14is_any_of_predI5CharT6Traits9AllocatorEERKNSt12basic_stringI5CharT6Traits9AllocatorEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11string_util9is_any_ofEPKc">
+<span id="_CPPv3N3hpx11string_util9is_any_ofEPKc"></span><span id="_CPPv2N3hpx11string_util9is_any_ofEPKc"></span><span id="hpx::string_util::is_any_of__cCP"></span><span class="target" id="classification_8hpp_1ae183fa818e5920389fdf024d462a1ed3"></span>auto <code class="sig-name descname">is_any_of</code><span class="sig-paren">(</span>char <em class="property">const</em> *<em>chars</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11string_util9is_any_ofEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4N3hpx11string_util8is_spaceE">
+<span id="_CPPv3N3hpx11string_util8is_spaceE"></span><span id="_CPPv2N3hpx11string_util8is_spaceE"></span><span id="hpx::string_util::is_space"></span><span class="target" id="structhpx_1_1string__util_1_1is__space"></span><em class="property">struct </em><code class="sig-name descname">is_space</code><a class="headerlink" href="#_CPPv4N3hpx11string_util8is_spaceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx11string_util8is_spaceclEi">
+<span id="_CPPv3NK3hpx11string_util8is_spaceclEi"></span><span id="_CPPv2NK3hpx11string_util8is_spaceclEi"></span><span id="hpx::string_util::is_space::call-operator__iC"></span><span class="target" id="structhpx_1_1string__util_1_1is__space_1acb64fed4fea63723e4a08ab1f9ac4e70"></span>bool <code class="sig-name descname">operator()</code><span class="sig-paren">(</span>int <em>c</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx11string_util8is_spaceclEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1string__util"></span><em class="property">namespace </em><code class="sig-name descname">string_util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Enums</p>
+<dl class="cpp enum">
+<dt id="_CPPv4N3hpx11string_util19token_compress_modeE">
+<span id="_CPPv3N3hpx11string_util19token_compress_modeE"></span><span id="_CPPv2N3hpx11string_util19token_compress_modeE"></span><span class="target" id="split_8hpp_1ac26d016d8e26a3d2600f3ed35a4baee3"></span><em class="property">enum </em><code class="sig-name descname">token_compress_mode</code><a class="headerlink" href="#_CPPv4N3hpx11string_util19token_compress_modeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx11string_util3offE">
+<span id="_CPPv3N3hpx11string_util3offE"></span><span id="_CPPv2N3hpx11string_util3offE"></span><span class="target" id="split_8hpp_1ac26d016d8e26a3d2600f3ed35a4baee3a3262d48df5d75e3452f0f16b313b7808"></span><code class="sig-name descname">off</code><a class="headerlink" href="#_CPPv4N3hpx11string_util3offE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx11string_util2onE">
+<span id="_CPPv3N3hpx11string_util2onE"></span><span id="_CPPv2N3hpx11string_util2onE"></span><span class="target" id="split_8hpp_1ac26d016d8e26a3d2600f3ed35a4baee3aed2b5c0139cec8ad2873829dc1117d50"></span><code class="sig-name descname">on</code><a class="headerlink" href="#_CPPv4N3hpx11string_util2onE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I00000EN3hpx11string_util5splitEvR9ContainerRKNSt12basic_stringI5CharT6Traits9AllocatorEERR9Predicate19token_compress_mode">
+<span id="_CPPv3I00000EN3hpx11string_util5splitER9ContainerRKNSt12basic_stringI5CharT6Traits9AllocatorEERR9Predicate19token_compress_mode"></span><span id="_CPPv2I00000EN3hpx11string_util5splitER9ContainerRKNSt12basic_stringI5CharT6Traits9AllocatorEERR9Predicate19token_compress_mode"></span><span class="target" id="split_8hpp_1a268794d571de08755d74d5948b9efb21"></span>template&lt;typename <code class="sig-name descname">Container</code>, typename <code class="sig-name descname">Predicate</code>, typename <code class="sig-name descname">CharT</code>, typename <code class="sig-name descname">Traits</code>, typename <code class="sig-name descname">Allocator</code>&gt;<br />void <code class="sig-name descname">split</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00000EN3hpx11string_util5splitEvR9ContainerRKNSt12basic_stringI5CharT6Traits9AllocatorEERR9Predicate19token_compress_mode" title="hpx::string_util::split::Container">Container</a> &amp;<em>container</em>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::basic_string&lt;<a class="reference internal" href="#_CPPv4I00000EN3hpx11string_util5splitEvR9ContainerRKNSt12basic_stringI5CharT6Traits9AllocatorEERR9Predicate19token_compress_mode" title="hpx::string_util::split::CharT">CharT</a>, <a class="reference internal" href="#_CPPv4I00000EN3hpx11string_util5splitEvR9ContainerRKNSt12basic_stringI5CharT6Traits9AllocatorEERR9Predicate19token_compress_mode" title="hpx::string_util::split::Traits">Traits</a>, <a class="reference internal" href="#_CPPv4I00000EN3hpx11string_util5splitEvR9ContainerRKNSt12basic_stringI5CharT6Traits9AllocatorEERR9Predicate19token_compress_mode" title="hpx::string_util::split::Allocator">Allocator</a>&gt; <em class="property">const</em> &amp;<em>str</em>, <a class="reference internal" href="#_CPPv4I00000EN3hpx11string_util5splitEvR9ContainerRKNSt12basic_stringI5CharT6Traits9AllocatorEERR9Predicate19token_compress_mode" title="hpx::string_util::split::Predicate">Predicate</a> &amp;&amp;<em>pred</em>, <a class="reference internal" href="#_CPPv4N3hpx11string_util19token_compress_modeE" title="hpx::string_util::token_compress_mode">token_compress_mode</a> <em>compress_mode</em> = <a class="reference internal" href="#_CPPv4N3hpx11string_util19token_compress_modeE" title="hpx::string_util::token_compress_mode">token_compress_mode</a>::off<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00000EN3hpx11string_util5splitEvR9ContainerRKNSt12basic_stringI5CharT6Traits9AllocatorEERR9Predicate19token_compress_mode" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx11string_util5splitEvR9ContainerPKcRR9Predicate19token_compress_mode">
+<span id="_CPPv3I00EN3hpx11string_util5splitER9ContainerPKcRR9Predicate19token_compress_mode"></span><span id="_CPPv2I00EN3hpx11string_util5splitER9ContainerPKcRR9Predicate19token_compress_mode"></span><span class="target" id="split_8hpp_1a33d1c5c7e667011dde0f81dc13377c7f"></span>template&lt;typename <code class="sig-name descname">Container</code>, typename <code class="sig-name descname">Predicate</code>&gt;<br />void <code class="sig-name descname">split</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3hpx11string_util5splitEvR9ContainerPKcRR9Predicate19token_compress_mode" title="hpx::string_util::split::Container">Container</a> &amp;<em>container</em>, char <em class="property">const</em> *<em>str</em>, <a class="reference internal" href="#_CPPv4I00EN3hpx11string_util5splitEvR9ContainerPKcRR9Predicate19token_compress_mode" title="hpx::string_util::split::Predicate">Predicate</a> &amp;&amp;<em>pred</em>, <a class="reference internal" href="#_CPPv4N3hpx11string_util19token_compress_modeE" title="hpx::string_util::token_compress_mode">token_compress_mode</a> <em>compress_mode</em> = <a class="reference internal" href="#_CPPv4N3hpx11string_util19token_compress_modeE" title="hpx::string_util::token_compress_mode">token_compress_mode</a>::off<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx11string_util5splitEvR9ContainerPKcRR9Predicate19token_compress_mode" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1string__util"></span><em class="property">namespace </em><code class="sig-name descname">string_util</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I000EN3hpx11string_util4trimEvRNSt12basic_stringI5CharT6Traits5AllocEE">
+<span id="_CPPv3I000EN3hpx11string_util4trimERNSt12basic_stringI5CharT6Traits5AllocEE"></span><span id="_CPPv2I000EN3hpx11string_util4trimERNSt12basic_stringI5CharT6Traits5AllocEE"></span><span class="target" id="trim_8hpp_1ad4cef3a9f6876585096523cddd26b0a4"></span>template&lt;typename <code class="sig-name descname">CharT</code>, class <code class="sig-name descname">Traits</code>, class <code class="sig-name descname">Alloc</code>&gt;<br />void <code class="sig-name descname">trim</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::basic_string&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx11string_util4trimEvRNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::trim::CharT">CharT</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util4trimEvRNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::trim::Traits">Traits</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util4trimEvRNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::trim::Alloc">Alloc</a>&gt; &amp;<em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000EN3hpx11string_util4trimEvRNSt12basic_stringI5CharT6Traits5AllocEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I000EN3hpx11string_util9trim_copyENSt12basic_stringI5CharT6Traits5AllocEERKNSt12basic_stringI5CharT6Traits5AllocEE">
+<span id="_CPPv3I000EN3hpx11string_util9trim_copyERKNSt12basic_stringI5CharT6Traits5AllocEE"></span><span id="_CPPv2I000EN3hpx11string_util9trim_copyERKNSt12basic_stringI5CharT6Traits5AllocEE"></span><span class="target" id="trim_8hpp_1a416077d9a567d903f284a1861ac477e2"></span>template&lt;typename <code class="sig-name descname">CharT</code>, class <code class="sig-name descname">Traits</code>, class <code class="sig-name descname">Alloc</code>&gt;<br /><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::basic_string&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9trim_copyENSt12basic_stringI5CharT6Traits5AllocEERKNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::trim_copy::CharT">CharT</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9trim_copyENSt12basic_stringI5CharT6Traits5AllocEERKNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::trim_copy::Traits">Traits</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9trim_copyENSt12basic_stringI5CharT6Traits5AllocEERKNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::trim_copy::Alloc">Alloc</a>&gt; <code class="sig-name descname">trim_copy</code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std">std</a>::basic_string&lt;<a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9trim_copyENSt12basic_stringI5CharT6Traits5AllocEERKNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::trim_copy::CharT">CharT</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9trim_copyENSt12basic_stringI5CharT6Traits5AllocEERKNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::trim_copy::Traits">Traits</a>, <a class="reference internal" href="#_CPPv4I000EN3hpx11string_util9trim_copyENSt12basic_stringI5CharT6Traits5AllocEERKNSt12basic_stringI5CharT6Traits5AllocEE" title="hpx::string_util::trim_copy::Alloc">Alloc</a>&gt; <em class="property">const</em> &amp;<em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000EN3hpx11string_util9trim_copyENSt12basic_stringI5CharT6Traits5AllocEERKNSt12basic_stringI5CharT6Traits5AllocEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../synchronization/api.html" class="btn btn-neutral float-right" title="synchronization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../statistics/api.html" class="btn btn-neutral float-left" title="statistics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2008-2020, The STE||AR Group
+      <span class="commit">
+        
+        Revision <code>c2fb8a8</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

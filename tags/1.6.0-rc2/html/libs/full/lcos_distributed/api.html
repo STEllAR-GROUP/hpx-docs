@@ -1,0 +1,1059 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lcos_distributed &mdash; HPX 1.6.0-rc2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="mpi_base" href="../mpi_base/api.html" />
+    <link rel="prev" title="init_runtime" href="../init_runtime/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> HPX
+          
+
+          
+            
+            <img src="../../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.0-rc2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api/public_api.html">Public API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/affinity/api.html">affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/config_registry/api.html">config_registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/execution_base/api.html">execution_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/itt_notify/api.html">itt_notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/logging/api.html">logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/properties/api.html">properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/statistics/api.html">statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/string_util/api.html">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/testing/api.html">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/version/api.html">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions/api.html">actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions_base/api.html">actions_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agas/api.html">agas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_colocated/api.html">async_colocated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_cuda/api.html">async_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_distributed/api.html">async_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_mpi/api.html">async_mpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint_base/api.html">checkpoint_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collectives/api.html">collectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../command_line_handling/api.html">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../components_base/api.html">components_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../executors_distributed/api.html">executors_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../init_runtime/api.html">init_runtime</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lcos_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpi_base/api.html">mpi_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../naming/api.html">naming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resiliency_distributed/api.html">resiliency_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_distributed/api.html">runtime_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_local/api.html">runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_executors/api.html">thread_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/pack_traversal/api.html">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/timed_execution/api.html">timed_execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">Citing <em>HPX</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users.html"><em>HPX</em> users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../api.html">API reference</a> &raquo;</li>
+        
+      <li>lcos_distributed</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/full/lcos_distributed/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lcos-distributed">
+<span id="modules-lcos-distributed-api"></span><h1>lcos_distributed<a class="headerlink" href="#lcos-distributed" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this module can be included with the header
+<code class="docutils literal notranslate"><span class="pre">hpx/modules/lcos_distributed.hpp</span></code>. These headers may be used by user-code but are not
+guaranteed stable (neither header location nor contents). You are using these at
+your own risk. If you wish to use non-public functionality from a module we
+<em>strongly</em> suggest only including the module header <code class="docutils literal notranslate"><span class="pre">hpx/modules/lcos_distributed.hpp</span></code>, not
+the particular header in which the functionality you would like to use is
+defined. See <a class="reference internal" href="../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names that are part of the public
+<em>HPX</em> API.</p>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcosE">
+<span id="_CPPv3N3hpx4lcosE"></span><span id="_CPPv2N3hpx4lcosE"></span><span id="hpx::lcos"></span><span class="target" id="namespacehpx_1_1lcos"></span><em class="property">namespace </em><code class="sig-name descname">lcos</code><br /></dt>
+<dd><dl class="cpp class">
+<dt id="_CPPv4I0EN3hpx4lcos7channelE">
+<span id="_CPPv3I0EN3hpx4lcos7channelE"></span><span id="_CPPv2I0EN3hpx4lcos7channelE"></span><span class="target" id="classhpx_1_1lcos_1_1channel"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">channel</code><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos7channelE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos7channel10value_typeE">
+<span id="_CPPv3N3hpx4lcos7channel10value_typeE"></span><span id="_CPPv2N3hpx4lcos7channel10value_typeE"></span><span id="hpx::lcos::channel::value_type"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a381f44cc0f02bf1272581855d6028fdd"></span><em class="property">typedef </em>T <code class="sig-name descname">value_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel10value_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos7channel7channelEv">
+<span id="_CPPv3N3hpx4lcos7channel7channelEv"></span><span id="_CPPv2N3hpx4lcos7channel7channelEv"></span><span id="hpx::lcos::channel::channel"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1ac60f2458e698cbaf085cf4ece6198c75"></span><code class="sig-name descname">channel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel7channelEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos7channel7channelERKN6naming7id_typeE">
+<span id="_CPPv3N3hpx4lcos7channel7channelERKN6naming7id_typeE"></span><span id="_CPPv2N3hpx4lcos7channel7channelERKN6naming7id_typeE"></span><span id="hpx::lcos::channel::channel__naming::id_typeCR"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a547a78e9d345e21e85b46652225a5af4"></span><code class="sig-name descname">channel</code><span class="sig-paren">(</span><a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a> <em class="property">const</em> &amp;<em>loc</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel7channelERKN6naming7id_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos7channel7channelERRN3hpx6futureIN6naming7id_typeEEE">
+<span id="_CPPv3N3hpx4lcos7channel7channelERRN3hpx6futureIN6naming7id_typeEEE"></span><span id="_CPPv2N3hpx4lcos7channel7channelERRN3hpx6futureIN6naming7id_typeEEE"></span><span id="hpx::lcos::channel::channel__hpx::future:naming::id_type:RR"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a2a662d987a5d1a56435f9fbabbc377c2"></span><code class="sig-name descname">channel</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; &amp;&amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel7channelERRN3hpx6futureIN6naming7id_typeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos7channel7channelERRN3hpx13shared_futureIN6naming7id_typeEEE">
+<span id="_CPPv3N3hpx4lcos7channel7channelERRN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="_CPPv2N3hpx4lcos7channel7channelERRN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="hpx::lcos::channel::channel__hpx::shared_future:naming::id_type:RR"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1ad1459f4dc07cef43e3ee1ce1138819dc"></span><code class="sig-name descname">channel</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::shared_future&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; &amp;&amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel7channelERRN3hpx13shared_futureIN6naming7id_typeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos7channel7channelERKN3hpx13shared_futureIN6naming7id_typeEEE">
+<span id="_CPPv3N3hpx4lcos7channel7channelERKN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="_CPPv2N3hpx4lcos7channel7channelERKN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="hpx::lcos::channel::channel__hpx::shared_future:naming::id_type:CR"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1ac22decb036204b43993deb429947ef91"></span><code class="sig-name descname">channel</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::shared_future&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; <em class="property">const</em> &amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel7channelERKN3hpx13shared_futureIN6naming7id_typeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos7channel3getEN6launch12async_policyENSt6size_tE">
+<span id="_CPPv3NK3hpx4lcos7channel3getEN6launch12async_policyENSt6size_tE"></span><span id="_CPPv2NK3hpx4lcos7channel3getEN6launch12async_policyENSt6size_tE"></span><span id="hpx::lcos::channel::get__launch::async_policy.std::sC"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a9e5eb00de5cb512bc1319c3df58f911a"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;T&gt; <code class="sig-name descname">get</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::async_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos7channel3getEN6launch12async_policyENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos7channel3getENSt6size_tE">
+<span id="_CPPv3NK3hpx4lcos7channel3getENSt6size_tE"></span><span id="_CPPv2NK3hpx4lcos7channel3getENSt6size_tE"></span><span id="hpx::lcos::channel::get__std::sC"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a9c6b2dcc73ce473beef2762f8497246e"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;T&gt; <code class="sig-name descname">get</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos7channel3getENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos7channel3getEN6launch11sync_policyENSt6size_tERN3hpx10error_codeE">
+<span id="_CPPv3NK3hpx4lcos7channel3getEN6launch11sync_policyENSt6size_tERN3hpx10error_codeE"></span><span id="_CPPv2NK3hpx4lcos7channel3getEN6launch11sync_policyENSt6size_tERN3hpx10error_codeE"></span><span id="hpx::lcos::channel::get__launch::sync_policy.std::s.hpx::error_codeRC"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1afab1c44f181c778525b96e99c2a9db0a"></span>T <code class="sig-name descname">get</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos7channel3getEN6launch11sync_policyENSt6size_tERN3hpx10error_codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos7channel3getEN6launch11sync_policyERN3hpx10error_codeENSt6size_tE">
+<span id="_CPPv3NK3hpx4lcos7channel3getEN6launch11sync_policyERN3hpx10error_codeENSt6size_tE"></span><span id="_CPPv2NK3hpx4lcos7channel3getEN6launch11sync_policyERN3hpx10error_codeENSt6size_tE"></span><span id="hpx::lcos::channel::get__launch::sync_policy.hpx::error_codeR.std::sC"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1abd4febca26758174faf63ab305008631"></span>T <code class="sig-name descname">get</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos7channel3getEN6launch11sync_policyERN3hpx10error_codeENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEbE4typeEN6launch12apply_policyE1UNSt6size_tE">
+<span id="_CPPv3I00EN3hpx4lcos7channel3setEN6launch12apply_policyE1UNSt6size_tE"></span><span id="_CPPv2I00EN3hpx4lcos7channel3setEN6launch12apply_policyE1UNSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a55b035fb8c7cac0b6f187884f04f8b6a"></span>template&lt;typename <code class="sig-name descname">U</code>, typename <code class="sig-name descname">U2</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;!<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEbE4typeEN6launch12apply_policyE1UNSt6size_tE" title="hpx::lcos::channel::set::U2">U2</a>&gt;::value, bool&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::apply_policy, <a class="reference internal" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEbE4typeEN6launch12apply_policyE1UNSt6size_tE" title="hpx::lcos::channel::set::U">U</a> <em>val</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEbE4typeEN6launch12apply_policyE1UNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEN3hpx6futureIvEEE4typeEN6launch12async_policyE1UNSt6size_tE">
+<span id="_CPPv3I00EN3hpx4lcos7channel3setEN6launch12async_policyE1UNSt6size_tE"></span><span id="_CPPv2I00EN3hpx4lcos7channel3setEN6launch12async_policyE1UNSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a8bc9328d7401b6ec01149f00bf9c0207"></span>template&lt;typename <code class="sig-name descname">U</code>, typename <code class="sig-name descname">U2</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;!<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEN3hpx6futureIvEEE4typeEN6launch12async_policyE1UNSt6size_tE" title="hpx::lcos::channel::set::U2">U2</a>&gt;::value, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt;&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::async_policy, <a class="reference internal" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEN3hpx6futureIvEEE4typeEN6launch12async_policyE1UNSt6size_tE" title="hpx::lcos::channel::set::U">U</a> <em>val</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEN3hpx6futureIvEEE4typeEN6launch12async_policyE1UNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEE4typeEN6launch11sync_policyE1UNSt6size_tE">
+<span id="_CPPv3I00EN3hpx4lcos7channel3setEN6launch11sync_policyE1UNSt6size_tE"></span><span id="_CPPv2I00EN3hpx4lcos7channel3setEN6launch11sync_policyE1UNSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1afd474d40b7cc264e22a8a539bc5a84c8"></span>template&lt;typename <code class="sig-name descname">U</code>, typename <code class="sig-name descname">U2</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;!<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEE4typeEN6launch11sync_policyE1UNSt6size_tE" title="hpx::lcos::channel::set::U2">U2</a>&gt;::value&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEE4typeEN6launch11sync_policyE1UNSt6size_tE" title="hpx::lcos::channel::set::U">U</a> <em>val</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEE4typeEN6launch11sync_policyE1UNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE">
+<span id="_CPPv3I00EN3hpx4lcos7channel3setE1UNSt6size_tE"></span><span id="_CPPv2I00EN3hpx4lcos7channel3setE1UNSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a6006fd9da2f01932a42d7f21c981e5b7"></span>template&lt;typename <code class="sig-name descname">U</code>, typename <code class="sig-name descname">U2</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;!<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE" title="hpx::lcos::channel::set::U2">U2</a>&gt;::value &amp;&amp; !<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4N3hpx6traitsE" title="hpx::traits">traits</a>::is_launch_policy&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE" title="hpx::lcos::channel::set::U">U</a>&gt;::value&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE" title="hpx::lcos::channel::set::U">U</a> <em>val</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx4lcos7channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEbE4typeEN6launch12apply_policyENSt6size_tE">
+<span id="_CPPv3I0EN3hpx4lcos7channel3setEN6launch12apply_policyENSt6size_tE"></span><span id="_CPPv2I0EN3hpx4lcos7channel3setEN6launch12apply_policyENSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a99e2a730f0d3cca427caebc2bf9b5045"></span>template&lt;typename <code class="sig-name descname">U</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEbE4typeEN6launch12apply_policyENSt6size_tE" title="hpx::lcos::channel::set::U">U</a>&gt;::value, bool&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::apply_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEbE4typeEN6launch12apply_policyENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEN3hpx6futureIvEEE4typeEN6launch12async_policyENSt6size_tE">
+<span id="_CPPv3I0EN3hpx4lcos7channel3setEN6launch12async_policyENSt6size_tE"></span><span id="_CPPv2I0EN3hpx4lcos7channel3setEN6launch12async_policyENSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a05fa4558849eb3b00c2db68321b3163e"></span>template&lt;typename <code class="sig-name descname">U</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEN3hpx6futureIvEEE4typeEN6launch12async_policyENSt6size_tE" title="hpx::lcos::channel::set::U">U</a>&gt;::value, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt;&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::async_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEN3hpx6futureIvEEE4typeEN6launch12async_policyENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeEN6launch11sync_policyENSt6size_tE">
+<span id="_CPPv3I0EN3hpx4lcos7channel3setEN6launch11sync_policyENSt6size_tE"></span><span id="_CPPv2I0EN3hpx4lcos7channel3setEN6launch11sync_policyENSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a099ed1aea8dd63c11278a416a969ca46"></span>template&lt;typename <code class="sig-name descname">U</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeEN6launch11sync_policyENSt6size_tE" title="hpx::lcos::channel::set::U">U</a>&gt;::value&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeEN6launch11sync_policyENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeENSt6size_tE">
+<span id="_CPPv3I0EN3hpx4lcos7channel3setENSt6size_tE"></span><span id="_CPPv2I0EN3hpx4lcos7channel3setENSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a05d846536da3666685c4be9be44337ae"></span>template&lt;typename <code class="sig-name descname">U</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeENSt6size_tE" title="hpx::lcos::channel::set::U">U</a>&gt;::value&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="hpx::lcos::channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos7channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos7channel5closeEN6launch12apply_policyEb">
+<span id="_CPPv3N3hpx4lcos7channel5closeEN6launch12apply_policyEb"></span><span id="_CPPv2N3hpx4lcos7channel5closeEN6launch12apply_policyEb"></span><span id="hpx::lcos::channel::close__launch::apply_policy.b"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1add3cfd0d2d850ed79e0bf8c508d15196"></span>void <code class="sig-name descname">close</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::apply_policy, bool <em>force_delete_entries</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel5closeEN6launch12apply_policyEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos7channel5closeEN6launch12async_policyEb">
+<span id="_CPPv3N3hpx4lcos7channel5closeEN6launch12async_policyEb"></span><span id="_CPPv2N3hpx4lcos7channel5closeEN6launch12async_policyEb"></span><span id="hpx::lcos::channel::close__launch::async_policy.b"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1aa49c377d25d7d830608d1c0ca7bff73e"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t&gt; <code class="sig-name descname">close</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::async_policy, bool <em>force_delete_entries</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel5closeEN6launch12async_policyEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos7channel5closeEN6launch11sync_policyEb">
+<span id="_CPPv3N3hpx4lcos7channel5closeEN6launch11sync_policyEb"></span><span id="_CPPv2N3hpx4lcos7channel5closeEN6launch11sync_policyEb"></span><span id="hpx::lcos::channel::close__launch::sync_policy.b"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a8ddc7396a4d75c6803cfb5cbf27fcc92"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">close</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, bool <em>force_delete_entries</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel5closeEN6launch11sync_policyEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos7channel5closeEb">
+<span id="_CPPv3N3hpx4lcos7channel5closeEb"></span><span id="_CPPv2N3hpx4lcos7channel5closeEb"></span><span id="hpx::lcos::channel::close__b"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a44bba8f57fe75f2d92f468f21c02a48e"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">close</code><span class="sig-paren">(</span>bool <em>force_delete_entries</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel5closeEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos7channel5beginEv">
+<span id="_CPPv3NK3hpx4lcos7channel5beginEv"></span><span id="_CPPv2NK3hpx4lcos7channel5beginEv"></span><span id="hpx::lcos::channel::beginC"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1aa775fa4f57932fe7c244a41badc86a72"></span>channel_iterator&lt;T, channel&lt;T&gt;&gt; <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos7channel5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos7channel3endEv">
+<span id="_CPPv3NK3hpx4lcos7channel3endEv"></span><span id="_CPPv2NK3hpx4lcos7channel3endEv"></span><span id="hpx::lcos::channel::endC"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1ab11eae9f980229ff18c5085e6863c5f2"></span>channel_iterator&lt;T, channel&lt;T&gt;&gt; <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos7channel3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos7channel6rbeginEv">
+<span id="_CPPv3NK3hpx4lcos7channel6rbeginEv"></span><span id="_CPPv2NK3hpx4lcos7channel6rbeginEv"></span><span id="hpx::lcos::channel::rbeginC"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a143d65d072a78d7ca086938f84a4c53e"></span>channel_iterator&lt;T, channel&lt;T&gt;&gt; <code class="sig-name descname">rbegin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos7channel6rbeginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos7channel4rendEv">
+<span id="_CPPv3NK3hpx4lcos7channel4rendEv"></span><span id="_CPPv2NK3hpx4lcos7channel4rendEv"></span><span id="hpx::lcos::channel::rendC"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a63782c00882df556d19e11a2c6f7a1bc"></span>channel_iterator&lt;T, channel&lt;T&gt;&gt; <code class="sig-name descname">rend</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos7channel4rendEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos7channel9base_typeE">
+<span id="_CPPv3N3hpx4lcos7channel9base_typeE"></span><span id="_CPPv2N3hpx4lcos7channel9base_typeE"></span><span id="hpx::lcos::channel::base_type"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1a6ddef1a2b9f17940b04dc5d31b3a6d8f"></span><em class="property">typedef </em><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::client_base&lt;channel&lt;T&gt;, <a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos">lcos</a>::<a class="reference internal" href="#_CPPv4N3hpx4lcos6serverE" title="hpx::lcos::server">server</a>::channel&lt;T&gt;&gt; <code class="sig-name descname">base_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos7channel9base_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Static Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4lcos7channel18default_generationE">
+<span id="_CPPv3N3hpx4lcos7channel18default_generationE"></span><span id="_CPPv2N3hpx4lcos7channel18default_generationE"></span><span id="hpx::lcos::channel::default_generation__std::s"></span><span class="target" id="classhpx_1_1lcos_1_1channel_1ab46742183a7377d33fe830e6daadf147"></span><em class="property">constexpr</em> <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">default_generation</code> = <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t(-1)<a class="headerlink" href="#_CPPv4N3hpx4lcos7channel18default_generationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I00EN3hpx4lcos16channel_iteratorE">
+<span id="_CPPv3I00EN3hpx4lcos16channel_iteratorE"></span><span id="_CPPv2I00EN3hpx4lcos16channel_iteratorE"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">Channel</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">channel_iterator</code> : <em class="property">public</em> <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::iterator_facade&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos16channel_iteratorE" title="hpx::lcos::channel_iterator">channel_iterator</a>&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos16channel_iteratorE" title="hpx::lcos::channel_iterator::T">T</a>, <a class="reference internal" href="#_CPPv4I00EN3hpx4lcos16channel_iteratorE" title="hpx::lcos::channel_iterator::Channel">Channel</a>&gt;, <a class="reference internal" href="#_CPPv4I00EN3hpx4lcos16channel_iteratorE" title="hpx::lcos::channel_iterator::T">T</a> <em class="property">const</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::input_iterator_tag&gt;<a class="headerlink" href="#_CPPv4I00EN3hpx4lcos16channel_iteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos16channel_iterator16channel_iteratorEv">
+<span id="_CPPv3N3hpx4lcos16channel_iterator16channel_iteratorEv"></span><span id="_CPPv2N3hpx4lcos16channel_iterator16channel_iteratorEv"></span><span id="hpx::lcos::channel_iterator::channel_iterator"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1a0019dfb5a3b8ecc7577b767a62430b5c"></span><code class="sig-name descname">channel_iterator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos16channel_iterator16channel_iteratorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos16channel_iterator16channel_iteratorERK7Channel">
+<span id="_CPPv3N3hpx4lcos16channel_iterator16channel_iteratorERK7Channel"></span><span id="_CPPv2N3hpx4lcos16channel_iterator16channel_iteratorERK7Channel"></span><span id="hpx::lcos::channel_iterator::channel_iterator__ChannelCR"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1a9730e3a9bc071668261ee213822537c5"></span><code class="sig-name descname">channel_iterator</code><span class="sig-paren">(</span>Channel <em class="property">const</em> &amp;<em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos16channel_iterator16channel_iteratorERK7Channel" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos16channel_iterator9base_typeE">
+<span id="_CPPv3N3hpx4lcos16channel_iterator9base_typeE"></span><span id="_CPPv2N3hpx4lcos16channel_iterator9base_typeE"></span><span id="hpx::lcos::channel_iterator::base_type"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1aadd67608f1f00ed14c383d7cfddba958"></span><em class="property">typedef </em><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::iterator_facade&lt;channel_iterator&lt;T, Channel&gt;, T <em class="property">const</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::input_iterator_tag&gt; <code class="sig-name descname">base_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos16channel_iterator9base_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos16channel_iterator11get_checkedEv">
+<span id="_CPPv3NK3hpx4lcos16channel_iterator11get_checkedEv"></span><span id="_CPPv2NK3hpx4lcos16channel_iterator11get_checkedEv"></span><span id="hpx::lcos::channel_iterator::get_checkedC"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1a91f5a287a0f9d3df735566949005d9cd"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::pair&lt;T, bool&gt; <code class="sig-name descname">get_checked</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos16channel_iterator11get_checkedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos16channel_iterator5equalERK16channel_iterator">
+<span id="_CPPv3NK3hpx4lcos16channel_iterator5equalERK16channel_iterator"></span><span id="_CPPv2NK3hpx4lcos16channel_iterator5equalERK16channel_iterator"></span><span id="hpx::lcos::channel_iterator::equal__channel_iteratorCRC"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1a20d09dd131b8304bd3b77da7c4762dd9"></span>bool <code class="sig-name descname">equal</code><span class="sig-paren">(</span>channel_iterator <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos16channel_iterator5equalERK16channel_iterator" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos16channel_iterator9incrementEv">
+<span id="_CPPv3N3hpx4lcos16channel_iterator9incrementEv"></span><span id="_CPPv2N3hpx4lcos16channel_iterator9incrementEv"></span><span id="hpx::lcos::channel_iterator::increment"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1a98b943359b6bfb38a758d368f5c7d417"></span>void <code class="sig-name descname">increment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos16channel_iterator9incrementEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos16channel_iterator11dereferenceEv">
+<span id="_CPPv3NK3hpx4lcos16channel_iterator11dereferenceEv"></span><span id="_CPPv2NK3hpx4lcos16channel_iterator11dereferenceEv"></span><span id="hpx::lcos::channel_iterator::dereferenceC"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1aa86ea9d93eb29920c8773d88ee49d20a"></span><a class="reference internal" href="#_CPPv4N3hpx4lcos16channel_iterator9base_typeE" title="hpx::lcos::channel_iterator::base_type">base_type</a>::reference <code class="sig-name descname">dereference</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos16channel_iterator11dereferenceEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4lcos16channel_iterator8channel_E">
+<span id="_CPPv3N3hpx4lcos16channel_iterator8channel_E"></span><span id="_CPPv2N3hpx4lcos16channel_iterator8channel_E"></span><span id="hpx::lcos::channel_iterator::channel___ChannelCP"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1a25c78c445c1fc4ee8ebfe0bb4abd2e33"></span>Channel <em class="property">const</em> *<code class="sig-name descname">channel_</code><a class="headerlink" href="#_CPPv4N3hpx4lcos16channel_iterator8channel_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4lcos16channel_iterator5data_E">
+<span id="_CPPv3N3hpx4lcos16channel_iterator5data_E"></span><span id="_CPPv2N3hpx4lcos16channel_iterator5data_E"></span><span id="hpx::lcos::channel_iterator::data___std::pair:T.b:"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1ad37bfe197e9075dee595892ae202f839"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::pair&lt;T, bool&gt; <code class="sig-name descname">data_</code><a class="headerlink" href="#_CPPv4N3hpx4lcos16channel_iterator5data_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_1ad00908d93ca5dd8443486a1fe00aeea2"></span><em class="property">friend </em><code class="sig-name descname">hpx::lcos::hpx::util::iterator_core_access</code></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I0EN3hpx4lcos16channel_iteratorIv7ChannelEE">
+<span id="_CPPv3I0EN3hpx4lcos16channel_iteratorIv7ChannelEE"></span><span id="_CPPv2I0EN3hpx4lcos16channel_iteratorIv7ChannelEE"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4"></span>template&lt;typename <code class="sig-name descname">Channel</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">channel_iterator</code>&lt;void, <a class="reference internal" href="#_CPPv4I0EN3hpx4lcos16channel_iteratorIv7ChannelEE" title="hpx::lcos::channel_iterator&lt;void, Channel&gt;::Channel">Channel</a>&gt; : <em class="property">public</em> <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::iterator_facade&lt;channel_iterator&lt;void, <a class="reference internal" href="#_CPPv4I0EN3hpx4lcos16channel_iteratorIv7ChannelEE" title="hpx::lcos::channel_iterator&lt;void, Channel&gt;::Channel">Channel</a>&gt;, <a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../../core/type_support/api.html#_CPPv4N3hpx4util11unused_typeE" title="hpx::util::unused_type">unused_type</a> <em class="property">const</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::input_iterator_tag&gt;<a class="headerlink" href="#_CPPv4I0EN3hpx4lcos16channel_iteratorIv7ChannelEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1a8412758b79e903699e5de4d0050dbd4f"></span><code class="sig-name descname">channel_iterator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1acbdaa5c213f00c47de369fb6c0967232"></span><code class="sig-name descname">channel_iterator</code><span class="sig-paren">(</span>Channel <em class="property">const</em> &amp;<em>c</em><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1a0be6ad3354ca962bf99f5c09afc05ecd"></span><em class="property">typedef </em><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::iterator_facade&lt;channel_iterator&lt;void, Channel&gt;, <a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../../core/type_support/api.html#_CPPv4N3hpx4util11unused_typeE" title="hpx::util::unused_type">unused_type</a> <em class="property">const</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::input_iterator_tag&gt; <code class="sig-name descname">base_type</code><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos16channel_iterator11get_checkedEv">
+<span id="_CPPv3N3hpx4lcos16channel_iterator11get_checkedEv"></span><span id="_CPPv2N3hpx4lcos16channel_iterator11get_checkedEv"></span><span id="hpx::lcos::channel_iterator::get_checked"></span><span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1a905448aa98a5e6065ad9cea187bb55c9"></span>bool <code class="sig-name descname">get_checked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos16channel_iterator11get_checkedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1a1ba4d3e2fdf399833a22884ae406afd5"></span>bool <code class="sig-name descname">equal</code><span class="sig-paren">(</span>channel_iterator <em class="property">const</em> &amp;<em>rhs</em><span class="sig-paren">)</span> <em class="property">const</em><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1a6830c75526745265a396c0fab4d4e597"></span>void <code class="sig-name descname">increment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1ab5ff85496e59a20ab19772e1683c6292"></span><a class="reference internal" href="#_CPPv4N3hpx4lcos16channel_iterator9base_typeE" title="hpx::lcos::channel_iterator::base_type">base_type</a>::reference <code class="sig-name descname">dereference</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1aaa43ff7d0e7f95ec3ef2c9429ac9bcde"></span>Channel <em class="property">const</em> *<code class="sig-name descname">channel_</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1a449f0b20a9bfe7a7ee9b35f1e8e58f76"></span>bool <code class="sig-name descname">data_</code><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1lcos_1_1channel__iterator_3_01void_00_01_channel_01_4_1ad00908d93ca5dd8443486a1fe00aeea2"></span><em class="property">friend </em><code class="sig-name descname">hpx::lcos::hpx::util::iterator_core_access</code></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I0EN3hpx4lcos15receive_channelE">
+<span id="_CPPv3I0EN3hpx4lcos15receive_channelE"></span><span id="_CPPv2I0EN3hpx4lcos15receive_channelE"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">receive_channel</code><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos15receive_channelE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos15receive_channel10value_typeE">
+<span id="_CPPv3N3hpx4lcos15receive_channel10value_typeE"></span><span id="_CPPv2N3hpx4lcos15receive_channel10value_typeE"></span><span id="hpx::lcos::receive_channel::value_type"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a1ff05970de8a386de1f779d03469fa9b"></span><em class="property">typedef </em>T <code class="sig-name descname">value_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos15receive_channel10value_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos15receive_channel15receive_channelEv">
+<span id="_CPPv3N3hpx4lcos15receive_channel15receive_channelEv"></span><span id="_CPPv2N3hpx4lcos15receive_channel15receive_channelEv"></span><span id="hpx::lcos::receive_channel::receive_channel"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a1fb70b233e33b5b1409d40fd02486386"></span><code class="sig-name descname">receive_channel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos15receive_channel15receive_channelEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos15receive_channel15receive_channelERK7channelI1TE">
+<span id="_CPPv3N3hpx4lcos15receive_channel15receive_channelERK7channelI1TE"></span><span id="_CPPv2N3hpx4lcos15receive_channel15receive_channelERK7channelI1TE"></span><span id="hpx::lcos::receive_channel::receive_channel__channel:T:CR"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a3cfdd77bd864b8c863b314dca6eb5dff"></span><code class="sig-name descname">receive_channel</code><span class="sig-paren">(</span>channel&lt;T&gt; <em class="property">const</em> &amp;<em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos15receive_channel15receive_channelERK7channelI1TE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos15receive_channel15receive_channelERRN3hpx6futureIN6naming7id_typeEEE">
+<span id="_CPPv3N3hpx4lcos15receive_channel15receive_channelERRN3hpx6futureIN6naming7id_typeEEE"></span><span id="_CPPv2N3hpx4lcos15receive_channel15receive_channelERRN3hpx6futureIN6naming7id_typeEEE"></span><span id="hpx::lcos::receive_channel::receive_channel__hpx::future:naming::id_type:RR"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a4db57cc78abf8945d7fe79677a9a427e"></span><code class="sig-name descname">receive_channel</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; &amp;&amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos15receive_channel15receive_channelERRN3hpx6futureIN6naming7id_typeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos15receive_channel15receive_channelERRN3hpx13shared_futureIN6naming7id_typeEEE">
+<span id="_CPPv3N3hpx4lcos15receive_channel15receive_channelERRN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="_CPPv2N3hpx4lcos15receive_channel15receive_channelERRN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="hpx::lcos::receive_channel::receive_channel__hpx::shared_future:naming::id_type:RR"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a6623b477a12cdc4284f69da5d7eed215"></span><code class="sig-name descname">receive_channel</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::shared_future&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; &amp;&amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos15receive_channel15receive_channelERRN3hpx13shared_futureIN6naming7id_typeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos15receive_channel15receive_channelERKN3hpx13shared_futureIN6naming7id_typeEEE">
+<span id="_CPPv3N3hpx4lcos15receive_channel15receive_channelERKN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="_CPPv2N3hpx4lcos15receive_channel15receive_channelERKN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="hpx::lcos::receive_channel::receive_channel__hpx::shared_future:naming::id_type:CR"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a51966b38bcb3c260c2b76bf8976977e8"></span><code class="sig-name descname">receive_channel</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::shared_future&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; <em class="property">const</em> &amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos15receive_channel15receive_channelERKN3hpx13shared_futureIN6naming7id_typeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos15receive_channel3getEN6launch12async_policyENSt6size_tE">
+<span id="_CPPv3NK3hpx4lcos15receive_channel3getEN6launch12async_policyENSt6size_tE"></span><span id="_CPPv2NK3hpx4lcos15receive_channel3getEN6launch12async_policyENSt6size_tE"></span><span id="hpx::lcos::receive_channel::get__launch::async_policy.std::sC"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1aad8864159f980a793613ab1ba07b11d5"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;T&gt; <code class="sig-name descname">get</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::async_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos15receive_channel18default_generationE" title="hpx::lcos::receive_channel::default_generation">default_generation</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos15receive_channel3getEN6launch12async_policyENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos15receive_channel3getENSt6size_tE">
+<span id="_CPPv3NK3hpx4lcos15receive_channel3getENSt6size_tE"></span><span id="_CPPv2NK3hpx4lcos15receive_channel3getENSt6size_tE"></span><span id="hpx::lcos::receive_channel::get__std::sC"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1ae9da218a005a9fdfcfd015d037597a6f"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;T&gt; <code class="sig-name descname">get</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos15receive_channel18default_generationE" title="hpx::lcos::receive_channel::default_generation">default_generation</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos15receive_channel3getENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos15receive_channel3getEN6launch11sync_policyENSt6size_tERN3hpx10error_codeE">
+<span id="_CPPv3NK3hpx4lcos15receive_channel3getEN6launch11sync_policyENSt6size_tERN3hpx10error_codeE"></span><span id="_CPPv2NK3hpx4lcos15receive_channel3getEN6launch11sync_policyENSt6size_tERN3hpx10error_codeE"></span><span id="hpx::lcos::receive_channel::get__launch::sync_policy.std::s.hpx::error_codeRC"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1aab2143cbccedcb88a8faa132f95cf574"></span>T <code class="sig-name descname">get</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos15receive_channel18default_generationE" title="hpx::lcos::receive_channel::default_generation">default_generation</a>, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos15receive_channel3getEN6launch11sync_policyENSt6size_tERN3hpx10error_codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos15receive_channel3getEN6launch11sync_policyERN3hpx10error_codeENSt6size_tE">
+<span id="_CPPv3NK3hpx4lcos15receive_channel3getEN6launch11sync_policyERN3hpx10error_codeENSt6size_tE"></span><span id="_CPPv2NK3hpx4lcos15receive_channel3getEN6launch11sync_policyERN3hpx10error_codeENSt6size_tE"></span><span id="hpx::lcos::receive_channel::get__launch::sync_policy.hpx::error_codeR.std::sC"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a1bd640f602bed1e259a9974a38b192fc"></span>T <code class="sig-name descname">get</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos15receive_channel18default_generationE" title="hpx::lcos::receive_channel::default_generation">default_generation</a><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos15receive_channel3getEN6launch11sync_policyERN3hpx10error_codeENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos15receive_channel5beginEv">
+<span id="_CPPv3NK3hpx4lcos15receive_channel5beginEv"></span><span id="_CPPv2NK3hpx4lcos15receive_channel5beginEv"></span><span id="hpx::lcos::receive_channel::beginC"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1abc7856783c9a7ba1919e75b8a6508bef"></span>channel_iterator&lt;T, channel&lt;T&gt;&gt; <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos15receive_channel5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos15receive_channel3endEv">
+<span id="_CPPv3NK3hpx4lcos15receive_channel3endEv"></span><span id="_CPPv2NK3hpx4lcos15receive_channel3endEv"></span><span id="hpx::lcos::receive_channel::endC"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a397c64abf2a86deadc2b9454e350fc98"></span>channel_iterator&lt;T, channel&lt;T&gt;&gt; <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos15receive_channel3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos15receive_channel6rbeginEv">
+<span id="_CPPv3NK3hpx4lcos15receive_channel6rbeginEv"></span><span id="_CPPv2NK3hpx4lcos15receive_channel6rbeginEv"></span><span id="hpx::lcos::receive_channel::rbeginC"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a597ce35912f633b02d5d784889fc09a6"></span>channel_iterator&lt;T, channel&lt;T&gt;&gt; <code class="sig-name descname">rbegin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos15receive_channel6rbeginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx4lcos15receive_channel4rendEv">
+<span id="_CPPv3NK3hpx4lcos15receive_channel4rendEv"></span><span id="_CPPv2NK3hpx4lcos15receive_channel4rendEv"></span><span id="hpx::lcos::receive_channel::rendC"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a32bb9066f8d140292ad89f6cc462d0f8"></span>channel_iterator&lt;T, channel&lt;T&gt;&gt; <code class="sig-name descname">rend</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx4lcos15receive_channel4rendEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos15receive_channel9base_typeE">
+<span id="_CPPv3N3hpx4lcos15receive_channel9base_typeE"></span><span id="_CPPv2N3hpx4lcos15receive_channel9base_typeE"></span><span id="hpx::lcos::receive_channel::base_type"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1adb711549fb421dfc03d61a1b6ec4c1cb"></span><em class="property">typedef </em><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::client_base&lt;receive_channel&lt;T&gt;, <a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos">lcos</a>::<a class="reference internal" href="#_CPPv4N3hpx4lcos6serverE" title="hpx::lcos::server">server</a>::channel&lt;T&gt;&gt; <code class="sig-name descname">base_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos15receive_channel9base_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Static Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4lcos15receive_channel18default_generationE">
+<span id="_CPPv3N3hpx4lcos15receive_channel18default_generationE"></span><span id="_CPPv2N3hpx4lcos15receive_channel18default_generationE"></span><span id="hpx::lcos::receive_channel::default_generation__std::s"></span><span class="target" id="classhpx_1_1lcos_1_1receive__channel_1a13fddb733698400f7fb8f2d4daa1ef1c"></span><em class="property">constexpr</em> <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">default_generation</code> = <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t(-1)<a class="headerlink" href="#_CPPv4N3hpx4lcos15receive_channel18default_generationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I0EN3hpx4lcos12send_channelE">
+<span id="_CPPv3I0EN3hpx4lcos12send_channelE"></span><span id="_CPPv2I0EN3hpx4lcos12send_channelE"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">send_channel</code><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos12send_channelE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos12send_channel10value_typeE">
+<span id="_CPPv3N3hpx4lcos12send_channel10value_typeE"></span><span id="_CPPv2N3hpx4lcos12send_channel10value_typeE"></span><span id="hpx::lcos::send_channel::value_type"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a8ffe84e1242b8f9f4cbfacc26589f951"></span><em class="property">typedef </em>T <code class="sig-name descname">value_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel10value_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos12send_channel12send_channelEv">
+<span id="_CPPv3N3hpx4lcos12send_channel12send_channelEv"></span><span id="_CPPv2N3hpx4lcos12send_channel12send_channelEv"></span><span id="hpx::lcos::send_channel::send_channel"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a06ee3644a8cdc1828d92151684f3ac78"></span><code class="sig-name descname">send_channel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel12send_channelEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos12send_channel12send_channelERK7channelI1TE">
+<span id="_CPPv3N3hpx4lcos12send_channel12send_channelERK7channelI1TE"></span><span id="_CPPv2N3hpx4lcos12send_channel12send_channelERK7channelI1TE"></span><span id="hpx::lcos::send_channel::send_channel__channel:T:CR"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1aadf96ebe14dc60e8df09b0cecd69f410"></span><code class="sig-name descname">send_channel</code><span class="sig-paren">(</span>channel&lt;T&gt; <em class="property">const</em> &amp;<em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel12send_channelERK7channelI1TE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos12send_channel12send_channelERRN3hpx6futureIN6naming7id_typeEEE">
+<span id="_CPPv3N3hpx4lcos12send_channel12send_channelERRN3hpx6futureIN6naming7id_typeEEE"></span><span id="_CPPv2N3hpx4lcos12send_channel12send_channelERRN3hpx6futureIN6naming7id_typeEEE"></span><span id="hpx::lcos::send_channel::send_channel__hpx::future:naming::id_type:RR"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a09b371f6dd4ae751c2ee83e7162fba7f"></span><code class="sig-name descname">send_channel</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; &amp;&amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel12send_channelERRN3hpx6futureIN6naming7id_typeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos12send_channel12send_channelERRN3hpx13shared_futureIN6naming7id_typeEEE">
+<span id="_CPPv3N3hpx4lcos12send_channel12send_channelERRN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="_CPPv2N3hpx4lcos12send_channel12send_channelERRN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="hpx::lcos::send_channel::send_channel__hpx::shared_future:naming::id_type:RR"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a02f872702d6920f28978c11a7edea799"></span><code class="sig-name descname">send_channel</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::shared_future&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; &amp;&amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel12send_channelERRN3hpx13shared_futureIN6naming7id_typeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos12send_channel12send_channelERKN3hpx13shared_futureIN6naming7id_typeEEE">
+<span id="_CPPv3N3hpx4lcos12send_channel12send_channelERKN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="_CPPv2N3hpx4lcos12send_channel12send_channelERKN3hpx13shared_futureIN6naming7id_typeEEE"></span><span id="hpx::lcos::send_channel::send_channel__hpx::shared_future:naming::id_type:CR"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a94c35bca0e5274544b774f9bdab20fc1"></span><code class="sig-name descname">send_channel</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::shared_future&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; <em class="property">const</em> &amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel12send_channelERKN3hpx13shared_futureIN6naming7id_typeEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEbE4typeEN6launch12apply_policyE1UNSt6size_tE">
+<span id="_CPPv3I00EN3hpx4lcos12send_channel3setEN6launch12apply_policyE1UNSt6size_tE"></span><span id="_CPPv2I00EN3hpx4lcos12send_channel3setEN6launch12apply_policyE1UNSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a2bb7459744739f74593d6a939da8c687"></span>template&lt;typename <code class="sig-name descname">U</code>, typename <code class="sig-name descname">U2</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;!<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEbE4typeEN6launch12apply_policyE1UNSt6size_tE" title="hpx::lcos::send_channel::set::U2">U2</a>&gt;::value, bool&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::apply_policy, <a class="reference internal" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEbE4typeEN6launch12apply_policyE1UNSt6size_tE" title="hpx::lcos::send_channel::set::U">U</a> <em>val</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos12send_channel18default_generationE" title="hpx::lcos::send_channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEbE4typeEN6launch12apply_policyE1UNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEN3hpx6futureIvEEE4typeEN6launch12async_policyE1UNSt6size_tE">
+<span id="_CPPv3I00EN3hpx4lcos12send_channel3setEN6launch12async_policyE1UNSt6size_tE"></span><span id="_CPPv2I00EN3hpx4lcos12send_channel3setEN6launch12async_policyE1UNSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1ae8804bec13a345052b522df87c13bca0"></span>template&lt;typename <code class="sig-name descname">U</code>, typename <code class="sig-name descname">U2</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;!<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEN3hpx6futureIvEEE4typeEN6launch12async_policyE1UNSt6size_tE" title="hpx::lcos::send_channel::set::U2">U2</a>&gt;::value, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt;&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::async_policy, <a class="reference internal" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEN3hpx6futureIvEEE4typeEN6launch12async_policyE1UNSt6size_tE" title="hpx::lcos::send_channel::set::U">U</a> <em>val</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos12send_channel18default_generationE" title="hpx::lcos::send_channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEN3hpx6futureIvEEE4typeEN6launch12async_policyE1UNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEE4typeEN6launch11sync_policyE1UNSt6size_tE">
+<span id="_CPPv3I00EN3hpx4lcos12send_channel3setEN6launch11sync_policyE1UNSt6size_tE"></span><span id="_CPPv2I00EN3hpx4lcos12send_channel3setEN6launch11sync_policyE1UNSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a203975239782ca6e50202e3d4c1d77a5"></span>template&lt;typename <code class="sig-name descname">U</code>, typename <code class="sig-name descname">U2</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;!<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEE4typeEN6launch11sync_policyE1UNSt6size_tE" title="hpx::lcos::send_channel::set::U2">U2</a>&gt;::value&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEE4typeEN6launch11sync_policyE1UNSt6size_tE" title="hpx::lcos::send_channel::set::U">U</a> <em>val</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos12send_channel18default_generationE" title="hpx::lcos::send_channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXntNSt7is_voidI2U2E5valueEEE4typeEN6launch11sync_policyE1UNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE">
+<span id="_CPPv3I00EN3hpx4lcos12send_channel3setE1UNSt6size_tE"></span><span id="_CPPv2I00EN3hpx4lcos12send_channel3setE1UNSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1ae1d04cd519cf31c7babbd685f1d0c9ec"></span>template&lt;typename <code class="sig-name descname">U</code>, typename <code class="sig-name descname">U2</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;!<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE" title="hpx::lcos::send_channel::set::U2">U2</a>&gt;::value &amp;&amp; !<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4N3hpx6traitsE" title="hpx::traits">traits</a>::is_launch_policy&lt;<a class="reference internal" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE" title="hpx::lcos::send_channel::set::U">U</a>&gt;::value&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE" title="hpx::lcos::send_channel::set::U">U</a> <em>val</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos12send_channel18default_generationE" title="hpx::lcos::send_channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx4lcos12send_channel3setENSt9enable_ifIXaantNSt7is_voidI2U2E5valueEntN6traits16is_launch_policyI1UE5valueEEE4typeE1UNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEbE4typeEN6launch12apply_policyENSt6size_tE">
+<span id="_CPPv3I0EN3hpx4lcos12send_channel3setEN6launch12apply_policyENSt6size_tE"></span><span id="_CPPv2I0EN3hpx4lcos12send_channel3setEN6launch12apply_policyENSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a3a88d5d6d0338a2ee2a1e2a5ebc91a5a"></span>template&lt;typename <code class="sig-name descname">U</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEbE4typeEN6launch12apply_policyENSt6size_tE" title="hpx::lcos::send_channel::set::U">U</a>&gt;::value, bool&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::apply_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos12send_channel18default_generationE" title="hpx::lcos::send_channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEbE4typeEN6launch12apply_policyENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEN3hpx6futureIvEEE4typeEN6launch12async_policyENSt6size_tE">
+<span id="_CPPv3I0EN3hpx4lcos12send_channel3setEN6launch12async_policyENSt6size_tE"></span><span id="_CPPv2I0EN3hpx4lcos12send_channel3setEN6launch12async_policyENSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1ad1e5fbfb3add6fae82a89a80b5f86fa3"></span>template&lt;typename <code class="sig-name descname">U</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEN3hpx6futureIvEEE4typeEN6launch12async_policyENSt6size_tE" title="hpx::lcos::send_channel::set::U">U</a>&gt;::value, <a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;void&gt;&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::async_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos12send_channel18default_generationE" title="hpx::lcos::send_channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEN3hpx6futureIvEEE4typeEN6launch12async_policyENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeEN6launch11sync_policyENSt6size_tE">
+<span id="_CPPv3I0EN3hpx4lcos12send_channel3setEN6launch11sync_policyENSt6size_tE"></span><span id="_CPPv2I0EN3hpx4lcos12send_channel3setEN6launch11sync_policyENSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a8ad730cff981171683db7d581e93b027"></span>template&lt;typename <code class="sig-name descname">U</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeEN6launch11sync_policyENSt6size_tE" title="hpx::lcos::send_channel::set::U">U</a>&gt;::value&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos12send_channel18default_generationE" title="hpx::lcos::send_channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeEN6launch11sync_policyENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeENSt6size_tE">
+<span id="_CPPv3I0EN3hpx4lcos12send_channel3setENSt6size_tE"></span><span id="_CPPv2I0EN3hpx4lcos12send_channel3setENSt6size_tE"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a9418093249acad61d3541962348df7ae"></span>template&lt;typename <code class="sig-name descname">U</code> = T&gt;<br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::enable_if&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;<a class="reference internal" href="#_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeENSt6size_tE" title="hpx::lcos::send_channel::set::U">U</a>&gt;::value&gt;::type <code class="sig-name descname">set</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em> = <a class="reference internal" href="#_CPPv4N3hpx4lcos12send_channel18default_generationE" title="hpx::lcos::send_channel::default_generation">default_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos12send_channel3setENSt9enable_ifINSt7is_voidI1UE5valueEE4typeENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos12send_channel5closeEN6launch12apply_policyEb">
+<span id="_CPPv3N3hpx4lcos12send_channel5closeEN6launch12apply_policyEb"></span><span id="_CPPv2N3hpx4lcos12send_channel5closeEN6launch12apply_policyEb"></span><span id="hpx::lcos::send_channel::close__launch::apply_policy.b"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1ad59b1d3d73176e32e6f24686f85355ef"></span>void <code class="sig-name descname">close</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::apply_policy, bool <em>force_delete_entries</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel5closeEN6launch12apply_policyEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos12send_channel5closeEN6launch12async_policyEb">
+<span id="_CPPv3N3hpx4lcos12send_channel5closeEN6launch12async_policyEb"></span><span id="_CPPv2N3hpx4lcos12send_channel5closeEN6launch12async_policyEb"></span><span id="hpx::lcos::send_channel::close__launch::async_policy.b"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a7d1f65041aa7460f299532e411d702a7"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t&gt; <code class="sig-name descname">close</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::async_policy, bool <em>force_delete_entries</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel5closeEN6launch12async_policyEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos12send_channel5closeEN6launch11sync_policyEb">
+<span id="_CPPv3N3hpx4lcos12send_channel5closeEN6launch11sync_policyEb"></span><span id="_CPPv2N3hpx4lcos12send_channel5closeEN6launch11sync_policyEb"></span><span id="hpx::lcos::send_channel::close__launch::sync_policy.b"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a47d5ca70f4f03ef78ac3ceb1bf2f2749"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">close</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, bool <em>force_delete_entries</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel5closeEN6launch11sync_policyEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos12send_channel5closeEb">
+<span id="_CPPv3N3hpx4lcos12send_channel5closeEb"></span><span id="_CPPv2N3hpx4lcos12send_channel5closeEb"></span><span id="hpx::lcos::send_channel::close__b"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a430283100ff72913d0afb9059612e021"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">close</code><span class="sig-paren">(</span>bool <em>force_delete_entries</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel5closeEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos12send_channel9base_typeE">
+<span id="_CPPv3N3hpx4lcos12send_channel9base_typeE"></span><span id="_CPPv2N3hpx4lcos12send_channel9base_typeE"></span><span id="hpx::lcos::send_channel::base_type"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1ad8800f91d5f0867f0ea6272f35571dbe"></span><em class="property">typedef </em><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::client_base&lt;send_channel&lt;T&gt;, <a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos">lcos</a>::<a class="reference internal" href="#_CPPv4N3hpx4lcos6serverE" title="hpx::lcos::server">server</a>::channel&lt;T&gt;&gt; <code class="sig-name descname">base_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel9base_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Static Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4lcos12send_channel18default_generationE">
+<span id="_CPPv3N3hpx4lcos12send_channel18default_generationE"></span><span id="_CPPv2N3hpx4lcos12send_channel18default_generationE"></span><span id="hpx::lcos::send_channel::default_generation__std::s"></span><span class="target" id="classhpx_1_1lcos_1_1send__channel_1a9664114e74bdf59c8568739d8b63ab4e"></span><em class="property">constexpr</em> <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">default_generation</code> = <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t(-1)<a class="headerlink" href="#_CPPv4N3hpx4lcos12send_channel18default_generationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_CHANNEL_DECLARATION">
+<span class="target" id="lcos__distributed_2server_2channel_8hpp_1a04c375435ab0a76912cc1fe44f57e23f"></span><code class="sig-name descname">HPX_REGISTER_CHANNEL_DECLARATION</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_CHANNEL_DECLARATION" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_CHANNEL_DECLARATION_">
+<span class="target" id="lcos__distributed_2server_2channel_8hpp_1a0c93bf7d8ed6a97e0ff0055e14e432f1"></span><code class="sig-name descname">HPX_REGISTER_CHANNEL_DECLARATION_</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_CHANNEL_DECLARATION_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_CHANNEL_DECLARATION_1">
+<span class="target" id="lcos__distributed_2server_2channel_8hpp_1ab4e8cc0598278b0b22261a969be81aae"></span><code class="sig-name descname">HPX_REGISTER_CHANNEL_DECLARATION_1</code><span class="sig-paren">(</span><em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_CHANNEL_DECLARATION_1" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_CHANNEL_DECLARATION_2">
+<span class="target" id="lcos__distributed_2server_2channel_8hpp_1acf471eaa93b513a2720695e79be515ea"></span><code class="sig-name descname">HPX_REGISTER_CHANNEL_DECLARATION_2</code><span class="sig-paren">(</span><em>type</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_CHANNEL_DECLARATION_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_CHANNEL">
+<span class="target" id="lcos__distributed_2server_2channel_8hpp_1a2716222c447c181baeb1105ed9016120"></span><code class="sig-name descname">HPX_REGISTER_CHANNEL</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_CHANNEL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_CHANNEL_">
+<span class="target" id="lcos__distributed_2server_2channel_8hpp_1a302642f9cba803fad8af86e027164bee"></span><code class="sig-name descname">HPX_REGISTER_CHANNEL_</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_CHANNEL_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_CHANNEL_1">
+<span class="target" id="lcos__distributed_2server_2channel_8hpp_1a8d9e81745bcb6f32c8f37c31869b98a0"></span><code class="sig-name descname">HPX_REGISTER_CHANNEL_1</code><span class="sig-paren">(</span><em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_CHANNEL_1" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_REGISTER_CHANNEL_2">
+<span class="target" id="lcos__distributed_2server_2channel_8hpp_1a415ffba0d7f46f624c73b6878fd0fc7c"></span><code class="sig-name descname">HPX_REGISTER_CHANNEL_2</code><span class="sig-paren">(</span><em>type</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_REGISTER_CHANNEL_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1lcos"></span><em class="property">namespace </em><code class="sig-name descname">lcos</code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos6serverE">
+<span id="_CPPv3N3hpx4lcos6serverE"></span><span id="_CPPv2N3hpx4lcos6serverE"></span><span id="hpx::lcos::server"></span><span class="target" id="namespacehpx_1_1lcos_1_1server"></span><em class="property">namespace </em><code class="sig-name descname">server</code><a class="headerlink" href="#_CPPv4N3hpx4lcos6serverE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="cpp class">
+<dt id="_CPPv4I00EN3hpx4lcos6server7channelE">
+<span id="_CPPv3I00EN3hpx4lcos6server7channelE"></span><span id="_CPPv2I00EN3hpx4lcos6server7channelE"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel"></span>template&lt;typename <code class="sig-name descname">T</code>, typename <code class="sig-name descname">RemoteType</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">channel</code><a class="headerlink" href="#_CPPv4I00EN3hpx4lcos6server7channelE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos6server7channel16base_type_holderE">
+<span id="_CPPv3N3hpx4lcos6server7channel16base_type_holderE"></span><span id="_CPPv2N3hpx4lcos6server7channel16base_type_holderE"></span><span id="hpx::lcos::server::channel::base_type_holder"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1af88fea23a4d527f95eeb87a7ba985d92"></span><em class="property">typedef </em><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos">lcos</a>::base_lco_with_value&lt;T, RemoteType, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4N3hpx6traitsE" title="hpx::traits">traits</a>::detail::component_tag&gt; <code class="sig-name descname">base_type_holder</code><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel16base_type_holderE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos6server7channel13wrapping_typeE">
+<span id="_CPPv3N3hpx4lcos6server7channel13wrapping_typeE"></span><span id="_CPPv2N3hpx4lcos6server7channel13wrapping_typeE"></span><span id="hpx::lcos::server::channel::wrapping_type"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a6d367eee9557396cc13e7b2807dd5add"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3hpx4lcos6server7channel9base_typeE" title="hpx::lcos::server::channel::base_type">base_type</a>::wrapping_type <code class="sig-name descname">wrapping_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel13wrapping_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel7channelEv">
+<span id="_CPPv3N3hpx4lcos6server7channel7channelEv"></span><span id="_CPPv2N3hpx4lcos6server7channel7channelEv"></span><span id="hpx::lcos::server::channel::channel"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a4ebff6b9b3a2ec8d4d495061ef906c4c"></span><code class="sig-name descname">channel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel7channelEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel9set_valueERR10RemoteType">
+<span id="_CPPv3N3hpx4lcos6server7channel9set_valueERR10RemoteType"></span><span id="_CPPv2N3hpx4lcos6server7channel9set_valueERR10RemoteType"></span><span id="hpx::lcos::server::channel::set_value__RemoteTypeRR"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a4dac4d5b6bea4ed0822affaebf9af929"></span>void <code class="sig-name descname">set_value</code><span class="sig-paren">(</span>RemoteType &amp;&amp;<em>result</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel9set_valueERR10RemoteType" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel13set_exceptionERKNSt13exception_ptrE">
+<span id="_CPPv3N3hpx4lcos6server7channel13set_exceptionERKNSt13exception_ptrE"></span><span id="_CPPv2N3hpx4lcos6server7channel13set_exceptionERKNSt13exception_ptrE"></span><span id="hpx::lcos::server::channel::set_exception__std::exception_ptrCR"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1afa71d1e5c361961ef1eb458e99af488f"></span>void <code class="sig-name descname">set_exception</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::exception_ptr <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel13set_exceptionERKNSt13exception_ptrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel9get_valueEv">
+<span id="_CPPv3N3hpx4lcos6server7channel9get_valueEv"></span><span id="_CPPv2N3hpx4lcos6server7channel9get_valueEv"></span><span id="hpx::lcos::server::channel::get_value"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a40ec37c1a152111f2a6ac1db61a39d89"></span><a class="reference internal" href="#_CPPv4N3hpx4lcos6server7channel11result_typeE" title="hpx::lcos::server::channel::result_type">result_type</a> <code class="sig-name descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel9get_valueEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel9get_valueER10error_code">
+<span id="_CPPv3N3hpx4lcos6server7channel9get_valueER10error_code"></span><span id="_CPPv2N3hpx4lcos6server7channel9get_valueER10error_code"></span><span id="hpx::lcos::server::channel::get_value__error_codeR"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a4c89156d38ae9e3b1986e5631c568c8f"></span><a class="reference internal" href="#_CPPv4N3hpx4lcos6server7channel11result_typeE" title="hpx::lcos::server::channel::result_type">result_type</a> <code class="sig-name descname">get_value</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel9get_valueER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel14get_generationENSt6size_tE">
+<span id="_CPPv3N3hpx4lcos6server7channel14get_generationENSt6size_tE"></span><span id="_CPPv2N3hpx4lcos6server7channel14get_generationENSt6size_tE"></span><span id="hpx::lcos::server::channel::get_generation__std::s"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a5ba1c3b8d1dfa840731f0772d04d30fe"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::future&lt;T&gt; <code class="sig-name descname">get_generation</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel14get_generationENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel34HPX_DEFINE_COMPONENT_DIRECT_ACTIONE7channel14get_generation">
+<span id="_CPPv3N3hpx4lcos6server7channel34HPX_DEFINE_COMPONENT_DIRECT_ACTIONE7channel14get_generation"></span><span id="_CPPv2N3hpx4lcos6server7channel34HPX_DEFINE_COMPONENT_DIRECT_ACTIONE7channel14get_generation"></span><span id="hpx::lcos::server::channel::HPX_DEFINE_COMPONENT_DIRECT_ACTION__channel.get_generation"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1aae2fc49a020ec4e714e9c44baf98018a"></span><code class="sig-name descname">HPX_DEFINE_COMPONENT_DIRECT_ACTION</code><span class="sig-paren">(</span>channel, <a class="reference internal" href="#_CPPv4N3hpx4lcos6server7channel14get_generationENSt6size_tE" title="hpx::lcos::server::channel::get_generation">get_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel34HPX_DEFINE_COMPONENT_DIRECT_ACTIONE7channel14get_generation" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel14set_generationERR10RemoteTypeNSt6size_tE">
+<span id="_CPPv3N3hpx4lcos6server7channel14set_generationERR10RemoteTypeNSt6size_tE"></span><span id="_CPPv2N3hpx4lcos6server7channel14set_generationERR10RemoteTypeNSt6size_tE"></span><span id="hpx::lcos::server::channel::set_generation__RemoteTypeRR.std::s"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a073b9d8d6b79f0284b6e329a616937ac"></span>void <code class="sig-name descname">set_generation</code><span class="sig-paren">(</span>RemoteType &amp;&amp;<em>value</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>generation</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel14set_generationERR10RemoteTypeNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel34HPX_DEFINE_COMPONENT_DIRECT_ACTIONE7channel14set_generation">
+<span id="_CPPv3N3hpx4lcos6server7channel34HPX_DEFINE_COMPONENT_DIRECT_ACTIONE7channel14set_generation"></span><span id="_CPPv2N3hpx4lcos6server7channel34HPX_DEFINE_COMPONENT_DIRECT_ACTIONE7channel14set_generation"></span><span id="hpx::lcos::server::channel::HPX_DEFINE_COMPONENT_DIRECT_ACTION__channel.set_generation"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1aa36dda4c5e116ee087e8fc0f5f4942f0"></span><code class="sig-name descname">HPX_DEFINE_COMPONENT_DIRECT_ACTION</code><span class="sig-paren">(</span>channel, <a class="reference internal" href="#_CPPv4N3hpx4lcos6server7channel14set_generationERR10RemoteTypeNSt6size_tE" title="hpx::lcos::server::channel::set_generation">set_generation</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel34HPX_DEFINE_COMPONENT_DIRECT_ACTIONE7channel14set_generation" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel5closeEb">
+<span id="_CPPv3N3hpx4lcos6server7channel5closeEb"></span><span id="_CPPv2N3hpx4lcos6server7channel5closeEb"></span><span id="hpx::lcos::server::channel::close__b"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a8112390173ac0c2a646db0b02d13f8c6"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">close</code><span class="sig-paren">(</span>bool <em>force_delete_entries</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel5closeEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel27HPX_DEFINE_COMPONENT_ACTIONE7channel5close">
+<span id="_CPPv3N3hpx4lcos6server7channel27HPX_DEFINE_COMPONENT_ACTIONE7channel5close"></span><span id="_CPPv2N3hpx4lcos6server7channel27HPX_DEFINE_COMPONENT_ACTIONE7channel5close"></span><span id="hpx::lcos::server::channel::HPX_DEFINE_COMPONENT_ACTION__channel.close"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a32f37281679f461b92107b007c50c2b8"></span><code class="sig-name descname">HPX_DEFINE_COMPONENT_ACTION</code><span class="sig-paren">(</span>channel, <a class="reference internal" href="#_CPPv4N3hpx4lcos6server7channel5closeEb" title="hpx::lcos::server::channel::close">close</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel27HPX_DEFINE_COMPONENT_ACTIONE7channel5close" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel18get_component_typeEv">
+<span id="_CPPv3N3hpx4lcos6server7channel18get_component_typeEv"></span><span id="_CPPv2N3hpx4lcos6server7channel18get_component_typeEv"></span><span id="hpx::lcos::server::channel::get_component_type"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1aeddb43500b63e8dde1159cbaa63fd412"></span><em class="property">static</em> <a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx10components14component_typeE" title="hpx::components::component_type">component_type</a> <code class="sig-name descname">get_component_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel18get_component_typeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4lcos6server7channel18set_component_typeEN10components14component_typeE">
+<span id="_CPPv3N3hpx4lcos6server7channel18set_component_typeEN10components14component_typeE"></span><span id="_CPPv2N3hpx4lcos6server7channel18set_component_typeEN10components14component_typeE"></span><span id="hpx::lcos::server::channel::set_component_type__components::component_type"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1adb0b924bb4bb4ae640b0a9bfb5407bfc"></span><em class="property">static</em> void <code class="sig-name descname">set_component_type</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx10components14component_typeE" title="hpx::components::component_type">component_type</a> <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel18set_component_typeEN10components14component_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos6server7channel9base_typeE">
+<span id="_CPPv3N3hpx4lcos6server7channel9base_typeE"></span><span id="_CPPv2N3hpx4lcos6server7channel9base_typeE"></span><span id="hpx::lcos::server::channel::base_type"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1aaf21b2d8e5c0f27d4c9e0edba4d79f4b"></span><em class="property">typedef </em><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::component_base&lt;channel&gt; <code class="sig-name descname">base_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel9base_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4lcos6server7channel11result_typeE">
+<span id="_CPPv3N3hpx4lcos6server7channel11result_typeE"></span><span id="_CPPv2N3hpx4lcos6server7channel11result_typeE"></span><span id="hpx::lcos::server::channel::result_type"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a5cc0f27c3c07f6f0d1c87911612fe04a"></span><em class="property">typedef </em><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::conditional&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::is_void&lt;T&gt;::value, <a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../../core/type_support/api.html#_CPPv4N3hpx4util11unused_typeE" title="hpx::util::unused_type">unused_type</a>, T&gt;::type <code class="sig-name descname">result_type</code><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel11result_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx4lcos6server7channel8channel_E">
+<span id="_CPPv3N3hpx4lcos6server7channel8channel_E"></span><span id="_CPPv2N3hpx4lcos6server7channel8channel_E"></span><span id="hpx::lcos::server::channel::channel___lcos::local::channel:result_type:"></span><span class="target" id="classhpx_1_1lcos_1_1server_1_1channel_1a77206f5831d17aca8787c977c04a9d28"></span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos">lcos</a>::<a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcos5localE" title="hpx::lcos::local">local</a>::channel&lt;<a class="reference internal" href="#_CPPv4N3hpx4lcos6server7channel11result_typeE" title="hpx::lcos::server::channel::result_type">result_type</a>&gt; <code class="sig-name descname">channel_</code><a class="headerlink" href="#_CPPv4N3hpx4lcos6server7channel8channel_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../mpi_base/api.html" class="btn btn-neutral float-right" title="mpi_base" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../init_runtime/api.html" class="btn btn-neutral float-left" title="init_runtime" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2008-2020, The STE||AR Group
+      <span class="commit">
+        
+        Revision <code>c2fb8a8</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

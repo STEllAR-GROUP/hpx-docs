@@ -1,0 +1,990 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>runtime_distributed &mdash; HPX 1.6.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="runtime_local" href="../runtime_local/api.html" />
+    <link rel="prev" title="runtime_configuration" href="../runtime_configuration/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> HPX
+          
+
+          
+            
+            <img src="../../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api/public_api.html">Public API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/affinity/api.html">affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/config_registry/api.html">config_registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/execution_base/api.html">execution_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/itt_notify/api.html">itt_notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/logging/api.html">logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/properties/api.html">properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/statistics/api.html">statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/string_util/api.html">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/testing/api.html">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/version/api.html">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions/api.html">actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../actions_base/api.html">actions_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agas/api.html">agas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_colocated/api.html">async_colocated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_cuda/api.html">async_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_distributed/api.html">async_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_mpi/api.html">async_mpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../checkpoint_base/api.html">checkpoint_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collectives/api.html">collectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../command_line_handling/api.html">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../components_base/api.html">components_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../executors_distributed/api.html">executors_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../init_runtime/api.html">init_runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_distributed/api.html">lcos_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpi_base/api.html">mpi_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../naming/api.html">naming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resiliency_distributed/api.html">resiliency_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">runtime_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime_local/api.html">runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_executors/api.html">thread_executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/pack_traversal/api.html">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/timed_execution/api.html">timed_execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">Citing <em>HPX</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users.html"><em>HPX</em> users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../api.html">API reference</a> &raquo;</li>
+        
+      <li>runtime_distributed</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/full/runtime_distributed/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="runtime-distributed">
+<span id="modules-runtime-distributed-api"></span><h1>runtime_distributed<a class="headerlink" href="#runtime-distributed" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this module can be included with the header
+<code class="docutils literal notranslate"><span class="pre">hpx/modules/runtime_distributed.hpp</span></code>. These headers may be used by user-code but are not
+guaranteed stable (neither header location nor contents). You are using these at
+your own risk. If you wish to use non-public functionality from a module we
+<em>strongly</em> suggest only including the module header <code class="docutils literal notranslate"><span class="pre">hpx/modules/runtime_distributed.hpp</span></code>, not
+the particular header in which the functionality you would like to use is
+defined. See <a class="reference internal" href="../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names that are part of the public
+<em>HPX</em> API.</p>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx20tolerate_node_faultsEv">
+<span id="_CPPv3N3hpx20tolerate_node_faultsEv"></span><span id="_CPPv2N3hpx20tolerate_node_faultsEv"></span><span id="hpx::tolerate_node_faults"></span><span class="target" id="runtime__distributed_8hpp_1a6a7e3387e6a55d6d7040a142bda044d6"></span>bool <code class="sig-name descname">tolerate_node_faults</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx20tolerate_node_faultsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt id="_CPPv4N3hpx19runtime_distributedE">
+<span id="_CPPv3N3hpx19runtime_distributedE"></span><span id="_CPPv2N3hpx19runtime_distributedE"></span><span id="hpx::runtime_distributed"></span><span class="target" id="classhpx_1_1runtime__distributed"></span><em class="property">class </em><code class="sig-name descname">runtime_distributed</code> : <em class="property">public</em> <a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx7runtimeE" title="hpx::runtime">runtime</a><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;runtime_distributed.hpp&gt;</em><p>The <em>runtime</em> class encapsulates the HPX runtime system in a simple to use way. It makes sure all required parts of the HPX runtime system are properly initialized. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed19runtime_distributedERN4util21runtime_configurationE">
+<span id="_CPPv3N3hpx19runtime_distributed19runtime_distributedERN4util21runtime_configurationE"></span><span id="_CPPv2N3hpx19runtime_distributed19runtime_distributedERN4util21runtime_configurationE"></span><span id="hpx::runtime_distributed::runtime_distributed__util::runtime_configurationR"></span><span class="target" id="classhpx_1_1runtime__distributed_1af9e624d5d16e36a0fddf3c0065980678"></span><code class="sig-name descname">runtime_distributed</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx4util21runtime_configurationE" title="hpx::util::runtime_configuration">runtime_configuration</a> &amp;<em>rtcfg</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed19runtime_distributedERN4util21runtime_configurationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a new HPX runtime instance</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">locality_mode</span></code>: [in] This is the mode the given runtime instance should be executed in. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributedD0Ev">
+<span id="_CPPv3N3hpx19runtime_distributedD0Ev"></span><span id="_CPPv2N3hpx19runtime_distributedD0Ev"></span><span id="hpx::runtime_distributed::~runtime_distributed"></span><span class="target" id="classhpx_1_1runtime__distributed_1a7a39a93e9618e3375f49db5c1547932d"></span><code class="sig-name descname">~runtime_distributed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributedD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The destructor makes sure all HPX runtime services are properly shut down before exiting. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed5startERKN4util15function_nonserI22hpx_main_function_typeEEb">
+<span id="_CPPv3N3hpx19runtime_distributed5startERKN4util15function_nonserI22hpx_main_function_typeEEb"></span><span id="_CPPv2N3hpx19runtime_distributed5startERKN4util15function_nonserI22hpx_main_function_typeEEb"></span><span id="hpx::runtime_distributed::start__util::function_nonser:hpx_main_function_type:CR.b"></span><span class="target" id="classhpx_1_1runtime__distributed_1a94f966b86c6c495892c08283951a8d65"></span>int <code class="sig-name descname">start</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../../core/functional/api.html#_CPPv4I0EN3hpx4util15function_nonserE" title="hpx::util::function_nonser">function_nonser</a>&lt;hpx_main_function_type&gt; <em class="property">const</em> &amp;<em>func</em>, bool <em>blocking</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed5startERKN4util15function_nonserI22hpx_main_function_typeEEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Start the runtime system. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>If a blocking is a true, this function will return the value as returned as the result of the invocation of the function object given by the parameter <code class="docutils literal notranslate"><span class="pre">func</span></code>. Otherwise it will return zero. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: [in] This is the main function of an HPX application. It will be scheduled for execution by the thread manager as soon as the runtime has been initialized. This function is expected to expose an interface as defined by the typedef <em>hpx_main_function_type</em>. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">blocking</span></code>: [in] This allows to control whether this call blocks until the runtime system has been stopped. If this parameter is <em>true</em> the function <em>runtime::start</em> will call <em>runtime::wait</em> internally.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed5startEb">
+<span id="_CPPv3N3hpx19runtime_distributed5startEb"></span><span id="_CPPv2N3hpx19runtime_distributed5startEb"></span><span id="hpx::runtime_distributed::start__b"></span><span class="target" id="classhpx_1_1runtime__distributed_1ae5f0c0bf48879ffbb883d58de370fd68"></span>int <code class="sig-name descname">start</code><span class="sig-paren">(</span>bool <em>blocking</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed5startEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Start the runtime system. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>If a blocking is a true, this function will return the value as returned as the result of the invocation of the function object given by the parameter <code class="docutils literal notranslate"><span class="pre">func</span></code>. Otherwise it will return zero. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">blocking</span></code>: [in] This allows to control whether this call blocks until the runtime system has been stopped. If this parameter is <em>true</em> the function <em>runtime::start</em> will call <em>runtime::wait</em> internally .</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed4waitEv">
+<span id="_CPPv3N3hpx19runtime_distributed4waitEv"></span><span id="_CPPv2N3hpx19runtime_distributed4waitEv"></span><span id="hpx::runtime_distributed::wait"></span><span class="target" id="classhpx_1_1runtime__distributed_1a63559a636866606a7b9d45937b2fa757"></span>int <code class="sig-name descname">wait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed4waitEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Wait for the shutdown action to be executed. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>This function will return the value as returned as the result of the invocation of the function object given by the parameter <code class="docutils literal notranslate"><span class="pre">func</span></code>. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed4stopEb">
+<span id="_CPPv3N3hpx19runtime_distributed4stopEb"></span><span id="_CPPv2N3hpx19runtime_distributed4stopEb"></span><span id="hpx::runtime_distributed::stop__b"></span><span class="target" id="classhpx_1_1runtime__distributed_1a83d8ce3ff1f6929ec3fe76f9b555cf2f"></span>void <code class="sig-name descname">stop</code><span class="sig-paren">(</span>bool <em>blocking</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed4stopEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initiate termination of the runtime system. </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">blocking</span></code>: [in] This allows to control whether this call blocks until the runtime system has been fully stopped. If this parameter is <em>false</em> then this call will initiate the stop action but will return immediately. Use a second call to stop with this parameter set to <em>true</em> to wait for all internal work to be completed. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed8finalizeEd">
+<span id="_CPPv3N3hpx19runtime_distributed8finalizeEd"></span><span id="_CPPv2N3hpx19runtime_distributed8finalizeEd"></span><span id="hpx::runtime_distributed::finalize__double"></span><span class="target" id="classhpx_1_1runtime__distributed_1af6c7792e52f92d63ffa108d7535bbf91"></span>int <code class="sig-name descname">finalize</code><span class="sig-paren">(</span>double <em>shutdown_timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed8finalizeEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed11stop_helperEbRNSt18condition_variableERNSt5mutexE">
+<span id="_CPPv3N3hpx19runtime_distributed11stop_helperEbRNSt18condition_variableERNSt5mutexE"></span><span id="_CPPv2N3hpx19runtime_distributed11stop_helperEbRNSt18condition_variableERNSt5mutexE"></span><span id="hpx::runtime_distributed::stop_helper__b.std::condition_variableR.std::mutexR"></span><span class="target" id="classhpx_1_1runtime__distributed_1a3aaa149e373ee475396381e5cdb03117"></span>void <code class="sig-name descname">stop_helper</code><span class="sig-paren">(</span>bool <em>blocking</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::condition_variable &amp;<em>cond</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::mutex &amp;<em>mtx</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed11stop_helperEbRNSt18condition_variableERNSt5mutexE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Stop the runtime system, wait for termination. </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">blocking</span></code>: [in] This allows to control whether this call blocks until the runtime system has been fully stopped. If this parameter is <em>false</em> then this call will initiate the stop action but will return immediately. Use a second call to stop with this parameter set to <em>true</em> to wait for all internal work to be completed. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed7suspendEv">
+<span id="_CPPv3N3hpx19runtime_distributed7suspendEv"></span><span id="_CPPv2N3hpx19runtime_distributed7suspendEv"></span><span id="hpx::runtime_distributed::suspend"></span><span class="target" id="classhpx_1_1runtime__distributed_1a225df0a449f0665d32c88ccd822bbf53"></span>int <code class="sig-name descname">suspend</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed7suspendEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Suspend the runtime system. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed6resumeEv">
+<span id="_CPPv3N3hpx19runtime_distributed6resumeEv"></span><span id="_CPPv2N3hpx19runtime_distributed6resumeEv"></span><span id="hpx::runtime_distributed::resume"></span><span class="target" id="classhpx_1_1runtime__distributed_1afdf2f3975feab19731d6e56e2e3a5f95"></span>int <code class="sig-name descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed6resumeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resume the runtime system. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed12report_errorENSt6size_tERKNSt13exception_ptrEb">
+<span id="_CPPv3N3hpx19runtime_distributed12report_errorENSt6size_tERKNSt13exception_ptrEb"></span><span id="_CPPv2N3hpx19runtime_distributed12report_errorENSt6size_tERKNSt13exception_ptrEb"></span><span id="hpx::runtime_distributed::report_error__std::s.std::exception_ptrCR.b"></span><span class="target" id="classhpx_1_1runtime__distributed_1ad44a59f59e0fe4a056d050d5bba6e5d5"></span>bool <code class="sig-name descname">report_error</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>num_thread</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::exception_ptr <em class="property">const</em> &amp;<em>e</em>, bool <em>terminate_all</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed12report_errorENSt6size_tERKNSt13exception_ptrEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Report a non-recoverable error to the runtime system. </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">num_thread</span></code>: [in] The number of the operating system thread the error has been detected in. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: [in] This is an instance encapsulating an exception which lead to this function call. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">terminate_all</span></code>: [in] Kill all localities attached to the currently running application (default: true) </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed12report_errorERKNSt13exception_ptrEb">
+<span id="_CPPv3N3hpx19runtime_distributed12report_errorERKNSt13exception_ptrEb"></span><span id="_CPPv2N3hpx19runtime_distributed12report_errorERKNSt13exception_ptrEb"></span><span id="hpx::runtime_distributed::report_error__std::exception_ptrCR.b"></span><span class="target" id="classhpx_1_1runtime__distributed_1ab9557735c82765ef52e06302695b4c8a"></span>bool <code class="sig-name descname">report_error</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::exception_ptr <em class="property">const</em> &amp;<em>e</em>, bool <em>terminate_all</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed12report_errorERKNSt13exception_ptrEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Report a non-recoverable error to the runtime system. </p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>This function will retrieve the number of the current shepherd thread and forward to the report_error function above. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code>: [in] This is an instance encapsulating an exception which lead to this function call. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">terminate_all</span></code>: [in] Kill all localities attached to the currently running application (default: true)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed3runERKN4util15function_nonserI22hpx_main_function_typeEE">
+<span id="_CPPv3N3hpx19runtime_distributed3runERKN4util15function_nonserI22hpx_main_function_typeEE"></span><span id="_CPPv2N3hpx19runtime_distributed3runERKN4util15function_nonserI22hpx_main_function_typeEE"></span><span id="hpx::runtime_distributed::run__util::function_nonser:hpx_main_function_type:CR"></span><span class="target" id="classhpx_1_1runtime__distributed_1ac3069d38cd8ac38ba62b2e5f119656c9"></span>int <code class="sig-name descname">run</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../../core/functional/api.html#_CPPv4I0EN3hpx4util15function_nonserE" title="hpx::util::function_nonser">function_nonser</a>&lt;hpx_main_function_type&gt; <em class="property">const</em> &amp;<em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed3runERKN4util15function_nonserI22hpx_main_function_typeEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run the HPX runtime system, use the given function for the main <em>thread</em> and block waiting for all threads to finish. </p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>The parameter <em>func</em> is optional. If no function is supplied, the runtime system will simply wait for the shutdown action without explicitly executing any main thread.</p>
+</dd>
+<dt><strong>Return</strong></dt><dd><p>This function will return the value as returned as the result of the invocation of the function object given by the parameter <code class="docutils literal notranslate"><span class="pre">func</span></code>. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: [in] This is the main function of an HPX application. It will be scheduled for execution by the thread manager as soon as the runtime has been initialized. This function is expected to expose an interface as defined by the typedef <em>hpx_main_function_type</em>. This parameter is optional and defaults to none main thread function, in which case all threads have to be scheduled explicitly.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed3runEv">
+<span id="_CPPv3N3hpx19runtime_distributed3runEv"></span><span id="_CPPv2N3hpx19runtime_distributed3runEv"></span><span id="hpx::runtime_distributed::run"></span><span class="target" id="classhpx_1_1runtime__distributed_1aa9a9b819f94b9e05da0a1bdf241fa833"></span>int <code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed3runEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run the HPX runtime system, initially use the given number of (OS) threads in the thread-manager and block waiting for all threads to finish. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>This function will always return 0 (zero). </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed21is_networking_enabledEv">
+<span id="_CPPv3N3hpx19runtime_distributed21is_networking_enabledEv"></span><span id="_CPPv2N3hpx19runtime_distributed21is_networking_enabledEv"></span><span id="hpx::runtime_distributed::is_networking_enabled"></span><span class="target" id="classhpx_1_1runtime__distributed_1a34a354ed2274dc87520f41e9f3a0ba4b"></span>bool <code class="sig-name descname">is_networking_enabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed21is_networking_enabledEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx19runtime_distributed14set_error_sinkEN10components6server24console_error_dispatcher9sink_typeERR1F">
+<span id="_CPPv3I0EN3hpx19runtime_distributed14set_error_sinkERR1F"></span><span id="_CPPv2I0EN3hpx19runtime_distributed14set_error_sinkERR1F"></span><span class="target" id="classhpx_1_1runtime__distributed_1a77a293086dc02cc1e7217782d2b7f6fd"></span>template&lt;typename <code class="sig-name descname">F</code>&gt;<br /><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::server::console_error_dispatcher::sink_type <code class="sig-name descname">set_error_sink</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx19runtime_distributed14set_error_sinkEN10components6server24console_error_dispatcher9sink_typeERR1F" title="hpx::runtime_distributed::set_error_sink::F">F</a> &amp;&amp;<em>sink</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx19runtime_distributed14set_error_sinkEN10components6server24console_error_dispatcher9sink_typeERR1F" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed20get_counter_registryEv">
+<span id="_CPPv3N3hpx19runtime_distributed20get_counter_registryEv"></span><span id="_CPPv2N3hpx19runtime_distributed20get_counter_registryEv"></span><span id="hpx::runtime_distributed::get_counter_registry"></span><span class="target" id="classhpx_1_1runtime__distributed_1a59bbe4850c96c3ab9cb1a76240389646"></span><a class="reference internal" href="../performance_counters/api.html#_CPPv4N3hpx20performance_countersE" title="hpx::performance_counters">performance_counters</a>::<a class="reference internal" href="../performance_counters/api.html#_CPPv4N3hpx20performance_counters8registryE" title="hpx::performance_counters::registry">registry</a> &amp;<code class="sig-name descname">get_counter_registry</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed20get_counter_registryEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Allow access to the registry counter registry instance used by the HPX runtime. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed20get_counter_registryEv">
+<span id="_CPPv3NK3hpx19runtime_distributed20get_counter_registryEv"></span><span id="_CPPv2NK3hpx19runtime_distributed20get_counter_registryEv"></span><span id="hpx::runtime_distributed::get_counter_registryC"></span><span class="target" id="classhpx_1_1runtime__distributed_1af86174a19318e63a9f48f9359e989c17"></span><a class="reference internal" href="../performance_counters/api.html#_CPPv4N3hpx20performance_countersE" title="hpx::performance_counters">performance_counters</a>::<a class="reference internal" href="../performance_counters/api.html#_CPPv4N3hpx20performance_counters8registryE" title="hpx::performance_counters::registry">registry</a> <em class="property">const</em> &amp;<code class="sig-name descname">get_counter_registry</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed20get_counter_registryEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Allow access to the registry counter registry instance used by the HPX runtime. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed22register_counter_typesEv">
+<span id="_CPPv3N3hpx19runtime_distributed22register_counter_typesEv"></span><span id="_CPPv2N3hpx19runtime_distributed22register_counter_typesEv"></span><span id="hpx::runtime_distributed::register_counter_types"></span><span class="target" id="classhpx_1_1runtime__distributed_1af46b96b964dcb53210205d5babed58c8"></span>void <code class="sig-name descname">register_counter_types</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed22register_counter_typesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Install all performance counters related to this runtime instance. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed23register_query_countersERKNSt10shared_ptrIN4util14query_countersEEE">
+<span id="_CPPv3N3hpx19runtime_distributed23register_query_countersERKNSt10shared_ptrIN4util14query_countersEEE"></span><span id="_CPPv2N3hpx19runtime_distributed23register_query_countersERKNSt10shared_ptrIN4util14query_countersEEE"></span><span id="hpx::runtime_distributed::register_query_counters__std::shared_ptr:util::query_counters:CR"></span><span class="target" id="classhpx_1_1runtime__distributed_1a9de09747e434ea045f226bdbdd422586"></span>void <code class="sig-name descname">register_query_counters</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::shared_ptr&lt;<a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::query_counters&gt; <em class="property">const</em> &amp;<em>active_counters</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed23register_query_countersERKNSt10shared_ptrIN4util14query_countersEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed21start_active_countersER10error_code">
+<span id="_CPPv3N3hpx19runtime_distributed21start_active_countersER10error_code"></span><span id="_CPPv2N3hpx19runtime_distributed21start_active_countersER10error_code"></span><span id="hpx::runtime_distributed::start_active_counters__error_codeR"></span><span class="target" id="classhpx_1_1runtime__distributed_1a7b99689b06e5d198dc47546bea0043d6"></span>void <code class="sig-name descname">start_active_counters</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed21start_active_countersER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed20stop_active_countersER10error_code">
+<span id="_CPPv3N3hpx19runtime_distributed20stop_active_countersER10error_code"></span><span id="_CPPv2N3hpx19runtime_distributed20stop_active_countersER10error_code"></span><span id="hpx::runtime_distributed::stop_active_counters__error_codeR"></span><span class="target" id="classhpx_1_1runtime__distributed_1ac6351fe7bd45af5cb10e08ceddb72986"></span>void <code class="sig-name descname">stop_active_counters</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed20stop_active_countersER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed21reset_active_countersER10error_code">
+<span id="_CPPv3N3hpx19runtime_distributed21reset_active_countersER10error_code"></span><span id="_CPPv2N3hpx19runtime_distributed21reset_active_countersER10error_code"></span><span id="hpx::runtime_distributed::reset_active_counters__error_codeR"></span><span class="target" id="classhpx_1_1runtime__distributed_1a2173c60b4ae61edbf68e09e9b91d3f9f"></span>void <code class="sig-name descname">reset_active_counters</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed21reset_active_countersER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed22reinit_active_countersEbR10error_code">
+<span id="_CPPv3N3hpx19runtime_distributed22reinit_active_countersEbR10error_code"></span><span id="_CPPv2N3hpx19runtime_distributed22reinit_active_countersEbR10error_code"></span><span id="hpx::runtime_distributed::reinit_active_counters__b.error_codeR"></span><span class="target" id="classhpx_1_1runtime__distributed_1a65c1dd82da32e472a97c5ec3523bb545"></span>void <code class="sig-name descname">reinit_active_counters</code><span class="sig-paren">(</span>bool <em>reset</em> = true, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed22reinit_active_countersEbR10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed24evaluate_active_countersEbPKcR10error_code">
+<span id="_CPPv3N3hpx19runtime_distributed24evaluate_active_countersEbPKcR10error_code"></span><span id="_CPPv2N3hpx19runtime_distributed24evaluate_active_countersEbPKcR10error_code"></span><span id="hpx::runtime_distributed::evaluate_active_counters__b.cCP.error_codeR"></span><span class="target" id="classhpx_1_1runtime__distributed_1aebc332bad136b76bafdcf42fae261cc3"></span>void <code class="sig-name descname">evaluate_active_counters</code><span class="sig-paren">(</span>bool <em>reset</em> = false, char <em class="property">const</em> *<em>description</em> = nullptr, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed24evaluate_active_countersEbPKcR10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed24stop_evaluating_countersEb">
+<span id="_CPPv3N3hpx19runtime_distributed24stop_evaluating_countersEb"></span><span id="_CPPv2N3hpx19runtime_distributed24stop_evaluating_countersEb"></span><span id="hpx::runtime_distributed::stop_evaluating_counters__b"></span><span class="target" id="classhpx_1_1runtime__distributed_1afcc2a92c39882af4b9a513ce61b26cd8"></span>void <code class="sig-name descname">stop_evaluating_counters</code><span class="sig-paren">(</span>bool <em>terminate</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed24stop_evaluating_countersEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed15get_agas_clientEv">
+<span id="_CPPv3N3hpx19runtime_distributed15get_agas_clientEv"></span><span id="_CPPv2N3hpx19runtime_distributed15get_agas_clientEv"></span><span id="hpx::runtime_distributed::get_agas_client"></span><span class="target" id="classhpx_1_1runtime__distributed_1a334466bb7bc62e99f93c2792b9e786ef"></span><a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6naming15resolver_clientE" title="hpx::naming::resolver_client">resolver_client</a> &amp;<code class="sig-name descname">get_agas_client</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed15get_agas_clientEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Allow access to the AGAS client instance used by the HPX runtime. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed18get_thread_managerEv">
+<span id="_CPPv3N3hpx19runtime_distributed18get_thread_managerEv"></span><span id="_CPPv2N3hpx19runtime_distributed18get_thread_managerEv"></span><span id="hpx::runtime_distributed::get_thread_manager"></span><span class="target" id="classhpx_1_1runtime__distributed_1af2bc1a56bd74fdc2bda0317327f75c52"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::<a class="reference internal" href="../threadmanager/api.html#_CPPv4N3hpx7threads13threadmanagerE" title="hpx::threads::threadmanager">threadmanager</a> &amp;<code class="sig-name descname">get_thread_manager</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed18get_thread_managerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Allow access to the thread manager instance used by the HPX runtime. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed11get_applierEv">
+<span id="_CPPv3N3hpx19runtime_distributed11get_applierEv"></span><span id="_CPPv2N3hpx19runtime_distributed11get_applierEv"></span><span id="hpx::runtime_distributed::get_applier"></span><span class="target" id="classhpx_1_1runtime__distributed_1a3bca5f7101e990d282962e02b1753dbe"></span><a class="reference internal" href="../async_distributed/api.html#_CPPv4N3hpx7applierE" title="hpx::applier">applier</a>::<a class="reference internal" href="../async_distributed/api.html#_CPPv4N3hpx7applierE" title="hpx::applier">applier</a> &amp;<code class="sig-name descname">get_applier</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed11get_applierEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Allow access to the applier instance used by the HPX runtime. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed4hereEv">
+<span id="_CPPv3NK3hpx19runtime_distributed4hereEv"></span><span id="_CPPv2NK3hpx19runtime_distributed4hereEv"></span><span id="hpx::runtime_distributed::hereC"></span><span class="target" id="classhpx_1_1runtime__distributed_1a75bc0f8e4722d358cc1f9a8408b42910"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <code class="sig-name descname">here</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed4hereEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns a string of the locality endpoints (usable in debug output) </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed23get_runtime_support_lvaEv">
+<span id="_CPPv3NK3hpx19runtime_distributed23get_runtime_support_lvaEv"></span><span id="_CPPv2NK3hpx19runtime_distributed23get_runtime_support_lvaEv"></span><span id="hpx::runtime_distributed::get_runtime_support_lvaC"></span><span class="target" id="classhpx_1_1runtime__distributed_1a284535b920137793a81646804e6d00f5"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint64_t <code class="sig-name descname">get_runtime_support_lva</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed23get_runtime_support_lvaEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed11get_next_idENSt6size_tE">
+<span id="_CPPv3N3hpx19runtime_distributed11get_next_idENSt6size_tE"></span><span id="_CPPv2N3hpx19runtime_distributed11get_next_idENSt6size_tE"></span><span id="hpx::runtime_distributed::get_next_id__std::s"></span><span class="target" id="classhpx_1_1runtime__distributed_1a1dccaffe93cd180c4d747ed145e33552"></span><a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming8gid_typeE" title="hpx::naming::gid_type">gid_type</a> <code class="sig-name descname">get_next_id</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>count</em> = 1<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed11get_next_idENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed11get_id_poolEv">
+<span id="_CPPv3N3hpx19runtime_distributed11get_id_poolEv"></span><span id="_CPPv2N3hpx19runtime_distributed11get_id_poolEv"></span><span id="hpx::runtime_distributed::get_id_pool"></span><span class="target" id="classhpx_1_1runtime__distributed_1a11b8ed91baf1b5011aabb82420877098"></span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::unique_id_ranges &amp;<code class="sig-name descname">get_id_pool</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed11get_id_poolEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed24add_pre_startup_functionE21startup_function_type">
+<span id="_CPPv3N3hpx19runtime_distributed24add_pre_startup_functionE21startup_function_type"></span><span id="_CPPv2N3hpx19runtime_distributed24add_pre_startup_functionE21startup_function_type"></span><span id="hpx::runtime_distributed::add_pre_startup_function__startup_function_type"></span><span class="target" id="classhpx_1_1runtime__distributed_1aeb674ad29147b0cdb831133ace7cc4e1"></span>void <code class="sig-name descname">add_pre_startup_function</code><span class="sig-paren">(</span><a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx21startup_function_typeE" title="hpx::startup_function_type">startup_function_type</a> <em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed24add_pre_startup_functionE21startup_function_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add a function to be executed inside a HPX thread before hpx_main but guaranteed to be executed before any startup function registered with <em>add_startup_function</em>.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>The difference to a startup function is that all pre-startup functions will be (system-wide) executed before any startup function. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: The function ‘f’ will be called from inside a HPX thread before hpx_main is executed. This is very useful to setup the runtime environment of the application (install performance counters, etc.)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed20add_startup_functionE21startup_function_type">
+<span id="_CPPv3N3hpx19runtime_distributed20add_startup_functionE21startup_function_type"></span><span id="_CPPv2N3hpx19runtime_distributed20add_startup_functionE21startup_function_type"></span><span id="hpx::runtime_distributed::add_startup_function__startup_function_type"></span><span class="target" id="classhpx_1_1runtime__distributed_1a7024a7de8d399510207149d94d9ce94a"></span>void <code class="sig-name descname">add_startup_function</code><span class="sig-paren">(</span><a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx21startup_function_typeE" title="hpx::startup_function_type">startup_function_type</a> <em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed20add_startup_functionE21startup_function_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add a function to be executed inside a HPX thread before hpx_main</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: The function ‘f’ will be called from inside a HPX thread before hpx_main is executed. This is very useful to setup the runtime environment of the application (install performance counters, etc.) </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed25add_pre_shutdown_functionE22shutdown_function_type">
+<span id="_CPPv3N3hpx19runtime_distributed25add_pre_shutdown_functionE22shutdown_function_type"></span><span id="_CPPv2N3hpx19runtime_distributed25add_pre_shutdown_functionE22shutdown_function_type"></span><span id="hpx::runtime_distributed::add_pre_shutdown_function__shutdown_function_type"></span><span class="target" id="classhpx_1_1runtime__distributed_1ae9e509bd99a03cbc4d6a656c9140f249"></span>void <code class="sig-name descname">add_pre_shutdown_function</code><span class="sig-paren">(</span><a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx22shutdown_function_typeE" title="hpx::shutdown_function_type">shutdown_function_type</a> <em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed25add_pre_shutdown_functionE22shutdown_function_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add a function to be executed inside a HPX thread during hpx::finalize, but guaranteed before any of the shutdown functions is executed.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>The difference to a shutdown function is that all pre-shutdown functions will be (system-wide) executed before any shutdown function. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: The function ‘f’ will be called from inside a HPX thread while hpx::finalize is executed. This is very useful to tear down the runtime environment of the application (uninstall performance counters, etc.)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed21add_shutdown_functionE22shutdown_function_type">
+<span id="_CPPv3N3hpx19runtime_distributed21add_shutdown_functionE22shutdown_function_type"></span><span id="_CPPv2N3hpx19runtime_distributed21add_shutdown_functionE22shutdown_function_type"></span><span id="hpx::runtime_distributed::add_shutdown_function__shutdown_function_type"></span><span class="target" id="classhpx_1_1runtime__distributed_1a776ee71089296092b0231fc783ac63a4"></span>void <code class="sig-name descname">add_shutdown_function</code><span class="sig-paren">(</span><a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx22shutdown_function_typeE" title="hpx::shutdown_function_type">shutdown_function_type</a> <em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed21add_shutdown_functionE22shutdown_function_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add a function to be executed inside a HPX thread during hpx::finalize</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: The function ‘f’ will be called from inside a HPX thread while hpx::finalize is executed. This is very useful to tear down the runtime environment of the application (uninstall performance counters, etc.) </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed15get_thread_poolEPKc">
+<span id="_CPPv3N3hpx19runtime_distributed15get_thread_poolEPKc"></span><span id="_CPPv2N3hpx19runtime_distributed15get_thread_poolEPKc"></span><span id="hpx::runtime_distributed::get_thread_pool__cCP"></span><span class="target" id="classhpx_1_1runtime__distributed_1aaf19ee04babe3220dd3839636855812f"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../../core/io_service/api.html#_CPPv4N3hpx4util15io_service_poolE" title="hpx::util::io_service_pool">io_service_pool</a> *<code class="sig-name descname">get_thread_pool</code><span class="sig-paren">(</span>char <em class="property">const</em> *<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed15get_thread_poolEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Access one of the internal thread pools (io_service instances) HPX is using to perform specific tasks. The three possible values for the argument <code class="docutils literal notranslate"><span class="pre">name</span></code> are “main_pool”, “io_pool”, “parcel_pool”, and “timer_pool”. For any other argument value the function will return zero. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed15register_threadEPKcNSt6size_tEbR10error_code">
+<span id="_CPPv3N3hpx19runtime_distributed15register_threadEPKcNSt6size_tEbR10error_code"></span><span id="_CPPv2N3hpx19runtime_distributed15register_threadEPKcNSt6size_tEbR10error_code"></span><span id="hpx::runtime_distributed::register_thread__cCP.std::s.b.error_codeR"></span><span class="target" id="classhpx_1_1runtime__distributed_1a0da0611ee1be06e9776ff6ceaab27b30"></span>bool <code class="sig-name descname">register_thread</code><span class="sig-paren">(</span>char <em class="property">const</em> *<em>name</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>num</em> = 0, bool <em>service_thread</em> = true, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed15register_threadEPKcNSt6size_tEbR10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Register an external OS-thread with HPX. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed23get_notification_policyEPKcN13runtime_local14os_thread_typeE">
+<span id="_CPPv3N3hpx19runtime_distributed23get_notification_policyEPKcN13runtime_local14os_thread_typeE"></span><span id="_CPPv2N3hpx19runtime_distributed23get_notification_policyEPKcN13runtime_local14os_thread_typeE"></span><span id="hpx::runtime_distributed::get_notification_policy__cCP.runtime_local::os_thread_type"></span><span class="target" id="classhpx_1_1runtime__distributed_1aab9fd88af7134e8bd58cd5f553a4875d"></span>notification_policy_type <code class="sig-name descname">get_notification_policy</code><span class="sig-paren">(</span>char <em class="property">const</em> *<em>prefix</em>, <a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx13runtime_localE" title="hpx::runtime_local">runtime_local</a>::<a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx13runtime_local14os_thread_typeE" title="hpx::runtime_local::os_thread_type">os_thread_type</a> <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed23get_notification_policyEPKcN13runtime_local14os_thread_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Generate a new notification policy instance for the given thread name prefix </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed15get_locality_idER10error_code">
+<span id="_CPPv3NK3hpx19runtime_distributed15get_locality_idER10error_code"></span><span id="_CPPv2NK3hpx19runtime_distributed15get_locality_idER10error_code"></span><span id="hpx::runtime_distributed::get_locality_id__error_codeRC"></span><span class="target" id="classhpx_1_1runtime__distributed_1adacdd14a89ddb2dd72f0da8057c2c325"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t <code class="sig-name descname">get_locality_id</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed15get_locality_idER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed22get_num_worker_threadsEv">
+<span id="_CPPv3NK3hpx19runtime_distributed22get_num_worker_threadsEv"></span><span id="_CPPv2NK3hpx19runtime_distributed22get_num_worker_threadsEv"></span><span id="hpx::runtime_distributed::get_num_worker_threadsC"></span><span class="target" id="classhpx_1_1runtime__distributed_1a905d8c9bb27e657b15a28f8ce7af7e5d"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <code class="sig-name descname">get_num_worker_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed22get_num_worker_threadsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed18get_num_localitiesEN3hpx6launch11sync_policyER10error_code">
+<span id="_CPPv3NK3hpx19runtime_distributed18get_num_localitiesEN3hpx6launch11sync_policyER10error_code"></span><span id="_CPPv2NK3hpx19runtime_distributed18get_num_localitiesEN3hpx6launch11sync_policyER10error_code"></span><span id="hpx::runtime_distributed::get_num_localities__hpx::launch::sync_policy.error_codeRC"></span><span class="target" id="classhpx_1_1runtime__distributed_1a13a6810abb3e352586fca69dfaf8545f"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t <code class="sig-name descname">get_num_localities</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed18get_num_localitiesEN3hpx6launch11sync_policyER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed26get_initial_num_localitiesEv">
+<span id="_CPPv3NK3hpx19runtime_distributed26get_initial_num_localitiesEv"></span><span id="_CPPv2NK3hpx19runtime_distributed26get_initial_num_localitiesEv"></span><span id="hpx::runtime_distributed::get_initial_num_localitiesC"></span><span class="target" id="classhpx_1_1runtime__distributed_1ae0b7802671e5c39b8d526150ca83cdc7"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t <code class="sig-name descname">get_initial_num_localities</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed26get_initial_num_localitiesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed18get_num_localitiesEv">
+<span id="_CPPv3NK3hpx19runtime_distributed18get_num_localitiesEv"></span><span id="_CPPv2NK3hpx19runtime_distributed18get_num_localitiesEv"></span><span id="hpx::runtime_distributed::get_num_localitiesC"></span><span class="target" id="classhpx_1_1runtime__distributed_1aa09484ea60b5a54be8f40249318897a5"></span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos">lcos</a>::future&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t&gt; <code class="sig-name descname">get_num_localities</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed18get_num_localitiesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed18get_num_localitiesEN3hpx6launch11sync_policyEN10components14component_typeER10error_code">
+<span id="_CPPv3NK3hpx19runtime_distributed18get_num_localitiesEN3hpx6launch11sync_policyEN10components14component_typeER10error_code"></span><span id="_CPPv2NK3hpx19runtime_distributed18get_num_localitiesEN3hpx6launch11sync_policyEN10components14component_typeER10error_code"></span><span id="hpx::runtime_distributed::get_num_localities__hpx::launch::sync_policy.components::component_type.error_codeRC"></span><span class="target" id="classhpx_1_1runtime__distributed_1a552189d3669e76a5f0f27075c3b00879"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t <code class="sig-name descname">get_num_localities</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx">hpx</a>::<a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx10components14component_typeE" title="hpx::components::component_type">component_type</a> <em>type</em>, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed18get_num_localitiesEN3hpx6launch11sync_policyEN10components14component_typeER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx19runtime_distributed18get_num_localitiesEN10components14component_typeE">
+<span id="_CPPv3NK3hpx19runtime_distributed18get_num_localitiesEN10components14component_typeE"></span><span id="_CPPv2NK3hpx19runtime_distributed18get_num_localitiesEN10components14component_typeE"></span><span id="hpx::runtime_distributed::get_num_localities__components::component_typeC"></span><span class="target" id="classhpx_1_1runtime__distributed_1a553c901072e0889f497fe71178b2bfc7"></span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos">lcos</a>::future&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t&gt; <code class="sig-name descname">get_num_localities</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx10components14component_typeE" title="hpx::components::component_type">component_type</a> <em>type</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3hpx19runtime_distributed18get_num_localitiesEN10components14component_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed12assign_coresERKNSt6stringENSt8uint32_tE">
+<span id="_CPPv3N3hpx19runtime_distributed12assign_coresERKNSt6stringENSt8uint32_tE"></span><span id="_CPPv2N3hpx19runtime_distributed12assign_coresERKNSt6stringENSt8uint32_tE"></span><span id="hpx::runtime_distributed::assign_cores__ssCR.std::uint32_t"></span><span class="target" id="classhpx_1_1runtime__distributed_1ab354529902728fe6e6444aa8b4d56817"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t <code class="sig-name descname">assign_cores</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>locality_basename</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t <em>num_threads</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed12assign_coresERKNSt6stringENSt8uint32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed12assign_coresEv">
+<span id="_CPPv3N3hpx19runtime_distributed12assign_coresEv"></span><span id="_CPPv2N3hpx19runtime_distributed12assign_coresEv"></span><span id="hpx::runtime_distributed::assign_cores"></span><span class="target" id="classhpx_1_1runtime__distributed_1a20a8c6baccf116b4da480e29527c3766"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t <code class="sig-name descname">assign_cores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed12assign_coresEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx19runtime_distributed19used_cores_map_typeE">
+<span id="_CPPv3N3hpx19runtime_distributed19used_cores_map_typeE"></span><span id="_CPPv2N3hpx19runtime_distributed19used_cores_map_typeE"></span><span class="target" id="classhpx_1_1runtime__distributed_1ab561f007c573f551e4df4a677b38c55a"></span><em class="property">using </em><code class="sig-name descname">used_cores_map_type</code> = <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::map&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t&gt;<a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed19used_cores_map_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed4ThisEv">
+<span id="_CPPv3N3hpx19runtime_distributed4ThisEv"></span><span id="_CPPv2N3hpx19runtime_distributed4ThisEv"></span><span id="hpx::runtime_distributed::This"></span><span class="target" id="classhpx_1_1runtime__distributed_1a90f6b2a7306d4b5e73b855502c65d964"></span><a class="reference internal" href="#_CPPv4N3hpx19runtime_distributedE" title="hpx::runtime_distributed">runtime_distributed</a> *<code class="sig-name descname">This</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed4ThisEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed10run_helperERKN4util15function_nonserIN7runtime22hpx_main_function_typeEEERi">
+<span id="_CPPv3N3hpx19runtime_distributed10run_helperERKN4util15function_nonserIN7runtime22hpx_main_function_typeEEERi"></span><span id="_CPPv2N3hpx19runtime_distributed10run_helperERKN4util15function_nonserIN7runtime22hpx_main_function_typeEEERi"></span><span id="hpx::runtime_distributed::run_helper__util::function_nonser:runtime::hpx_main_function_type:CR.iR"></span><span class="target" id="classhpx_1_1runtime__distributed_1a124de087eb9d5ebc2e0682d3d44b8994"></span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads">threads</a>::thread_result_type <code class="sig-name descname">run_helper</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::<a class="reference internal" href="../../core/functional/api.html#_CPPv4I0EN3hpx4util15function_nonserE" title="hpx::util::function_nonser">function_nonser</a>&lt;<a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx7runtimeE" title="hpx::runtime">runtime</a>::<a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx7runtime22hpx_main_function_typeE" title="hpx::runtime::hpx_main_function_type">hpx_main_function_type</a>&gt; <em class="property">const</em> &amp;<em>func</em>, int &amp;<em>result</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed10run_helperERKN4util15function_nonserIN7runtime22hpx_main_function_typeEEERi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed11wait_helperERNSt5mutexERNSt18condition_variableERb">
+<span id="_CPPv3N3hpx19runtime_distributed11wait_helperERNSt5mutexERNSt18condition_variableERb"></span><span id="_CPPv2N3hpx19runtime_distributed11wait_helperERNSt5mutexERNSt18condition_variableERb"></span><span id="hpx::runtime_distributed::wait_helper__std::mutexR.std::condition_variableR.bR"></span><span class="target" id="classhpx_1_1runtime__distributed_1ad02351385d67e41216514620d2043242"></span>void <code class="sig-name descname">wait_helper</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::mutex &amp;<em>mtx</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::condition_variable &amp;<em>cond</em>, bool &amp;<em>running</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed11wait_helperERNSt5mutexERNSt18condition_variableERb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed15init_tss_helperEPKcN13runtime_local14os_thread_typeENSt6size_tENSt6size_tEPKcPKcb">
+<span id="_CPPv3N3hpx19runtime_distributed15init_tss_helperEPKcN13runtime_local14os_thread_typeENSt6size_tENSt6size_tEPKcPKcb"></span><span id="_CPPv2N3hpx19runtime_distributed15init_tss_helperEPKcN13runtime_local14os_thread_typeENSt6size_tENSt6size_tEPKcPKcb"></span><span id="hpx::runtime_distributed::init_tss_helper__cCP.runtime_local::os_thread_type.std::s.std::s.cCP.cCP.b"></span><span class="target" id="classhpx_1_1runtime__distributed_1a9bb8eb65baec66e4e3e5cd6d7f1cb77a"></span>void <code class="sig-name descname">init_tss_helper</code><span class="sig-paren">(</span>char <em class="property">const</em> *<em>context</em>, <a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx13runtime_localE" title="hpx::runtime_local">runtime_local</a>::<a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx13runtime_local14os_thread_typeE" title="hpx::runtime_local::os_thread_type">os_thread_type</a> <em>type</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>local_thread_num</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>global_thread_num</em>, char <em class="property">const</em> *<em>pool_name</em>, char <em class="property">const</em> *<em>postfix</em>, bool <em>service_thread</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed15init_tss_helperEPKcN13runtime_local14os_thread_typeENSt6size_tENSt6size_tEPKcPKcb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed17deinit_tss_helperEPKcNSt6size_tE">
+<span id="_CPPv3N3hpx19runtime_distributed17deinit_tss_helperEPKcNSt6size_tE"></span><span id="_CPPv2N3hpx19runtime_distributed17deinit_tss_helperEPKcNSt6size_tE"></span><span id="hpx::runtime_distributed::deinit_tss_helper__cCP.std::s"></span><span class="target" id="classhpx_1_1runtime__distributed_1af8d6239f5a1809671707646c38c1ff3d"></span>void <code class="sig-name descname">deinit_tss_helper</code><span class="sig-paren">(</span>char <em class="property">const</em> *<em>context</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>num</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed17deinit_tss_helperEPKcNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed11init_tss_exERKNSt6stringEPKcN13runtime_local14os_thread_typeENSt6size_tENSt6size_tEPKcPKcbR10error_code">
+<span id="_CPPv3N3hpx19runtime_distributed11init_tss_exERKNSt6stringEPKcN13runtime_local14os_thread_typeENSt6size_tENSt6size_tEPKcPKcbR10error_code"></span><span id="_CPPv2N3hpx19runtime_distributed11init_tss_exERKNSt6stringEPKcN13runtime_local14os_thread_typeENSt6size_tENSt6size_tEPKcPKcbR10error_code"></span><span id="hpx::runtime_distributed::init_tss_ex__ssCR.cCP.runtime_local::os_thread_type.std::s.std::s.cCP.cCP.b.error_codeR"></span><span class="target" id="classhpx_1_1runtime__distributed_1a18eeaf51236985a0d9103db2e211a8ee"></span>void <code class="sig-name descname">init_tss_ex</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em> &amp;<em>locality</em>, char <em class="property">const</em> *<em>context</em>, <a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx13runtime_localE" title="hpx::runtime_local">runtime_local</a>::<a class="reference internal" href="../runtime_local/api.html#_CPPv4N3hpx13runtime_local14os_thread_typeE" title="hpx::runtime_local::os_thread_type">os_thread_type</a> <em>type</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>local_thread_num</em>, <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::size_t <em>global_thread_num</em>, char <em class="property">const</em> *<em>pool_name</em>, char <em class="property">const</em> *<em>postfix</em>, bool <em>service_thread</em>, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed11init_tss_exERKNSt6stringEPKcN13runtime_local14os_thread_typeENSt6size_tENSt6size_tEPKcPKcbR10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx19runtime_distributed5mode_E">
+<span id="_CPPv3N3hpx19runtime_distributed5mode_E"></span><span id="_CPPv2N3hpx19runtime_distributed5mode_E"></span><span id="hpx::runtime_distributed::mode___runtime_mode"></span><span class="target" id="classhpx_1_1runtime__distributed_1a8045c85011d7edf08c617a7541136989"></span><a class="reference internal" href="../runtime_configuration/api.html#_CPPv4N3hpx12runtime_modeE" title="hpx::runtime_mode">runtime_mode</a> <code class="sig-name descname">mode_</code><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed5mode_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx19runtime_distributed8id_pool_E">
+<span id="_CPPv3N3hpx19runtime_distributed8id_pool_E"></span><span id="_CPPv2N3hpx19runtime_distributed8id_pool_E"></span><span id="hpx::runtime_distributed::id_pool___util::unique_id_ranges"></span><span class="target" id="classhpx_1_1runtime__distributed_1a936276ebabc77b21c031e3afe3103e5a"></span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::unique_id_ranges <code class="sig-name descname">id_pool_</code><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed8id_pool_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx19runtime_distributed12agas_client_E">
+<span id="_CPPv3N3hpx19runtime_distributed12agas_client_E"></span><span id="_CPPv2N3hpx19runtime_distributed12agas_client_E"></span><span id="hpx::runtime_distributed::agas_client___naming::resolver_client"></span><span class="target" id="classhpx_1_1runtime__distributed_1a731b64937be4e8c09810fb9489403a99"></span><a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6naming15resolver_clientE" title="hpx::naming::resolver_client">resolver_client</a> <code class="sig-name descname">agas_client_</code><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed12agas_client_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx19runtime_distributed8applier_E">
+<span id="_CPPv3N3hpx19runtime_distributed8applier_E"></span><span id="_CPPv2N3hpx19runtime_distributed8applier_E"></span><span id="hpx::runtime_distributed::applier___applier::applier"></span><span class="target" id="classhpx_1_1runtime__distributed_1a28a36eac2ca4494379ba3f52fb67aaae"></span><a class="reference internal" href="../async_distributed/api.html#_CPPv4N3hpx7applierE" title="hpx::applier">applier</a>::<a class="reference internal" href="../async_distributed/api.html#_CPPv4N3hpx7applierE" title="hpx::applier">applier</a> <code class="sig-name descname">applier_</code><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed8applier_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx19runtime_distributed15used_cores_map_E">
+<span id="_CPPv3N3hpx19runtime_distributed15used_cores_map_E"></span><span id="_CPPv2N3hpx19runtime_distributed15used_cores_map_E"></span><span id="hpx::runtime_distributed::used_cores_map___used_cores_map_type"></span><span class="target" id="classhpx_1_1runtime__distributed_1abe47f18edc779c9702d101d556b9a65e"></span><a class="reference internal" href="#_CPPv4N3hpx19runtime_distributed19used_cores_map_typeE" title="hpx::runtime_distributed::used_cores_map_type">used_cores_map_type</a> <code class="sig-name descname">used_cores_map_</code><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed15used_cores_map_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx19runtime_distributed16runtime_support_E">
+<span id="_CPPv3N3hpx19runtime_distributed16runtime_support_E"></span><span id="_CPPv2N3hpx19runtime_distributed16runtime_support_E"></span><span id="hpx::runtime_distributed::runtime_support___std::unique_ptr:components::server::runtime_support:"></span><span class="target" id="classhpx_1_1runtime__distributed_1a1c561c1119d0fb8110c1ec4070d103a3"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::unique_ptr&lt;<a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::server::runtime_support&gt; <code class="sig-name descname">runtime_support_</code><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed16runtime_support_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx19runtime_distributed16active_counters_E">
+<span id="_CPPv3N3hpx19runtime_distributed16active_counters_E"></span><span id="_CPPv2N3hpx19runtime_distributed16active_counters_E"></span><span id="hpx::runtime_distributed::active_counters___std::shared_ptr:util::query_counters:"></span><span class="target" id="classhpx_1_1runtime__distributed_1aefe27e0638be5c1054540ead51c146bc"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::shared_ptr&lt;<a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util">util</a>::query_counters&gt; <code class="sig-name descname">active_counters_</code><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed16active_counters_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19runtime_distributed17default_errorsinkERKNSt6stringE">
+<span id="_CPPv3N3hpx19runtime_distributed17default_errorsinkERKNSt6stringE"></span><span id="_CPPv2N3hpx19runtime_distributed17default_errorsinkERKNSt6stringE"></span><span id="hpx::runtime_distributed::default_errorsink__ssCR"></span><span class="target" id="classhpx_1_1runtime__distributed_1acebfa56c2c8c487d47f5fa8f9a4b48e7"></span><em class="property">static</em> void <code class="sig-name descname">default_errorsink</code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::string <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19runtime_distributed17default_errorsinkERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx19find_all_localitiesEN10components14component_typeER10error_code">
+<span id="_CPPv3N3hpx19find_all_localitiesEN10components14component_typeER10error_code"></span><span id="_CPPv2N3hpx19find_all_localitiesEN10components14component_typeER10error_code"></span><span id="hpx::find_all_localities__components::component_type.error_codeR"></span><span class="target" id="find__localities_8hpp_1a0f1424a2b85140c6d6bb4077601760ae"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; <code class="sig-name descname">find_all_localities</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx10components14component_typeE" title="hpx::components::component_type">component_type</a> <em>type</em>, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx19find_all_localitiesEN10components14component_typeER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the list of global ids representing all localities available to this application which support the given component type. </p>
+<p>The function <em><a class="reference internal" href="#find__localities_8hpp_1a0f1424a2b85140c6d6bb4077601760ae"><span class="std std-ref">find_all_localities()</span></a></em> can be used to retrieve the global ids of all localities currently available to this application which support the creation of instances of the given component type.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>Generally, the id of a locality can be used for instance to create new instances of components and to invoke plain actions (global functions).</p>
+</dd>
+<dt><strong>Return</strong></dt><dd><p>The global ids representing the localities currently available to this application which support the creation of instances of the given component type. If no localities supporting the given component type are currently available, this function will return an empty vector.</p>
+</dd>
+<dt><strong>Note</strong></dt><dd><p>As long as <em>ec</em> is not pre-initialized to <em>hpx::throws</em> this function doesn’t throw but returns the result code using the parameter <em>ec</em>. Otherwise it throws an instance of hpx::exception.</p>
+</dd>
+<dt><strong>Note</strong></dt><dd><p>This function will return meaningful results only if called from an HPX-thread. It will return an empty vector otherwise.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::find_here()</em>, <em><a class="reference internal" href="#find__localities_8hpp_1adde1eeefca5bbb4863e54ca81dfb1b6f"><span class="std std-ref">hpx::find_locality()</span></a></em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: [in] The type of the components for which the function should return the available localities. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ec</span></code>: [in,out] this represents the error status on exit, if this is pre-initialized to <em>hpx::throws</em> the function will throw on error instead.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx22find_remote_localitiesEN10components14component_typeER10error_code">
+<span id="_CPPv3N3hpx22find_remote_localitiesEN10components14component_typeER10error_code"></span><span id="_CPPv2N3hpx22find_remote_localitiesEN10components14component_typeER10error_code"></span><span id="hpx::find_remote_localities__components::component_type.error_codeR"></span><span class="target" id="find__localities_8hpp_1a6b6542b41f455b106a8952474a7ff184"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::vector&lt;<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a>&gt; <code class="sig-name descname">find_remote_localities</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx10components14component_typeE" title="hpx::components::component_type">component_type</a> <em>type</em>, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx22find_remote_localitiesEN10components14component_typeER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the list of locality ids of remote localities supporting the given component type. By default this function will return the list of all remote localities (all but the current locality). </p>
+<p>The function <em><a class="reference internal" href="#find__localities_8hpp_1a6b6542b41f455b106a8952474a7ff184"><span class="std std-ref">find_remote_localities()</span></a></em> can be used to retrieve the global ids of all remote localities currently available to this application (i.e. all localities except the current one) which support the creation of instances of the given component type.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>Generally, the id of a locality can be used for instance to create new instances of components and to invoke plain actions (global functions).</p>
+</dd>
+<dt><strong>Return</strong></dt><dd><p>The global ids representing the remote localities currently available to this application.</p>
+</dd>
+<dt><strong>Note</strong></dt><dd><p>As long as <em>ec</em> is not pre-initialized to <em>hpx::throws</em> this function doesn’t throw but returns the result code using the parameter <em>ec</em>. Otherwise it throws an instance of hpx::exception.</p>
+</dd>
+<dt><strong>Note</strong></dt><dd><p>This function will return meaningful results only if called from an HPX-thread. It will return an empty vector otherwise.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::find_here()</em>, <em><a class="reference internal" href="#find__localities_8hpp_1adde1eeefca5bbb4863e54ca81dfb1b6f"><span class="std std-ref">hpx::find_locality()</span></a></em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: [in] The type of the components for which the function should return the available remote localities. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ec</span></code>: [in,out] this represents the error status on exit, if this is pre-initialized to <em>hpx::throws</em> the function will throw on error instead.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx13find_localityEN10components14component_typeER10error_code">
+<span id="_CPPv3N3hpx13find_localityEN10components14component_typeER10error_code"></span><span id="_CPPv2N3hpx13find_localityEN10components14component_typeER10error_code"></span><span id="hpx::find_locality__components::component_type.error_codeR"></span><span class="target" id="find__localities_8hpp_1adde1eeefca5bbb4863e54ca81dfb1b6f"></span><a class="reference internal" href="../agas/api.html#_CPPv4N3hpx6namingE" title="hpx::naming">naming</a>::<a class="reference internal" href="../naming_base/api.html#_CPPv4N3hpx6naming7id_typeE" title="hpx::naming::id_type">id_type</a> <code class="sig-name descname">find_locality</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx10components14component_typeE" title="hpx::components::component_type">component_type</a> <em>type</em>, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx13find_localityEN10components14component_typeER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the global id representing an arbitrary locality which supports the given component type. </p>
+<p>The function <em><a class="reference internal" href="#find__localities_8hpp_1adde1eeefca5bbb4863e54ca81dfb1b6f"><span class="std std-ref">find_locality()</span></a></em> can be used to retrieve the global id of an arbitrary locality currently available to this application which supports the creation of instances of the given component type.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>Generally, the id of a locality can be used for instance to create new instances of components and to invoke plain actions (global functions).</p>
+</dd>
+<dt><strong>Return</strong></dt><dd><p>The global id representing an arbitrary locality currently available to this application which supports the creation of instances of the given component type. If no locality supporting the given component type is currently available, this function will return <em>hpx::naming::invalid_id</em>.</p>
+</dd>
+<dt><strong>Note</strong></dt><dd><p>As long as <em>ec</em> is not pre-initialized to <em>hpx::throws</em> this function doesn’t throw but returns the result code using the parameter <em>ec</em>. Otherwise it throws an instance of hpx::exception.</p>
+</dd>
+<dt><strong>Note</strong></dt><dd><p>This function will return meaningful results only if called from an HPX-thread. It will return <em>hpx::naming::invalid_id</em> otherwise.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::find_here()</em>, <em><a class="reference internal" href="#find__localities_8hpp_1a0f1424a2b85140c6d6bb4077601760ae"><span class="std std-ref">hpx::find_all_localities()</span></a></em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: [in] The type of the components for which the function should return any available locality. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ec</span></code>: [in,out] this represents the error status on exit, if this is pre-initialized to <em>hpx::throws</em> the function will throw on error instead.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property">namespace </em><code class="sig-name descname">hpx</code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx18get_num_localitiesEN10components14component_typeE">
+<span id="_CPPv3N3hpx18get_num_localitiesEN10components14component_typeE"></span><span id="_CPPv2N3hpx18get_num_localitiesEN10components14component_typeE"></span><span id="hpx::get_num_localities__components::component_type"></span><span class="target" id="get__num__localities_8hpp_1ad87429472cce631ff4aa3b9538850cc8"></span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos">lcos</a>::future&lt;<a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t&gt; <code class="sig-name descname">get_num_localities</code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx10components14component_typeE" title="hpx::components::component_type">component_type</a> <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx18get_num_localitiesEN10components14component_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Asynchronously return the number of localities which are currently registered for the running application. </p>
+<p>The function <em>get_num_localities</em> asynchronously returns the number of localities currently connected to the console which support the creation of the given component type. The returned future represents the actual result.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>This function will return meaningful results only if called from an HPX-thread. It will return 0 otherwise.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::find_all_localities</em>, <em>hpx::get_num_localities</em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: The component type for which the number of connected localities should be retrieved.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx18get_num_localitiesEN6launch11sync_policyEN10components14component_typeER10error_code">
+<span id="_CPPv3N3hpx18get_num_localitiesEN6launch11sync_policyEN10components14component_typeER10error_code"></span><span id="_CPPv2N3hpx18get_num_localitiesEN6launch11sync_policyEN10components14component_typeER10error_code"></span><span id="hpx::get_num_localities__launch::sync_policy.components::component_type.error_codeR"></span><span class="target" id="get__num__localities_8hpp_1ae3d554fde53654e1812e72cec6198bd5"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std">std</a>::uint32_t <code class="sig-name descname">get_num_localities</code><span class="sig-paren">(</span><a class="reference internal" href="../../parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch">launch</a>::sync_policy, <a class="reference internal" href="../../../api/full_api.html#_CPPv4N3hpx10componentsE" title="hpx::components">components</a>::<a class="reference internal" href="../agas/api.html#_CPPv4N3hpx10components14component_typeE" title="hpx::components::component_type">component_type</a> <em>t</em>, <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code">error_code</a> &amp;<em>ec</em> = <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws">throws</a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx18get_num_localitiesEN6launch11sync_policyEN10components14component_typeER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Synchronously return the number of localities which are currently registered for the running application. </p>
+<p>The function <em>get_num_localities</em> returns the number of localities currently connected to the console which support the creation of the given component type. The returned future represents the actual result.</p>
+<p><dl class="simple">
+<dt><strong>Note</strong></dt><dd><p>This function will return meaningful results only if called from an HPX-thread. It will return 0 otherwise.</p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><em>hpx::find_all_localities</em>, <em>hpx::get_num_localities</em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: The component type for which the number of connected localities should be retrieved. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ec</span></code>: [in,out] this represents the error status on exit, if this is pre-initialized to <em>hpx::throws</em> the function will throw on error instead.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../runtime_local/api.html" class="btn btn-neutral float-right" title="runtime_local" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../runtime_configuration/api.html" class="btn btn-neutral float-left" title="runtime_configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2008-2020, The STE||AR Group.
+      <span class="commit">
+        
+        Revision <code>43bc70c</code>.
+      </span>
+      <span class="lastupdated">
+        Last updated on Feb 17, 2021.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

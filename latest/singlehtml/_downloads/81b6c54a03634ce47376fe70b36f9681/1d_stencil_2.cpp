@@ -120,7 +120,7 @@ int hpx_main(hpx::program_options::variables_map& vm)
     stepper step;
 
     // Measure execution time.
-    std::uint64_t t = hpx::util::high_resolution_clock::now();
+    std::uint64_t t = hpx::chrono::high_resolution_clock::now();
 
     // Execute nt time steps on nx grid points.
     hpx::future<stepper::space> result = step.do_work(nx, nt);
@@ -128,7 +128,7 @@ int hpx_main(hpx::program_options::variables_map& vm)
     stepper::space solution = result.get();
     hpx::wait_all(solution);
 
-    std::uint64_t elapsed = hpx::util::high_resolution_clock::now() - t;
+    std::uint64_t elapsed = hpx::chrono::high_resolution_clock::now() - t;
 
     // Print the final solution
     if (vm.count("results"))
@@ -164,6 +164,9 @@ int main(int argc, char* argv[])
     ;
 
     // Initialize and run HPX
-    return hpx::init(desc_commandline, argc, argv);
+    hpx::init_params init_args;
+    init_args.desc_cmdline = desc_commandline;
+
+    return hpx::init(argc, argv, init_args);
 }
 

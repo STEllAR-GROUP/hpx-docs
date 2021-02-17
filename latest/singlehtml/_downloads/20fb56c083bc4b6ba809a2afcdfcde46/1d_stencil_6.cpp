@@ -9,6 +9,8 @@
 //
 // This example builds on example five.
 
+#include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/hpx_init.hpp>
 #include <hpx/hpx.hpp>
 #include <hpx/serialization.hpp>
@@ -108,9 +110,11 @@ private:
     friend class hpx::serialization::access;
 
     template <typename Archive>
-    void serialize(Archive& ar, const unsigned int version)
+    void serialize(Archive& ar, const unsigned int)
     {
+        // clang-format off
         ar & data_ & size_ & min_index_;
+        // clang-format on
     }
 
 private:
@@ -378,14 +382,14 @@ int hpx_main(hpx::program_options::variables_map& vm)
     stepper step;
 
     // Measure execution time.
-    std::uint64_t t = hpx::util::high_resolution_clock::now();
+    std::uint64_t t = hpx::chrono::high_resolution_clock::now();
 
     // Execute nt time steps on nx grid points and print the final solution.
     stepper::space solution = step.do_work(np, nx, nt);
     for (std::size_t i = 0; i != np; ++i)
         solution[i].get_data(partition_server::middle_partition).wait();
 
-    std::uint64_t elapsed = hpx::util::high_resolution_clock::now() - t;
+    std::uint64_t elapsed = hpx::chrono::high_resolution_clock::now() - t;
 
     // Print the final solution
     if (vm.count("results"))
@@ -427,5 +431,9 @@ int main(int argc, char* argv[])
     ;
 
     // Initialize and run HPX
-    return hpx::init(desc_commandline, argc, argv);
+    hpx::init_params init_args;
+    init_args.desc_cmdline = desc_commandline;
+
+    return hpx::init(argc, argv, init_args);
 }
+#endif

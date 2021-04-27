@@ -350,6 +350,468 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
 <dt>
 <span class="target" id="namespacehpx"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">hpx</span></code><br /></dt>
 <dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx12experimentalE">
+<span id="_CPPv3N3hpx12experimentalE"></span><span id="_CPPv2N3hpx12experimentalE"></span><span id="hpx::experimental"></span><span class="target" id="namespacehpx_1_1experimental"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">experimental</span></code><br /></dt>
+<dd><dl class="cpp class">
+<dt id="_CPPv4I000EN3hpx12experimental14async_rw_mutexE">
+<span id="_CPPv3I000EN3hpx12experimental14async_rw_mutexE"></span><span id="_CPPv2I000EN3hpx12experimental14async_rw_mutexE"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">ReadWriteT</span></code><span class="pre">,</span> <span class="pre">typename</span> <code class="sig-name descname"><span class="pre">ReadT</span></code><span class="pre">,</span> <span class="pre">typename</span> <code class="sig-name descname"><span class="pre">Allocator</span></code><span class="pre">&gt;</span><br /><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">async_rw_mutex</span></code><a class="headerlink" href="#_CPPv4I000EN3hpx12experimental14async_rw_mutexE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;async_rw_mutex.hpp&gt;</em><p>Read-write mutex where access is granted to a value through senders.</p>
+<p>The wrapped value is accessed through read and readwrite, both of which return senders which call set_value on a connected receiver when the wrapped value is safe to read or write. The senders send the value through a wrapper type which is implicitly convertible to a reference of the wrapped value. Read-only senders send wrappers that are convertible to const references.</p>
+<p>A read-write sender gives exclusive access to the wrapped value, while a read-only sender gives shared (with other read-only senders) access to the value.</p>
+<p>A void mutex acts as a mutex around some user-managed resource, i.e. the void mutex does not manage any value and the types sent by the senders are not convertible. The sent types are copyable and release access to the protected resource when released.</p>
+<p>The order in which senders call set_value is determined by the order in which the senders are retrieved from the mutex. Connecting and starting the senders is thread-safe.</p>
+<p>Retrieving senders from the mutex is not thread-safe.</p>
+<p>The mutex is movable and non-copyable. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE9read_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE9read_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE9read_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a82bf3ed60512606e771242556930266d"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">read_type</span></code> <span class="pre">=</span> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">decay_t</span><span class="pre">&lt;</span><span class="pre">ReadT</span><span class="pre">&gt;</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE9read_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14readwrite_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14readwrite_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14readwrite_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a49ddf0385270075385c1902b9238f6a1"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">readwrite_type</span></code> <span class="pre">=</span> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">decay_t</span><span class="pre">&lt;</span><span class="pre">ReadWriteT</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14readwrite_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE10value_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE10value_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE10value_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1ab383656e4a79b1ae1a69e43e8b73f168"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">value_type</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14readwrite_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::readwrite_type"><span class="pre">readwrite_type</span></a><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE10value_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE16read_access_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE16read_access_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE16read_access_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a2ece5dc032b90e4c12e34361b05723c0"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">read_access_type</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_wrapper</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14readwrite_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::readwrite_type"><span class="pre">readwrite_type</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE9read_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::read_type"><span class="pre">read_type</span></a><span class="pre">,</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">read</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE16read_access_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21readwrite_access_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21readwrite_access_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21readwrite_access_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1abf792c54d8f7794b40fadfeaf0e79245"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">readwrite_access_type</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_wrapper</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14readwrite_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::readwrite_type"><span class="pre">readwrite_type</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE9read_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::read_type"><span class="pre">read_type</span></a><span class="pre">,</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">readwrite</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21readwrite_access_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14allocator_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14allocator_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14allocator_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a0df9397ddee0c6d623af97a44b0d026c"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">allocator_type</span></code> <span class="pre">=</span> <span class="pre">Allocator</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14allocator_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexEv">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex14async_rw_mutexEv"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex14async_rw_mutexEv"></span><span id="hpx::experimental::async_rw_mutex::async_rw_mutex"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1aa86edfe4944377fd8dec2840ebba39c2"></span><code class="sig-name descname"><span class="pre">async_rw_mutex</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx12experimental14async_rw_mutex14async_rw_mutexERR1URK14allocator_type">
+<span id="_CPPv3I00EN3hpx12experimental14async_rw_mutex14async_rw_mutexERR1URK14allocator_type"></span><span id="_CPPv2I00EN3hpx12experimental14async_rw_mutex14async_rw_mutexERR1URK14allocator_type"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1ab1d465539ec0ba3477319cff75c28730"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">U</span></code><span class="pre">,</span> <span class="pre">typename</span> <span class="pre">=</span> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">enable_if_t</span><span class="pre">&lt;</span><span class="pre">!</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">is_same</span><span class="pre">&lt;</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">decay_t</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I00EN3hpx12experimental14async_rw_mutex14async_rw_mutexERR1URK14allocator_type" title="hpx::experimental::async_rw_mutex::async_rw_mutex::U"><span class="pre">U</span></a><span class="pre">&gt;</span><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I00EN3hpx12experimental14async_rw_mutex14async_rw_mutexERR1URK14allocator_type" title="hpx::experimental::async_rw_mutex::async_rw_mutex"><span class="pre">async_rw_mutex</span></a><span class="pre">&gt;</span><span class="pre">::</span><span class="pre">value</span><span class="pre">&gt;</span><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">async_rw_mutex</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3hpx12experimental14async_rw_mutex14async_rw_mutexERR1URK14allocator_type" title="hpx::experimental::async_rw_mutex::async_rw_mutex::U"><span class="pre">U</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">u</span></em>, <span class="pre">allocator_type</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">alloc</span></em> <span class="pre">=</span> <span class="pre">{</span><span class="pre">}</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx12experimental14async_rw_mutex14async_rw_mutexERR1URK14allocator_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERR14async_rw_mutex">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex14async_rw_mutexERR14async_rw_mutex"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex14async_rw_mutexERR14async_rw_mutex"></span><span id="hpx::experimental::async_rw_mutex::async_rw_mutex__async_rw_mutexRR"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a13e45ff377d0b907721bb8f8a7a131d6"></span><code class="sig-name descname"><span class="pre">async_rw_mutex</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERR14async_rw_mutex" title="hpx::experimental::async_rw_mutex::async_rw_mutex"><span class="pre">async_rw_mutex</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERR14async_rw_mutex" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutexaSERR14async_rw_mutex">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutexaSERR14async_rw_mutex"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutexaSERR14async_rw_mutex"></span><span id="hpx::experimental::async_rw_mutex::assign-operator__async_rw_mutexRR"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1ad3f00d2079f4e9893c11ef0068be4c3d"></span><span class="pre">async_rw_mutex</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><span class="pre">async_rw_mutex</span><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutexaSERR14async_rw_mutex" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14async_rw_mutex">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14async_rw_mutex"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14async_rw_mutex"></span><span id="hpx::experimental::async_rw_mutex::async_rw_mutex__async_rw_mutexCR"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a9ad4b6d575fb4c39af83184b4be5a4f7"></span><code class="sig-name descname"><span class="pre">async_rw_mutex</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14async_rw_mutex" title="hpx::experimental::async_rw_mutex::async_rw_mutex"><span class="pre">async_rw_mutex</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14async_rw_mutex" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutexaSERK14async_rw_mutex">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutexaSERK14async_rw_mutex"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutexaSERK14async_rw_mutex"></span><span id="hpx::experimental::async_rw_mutex::assign-operator__async_rw_mutexCR"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1ae0de6862e2c727702ebd6880795daa6a"></span><span class="pre">async_rw_mutex</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><span class="pre">async_rw_mutex</span> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutexaSERK14async_rw_mutex" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex4readEv">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex4readEv"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex4readEv"></span><span id="hpx::experimental::async_rw_mutex::read"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a24c854d95a62ef0e03676f092f5e69e0"></span><span class="pre">sender</span><span class="pre">&lt;</span><span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">read</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex4readEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex9readwriteEv">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex9readwriteEv"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex9readwriteEv"></span><span id="hpx::experimental::async_rw_mutex::readwrite"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a8011057f304ee1942c57ec3a388957ab"></span><span class="pre">sender</span><span class="pre">&lt;</span><span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">readwrite</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">readwrite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex9readwriteEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE17shared_state_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE17shared_state_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE17shared_state_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a75d3cc3f7e99f38bebcb91684332a2e3"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">shared_state_type</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_shared_state</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE10value_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::value_type"><span class="pre">value_type</span></a><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE17shared_state_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a0edec1ed9ee3fdc56fad5cb38f7b0aee"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">shared_state_ptr_type</span></code> <span class="pre">=</span> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">shared_ptr</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE17shared_state_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::shared_state_type"><span class="pre">shared_state_type</span></a><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex5valueE">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex5valueE"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex5valueE"></span><span id="hpx::experimental::async_rw_mutex::value__value_type"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a8230da9deb5f35d27f9b989bff8a0e94"></span><span class="pre">value_type</span> <code class="sig-name descname"><span class="pre">value</span></code><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex5valueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex5allocE">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex5allocE"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex5allocE"></span><span id="hpx::experimental::async_rw_mutex::alloc__allocator_type"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a2790b43665639114bd24348f02cfa5e7"></span><span class="pre">allocator_type</span> <code class="sig-name descname"><span class="pre">alloc</span></code><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex5allocE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex11prev_accessE">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex11prev_accessE"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex11prev_accessE"></span><span id="hpx::experimental::async_rw_mutex::prev_access__detail::async_rw_mutex_access_type"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a317ee5a20ca1a577c7c1e527ffc93db3"></span><span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span> <code class="sig-name descname"><span class="pre">prev_access</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">readwrite</span><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex11prev_accessE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex10prev_stateE">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex10prev_stateE"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex10prev_stateE"></span><span id="hpx::experimental::async_rw_mutex::prev_state__shared_state_ptr_type"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a402c219163af9b742e20704d42ebc1eb"></span><span class="pre">shared_state_ptr_type</span> <code class="sig-name descname"><span class="pre">prev_state</span></code><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex10prev_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex5stateE">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex5stateE"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex5stateE"></span><span id="hpx::experimental::async_rw_mutex::state__shared_state_ptr_type"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_1a054d9ff00bb832803745173ca7580d27"></span><span class="pre">shared_state_ptr_type</span> <code class="sig-name descname"><span class="pre">state</span></code><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex5stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4I_N6detail26async_rw_mutex_access_typeEEN3hpx12experimental14async_rw_mutex6senderE">
+<span id="_CPPv3I_N6detail26async_rw_mutex_access_typeEEN3hpx12experimental14async_rw_mutex6senderE"></span><span id="_CPPv2I_N6detail26async_rw_mutex_access_typeEEN3hpx12experimental14async_rw_mutex6senderE"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender"></span><span class="pre">template&lt;</span><span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span> <code class="sig-name descname"><span class="pre">AccessType</span></code><span class="pre">&gt;</span><br /><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">sender</span></code><a class="headerlink" href="#_CPPv4I_N6detail26async_rw_mutex_access_typeEEN3hpx12experimental14async_rw_mutex6senderE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11access_typeE">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11access_typeE"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11access_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1a4f3964748111fb0845397fd5857ac8ff"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">access_type</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_wrapper</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE14readwrite_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::readwrite_type"><span class="pre">readwrite_type</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE9read_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::read_type"><span class="pre">read_type</span></a><span class="pre">,</span> <span class="pre">AccessType</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11access_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEIIDpE0IDpE0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11value_typesE">
+<span id="_CPPv3IEIIDpE0IDpE0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11value_typesE"></span><span id="_CPPv2IEIIDpE0IDpE0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11value_typesE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">template&lt;</span><span class="pre">typename</span><span class="pre">...</span><span class="pre">&gt;</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Tuple</span></code><span class="pre">,</span> <span class="pre">template&lt;</span><span class="pre">typename</span><span class="pre">...</span><span class="pre">&gt;</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Variant</span></code><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1a1c83258b314dd8ceef9709c376a4656e"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">value_types</span></code> <span class="pre">=</span> <span class="pre">Variant</span><span class="pre">&lt;</span><span class="pre">Tuple</span><span class="pre">&lt;</span><span class="pre">access_type</span><span class="pre">&gt;</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEIIDpE0IDpE0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11value_typesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEIIDpE0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11error_typesE">
+<span id="_CPPv3IEIIDpE0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11error_typesE"></span><span id="_CPPv2IEIIDpE0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11error_typesE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">template&lt;</span><span class="pre">typename</span><span class="pre">...</span><span class="pre">&gt;</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Variant</span></code><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1a404e868aced8effebe53c40b3f7ab0b5"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">error_types</span></code> <span class="pre">=</span> <span class="pre">Variant</span><span class="pre">&lt;</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">exception_ptr</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEIIDpE0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE11error_typesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0ENO3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender7connectEDaRR1R">
+<span id="_CPPv3I0ENO3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender7connectERR1R"></span><span id="_CPPv2I0ENO3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender7connectERR1R"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1a89a1ef8847d32c613ee07a5f28db8c92"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">R</span></code><span class="pre">&gt;</span><br /><span class="pre">auto</span> <code class="sig-name descname"><span class="pre">connect</span></code><span class="sig-paren">(</span><span class="pre">R</span> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">r</span></em><span class="sig-paren">)</span> <span class="pre">&amp;&amp;</span><a class="headerlink" href="#_CPPv4I0ENO3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender7connectEDaRR1R" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender10prev_stateE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender10prev_stateE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender10prev_stateE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1ab4c28845a2f5a042fed0d961cc0c8403"></span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <code class="sig-name descname"><span class="pre">prev_state</span></code><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender10prev_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender5stateE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender5stateE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender5stateE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1a326b2afb1574f865b988eeba517e398d"></span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <code class="sig-name descname"><span class="pre">state</span></code><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender5stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender10sends_doneE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender10sends_doneE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender10sends_doneE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1a77a3518b120eea1fb5e5a3ba11cb38ed"></span><em class="property"><span class="pre">constexpr</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">sends_done</span></code> <span class="pre">=</span> <span class="pre">false</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6sender10sends_doneE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4I0EN3hpx12experimental14async_rw_mutex6sender15operation_stateE">
+<span id="_CPPv3I0EN3hpx12experimental14async_rw_mutex6sender15operation_stateE"></span><span id="_CPPv2I0EN3hpx12experimental14async_rw_mutex6sender15operation_stateE"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">R</span></code><span class="pre">&gt;</span><br /><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">operation_state</span></code><a class="headerlink" href="#_CPPv4I0EN3hpx12experimental14async_rw_mutex6sender15operation_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4IEI0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR2R_21shared_state_ptr_type21shared_state_ptr_type">
+<span id="_CPPv3IEI0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR2R_21shared_state_ptr_type21shared_state_ptr_type"></span><span id="_CPPv2IEI0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR2R_21shared_state_ptr_type21shared_state_ptr_type"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state_1a7bb80ae68a7cf1abcb37cb03c5b9d7cc"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">R_</span></code><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">operation_state</span></code><span class="sig-paren">(</span><span class="pre">R_</span> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">r</span></em>, <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <em><span class="pre">prev_state</span></em>, <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <em><span class="pre">state</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEI0EN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR2R_21shared_state_ptr_type21shared_state_ptr_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state_1a6d14ebc37208aa17d9ee4b80a93e5ae7"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">operation_state</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::sender&lt;AccessType&gt;::operation_state::operation_state"><span class="pre">operation_state</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_stateaSER15operation_stateRR15operation_state">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_stateaSERR15operation_state"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_stateaSERR15operation_state"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state_1a7a419cfb858992e6ff86eb9c42ea2e0e"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">operation_state</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><span class="pre">operation_state</span><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_stateaSER15operation_stateRR15operation_state" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state_1ae33484484fc0c20b86e0dcb0b6ca0e9e"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">operation_state</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::sender&lt;AccessType&gt;::operation_state::operation_state"><span class="pre">operation_state</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_stateaSER15operation_stateRK15operation_state">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_stateaSERK15operation_state"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_stateaSERK15operation_state"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state_1a18518531aac76559e0224dad86a68916"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">operation_state</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><span class="pre">operation_state</span> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_stateaSER15operation_stateRK15operation_state" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state5startEvv">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state5startEv"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state5startEv"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state_1af1d5bd34a97f4f3b46b1f92e8427fa1b"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">void</span> <code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state5startEvv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state1rE">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state1rE"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state1rE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state_1a487e35ba36e377f73eba47bce9afcaa0"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">decay_t</span><span class="pre">&lt;</span><span class="pre">R</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">r</span></code><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state1rE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state10prev_stateE">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state10prev_stateE"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state10prev_stateE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state_1a5edfbf762d39f58ae058e27384fa3ad9"></span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <code class="sig-name descname"><span class="pre">prev_state</span></code><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state10prev_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state5stateE">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state5stateE"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state5stateE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_1_1sender_1_1operation__state_1a8762da5a0ce8c3b1874b24b3e37bc1b7"></span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;ReadWriteT, ReadT, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <code class="sig-name descname"><span class="pre">state</span></code><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexI10ReadWriteT5ReadT9AllocatorE6senderI10AccessTypeE15operation_state5stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I0EN3hpx12experimental14async_rw_mutexIvv9AllocatorEE">
+<span id="_CPPv3I0EN3hpx12experimental14async_rw_mutexIvv9AllocatorEE"></span><span id="_CPPv2I0EN3hpx12experimental14async_rw_mutexIvv9AllocatorEE"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">Allocator</span></code><span class="pre">&gt;</span><br /><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">async_rw_mutex</span></code><span class="pre">&lt;</span><span class="pre">void</span><span class="pre">,</span> <span class="pre">void</span><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0EN3hpx12experimental14async_rw_mutexIvv9AllocatorEE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::Allocator"><span class="pre">Allocator</span></a><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4I0EN3hpx12experimental14async_rw_mutexIvv9AllocatorEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE9read_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE9read_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE9read_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a791f73f4f2cf11e9bcaad38e9cac14af"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">read_type</span></code> <span class="pre">=</span> <span class="pre">void</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE9read_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14readwrite_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14readwrite_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14readwrite_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a00744bd756f7e2f80432c855bdf3be8f"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">readwrite_type</span></code> <span class="pre">=</span> <span class="pre">void</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14readwrite_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE16read_access_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE16read_access_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE16read_access_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a684137cbeec4d69f9b39b320f2b940ae"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">read_access_type</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_wrapper</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14readwrite_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::readwrite_type"><span class="pre">readwrite_type</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE9read_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::read_type"><span class="pre">read_type</span></a><span class="pre">,</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">read</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE16read_access_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21readwrite_access_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21readwrite_access_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21readwrite_access_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1abc3e8ebdd499578e99333bab8a352c82"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">readwrite_access_type</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_wrapper</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14readwrite_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::readwrite_type"><span class="pre">readwrite_type</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE9read_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::read_type"><span class="pre">read_type</span></a><span class="pre">,</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">readwrite</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21readwrite_access_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14allocator_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14allocator_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14allocator_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a3ffffa908dc559f707b3ad64e08b5130"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">allocator_type</span></code> <span class="pre">=</span> <span class="pre">Allocator</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14allocator_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14allocator_type">
+<span id="_CPPv3N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14allocator_type"></span><span id="_CPPv2N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14allocator_type"></span><span id="hpx::experimental::async_rw_mutex::async_rw_mutex__allocator_typeCR"></span><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1ad219d16b42172363bea9e80f675898bd"></span><code class="sig-name descname"><span class="pre">async_rw_mutex</span></code><span class="sig-paren">(</span><span class="pre">allocator_type</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">alloc</span></em> <span class="pre">=</span> <span class="pre">{</span><span class="pre">}</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14allocator_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1abd79f69d8579a7fcd8e3bb8c197cbdf2"></span><code class="sig-name descname"><span class="pre">async_rw_mutex</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERR14async_rw_mutex" title="hpx::experimental::async_rw_mutex::async_rw_mutex"><span class="pre">async_rw_mutex</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1ada86747cdf58f70a3d11417cba74d631"></span><span class="pre">async_rw_mutex</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><span class="pre">async_rw_mutex</span><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a27ba5cd7a271c13fb19be9dc22291234"></span><code class="sig-name descname"><span class="pre">async_rw_mutex</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx12experimental14async_rw_mutex14async_rw_mutexERK14async_rw_mutex" title="hpx::experimental::async_rw_mutex::async_rw_mutex"><span class="pre">async_rw_mutex</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a691f055d0aab92fe622e557ba264c38f"></span><span class="pre">async_rw_mutex</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><span class="pre">async_rw_mutex</span> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a30d354884608d2d804e22eb3778f5cd5"></span><span class="pre">sender</span><span class="pre">&lt;</span><span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">read</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a8f9b5bd11f751142c5be140b7cdf123c"></span><span class="pre">sender</span><span class="pre">&lt;</span><span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">readwrite</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">readwrite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE17shared_state_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE17shared_state_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE17shared_state_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a22628360c09c9058a69b044e1ef13a86"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">shared_state_type</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_shared_state</span><span class="pre">&lt;</span><span class="pre">void</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE17shared_state_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a5415b0f7dca8956438a24dc3a00fc0a3"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">shared_state_ptr_type</span></code> <span class="pre">=</span> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">shared_ptr</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE17shared_state_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::shared_state_type"><span class="pre">shared_state_type</span></a><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a2411dd3ae4ff419db80f370b76d859df"></span><span class="pre">allocator_type</span> <code class="sig-name descname"><span class="pre">alloc</span></code><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1a41fbbe1be5caac7c65527adf7f93e7cd"></span><span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span> <code class="sig-name descname"><span class="pre">prev_access</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span><span class="pre">::</span><span class="pre">readwrite</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1ae184b5d71df26e408f260ac726908ee8"></span><span class="pre">shared_state_ptr_type</span> <code class="sig-name descname"><span class="pre">prev_state</span></code><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt>
+<span class="target" id="classhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1aa01c15424123658271168b9606c7cf3e"></span><span class="pre">shared_state_ptr_type</span> <code class="sig-name descname"><span class="pre">state</span></code><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4I_N6detail26async_rw_mutex_access_typeEEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderE">
+<span id="_CPPv3I_N6detail26async_rw_mutex_access_typeEEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderE"></span><span id="_CPPv2I_N6detail26async_rw_mutex_access_typeEEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderE"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender"></span><span class="pre">template&lt;</span><span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_type</span> <code class="sig-name descname"><span class="pre">AccessType</span></code><span class="pre">&gt;</span><br /><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">sender</span></code><a class="headerlink" href="#_CPPv4I_N6detail26async_rw_mutex_access_typeEEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11access_typeE">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11access_typeE"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11access_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1ac5df1b7b1af0db9cd34307795db74ff1"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">access_type</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">async_rw_mutex_access_wrapper</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE14readwrite_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::readwrite_type"><span class="pre">readwrite_type</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE9read_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::read_type"><span class="pre">read_type</span></a><span class="pre">,</span> <span class="pre">AccessType</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11access_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEIIDpE0IDpE0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11value_typesE">
+<span id="_CPPv3IEIIDpE0IDpE0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11value_typesE"></span><span id="_CPPv2IEIIDpE0IDpE0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11value_typesE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">template&lt;</span><span class="pre">typename</span><span class="pre">...</span><span class="pre">&gt;</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Tuple</span></code><span class="pre">,</span> <span class="pre">template&lt;</span><span class="pre">typename</span><span class="pre">...</span><span class="pre">&gt;</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Variant</span></code><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1a8c418f7a74182c3f371506625fc21b65"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">value_types</span></code> <span class="pre">=</span> <span class="pre">Variant</span><span class="pre">&lt;</span><span class="pre">Tuple</span><span class="pre">&lt;</span><span class="pre">access_type</span><span class="pre">&gt;</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEIIDpE0IDpE0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11value_typesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4IEIIDpE0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11error_typesE">
+<span id="_CPPv3IEIIDpE0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11error_typesE"></span><span id="_CPPv2IEIIDpE0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11error_typesE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">template&lt;</span><span class="pre">typename</span><span class="pre">...</span><span class="pre">&gt;</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Variant</span></code><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1a7b8c85531d4485d088c7d748fee86fbe"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">error_types</span></code> <span class="pre">=</span> <span class="pre">Variant</span><span class="pre">&lt;</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">exception_ptr</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IEIIDpE0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE11error_typesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0ENO3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender7connectEDaRR1R">
+<span id="_CPPv3I0ENO3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender7connectERR1R"></span><span id="_CPPv2I0ENO3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender7connectERR1R"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1abaaa10fbfb9bac4362c263d247ceb7c7"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">R</span></code><span class="pre">&gt;</span><br /><span class="pre">auto</span> <code class="sig-name descname"><span class="pre">connect</span></code><span class="sig-paren">(</span><span class="pre">R</span> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">r</span></em><span class="sig-paren">)</span> <span class="pre">&amp;&amp;</span><a class="headerlink" href="#_CPPv4I0ENO3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender7connectEDaRR1R" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender10prev_stateE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender10prev_stateE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender10prev_stateE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1a2d3734233cb4bc171ae2bea6756ee29d"></span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <code class="sig-name descname"><span class="pre">prev_state</span></code><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender10prev_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender5stateE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender5stateE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender5stateE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1a72ab80f54470ae0f7371b61d8e57efed"></span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <code class="sig-name descname"><span class="pre">state</span></code><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender5stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Attributes</p>
+<dl class="cpp member">
+<dt id="_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender10sends_doneE">
+<span id="_CPPv3IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender10sends_doneE"></span><span id="_CPPv2IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender10sends_doneE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1a5a656976f370e3a9d0c65b953c23795a"></span><em class="property"><span class="pre">constexpr</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">sends_done</span></code> <span class="pre">=</span> <span class="pre">false</span><a class="headerlink" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender10sends_doneE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt id="_CPPv4I0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender15operation_stateE">
+<span id="_CPPv3I0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender15operation_stateE"></span><span id="_CPPv2I0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender15operation_stateE"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">R</span></code><span class="pre">&gt;</span><br /><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">operation_state</span></code><a class="headerlink" href="#_CPPv4I0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6sender15operation_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4IEI0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR2R_21shared_state_ptr_type21shared_state_ptr_type">
+<span id="_CPPv3IEI0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR2R_21shared_state_ptr_type21shared_state_ptr_type"></span><span id="_CPPv2IEI0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR2R_21shared_state_ptr_type21shared_state_ptr_type"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state_1a5ac94ceb521c24144828b98df4bef4dd"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">R_</span></code><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">operation_state</span></code><span class="sig-paren">(</span><span class="pre">R_</span> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">r</span></em>, <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <em><span class="pre">prev_state</span></em>, <a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <em><span class="pre">state</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEI0EN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR2R_21shared_state_ptr_type21shared_state_ptr_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state_1a50e10765f10d4741cb79023dd1b5ee91"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">operation_state</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::sender&lt;AccessType&gt;::operation_state::operation_state"><span class="pre">operation_state</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERR15operation_state" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_stateaSER15operation_stateRR15operation_state">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_stateaSERR15operation_state"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_stateaSERR15operation_state"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state_1a5ddd20ac637bf7ba6bbdcf4f160ca236"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">operation_state</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><span class="pre">operation_state</span><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_stateaSER15operation_stateRR15operation_state" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state_1a2e5d735a6a5162f07a7c387396550f59"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">operation_state</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::sender&lt;AccessType&gt;::operation_state::operation_state"><span class="pre">operation_state</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state15operation_stateERK15operation_state" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_stateaSER15operation_stateRK15operation_state">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_stateaSERK15operation_state"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_stateaSERK15operation_state"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state_1aef9325bb9689a796e27cf8bc2ec0190d"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">operation_state</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><span class="pre">operation_state</span> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_stateaSER15operation_stateRK15operation_state" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state5startEvv">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state5startEv"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state5startEv"></span><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state_1a082f7ba36b324763aaaf78e4f786c3d8"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">void</span> <code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state5startEvv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state1rE">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state1rE"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state1rE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state_1a8aae8d219a046fc302460c493d9c251c"></span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">decay_t</span><span class="pre">&lt;</span><span class="pre">R</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">r</span></code><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state1rE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state10prev_stateE">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state10prev_stateE"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state10prev_stateE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state_1a6cd3b2e24cc038ce3f43afaaf047b280"></span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <code class="sig-name descname"><span class="pre">prev_state</span></code><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state10prev_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state5stateE">
+<span id="_CPPv3IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state5stateE"></span><span id="_CPPv2IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state5stateE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="structhpx_1_1experimental_1_1async__rw__mutex_3_01void_00_01void_00_01_allocator_01_4_1_1sender_1_1operation__state_1acc72038d9dacf0b89005247e2d312a98"></span><a class="reference internal" href="#_CPPv4IEN3hpx12experimental14async_rw_mutexIvv9AllocatorE21shared_state_ptr_typeE" title="hpx::experimental::async_rw_mutex&lt;void, void, Allocator&gt;::shared_state_ptr_type"><span class="pre">shared_state_ptr_type</span></a> <code class="sig-name descname"><span class="pre">state</span></code><a class="headerlink" href="#_CPPv4IEIEN3hpx12experimental14async_rw_mutexIvv9AllocatorE6senderI10AccessTypeE15operation_state5stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">hpx</span></code><br /></dt>
+<dd><dl class="cpp type">
 <dt id="_CPPv4N3hpx4lcosE">
 <span id="_CPPv3N3hpx4lcosE"></span><span id="_CPPv2N3hpx4lcosE"></span><span id="hpx::lcos"></span><span class="target" id="namespacehpx_1_1lcos"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">lcos</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcosE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="cpp type">
@@ -2899,10 +3361,10 @@ defined. See <a class="reference internal" href="../../../api/public_api.html#pu
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>dddbd30</code>.
+        Revision <code>d2f8a84</code>.
       </span>
       <span class="lastupdated">
-        Last updated on Apr 22, 2021.
+        Last updated on Apr 27, 2021.
       </span>
 
     </p>

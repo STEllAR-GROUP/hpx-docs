@@ -236,7 +236,7 @@ future value by iterating:</p>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <p>The source code for this example can be found here:
-<a class="reference download internal" download="" href="../_downloads/82e9f7ff951b2164f21907cbcedc1f2f/interest_calculator.cpp"><code class="xref download docutils literal notranslate"><span class="pre">interest_calculator.cpp</span></code></a>.</p>
+<a class="reference download internal" download="" href="../_downloads/2b583c3b9d65dd88ffc89d3a51ba81d8/interest_calculator.cpp"><code class="xref download docutils literal notranslate"><span class="pre">interest_calculator.cpp</span></code></a>.</p>
 <p>To compile this program, go to your <em>HPX</em> build directory (see
 <a class="reference internal" href="../manual/building_hpx.html#hpx-build-system"><span class="std std-ref">HPX build system</span></a> for information on configuring and building <em>HPX</em>) and
 enter:</p>
@@ -260,9 +260,7 @@ Boost.Program Options to set our command line variables (see
 <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> for more details). These options set the principal,
 rate, compound period, and time. It is important to note that the units of time
 for <code class="docutils literal notranslate"><span class="pre">cp</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> must be the same.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="c1">//[interest_main</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">options_description</span> <span class="n">cmdline</span><span class="p">(</span><span class="s">&quot;Usage: &quot;</span> <span class="n">HPX_APPLICATION_STRING</span> <span class="s">&quot; [options]&quot;</span><span class="p">);</span>
 
@@ -273,12 +271,16 @@ for <code class="docutils literal notranslate"><span class="pre">cp</span></code
         <span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">12</span><span class="o">*</span><span class="mi">30</span><span class="p">),</span>
             <span class="s">&quot;The time money is invested [months]&quot;</span><span class="p">)</span>
     <span class="p">;</span>
+
+    <span class="n">hpx</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
+    <span class="n">init_args</span><span class="p">.</span><span class="n">desc_cmdline</span> <span class="o">=</span> <span class="n">cmdline</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Next we look at hpx_main.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="c1">//[interest_hpx_main</span>
-<span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="n">variables_map</span> <span class="o">&amp;</span> <span class="n">vm</span><span class="p">)</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="n">variables_map</span> <span class="o">&amp;</span> <span class="n">vm</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="p">{</span>
         <span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="p">;</span>
@@ -326,6 +328,9 @@ for <code class="docutils literal notranslate"><span class="pre">cp</span></code
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Final amount: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Amount made: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">result</span><span class="o">-</span><span class="n">init_principal</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
     <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Here we find our command line variables read in, the rate is converted from a
@@ -344,9 +349,7 @@ will first wait for its arguments to be ready before launching any callbacks, so
 are ready. This loop continues for each compound period that must be calculated.
 To see how <code class="docutils literal notranslate"><span class="pre">interest</span></code> and <code class="docutils literal notranslate"><span class="pre">principal</span></code> are calculated in the loop, let us look
 at <code class="docutils literal notranslate"><span class="pre">calc_action</span></code> and <code class="docutils literal notranslate"><span class="pre">add_action</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="c1">//[interest_calc_add_action</span>
-<span class="c1">// Calculate interest for one period</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calculate interest for one period</span>
 <span class="kt">double</span> <span class="nf">calc</span><span class="p">(</span><span class="kt">double</span> <span class="n">principal</span><span class="p">,</span> <span class="kt">double</span> <span class="n">rate</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">principal</span> <span class="o">*</span> <span class="n">rate</span><span class="p">;</span>
@@ -356,6 +359,8 @@ at <code class="docutils literal notranslate"><span class="pre">calc_action</spa
 <span class="c1">// Add the amount made to the principal</span>
 <span class="kt">double</span> <span class="nf">add</span><span class="p">(</span><span class="kt">double</span> <span class="n">principal</span><span class="p">,</span> <span class="kt">double</span> <span class="n">interest</span><span class="p">)</span>
 <span class="p">{</span>
+    <span class="k">return</span> <span class="n">principal</span> <span class="o">+</span> <span class="n">interest</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>After the shared future dependencies have been defined in hpx_main, we see the
@@ -395,10 +400,10 @@ the initial value of the investment.</p>
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>43bc70c</code>.
+        Revision <code>d4868b3</code>.
       </span>
       <span class="lastupdated">
-        Last updated on Feb 17, 2021.
+        Last updated on May 15, 2021.
       </span>
 
     </p>

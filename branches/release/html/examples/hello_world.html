@@ -33,7 +33,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -216,7 +215,7 @@ hello world from OS-thread 0 on locality 1
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <p>The source code for this example can be found here:
-<a class="reference download internal" download="" href="../_downloads/c724a0e138d0870f78371e40fc37f39b/hello_world_distributed.cpp"><code class="xref download docutils literal notranslate"><span class="pre">hello_world_distributed.cpp</span></code></a>.</p>
+<a class="reference download internal" download="" href="../_downloads/e23ffd4288a1100ccd59b859cdd497be/hello_world_distributed.cpp"><code class="xref download docutils literal notranslate"><span class="pre">hello_world_distributed.cpp</span></code></a>.</p>
 <p>To compile this program, go to your <em>HPX</em> build directory (see
 <a class="reference internal" href="../manual/building_hpx.html#hpx-build-system"><span class="std std-ref">HPX build system</span></a> for information on configuring and building <em>HPX</em>) and
 enter:</p>
@@ -285,9 +284,9 @@ futures are stored in a vector so that they can easily be accessed.
 using the synchronous version of <a class="reference internal" href="../libs/parallelism/async_combinators/api.html#_CPPv4I0EN3hpx8wait_allEv9InputIter9InputIter" title="hpx::wait_all"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::wait_all</span></code></a>, which takes one
 argument (the <code class="docutils literal notranslate"><span class="pre">std::vector&lt;&gt;</span></code> of futures to wait on). This function will not
 return until all the futures in the vector have been executed.</p>
-<p>In <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> we used <a class="reference internal" href="../api/full_api.html#_CPPv4N3hpx9find_hereER10error_code" title="hpx::find_here"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_here</span></code></a> to specify the
+<p>In <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> we used <a class="reference internal" href="../libs/full/runtime_distributed/api.html#_CPPv4N3hpx9find_hereER10error_code" title="hpx::find_here"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_here</span></code></a> to specify the
 target of our actions. Here, we instead use
-<a class="reference internal" href="../api/full_api.html#_CPPv4N3hpx19find_all_localitiesER10error_code" title="hpx::find_all_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_all_localities</span></code></a>, which returns an <code class="docutils literal notranslate"><span class="pre">std::vector&lt;&gt;</span></code>
+<a class="reference internal" href="../libs/full/runtime_distributed/api.html#_CPPv4N3hpx19find_all_localitiesER10error_code" title="hpx::find_all_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_all_localities</span></code></a>, which returns an <code class="docutils literal notranslate"><span class="pre">std::vector&lt;&gt;</span></code>
 containing the identifiers of all the machines in the system, including the one
 that we are on.</p>
 <p>As in <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with hpx::async and actions: Fibonacci</span></a> our futures are set using
@@ -336,7 +335,8 @@ wrapped in the action above:</p>
             <span class="c1">// task will actually run on that worker thread.</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">parallel</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">default_executor</span> <span class="n">exec</span><span class="p">(</span>
                 <span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">thread_schedule_hint</span><span class="p">(</span>
-                    <span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">thread_schedule_hint_mode</span><span class="o">::</span><span class="kr">thread</span><span class="p">,</span> <span class="n">worker</span><span class="p">));</span>
+                    <span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">thread_schedule_hint_mode</span><span class="o">::</span><span class="kr">thread</span><span class="p">,</span>
+                    <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">int16_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">worker</span><span class="p">)));</span>
             <span class="n">futures</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">exec</span><span class="p">,</span> <span class="n">hello_world_worker</span><span class="p">,</span> <span class="n">worker</span><span class="p">));</span>
         <span class="p">}</span>
 
@@ -422,10 +422,10 @@ why we must use a guess-and-check approach.</p>
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>43bc70c</code>.
+        Revision <code>d4868b3</code>.
       </span>
       <span class="lastupdated">
-        Last updated on Feb 17, 2021.
+        Last updated on May 15, 2021.
       </span>
 
     </p>

@@ -337,19 +337,18 @@ priority instead of using a separate thread pool.</p>
 <p>The <a class="reference internal" href="../libs/full/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitionerE" title="hpx::resource::partitioner"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::resource::partitioner</span></code></a> is now created during <em>HPX</em> runtime
 initialization without explicit action needed from the user. To specify some of
 the initialization parameters you can use the <a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx11init_paramsE" title="hpx::init_params"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::init_params</span></code></a>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_init.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/resource_partitioner/partitioner.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
 <span class="p">}</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// Setup the init parameters</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">hpx_main</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -370,14 +369,14 @@ iterate through the topology to add the wanted processing units to the thread
 pool. Below is an example of adding all processing units from the first NUMA
 domain to a custom thread pool, unless there is only one NUMA domain in which
 case we leave the first processing unit for the default thread pool:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_init.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/resource_partitioner/partitioner.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/modules/resource_partitioner.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">init_resource_partitioner_handler</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">partitioner</span><span class="o">&amp;</span> <span class="n">rp</span><span class="p">,</span>
@@ -408,10 +407,10 @@ case we leave the first processing unit for the default thread pool:</p>
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
 <span class="p">{</span>
     <span class="c1">// Set the callback to init the thread_pools</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
     <span class="n">init_args</span><span class="p">.</span><span class="n">rp_callback</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">init_resource_partitioner_handler</span><span class="p">;</span>
 
-    <span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">hpx_main</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -573,10 +572,10 @@ folder for examples of advanced resource partitioner usage:
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>d4868b3</code>.
+        Revision <code>dd1bd3d</code>.
       </span>
       <span class="lastupdated">
-        Last updated on May 15, 2021.
+        Last updated on Jun 02, 2021.
       </span>
 
     </p>

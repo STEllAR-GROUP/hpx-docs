@@ -1,0 +1,1277 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Public API &mdash; HPX 1.7.0-rc1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Main HPX library" href="full_api.html" />
+    <link rel="prev" title="API reference" href="../api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HPX
+          
+
+          
+            
+            <img src="../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.7.0-rc1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libs/overview.html">Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Public API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-algorithm-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/algorithm.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-any-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/any.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-assert-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/assert.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#macros">Macros</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-barrier-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/barrier.hpp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-local-barrier-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/local/barrier.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-distributed-barrier-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/barrier.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-channel-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/channel.hpp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-local-channel-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/local/channel.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-distributed-channel-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/channel.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-chrono-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/chrono.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-condition-variable-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/condition_variable.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id10">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-exception-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/exception.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id11">Macros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-execution-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/execution.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#constants">Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-functional-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/functional.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id14">Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-future-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/future.hpp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-local-future-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/local/future.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id17">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-distributed-future-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/future.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id19">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-init-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/init.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id21">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id22">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-latch-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/latch.hpp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-local-latch-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/local/latch.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id23">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-distributed-latch-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/latch.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id24">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-mutex-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/mutex.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id25">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id26">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-memory-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/memory.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id27">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-numeric-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/numeric.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id28">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-optional-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/optional.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id29">Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id30">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id31">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-runtime-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/runtime.hpp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-local-runtime-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/local/runtime.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#typedefs">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id32">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-distributed-runtime-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/runtime.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id33">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-system-error-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/system_error.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id34">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-task-block-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/task_block.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id35">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id36">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-thread-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/thread.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id37">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id38">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-semaphore-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/semaphore.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id39">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-shared-mutex-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/shared_mutex.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id40">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-stop-token-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/stop_token.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id41">Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id42">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-tuple-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/tuple.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id43">Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id44">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id45">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-type-traits-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/type_traits.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id46">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-version-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/version.hpp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id47">Macros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id48">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-hpx-wrap-main-hpp">Header <code class="docutils literal notranslate"><span class="pre">hpx/wrap_main.hpp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#full-api">Full API</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">Citing <em>HPX</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../users.html"><em>HPX</em> users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API reference</a> &raquo;</li>
+        
+      <li>Public API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/api/public_api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="public-api">
+<span id="id2"></span><h1>Public API<a class="headerlink" href="#public-api" title="Permalink to this headline">¶</a></h1>
+<p>All names below are also available in the top-level <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace unless
+otherwise noted. The names in <code class="docutils literal notranslate"><span class="pre">hpx</span></code> should be preferred. The names in
+sub-namespaces will eventually be removed.</p>
+<div class="section" id="header-hpx-algorithm-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/algorithm.hpp</span></code><a class="headerlink" href="#header-hpx-algorithm-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/algorithm">algorithm</a>.
+See <a class="reference internal" href="../manual/writing_single_node_hpx_applications.html#parallel-algorithms"><span class="std std-ref">Using parallel algorithms</span></a> for more information about the parallel
+algorithms.</p>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx8parallel2v29reductionEN6detail16reduction_helperI1TNSt5decayI2OpE4typeEEER1TRK1TRR2Op" title="hpx::parallel::v2::reduction"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::v2::reduction</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0EN3hpx8parallel2v29inductionEN6detail23induction_stride_helperI1TEERR1TNSt6size_tE" title="hpx::parallel::v2::induction"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::v2::induction</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx13adjacent_findE7FwdIter7FwdIter7FwdIterRR4Pred" title="hpx::adjacent_find"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::adjacent_find</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6all_ofEN4util6detail16algorithm_resultI8ExPolicybE4typeERR8ExPolicy7FwdIter7FwdIterRR1FRR4Proj" title="hpx::all_of"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::all_of</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6any_ofEN4util6detail16algorithm_resultI8ExPolicybE4typeERR8ExPolicy7FwdIter7FwdIterRR1FRR4Proj" title="hpx::any_of"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::any_of</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx4copyEN3hpx8parallel4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2" title="hpx::copy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::copy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx7copy_ifEN3hpx8parallel4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2RR4Pred" title="hpx::copy_if"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::copy_if</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6copy_nEN3hpx8parallel4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeERR8ExPolicy8FwdIter14Size8FwdIter2" title="hpx::copy_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::copy_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx5countEN4util6detail16algorithm_resultI8ExPolicyNSt15iterator_traitsI8FwdIterBE15difference_typeEE4typeERR8ExPolicy8FwdIterB8FwdIterERK1TRR4Proj" title="hpx::count"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::count</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx8count_ifEN4util6detail16algorithm_resultI8ExPolicyNSt15iterator_traitsI4IterE15difference_typeEE4typeERR8ExPolicy4Iter4SentRR1FRR4Proj" title="hpx::count_if"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::count_if</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx5equalEN4util6detail16algorithm_resultI8ExPolicybE4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter28FwdIter2RR4Pred" title="hpx::equal"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::equal</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx4fillEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicy7FwdIter7FwdIter1T" title="hpx::fill"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::fill</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6fill_nEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter4Size1T" title="hpx::fill_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::fill_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx4findEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter7FwdIterRK1T" title="hpx::find"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8find_endEN4util6detail16algorithm_resultI8ExPolicy8FwdIter1E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter28FwdIter2RR4Pred" title="hpx::find_end"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_end</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx13find_first_ofEN4util6detail16algorithm_resultI8ExPolicy8FwdIter1E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter28FwdIter2RR4Pred" title="hpx::find_first_of"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_first_of</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx7find_ifEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter7FwdIterRR1F" title="hpx::find_if"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_if</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx11find_if_notEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter7FwdIterRR1F" title="hpx::find_if_not"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_if_not</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx8for_eachE1F6InIter6InIterRR1F" title="hpx::for_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::for_each</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx10for_each_nE6InIter6InIter4SizeRR1F" title="hpx::for_each_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::for_each_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8generateEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter7FwdIterRR1F" title="hpx::generate"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::generate</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx10generate_nEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter4SizeRR1F" title="hpx::generate_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::generate_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8includesEN4util6detail16algorithm_resultI8ExPolicybE4type4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter28FwdIter2RR4Pred" title="hpx::includes"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::includes</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx13inplace_mergeEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicy8RandIter8RandIter8RandIterRR4Comp" title="hpx::inplace_merge"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::inplace_merge</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx7is_heapEN4util6detail16algorithm_resultI8ExPolicybE4typeERR8ExPolicy8RandIter8RandIterRR4Comp" title="hpx::is_heap"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::is_heap</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx13is_heap_untilEN4util6detail16algorithm_resultI8ExPolicy8RandIterE4typeERR8ExPolicy8RandIter8RandIterRR4Comp" title="hpx::is_heap_until"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::is_heap_until</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx14is_partitionedEb7FwdIter7FwdIterRR4Pred" title="hpx::is_partitioned"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::is_partitioned</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx9is_sortedEb7FwdIter7FwdIterRR4Pred" title="hpx::is_sorted"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::is_sorted</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx15is_sorted_untilE7FwdIter7FwdIter7FwdIterRR4Pred" title="hpx::is_sorted_until"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::is_sorted_until</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx23lexicographical_compareEb7InIter17InIter17InIter27InIter2RR4Pred" title="hpx::lexicographical_compare"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::lexicographical_compare</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx9make_heapEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicy7RndIter7RndIterRR4Comp" title="hpx::make_heap"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::make_heap</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v111max_elementEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter7FwdIterRR1FRR4Proj" title="hpx::parallel::v1::max_element"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::max_element</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx5mergeEN4util6detail16algorithm_resultI8ExPolicy9RandIter3E4typeERR8ExPolicy9RandIter19RandIter19RandIter29RandIter29RandIter3RR4Comp" title="hpx::merge"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::merge</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v111min_elementEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter7FwdIterRR1FRR4Proj" title="hpx::parallel::v1::min_element"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::min_element</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v114minmax_elementEN4util6detail16algorithm_resultI8ExPolicyN3hpx4util11tagged_pairIFN3tag3minE7FwdIterEFN3tag3maxE7FwdIterEEEE4typeERR8ExPolicy7FwdIter7FwdIterRR1FRR4Proj" title="hpx::parallel::v1::minmax_element"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::minmax_element</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::mismatch</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx4moveEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2" title="hpx::move"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::move</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx7none_ofEN4util6detail16algorithm_resultI8ExPolicybE4typeERR8ExPolicy7FwdIter7FwdIterRR1FRR4Proj" title="hpx::none_of"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::none_of</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0EN3hpx12partial_sortEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicy8RandIter8RandIter8RandIter" title="hpx::partial_sort"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::partial_sort</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v19partitionEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter7FwdIterRR4PredRR4Proj" title="hpx::parallel::v1::partition"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::partition</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000000EN3hpx8parallel2v114partition_copyEN4util6detail16algorithm_resultI8ExPolicyN3hpx4util12tagged_tupleIFN3tag2inE8FwdIter1EFN3tag4out1E8FwdIter2EFN3tag4out2E8FwdIter3EEEE4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter28FwdIter3RR4PredRR4Proj" title="hpx::parallel::v1::partition_copy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::partition_copy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx6removeE7FwdIter7FwdIter7FwdIterRK1T" title="hpx::remove"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::remove</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx11remove_copyE7FwdIter6InIter6InIter7OutIterRK1T" title="hpx::remove_copy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::remove_copy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx14remove_copy_ifE7FwdIter6InIter6InIter7OutIterRR4Pred" title="hpx::remove_copy_if"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::remove_copy_if</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx9remove_ifE7FwdIter7FwdIter7FwdIterRR4Pred" title="hpx::remove_if"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::remove_if</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx7replaceEv6InIter6InIterRK1TRK1T" title="hpx::replace"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::replace</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx12replace_copyE7OutIter6InIter6InIter7OutIterRK1TRK1T" title="hpx::replace_copy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::replace_copy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx15replace_copy_ifE7OutIter6InIter6InIter7OutIterRR4PredRK1T" title="hpx::replace_copy_if"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::replace_copy_if</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx10replace_ifEv4Iter4IterRR4PredRK1T" title="hpx::replace_if"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::replace_if</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0EN3hpx7reverseEv9BidirIter9BidirIter" title="hpx::reverse"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::reverse</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx12reverse_copyE7OutIter9BidirIter9BidirIter7Outiter" title="hpx::reverse_copy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::reverse_copy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx8parallel2v16rotateEN4util6detail16algorithm_resultI8ExPolicyN4util13in_out_resultI7FwdIter7FwdIterEEE4typeERR8ExPolicy7FwdIter7FwdIter7FwdIter" title="hpx::parallel::v1::rotate"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::rotate</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8parallel2v111rotate_copyEN4util6detail16algorithm_resultI8ExPolicyN4util13in_out_resultI8FwdIter18FwdIter2EEE4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter18FwdIter2" title="hpx::parallel::v1::rotate_copy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::rotate_copy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx6searchE7FwdIter7FwdIter7FwdIter8FwdIter28FwdIter2RR4Pred" title="hpx::search"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::search</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8search_nE7FwdIter7FwdIterNSt6size_tE8FwdIter28FwdIter2RR4Pred" title="hpx::search_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::search_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx14set_differenceEN4util6detail16algorithm_resultI8ExPolicy8FwdIter3E4type4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter28FwdIter28FwdIter3RR4Pred" title="hpx::set_difference"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::set_difference</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx16set_intersectionEN4util6detail16algorithm_resultI8ExPolicy8FwdIter3E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter28FwdIter28FwdIter3RR4Pred" title="hpx::set_intersection"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::set_intersection</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx24set_symmetric_differenceEN4util6detail16algorithm_resultI8ExPolicy8FwdIter3E4type4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter28FwdIter28FwdIter3RR4Pred" title="hpx::set_symmetric_difference"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::set_symmetric_difference</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx9set_unionEN4util6detail16algorithm_resultI8ExPolicy8FwdIter3E4type4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter28FwdIter28FwdIter3RR4Pred" title="hpx::set_union"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::set_union</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v14sortEN4util6detail16algorithm_resultI8ExPolicy8RandomItE4typeERR8ExPolicy8RandomIt8RandomItRR4CompRR4Proj" title="hpx::parallel::v1::sort"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::sort</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v116stable_partitionEN4util6detail16algorithm_resultI8ExPolicy9BidirIterE4typeERR8ExPolicy9BidirIter9BidirIterRR1FRR4Proj" title="hpx::parallel::v1::stable_partition"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::stable_partition</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx8parallel2v111stable_sortEN4util6detail16algorithm_resultI8ExPolicy8RandomItE4typeERR8ExPolicy8RandomIt8SentinelRR7CompareRR4Proj" title="hpx::parallel::v1::stable_sort"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::stable_sort</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8parallel2v111swap_rangesENSt9enable_ifIN3hpx19is_execution_policyI8ExPolicyE5valueEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeEE4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2" title="hpx::parallel::v1::swap_ranges"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::swap_ranges</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx9transformEN4util6detail16algorithm_resultI8ExPolicyN4util13in_out_resultI8FwdIter18FwdIter2EEE4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2RR1F" title="hpx::transform"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::transform</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v16uniqueEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter7FwdIterRR4PredRR4Proj" title="hpx::parallel::v1::unique"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::unique</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx8parallel2v111unique_copyEN4util6detail16algorithm_resultI8ExPolicyN3hpx4util11tagged_pairIFN3tag2inE8FwdIter1EFN3tag3outE8FwdIter2EEEE4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2RR4PredRR4Proj" title="hpx::parallel::v1::unique_copy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::unique_copy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0DpEN3hpx8for_loopEvNSt7decay_tI1IEE1IDpRR4Args" title="hpx::for_loop"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::for_loop</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00DpEN3hpx16for_loop_stridedEvNSt7decay_tI1IEE1I1SDpRR4Args" title="hpx::for_loop_strided"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::for_loop_strided</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00DpEN3hpx10for_loop_nEv1I4SizeDpRR4Args" title="hpx::for_loop_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::for_loop_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000DpEN3hpx18for_loop_n_stridedEv1I4Size1SDpRR4Args" title="hpx::for_loop_n_strided"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::for_loop_n_strided</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges13adjacent_findE7FwdIter7FwdIter4SentRR4PredRR4Proj" title="hpx::ranges::adjacent_find"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::adjacent_find</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges6all_ofEN4util6detail16algorithm_resultI8ExPolicybE4typeERR8ExPolicyRR3RngRR1FRR4Proj" title="hpx::ranges::all_of"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::all_of</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges6any_ofEN4util6detail16algorithm_resultI8ExPolicybE4typeERR8ExPolicyRR3RngRR1FRR4Proj" title="hpx::ranges::any_of"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::any_of</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges4copyEN3hpx8parallel4util6detail16algorithm_resultI8ExPolicyN3hpx6ranges11copy_resultI5Iter14IterEEE4typeERR8ExPolicy5Iter15Sent17FwdIter" title="hpx::ranges::copy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::copy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000000EN3hpx6ranges7copy_ifEN3hpx8parallel4util6detail16algorithm_resultI8ExPolicyN3hpx6ranges14copy_if_resultIN3hpx6traits12range_traitsI3RngE13iterator_typeE7OutIterEEE4typeERR8ExPolicy8FwdIter15Sent17FwdIterRR1FRR4Proj" title="hpx::ranges::copy_if"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::copy_if</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges6copy_nEN3hpx8parallel4util6detail16algorithm_resultI8ExPolicyN3hpx6ranges13copy_n_resultI8FwdIter18FwdIter2EEE4typeERR8ExPolicy8FwdIter14Size8FwdIter2" title="hpx::ranges::copy_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::copy_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges5countEN4util6detail16algorithm_resultI8ExPolicyNSt15iterator_traitsIN3hpx6traits12range_traitsI3RngE13iterator_typeEE15difference_typeEE4typeERR8ExPolicyRR3RngRK1TRR4Proj" title="hpx::ranges::count"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::count</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges8count_ifEN4util6detail16algorithm_resultI8ExPolicyNSt15iterator_traitsIN3hpx6traits12range_traitsI3RngE13iterator_typeEE15difference_typeEE4typeERR8ExPolicyRR3RngRR1FRR4Proj" title="hpx::ranges::count_if"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::count_if</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000000EN3hpx6ranges5equalEN4util6detail16algorithm_resultI8ExPolicybE4typeERR8ExPolicy5Iter15Sent15Iter25Sent2RR4PredRR5Proj1RR5Proj2" title="hpx::ranges::equal"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::equal</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::fill</span></code></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::fill_n</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx6ranges4findEN4util6detail16algorithm_resultI8ExPolicy4IterE4typeERR8ExPolicy4Iter4SentRK1TRR4Proj" title="hpx::ranges::find"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::find</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000000EN3hpx6ranges8find_endEN4util6detail16algorithm_resultI8ExPolicyN3hpx6traits14range_iteratorI4Rng1E4typeEE4typeERR8ExPolicy5Iter15Sent15Iter25Sent2RR4PredRR5Proj1RR5Proj2" title="hpx::ranges::find_end"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::find_end</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000000EN3hpx6ranges13find_first_ofEN4util6detail16algorithm_resultI8ExPolicyN3hpx6traits14range_iteratorI4Rng1E4typeEE4typeERR8ExPolicy5Iter15Sent15Iter25Sent2RR4PredRR5Proj1RR5Proj2" title="hpx::ranges::find_first_of"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::find_first_of</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::find_if</span></code></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::find_if_not</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges8for_eachEN3hpx6ranges15for_each_resultI6InIter1FEE6InIter4SentRR1FRR4Proj" title="hpx::ranges::for_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::for_each</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx6ranges10for_each_nEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter4SizeRR1FRR4Proj" title="hpx::ranges::for_each_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::for_each_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx6ranges8generateEN4util6detail16algorithm_resultI8ExPolicyN3hpx6traits14range_iteratorI3RngE4typeEE4typeERR8ExPolicyRR3RngRR1F" title="hpx::ranges::generate"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::generate</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges10generate_nEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter4SizeRR1F" title="hpx::ranges::generate_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::generate_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000000EN3hpx6ranges8includesEN4util6detail16algorithm_resultI8ExPolicybE4type4typeERR8ExPolicy5Iter15Sent15Iter25Sent2RR4PredRR5Proj1RR5Proj2" title="hpx::ranges::includes"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::includes</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx6ranges13inplace_mergeEN4util6detail16algorithm_resultI8ExPolicy4IterE4typeERR8ExPolicy4Iter4Iter4SentRR4CompRR4Proj" title="hpx::ranges::inplace_merge"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::inplace_merge</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::is_heap</span></code></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::is_heap_until</span></code></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::is_partitioned</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges9is_sortedEb7FwdIter4SentRR4PredRR4Proj" title="hpx::ranges::is_sorted"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::is_sorted</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges15is_sorted_untilE7FwdIter7FwdIter4SentRR4PredRR4Proj" title="hpx::ranges::is_sorted_until"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::is_sorted_until</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges9make_heapEN4util6detail16algorithm_resultI8ExPolicyN3hpx6traits14range_iteratorI3RngE4typeEE4typeERR8ExPolicyRR3RngRR4CompRR4Proj" title="hpx::ranges::make_heap"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::make_heap</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000000000EN3hpx6ranges5mergeEN4util6detail16algorithm_resultI8ExPolicyN3hpx6ranges12merge_resultI5Iter15Iter25Iter3EEE4typeERR8ExPolicy5Iter15Sent15Iter25Sent25Iter3RR4CompRR5Proj1RR5Proj2" title="hpx::ranges::merge"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::merge</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::move</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6ranges7none_ofEN4util6detail16algorithm_resultI8ExPolicybE4typeERR8ExPolicyRR3RngRR1FRR4Proj" title="hpx::ranges::none_of"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::none_of</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000000000EN3hpx6ranges14set_differenceEN4util6detail16algorithm_resultI8ExPolicyN6ranges21set_difference_resultI5Iter15Iter3EEE4typeERR8ExPolicy5Iter15Sent15Iter25Sent25Iter3RR4PredRR5Proj1RR5Proj2" title="hpx::ranges::set_difference"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::set_difference</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000000000EN3hpx6ranges16set_intersectionEN4util6detail16algorithm_resultI8ExPolicyN6ranges23set_intersection_resultI5Iter15Iter25Iter3EEE4typeERR8ExPolicy5Iter15Sent15Iter25Sent25Iter3RR4PredRR5Proj1RR5Proj2" title="hpx::ranges::set_intersection"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::set_intersection</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000000000EN3hpx6ranges24set_symmetric_differenceEN4util6detail16algorithm_resultI8ExPolicyN6ranges31set_symmetric_difference_resultI5Iter15Iter25Iter3EEE4typeERR8ExPolicy5Iter15Sent15Iter25Sent25Iter3RR4PredRR5Proj1RR5Proj2" title="hpx::ranges::set_symmetric_difference"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::set_symmetric_difference</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000000000EN3hpx6ranges9set_unionEN4util6detail16algorithm_resultI8ExPolicyN6ranges16set_union_resultI5Iter15Iter25Iter3EEE4typeERR8ExPolicy5Iter15Sent15Iter25Sent25Iter3RR4PredRR5Proj1RR5Proj2" title="hpx::ranges::set_union"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::set_union</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00DpEN3hpx6ranges8for_loopEv4Iter4SentDpRR4Args" title="hpx::ranges::for_loop"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::for_loop</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000DpEN3hpx6ranges16for_loop_stridedEv4Iter4Sent1SDpRR4Args" title="hpx::ranges::for_loop_strided"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::ranges::for_loop_strided</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-any-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/any.hpp</span></code><a class="headerlink" href="#header-hpx-any-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/any">any</a>.
+<a class="reference internal" href="../libs/core/serialization/api.html#_CPPv4N3hpx3anyE" title="hpx::any"><code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">hpx::any</span></code></a> is compatible with <code class="docutils literal notranslate"><span class="pre">std::any</span></code>.</p>
+<div class="section" id="id3">
+<h3>Classes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/serialization/api.html#_CPPv4N3hpx3anyE" title="hpx::any"><code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">hpx::any</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4N3hpx10any_nonserE" title="hpx::any_nonser"><code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">hpx::any_nonser</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4N3hpx12bad_any_castE" title="hpx::bad_any_cast"><code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">hpx::bad_any_cast</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4N3hpx17unique_any_nonserE" title="hpx::unique_any_nonser"><code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">hpx::unique_any_nonser</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Functions<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4I00000EN3hpx8any_castEP1TPN4util9basic_anyI5IArch5OArch4Char8CopyableEE" title="hpx::any_cast"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::any_cast</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/serialization/api.html#_CPPv4I00EN3hpx8make_anyEN4util9basic_anyIN13serialization13input_archiveEN13serialization14output_archiveE4CharEERR1T" title="hpx::make_any"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::make_any</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4I0EN3hpx15make_any_nonserEN4util9basic_anyIvvvNSt9true_typeEEERR1T" title="hpx::make_any_nonser"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::make_any_nonser</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4I0EN3hpx22make_unique_any_nonserEN4util9basic_anyIvvvNSt10false_typeEEERR1T" title="hpx::make_unique_any_nonser"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::make_unique_any_nonser</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-assert-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/assert.hpp</span></code><a class="headerlink" href="#header-hpx-assert-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/cassert">cassert</a>.
+<a class="reference internal" href="../libs/core/assertion/api.html#c.HPX_ASSERT" title="HPX_ASSERT"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_ASSERT</span></code></a> is the <em>HPX</em> equivalent to <code class="docutils literal notranslate"><span class="pre">assert</span></code> in <code class="docutils literal notranslate"><span class="pre">cassert</span></code>.
+<a class="reference internal" href="../libs/core/assertion/api.html#c.HPX_ASSERT" title="HPX_ASSERT"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_ASSERT</span></code></a> can also be used in CUDA device code.</p>
+<div class="section" id="macros">
+<h3>Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/assertion/api.html#c.HPX_ASSERT" title="HPX_ASSERT"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_ASSERT</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/assertion/api.html#c.HPX_ASSERT_MSG" title="HPX_ASSERT_MSG"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_ASSERT_MSG</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-barrier-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/barrier.hpp</span></code><a class="headerlink" href="#header-hpx-barrier-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header includes <a class="reference internal" href="#public-api-header-hpx-local-barrier"><span class="std std-ref">Header hpx/local/barrier.hpp</span></a> and
+<a class="reference internal" href="#public-api-header-hpx-distributed-barrier"><span class="std std-ref">Header hpx/distributed/barrier.hpp</span></a>.</p>
+</div>
+<div class="section" id="header-hpx-local-barrier-hpp">
+<span id="public-api-header-hpx-local-barrier"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/local/barrier.hpp</span></code><a class="headerlink" href="#header-hpx-local-barrier-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/barrier">barrier</a>.</p>
+<div class="section" id="id5">
+<h3>Classes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::cpp20_barrier</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-distributed-barrier-hpp">
+<span id="public-api-header-hpx-distributed-barrier"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/barrier.hpp</span></code><a class="headerlink" href="#header-hpx-distributed-barrier-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Contains a distributed barrier implementation. This functionality is also
+exposed through the <code class="docutils literal notranslate"><span class="pre">hpx::distributed</span></code> namespace. The name in
+<code class="docutils literal notranslate"><span class="pre">hpx::distributed</span></code> should be preferred.</p>
+<div class="section" id="id6">
+<h3>Classes<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/full/collectives/api.html#_CPPv4N3hpx4lcos7barrierE" title="hpx::lcos::barrier"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::barrier</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-channel-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/channel.hpp</span></code><a class="headerlink" href="#header-hpx-channel-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header includes <a class="reference internal" href="#public-api-header-hpx-local-channel"><span class="std std-ref">Header hpx/local/channel.hpp</span></a> and
+<a class="reference internal" href="#public-api-header-hpx-distributed-channel"><span class="std std-ref">Header hpx/distributed/channel.hpp</span></a>.</p>
+</div>
+<div class="section" id="header-hpx-local-channel-hpp">
+<span id="public-api-header-hpx-local-channel"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/local/channel.hpp</span></code><a class="headerlink" href="#header-hpx-local-channel-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Contains a local channel implementation.</p>
+<div class="section" id="id7">
+<h3>Classes<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::channel</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-distributed-channel-hpp">
+<span id="public-api-header-hpx-distributed-channel"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/channel.hpp</span></code><a class="headerlink" href="#header-hpx-distributed-channel-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Contains a distributed channel implementation. This functionality is also
+exposed through the <code class="docutils literal notranslate"><span class="pre">hpx::distributed</span></code> namespace. The name in
+<code class="docutils literal notranslate"><span class="pre">hpx::distributed</span></code> should be preferred.</p>
+<div class="section" id="id8">
+<h3>Classes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::channel</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-chrono-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/chrono.hpp</span></code><a class="headerlink" href="#header-hpx-chrono-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/chrono">chrono</a>.
+The following replacements and extensions are provided compared to
+<a class="reference external" href="http://en.cppreference.com/w/cpp/header/chrono">chrono</a>. The classes below are also available in the
+<code class="docutils literal notranslate"><span class="pre">hpx::chrono</span></code> namespace, not in the top-level <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace.</p>
+<div class="section" id="id9">
+<h3>Classes<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/timing/api.html#_CPPv4N3hpx6chrono21high_resolution_clockE" title="hpx::chrono::high_resolution_clock"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::chrono::high_resolution_clock</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/timing/api.html#_CPPv4N3hpx6chrono21high_resolution_timerE" title="hpx::chrono::high_resolution_timer"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::chrono::high_resolution_timer</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/timing/api.html#_CPPv4N3hpx6chrono17steady_time_pointE" title="hpx::chrono::steady_time_point"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::chrono::steady_time_point</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-condition-variable-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/condition_variable.hpp</span></code><a class="headerlink" href="#header-hpx-condition-variable-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header
+<a class="reference external" href="http://en.cppreference.com/w/cpp/header/condition_variable">condition_variable</a>.</p>
+<div class="section" id="id10">
+<h3>Classes<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local18condition_variableE" title="hpx::lcos::local::condition_variable"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::condition_variable</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local22condition_variable_anyE" title="hpx::lcos::local::condition_variable_any"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::condition_variable_any</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local9cv_statusE" title="hpx::lcos::local::cv_status"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::cv_status</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-exception-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/exception.hpp</span></code><a class="headerlink" href="#header-hpx-exception-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/exception">exception</a>.
+<a class="reference internal" href="../libs/core/errors/api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::exception</span></code></a> extends <code class="docutils literal notranslate"><span class="pre">std::exception</span></code> and is the base class for
+all exceptions thrown in <em>HPX</em>. <a class="reference internal" href="../libs/core/errors/api.html#c.HPX_THROW_EXCEPTION" title="HPX_THROW_EXCEPTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_THROW_EXCEPTION</span></code></a> can be used to
+throw <em>HPX</em> exceptions with file and line information attached to the exception.</p>
+<div class="section" id="id11">
+<h3>Macros<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/errors/api.html#c.HPX_THROW_EXCEPTION" title="HPX_THROW_EXCEPTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_THROW_EXCEPTION</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h3>Classes<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/errors/api.html#_CPPv4N3hpx9exceptionE" title="hpx::exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::exception</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-execution-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/execution.hpp</span></code><a class="headerlink" href="#header-hpx-execution-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/execution">execution</a>.
+See <a class="reference internal" href="../manual/writing_single_node_hpx_applications.html#parallel"><span class="std std-ref">High level parallel facilities</span></a>, <a class="reference internal" href="../manual/writing_single_node_hpx_applications.html#parallel-algorithms"><span class="std std-ref">Using parallel algorithms</span></a> and <a class="reference internal" href="../manual/writing_single_node_hpx_applications.html#executor-parameters"><span class="std std-ref">Executor parameters and executor parameter traits</span></a>
+for more information about execution policies and executor parameters.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These names are only available in the <code class="docutils literal notranslate"><span class="pre">hpx::execution</span></code> namespace, not in
+the top-level <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace.</p>
+</div>
+<div class="section" id="constants">
+<h3>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::execution::seq</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/executors/api.html#_CPPv4N3hpx9execution3parE" title="hpx::execution::par"><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::execution::par</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::execution::par_unseq</span></code></p></li>
+<li><p><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::execution::task</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id13">
+<h3>Classes<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/executors/api.html#_CPPv4N3hpx9execution16sequenced_policyE" title="hpx::execution::sequenced_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::sequenced_policy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/executors/api.html#_CPPv4N3hpx9execution15parallel_policyE" title="hpx::execution::parallel_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::parallel_policy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/executors/api.html#_CPPv4N3hpx9execution27parallel_unsequenced_policyE" title="hpx::execution::parallel_unsequenced_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::parallel_unsequenced_policy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/executors/api.html#_CPPv4N3hpx9execution21sequenced_task_policyE" title="hpx::execution::sequenced_task_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::sequenced_task_policy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/executors/api.html#_CPPv4N3hpx9execution20parallel_task_policyE" title="hpx::execution::parallel_task_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::parallel_task_policy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/execution/api.html#_CPPv4N3hpx9execution15auto_chunk_sizeE" title="hpx::execution::auto_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::auto_chunk_size</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/execution/api.html#_CPPv4N3hpx9execution18dynamic_chunk_sizeE" title="hpx::execution::dynamic_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::dynamic_chunk_size</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/execution/api.html#_CPPv4N3hpx9execution17guided_chunk_sizeE" title="hpx::execution::guided_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::guided_chunk_size</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/execution/api.html#_CPPv4N3hpx9execution26persistent_auto_chunk_sizeE" title="hpx::execution::persistent_auto_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::persistent_auto_chunk_size</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/execution/api.html#_CPPv4N3hpx9execution17static_chunk_sizeE" title="hpx::execution::static_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::static_chunk_size</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-functional-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/functional.hpp</span></code><a class="headerlink" href="#header-hpx-functional-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header
+<a class="reference external" href="http://en.cppreference.com/w/cpp/header/functional">functional</a>. <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::function</span></code> is a more
+efficient and serializable replacement for <code class="docutils literal notranslate"><span class="pre">std::function</span></code>.</p>
+<div class="section" id="id14">
+<h3>Constants<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>The following constants are also available in <code class="docutils literal notranslate"><span class="pre">hpx::placeholders</span></code>, not the
+top-level <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4N3hpx4util12placeholders2_1E" title="hpx::util::placeholders::_1"><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::util::placeholders::_1</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4N3hpx4util12placeholders2_2E" title="hpx::util::placeholders::_2"><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::util::placeholders::_2</span></code></a></p></li>
+<li><p>…</p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4N3hpx4util12placeholders2_9E" title="hpx::util::placeholders::_9"><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::util::placeholders::_9</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h3>Classes<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::function</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I0EN3hpx4util15function_nonserE" title="hpx::util::function_nonser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::function_nonser</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::function_ref</span></code></p></li>
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::unique_function</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I0EN3hpx4util22unique_function_nonserE" title="hpx::util::unique_function_nonser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::unique_function_nonser</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I0EN3hpx6traits18is_bind_expressionE" title="hpx::traits::is_bind_expression"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::traits::is_bind_expression</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I0EN3hpx6traits14is_placeholderE" title="hpx::traits::is_placeholder"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::traits::is_placeholder</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id16">
+<h3>Functions<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I0Dp0EN3hpx4util4bindEN6detail5boundINSt5decayI1FE4typeEN4util15make_index_packIXsZ2TsEE4typeEDpN4util12decay_unwrapI2TsE4typeEEERR1FDpRR2Ts" title="hpx::util::bind"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::util::bind</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I0DpEN3hpx4util9bind_backEN6detail10bound_backINSt5decayI1FE4typeEN4util15make_index_packIXsZ2TsEE4typeEDpN4util12decay_unwrapI2TsE4typeEEERR1FDpRR2Ts" title="hpx::util::bind_back"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::util::bind_back</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I0DpEN3hpx4util10bind_frontEN6detail11bound_frontINSt5decayI1FE4typeEN4util15make_index_packIXsZ2TsEE4typeEDpN4util12decay_unwrapI2TsE4typeEEERR1FDpRR2Ts" title="hpx::util::bind_front"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::util::bind_front</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I0DpEN3hpx4util6invokeEN4util13invoke_resultI1FDp2TsE4typeERR1FDpRR2Ts" title="hpx::util::invoke"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::util::invoke</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I00EN3hpx4util12invoke_fusedEN6detail19invoke_fused_resultI1F5TupleE4typeERR1FRR5Tuple" title="hpx::util::invoke_fused"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::util::invoke_fused</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/functional/api.html#_CPPv4I00EN3hpx4util6mem_fnEN6detail6mem_fnIM1C1MEEM1C1M" title="hpx::util::mem_fn"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::util::mem_fn</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-future-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/future.hpp</span></code><a class="headerlink" href="#header-hpx-future-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header includes <a class="reference internal" href="#public-api-header-hpx-local-future"><span class="std std-ref">Header hpx/local/future.hpp</span></a> and
+<a class="reference internal" href="#public-api-header-hpx-distributed-future"><span class="std std-ref">Header hpx/distributed/future.hpp</span></a>.</p>
+</div>
+<div class="section" id="header-hpx-local-future-hpp">
+<span id="public-api-header-hpx-local-future"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/local/future.hpp</span></code><a class="headerlink" href="#header-hpx-local-future-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/future">future</a>.
+See <a class="reference internal" href="../manual/writing_single_node_hpx_applications.html#extend-futures"><span class="std std-ref">Extended facilities for futures</span></a> for more information about extensions to futures
+compared to the C++ standard library.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All names except <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::promise</span></code> are also available in
+the top-level <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace. <code class="docutils literal notranslate"><span class="pre">hpx::promise</span></code> refers to
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::promise</span></code>, a distributed variant of
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::promise</span></code>, but will eventually refer to
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::promise</span></code> after a deprecation period.</p>
+</div>
+<div class="section" id="id17">
+<h3>Classes<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::future</span></code></p></li>
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::shared_future</span></code></p></li>
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::promise</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::launch</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id18">
+<h3>Functions<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/futures/api.html#_CPPv4I00EN3hpx4lcos11make_futureEN3hpx4lcos6futureI1REERRN3hpx4lcos6futureI1UEE" title="hpx::lcos::make_future"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::lcos::make_future</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/futures/api.html#_CPPv4I0EN3hpx4lcos18make_shared_futureEN3hpx4lcos13shared_futureI1REERRN3hpx4lcos6futureI1REE" title="hpx::lcos::make_shared_future"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::lcos::make_shared_future</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/futures/api.html#_CPPv4I0DpEN3hpx4lcos17make_ready_futureENSt9enable_ifIXooNSt16is_constructibleI1TDpRR2TsE5valueENSt7is_voidI1TE5valueEE6futureI1TEE4typeEDpRR2Ts" title="hpx::lcos::make_ready_future"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::lcos::make_ready_future</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00DpEN3hpx5asyncEDaRR1FDpRR2Ts" title="hpx::async"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I0DpEN3hpx5applyEbRKN6naming7id_typeEDpRR2Ts" title="hpx::apply"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::apply</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00DpEN3hpx4syncEDaRR1FDpRR2Ts" title="hpx::sync"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::sync</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00Dp0EN3hpx8dataflowEDaRR2T0DpRR2Ts" title="hpx::dataflow"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::dataflow</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/async_combinators/api.html#_CPPv4I00EN3hpx8when_allE6futureI9ContainerE9InputIter9InputIter" title="hpx::when_all"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::when_all</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/async_combinators/api.html#_CPPv4I00EN3hpx8when_anyE6futureI15when_any_resultI9ContainerEE9InputIter9InputIter" title="hpx::when_any"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::when_any</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/async_combinators/api.html#_CPPv4I00EN3hpx9when_someE6futureI16when_some_resultI9ContainerEENSt6size_tE8Iterator8IteratorR10error_code" title="hpx::when_some"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::when_some</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/async_combinators/api.html#_CPPv4I00EN3hpx9when_eachE6futureIvERR1FRRNSt6vectorI6FutureEE" title="hpx::when_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::when_each</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/async_combinators/api.html#_CPPv4I0EN3hpx8wait_allEv9InputIter9InputIter" title="hpx::wait_all"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::wait_all</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/async_combinators/api.html#_CPPv4I0EN3hpx8wait_anyEv9InputIter9InputIterR10error_code" title="hpx::wait_any"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::wait_any</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/async_combinators/api.html#_CPPv4I0EN3hpx9wait_someE6futureI6vectorI6futureINSt15iterator_traitsI9InputIterE10value_typeEEEENSt6size_tE8Iterator8IteratorR10error_code" title="hpx::wait_some"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::wait_some</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/async_combinators/api.html#_CPPv4I00EN3hpx9wait_eachEvRR1FRRNSt6vectorI6FutureEE" title="hpx::wait_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::wait_each</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/assert.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/future.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx_main.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/tuple.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Asynchronous execution with futures</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{});</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">f2</span> <span class="o">=</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="p">});</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">f3</span> <span class="o">=</span>
+        <span class="n">f2</span><span class="p">.</span><span class="n">then</span><span class="p">([](</span><span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;&amp;</span> <span class="n">f</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">f</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">*</span> <span class="mi">3</span><span class="p">;</span> <span class="p">});</span>
+
+    <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">promise</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">f4</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">get_future</span><span class="p">();</span>
+    <span class="n">HPX_ASSERT</span><span class="p">(</span><span class="o">!</span><span class="n">f4</span><span class="p">.</span><span class="n">is_ready</span><span class="p">());</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">set_value</span><span class="p">(</span><span class="mf">123.45</span><span class="p">);</span>
+    <span class="n">HPX_ASSERT</span><span class="p">(</span><span class="n">f4</span><span class="p">.</span><span class="n">is_ready</span><span class="p">());</span>
+
+    <span class="n">hpx</span><span class="o">::</span><span class="n">packaged_task</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">t</span><span class="p">([]()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">43</span><span class="p">;</span> <span class="p">});</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">f5</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">get_future</span><span class="p">();</span>
+    <span class="n">HPX_ASSERT</span><span class="p">(</span><span class="o">!</span><span class="n">f5</span><span class="p">.</span><span class="n">is_ready</span><span class="p">());</span>
+    <span class="n">t</span><span class="p">();</span>
+    <span class="n">HPX_ASSERT</span><span class="p">(</span><span class="n">f5</span><span class="p">.</span><span class="n">is_ready</span><span class="p">());</span>
+
+    <span class="c1">// Fire-and-forget</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">apply</span><span class="p">([]()</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;This will be printed later</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="c1">// Synchronous execution</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">sync</span><span class="p">([]()</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;This will be printed immediately</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="c1">// Combinators</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">f6</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">([]()</span> <span class="p">{</span> <span class="k">return</span> <span class="mf">3.14</span><span class="p">;</span> <span class="p">});</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">f7</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">([]()</span> <span class="p">{</span> <span class="k">return</span> <span class="mf">42.0</span><span class="p">;</span> <span class="p">});</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span>
+        <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">when_all</span><span class="p">(</span><span class="n">f6</span><span class="p">,</span> <span class="n">f7</span><span class="p">)</span>
+               <span class="p">.</span><span class="n">then</span><span class="p">([](</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span>
+                         <span class="n">hpx</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;&gt;</span>
+                             <span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+                   <span class="n">hpx</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span>
+                       <span class="n">f</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+                   <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">).</span><span class="n">get</span><span class="p">();</span>
+                   <span class="kt">double</span> <span class="n">r</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">).</span><span class="n">get</span><span class="p">();</span>
+                   <span class="k">return</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span><span class="p">;</span>
+               <span class="p">})</span>
+               <span class="p">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// Easier continuations with dataflow; it waits for all future or</span>
+    <span class="c1">// shared_future arguments before executing the continuation, and also</span>
+    <span class="c1">// accepts non-future arguments</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">f8</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">([]()</span> <span class="p">{</span> <span class="k">return</span> <span class="mf">3.14</span><span class="p">;</span> <span class="p">});</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">f9</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">make_ready_future</span><span class="p">(</span><span class="mf">42.0</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">f10</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">([]()</span> <span class="p">{</span> <span class="k">return</span> <span class="mf">123.45</span><span class="p">;</span> <span class="p">});</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;&gt;</span> <span class="n">f11</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">dataflow</span><span class="p">(</span>
+        <span class="p">[](</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">b</span><span class="p">,</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">c</span><span class="p">,</span> <span class="kt">double</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">make_tuple</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">c</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">/</span> <span class="n">d</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="n">f8</span><span class="p">,</span> <span class="n">f9</span><span class="p">,</span> <span class="n">f10</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.9</span><span class="p">);</span>
+
+    <span class="c1">// split_future gives a tuple of futures from a future of tuple</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span> <span class="n">f12</span> <span class="o">=</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">split_future</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f11</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f12</span><span class="p">).</span><span class="n">get</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="header-hpx-distributed-future-hpp">
+<span id="public-api-header-hpx-distributed-future"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/future.hpp</span></code><a class="headerlink" href="#header-hpx-distributed-future-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Contains overloads of <a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00DpEN3hpx5asyncEDaRR1FDpRR2Ts" title="hpx::async"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async</span></code></a>, <a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I0DpEN3hpx5applyEbRKN6naming7id_typeEDpRR2Ts" title="hpx::apply"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::apply</span></code></a>,
+<a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00DpEN3hpx4syncEDaRR1FDpRR2Ts" title="hpx::sync"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::sync</span></code></a>, and <a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00Dp0EN3hpx8dataflowEDaRR2T0DpRR2Ts" title="hpx::dataflow"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::dataflow</span></code></a> that can be used with
+actions. See <a class="reference internal" href="../manual/writing_distributed_hpx_applications.html#action-invocation"><span class="std std-ref">Action invocation</span></a> for more information about invoking
+actions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The alias from <code class="docutils literal notranslate"><span class="pre">hpx::promise</span></code> to <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::promise</span></code> is
+deprecated and will be removed in a future release. The alias
+<code class="docutils literal notranslate"><span class="pre">hpx::distributed::promise</span></code> should be used in new applications.</p>
+</div>
+<div class="section" id="id19">
+<h3>Classes<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::promise</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id20">
+<h3>Functions<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00DpEN3hpx5asyncEDaRR1FDpRR2Ts" title="hpx::async"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::async</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I0DpEN3hpx5applyEbRKN6naming7id_typeEDpRR2Ts" title="hpx::apply"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::apply</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00DpEN3hpx4syncEDaRR1FDpRR2Ts" title="hpx::sync"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::sync</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00Dp0EN3hpx8dataflowEDaRR2T0DpRR2Ts" title="hpx::dataflow"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::dataflow</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-init-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/init.hpp</span></code><a class="headerlink" href="#header-hpx-init-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header contains functionality for starting, stopping, suspending, and
+resuming the <em>HPX</em> runtime. This is the main way to explicitly start the <em>HPX</em>
+runtime. See <a class="reference internal" href="../manual/starting_the_hpx_runtime.html#starting-hpx"><span class="std std-ref">Starting the HPX runtime</span></a> for more details on starting the <em>HPX</em> runtime.</p>
+<div class="section" id="id21">
+<h3>Classes<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx11init_paramsE" title="hpx::init_params"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::init_params</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_configuration/api.html#_CPPv4N3hpx12runtime_modeE" title="hpx::runtime_mode"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">hpx::runtime_mode</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id22">
+<h3>Functions<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx4initENSt8functionIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx5startERKN4util15function_nonserIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::start"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::start</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx8finalizeEddR10error_code" title="hpx::finalize"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::finalize</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx10disconnectEddR10error_code" title="hpx::disconnect"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::disconnect</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx7suspendER10error_code" title="hpx::suspend"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::suspend</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx6resumeER10error_code" title="hpx::resume"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::resume</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-latch-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/latch.hpp</span></code><a class="headerlink" href="#header-hpx-latch-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header includes <a class="reference internal" href="#public-api-header-hpx-local-latch"><span class="std std-ref">Header hpx/local/latch.hpp</span></a> and
+<a class="reference internal" href="#public-api-header-hpx-distributed-latch"><span class="std std-ref">Header hpx/distributed/latch.hpp</span></a>.</p>
+</div>
+<div class="section" id="header-hpx-local-latch-hpp">
+<span id="public-api-header-hpx-local-latch"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/local/latch.hpp</span></code><a class="headerlink" href="#header-hpx-local-latch-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/latch">latch</a>.</p>
+<div class="section" id="id23">
+<h3>Classes<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local11cpp20_latchE" title="hpx::lcos::local::cpp20_latch"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::cpp20_latch</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-distributed-latch-hpp">
+<span id="public-api-header-hpx-distributed-latch"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/latch.hpp</span></code><a class="headerlink" href="#header-hpx-distributed-latch-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Contains a distributed latch implementation. This functionality is also exposed
+through the <code class="docutils literal notranslate"><span class="pre">hpx::distributed</span></code> namespace. The name in <code class="docutils literal notranslate"><span class="pre">hpx::distributed</span></code>
+should be preferred.</p>
+<div class="section" id="id24">
+<h3>Classes<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/full/collectives/api.html#_CPPv4N3hpx4lcos5latchE" title="hpx::lcos::latch"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::latch</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-mutex-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/mutex.hpp</span></code><a class="headerlink" href="#header-hpx-mutex-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/mutex">mutex</a>.</p>
+<div class="section" id="id25">
+<h3>Classes<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local5mutexE" title="hpx::lcos::local::mutex"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::mutex</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local8no_mutexE" title="hpx::lcos::local::no_mutex"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::no_mutex</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local9once_flagE" title="hpx::lcos::local::once_flag"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::once_flag</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local15recursive_mutexE" title="hpx::lcos::local::recursive_mutex"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::recursive_mutex</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local8spinlockE" title="hpx::lcos::local::spinlock"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::spinlock</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local11timed_mutexE" title="hpx::lcos::local::timed_mutex"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::timed_mutex</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::unlock_guard</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id26">
+<h3>Functions<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4I0DpEN3hpx4lcos5local9call_onceEvR9once_flagRR1FDpRR4Args" title="hpx::lcos::local::call_once"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::lcos::local::call_once</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-memory-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/memory.hpp</span></code><a class="headerlink" href="#header-hpx-memory-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/memory">memory</a>. It
+contains parallel versions of the copy, fill, move, and construct helper
+functions in <a class="reference external" href="http://en.cppreference.com/w/cpp/header/memory">memory</a>. See <a class="reference internal" href="../manual/writing_single_node_hpx_applications.html#parallel-algorithms"><span class="std std-ref">Using parallel algorithms</span></a> for
+more information about the parallel algorithms.</p>
+<div class="section" id="id27">
+<h3>Functions<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8parallel2v118uninitialized_copyENSt9enable_ifIN3hpx19is_execution_policyI8ExPolicyE5valueEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeEE4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2" title="hpx::parallel::v1::uninitialized_copy"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_copy</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v120uninitialized_copy_nENSt9enable_ifIN3hpx19is_execution_policyI8ExPolicyE5valueEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeEE4typeERR8ExPolicy8FwdIter14Size8FwdIter2" title="hpx::parallel::v1::uninitialized_copy_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_copy_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx8parallel2v131uninitialized_default_constructEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicy7FwdIter7FwdIter" title="hpx::parallel::v1::uninitialized_default_construct"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_default_construct</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8parallel2v133uninitialized_default_construct_nEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter4Size" title="hpx::parallel::v1::uninitialized_default_construct_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_default_construct_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8parallel2v118uninitialized_fillENSt9enable_ifIN3hpx19is_execution_policyI8ExPolicyE5valueEN4util6detail16algorithm_resultI8ExPolicyE4typeEE4typeERR8ExPolicy7FwdIter7FwdIterRK1T" title="hpx::parallel::v1::uninitialized_fill"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_fill</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v120uninitialized_fill_nENSt9enable_ifIN3hpx19is_execution_policyI8ExPolicyE5valueEN4util6detail16algorithm_resultI8ExPolicyE4typeEE4typeERR8ExPolicy7FwdIter4SizeRK1T" title="hpx::parallel::v1::uninitialized_fill_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_fill_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8parallel2v118uninitialized_moveEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2" title="hpx::parallel::v1::uninitialized_move"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_move</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx8parallel2v120uninitialized_move_nEN4util6detail16algorithm_resultI8ExPolicyN3hpx4util11tagged_pairIFN3tag2inE8FwdIter1EFN3tag3outE8FwdIter2EEEE4typeERR8ExPolicy8FwdIter14Size8FwdIter2" title="hpx::parallel::v1::uninitialized_move_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_move_n</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx8parallel2v129uninitialized_value_constructEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicy7FwdIter7FwdIter" title="hpx::parallel::v1::uninitialized_value_construct"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_value_construct</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8parallel2v131uninitialized_value_construct_nEN4util6detail16algorithm_resultI8ExPolicy7FwdIterE4typeERR8ExPolicy7FwdIter4Size" title="hpx::parallel::v1::uninitialized_value_construct_n"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::uninitialized_value_construct_n</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-numeric-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/numeric.hpp</span></code><a class="headerlink" href="#header-hpx-numeric-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/numeric">numeric</a>.
+See <a class="reference internal" href="../manual/writing_single_node_hpx_applications.html#parallel-algorithms"><span class="std std-ref">Using parallel algorithms</span></a> for more information about the parallel
+algorithms.</p>
+<div class="section" id="id28">
+<h3>Functions<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000EN3hpx8parallel2v119adjacent_differenceENSt9enable_ifIN3hpx19is_execution_policyI8ExPolicyE5valueEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeEE4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2" title="hpx::parallel::v1::adjacent_difference"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::adjacent_difference</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx8parallel2v114exclusive_scanENSt9enable_ifIN3hpx19is_execution_policyI8ExPolicyE5valueEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeEE4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter21TRR2Op" title="hpx::parallel::v1::exclusive_scan"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::exclusive_scan</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx8parallel2v114inclusive_scanEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2RR2Op1T" title="hpx::parallel::v1::inclusive_scan"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::inclusive_scan</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I0000EN3hpx6reduceEN4util6detail16algorithm_resultI8ExPolicy1TE4typeERR8ExPolicy7FwdIter7FwdIter1TRR1F" title="hpx::reduce"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::reduce</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000000EN3hpx8parallel2v124transform_exclusive_scanEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter21TRR2OpRR4Conv" title="hpx::parallel::v1::transform_exclusive_scan"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::transform_exclusive_scan</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I000000EN3hpx8parallel2v124transform_inclusive_scanEN4util6detail16algorithm_resultI8ExPolicy8FwdIter2E4typeERR8ExPolicy8FwdIter18FwdIter18FwdIter2RR2OpRR4Conv1T" title="hpx::parallel::v1::transform_inclusive_scan"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v1::transform_inclusive_scan</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00000EN3hpx16transform_reduceEN4util6detail16algorithm_resultI8ExPolicy1TE4typeERR8ExPolicy7FwdIter7FwdIter1TRR6ReduceRR7Convert" title="hpx::transform_reduce"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::transform_reduce</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-optional-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/optional.hpp</span></code><a class="headerlink" href="#header-hpx-optional-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/optional">optional</a>.
+<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">hpx::util::optional</span></code> is compatible with <code class="docutils literal notranslate"><span class="pre">std::optional</span></code>.</p>
+<div class="section" id="id29">
+<h3>Constants<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4N3hpx4util7nulloptE" title="hpx::util::nullopt"><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::util::nullopt</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id30">
+<h3>Classes<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::optional</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4N3hpx4util9nullopt_tE" title="hpx::util::nullopt_t"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::nullopt_t</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4N3hpx4util19bad_optional_accessE" title="hpx::util::bad_optional_access"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::util::bad_optional_access</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id31">
+<h3>Functions<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4I0EN3hpx4util13make_optionalE8optionalINSt5decayI1TE4typeEERR1T" title="hpx::util::make_optional"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::util::make_optional</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-runtime-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/runtime.hpp</span></code><a class="headerlink" href="#header-hpx-runtime-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header includes <a class="reference internal" href="#public-api-header-hpx-local-runtime"><span class="std std-ref">Header hpx/local/runtime.hpp</span></a> and
+<a class="reference internal" href="#public-api-header-hpx-distributed-runtime"><span class="std std-ref">Header hpx/distributed/runtime.hpp</span></a>.</p>
+</div>
+<div class="section" id="header-hpx-local-runtime-hpp">
+<span id="public-api-header-hpx-local-runtime"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/local/runtime.hpp</span></code><a class="headerlink" href="#header-hpx-local-runtime-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header contains functions for accessing local runtime information.</p>
+<div class="section" id="typedefs">
+<h3>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/full/runtime_local/api.html#_CPPv4N3hpx21startup_function_typeE" title="hpx::startup_function_type"><code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">hpx::startup_function_type</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_local/api.html#_CPPv4N3hpx22shutdown_function_typeE" title="hpx::shutdown_function_type"><code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">hpx::shutdown_function_type</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id32">
+<h3>Functions<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/full/runtime_local/api.html#_CPPv4N3hpx22get_num_worker_threadsEv" title="hpx::get_num_worker_threads"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_num_worker_threads</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/threading_base/api.html#_CPPv4N3hpx21get_worker_thread_numEv" title="hpx::get_worker_thread_num"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_worker_thread_num</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_local/api.html#_CPPv4N3hpx15get_thread_nameEv" title="hpx::get_thread_name"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_thread_name</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_local/api.html#_CPPv4N3hpx29register_pre_startup_functionE21startup_function_type" title="hpx::register_pre_startup_function"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::register_pre_startup_function</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_local/api.html#_CPPv4N3hpx25register_startup_functionE21startup_function_type" title="hpx::register_startup_function"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::register_startup_function</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_local/api.html#_CPPv4N3hpx30register_pre_shutdown_functionE22shutdown_function_type" title="hpx::register_pre_shutdown_function"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::register_pre_shutdown_function</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_local/api.html#_CPPv4N3hpx26register_shutdown_functionE22shutdown_function_type" title="hpx::register_shutdown_function"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::register_shutdown_function</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api.html#_CPPv4N3hpx18get_num_localitiesEN10components14component_typeE" title="hpx::get_num_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_num_localities</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api.html#_CPPv4N3hpx17get_locality_nameERKN6naming7id_typeE" title="hpx::get_locality_name"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_locality_name</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-distributed-runtime-hpp">
+<span id="public-api-header-hpx-distributed-runtime"></span><h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/distributed/runtime.hpp</span></code><a class="headerlink" href="#header-hpx-distributed-runtime-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header contains functions for accessing distributed runtime information.</p>
+<div class="section" id="id33">
+<h3>Functions<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api.html#_CPPv4N3hpx18find_root_localityER10error_code" title="hpx::find_root_locality"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_root_locality</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api.html#_CPPv4N3hpx19find_all_localitiesER10error_code" title="hpx::find_all_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_all_localities</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api.html#_CPPv4N3hpx22find_remote_localitiesER10error_code" title="hpx::find_remote_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_remote_localities</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api.html#_CPPv4N3hpx13find_localityEN10components14component_typeER10error_code" title="hpx::find_locality"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_locality</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/async_colocated/api.html#_CPPv4N3hpx17get_colocation_idEN6launch11sync_policyERKN6naming7id_typeER10error_code" title="hpx::get_colocation_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_colocation_id</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/runtime_local/api.html#_CPPv4N3hpx15get_locality_idER10error_code" title="hpx::get_locality_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_locality_id</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-system-error-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/system_error.hpp</span></code><a class="headerlink" href="#header-hpx-system-error-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header
+<a class="reference external" href="http://en.cppreference.com/w/cpp/header/system_error">system_error</a>.</p>
+<div class="section" id="id34">
+<h3>Classes<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-task-block-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/task_block.hpp</span></code><a class="headerlink" href="#header-hpx-task-block-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the <code class="docutils literal notranslate"><span class="pre">task_block</span></code> feature in <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4411.pdf">N4411</a>. See
+<a class="reference internal" href="../manual/writing_single_node_hpx_applications.html#using-task-block"><span class="std std-ref">Using task blocks</span></a> for more details on using task blocks.</p>
+<div class="section" id="id35">
+<h3>Classes<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4N3hpx8parallel2v223task_canceled_exceptionE" title="hpx::parallel::v2::task_canceled_exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::v2::task_canceled_exception</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::v2::task_block</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id36">
+<h3>Functions<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx8parallel2v217define_task_blockEN3hpx6futureIvEERR8ExPolicyRR1F" title="hpx::parallel::v2::define_task_block"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v2::define_task_block</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/algorithms/api.html#_CPPv4I00EN3hpx8parallel2v232define_task_block_restore_threadEN4util6detail16algorithm_resultI8ExPolicyE4typeERR8ExPolicyRR1F" title="hpx::parallel::v2::define_task_block_restore_thread"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::parallel::v2::define_task_block_restore_thread</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-thread-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/thread.hpp</span></code><a class="headerlink" href="#header-hpx-thread-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/thread">thread</a>.
+The functionality in this header is equivalent to the standard library thread
+functionality, with the exception that the <em>HPX</em> equivalents are implemented on
+top of lightweight threads and the <em>HPX</em> runtime.</p>
+<div class="section" id="id37">
+<h3>Classes<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/threading/api.html#_CPPv4N3hpx6threadE" title="hpx::thread"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::thread</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/threading/api.html#_CPPv4N3hpx7jthreadE" title="hpx::jthread"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::jthread</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id38">
+<h3>Functions<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/parallelism/threading/api.html#_CPPv4N3hpx11this_thread5yieldEv" title="hpx::this_thread::yield"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::this_thread::yield</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/threading/api.html#_CPPv4N3hpx11this_thread6get_idEv" title="hpx::this_thread::get_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::this_thread::get_id</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/threading/api.html#_CPPv4N3hpx11this_thread9sleep_forERKN3hpx6chrono15steady_durationE" title="hpx::this_thread::sleep_for"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::this_thread::sleep_for</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/parallelism/threading/api.html#_CPPv4N3hpx11this_thread11sleep_untilERKN3hpx6chrono17steady_time_pointE" title="hpx::this_thread::sleep_until"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::this_thread::sleep_until</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-semaphore-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/semaphore.hpp</span></code><a class="headerlink" href="#header-hpx-semaphore-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header
+<a class="reference external" href="http://en.cppreference.com/w/cpp/header/semaphore">semaphore</a>.</p>
+<div class="section" id="id39">
+<h3>Classes<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::cpp20_binary_semaphore</span></code></p></li>
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::cpp20_counting_semaphore</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-shared-mutex-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/shared_mutex.hpp</span></code><a class="headerlink" href="#header-hpx-shared-mutex-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header
+<a class="reference external" href="http://en.cppreference.com/w/cpp/header/shared_mutex">shared_mutex</a>.</p>
+<div class="section" id="id40">
+<h3>Classes<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx4lcos5local12shared_mutexE" title="hpx::lcos::local::shared_mutex"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::shared_mutex</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-stop-token-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/stop_token.hpp</span></code><a class="headerlink" href="#header-hpx-stop-token-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header
+<a class="reference external" href="http://en.cppreference.com/w/cpp/header/stop_token">stop_token</a>.</p>
+<div class="section" id="id41">
+<h3>Constants<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::nostopstate</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id42">
+<h3>Classes<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::stop_callback</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx11stop_sourceE" title="hpx::stop_source"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::stop_source</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx10stop_tokenE" title="hpx::stop_token"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::stop_token</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/synchronization/api.html#_CPPv4N3hpx13nostopstate_tE" title="hpx::nostopstate_t"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::nostopstate_t</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-tuple-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/tuple.hpp</span></code><a class="headerlink" href="#header-hpx-tuple-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header <a class="reference external" href="http://en.cppreference.com/w/cpp/header/tuple">tuple</a>.
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::tuple</span></code> can be used in CUDA device code, unlike <code class="docutils literal notranslate"><span class="pre">std::tuple</span></code>.</p>
+<div class="section" id="id43">
+<h3>Constants<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4N3hpx6ignoreE" title="hpx::ignore"><code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">hpx::ignore</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id44">
+<h3>Classes<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::tuple</span></code></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4I0EN3hpx10tuple_sizeE" title="hpx::tuple_size"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::tuple_size</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::tuple_element</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id45">
+<h3>Functions<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4IDpEN3hpx10make_tupleE5tupleIDpN4util12decay_unwrapI2TsE4typeEEDpRR2Ts" title="hpx::make_tuple"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::make_tuple</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4IDpEN3hpx3tieE5tupleIDpR2TsEDpR2Ts" title="hpx::tie"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::tie</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4IDpEN3hpx16forward_as_tupleE5tupleIDpRR2TsEDpRR2Ts" title="hpx::forward_as_tuple"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::forward_as_tuple</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/datastructures/api.html#_CPPv4IDpEN3hpx9tuple_catEDaDpRR6Tuples" title="hpx::tuple_cat"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::tuple_cat</span></code></a></p></li>
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-type-traits-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/type_traits.hpp</span></code><a class="headerlink" href="#header-hpx-type-traits-hpp" title="Permalink to this headline">¶</a></h2>
+<p>Corresponds to the C++ standard library header
+<a class="reference external" href="http://en.cppreference.com/w/cpp/header/type_traits">type_traits</a>.</p>
+<div class="section" id="id46">
+<h3>Classes<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::is_invocable</span></code></p></li>
+<li><p><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::is_invocable_r</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-version-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/version.hpp</span></code><a class="headerlink" href="#header-hpx-version-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header provides version information about <em>HPX</em>.</p>
+<div class="section" id="id47">
+<h3>Macros<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_VERSION_MAJOR</span></code></p></li>
+<li><p><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_VERSION_MINOR</span></code></p></li>
+<li><p><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_VERSION_SUBMINOR</span></code></p></li>
+<li><p><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_VERSION_FULL</span></code></p></li>
+<li><p><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_VERSION_DATE</span></code></p></li>
+<li><p><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_VERSION_TAG</span></code></p></li>
+<li><p><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_AGAS_VERSION</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id48">
+<h3>Functions<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../libs/core/version/api.html#_CPPv4N3hpx13major_versionEv" title="hpx::major_version"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::major_version</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/version/api.html#_CPPv4N3hpx13minor_versionEv" title="hpx::minor_version"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::minor_version</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/version/api.html#_CPPv4N3hpx16subminor_versionEv" title="hpx::subminor_version"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::subminor_version</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/version/api.html#_CPPv4N3hpx12full_versionEv" title="hpx::full_version"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::full_version</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/version/api.html#_CPPv4N3hpx22full_version_as_stringEv" title="hpx::full_version_as_string"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::full_version_as_string</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/version/api.html#_CPPv4N3hpx3tagEv" title="hpx::tag"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::tag</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/version/api.html#_CPPv4N3hpx12agas_versionEv" title="hpx::agas_version"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::agas_version</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/version/api.html#_CPPv4N3hpx10build_typeEv" title="hpx::build_type"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::build_type</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/core/version/api.html#_CPPv4N3hpx15build_date_timeEv" title="hpx::build_date_time"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::build_date_time</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-hpx-wrap-main-hpp">
+<h2>Header <code class="docutils literal notranslate"><span class="pre">hpx/wrap_main.hpp</span></code><a class="headerlink" href="#header-hpx-wrap-main-hpp" title="Permalink to this headline">¶</a></h2>
+<p>This header does not provide any direct functionality but is used for implicitly
+using <code class="docutils literal notranslate"><span class="pre">main</span></code> as the runtime entry point. See <a class="reference internal" href="../manual/starting_the_hpx_runtime.html#minimal"><span class="std std-ref">Re-use the main() function as the main HPX entry point</span></a> for more details
+on implicitly starting the <em>HPX</em> runtime.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="full_api.html" class="btn btn-neutral float-right" title="Main HPX library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../api.html" class="btn btn-neutral float-left" title="API reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2008-2020, The STE||AR Group.
+      <span class="commit">
+        
+        Revision <code>8394aa8</code>.
+      </span>
+      <span class="lastupdated">
+        Last updated on Jun 08, 2021.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

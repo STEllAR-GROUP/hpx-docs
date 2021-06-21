@@ -1,0 +1,1030 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>threading &mdash; HPX 1.7.0-rc2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="timed_execution" href="../timed_execution/api.html" />
+    <link rel="prev" title="thread_pool_util" href="../thread_pool_util/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> HPX
+          
+
+          
+            
+            <img src="../../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.7.0-rc2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api/public_api.html">Public API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/affinity/api.html">affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/config_registry/api.html">config_registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/execution_base/api.html">execution_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/ini/api.html">ini</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/itt_notify/api.html">itt_notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/logging/api.html">logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/properties/api.html">properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/statistics/api.html">statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/string_util/api.html">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/testing/api.html">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core/version/api.html">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/actions/api.html">actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/actions_base/api.html">actions_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/agas/api.html">agas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/agas_base/api.html">agas_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_colocated/api.html">async_colocated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_cuda/api.html">async_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_distributed/api.html">async_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_mpi/api.html">async_mpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/checkpoint_base/api.html">checkpoint_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/collectives/api.html">collectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/command_line_handling/api.html">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/command_line_handling_local/api.html">command_line_handling_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/components/api.html">components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/components_base/api.html">components_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/distribution_policies/api.html">distribution_policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/executors_distributed/api.html">executors_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/include_local/api.html">include_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/init_runtime/api.html">init_runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/init_runtime_local/api.html">init_runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/lcos_distributed/api.html">lcos_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/mpi_base/api.html">mpi_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/naming/api.html">naming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/resiliency_distributed/api.html">resiliency_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_components/api.html">runtime_components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_distributed/api.html">runtime_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_local/api.html">runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pack_traversal/api.html">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_pool_util/api.html">thread_pool_util</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timed_execution/api.html">timed_execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">Citing <em>HPX</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users.html"><em>HPX</em> users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../api.html">API reference</a> &raquo;</li>
+        
+      <li>threading</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/parallelism/threading/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="threading">
+<span id="modules-threading-api"></span><h1>threading<a class="headerlink" href="#threading" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this module can be included with the header
+<code class="docutils literal notranslate"><span class="pre">hpx/modules/threading.hpp</span></code>. These headers may be used by user-code but are not
+guaranteed stable (neither header location nor contents). You are using these at
+your own risk. If you wish to use non-public functionality from a module we
+<em>strongly</em> suggest only including the module header <code class="docutils literal notranslate"><span class="pre">hpx/modules/threading.hpp</span></code>, not
+the particular header in which the functionality you would like to use is
+defined. See <a class="reference internal" href="../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names that are part of the public
+<em>HPX</em> API.</p>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">hpx</span></code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4swapER7jthreadR7jthread">
+<span id="_CPPv3N3hpx4swapER7jthreadR7jthread"></span><span id="_CPPv2N3hpx4swapER7jthreadR7jthread"></span><span id="hpx::swap__jthreadR.jthreadR"></span><span class="target" id="jthread_8hpp_1ad8037465513bb07796e4cc3c6d269406"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">swap</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx7jthreadE" title="hpx::jthread"><span class="pre">jthread</span></a> <span class="pre">&amp;</span><em><span class="pre">lhs</span></em>, <a class="reference internal" href="#_CPPv4N3hpx7jthreadE" title="hpx::jthread"><span class="pre">jthread</span></a> <span class="pre">&amp;</span><em><span class="pre">rhs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4swapER7jthreadR7jthread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt id="_CPPv4N3hpx7jthreadE">
+<span id="_CPPv3N3hpx7jthreadE"></span><span id="_CPPv2N3hpx7jthreadE"></span><span id="hpx::jthread"></span><span class="target" id="classhpx_1_1jthread"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">jthread</span></code><a class="headerlink" href="#_CPPv4N3hpx7jthreadE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx7jthread2idE">
+<span id="_CPPv3N3hpx7jthread2idE"></span><span id="_CPPv2N3hpx7jthread2idE"></span><span class="target" id="classhpx_1_1jthread_1aa197509ebb066dc02624c162e5f48698"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">id</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a><a class="headerlink" href="#_CPPv4N3hpx7jthread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx7jthread18native_handle_typeE">
+<span id="_CPPv3N3hpx7jthread18native_handle_typeE"></span><span id="_CPPv2N3hpx7jthread18native_handle_typeE"></span><span class="target" id="classhpx_1_1jthread_1a467de375f8bc719c02da616cfbcf8393"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">native_handle_type</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread18native_handle_typeE" title="hpx::thread::native_handle_type"><span class="pre">native_handle_type</span></a><a class="headerlink" href="#_CPPv4N3hpx7jthread18native_handle_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthread7jthreadEv">
+<span id="_CPPv3N3hpx7jthread7jthreadEv"></span><span id="_CPPv2N3hpx7jthread7jthreadEv"></span><span id="hpx::jthread::jthread"></span><span class="target" id="classhpx_1_1jthread_1a19dbc4ff5c5f0c39d5da58164455a2fe"></span><code class="sig-name descname"><span class="pre">jthread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthread7jthreadEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0Dp0EN3hpx7jthread7jthreadERR1FDpRR2Ts">
+<span id="_CPPv3I0Dp0EN3hpx7jthread7jthreadERR1FDpRR2Ts"></span><span id="_CPPv2I0Dp0EN3hpx7jthread7jthreadERR1FDpRR2Ts"></span><span class="target" id="classhpx_1_1jthread_1af441c922146826eb685001ae54b658a2"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">F</span></code><span class="pre">,</span> <span class="pre">typename</span> <span class="pre">...</span><code class="sig-name descname"><span class="pre">Ts</span></code><span class="pre">,</span> <span class="pre">typename</span> <code class="sig-name descname"><span class="pre">Enable</span></code> <span class="pre">=</span> <em class="property"><span class="pre">typename</span></em> <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">enable_if</span><span class="pre">&lt;</span><span class="pre">!</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">is_same</span><span class="pre">&lt;</span><em class="property"><span class="pre">typename</span></em> <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">decay</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I0Dp0EN3hpx7jthread7jthreadERR1FDpRR2Ts" title="hpx::jthread::jthread::F"><span class="pre">F</span></a><span class="pre">&gt;</span><span class="pre">::</span><span class="pre">type</span><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0Dp0EN3hpx7jthread7jthreadERR1FDpRR2Ts" title="hpx::jthread::jthread"><span class="pre">jthread</span></a><span class="pre">&gt;</span><span class="pre">::</span><span class="pre">value</span><span class="pre">&gt;</span><span class="pre">::</span><span class="pre">type</span><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">jthread</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0Dp0EN3hpx7jthread7jthreadERR1FDpRR2Ts" title="hpx::jthread::jthread::F"><span class="pre">F</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">f</span></em>, <a class="reference internal" href="#_CPPv4I0Dp0EN3hpx7jthread7jthreadERR1FDpRR2Ts" title="hpx::jthread::jthread::Ts"><span class="pre">Ts</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="pre">...</span> <em><span class="pre">ts</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0Dp0EN3hpx7jthread7jthreadERR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthreadD0Ev">
+<span id="_CPPv3N3hpx7jthreadD0Ev"></span><span id="_CPPv2N3hpx7jthreadD0Ev"></span><span id="hpx::jthread::~jthread"></span><span class="target" id="classhpx_1_1jthread_1aaa8ec62f8f6b7d19f2fbf27ffe019c87"></span><code class="sig-name descname"><span class="pre">~jthread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthreadD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthread7jthreadERK7jthread">
+<span id="_CPPv3N3hpx7jthread7jthreadERK7jthread"></span><span id="_CPPv2N3hpx7jthread7jthreadERK7jthread"></span><span id="hpx::jthread::jthread__jthreadCR"></span><span class="target" id="classhpx_1_1jthread_1aa5a5911703d68155e1ac2a6d4c7f0ea5"></span><code class="sig-name descname"><span class="pre">jthread</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx7jthread7jthreadERK7jthread" title="hpx::jthread::jthread"><span class="pre">jthread</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthread7jthreadERK7jthread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthread7jthreadERR7jthread">
+<span id="_CPPv3N3hpx7jthread7jthreadERR7jthread"></span><span id="_CPPv2N3hpx7jthread7jthreadERR7jthread"></span><span id="hpx::jthread::jthread__jthreadRR"></span><span class="target" id="classhpx_1_1jthread_1a7594491d4a055de807c0720b20e1ddc4"></span><code class="sig-name descname"><span class="pre">jthread</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx7jthread7jthreadERR7jthread" title="hpx::jthread::jthread"><span class="pre">jthread</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthread7jthreadERR7jthread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthreadaSERK7jthread">
+<span id="_CPPv3N3hpx7jthreadaSERK7jthread"></span><span id="_CPPv2N3hpx7jthreadaSERK7jthread"></span><span id="hpx::jthread::assign-operator__jthreadCR"></span><span class="target" id="classhpx_1_1jthread_1ae14882244892aa47c5754151d2c8b57f"></span><a class="reference internal" href="#_CPPv4N3hpx7jthreadE" title="hpx::jthread"><span class="pre">jthread</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx7jthreadE" title="hpx::jthread"><span class="pre">jthread</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthreadaSERK7jthread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthreadaSERR7jthread">
+<span id="_CPPv3N3hpx7jthreadaSERR7jthread"></span><span id="_CPPv2N3hpx7jthreadaSERR7jthread"></span><span id="hpx::jthread::assign-operator__jthreadRR"></span><span class="target" id="classhpx_1_1jthread_1ae55d5559379aac0d2c24257661018921"></span><a class="reference internal" href="#_CPPv4N3hpx7jthreadE" title="hpx::jthread"><span class="pre">jthread</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx7jthreadE" title="hpx::jthread"><span class="pre">jthread</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthreadaSERR7jthread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthread4swapER7jthread">
+<span id="_CPPv3N3hpx7jthread4swapER7jthread"></span><span id="_CPPv2N3hpx7jthread4swapER7jthread"></span><span id="hpx::jthread::swap__jthreadR"></span><span class="target" id="classhpx_1_1jthread_1ae781ef3798f709febe09f576a4af3378"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">swap</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx7jthreadE" title="hpx::jthread"><span class="pre">jthread</span></a> <span class="pre">&amp;</span><em><span class="pre">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthread4swapER7jthread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1jthread_1a44af109c36b0a5611b341001df936288"></span><code class="sig-name descname"><span class="pre">HPX_NODISCARD</span> <span class="pre">bool</span> <span class="pre">hpx::jthread::joinable()</span> <span class="pre">const</span></code></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthread4joinEv">
+<span id="_CPPv3N3hpx7jthread4joinEv"></span><span id="_CPPv2N3hpx7jthread4joinEv"></span><span id="hpx::jthread::join"></span><span class="target" id="classhpx_1_1jthread_1a6ee585182e8a20086c84f3f97e4adf6a"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">join</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthread4joinEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthread6detachEv">
+<span id="_CPPv3N3hpx7jthread6detachEv"></span><span id="_CPPv2N3hpx7jthread6detachEv"></span><span id="hpx::jthread::detach"></span><span class="target" id="classhpx_1_1jthread_1af15e9868810b1542ab06c609718a4035"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">detach</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthread6detachEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1jthread_1a34be2711b42cf4bd681522c716c49ffe"></span><code class="sig-name descname"><span class="pre">HPX_NODISCARD</span> <span class="pre">id</span> <span class="pre">hpx::jthread::get_id()</span> <span class="pre">const</span></code></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1jthread_1ae45e3a429468674a38733a7f1052d880"></span><code class="sig-name descname"><span class="pre">HPX_NODISCARD</span> <span class="pre">native_handle_type</span> <span class="pre">hpx::jthread::native_handle()</span></code></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1jthread_1a103b4384d314fbc4676066ce063fc07e"></span><code class="sig-name descname"><span class="pre">HPX_NODISCARD</span> <span class="pre">stop_source</span> <span class="pre">hpx::jthread::get_stop_source()</span></code></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1jthread_1afc8f4271405cc5c18defc0d3418bbea3"></span><code class="sig-name descname"><span class="pre">HPX_NODISCARD</span> <span class="pre">stop_token</span> <span class="pre">hpx::jthread::get_stop_token()</span> <span class="pre">const</span></code></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7jthread12request_stopEv">
+<span id="_CPPv3N3hpx7jthread12request_stopEv"></span><span id="_CPPv2N3hpx7jthread12request_stopEv"></span><span id="hpx::jthread::request_stop"></span><span class="target" id="classhpx_1_1jthread_1a759d43128d64085d1cb94ec7db206e07"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">request_stop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7jthread12request_stopEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1jthread_1a3f63b879c32803154ba2a896ff394c67"></span><code class="sig-name descname"><span class="pre">static</span> <span class="pre">HPX_NODISCARD</span> <span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">hpx::jthread::hardware_concurrency()</span></code></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx7jthread8ssource_E">
+<span id="_CPPv3N3hpx7jthread8ssource_E"></span><span id="_CPPv2N3hpx7jthread8ssource_E"></span><span id="hpx::jthread::ssource___stop_source"></span><span class="target" id="classhpx_1_1jthread_1aafe3d27f911d9c70ca6a44e448e4315c"></span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx11stop_sourceE" title="hpx::stop_source"><span class="pre">stop_source</span></a> <code class="sig-name descname"><span class="pre">ssource_</span></code><a class="headerlink" href="#_CPPv4N3hpx7jthread8ssource_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx7jthread7thread_E">
+<span id="_CPPv3N3hpx7jthread7thread_E"></span><span id="_CPPv2N3hpx7jthread7thread_E"></span><span id="hpx::jthread::thread___hpx::thread"></span><span class="target" id="classhpx_1_1jthread_1a4d66eb841f7d8b5c2254f5dfa1424bec"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx"><span class="pre">hpx</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a> <code class="sig-name descname"><span class="pre">thread_</span></code> <span class="pre">=</span> <span class="pre">{</span><span class="pre">}</span><a class="headerlink" href="#_CPPv4N3hpx7jthread7thread_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx7jthread6invokeEvNSt10false_typeERR1FRR10stop_tokenDpRR2Ts">
+<span id="_CPPv3I0DpEN3hpx7jthread6invokeENSt10false_typeERR1FRR10stop_tokenDpRR2Ts"></span><span id="_CPPv2I0DpEN3hpx7jthread6invokeENSt10false_typeERR1FRR10stop_tokenDpRR2Ts"></span><span class="target" id="classhpx_1_1jthread_1aa71f8cff99caa9bf11ef20d590778953"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">F</span></code><span class="pre">,</span> <span class="pre">typename</span> <span class="pre">...</span><code class="sig-name descname"><span class="pre">Ts</span></code><span class="pre">&gt;</span><br /><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">invoke</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">false_type</span>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx7jthread6invokeEvNSt10false_typeERR1FRR10stop_tokenDpRR2Ts" title="hpx::jthread::invoke::F"><span class="pre">F</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">f</span></em>, <a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx10stop_tokenE" title="hpx::stop_token"><span class="pre">stop_token</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx7jthread6invokeEvNSt10false_typeERR1FRR10stop_tokenDpRR2Ts" title="hpx::jthread::invoke::Ts"><span class="pre">Ts</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="pre">...</span> <em><span class="pre">ts</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx7jthread6invokeEvNSt10false_typeERR1FRR10stop_tokenDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx7jthread6invokeEvNSt9true_typeERR1FRR10stop_tokenDpRR2Ts">
+<span id="_CPPv3I0DpEN3hpx7jthread6invokeENSt9true_typeERR1FRR10stop_tokenDpRR2Ts"></span><span id="_CPPv2I0DpEN3hpx7jthread6invokeENSt9true_typeERR1FRR10stop_tokenDpRR2Ts"></span><span class="target" id="classhpx_1_1jthread_1a3ab864ab96f99df9d880945dc0f0bca0"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">F</span></code><span class="pre">,</span> <span class="pre">typename</span> <span class="pre">...</span><code class="sig-name descname"><span class="pre">Ts</span></code><span class="pre">&gt;</span><br /><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">invoke</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">true_type</span>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx7jthread6invokeEvNSt9true_typeERR1FRR10stop_tokenDpRR2Ts" title="hpx::jthread::invoke::F"><span class="pre">F</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">f</span></em>, <a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx10stop_tokenE" title="hpx::stop_token"><span class="pre">stop_token</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">st</span></em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx7jthread6invokeEvNSt9true_typeERR1FRR10stop_tokenDpRR2Ts" title="hpx::jthread::invoke::Ts"><span class="pre">Ts</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="pre">...</span> <em><span class="pre">ts</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx7jthread6invokeEvNSt9true_typeERR1FRR10stop_tokenDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp struct">
+<dt id="_CPPv4IENSt4hashIN3hpx6thread2idEEE">
+<span id="_CPPv3IENSt4hashIN3hpx6thread2idEEE"></span><span id="_CPPv2IENSt4hashIN3hpx6thread2idEEE"></span><span class="target" id="structstd_1_1hash_3_1_1hpx_1_1thread_1_1id_01_4"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">hash</span></code><span class="pre">&lt;</span><span class="pre">::</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx"><span class="pre">hpx</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4IENSt4hashIN3hpx6thread2idEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4NKSt4hashclERKN3hpx6thread2idE">
+<span id="_CPPv3NKSt4hashclERKN3hpx6thread2idE"></span><span id="_CPPv2NKSt4hashclERKN3hpx6thread2idE"></span><span id="std::hash::call-operator__hpx::thread::idCRC"></span><span class="target" id="structstd_1_1hash_3_1_1hpx_1_1thread_1_1id_01_4_1a46b24ab48c2c864107b5b03c7e41fce0"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">operator()</span></code><span class="sig-paren">(</span><span class="pre">::</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx"><span class="pre">hpx</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">id</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NKSt4hashclERKN3hpx6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">hpx</span></code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Typedefs</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx31thread_termination_handler_typeE">
+<span id="_CPPv3N3hpx31thread_termination_handler_typeE"></span><span id="_CPPv2N3hpx31thread_termination_handler_typeE"></span><span class="target" id="thread_8hpp_1a8ce84862c37295f0278a1a46e31795c9"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">thread_termination_handler_type</span></code> <span class="pre">=</span> <a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util"><span class="pre">util</span></a><span class="pre">::</span><a class="reference internal" href="../../core/functional/api.html#_CPPv4I0EN3hpx4util15function_nonserE" title="hpx::util::function_nonser"><span class="pre">function_nonser</span></a><span class="pre">&lt;</span><span class="pre">void</span><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">exception_ptr</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><span class="pre">e</span><span class="sig-paren">)</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4N3hpx31thread_termination_handler_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx30set_thread_termination_handlerE31thread_termination_handler_type">
+<span id="_CPPv3N3hpx30set_thread_termination_handlerE31thread_termination_handler_type"></span><span id="_CPPv2N3hpx30set_thread_termination_handlerE31thread_termination_handler_type"></span><span id="hpx::set_thread_termination_handler__thread_termination_handler_type"></span><span class="target" id="thread_8hpp_1a2d474b6b4727ebc64646d8883413a82e"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">set_thread_termination_handler</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx31thread_termination_handler_typeE" title="hpx::thread_termination_handler_type"><span class="pre">thread_termination_handler_type</span></a> <em><span class="pre">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx30set_thread_termination_handlerE31thread_termination_handler_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4swapER6threadR6thread">
+<span id="_CPPv3N3hpx4swapER6threadR6thread"></span><span id="_CPPv2N3hpx4swapER6threadR6thread"></span><span id="hpx::swap__threadR.threadR"></span><span class="target" id="thread_8hpp_1a92f91d354cc8664cf406b70a741c8256"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">swap</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4swapER6threadR6thread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpxeqERKN6thread2idERKN6thread2idE">
+<span id="_CPPv3N3hpxeqERKN6thread2idERKN6thread2idE"></span><span id="_CPPv2N3hpxeqERKN6thread2idERKN6thread2idE"></span><span id="hpx::eq-operator__thread::idCR.thread::idCR"></span><span class="target" id="thread_8hpp_1abc3a27bf3f283dae125c6888e84345e0"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator==</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpxeqERKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpxneERKN6thread2idERKN6thread2idE">
+<span id="_CPPv3N3hpxneERKN6thread2idERKN6thread2idE"></span><span id="_CPPv2N3hpxneERKN6thread2idERKN6thread2idE"></span><span id="hpx::neq-operator__thread::idCR.thread::idCR"></span><span class="target" id="thread_8hpp_1a8d90ef0cc7367ac5c17a41de350538b6"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator!=</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpxneERKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpxltERKN6thread2idERKN6thread2idE">
+<span id="_CPPv3N3hpxltERKN6thread2idERKN6thread2idE"></span><span id="_CPPv2N3hpxltERKN6thread2idERKN6thread2idE"></span><span id="hpx::lt-operator__thread::idCR.thread::idCR"></span><span class="target" id="thread_8hpp_1a07b8d0467206405c577559cc5cdbb957"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator&lt;</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpxltERKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpxgtERKN6thread2idERKN6thread2idE">
+<span id="_CPPv3N3hpxgtERKN6thread2idERKN6thread2idE"></span><span id="_CPPv2N3hpxgtERKN6thread2idERKN6thread2idE"></span><span id="hpx::gt-operator__thread::idCR.thread::idCR"></span><span class="target" id="thread_8hpp_1a1973a1aa5aeba187692a9ea5b38db152"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator&gt;</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpxgtERKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpxleERKN6thread2idERKN6thread2idE">
+<span id="_CPPv3N3hpxleERKN6thread2idERKN6thread2idE"></span><span id="_CPPv2N3hpxleERKN6thread2idERKN6thread2idE"></span><span id="hpx::lte-operator__thread::idCR.thread::idCR"></span><span class="target" id="thread_8hpp_1ab6d61c43403910e990425d4720f37832"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator&lt;=</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpxleERKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpxgeERKN6thread2idERKN6thread2idE">
+<span id="_CPPv3N3hpxgeERKN6thread2idERKN6thread2idE"></span><span id="_CPPv2N3hpxgeERKN6thread2idERKN6thread2idE"></span><span id="hpx::gte-operator__thread::idCR.thread::idCR"></span><span class="target" id="thread_8hpp_1aaa492728e66e353b54d6e968690574b2"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator&gt;=</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpxgeERKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpxlsERNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE">
+<span id="_CPPv3I00EN3hpxlsERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE"></span><span id="_CPPv2I00EN3hpxlsERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE"></span><span class="target" id="thread_8hpp_1ac6cefece358a978bf3b068a719167bd4"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">Char</span></code><span class="pre">,</span> <span class="pre">typename</span> <code class="sig-name descname"><span class="pre">Traits</span></code><span class="pre">&gt;</span><br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">basic_ostream</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I00EN3hpxlsERNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="hpx::operator&lt;&lt;::Char"><span class="pre">Char</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I00EN3hpxlsERNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="hpx::operator&lt;&lt;::Traits"><span class="pre">Traits</span></a><span class="pre">&gt;</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator&lt;&lt;</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">basic_ostream</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I00EN3hpxlsERNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="hpx::operator&lt;&lt;::Char"><span class="pre">Char</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I00EN3hpxlsERNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="hpx::operator&lt;&lt;::Traits"><span class="pre">Traits</span></a><span class="pre">&gt;</span> <span class="pre">&amp;</span><em><span class="pre">out</span></em>, <a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpxlsERNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt id="_CPPv4N3hpx6threadE">
+<span id="_CPPv3N3hpx6threadE"></span><span id="_CPPv2N3hpx6threadE"></span><span id="hpx::thread"></span><span class="target" id="classhpx_1_1thread"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">thread</span></code><a class="headerlink" href="#_CPPv4N3hpx6threadE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx6thread18native_handle_typeE">
+<span id="_CPPv3N3hpx6thread18native_handle_typeE"></span><span id="_CPPv2N3hpx6thread18native_handle_typeE"></span><span id="hpx::thread::native_handle_type"></span><span class="target" id="classhpx_1_1thread_1a47d3cc45000a4d0fc3cba386d2d56478"></span><em class="property"><span class="pre">typedef</span> </em><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx7threads14thread_id_typeE" title="hpx::threads::thread_id_type"><span class="pre">thread_id_type</span></a> <code class="sig-name descname"><span class="pre">native_handle_type</span></code><a class="headerlink" href="#_CPPv4N3hpx6thread18native_handle_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread6threadEv">
+<span id="_CPPv3N3hpx6thread6threadEv"></span><span id="_CPPv2N3hpx6thread6threadEv"></span><span id="hpx::thread::thread"></span><span class="target" id="classhpx_1_1thread_1ae8e62ee37dbcb221ff53fcdc0161e76f"></span><code class="sig-name descname"><span class="pre">thread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread6threadEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3hpx6thread6threadERR1F">
+<span id="_CPPv3I00EN3hpx6thread6threadERR1F"></span><span id="_CPPv2I00EN3hpx6thread6threadERR1F"></span><span class="target" id="classhpx_1_1thread_1a731d887456257a9c078b113c8890f47a"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">F</span></code><span class="pre">,</span> <span class="pre">typename</span> <code class="sig-name descname"><span class="pre">Enable</span></code> <span class="pre">=</span> <em class="property"><span class="pre">typename</span></em> <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">enable_if</span><span class="pre">&lt;</span><span class="pre">!</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">is_same</span><span class="pre">&lt;</span><em class="property"><span class="pre">typename</span></em> <a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">decay</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I00EN3hpx6thread6threadERR1F" title="hpx::thread::thread::F"><span class="pre">F</span></a><span class="pre">&gt;</span><span class="pre">::</span><span class="pre">type</span><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I00EN3hpx6thread6threadERR1F" title="hpx::thread::thread"><span class="pre">thread</span></a><span class="pre">&gt;</span><span class="pre">::</span><span class="pre">value</span><span class="pre">&gt;</span><span class="pre">::</span><span class="pre">type</span><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">thread</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3hpx6thread6threadERR1F" title="hpx::thread::thread::F"><span class="pre">F</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx6thread6threadERR1F" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx6thread6threadERR1FDpRR2Ts">
+<span id="_CPPv3I0DpEN3hpx6thread6threadERR1FDpRR2Ts"></span><span id="_CPPv2I0DpEN3hpx6thread6threadERR1FDpRR2Ts"></span><span class="target" id="classhpx_1_1thread_1ac7d76cb7c26536a238a3f0694f765735"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">F</span></code><span class="pre">,</span> <span class="pre">typename</span> <span class="pre">...</span><code class="sig-name descname"><span class="pre">Ts</span></code><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">thread</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0DpEN3hpx6thread6threadERR1FDpRR2Ts" title="hpx::thread::thread::F"><span class="pre">F</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">f</span></em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx6thread6threadERR1FDpRR2Ts" title="hpx::thread::thread::Ts"><span class="pre">Ts</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="pre">...</span> <em><span class="pre">vs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx6thread6threadERR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3hpx6thread6threadEPN7threads16thread_pool_baseERR1F">
+<span id="_CPPv3I0EN3hpx6thread6threadEPN7threads16thread_pool_baseERR1F"></span><span id="_CPPv2I0EN3hpx6thread6threadEPN7threads16thread_pool_baseERR1F"></span><span class="target" id="classhpx_1_1thread_1a671cd18570f330fad4a8f589f4a33719"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">F</span></code><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">thread</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/threading_base/api.html#_CPPv4N3hpx7threads16thread_pool_baseE" title="hpx::threads::thread_pool_base"><span class="pre">thread_pool_base</span></a> <span class="pre">*</span><em><span class="pre">pool</span></em>, <a class="reference internal" href="#_CPPv4I0EN3hpx6thread6threadEPN7threads16thread_pool_baseERR1F" title="hpx::thread::thread::F"><span class="pre">F</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx6thread6threadEPN7threads16thread_pool_baseERR1F" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0DpEN3hpx6thread6threadEPN7threads16thread_pool_baseERR1FDpRR2Ts">
+<span id="_CPPv3I0DpEN3hpx6thread6threadEPN7threads16thread_pool_baseERR1FDpRR2Ts"></span><span id="_CPPv2I0DpEN3hpx6thread6threadEPN7threads16thread_pool_baseERR1FDpRR2Ts"></span><span class="target" id="classhpx_1_1thread_1aa1ff9234ec3ab1228e007b07ccaea952"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">F</span></code><span class="pre">,</span> <span class="pre">typename</span> <span class="pre">...</span><code class="sig-name descname"><span class="pre">Ts</span></code><span class="pre">&gt;</span><br /><code class="sig-name descname"><span class="pre">thread</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/threading_base/api.html#_CPPv4N3hpx7threads16thread_pool_baseE" title="hpx::threads::thread_pool_base"><span class="pre">thread_pool_base</span></a> <span class="pre">*</span><em><span class="pre">pool</span></em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx6thread6threadEPN7threads16thread_pool_baseERR1FDpRR2Ts" title="hpx::thread::thread::F"><span class="pre">F</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">f</span></em>, <a class="reference internal" href="#_CPPv4I0DpEN3hpx6thread6threadEPN7threads16thread_pool_baseERR1FDpRR2Ts" title="hpx::thread::thread::Ts"><span class="pre">Ts</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="pre">...</span> <em><span class="pre">vs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0DpEN3hpx6thread6threadEPN7threads16thread_pool_baseERR1FDpRR2Ts" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6threadD0Ev">
+<span id="_CPPv3N3hpx6threadD0Ev"></span><span id="_CPPv2N3hpx6threadD0Ev"></span><span id="hpx::thread::~thread"></span><span class="target" id="classhpx_1_1thread_1ad83512a3049616e894d8248d7bbfc6b7"></span><code class="sig-name descname"><span class="pre">~thread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6threadD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread6threadERR6thread">
+<span id="_CPPv3N3hpx6thread6threadERR6thread"></span><span id="_CPPv2N3hpx6thread6threadERR6thread"></span><span id="hpx::thread::thread__threadRR"></span><span class="target" id="classhpx_1_1thread_1a8dc054cfae4ba09154233fce4aa55d4a"></span><code class="sig-name descname"><span class="pre">thread</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6thread6threadERR6thread" title="hpx::thread::thread"><span class="pre">thread</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread6threadERR6thread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6threadaSERR6thread">
+<span id="_CPPv3N3hpx6threadaSERR6thread"></span><span id="_CPPv2N3hpx6threadaSERR6thread"></span><span id="hpx::thread::assign-operator__threadRR"></span><span class="target" id="classhpx_1_1thread_1a607af49c5e8b256b4be154f5c0052150"></span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">&amp;</span><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6threadaSERR6thread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread4swapER6thread">
+<span id="_CPPv3N3hpx6thread4swapER6thread"></span><span id="_CPPv2N3hpx6thread4swapER6thread"></span><span id="hpx::thread::swap__threadR"></span><span class="target" id="classhpx_1_1thread_1a6926e6415397708fa7c316689742d92b"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">swap</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread4swapER6thread" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx6thread8joinableEv">
+<span id="_CPPv3NK3hpx6thread8joinableEv"></span><span id="_CPPv2NK3hpx6thread8joinableEv"></span><span id="hpx::thread::joinableC"></span><span class="target" id="classhpx_1_1thread_1a12a733bddbd5e02db6e3a8ab1b4f9a40"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">joinable</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx6thread8joinableEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread4joinEv">
+<span id="_CPPv3N3hpx6thread4joinEv"></span><span id="_CPPv2N3hpx6thread4joinEv"></span><span id="hpx::thread::join"></span><span class="target" id="classhpx_1_1thread_1a144b2a4ef1ec1209d5eac52d95419b62"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">join</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread4joinEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread6detachEv">
+<span id="_CPPv3N3hpx6thread6detachEv"></span><span id="_CPPv2N3hpx6thread6detachEv"></span><span id="hpx::thread::detach"></span><span class="target" id="classhpx_1_1thread_1a65d7f6e9f4bb311d73c40a2f74976ede"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">detach</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread6detachEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx6thread6get_idEv">
+<span id="_CPPv3NK3hpx6thread6get_idEv"></span><span id="_CPPv2NK3hpx6thread6get_idEv"></span><span id="hpx::thread::get_idC"></span><span class="target" id="classhpx_1_1thread_1a914e10ffd5e2486ca505fdc579902346"></span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <code class="sig-name descname"><span class="pre">get_id</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx6thread6get_idEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx6thread13native_handleEv">
+<span id="_CPPv3NK3hpx6thread13native_handleEv"></span><span id="_CPPv2NK3hpx6thread13native_handleEv"></span><span id="hpx::thread::native_handleC"></span><span class="target" id="classhpx_1_1thread_1acf48190d264ab64c1c4ec99d0b421b5a"></span><a class="reference internal" href="#_CPPv4N3hpx6thread18native_handle_typeE" title="hpx::thread::native_handle_type"><span class="pre">native_handle_type</span></a> <code class="sig-name descname"><span class="pre">native_handle</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx6thread13native_handleEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread9interruptEb">
+<span id="_CPPv3N3hpx6thread9interruptEb"></span><span id="_CPPv2N3hpx6thread9interruptEb"></span><span id="hpx::thread::interrupt__b"></span><span class="target" id="classhpx_1_1thread_1ac34d0d033aa743c476a79dbc2e1a8a39"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">interrupt</span></code><span class="sig-paren">(</span><span class="pre">bool</span> <em><span class="pre">flag</span></em> <span class="pre">=</span> <span class="pre">true</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread9interruptEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx6thread22interruption_requestedEv">
+<span id="_CPPv3NK3hpx6thread22interruption_requestedEv"></span><span id="_CPPv2NK3hpx6thread22interruption_requestedEv"></span><span id="hpx::thread::interruption_requestedC"></span><span class="target" id="classhpx_1_1thread_1a33276bb4c20bbb0b1978944e18ef71b8"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">interruption_requested</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx6thread22interruption_requestedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread10get_futureER10error_code">
+<span id="_CPPv3N3hpx6thread10get_futureER10error_code"></span><span id="_CPPv2N3hpx6thread10get_futureER10error_code"></span><span id="hpx::thread::get_future__error_codeR"></span><span class="target" id="classhpx_1_1thread_1ab814804babf68df549bbf152e0a089ca"></span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos"><span class="pre">lcos</span></a><span class="pre">::</span><span class="pre">future</span><span class="pre">&lt;</span><span class="pre">void</span><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">get_future</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><span class="pre">error_code</span></a> <span class="pre">&amp;</span><em><span class="pre">ec</span></em> <span class="pre">=</span> <a class="reference internal" href="../../core/errors/api.html#_CPPv4N3hpx6throwsE" title="hpx::throws"><span class="pre">throws</span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread10get_futureER10error_code" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx6thread15get_thread_dataEv">
+<span id="_CPPv3NK3hpx6thread15get_thread_dataEv"></span><span id="_CPPv2NK3hpx6thread15get_thread_dataEv"></span><span id="hpx::thread::get_thread_dataC"></span><span class="target" id="classhpx_1_1thread_1a4535ef82cec3b953d2c941d20e3e3904"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">get_thread_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx6thread15get_thread_dataEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread15set_thread_dataENSt6size_tE">
+<span id="_CPPv3N3hpx6thread15set_thread_dataENSt6size_tE"></span><span id="_CPPv2N3hpx6thread15set_thread_dataENSt6size_tE"></span><span id="hpx::thread::set_thread_data__std::s"></span><span class="target" id="classhpx_1_1thread_1a7317a3cf5251f3b33c990449570d4cea"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">set_thread_data</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread15set_thread_dataENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1thread_1a9bafc674c7c95449d2bc6b8df84aa229"></span><code class="sig-name descname"><span class="pre">static</span> <span class="pre">HPX_NODISCARD</span> <span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">hpx::thread::hardware_concurrency()</span></code></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread9interruptE2idb">
+<span id="_CPPv3N3hpx6thread9interruptE2idb"></span><span id="_CPPv2N3hpx6thread9interruptE2idb"></span><span id="hpx::thread::interrupt__id.b"></span><span class="target" id="classhpx_1_1thread_1a7bb5d0b47402965ad11911657cf71c35"></span><em class="property"><span class="pre">static</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">interrupt</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a>, <span class="pre">bool</span> <em><span class="pre">flag</span></em> <span class="pre">=</span> <span class="pre">true</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread9interruptE2idb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx6thread10mutex_typeE">
+<span id="_CPPv3N3hpx6thread10mutex_typeE"></span><span id="_CPPv2N3hpx6thread10mutex_typeE"></span><span id="hpx::thread::mutex_type"></span><span class="target" id="classhpx_1_1thread_1a13d9531044b01ebfa5e0d84e60a3f298"></span><em class="property"><span class="pre">typedef</span> </em><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos"><span class="pre">lcos</span></a><span class="pre">::</span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcos5localE" title="hpx::lcos::local"><span class="pre">local</span></a><span class="pre">::</span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx4lcos5local8spinlockE" title="hpx::lcos::local::spinlock"><span class="pre">spinlock</span></a> <code class="sig-name descname"><span class="pre">mutex_type</span></code><a class="headerlink" href="#_CPPv4N3hpx6thread10mutex_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx6thread9terminateEPKcPKc">
+<span id="_CPPv3NK3hpx6thread9terminateEPKcPKc"></span><span id="_CPPv2NK3hpx6thread9terminateEPKcPKc"></span><span id="hpx::thread::terminate__cCP.cCPC"></span><span class="target" id="classhpx_1_1thread_1aed9557be778e81ec54da230372bdf672"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">terminate</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">function</span></em>, <em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">reason</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx6thread9terminateEPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx6thread15joinable_lockedEv">
+<span id="_CPPv3NK3hpx6thread15joinable_lockedEv"></span><span id="_CPPv2NK3hpx6thread15joinable_lockedEv"></span><span id="hpx::thread::joinable_lockedC"></span><span class="target" id="classhpx_1_1thread_1a8795b29cdb2ee8e66d0f7cadd30275ba"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">joinable_locked</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx6thread15joinable_lockedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread13detach_lockedEv">
+<span id="_CPPv3N3hpx6thread13detach_lockedEv"></span><span id="_CPPv2N3hpx6thread13detach_lockedEv"></span><span id="hpx::thread::detach_locked"></span><span class="target" id="classhpx_1_1thread_1a6629d17f74f8e9c137ed024c7f52a3ca"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">detach_locked</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread13detach_lockedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread12start_threadEPN7threads16thread_pool_baseERRN4util22unique_function_nonserIFvvEEE">
+<span id="_CPPv3N3hpx6thread12start_threadEPN7threads16thread_pool_baseERRN4util22unique_function_nonserIFvvEEE"></span><span id="_CPPv2N3hpx6thread12start_threadEPN7threads16thread_pool_baseERRN4util22unique_function_nonserIFvvEEE"></span><span class="target" id="classhpx_1_1thread_1a9c6a39932699eb51af98c0a471e3bb6c"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">start_thread</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/threading_base/api.html#_CPPv4N3hpx7threads16thread_pool_baseE" title="hpx::threads::thread_pool_base"><span class="pre">thread_pool_base</span></a> <span class="pre">*</span><em><span class="pre">pool</span></em>, <a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util"><span class="pre">util</span></a><span class="pre">::</span><a class="reference internal" href="../../core/functional/api.html#_CPPv4I0EN3hpx4util22unique_function_nonserE" title="hpx::util::unique_function_nonser"><span class="pre">unique_function_nonser</span></a><span class="pre">&lt;</span><span class="pre">void</span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="pre">&gt;</span> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread12start_threadEPN7threads16thread_pool_baseERRN4util22unique_function_nonserIFvvEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx6thread4mtx_E">
+<span id="_CPPv3N3hpx6thread4mtx_E"></span><span id="_CPPv2N3hpx6thread4mtx_E"></span><span id="hpx::thread::mtx___mutex_type"></span><span class="target" id="classhpx_1_1thread_1a17c350b2a01963d9c5f6b6b720e86596"></span><a class="reference internal" href="#_CPPv4N3hpx6thread10mutex_typeE" title="hpx::thread::mutex_type"><span class="pre">mutex_type</span></a> <code class="sig-name descname"><span class="pre">mtx_</span></code><a class="headerlink" href="#_CPPv4N3hpx6thread4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx6thread3id_E">
+<span id="_CPPv3N3hpx6thread3id_E"></span><span id="_CPPv2N3hpx6thread3id_E"></span><span id="hpx::thread::id___threads::thread_id_type"></span><span class="target" id="classhpx_1_1thread_1ac7c471d6db19bb8e33f697ec2d703479"></span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx7threads14thread_id_typeE" title="hpx::threads::thread_id_type"><span class="pre">thread_id_type</span></a> <code class="sig-name descname"><span class="pre">id_</span></code><a class="headerlink" href="#_CPPv4N3hpx6thread3id_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread23thread_function_nullaryERKN4util22unique_function_nonserIFvvEEE">
+<span id="_CPPv3N3hpx6thread23thread_function_nullaryERKN4util22unique_function_nonserIFvvEEE"></span><span id="_CPPv2N3hpx6thread23thread_function_nullaryERKN4util22unique_function_nonserIFvvEEE"></span><span class="target" id="classhpx_1_1thread_1ae0fc2d1b99d76d6c8520a08fc294f656"></span><em class="property"><span class="pre">static</span></em> <a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><span class="pre">thread_result_type</span> <code class="sig-name descname"><span class="pre">thread_function_nullary</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/allocator_support/api.html#_CPPv4N3hpx4utilE" title="hpx::util"><span class="pre">util</span></a><span class="pre">::</span><a class="reference internal" href="../../core/functional/api.html#_CPPv4I0EN3hpx4util22unique_function_nonserE" title="hpx::util::unique_function_nonser"><span class="pre">unique_function_nonser</span></a><span class="pre">&lt;</span><span class="pre">void</span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="pre">&gt;</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread23thread_function_nullaryERKN4util22unique_function_nonserIFvvEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt id="_CPPv4N3hpx6thread2idE">
+<span id="_CPPv3N3hpx6thread2idE"></span><span id="_CPPv2N3hpx6thread2idE"></span><span id="hpx::thread::id"></span><span class="target" id="classhpx_1_1thread_1_1id"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">id</span></code><a class="headerlink" href="#_CPPv4N3hpx6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread2id2idEv">
+<span id="_CPPv3N3hpx6thread2id2idEv"></span><span id="_CPPv2N3hpx6thread2id2idEv"></span><span id="hpx::thread::id::id"></span><span class="target" id="classhpx_1_1thread_1_1id_1a63028f686f08187164a069bd751f8537"></span><code class="sig-name descname"><span class="pre">id</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread2id2idEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread2id2idERKN7threads14thread_id_typeE">
+<span id="_CPPv3N3hpx6thread2id2idERKN7threads14thread_id_typeE"></span><span id="_CPPv2N3hpx6thread2id2idERKN7threads14thread_id_typeE"></span><span id="hpx::thread::id::id__threads::thread_id_typeCR"></span><span class="target" id="classhpx_1_1thread_1_1id_1a043e3e5a4a8da3eae5da19bc0f17f38d"></span><code class="sig-name descname"><span class="pre">id</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx7threads14thread_id_typeE" title="hpx::threads::thread_id_type"><span class="pre">thread_id_type</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">i</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread2id2idERKN7threads14thread_id_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx6thread2id2idERRN7threads14thread_id_typeE">
+<span id="_CPPv3N3hpx6thread2id2idERRN7threads14thread_id_typeE"></span><span id="_CPPv2N3hpx6thread2id2idERRN7threads14thread_id_typeE"></span><span id="hpx::thread::id::id__threads::thread_id_typeRR"></span><span class="target" id="classhpx_1_1thread_1_1id_1a1ae660af264722211179558456fcd14d"></span><code class="sig-name descname"><span class="pre">id</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx7threads14thread_id_typeE" title="hpx::threads::thread_id_type"><span class="pre">thread_id_type</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">i</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx6thread2id2idERRN7threads14thread_id_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3hpx6thread2id13native_handleEv">
+<span id="_CPPv3NK3hpx6thread2id13native_handleEv"></span><span id="_CPPv2NK3hpx6thread2id13native_handleEv"></span><span id="hpx::thread::id::native_handleC"></span><span class="target" id="classhpx_1_1thread_1_1id_1a507879fe4ee65bfa589df2d04a4a6618"></span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx7threads14thread_id_typeE" title="hpx::threads::thread_id_type"><span class="pre">thread_id_type</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">native_handle</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx6thread2id13native_handleEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx6thread2id3id_E">
+<span id="_CPPv3N3hpx6thread2id3id_E"></span><span id="_CPPv2N3hpx6thread2id3id_E"></span><span id="hpx::thread::id::id___threads::thread_id_type"></span><span class="target" id="classhpx_1_1thread_1_1id_1afb08651e3bb64887d9d14fb5929bcde6"></span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/synchronization/api.html#_CPPv4N3hpx7threads14thread_id_typeE" title="hpx::threads::thread_id_type"><span class="pre">thread_id_type</span></a> <code class="sig-name descname"><span class="pre">id_</span></code><a class="headerlink" href="#_CPPv4N3hpx6thread2id3id_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1thread_1_1id_1adb314a48b19f4325e5e69e8a60091fce"></span><em class="property"><span class="pre">friend</span> </em><code class="sig-name descname"><span class="pre">hpx::thread</span></code></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4eqRKN6thread2idERKN6thread2idE">
+<span id="_CPPv3eqRKN6thread2idERKN6thread2idE"></span><span id="_CPPv2eqRKN6thread2idERKN6thread2idE"></span><span id="eq-operator__thread::idCR.thread::idCR"></span><span class="target" id="classhpx_1_1thread_1_1id_1a8b2278899dc3cd0497b6bec16d82687f"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator==</span></code><span class="sig-paren">(</span><span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4eqRKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4neRKN6thread2idERKN6thread2idE">
+<span id="_CPPv3neRKN6thread2idERKN6thread2idE"></span><span id="_CPPv2neRKN6thread2idERKN6thread2idE"></span><span id="neq-operator__thread::idCR.thread::idCR"></span><span class="target" id="classhpx_1_1thread_1_1id_1ab8fb1b6c02e3d0aa9287645c374ca8ed"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator!=</span></code><span class="sig-paren">(</span><span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4neRKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4ltRKN6thread2idERKN6thread2idE">
+<span id="_CPPv3ltRKN6thread2idERKN6thread2idE"></span><span id="_CPPv2ltRKN6thread2idERKN6thread2idE"></span><span id="lt-operator__thread::idCR.thread::idCR"></span><span class="target" id="classhpx_1_1thread_1_1id_1a74f94dfb5daac08018a0d71cb837acbf"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator&lt;</span></code><span class="sig-paren">(</span><span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4ltRKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4gtRKN6thread2idERKN6thread2idE">
+<span id="_CPPv3gtRKN6thread2idERKN6thread2idE"></span><span id="_CPPv2gtRKN6thread2idERKN6thread2idE"></span><span id="gt-operator__thread::idCR.thread::idCR"></span><span class="target" id="classhpx_1_1thread_1_1id_1a124cddb36c28ab2ef4ea70c9da386408"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator&gt;</span></code><span class="sig-paren">(</span><span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4gtRKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4leRKN6thread2idERKN6thread2idE">
+<span id="_CPPv3leRKN6thread2idERKN6thread2idE"></span><span id="_CPPv2leRKN6thread2idERKN6thread2idE"></span><span id="lte-operator__thread::idCR.thread::idCR"></span><span class="target" id="classhpx_1_1thread_1_1id_1afdc4b76eec66944f3bb6fdd966356118"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator&lt;=</span></code><span class="sig-paren">(</span><span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4leRKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4geRKN6thread2idERKN6thread2idE">
+<span id="_CPPv3geRKN6thread2idERKN6thread2idE"></span><span id="_CPPv2geRKN6thread2idERKN6thread2idE"></span><span id="gte-operator__thread::idCR.thread::idCR"></span><span class="target" id="classhpx_1_1thread_1_1id_1aa1883c3724bb098561244e0483de0e44"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">operator&gt;=</span></code><span class="sig-paren">(</span><span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em>, <span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4geRKN6thread2idERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00ElsRNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE">
+<span id="_CPPv3I00ElsRNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE"></span><span id="_CPPv2I00ElsRNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE"></span><span class="target" id="classhpx_1_1thread_1_1id_1a9988c4f3c04647b0a58e340e2091ca14"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">Char</span></code><span class="pre">,</span> <span class="pre">typename</span> <code class="sig-name descname"><span class="pre">Traits</span></code><span class="pre">&gt;</span><br /><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">basic_ostream</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I00ElsRNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="operator&lt;&lt;::Char"><span class="pre">Char</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I00ElsRNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="operator&lt;&lt;::Traits"><span class="pre">Traits</span></a><span class="pre">&gt;</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator&lt;&lt;</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">basic_ostream</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I00ElsRNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="operator&lt;&lt;::Char"><span class="pre">Char</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I00ElsRNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="operator&lt;&lt;::Traits"><span class="pre">Traits</span></a><span class="pre">&gt;</span> <span class="pre">&amp;</span><em><span class="pre">out</span></em>, <span class="pre">thread</span><span class="pre">::</span><span class="pre">id</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00ElsRNSt13basic_ostreamI4Char6TraitsEERNSt13basic_ostreamI4Char6TraitsEERKN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx11this_threadE">
+<span id="_CPPv3N3hpx11this_threadE"></span><span id="_CPPv2N3hpx11this_threadE"></span><span id="hpx::this_thread"></span><span class="target" id="namespacehpx_1_1this__thread"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">this_thread</span></code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread6get_idEv">
+<span id="_CPPv3N3hpx11this_thread6get_idEv"></span><span id="_CPPv2N3hpx11this_thread6get_idEv"></span><span id="hpx::this_thread::get_id"></span><span class="target" id="thread_8hpp_1a7af20818d0b5e9201ab9337d7023d47d"></span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <code class="sig-name descname"><span class="pre">get_id</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread6get_idEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread5yieldEv">
+<span id="_CPPv3N3hpx11this_thread5yieldEv"></span><span id="_CPPv2N3hpx11this_thread5yieldEv"></span><span id="hpx::this_thread::yield"></span><span class="target" id="thread_8hpp_1a9741ecd1a565aada509f4ece34a51098"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">yield</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread5yieldEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread8yield_toEN6thread2idE">
+<span id="_CPPv3N3hpx11this_thread8yield_toEN6thread2idE"></span><span id="_CPPv2N3hpx11this_thread8yield_toEN6thread2idE"></span><span id="hpx::this_thread::yield_to__thread::id"></span><span class="target" id="thread_8hpp_1a60baac157054035f3d1aec354d0a1ed3"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">yield_to</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread8yield_toEN6thread2idE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread12get_priorityEv">
+<span id="_CPPv3N3hpx11this_thread12get_priorityEv"></span><span id="_CPPv2N3hpx11this_thread12get_priorityEv"></span><span id="hpx::this_thread::get_priority"></span><span class="target" id="thread_8hpp_1ab49ad5fcd17d3b4f0aba65ba15db23f1"></span><a class="reference internal" href="../../core/affinity/api.html#_CPPv4N3hpx7threadsE" title="hpx::threads"><span class="pre">threads</span></a><span class="pre">::</span><a class="reference internal" href="../../core/coroutines/api.html#_CPPv4N3hpx7threads15thread_priorityE" title="hpx::threads::thread_priority"><span class="pre">thread_priority</span></a> <code class="sig-name descname"><span class="pre">get_priority</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread12get_priorityEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread14get_stack_sizeEv">
+<span id="_CPPv3N3hpx11this_thread14get_stack_sizeEv"></span><span id="_CPPv2N3hpx11this_thread14get_stack_sizeEv"></span><span id="hpx::this_thread::get_stack_size"></span><span class="target" id="thread_8hpp_1a0c1679dbf05a641aba0eb61d03e9f77b"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">ptrdiff_t</span> <code class="sig-name descname"><span class="pre">get_stack_size</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread14get_stack_sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread18interruption_pointEv">
+<span id="_CPPv3N3hpx11this_thread18interruption_pointEv"></span><span id="_CPPv2N3hpx11this_thread18interruption_pointEv"></span><span id="hpx::this_thread::interruption_point"></span><span class="target" id="thread_8hpp_1afed29489fe37f74d28ad598645bee89a"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">interruption_point</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread18interruption_pointEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread20interruption_enabledEv">
+<span id="_CPPv3N3hpx11this_thread20interruption_enabledEv"></span><span id="_CPPv2N3hpx11this_thread20interruption_enabledEv"></span><span id="hpx::this_thread::interruption_enabled"></span><span class="target" id="thread_8hpp_1a8a68e7805419dd290528a99d64db670f"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">interruption_enabled</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread20interruption_enabledEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread22interruption_requestedEv">
+<span id="_CPPv3N3hpx11this_thread22interruption_requestedEv"></span><span id="_CPPv2N3hpx11this_thread22interruption_requestedEv"></span><span id="hpx::this_thread::interruption_requested"></span><span class="target" id="thread_8hpp_1acf7fd1e2e7965fcda83d436fa5242a9a"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">interruption_requested</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread22interruption_requestedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread9interruptEv">
+<span id="_CPPv3N3hpx11this_thread9interruptEv"></span><span id="_CPPv2N3hpx11this_thread9interruptEv"></span><span id="hpx::this_thread::interrupt"></span><span class="target" id="thread_8hpp_1a49cd26229bfb67be978922ae515a44bb"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">interrupt</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread9interruptEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread11sleep_untilERKN3hpx6chrono17steady_time_pointE">
+<span id="_CPPv3N3hpx11this_thread11sleep_untilERKN3hpx6chrono17steady_time_pointE"></span><span id="_CPPv2N3hpx11this_thread11sleep_untilERKN3hpx6chrono17steady_time_pointE"></span><span id="hpx::this_thread::sleep_until__hpx::chrono::steady_time_pointCR"></span><span class="target" id="thread_8hpp_1a54a70ab1723fd42701b6afa1c7c02f4b"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">sleep_until</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx"><span class="pre">hpx</span></a><span class="pre">::</span><a class="reference internal" href="../../core/timing/api.html#_CPPv4N3hpx6chronoE" title="hpx::chrono"><span class="pre">chrono</span></a><span class="pre">::</span><a class="reference internal" href="../../core/timing/api.html#_CPPv4N3hpx6chrono17steady_time_pointE" title="hpx::chrono::steady_time_point"><span class="pre">steady_time_point</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">abs_time</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread11sleep_untilERKN3hpx6chrono17steady_time_pointE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread9sleep_forERKN3hpx6chrono15steady_durationE">
+<span id="_CPPv3N3hpx11this_thread9sleep_forERKN3hpx6chrono15steady_durationE"></span><span id="_CPPv2N3hpx11this_thread9sleep_forERKN3hpx6chrono15steady_durationE"></span><span id="hpx::this_thread::sleep_for__hpx::chrono::steady_durationCR"></span><span class="target" id="thread_8hpp_1a35decaea18ab6ed422429185f18fe90c"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">sleep_for</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx"><span class="pre">hpx</span></a><span class="pre">::</span><a class="reference internal" href="../../core/timing/api.html#_CPPv4N3hpx6chronoE" title="hpx::chrono"><span class="pre">chrono</span></a><span class="pre">::</span><a class="reference internal" href="../../core/timing/api.html#_CPPv4N3hpx6chrono15steady_durationE" title="hpx::chrono::steady_duration"><span class="pre">steady_duration</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">rel_time</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread9sleep_forERKN3hpx6chrono15steady_durationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread15get_thread_dataEv">
+<span id="_CPPv3N3hpx11this_thread15get_thread_dataEv"></span><span id="_CPPv2N3hpx11this_thread15get_thread_dataEv"></span><span id="hpx::this_thread::get_thread_data"></span><span class="target" id="thread_8hpp_1af551f1cc08fe1b20d6644e0a03a79689"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">get_thread_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread15get_thread_dataEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread15set_thread_dataENSt6size_tE">
+<span id="_CPPv3N3hpx11this_thread15set_thread_dataENSt6size_tE"></span><span id="_CPPv2N3hpx11this_thread15set_thread_dataENSt6size_tE"></span><span id="hpx::this_thread::set_thread_data__std::s"></span><span class="target" id="thread_8hpp_1abe52620d1c93af629ad1fd2638f72c19"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">set_thread_data</span></code><span class="sig-paren">(</span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread15set_thread_dataENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt id="_CPPv4N3hpx11this_thread20disable_interruptionE">
+<span id="_CPPv3N3hpx11this_thread20disable_interruptionE"></span><span id="_CPPv2N3hpx11this_thread20disable_interruptionE"></span><span id="hpx::this_thread::disable_interruption"></span><span class="target" id="classhpx_1_1this__thread_1_1disable__interruption"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">disable_interruption</span></code><a class="headerlink" href="#_CPPv4N3hpx11this_thread20disable_interruptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread20disable_interruption20disable_interruptionEv">
+<span id="_CPPv3N3hpx11this_thread20disable_interruption20disable_interruptionEv"></span><span id="_CPPv2N3hpx11this_thread20disable_interruption20disable_interruptionEv"></span><span id="hpx::this_thread::disable_interruption::disable_interruption"></span><span class="target" id="classhpx_1_1this__thread_1_1disable__interruption_1ab5f14638419e1c8dc2480cfbd07c83ab"></span><code class="sig-name descname"><span class="pre">disable_interruption</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread20disable_interruption20disable_interruptionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread20disable_interruptionD0Ev">
+<span id="_CPPv3N3hpx11this_thread20disable_interruptionD0Ev"></span><span id="_CPPv2N3hpx11this_thread20disable_interruptionD0Ev"></span><span id="hpx::this_thread::disable_interruption::~disable_interruption"></span><span class="target" id="classhpx_1_1this__thread_1_1disable__interruption_1abcbeef0223888b0ad863641d7ed8d131"></span><code class="sig-name descname"><span class="pre">~disable_interruption</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread20disable_interruptionD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread20disable_interruption20disable_interruptionERK20disable_interruption">
+<span id="_CPPv3N3hpx11this_thread20disable_interruption20disable_interruptionERK20disable_interruption"></span><span id="_CPPv2N3hpx11this_thread20disable_interruption20disable_interruptionERK20disable_interruption"></span><span id="hpx::this_thread::disable_interruption::disable_interruption__disable_interruptionCR"></span><span class="target" id="classhpx_1_1this__thread_1_1disable__interruption_1a515c6219c258b25bf19836cb605fe608"></span><code class="sig-name descname"><span class="pre">disable_interruption</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx11this_thread20disable_interruption20disable_interruptionERK20disable_interruption" title="hpx::this_thread::disable_interruption::disable_interruption"><span class="pre">disable_interruption</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread20disable_interruption20disable_interruptionERK20disable_interruption" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread20disable_interruptionaSERK20disable_interruption">
+<span id="_CPPv3N3hpx11this_thread20disable_interruptionaSERK20disable_interruption"></span><span id="_CPPv2N3hpx11this_thread20disable_interruptionaSERK20disable_interruption"></span><span id="hpx::this_thread::disable_interruption::assign-operator__disable_interruptionCR"></span><span class="target" id="classhpx_1_1this__thread_1_1disable__interruption_1a6cbcde22877dc58b8e539c69618a5379"></span><a class="reference internal" href="#_CPPv4N3hpx11this_thread20disable_interruptionE" title="hpx::this_thread::disable_interruption"><span class="pre">disable_interruption</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx11this_thread20disable_interruptionE" title="hpx::this_thread::disable_interruption"><span class="pre">disable_interruption</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread20disable_interruptionaSERK20disable_interruption" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx11this_thread20disable_interruption25interruption_was_enabled_E">
+<span id="_CPPv3N3hpx11this_thread20disable_interruption25interruption_was_enabled_E"></span><span id="_CPPv2N3hpx11this_thread20disable_interruption25interruption_was_enabled_E"></span><span id="hpx::this_thread::disable_interruption::interruption_was_enabled___b"></span><span class="target" id="classhpx_1_1this__thread_1_1disable__interruption_1a6bf39eef853141114da4a91217440ea2"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">interruption_was_enabled_</span></code><a class="headerlink" href="#_CPPv4N3hpx11this_thread20disable_interruption25interruption_was_enabled_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="classhpx_1_1this__thread_1_1disable__interruption_1a945f79df871d96e98cd1d4080887c491"></span><em class="property"><span class="pre">friend</span> </em><code class="sig-name descname"><span class="pre">hpx::this_thread::restore_interruption</span></code></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3hpx11this_thread20restore_interruptionE">
+<span id="_CPPv3N3hpx11this_thread20restore_interruptionE"></span><span id="_CPPv2N3hpx11this_thread20restore_interruptionE"></span><span id="hpx::this_thread::restore_interruption"></span><span class="target" id="classhpx_1_1this__thread_1_1restore__interruption"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">restore_interruption</span></code><a class="headerlink" href="#_CPPv4N3hpx11this_thread20restore_interruptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread20restore_interruption20restore_interruptionER20disable_interruption">
+<span id="_CPPv3N3hpx11this_thread20restore_interruption20restore_interruptionER20disable_interruption"></span><span id="_CPPv2N3hpx11this_thread20restore_interruption20restore_interruptionER20disable_interruption"></span><span id="hpx::this_thread::restore_interruption::restore_interruption__disable_interruptionR"></span><span class="target" id="classhpx_1_1this__thread_1_1restore__interruption_1abd976c6556118171f5ee5b6d2a35c5bd"></span><code class="sig-name descname"><span class="pre">restore_interruption</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx11this_thread20disable_interruptionE" title="hpx::this_thread::disable_interruption"><span class="pre">disable_interruption</span></a> <span class="pre">&amp;</span><em><span class="pre">d</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread20restore_interruption20restore_interruptionER20disable_interruption" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread20restore_interruptionD0Ev">
+<span id="_CPPv3N3hpx11this_thread20restore_interruptionD0Ev"></span><span id="_CPPv2N3hpx11this_thread20restore_interruptionD0Ev"></span><span id="hpx::this_thread::restore_interruption::~restore_interruption"></span><span class="target" id="classhpx_1_1this__thread_1_1restore__interruption_1a9b78344b79c0ad0524a2d59361841eea"></span><code class="sig-name descname"><span class="pre">~restore_interruption</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread20restore_interruptionD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread20restore_interruption20restore_interruptionERK20restore_interruption">
+<span id="_CPPv3N3hpx11this_thread20restore_interruption20restore_interruptionERK20restore_interruption"></span><span id="_CPPv2N3hpx11this_thread20restore_interruption20restore_interruptionERK20restore_interruption"></span><span id="hpx::this_thread::restore_interruption::restore_interruption__restore_interruptionCR"></span><span class="target" id="classhpx_1_1this__thread_1_1restore__interruption_1aca9b8550bdc990a435ae7afc3043d818"></span><code class="sig-name descname"><span class="pre">restore_interruption</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx11this_thread20restore_interruption20restore_interruptionERK20restore_interruption" title="hpx::this_thread::restore_interruption::restore_interruption"><span class="pre">restore_interruption</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread20restore_interruption20restore_interruptionERK20restore_interruption" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx11this_thread20restore_interruptionaSERK20restore_interruption">
+<span id="_CPPv3N3hpx11this_thread20restore_interruptionaSERK20restore_interruption"></span><span id="_CPPv2N3hpx11this_thread20restore_interruptionaSERK20restore_interruption"></span><span id="hpx::this_thread::restore_interruption::assign-operator__restore_interruptionCR"></span><span class="target" id="classhpx_1_1this__thread_1_1restore__interruption_1a69673dedde81902f97efb9aec7fdb1d5"></span><a class="reference internal" href="#_CPPv4N3hpx11this_thread20restore_interruptionE" title="hpx::this_thread::restore_interruption"><span class="pre">restore_interruption</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx11this_thread20restore_interruptionE" title="hpx::this_thread::restore_interruption"><span class="pre">restore_interruption</span></a> <em class="property"><span class="pre">const</span></em><span class="pre">&amp;</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx11this_thread20restore_interruptionaSERK20restore_interruption" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp member">
+<dt id="_CPPv4N3hpx11this_thread20restore_interruption25interruption_was_enabled_E">
+<span id="_CPPv3N3hpx11this_thread20restore_interruption25interruption_was_enabled_E"></span><span id="_CPPv2N3hpx11this_thread20restore_interruption25interruption_was_enabled_E"></span><span id="hpx::this_thread::restore_interruption::interruption_was_enabled___b"></span><span class="target" id="classhpx_1_1this__thread_1_1restore__interruption_1a975c571433b444dc279cfadbccbe0f71"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">interruption_was_enabled_</span></code><a class="headerlink" href="#_CPPv4N3hpx11this_thread20restore_interruption25interruption_was_enabled_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4St">
+<span id="_CPPv3St"></span><span id="_CPPv2St"></span><span id="std"></span><span class="target" id="namespacestd"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">std</span></code><br /></dt>
+<dd><dl class="cpp struct">
+<dt>
+<span class="target" id="structstd_1_1hash_3_1_1hpx_1_1thread_1_1id_01_4"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">hash</span></code><span class="pre">&lt;</span><span class="pre">::</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx"><span class="pre">hpx</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a><span class="pre">&gt;</span><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt>
+<span class="target" id="structstd_1_1hash_3_1_1hpx_1_1thread_1_1id_01_4_1a46b24ab48c2c864107b5b03c7e41fce0"></span><a class="reference internal" href="../../core/datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">operator()</span></code><span class="sig-paren">(</span><span class="pre">::</span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx"><span class="pre">hpx</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6threadE" title="hpx::thread"><span class="pre">thread</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx6thread2idE" title="hpx::thread::id"><span class="pre">id</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">id</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../timed_execution/api.html" class="btn btn-neutral float-right" title="timed_execution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../thread_pool_util/api.html" class="btn btn-neutral float-left" title="thread_pool_util" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2008-2020, The STE||AR Group.
+      <span class="commit">
+        
+        Revision <code>49717bc</code>.
+      </span>
+      <span class="lastupdated">
+        Last updated on Jun 21, 2021.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

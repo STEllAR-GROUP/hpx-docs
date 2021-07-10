@@ -247,7 +247,10 @@ latest proposals.</p>
 algorithms with equivalent behaviour to the non-task policies
 <code class="docutils literal notranslate"><span class="pre">hpx::execution::seq</span></code>, <code class="docutils literal notranslate"><span class="pre">hpx::execution::par</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">hpx::execution::par_unseq</span></code>.</p></li>
-<li><p>Vc support has been fixed, after being broken in 1.6.0.</p></li>
+<li><p>Vc support has been fixed, after being broken in 1.6.0. In addition, <em>HPX</em> now
+experimentally supports GCC’s SIMD implementation, when available. The
+implementation can be used through the <code class="docutils literal notranslate"><span class="pre">hpx::execution::simd</span></code> and
+<code class="docutils literal notranslate"><span class="pre">hpx::execution::simdpar</span></code> execution policies.</p></li>
 <li><p>The customization points <code class="docutils literal notranslate"><span class="pre">sync_execute</span></code>, <code class="docutils literal notranslate"><span class="pre">async_execute</span></code>,
 <code class="docutils literal notranslate"><span class="pre">then_execute</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">bulk_sync_execute</span></code>, <code class="docutils literal notranslate"><span class="pre">bulk_async_execute</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">bulk_then_execute</span></code> are now implemented using <code class="docutils literal notranslate"><span class="pre">tag_dispatch</span></code> (previously
@@ -276,12 +279,19 @@ functionality is experimental and can change without notice.</p>
 <li><p>All <code class="docutils literal notranslate"><span class="pre">hpx::init</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx::start</span></code> overloads now take <code class="docutils literal notranslate"><span class="pre">std::function</span></code>s
 instead of <code class="docutils literal notranslate"><span class="pre">hpx::util::function_nonser</span></code>. No changes should be required in
 user code to accommodate this change.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::util::unwrapping</span></code> and other related unwrapping functionality has been
+moved up into the <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace. Names in <code class="docutils literal notranslate"><span class="pre">hpx::util</span></code> are still usable
+with a deprecation warning. This functionality can now be accessed through the
+<code class="docutils literal notranslate"><span class="pre">hpx/unwrap.hpp</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx/local/unwrap.hpp</span></code> headers.</p></li>
 <li><p>The default tag for APEX has been update from 2.3.1 to 2.4.0. In particular,
 this fixes a bug which could lead to hangs in distributed runs.</p></li>
-<li><p>The dependency on Boost.ASIO has been replaced with the standalone ASIO
-available at <a class="reference external" href="https://github.com/chriskohlhoff/asio">https://github.com/chriskohlhoff/asio</a>. ASIO will be fetched
-automatically using CMake’s fetchcontent, unless <code class="docutils literal notranslate"><span class="pre">ASIO_ROOT</span></code> is set as a
-CMake variable. In general, dependencies on Boost have again been reduced.</p></li>
+<li><p>The dependency on Boost.Asio has been replaced with the standalone Asio
+available at <a class="reference external" href="https://github.com/chriskohlhoff/asio">https://github.com/chriskohlhoff/asio</a>. By default, a
+system-installed Asio will be used. <code class="docutils literal notranslate"><span class="pre">ASIO_ROOT</span></code> can be given as a hint to
+tell CMake where to find Asio. Alternatively, Asio can be fetched
+automatically  using CMake’s fetchcontent by setting
+<code class="docutils literal notranslate"><span class="pre">HPX_WITH_FETCH_ASIO=ON</span></code>. In general, dependencies on Boost have again been
+reduced.</p></li>
 <li><p>Modularization of the library has continued. In this release almost all
 functionality has been moved into modules. These changes do not generally
 affect user code. Warnings are still issued for headers that have moved.</p></li>
@@ -554,10 +564,10 @@ other module categories</p></li>
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>ae29c75</code>.
+        Revision <code>968c317</code>.
       </span>
       <span class="lastupdated">
-        Last updated on Jun 29, 2021.
+        Last updated on Jul 10, 2021.
       </span>
 
     </p>

@@ -473,7 +473,7 @@ favorite compiler with <em>HPX</em> visit <a class="reference external" href="ht
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When building Boost using gcc, please note that it is required to specify a
-<code class="docutils literal notranslate"><span class="pre">cxxflags=-std=c++14</span></code> command line argument to <code class="docutils literal notranslate"><span class="pre">b2</span></code> (<code class="docutils literal notranslate"><span class="pre">bjam</span></code>).</p>
+<code class="docutils literal notranslate"><span class="pre">cxxflags=-std=c++17</span></code> command line argument to <code class="docutils literal notranslate"><span class="pre">b2</span></code> (<code class="docutils literal notranslate"><span class="pre">bjam</span></code>).</p>
 </div>
 <table class="docutils align-default" id="id16">
 <caption><span class="caption-number">Table 3 </span><span class="caption-text">Software prerequisites for <em>HPX</em> on Windows systems</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
@@ -792,16 +792,12 @@ variable <code class="docutils literal notranslate"><span class="pre">HPX_LIBRAR
 those are added to the <code class="docutils literal notranslate"><span class="pre">Libs</span></code> sections). In order to use the optional
 libraries, you need to specify them as link dependencies in your build (See
 <a class="reference internal" href="creating_hpx_projects.html#creating-hpx-projects"><span class="std std-ref">Creating HPX projects</span></a>).</p>
-<p>As <em>HPX</em> is a modern C++ library, we require a certain minimum set of features
-from the C++11 standard. In addition, we make use of certain C++14 features if
-the used compiler supports them. This means that the <em>HPX</em> build system will try
-to determine the highest support C++ standard flavor and check for availability
-of those features. That is, the default will be the highest C++ standard version
-available. If you want to force <em>HPX</em> to use a specific C++ standard version, you
-can use the following CMake variables:</p>
+<p>As <em>HPX</em> is a modern C++ library which relies on C++17 by default. The use of
+more recent standards can be opted into explicitly. If you want to force <em>HPX</em>
+to use a specific C++ standard version, you can use the following CMake
+variables:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX14</span></code>: Enables C++14 support (this is the minimum requirement)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX17</span></code>: Enables C++17 support</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX17</span></code>: Enables C++17 support (this is the minimum requirement)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX2A</span></code>: Enables (experimental) C++20 support</p></li>
 </ul>
 </div>
@@ -2039,7 +2035,6 @@ generate your specific makefiles/project files.</p>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_COMPRESSION_ZLIB-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_COMPRESSION_ZLIB:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_COMPUTE_CUDA-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_COMPUTE_CUDA:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_CUDA-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_CUDA:BOOL</span></code></a></p></li>
-<li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_CUDA_CLANG-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_CUDA_CLANG:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_DATAPAR-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DATAPAR:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_DATAPAR_VC-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DATAPAR_VC:BOOL</span></code></a></p></li>
 <li><p><a class="reference internal" href="#cmdoption-arg-HPX_WITH_DATAPAR_VC_NO_LIBRARY-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DATAPAR_VC_NO_LIBRARY:BOOL</span></code></a></p></li>
@@ -2136,12 +2131,6 @@ generate your specific makefiles/project files.</p>
 <dt id="cmdoption-arg-HPX_WITH_CUDA-BOOL">
 <span id="cmdoption-arg-hpx-with-cuda-bool"></span><code class="sig-name descname"><span class="pre">HPX_WITH_CUDA:BOOL</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_CUDA-BOOL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable HPX_WITH_ASYNC_CUDA (CUDA or HIP futures) and HPX_WITH_COMPUTE_CUDA (CUDA/HIP enabled parallel algorithms) (default: OFF)</p>
-</dd></dl>
-
-<dl class="std option">
-<dt id="cmdoption-arg-HPX_WITH_CUDA_CLANG-BOOL">
-<span id="cmdoption-arg-hpx-with-cuda-clang-bool"></span><code class="sig-name descname"><span class="pre">HPX_WITH_CUDA_CLANG:BOOL</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_CUDA_CLANG-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use clang to compile CUDA code (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2841,7 +2830,7 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_FILESYSTEM_WITH_BOOST_FILESYSTEM_COMPATIBILITY-BOOL">
 <span id="cmdoption-arg-hpx-filesystem-with-boost-filesystem-compatibility-bool"></span><code class="sig-name descname"><span class="pre">HPX_FILESYSTEM_WITH_BOOST_FILESYSTEM_COMPATIBILITY:BOOL</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_FILESYSTEM_WITH_BOOST_FILESYSTEM_COMPATIBILITY-BOOL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enable Boost.FileSystem compatibility. (default: ON)</p>
+<dd><p>Enable Boost.FileSystem compatibility. (default: OFF)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2957,7 +2946,7 @@ improves the generated diagnostics.</p>
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>35c1d0b</code>.
+        Revision <code>8e64aa4</code>.
       </span>
       <span class="lastupdated">
         Last updated on Jul 28, 2021.

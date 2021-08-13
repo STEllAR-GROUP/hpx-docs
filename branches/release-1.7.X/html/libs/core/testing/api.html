@@ -1,0 +1,987 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>testing &mdash; HPX release-1.7.X documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="thread_pools" href="../thread_pools/api.html" />
+    <link rel="prev" title="synchronization" href="../synchronization/api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> HPX
+          
+
+          
+            
+            <img src="../../../_static/HPX_STELLAR.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                release-1.7.X
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../why_hpx.html">Why <em>HPX</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../additional_material.html">Additional material</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api/public_api.html">Public API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api/full_api.html">Main <em>HPX</em> library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../affinity/api.html">affinity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../allocator_support/api.html">allocator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../asio/api.html">asio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../assertion/api.html">assertion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cache/api.html">cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concepts/api.html">concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concurrency/api.html">concurrency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config/api.html">config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config_registry/api.html">config_registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../coroutines/api.html">coroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../datastructures/api.html">datastructures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/api.html">debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../errors/api.html">errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execution_base/api.html">execution_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/api.html">filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../format/api.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../functional/api.html">functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hardware/api.html">hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hashing/api.html">hashing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ini/api.html">ini</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io_service/api.html">io_service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iterator_support/api.html">iterator_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../itt_notify/api.html">itt_notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logging/api.html">logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../memory/api.html">memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../plugin/api.html">plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prefix/api.html">prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessor/api.html">preprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../properties/api.html">properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../schedulers/api.html">schedulers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../serialization/api.html">serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../static_reinit/api.html">static_reinit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistics/api.html">statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../string_util/api.html">string_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../synchronization/api.html">synchronization</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_pools/api.html">thread_pools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thread_support/api.html">thread_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../threading_base/api.html">threading_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timing/api.html">timing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topology/api.html">topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../type_support/api.html">type_support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util/api.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../version/api.html">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/actions/api.html">actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/actions_base/api.html">actions_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/agas/api.html">agas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/agas_base/api.html">agas_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_colocated/api.html">async_colocated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_cuda/api.html">async_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_distributed/api.html">async_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/async_mpi/api.html">async_mpi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/batch_environments/api.html">batch_environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/checkpoint/api.html">checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/checkpoint_base/api.html">checkpoint_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/collectives/api.html">collectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/command_line_handling/api.html">command_line_handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/command_line_handling_local/api.html">command_line_handling_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/components/api.html">components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/components_base/api.html">components_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/compute/api.html">compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/compute_cuda/api.html">compute_cuda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/distribution_policies/api.html">distribution_policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/executors_distributed/api.html">executors_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/include/api.html">include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/include_local/api.html">include_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/init_runtime/api.html">init_runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/init_runtime_local/api.html">init_runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/lcos_distributed/api.html">lcos_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/mpi_base/api.html">mpi_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/naming/api.html">naming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/naming_base/api.html">naming_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/performance_counters/api.html">performance_counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/program_options/api.html">program_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/resiliency_distributed/api.html">resiliency_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/resource_partitioner/api.html">resource_partitioner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_components/api.html">runtime_components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_configuration/api.html">runtime_configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_distributed/api.html">runtime_distributed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/runtime_local/api.html">runtime_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/segmented_algorithms/api.html">segmented_algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../full/threadmanager/api.html">threadmanager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/algorithms/api.html">algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_base/api.html">async_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_combinators/api.html">async_combinators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/async_local/api.html">async_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/execution/api.html">execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/executors/api.html">executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/futures/api.html">futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/lcos_local/api.html">lcos_local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/pack_traversal/api.html">pack_traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/resiliency/api.html">resiliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/thread_pool_util/api.html">thread_pool_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/threading/api.html">threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parallelism/timed_execution/api.html">timed_execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to <em>HPX</em></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">Citing <em>HPX</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users.html"><em>HPX</em> users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about_hpx.html">About <em>HPX</em></a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HPX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../api.html">API reference</a> &raquo;</li>
+        
+      <li>testing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/STEllAR-GROUP/hpx/blob/master/docs/sphinx/libs/core/testing/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="testing">
+<span id="modules-testing-api"></span><h1>testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<p>The contents of this module can be included with the header
+<code class="docutils literal notranslate"><span class="pre">hpx/modules/testing.hpp</span></code>. These headers may be used by user-code but are not
+guaranteed stable (neither header location nor contents). You are using these at
+your own risk. If you wish to use non-public functionality from a module we
+<em>strongly</em> suggest only including the module header <code class="docutils literal notranslate"><span class="pre">hpx/modules/testing.hpp</span></code>, not
+the particular header in which the functionality you would like to use is
+defined. See <a class="reference internal" href="../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names that are part of the public
+<em>HPX</em> API.</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Defines</p>
+<dl class="cpp macro">
+<dt id="c.HPX_TEST">
+<span class="target" id="testing_8hpp_1a9b3f495af7b0ff530785008b756e9827"></span><code class="sig-name descname"><span class="pre">HPX_TEST</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_">
+<span class="target" id="testing_8hpp_1aaad9a040223903d967c76d5c6c6a8ff5"></span><code class="sig-name descname"><span class="pre">HPX_TEST_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_1">
+<span class="target" id="testing_8hpp_1a72910bc4138c5dc4dd30c1c34adf7cfe"></span><code class="sig-name descname"><span class="pre">HPX_TEST_1</span></code><span class="sig-paren">(</span><em><span class="pre">expr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_1" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_2">
+<span class="target" id="testing_8hpp_1aa688696f48eae4b4ce1d297826b68344"></span><code class="sig-name descname"><span class="pre">HPX_TEST_2</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_IMPL">
+<span class="target" id="testing_8hpp_1a41aa599c07a69d9bfb5b760832b04dad"></span><code class="sig-name descname"><span class="pre">HPX_TEST_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_MSG">
+<span class="target" id="testing_8hpp_1a2db62106cc608fe6f3d3b74992f5fed9"></span><code class="sig-name descname"><span class="pre">HPX_TEST_MSG</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_MSG" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_MSG_">
+<span class="target" id="testing_8hpp_1ab50a6c11ff88e3e62bd455e93a04f67f"></span><code class="sig-name descname"><span class="pre">HPX_TEST_MSG_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_MSG_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_MSG_2">
+<span class="target" id="testing_8hpp_1a731e5a8d72f7e309b7a5d743e3b0e5ea"></span><code class="sig-name descname"><span class="pre">HPX_TEST_MSG_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_MSG_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_MSG_3">
+<span class="target" id="testing_8hpp_1a37ac2756f5de3878d278894632acab51"></span><code class="sig-name descname"><span class="pre">HPX_TEST_MSG_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_MSG_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_MSG_IMPL">
+<span class="target" id="testing_8hpp_1a79e50999b040aa9c48ed6595412d60dd"></span><code class="sig-name descname"><span class="pre">HPX_TEST_MSG_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_MSG_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ">
+<span class="target" id="testing_8hpp_1a02c5031344a00bb4159c8537dd40923c"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ_">
+<span class="target" id="testing_8hpp_1a9a3f07aa7400e0caedbac95b2112d5ae"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ_2">
+<span class="target" id="testing_8hpp_1acc1eafdfafa20aa455249a0d5c9db53c"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ_3">
+<span class="target" id="testing_8hpp_1a96f1f41e5da44938a136e4253404f338"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ_IMPL">
+<span class="target" id="testing_8hpp_1a9ad485f3ef6e130481800fc296422642"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ">
+<span class="target" id="testing_8hpp_1aaeeb7a7d566760cdd910d55c76ee34a7"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ_">
+<span class="target" id="testing_8hpp_1a4b4ab885735f64fe8a228b659c333618"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ_2">
+<span class="target" id="testing_8hpp_1aeae44c72d63804fe8f5d246764d7492a"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ_3">
+<span class="target" id="testing_8hpp_1a9bfa1c99e9733b790e2ba77f2ed9bc25"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ_IMPL">
+<span class="target" id="testing_8hpp_1a7346f9393acec74644fa945ddd9387c0"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT">
+<span class="target" id="testing_8hpp_1ac2ad2c882a28853d8fa4f1e949457532"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT_">
+<span class="target" id="testing_8hpp_1a9baa0647ada3695b663a4ae4ff925a68"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT_2">
+<span class="target" id="testing_8hpp_1ad3923ca5f0dd045bad015f139477cd5e"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT_3">
+<span class="target" id="testing_8hpp_1aced1567e836bbbda2873253b8fb2b441"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT_IMPL">
+<span class="target" id="testing_8hpp_1a15103cd5a91121432b114e451b1f21bb"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE">
+<span class="target" id="testing_8hpp_1a7f7d74eba1e369dc2f07ba90a48d7bbd"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE_">
+<span class="target" id="testing_8hpp_1adc2bff8d567630db67d6851540929eae"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE_2">
+<span class="target" id="testing_8hpp_1add567992b6306384618b79f286593561"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE_3">
+<span class="target" id="testing_8hpp_1a763dc696aedb4647d2442c8e8524e674"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE_IMPL">
+<span class="target" id="testing_8hpp_1a661818c373488623959013ed27fb0e85"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE">
+<span class="target" id="testing_8hpp_1accdaaee7ac285ab90f7387d8b89f16ed"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE_">
+<span class="target" id="testing_8hpp_1ac2ae79afc112c4ba575178cef9a615c7"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE_3">
+<span class="target" id="testing_8hpp_1a918ba9a3be5046e32e9929c53a4e6bf6"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE_3</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">expr3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE_4">
+<span class="target" id="testing_8hpp_1abc78804ed7329afca081286009e2b953"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE_4</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">expr3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE_4" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE_IMPL">
+<span class="target" id="testing_8hpp_1ae669b5cecb59192d613616bb954cd3cb"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">expr3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ_MSG">
+<span class="target" id="testing_8hpp_1a41a05bf2fbae3596bd872e663cf8b5e1"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ_MSG</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ_MSG" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ_MSG_">
+<span class="target" id="testing_8hpp_1aaadc8e0460e56393d5994d917a0d4727"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ_MSG_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ_MSG_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ_MSG_3">
+<span class="target" id="testing_8hpp_1a4403738a0e11baaa56fdd928d837b0d8"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ_MSG_3</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ_MSG_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ_MSG_4">
+<span class="target" id="testing_8hpp_1a35a370466de6a28d04fcfbf3c4831a7d"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ_MSG_4</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ_MSG_4" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_EQ_MSG_IMPL">
+<span class="target" id="testing_8hpp_1a7cc24ffede6aeccba39efd3827cec5e5"></span><code class="sig-name descname"><span class="pre">HPX_TEST_EQ_MSG_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_EQ_MSG_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ_MSG">
+<span class="target" id="testing_8hpp_1a246680ddf4454a194a95e923a4d6a850"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ_MSG</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ_MSG" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ_MSG_">
+<span class="target" id="testing_8hpp_1a19ffeb8955212b1852c4bf74767db50c"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ_MSG_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ_MSG_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ_MSG_3">
+<span class="target" id="testing_8hpp_1ad1a6fd752f3713f782eee121f04e469c"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ_MSG_3</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ_MSG_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ_MSG_4">
+<span class="target" id="testing_8hpp_1acb83d1293f7a12bf357f0af9fcc90672"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ_MSG_4</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ_MSG_4" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_NEQ_MSG_IMPL">
+<span class="target" id="testing_8hpp_1a449e640310b9a8a3fc4f0f0c2fbf3de8"></span><code class="sig-name descname"><span class="pre">HPX_TEST_NEQ_MSG_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_NEQ_MSG_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT_MSG">
+<span class="target" id="testing_8hpp_1afbce0440d078e71fd9c751cea3543ca8"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT_MSG</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT_MSG" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT_MSG_">
+<span class="target" id="testing_8hpp_1a5f76cbfe3b74383a6938c934a8cc8a91"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT_MSG_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT_MSG_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT_MSG_3">
+<span class="target" id="testing_8hpp_1ab95d4238953235baf7abd477d5023ba7"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT_MSG_3</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT_MSG_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT_MSG_4">
+<span class="target" id="testing_8hpp_1a8cb2a4738ee8612e66b23fe0a4c26211"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT_MSG_4</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT_MSG_4" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LT_MSG_IMPL">
+<span class="target" id="testing_8hpp_1acca57fa6008c0a1ea45d1c75d0c5e1b0"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LT_MSG_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LT_MSG_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE_MSG">
+<span class="target" id="testing_8hpp_1a6b6557be0c1e5f02dc278276ccc3dd04"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE_MSG</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE_MSG" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE_MSG_">
+<span class="target" id="testing_8hpp_1a95cb10e18a8f3344e331a83e195a8cf0"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE_MSG_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE_MSG_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE_MSG_3">
+<span class="target" id="testing_8hpp_1a73a116182cc53b555b6db345d7fa2541"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE_MSG_3</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE_MSG_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE_MSG_4">
+<span class="target" id="testing_8hpp_1a3682eaf03f1aba66d31eace5d885f1da"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE_MSG_4</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE_MSG_4" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_LTE_MSG_IMPL">
+<span class="target" id="testing_8hpp_1a03c49ef88bb0778911115be8d211cd70"></span><code class="sig-name descname"><span class="pre">HPX_TEST_LTE_MSG_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_LTE_MSG_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE_MSG">
+<span class="target" id="testing_8hpp_1a51b0e7527f145e96330b638135570e99"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE_MSG</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE_MSG" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE_MSG_">
+<span class="target" id="testing_8hpp_1aacff2f5b546f07b9eece99419feec913"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE_MSG_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE_MSG_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE_MSG_4">
+<span class="target" id="testing_8hpp_1a92d22513d53f0217e6840f9b4021afa6"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE_MSG_4</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">expr3</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE_MSG_4" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE_MSG_5">
+<span class="target" id="testing_8hpp_1a4f843faf0032ebc208ed4294e81f8fe7"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE_MSG_5</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">expr3</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE_MSG_5" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_RANGE_MSG_IMPL">
+<span class="target" id="testing_8hpp_1af28aa088479c653080e129eb27807668"></span><code class="sig-name descname"><span class="pre">HPX_TEST_RANGE_MSG_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">expr3</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_RANGE_MSG_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY">
+<span class="target" id="testing_8hpp_1ac1fdcfa356d87792fd9ecc77919a3635"></span><code class="sig-name descname"><span class="pre">HPX_SANITY</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_">
+<span class="target" id="testing_8hpp_1ac293b8193250d7731d354a729fa7c6e8"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_1">
+<span class="target" id="testing_8hpp_1ae6fe13425b0cb616dcc48cd70fa51391"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_1</span></code><span class="sig-paren">(</span><em><span class="pre">expr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_1" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_2">
+<span class="target" id="testing_8hpp_1aeae3c6e2c066409488567145ca6ef801"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_2</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_IMPL">
+<span class="target" id="testing_8hpp_1adcd048bdda0f9d8db443f09d4db1719f"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_MSG">
+<span class="target" id="testing_8hpp_1ae92b9b8c7f7404a6851b14fee4d055bc"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_MSG</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_MSG" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_MSG_">
+<span class="target" id="testing_8hpp_1a7bc03328afdafd93936ffa6a15c17f95"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_MSG_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_MSG_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_MSG_2">
+<span class="target" id="testing_8hpp_1aa95a62d0f3b566a8bcf562b1bb9b27ab"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_MSG_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_MSG_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_MSG_3">
+<span class="target" id="testing_8hpp_1ae1f815c643d3b00de3ebb324b8de6dcf"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_MSG_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_MSG_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_MSG_IMPL">
+<span class="target" id="testing_8hpp_1aaddacb600fd47b16ff0278e1e219d7d8"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_MSG_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_MSG_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ">
+<span class="target" id="testing_8hpp_1aefd114910652c8b605bf9a3e39b51e12"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ_">
+<span class="target" id="testing_8hpp_1aa9d2b1d6d4bded7019c0a481bf469569"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ_2">
+<span class="target" id="testing_8hpp_1acb5aff6430324a1538aa65d3d0738dd4"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ_3">
+<span class="target" id="testing_8hpp_1a13e7ac8d5d9d836d23e7ee71a5dc6b9e"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ_IMPL">
+<span class="target" id="testing_8hpp_1a15938182f46a78ed06e83cce0e3381b9"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_NEQ">
+<span class="target" id="testing_8hpp_1a2fcefa134aacaa31935e4b601023c96f"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_NEQ</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_NEQ" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_NEQ_">
+<span class="target" id="testing_8hpp_1a0a0a5db8e068a3320f024c751d7732f3"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_NEQ_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_NEQ_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_NEQ_2">
+<span class="target" id="testing_8hpp_1a33709aa690d4793667692a97307b752f"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_NEQ_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_NEQ_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_NEQ_3">
+<span class="target" id="testing_8hpp_1a647b1266cb7acc5edb283f44ec49a6a5"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_NEQ_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_NEQ_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_NEQ_IMPL">
+<span class="target" id="testing_8hpp_1a5e603e49af1388a19f9cce8a65a2a0d9"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_NEQ_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_NEQ_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LT">
+<span class="target" id="testing_8hpp_1ae55ee065c79abef7779d8094aeff59d0"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LT</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LT" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LT_">
+<span class="target" id="testing_8hpp_1aac35b37bafd83a4d01e3972d0fb11e1b"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LT_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LT_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LT_2">
+<span class="target" id="testing_8hpp_1af799df2f70465bd86fd7bd3d21331d6d"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LT_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LT_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LT_3">
+<span class="target" id="testing_8hpp_1a47b2473fceb76d26c3fc68de4091d876"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LT_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LT_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LT_IMPL">
+<span class="target" id="testing_8hpp_1aa949faaeb4909d1a9c965963fdc7f1e2"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LT_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LT_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LTE">
+<span class="target" id="testing_8hpp_1af4bf60d7d78fdfd10a5aa986b6bb6be5"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LTE</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LTE_">
+<span class="target" id="testing_8hpp_1a0a45c6565fdb553e3f1a249667f39760"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LTE_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LTE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LTE_2">
+<span class="target" id="testing_8hpp_1a6dabbe7fb4e05c91a4b77bc239368cf6"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LTE_2</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LTE_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LTE_3">
+<span class="target" id="testing_8hpp_1af3a96607890d66baf7bc2c8e20c8ae7f"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LTE_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LTE_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_LTE_IMPL">
+<span class="target" id="testing_8hpp_1a8d91aa3c41e40746ab7e529eeb14f4f3"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_LTE_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_LTE_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_RANGE">
+<span class="target" id="testing_8hpp_1a39bf5ede093a8978ac9d625be9dc908a"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_RANGE</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_RANGE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_RANGE_">
+<span class="target" id="testing_8hpp_1ae93d66da34058a59d3b686a940ac2dce"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_RANGE_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_RANGE_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_RANGE_3">
+<span class="target" id="testing_8hpp_1a65b24f368622d468c8325e8837afd836"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_RANGE_3</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">expr3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_RANGE_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_RANGE_4">
+<span class="target" id="testing_8hpp_1ae64eae1ce55b7266e642e7f76fcb8d65"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_RANGE_4</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">expr3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_RANGE_4" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_RANGE_IMPL">
+<span class="target" id="testing_8hpp_1a8ed3a1e68be2e34b9e9760805fb66472"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_RANGE_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">expr3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_RANGE_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ_MSG">
+<span class="target" id="testing_8hpp_1a6970dece0ff87458ec7270fe091f515d"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ_MSG</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ_MSG" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ_MSG_">
+<span class="target" id="testing_8hpp_1aa53d40a328fd9e720c7ddc5d3ef22773"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ_MSG_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ_MSG_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ_MSG_3">
+<span class="target" id="testing_8hpp_1a7a51183fcc12e32db9f0c018442de2b8"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ_MSG_3</span></code><span class="sig-paren">(</span><em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ_MSG_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ_MSG_4">
+<span class="target" id="testing_8hpp_1a11bdecb3c20d64ffc568b947148adddf"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ_MSG_4</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ_MSG_4" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_SANITY_EQ_MSG_IMPL">
+<span class="target" id="testing_8hpp_1ab01e9fdadf1fcfd5a0a17c550133a9fe"></span><code class="sig-name descname"><span class="pre">HPX_SANITY_EQ_MSG_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expr1</span></em>, <em><span class="pre">expr2</span></em>, <em><span class="pre">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_SANITY_EQ_MSG_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_THROW">
+<span class="target" id="testing_8hpp_1a0ca23e3be69c7357aabc0f5bc43ba890"></span><code class="sig-name descname"><span class="pre">HPX_TEST_THROW</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_THROW" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_THROW_">
+<span class="target" id="testing_8hpp_1afda2c62f6c7f850806c9268e969eec27"></span><code class="sig-name descname"><span class="pre">HPX_TEST_THROW_</span></code><span class="sig-paren">(</span><span class="pre">...</span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_THROW_" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_THROW_2">
+<span class="target" id="testing_8hpp_1a3d36249d4446021eb1cc2323831a2fa2"></span><code class="sig-name descname"><span class="pre">HPX_TEST_THROW_2</span></code><span class="sig-paren">(</span><em><span class="pre">expression</span></em>, <em><span class="pre">exception</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_THROW_2" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_THROW_3">
+<span class="target" id="testing_8hpp_1ac593f0188834e71cc497139557eeacab"></span><code class="sig-name descname"><span class="pre">HPX_TEST_THROW_3</span></code><span class="sig-paren">(</span><em><span class="pre">strm</span></em>, <em><span class="pre">expression</span></em>, <em><span class="pre">exception</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_THROW_3" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp macro">
+<dt id="c.HPX_TEST_THROW_IMPL">
+<span class="target" id="testing_8hpp_1a8bc99b4ee8797eab1c62cd8010f08078"></span><code class="sig-name descname"><span class="pre">HPX_TEST_THROW_IMPL</span></code><span class="sig-paren">(</span><em><span class="pre">fixture</span></em>, <em><span class="pre">expression</span></em>, <em><span class="pre">exception</span></em><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_TEST_THROW_IMPL" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp type">
+<dt id="_CPPv43hpx">
+<span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">hpx</span></code><br /></dt>
+<dd><dl class="cpp type">
+<dt id="_CPPv4N3hpx4utilE">
+<span id="_CPPv3N3hpx4utilE"></span><span id="_CPPv2N3hpx4utilE"></span><span id="hpx::util"></span><span class="target" id="namespacehpx_1_1util"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">util</span></code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Typedefs</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3hpx4util25test_failure_handler_typeE">
+<span id="_CPPv3N3hpx4util25test_failure_handler_typeE"></span><span id="_CPPv2N3hpx4util25test_failure_handler_typeE"></span><span class="target" id="testing_8hpp_1ab6a4af35663cfe1daaff4a68814960ab"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">test_failure_handler_type</span></code> <span class="pre">=</span> <a class="reference internal" href="../functional/api.html#_CPPv4I0EN3hpx4util15function_nonserE" title="hpx::util::function_nonser"><span class="pre">function_nonser</span></a><span class="pre">&lt;</span><span class="pre">void</span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4N3hpx4util25test_failure_handler_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Enums</p>
+<dl class="cpp enum">
+<dt id="_CPPv4N3hpx4util12counter_typeE">
+<span id="_CPPv3N3hpx4util12counter_typeE"></span><span id="_CPPv2N3hpx4util12counter_typeE"></span><span class="target" id="testing_8hpp_1a8a346eb71b75a9453afa9bc40f243dd6"></span><em class="property"><span class="pre">enum</span> </em><code class="sig-name descname"><span class="pre">counter_type</span></code><a class="headerlink" href="#_CPPv4N3hpx4util12counter_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util14counter_sanityE">
+<span id="_CPPv3N3hpx4util14counter_sanityE"></span><span id="_CPPv2N3hpx4util14counter_sanityE"></span><span class="target" id="testing_8hpp_1a8a346eb71b75a9453afa9bc40f243dd6ab7e21dbc03c0966e38d7bc2e2f0e0254"></span><code class="sig-name descname"><span class="pre">counter_sanity</span></code><a class="headerlink" href="#_CPPv4N3hpx4util14counter_sanityE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt id="_CPPv4N3hpx4util12counter_testE">
+<span id="_CPPv3N3hpx4util12counter_testE"></span><span id="_CPPv2N3hpx4util12counter_testE"></span><span class="target" id="testing_8hpp_1a8a346eb71b75a9453afa9bc40f243dd6a66e191743f4f5a3743832a39bbf0504d"></span><code class="sig-name descname"><span class="pre">counter_test</span></code><a class="headerlink" href="#_CPPv4N3hpx4util12counter_testE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util24set_test_failure_handlerE25test_failure_handler_type">
+<span id="_CPPv3N3hpx4util24set_test_failure_handlerE25test_failure_handler_type"></span><span id="_CPPv2N3hpx4util24set_test_failure_handlerE25test_failure_handler_type"></span><span id="hpx::util::set_test_failure_handler__test_failure_handler_type"></span><span class="target" id="testing_8hpp_1a74f21e5d5c1e8855cebbc18deb52ba6e"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">set_test_failure_handler</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx4util25test_failure_handler_typeE" title="hpx::util::test_failure_handler_type"><span class="pre">test_failure_handler_type</span></a> <em><span class="pre">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util24set_test_failure_handlerE25test_failure_handler_type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util13report_errorsEv">
+<span id="_CPPv3N3hpx4util13report_errorsEv"></span><span id="_CPPv2N3hpx4util13report_errorsEv"></span><span id="hpx::util::report_errors"></span><span class="target" id="testing_8hpp_1afbbb7e99478e84239a8252c1c490d7f8"></span><span class="pre">int</span> <code class="sig-name descname"><span class="pre">report_errors</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util13report_errorsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util13report_errorsERNSt7ostreamE">
+<span id="_CPPv3N3hpx4util13report_errorsERNSt7ostreamE"></span><span id="_CPPv2N3hpx4util13report_errorsERNSt7ostreamE"></span><span id="hpx::util::report_errors__osR"></span><span class="target" id="testing_8hpp_1af191628dce381cd51bc97f9c1ae4bf8c"></span><span class="pre">int</span> <code class="sig-name descname"><span class="pre">report_errors</span></code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">ostream</span> <span class="pre">&amp;</span><em><span class="pre">stream</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util13report_errorsERNSt7ostreamE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util18print_cdash_timingEPKcd">
+<span id="_CPPv3N3hpx4util18print_cdash_timingEPKcd"></span><span id="_CPPv2N3hpx4util18print_cdash_timingEPKcd"></span><span id="hpx::util::print_cdash_timing__cCP.double"></span><span class="target" id="testing_8hpp_1a57f12670bfb39ac9f4cf72384d272b27"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">print_cdash_timing</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">name</span></em>, <span class="pre">double</span> <em><span class="pre">time</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util18print_cdash_timingEPKcd" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util18print_cdash_timingEPKcNSt8uint64_tE">
+<span id="_CPPv3N3hpx4util18print_cdash_timingEPKcNSt8uint64_tE"></span><span id="_CPPv2N3hpx4util18print_cdash_timingEPKcNSt8uint64_tE"></span><span id="hpx::util::print_cdash_timing__cCP.std::uint64_t"></span><span class="target" id="testing_8hpp_1a2bdcc84e2a9f6db3f6586adcec5a6b57"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">print_cdash_timing</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">name</span></em>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">uint64_t</span> <em><span class="pre">time</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util18print_cdash_timingEPKcNSt8uint64_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">hpx</span></code><br /></dt>
+<dd><dl class="cpp type">
+<dt>
+<span class="target" id="namespacehpx_1_1util"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">util</span></code><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx4util16perf_test_reportERKNSt6stringERKNSt6stringEKNSt6size_tERR15function_nonserIFvvEE">
+<span id="_CPPv3N3hpx4util16perf_test_reportERKNSt6stringERKNSt6stringEKNSt6size_tERR15function_nonserIFvvEE"></span><span id="_CPPv2N3hpx4util16perf_test_reportERKNSt6stringERKNSt6stringEKNSt6size_tERR15function_nonserIFvvEE"></span><span class="target" id="performance_8hpp_1ab85da67d93aa380f53b40a66eea60122"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">perf_test_report</span></code><span class="sig-paren">(</span><a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">string</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">name</span></em>, <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">string</span> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">exec</span></em>, <em class="property"><span class="pre">const</span></em> <a class="reference internal" href="../datastructures/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <em><span class="pre">steps</span></em>, <a class="reference internal" href="../functional/api.html#_CPPv4I0EN3hpx4util15function_nonserE" title="hpx::util::function_nonser"><span class="pre">function_nonser</span></a><span class="pre">&lt;</span><span class="pre">void</span><span class="sig-paren">(</span><span class="pre">void</span><span class="sig-paren">)</span><span class="pre">&gt;</span> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">test</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4util16perf_test_reportERKNSt6stringERKNSt6stringEKNSt6size_tERR15function_nonserIFvvEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <!-- Copyright (c) 2018 Mikael Simberg
+
+     Distributed under the Boost Software License, Version 1.0. (See accompanying
+     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) -->
+<!-- Make HPX inspect tool happy: hpxinspect:nounlinked -->
+
+<footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../thread_pools/api.html" class="btn btn-neutral float-right" title="thread_pools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../synchronization/api.html" class="btn btn-neutral float-left" title="synchronization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2008-2020, The STE||AR Group.
+      <span class="commit">
+        
+        Revision <code>ebf3729</code>.
+      </span>
+      <span class="lastupdated">
+        Last updated on Aug 13, 2021.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+ 
+
+SPDX-License-Identifier: BSL-1.0
+Distributed under the Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at
+<a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)
+
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -210,6 +210,11 @@ as appropriate.</p>
 are completed to avoid confusion.</p>
 <ol class="arabic">
 <li><p>Notify developers that a release is imminent.</p></li>
+<li><p>For minor and major releases: create and check out a new branch at an
+appropriate point on <code class="docutils literal notranslate"><span class="pre">master</span></code> with the name <code class="docutils literal notranslate"><span class="pre">release-major.minor.X</span></code>.
+<code class="docutils literal notranslate"><span class="pre">major</span></code> and <code class="docutils literal notranslate"><span class="pre">minor</span></code> should be the major and minor versions of the
+release. For patch releases: check out the corresponding
+<code class="docutils literal notranslate"><span class="pre">release-major.minor.X</span></code> branch.</p></li>
 <li><p>Write release notes in <code class="docutils literal notranslate"><span class="pre">docs/sphinx/releases/whats_new_$VERSION.rst</span></code>. Keep
 adding merged PRs and closed issues to this until just before the release is
 made. Use <code class="docutils literal notranslate"><span class="pre">tools/generate_pr_issue_list.sh</span></code> to generate the lists. Add the
@@ -239,23 +244,6 @@ Please contact the maintainers of the respective packages to generate a new
 release to synchronize with the <em>HPX</em> release (<a class="reference external" href="http://github.com/khuck/xpress-apex">APEX</a>, <a class="reference external" href="https://github.com/STEllAR-GROUP/libcds">libCDS</a>).</p></li>
 </ul>
 </li>
-<li><p>If there have been any commits to the release branch since the last release,
-create a tag from the old release branch before deleting the old release
-branch in the next step.</p></li>
-<li><p>Unprotect the release branch in the github repository settings so that it can
-be deleted and recreated (tick “Allow force pushes” in the release branch
-settings of the repository).</p></li>
-<li><p>Reset the release branch to the latest stable state on master and force push
-to origin/release. If you are creating a patch release, branch from the
-release tag for which you want to create a patch release.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">release</span></code> (or just <code class="docutils literal notranslate"><span class="pre">checkout</span></code> in case the it exists)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span> <span class="pre">stable</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--force</span> <span class="pre">origin</span> <span class="pre">release</span></code></p></li>
-</ul>
-</li>
-<li><p>Protect the release branch again to disable force pushes.</p></li>
-<li><p>Check out the release branch.</p></li>
 <li><p>Make sure <code class="docutils literal notranslate"><span class="pre">HPX_VERSION_MAJOR/MINOR/SUBMINOR</span></code> in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> contain
 the correct values. Change them if needed.</p></li>
 <li><p>This step does not apply to patch releases. Remove features which have been
@@ -382,7 +370,7 @@ HPC, Heise Online, and a CCT press release.</p></li>
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>a4bfdc9</code>.
+        Revision <code>640c923</code>.
       </span>
       <span class="lastupdated">
         Last updated on Aug 17, 2021.

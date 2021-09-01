@@ -99,6 +99,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#getting-hpx">Getting <em>HPX</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hpx-dependencies"><em>HPX</em> dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-hpx">Building <em>HPX</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests-and-examples">Tests and examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#run-tests">Run tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-examples">Run examples</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#installing-and-building-hpx-via-vcpkg">Installing and building <em>HPX</em> via vcpkg</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hello-world">Hello, World!</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#writing-task-based-applications">Writing task-based applications</a></li>
@@ -213,7 +218,8 @@ unpack it or clone the repository directly using <code class="docutils literal n
 </pre></div>
 </div>
 <p>It is also recommended that you check out the latest stable tag:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git checkout <span class="m">1</span>.7.1
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> hpx
+git checkout <span class="m">1</span>.7.1
 </pre></div>
 </div>
 </div>
@@ -232,23 +238,21 @@ versions, is available at <a class="reference internal" href="manual/building_hp
 </div>
 <div class="section" id="building-hpx">
 <h2>Building <em>HPX</em><a class="headerlink" href="#building-hpx" title="Permalink to this headline">¶</a></h2>
-<p>Once you have the source code and the dependencies, set up a separate build
-directory and configure the project. Assuming all your dependencies are in paths
+<p>Once you have the source code and the dependencies and assuming all your dependencies are in paths
 known to CMake, the following gets you started:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># In the HPX source directory</span>
-mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
-cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/install/path ..
-make install
+<ol class="arabic">
+<li><p>First, set up a separate build directory to configure the project:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
 </pre></div>
 </div>
-<p>This will build the core <em>HPX</em> libraries and examples, and install them to your
-chosen location. If you want to install <em>HPX</em> to system folders, simply leave out
-the <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> option. This may take a while. To speed up the
-process, launch more jobs by passing the <code class="docutils literal notranslate"><span class="pre">-jN</span></code> option to <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Do not set only <code class="docutils literal notranslate"><span class="pre">-j</span></code> (i.e. <code class="docutils literal notranslate"><span class="pre">-j</span></code> without an explicit number of jobs)
-unless you have a lot of memory available on your machine.</p>
+</li>
+<li><p>To configure the project you have the following options:</p>
+<ul class="simple">
+<li><p>To build the core <em>HPX</em> libraries and examples, and install them to your chosen location (recommended):</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/install/path ..
+</pre></div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -257,28 +261,82 @@ idea to start with a clean build directory to avoid configuration problems.
 It is especially important that you use a clean build directory when changing
 between <code class="docutils literal notranslate"><span class="pre">Release</span></code> and <code class="docutils literal notranslate"><span class="pre">Debug</span></code> modes.</p>
 </div>
-<p>If your dependencies are in custom locations, you may need to tell CMake where
-to find them by passing one or more of the following options to CMake:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-DBOOST_ROOT<span class="o">=</span>/path/to/boost
+</div></blockquote>
+<ul class="simple">
+<li><p>To install <em>HPX</em> to the default system folders, simply leave out the <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> option:</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake ..
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>If your dependencies are in custom locations, you may need to tell CMake where to find them by passing one or more of the following options to CMake:</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-DBOOST_ROOT<span class="o">=</span>/path/to/boost
 -DHWLOC_ROOT<span class="o">=</span>/path/to/hwloc
 -DTCMALLOC_ROOT<span class="o">=</span>/path/to/tcmalloc
 -DJEMALLOC_ROOT<span class="o">=</span>/path/to/jemalloc
 </pre></div>
 </div>
-<p>If you want to try <em>HPX</em> without using a custom allocator pass
-<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_MALLOC=system</span></code> to CMake.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>If you want to try <em>HPX</em> without using a custom allocator pass <code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_MALLOC=system</span></code> to CMake:</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/install/path -DHPX_WITH_MALLOC<span class="o">=</span>system ..
+</pre></div>
+</div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If you are building <em>HPX</em> for a system with more than 64 processing units,
-you must change the CMake variables <code class="docutils literal notranslate"><span class="pre">HPX_WITH_MORE_THAN_64_THREADS</span></code> (to
-<code class="docutils literal notranslate"><span class="pre">On</span></code>) and <code class="docutils literal notranslate"><span class="pre">HPX_WITH_MAX_CPU_COUNT</span></code> (to a value at least as big as the
-number of (virtual) cores on your system).</p>
+you must change the CMake variable <code class="docutils literal notranslate"><span class="pre">HPX_WITH_MAX_CPU_COUNT</span></code> (to a value at least as big as the
+number of (virtual) cores on your system). Note that the default value is 64.</p>
 </div>
-<p>To build the tests, run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">tests</span></code>. To run the tests, run either <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code>
-or use <code class="docutils literal notranslate"><span class="pre">ctest</span></code> for more control over which tests to run. You can run single
-tests for example with <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">--output-on-failure</span> <span class="pre">-R</span>
-<span class="pre">tests.unit.parallel.algorithms.for_loop</span></code> or a whole group of tests with <code class="docutils literal notranslate"><span class="pre">ctest</span>
-<span class="pre">--output-on-failure</span> <span class="pre">-R</span> <span class="pre">tests.unit</span></code>.</p>
+</div></blockquote>
+</li>
+<li><p>Once the configuration is complete, to build the project you run:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make -jN install <span class="c1"># where N is the number of jobs</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Do not set only <code class="docutils literal notranslate"><span class="pre">-j</span></code> (i.e. <code class="docutils literal notranslate"><span class="pre">-j</span></code> without an explicit number of jobs)
+unless you have a lot of memory available on your machine.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="tests-and-examples">
+<h2>Tests and examples<a class="headerlink" href="#tests-and-examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="run-tests">
+<h3>Run tests<a class="headerlink" href="#run-tests" title="Permalink to this headline">¶</a></h3>
+<p>To build the tests:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make tests
+</pre></div>
+</div>
+<p>To run the tests:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make <span class="nb">test</span>
+</pre></div>
+</div>
+<p>To control which tests to run use <code class="docutils literal notranslate"><span class="pre">ctest</span></code>:</p>
+<ul class="simple">
+<li><p>To run single tests, for example a test for <code class="docutils literal notranslate"><span class="pre">for_loop</span></code>:</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ctest --output-on-failure -R tests.unit.modules.algorithms.for_loop
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>To run a whole group of tests:</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ctest --output-on-failure -R tests.unit
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-examples">
+<h3>Run examples<a class="headerlink" href="#run-examples" title="Permalink to this headline">¶</a></h3>
 <p>If you did not run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> earlier, do so now or build the
 <code class="docutils literal notranslate"><span class="pre">hello_world_1</span></code> example by running:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make hello_world_1
@@ -313,6 +371,7 @@ test the target is. If you are developing <em>HPX</em> it is often helpful to ru
 </div>
 <p>It is also possible to build, for instance, all quickstart examples using <code class="docutils literal notranslate"><span class="pre">make</span>
 <span class="pre">examples.quickstart</span></code>.</p>
+</div>
 </div>
 </div>
 <div class="section" id="installing-and-building-hpx-via-vcpkg">
@@ -617,7 +676,7 @@ to a distributed implementation.</p>
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>c0b1612</code>.
+        Revision <code>6ea01b9</code>.
       </span>
       <span class="lastupdated">
         Last updated on Sep 01, 2021.

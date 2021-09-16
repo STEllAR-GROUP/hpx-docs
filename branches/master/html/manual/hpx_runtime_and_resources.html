@@ -334,24 +334,9 @@ priority instead of using a separate thread pool.</p>
 </div>
 <div class="section" id="using-the-resource-partitioner">
 <span id="using-resource-partitioner"></span><h3>Using the resource partitioner<a class="headerlink" href="#using-the-resource-partitioner" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="../libs/full/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitionerE" title="hpx::resource::partitioner"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::resource::partitioner</span></code></a> is now created during <em>HPX</em> runtime
+<p>The <a class="reference internal" href="../libs/core/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitionerE" title="hpx::resource::partitioner"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::resource::partitioner</span></code></a> is now created during <em>HPX</em> runtime
 initialization without explicit action needed from the user. To specify some of
 the initialization parameters you can use the <a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx11init_paramsE" title="hpx::init_params"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::init_params</span></code></a>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
-
-<span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Setup the init parameters</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">hpx_main</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 <p>The resource partitioner callback is the interface to add thread pools to the
 <em>HPX</em> runtime and to assign resources to the thread pools.  In order to create
 custom thread pools you can specify the resource partitioner callback
@@ -359,61 +344,16 @@ custom thread pools you can specify the resource partitioner callback
 resource partitioner will be created , see the example below. You can also
 specify other parameters, see <a class="reference internal" href="../libs/full/init_runtime/api.html#_CPPv4N3hpx11init_paramsE" title="hpx::init_params"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">hpx::init_params</span></code></a>.</p>
 <p>To add a thread pool use the
-<a class="reference internal" href="../libs/full/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitioner18create_thread_poolERKNSt6stringE17scheduling_policyN3hpx7threads8policies14scheduler_modeE" title="hpx::resource::partitioner::create_thread_pool"><code class="xref cpp cpp-member docutils literal notranslate"><span class="pre">hpx::resource::partitioner::create_thread_pool</span></code></a> method. If you
+<a class="reference internal" href="../libs/core/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitioner18create_thread_poolERKNSt6stringE17scheduling_policyN3hpx7threads8policies14scheduler_modeE" title="hpx::resource::partitioner::create_thread_pool"><code class="xref cpp cpp-member docutils literal notranslate"><span class="pre">hpx::resource::partitioner::create_thread_pool</span></code></a> method. If you
 simply want to use the default scheduler and scheduler options it is enough to
 call <code class="docutils literal notranslate"><span class="pre">rp.create_thread_pool(&quot;my-thread-pool&quot;)</span></code>.</p>
 <p>Then, to add resources to the thread pool you can use the
-<a class="reference internal" href="../libs/full/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitioner12add_resourceERKN3hpx8resource2puERKNSt6stringENSt6size_tE" title="hpx::resource::partitioner::add_resource"><code class="xref cpp cpp-member docutils literal notranslate"><span class="pre">hpx::resource::partitioner::add_resource</span></code></a> method. The resource
+<a class="reference internal" href="../libs/core/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitioner12add_resourceERKN3hpx8resource2puERKNSt6stringENSt6size_tE" title="hpx::resource::partitioner::add_resource"><code class="xref cpp cpp-member docutils literal notranslate"><span class="pre">hpx::resource::partitioner::add_resource</span></code></a> method. The resource
 partitioner exposes the hardware topology retrieved using <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a> and lets you
 iterate through the topology to add the wanted processing units to the thread
 pool. Below is an example of adding all processing units from the first NUMA
 domain to a custom thread pool, unless there is only one NUMA domain in which
 case we leave the first processing unit for the default thread pool:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/modules/resource_partitioner.hpp&gt;</span><span class="cp"></span>
-
-<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
-
-<span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">init_resource_partitioner_handler</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">partitioner</span><span class="o">&amp;</span> <span class="n">rp</span><span class="p">,</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">variables_map</span> <span class="k">const</span><span class="o">&amp;</span> <span class="cm">/*vm*/</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">rp</span><span class="p">.</span><span class="n">create_thread_pool</span><span class="p">(</span><span class="s">&quot;my-thread-pool&quot;</span><span class="p">);</span>
-
-    <span class="kt">bool</span> <span class="n">one_numa_domain</span> <span class="o">=</span> <span class="n">rp</span><span class="p">.</span><span class="n">numa_domains</span><span class="p">().</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">skipped_first_pu</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-
-    <span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">numa_domain</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">rp</span><span class="p">.</span><span class="n">numa_domains</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
-
-    <span class="k">for</span> <span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">core</span> <span class="k">const</span><span class="o">&amp;</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">d</span><span class="p">.</span><span class="n">cores</span><span class="p">())</span>
-    <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">pu</span> <span class="k">const</span><span class="o">&amp;</span> <span class="nl">p</span> <span class="p">:</span> <span class="n">c</span><span class="p">.</span><span class="n">pus</span><span class="p">())</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">one_numa_domain</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">skipped_first_pu</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="n">skipped_first_pu</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-                <span class="k">continue</span><span class="p">;</span>
-            <span class="p">}</span>
-
-            <span class="n">rp</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s">&quot;my-thread-pool&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
-<span class="p">{</span>
-    <span class="c1">// Set the callback to init the thread_pools</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
-    <span class="n">init_args</span><span class="p">.</span><span class="n">rp_callback</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">init_resource_partitioner_handler</span><span class="p">;</span>
-
-    <span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">hpx_main</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">init_args</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Whatever processing units not assigned to a thread pool by the time
@@ -519,7 +459,7 @@ to the resource partitioner created during runtime initialization.</p>
 <div class="section" id="advanced-usage">
 <h3>Advanced usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h3>
 <p>It is possible to customize the built in schedulers by passing scheduler options
-to <a class="reference internal" href="../libs/full/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitioner18create_thread_poolERKNSt6stringE17scheduling_policyN3hpx7threads8policies14scheduler_modeE" title="hpx::resource::partitioner::create_thread_pool"><code class="xref cpp cpp-member docutils literal notranslate"><span class="pre">hpx::resource::partitioner::create_thread_pool</span></code></a>. It is also possible
+to <a class="reference internal" href="../libs/core/resource_partitioner/api.html#_CPPv4N3hpx8resource11partitioner18create_thread_poolERKNSt6stringE17scheduling_policyN3hpx7threads8policies14scheduler_modeE" title="hpx::resource::partitioner::create_thread_pool"><code class="xref cpp cpp-member docutils literal notranslate"><span class="pre">hpx::resource::partitioner::create_thread_pool</span></code></a>. It is also possible
 to create and use custom schedulers.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -540,7 +480,7 @@ when creating the thread pool like this:</p>
 </pre></div>
 </div>
 <p>The available schedulers are documented here:
-<a class="reference internal" href="../libs/full/resource_partitioner/api.html#_CPPv4N3hpx8resource17scheduling_policyE" title="hpx::resource::scheduling_policy"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">hpx::resource::scheduling_policy</span></code></a>, and the available scheduler modes
+<a class="reference internal" href="../libs/core/resource_partitioner/api.html#_CPPv4N3hpx8resource17scheduling_policyE" title="hpx::resource::scheduling_policy"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">hpx::resource::scheduling_policy</span></code></a>, and the available scheduler modes
 here: <a class="reference internal" href="../libs/core/threading_base/api.html#_CPPv4N3hpx7threads8policies14scheduler_modeE" title="hpx::threads::policies::scheduler_mode"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">hpx::threads::policies::scheduler_mode</span></code></a>. Also see the examples
 folder for examples of advanced resource partitioner usage:
 <code class="docutils literal notranslate"><span class="pre">simple_resource_partitioner.cpp</span></code> and
@@ -572,7 +512,7 @@ folder for examples of advanced resource partitioner usage:
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>3288a9d</code>.
+        Revision <code>cde3066</code>.
       </span>
       <span class="lastupdated">
         Last updated on Sep 15, 2021.

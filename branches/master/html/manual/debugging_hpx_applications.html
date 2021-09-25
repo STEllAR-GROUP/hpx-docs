@@ -99,7 +99,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../terminology.html">Terminology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../manual.html">Manual</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="getting_hpx.html">Getting <em>HPX</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="building_hpx.html"><em>HPX</em> build system</a></li>
 <li class="toctree-l2"><a class="reference internal" href="creating_hpx_projects.html">Creating <em>HPX</em> projects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="starting_the_hpx_runtime.html">Starting the <em>HPX</em> runtime</a></li>
@@ -110,6 +109,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Debugging <em>HPX</em> applications</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#using-a-debugger-with-hpx-applications">Using a debugger with <em>HPX</em> applications</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#using-sanitizers-with-hpx-applications">Using sanitizers with <em>HPX</em> applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-applications-using-core-files">Debugging applications using core files</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="optimizing_hpx_applications.html">Optimizing <em>HPX</em> applications</a></li>
@@ -255,6 +255,34 @@ appending <code class="docutils literal notranslate"><span class="pre">-fsanitiz
 and <code class="docutils literal notranslate"><span class="pre">-fsanitize=address</span></code> to <code class="docutils literal notranslate"><span class="pre">CMAKE_EXE_LINKER_FLAGS</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">address</span></code>
 with the sanitizer that you want to use.</p>
 </div>
+<div class="section" id="debugging-applications-using-core-files">
+<span id="debugging-core"></span><h2>Debugging applications using core files<a class="headerlink" href="#debugging-applications-using-core-files" title="Permalink to this headline">¶</a></h2>
+<p>For <em>HPX</em> to generate useful core files, <em>HPX</em> has to be compiled without signal
+and exception handlers
+<a class="reference internal" href="building_hpx.html#cmdoption-arg-HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS:BOOL</span></code></a>. If this option is
+not specified, the signal handlers change the application state. For example,
+after a segmentation fault the stack trace will show the signal handler.
+Similarly, unhandled exceptions are also caught by these handlers and the
+stack trace will not point to the location where the unhandled exception was
+thrown.</p>
+<p>In general, core files are a helpful tool to inspect the state of the
+application at the moment of the crash (post-mortem debugging), without the need
+of attaching a debugger beforehand. This approach to debugging is especially
+useful if the error cannot be reliably reproduced, as only a single crashed
+application run is required to gain potentially helpful information like a
+stacktrace.</p>
+<p>To debug with core files, the operating system first has to be told to actually
+write them. On most Unix systems this can be done by calling:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">ulimit</span> -c unlimited
+</pre></div>
+</div>
+<p>in the shell. Now the debugger can be started up with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gdb &lt;application&gt; &lt;core file name&gt;
+</pre></div>
+</div>
+<p>The debugger should now display the last state of the application. The default
+file name for core files is <code class="docutils literal notranslate"><span class="pre">core</span></code>.</p>
+</div>
 </div>
 
 
@@ -280,10 +308,10 @@ with the sanitizer that you want to use.</p>
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>e6ec617</code>.
+        Revision <code>2f76325</code>.
       </span>
       <span class="lastupdated">
-        Last updated on Sep 24, 2021.
+        Last updated on Sep 25, 2021.
       </span>
 
     </p>

@@ -40,7 +40,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Creating HPX projects" href="creating_hpx_projects.html" />
-    <link rel="prev" title="Getting HPX" href="getting_hpx.html" /> 
+    <link rel="prev" title="Manual" href="../manual.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,47 +99,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../terminology.html">Terminology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../manual.html">Manual</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="getting_hpx.html">Getting <em>HPX</em></a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#"><em>HPX</em> build system</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#cmake-basics">CMake basics</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#basic-cmake-usage">Basic CMake usage</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#quick-start">Quick start</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#options-and-variables">Options and variables</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#supported-platforms">Supported platforms</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#software-and-libraries">Software and libraries</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#documentation">Documentation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#installing-boost">Installing Boost</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#installing-hwloc">Installing Hwloc</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-hpx">Getting <em>HPX</em></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#building-hpx">Building <em>HPX</em></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#basic-information">Basic information</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#build-types">Build types</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#platform-specific-notes">Platform specific notes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#debugging-applications-using-core-files">Debugging applications using core files</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#platform-specific-build-recipes">Platform specific build recipes</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#how-to-install-hpx-on-unix-variants">How to install <em>HPX</em> on Unix variants</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-to-install-hpx-on-os-x-mac">How to install <em>HPX</em> on OS X (Mac)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-to-install-hpx-on-windows">How to install <em>HPX</em> on Windows</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-to-install-hpx-on-fedora-distributions">How to install <em>HPX</em> on Fedora distributions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-to-install-hpx-on-arch-distributions">How to install <em>HPX</em> on Arch distributions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#how-to-install-hpx-on-debian-based-distributions">How to install <em>HPX</em> on Debian-based distributions</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#cmake-toolchains-shipped-with-hpx">CMake toolchains shipped with <em>HPX</em></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#arm-gcc">ARM-gcc</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#bgion-gcc">BGION-gcc</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#bgq">BGQ</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#cray">Cray</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#crayknl">CrayKNL</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#crayknlstatic">CrayKNLStatic</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#craystatic">CrayStatic</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#xeonphi">XeonPhi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#platform-specific-build-recipes">Platform specific build recipes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests-and-examples">Tests and examples</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#cmake-variables-used-to-configure-hpx">CMake variables used to configure <em>HPX</em></a><ul>
@@ -263,111 +234,14 @@
             
   <div class="section" id="hpx-build-system">
 <span id="id2"></span><h1><em>HPX</em> build system<a class="headerlink" href="#hpx-build-system" title="Permalink to this headline">¶</a></h1>
-<p>The build system for <em>HPX</em> is based on <a class="reference external" href="https://www.cmake.org">CMake</a>. CMake is a cross-platform
-build-generator tool. CMake does not build the project, it generates the files
-needed by your build tool (GNU make, Visual Studio, etc.) for building <em>HPX</em>.</p>
-<p>This section gives an introduction on how to use our build system to build
-<em>HPX</em> and how to use <em>HPX</em> in your own projects.</p>
-<div class="section" id="cmake-basics">
-<h2>CMake basics<a class="headerlink" href="#cmake-basics" title="Permalink to this headline">¶</a></h2>
-<p>CMake is a cross-platform build-generator tool. CMake does not build the
-project, it generates the files needed by your build tool (gnu make, visual
-studio, etc.) for building <em>HPX</em>.</p>
-<p>In general, the <em>HPX</em> CMake scripts try to adhere to the general CMake policies
-on how to write CMake-based projects.</p>
-<div class="section" id="basic-cmake-usage">
-<h3>Basic CMake usage<a class="headerlink" href="#basic-cmake-usage" title="Permalink to this headline">¶</a></h3>
-<p>This section explains basic aspects of CMake, specifically options needed for
-day-to-day usage.</p>
-<p>CMake comes with extensive documentation in the form of html files and on the
-CMake executable itself. Execute <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--help</span></code> for further help options.</p>
-<p>CMake needs to know which build tool it will generate files for (GNU make,
-Visual Studio, Xcode, etc.). If not specified on the command line, it will try to
-guess the build tool based on you environment. Once it has identified the build tool,
-CMake uses the corresponding generator to create files for your build tool. You can
-explicitly specify the generator with the command line option <code class="docutils literal notranslate"><span class="pre">-G</span> <span class="pre">&quot;Name</span> <span class="pre">of</span> <span class="pre">the</span>
-<span class="pre">generator&quot;</span></code>. To see the available generators on your platform, execute:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake --help
-</pre></div>
-</div>
-<p>This will list the generator names at the end of the help text. Generator names
-are case-sensitive. Example:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -G <span class="s2">&quot;Visual Studio 16 2019&quot;</span> path/to/hpx
-</pre></div>
-</div>
-<p>For a given development platform there can be more than one adequate generator.
-If you use Visual Studio <code class="docutils literal notranslate"><span class="pre">&quot;NMake</span> <span class="pre">Makefiles&quot;</span></code> is a generator you can use for
-building with NMake. By default, CMake chooses the more specific generator
-supported by your development environment. If you want an alternative generator,
-you must tell this to CMake with the <code class="docutils literal notranslate"><span class="pre">-G</span></code> option.</p>
-</div>
-<div class="section" id="quick-start">
-<span id="cmake-quick-start"></span><h3>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h3>
-<p>Here, you will use the command-line, non-interactive CMake interface.</p>
-<ol class="arabic">
-<li><p>Download and install CMake here: <a class="reference external" href="https://www.cmake.org/cmake/resources/software.html">CMake Downloads</a>. Version 3.18 is the
-minimum required version for <em>HPX</em>.</p></li>
-<li><p>Open a shell. Your development tools must be reachable from this shell
-through the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable.</p></li>
-<li><p>Create a directory for containing the build. Building <em>HPX</em> on the source directory
-is not supported. cd to this directory:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir mybuilddir
-<span class="nb">cd</span> mybuilddir
-</pre></div>
-</div>
-</li>
-<li><p>Execute this command on the shell replacing <code class="docutils literal notranslate"><span class="pre">path/to/hpx</span></code> with the path to
-the root of your <em>HPX</em> source tree:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake path/to/hpx
-</pre></div>
-</div>
-</li>
-</ol>
-<p>CMake will detect your development environment, perform a series of tests and
-will generate the files required for building <em>HPX</em>. CMake will use default
-values for all build parameters. See the <a class="reference internal" href="#cmake-variables"><span class="std std-ref">CMake variables used to configure HPX</span></a> section for
-fine-tuning your build.</p>
-<p>This can fail if CMake can’t detect your toolset, or if it thinks that the
-environment is not sane enough. In this case make sure that the toolset that you
-intend to use is the only one reachable from the shell and that the shell itself
-is the correct one for you development environment. CMake will refuse to build
-MinGW makefiles if you have a POSIX shell reachable through the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
-environment variable, for instance. You can force CMake to use various compilers
-and tools. Please visit <a class="reference external" href="https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/Useful-Variables#Compilers-and-Tools">CMake Useful Variables</a>
-for a detailed overview of specific CMake variables.</p>
-</div>
-<div class="section" id="options-and-variables">
-<span id="options"></span><h3>Options and variables<a class="headerlink" href="#options-and-variables" title="Permalink to this headline">¶</a></h3>
-<p>Variables customize how the build will be generated. Options are boolean
-variables, with possible values <code class="docutils literal notranslate"><span class="pre">ON</span></code>/<code class="docutils literal notranslate"><span class="pre">OFF</span></code>. Options and variables are
-defined on the CMake command line like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DVARIABLE<span class="o">=</span>value path/to/hpx
-</pre></div>
-</div>
-<p>You can set a variable after the initial CMake invocation for changing its
-value. You can also undefine a variable:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -UVARIABLE path/to/hpx
-</pre></div>
-</div>
-<p>Variables are stored on the CMake cache. This is a file named <code class="docutils literal notranslate"><span class="pre">CMakeCache.txt</span></code>
-on the root of the build directory. Do not hand-edit it.</p>
-<p>Variables are listed here appending its type after a colon. You should write the
-variable and the type on the CMake command line:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DVARIABLE:TYPE<span class="o">=</span>value path/to/llvm/source
-</pre></div>
-</div>
-<p>CMake supports the following variable types: <code class="docutils literal notranslate"><span class="pre">BOOL</span></code> (options), <code class="docutils literal notranslate"><span class="pre">STRING</span></code>
-(arbitrary string), <code class="docutils literal notranslate"><span class="pre">PATH</span></code> (directory name), <code class="docutils literal notranslate"><span class="pre">FILEPATH</span></code> (file name).</p>
-</div>
-</div>
 <div class="section" id="prerequisites">
 <span id="id3"></span><h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="supported-platforms">
 <h3>Supported platforms<a class="headerlink" href="#supported-platforms" title="Permalink to this headline">¶</a></h3>
 <p>At this time, <em>HPX</em> supports the following platforms. Other platforms may
 work, but we do not test <em>HPX</em> with other platforms, so please be warned.</p>
-<table class="docutils align-default" id="id14">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Supported Platforms for <em>HPX</em></span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Supported Platforms for <em>HPX</em></span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 19%" />
 <col style="width: 38%" />
@@ -401,80 +275,62 @@ work, but we do not test <em>HPX</em> with other platforms, so please be warned.
 </div>
 <div class="section" id="software-and-libraries">
 <h3>Software and libraries<a class="headerlink" href="#software-and-libraries" title="Permalink to this headline">¶</a></h3>
-<p>In the simplest case, <em>HPX</em> depends on <a class="reference external" href="https://www.boost.org/">Boost</a> and <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a>. So, before you
-read further, please make sure you have a recent version of <a class="reference external" href="https://www.boost.org/">Boost</a> installed
-on your target machine. <em>HPX</em> currently requires at least Boost V1.66.0 to work
-properly. It may build and run with older versions, but we do not test <em>HPX</em>
-with those versions, so please be warned.</p>
-<p>The installation of Boost is described in detail in Boost’s <a class="reference external" href="https://www.boost.org/more/getting_started/index.html">Getting Started</a>
-document. However, if you’ve never used the Boost
-libraries (or even if you have), here’s a quick primer:
-<a class="reference internal" href="#boost-installation"><span class="std std-ref">Installing Boost</span></a>.</p>
-<p>It is often possible to download the Boost libraries using the package manager of
-your distribution. Please refer to the corresponding documentation for your system
-for more information.</p>
-<p>In addition, we require a recent version of hwloc in order to support thread
-pinning and NUMA awareness. See <a class="reference internal" href="#hwloc-installation"><span class="std std-ref">Installing Hwloc</span></a> for instructions on
-building Portable Hardware Locality (HWLOC).</p>
+<p>The table below presents all the necessary prerequisites for building <em>HPX</em>.</p>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Software prerequisites for <em>HPX</em></span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Name</p></td>
+<td><p>Minimum version</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Compilers</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://gcc.gnu.org">GNU Compiler Collection (g++)</a></p></td>
+<td><p>7.0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://clang.llvm.org/">clang: a C language family frontend for LLVM</a></p></td>
+<td><p>7.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://msdn.microsoft.com/en-us/visualc/default.aspx">Visual C++</a> (x64)</p></td>
+<td><p>2015</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Build System</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.cmake.org">CMake</a></p></td>
+<td><p>3.18</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Required Libraries</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.boost.org/">Boost</a></p></td>
+<td><p>1.71.0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a></p></td>
+<td><p>1.5</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://think-async.com/Asio/">Asio</a></p></td>
+<td><p>1.12.0</p></td>
+</tr>
+</tbody>
+</table>
+<p>The most important dependencies are <a class="reference external" href="https://www.boost.org/">Boost</a> and <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a>. The installation of Boost
+is described in detail in Boost’s <a class="reference external" href="https://www.boost.org/more/getting_started/index.html">Getting Started</a>
+document. A recent version of hwloc is required in order to support thread
+pinning and NUMA awareness and can be found in <a class="reference external" href="https://www.open-mpi.org/software/hwloc/v1.11">Hwloc Downloads</a>.</p>
 <p><em>HPX</em> is written in 99.99% Standard C++ (the remaining 0.01% is platform
 specific assembly code). As such, <em>HPX</em> is compilable with almost any standards
-compliant C++ compiler. A compiler supporting the C++11 Standard is highly
-recommended. The code base takes advantage of C++11 language features when
-available (move semantics, rvalue references, magic statics, etc.). This may
-speed up the execution of your code significantly. We currently support the
-following C++ compilers: GCC, MSVC, ICPC and clang. For the status of your
-favorite compiler with <em>HPX</em> visit <a class="reference external" href="http://rostam.cct.lsu.edu/"><em>HPX</em> Buildbot Website</a>.</p>
+compliant C++ compiler. The code base takes advantage of C++ language and
+standard library features when available.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When building Boost using gcc, please note that it is required to specify a
 <code class="docutils literal notranslate"><span class="pre">cxxflags=-std=c++17</span></code> command line argument to <code class="docutils literal notranslate"><span class="pre">b2</span></code> (<code class="docutils literal notranslate"><span class="pre">bjam</span></code>).</p>
 </div>
-<table class="docutils align-default" id="id15">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Software prerequisites for <em>HPX</em> on Windows systems</span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>Name</p></td>
-<td><p>Minimum version</p></td>
-<td><p>Notes</p></td>
-</tr>
-<tr class="row-even"><td><p><strong>Compilers</strong></p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://msdn.microsoft.com/en-us/visualc/default.aspx">Visual C++</a> (x64)</p></td>
-<td><p>2015</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>Build System</strong></p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.cmake.org">CMake</a></p></td>
-<td><p>3.18</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>Required Libraries</strong></p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.boost.org/">Boost</a></p></td>
-<td><p>1.71.0</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.open-mpi.org/projects/hwloc/">Portable Hardware Locality (HWLOC)</a></p></td>
-<td><p>1.5</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://think-async.com/Asio/">Asio</a></p></td>
-<td><p>1.12.0</p></td>
-<td></td>
-</tr>
-</tbody>
-</table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In most configurations, <em>HPX</em> depends only on header-only Boost.
@@ -493,239 +349,60 @@ listed below.</p>
 localities. Please set the CMake variable <code class="docutils literal notranslate"><span class="pre">MPI_CXX_COMPILER</span></code> to your MPI
 C++ compiler wrapper if not detected automatically.</p>
 </div>
-<table class="docutils align-default" id="id16">
-<caption><span class="caption-number">Table 3 </span><span class="caption-text">Highly recommended optional software prerequisites for <em>HPX</em> on
-Linux systems</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Optional software prerequisites for <em>HPX</em></span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Name</p></td>
 <td><p>Minimum version</p></td>
-<td><p>Notes</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://code.google.com/p/gperftools">google-perftools</a></p></td>
 <td><p>1.7.1</p></td>
-<td><p>Used as a replacement for the system allocator, and for allocation
-diagnostics.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.nongnu.org/libunwind">libunwind</a></p></td>
-<td><p>0.97</p></td>
-<td><p>Dependency of google-perftools on x86-64, used for stack unwinding.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.open-mpi.org">Open MPI</a></p></td>
-<td><p>1.8.0</p></td>
-<td><p>Can be used as a highspeed communication library backend for the
-parcelport.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>When using OpenMPI please note that Ubuntu (notably 18.04 LTS) and older
-Debian ship an OpenMPI 2.x built with <code class="docutils literal notranslate"><span class="pre">--enable-heterogeneous</span></code> which may
-cause communication failures at runtime and should not be used.</p>
-</div>
-<table class="docutils align-default" id="id17">
-<caption><span class="caption-number">Table 4 </span><span class="caption-text">Optional software prerequisites for <em>HPX</em> on Linux systems</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>Name</p></td>
-<td><p>Minimum version</p></td>
-<td><p>Notes</p></td>
-</tr>
-<tr class="row-even"><td><p>Performance Application Programming Interface (PAPI)</p></td>
-<td></td>
-<td><p>Used for accessing hardware performance data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="http://jemalloc.net">jemalloc</a></p></td>
 <td><p>2.1.0</p></td>
-<td><p>Used as a replacement for the system allocator.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="http://microsoft.github.io/mimalloc/">mi-malloc</a></p></td>
 <td><p>1.0.0</p></td>
-<td><p>Used as a replacement for the system allocator.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.hdfgroup.org/HDF5">Hierarchical Data Format V5 (HDF5)</a></p></td>
-<td><p>1.6.7</p></td>
-<td><p>Used for data I/O in some example applications. See important note below.</p></td>
+<tr class="row-odd"><td><p>Performance Application Programming Interface (PAPI)</p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default" id="id18">
-<caption><span class="caption-number">Table 5 </span><span class="caption-text">Optional software prerequisites for <em>HPX</em> on Windows systems</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>Name</p></td>
-<td><p>Minimum version</p></td>
-<td><p>Notes</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.hdfgroup.org/HDF5">Hierarchical Data Format V5 (HDF5)</a></p></td>
-<td><p>1.6.7</p></td>
-<td><p>Used for data I/O in some example applications. See important note below.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>The C++ HDF5 libraries must be compiled with enabled thread safety support.
-This has to be explicitly specified while configuring the HDF5 libraries as
-it is not the default. Additionally, you must set the following environment
-variables before configuring the HDF5 libraries (this part only needs to be
-done on Linux):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s1">&#39;-DHDatexit=&quot;&quot;&#39;</span>
-<span class="nb">export</span> <span class="nv">CPPFLAGS</span><span class="o">=</span><span class="s1">&#39;-DHDatexit=&quot;&quot;&#39;</span>
+</div>
+</div>
+<div class="section" id="getting-hpx">
+<span id="id4"></span><h2>Getting <em>HPX</em><a class="headerlink" href="#getting-hpx" title="Permalink to this headline">¶</a></h2>
+<p>Download a tarball of the latest release from <a class="reference external" href="https://hpx.stellar-group.org/downloads/"><em>HPX</em> Downloads</a> and
+unpack it or clone the repository directly using <code class="docutils literal notranslate"><span class="pre">git</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/STEllAR-GROUP/hpx.git
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="documentation">
-<span id="documentation-prerequisites"></span><h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
-<p>To build the <em>HPX</em> documentation, you need recent versions of the following
-packages:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">python3</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sphinx</span> <span class="pre">3.5.4</span></code> (Python package)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sphinx_rtd_theme</span></code> (Python package)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">breathe</span> <span class="pre">4.16.0</span></code> (Python package)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">doxygen</span></code></p></li>
-</ul>
-<p>If the <a class="reference external" href="https://www.python.org">Python</a> dependencies are not available through your system package
-manager, you can install them using the Python package manager <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install --user sphinx sphinx_rtd_theme breathe
+<p>It is also recommended that you check out the latest stable tag:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> hpx
+git checkout <span class="m">1</span>.7.1
 </pre></div>
-</div>
-<p>You may need to set the following CMake variables to make sure CMake can
-find the required dependencies.</p>
-<dl class="std option">
-<dt id="cmdoption-arg-DOXYGEN_ROOT-PATH">
-<span id="cmdoption-arg-doxygen-root-path"></span><code class="sig-name descname"><span class="pre">DOXYGEN_ROOT:PATH</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-DOXYGEN_ROOT-PATH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specifies where to look for the installation of the <a class="reference external" href="https://www.doxygen.org">Doxygen</a> tool.</p>
-</dd></dl>
-
-<dl class="std option">
-<dt id="cmdoption-arg-SPHINX_ROOT-PATH">
-<span id="cmdoption-arg-sphinx-root-path"></span><code class="sig-name descname"><span class="pre">SPHINX_ROOT:PATH</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-SPHINX_ROOT-PATH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specifies where to look for the installation of the <a class="reference external" href="http://www.sphinx-doc.org">Sphinx</a> tool.</p>
-</dd></dl>
-
-<dl class="std option">
-<dt id="cmdoption-arg-BREATHE_APIDOC_ROOT-PATH">
-<span id="cmdoption-arg-breathe-apidoc-root-path"></span><code class="sig-name descname"><span class="pre">BREATHE_APIDOC_ROOT:PATH</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-BREATHE_APIDOC_ROOT-PATH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specifies where to look for the installation of the <a class="reference external" href="https://breathe.readthedocs.io/en/latest">Breathe</a> tool.</p>
-</dd></dl>
-
-</div>
-<div class="section" id="installing-boost">
-<span id="boost-installation"></span><h3>Installing Boost<a class="headerlink" href="#installing-boost" title="Permalink to this headline">¶</a></h3>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>When building Boost using gcc, please note that it is required to specify a
-<code class="docutils literal notranslate"><span class="pre">cxxflags=-std=c++14</span></code> command line argument to <code class="docutils literal notranslate"><span class="pre">b2</span></code> (<code class="docutils literal notranslate"><span class="pre">bjam</span></code>).</p>
-</div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>On Windows, depending on the installed versions of Visual Studio, you might
-also want to pass the correct toolset to the <code class="docutils literal notranslate"><span class="pre">b2</span></code> command depending on
-which version of the IDE you want to use. In addition, passing
-<code class="docutils literal notranslate"><span class="pre">address-model=64</span></code> is highly recommended. It might also be necessary to add
-command line argument <code class="docutils literal notranslate"><span class="pre">--build-type=complete</span></code> to the <code class="docutils literal notranslate"><span class="pre">b2</span></code> command on the
-Windows platform.</p>
-</div>
-<p>The easiest way to create a working Boost installation is to compile Boost from
-sources yourself. This is particularly important as many high performance
-resources, even if they have Boost installed, usually only provide you with an
-older version of Boost. We suggest you download the most recent release of the
-Boost libraries from here: <a class="reference external" href="https://www.boost.org/users/download/">Boost Downloads</a>. Unpack the downloaded archive
-into a directory of your choosing. We will refer to this directory a <code class="docutils literal notranslate"><span class="pre">$BOOST</span></code>.</p>
-<p>Building and installing the Boost binaries is simple. Regardless of what platform
-you are on, the basic instructions are as follows (with possible additional
-platform-dependent command line arguments):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$BOOST</span>
-bootstrap --prefix<span class="o">=</span>&lt;where to install boost&gt;
-./b2 -j&lt;N&gt;
-./b2 install
-</pre></div>
-</div>
-<p>where: <code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span> <span class="pre">boost&gt;</span></code> is the directory the built binaries will be
-installed to, and <code class="docutils literal notranslate"><span class="pre">&lt;N&gt;</span></code> is the number of cores to use to build the Boost
-binaries.</p>
-<p>After the above sequence of commands has been executed (this may take a while!),
-you will need to specify the directory where Boost was installed as
-<code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span> <span class="pre">boost&gt;</span></code>) while executing CMake for <em>HPX</em> as
-explained in detail in the sections <a class="reference internal" href="#unix-installation"><span class="std std-ref">How to install HPX on Unix variants</span></a> and
-<a class="reference internal" href="#windows-installation"><span class="std std-ref">How to install HPX on Windows</span></a>.</p>
-</div>
-<div class="section" id="installing-hwloc">
-<span id="hwloc-installation"></span><h3>Installing Hwloc<a class="headerlink" href="#installing-hwloc" title="Permalink to this headline">¶</a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>These instructions are for everything except Windows. On Windows there is no
-need to build hwloc. Instead, download the latest release, extract the files,
-and set <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> during CMake configuration to the directory in which
-you extracted the files.</p>
-</div>
-<p>We suggest you download the most recent release of hwloc from here:
-<a class="reference external" href="https://www.open-mpi.org/software/hwloc/v1.11">Hwloc Downloads</a>. Unpack the downloaded archive into a directory of your
-choosing. We will refer to this directory as <code class="docutils literal notranslate"><span class="pre">$HWLOC</span></code>.</p>
-<p>To build hwloc run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HWLOC</span>
-./configure --prefix<span class="o">=</span>&lt;where to install hwloc&gt;
-make -j&lt;N&gt; install
-</pre></div>
-</div>
-<p>where: <code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span> <span class="pre">hwloc&gt;</span></code> is the directory the built binaries will be
-installed to, and <code class="docutils literal notranslate"><span class="pre">&lt;N&gt;</span></code> is the number of cores to use to build hwloc.</p>
-<p>After the above sequence of commands has been executed, you will need to specify
-the directory where hwloc was installed as <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;where</span> <span class="pre">to</span> <span class="pre">install</span>
-<span class="pre">hwloc&gt;</span></code>) while executing CMake for <em>HPX</em> as explained in detail in the sections
-<a class="reference internal" href="#unix-installation"><span class="std std-ref">How to install HPX on Unix variants</span></a> and <a class="reference internal" href="#windows-installation"><span class="std std-ref">How to install HPX on Windows</span></a>.</p>
-<p>Please see <a class="reference external" href="https://www.open-mpi.org/projects/hwloc/doc/">Hwloc Documentation</a> for more information about hwloc.</p>
 </div>
 </div>
 <div class="section" id="building-hpx">
-<span id="id4"></span><h2>Building <em>HPX</em><a class="headerlink" href="#building-hpx" title="Permalink to this headline">¶</a></h2>
+<span id="id5"></span><h2>Building <em>HPX</em><a class="headerlink" href="#building-hpx" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="basic-information">
 <span id="info"></span><h3>Basic information<a class="headerlink" href="#basic-information" title="Permalink to this headline">¶</a></h3>
+<p>The build system for <em>HPX</em> is based on <a class="reference external" href="https://www.cmake.org">CMake</a>, a cross-platform
+build-generator tool which is not responsible for building the project
+but rather generates the files needed by your build tool (GNU make, Visual
+Studio, etc.) for building <em>HPX</em>. If CMake is not already installed in your
+system, you can download it and install it here: <a class="reference external" href="https://www.cmake.org/cmake/resources/software.html">CMake Downloads</a>.</p>
 <p>Once CMake has been run, the build process can be started. The <em>HPX</em> build
 process is highly configurable through CMake, and various CMake variables
 influence the build process. The build process consists of the following parts:</p>
 <ul class="simple">
-<li><p>The <em>HPX</em> core libraries (target core): This forms the basic set of <em>HPX</em>
-libraries. The generated targets are:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">hpx</span></code>: The core <em>HPX</em> library (always enabled).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hpx_init</span></code>: The <em>HPX</em> initialization library that applications need to
-link against to define the <em>HPX</em> entry points (disabled for static builds).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hpx_wrap</span></code>: The <em>HPX</em> static library used to determine the runtime
-behavior of <em>HPX</em> code and respective entry points for <code class="docutils literal notranslate"><span class="pre">hpx_main.h</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">iostreams_component</span></code>: The component used for (distributed) IO (always
-enabled).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">component_storage_component</span></code>: The component needed for migration to
-persistent storage.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">unordered_component</span></code>: The component needed for a distributed
-(partitioned) hash table.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">partioned_vector_component</span></code>: The component needed for a distributed
-(partitioned) vector.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">memory_component</span></code>: A dynamically loaded plugin that exposes memory based
-performance counters (only available on Linux).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">io_counter_component</span></code>: A dynamically loaded plugin that exposes
-I/O performance counters (only available on Linux).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">papi_component</span></code>: A dynamically loaded plugin that exposes PAPI
-performance counters (enabled with <a class="reference internal" href="#cmdoption-arg-HPX_WITH_PAPI-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_PAPI:BOOL</span></code></a>, default is
-<code class="docutils literal notranslate"><span class="pre">Off</span></code>).</p></li>
-</ul>
-</li>
+<li><p>The <em>HPX</em> core libraries (target <code class="docutils literal notranslate"><span class="pre">core</span></code>): This forms the basic set of <em>HPX</em>
+libraries.</p></li>
 <li><p><em>HPX</em> Examples (target <code class="docutils literal notranslate"><span class="pre">examples</span></code>): This target is enabled by default and
 builds all <em>HPX</em> examples (disable by setting
 <a class="reference internal" href="#cmdoption-arg-HPX_WITH_EXAMPLES-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_EXAMPLES:BOOL</span></code></a><code class="docutils literal notranslate"><span class="pre">=Off</span></code>). <em>HPX</em> examples are part of the
@@ -744,10 +421,7 @@ and is not enabled by default (enable by setting
 <p>The variables can be used to refine the recipes that can be found at
 <a class="reference internal" href="#build-recipes"><span class="std std-ref">Platform specific build recipes</span></a> which show some basic steps on how to build <em>HPX</em> for a
 specific platform.</p>
-<p>In order to use <em>HPX</em>, only the core libraries are required (the ones marked as
-optional above are truly optional). When building against <em>HPX</em>, the CMake
-variable <code class="docutils literal notranslate"><span class="pre">HPX_LIBRARIES</span></code> will contain <code class="docutils literal notranslate"><span class="pre">hpx</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx_init</span></code> (for pkgconfig,
-those are added to the <code class="docutils literal notranslate"><span class="pre">Libs</span></code> sections). In order to use the optional
+<p>In order to use <em>HPX</em>, only the core libraries are required. In order to use the optional
 libraries, you need to specify them as link dependencies in your build (See
 <a class="reference internal" href="creating_hpx_projects.html#creating-hpx-projects"><span class="std std-ref">Creating HPX projects</span></a>).</p>
 <p>As <em>HPX</em> is a modern C++ library which relies on C++17 by default. The use of
@@ -756,12 +430,12 @@ to use a specific C++ standard version, you can use the following CMake
 variables:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX17</span></code>: [Deprecated] C++17 is now the default C++ standard used in HPX.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX20</span></code>: [Deprecated] In order to use the C++20 standard, it is</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX20</span></code>: [Deprecated] In order to use the C++20 standard, it is preferable
+to set CMAKE_CXX_STANDARD and HPX_USE_CMAKE_CXX_STANDARD to ON.</p></li>
 </ul>
-<p>preferable to set CMAKE_CXX_STANDARD and HPX_USE_CMAKE_CXX_STANDARD to ON.</p>
 </div>
 <div class="section" id="build-types">
-<span id="id5"></span><h3>Build types<a class="headerlink" href="#build-types" title="Permalink to this headline">¶</a></h3>
+<span id="id6"></span><h3>Build types<a class="headerlink" href="#build-types" title="Permalink to this headline">¶</a></h3>
 <p>CMake can be configured to generate project files suitable for builds that
 have enabled debugging support or for an optimized build (without debugging
 support). The CMake variable used to set the build type is
@@ -786,70 +460,51 @@ the <code class="docutils literal notranslate"><span class="pre">CMAKE_BUILD_TYP
 <a class="reference external" href="https://www.cmake.org">CMake</a>, the <code class="docutils literal notranslate"><span class="pre">HPX_DEBUG</span></code> macro has to be set in debug mode.</p>
 </div>
 </div>
-<div class="section" id="platform-specific-notes">
-<span id="platform"></span><h3>Platform specific notes<a class="headerlink" href="#platform-specific-notes" title="Permalink to this headline">¶</a></h3>
-<p>Some platforms require users to have special link and/or compiler flags specified to
-build <em>HPX</em>. This is handled via CMake’s support for different toolchains (see
-<a class="reference external" href="https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html">cmake-toolchains(7)</a> for more
-information). This is also used for cross compilation.</p>
-<p><em>HPX</em> ships with a set of toolchains that can be used for compilation of <em>HPX</em>
-itself and applications depending on <em>HPX</em>. Please see <a class="reference internal" href="#cmake-toolchains"><span class="std std-ref">CMake toolchains shipped with HPX</span></a>
-for more information.</p>
-<p>In order to enable full static linking with the libraries, the CMake variable
-<a class="reference internal" href="#cmdoption-arg-HPX_WITH_STATIC_LINKING-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_STATIC_LINKING:BOOL</span></code></a> has to be set to <code class="docutils literal notranslate"><span class="pre">On</span></code>.</p>
-</div>
-<div class="section" id="debugging-applications-using-core-files">
-<span id="debugging-core"></span><h3>Debugging applications using core files<a class="headerlink" href="#debugging-applications-using-core-files" title="Permalink to this headline">¶</a></h3>
-<p>For <em>HPX</em> to generate useful core files, <em>HPX</em> has to be compiled without signal
-and exception handlers
-<a class="reference internal" href="#cmdoption-arg-HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DISABLED_SIGNAL_EXCEPTION_HANDLERS:BOOL</span></code></a>. If this option is
-not specified, the signal handlers change the application state. For example,
-after a segmentation fault the stack trace will show the signal handler.
-Similarly, unhandled exceptions are also caught by these handlers and the
-stack trace will not point to the location where the unhandled exception was
-thrown.</p>
-<p>In general, core files are a helpful tool to inspect the state of the
-application at the moment of the crash (post-mortem debugging), without the need
-of attaching a debugger beforehand. This approach to debugging is especially
-useful if the error cannot be reliably reproduced, as only a single crashed
-application run is required to gain potentially helpful information like a
-stacktrace.</p>
-<p>To debug with core files, the operating system first has to be told to actually
-write them. On most Unix systems this can be done by calling:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">ulimit</span> -c unlimited
-</pre></div>
-</div>
-<p>in the shell. Now the debugger can be started up with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gdb &lt;application&gt; &lt;core file name&gt;
-</pre></div>
-</div>
-<p>The debugger should now display the last state of the application. The default
-file name for core files is <code class="docutils literal notranslate"><span class="pre">core</span></code>.</p>
-</div>
-</div>
 <div class="section" id="platform-specific-build-recipes">
-<span id="build-recipes"></span><h2>Platform specific build recipes<a class="headerlink" href="#platform-specific-build-recipes" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The following build recipes are mostly user-contributed and may be outdated.
-We always welcome updated and new build recipes.</p>
-</div>
-<div class="section" id="how-to-install-hpx-on-unix-variants">
-<span id="unix-installation"></span><h3>How to install <em>HPX</em> on Unix variants<a class="headerlink" href="#how-to-install-hpx-on-unix-variants" title="Permalink to this headline">¶</a></h3>
-<ul>
-<li><p>Create a build directory. <em>HPX</em> requires an out-of-tree build. This means you
-will be unable to run CMake in the <em>HPX</em> source tree.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> hpx
-mkdir my_hpx_build
-<span class="nb">cd</span> my_hpx_build
+<span id="build-recipes"></span><h3>Platform specific build recipes<a class="headerlink" href="#platform-specific-build-recipes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="unix-variants">
+<span id="unix-installation"></span><h4>Unix variants<a class="headerlink" href="#unix-variants" title="Permalink to this headline">¶</a></h4>
+<p>Once you have the source code and the dependencies and assuming all your dependencies are in paths
+known to CMake, the following gets you started:</p>
+<ol class="arabic">
+<li><p>First, set up a separate build directory to configure the project:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
 </pre></div>
 </div>
 </li>
-<li><p>Invoke CMake from your build directory, pointing the CMake driver to the root
-of your <em>HPX</em> source tree.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DBOOST_ROOT<span class="o">=</span>/root/of/boost/installation <span class="se">\</span>
-      -DHWLOC_ROOT<span class="o">=</span>/root/of/hwloc/installation
-      <span class="o">[</span>other CMake variable definitions<span class="o">]</span> <span class="se">\</span>
+<li><p>To configure the project you have the following options:</p>
+<ul class="simple">
+<li><p>To build the core <em>HPX</em> libraries and examples, and install them to your chosen location (recommended):</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/install/path ..
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you want to change CMake variables for your build, it is usually a good
+idea to start with a clean build directory to avoid configuration problems.
+It is especially important that you use a clean build directory when changing
+between <code class="docutils literal notranslate"><span class="pre">Release</span></code> and <code class="docutils literal notranslate"><span class="pre">Debug</span></code> modes.</p>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>To install <em>HPX</em> to the default system folders, simply leave out the <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> option:</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake ..
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>If your dependencies are in custom locations, you may need to tell CMake where to find them by passing one or more options to CMake as shown below:</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake -DBOOST_ROOT<span class="o">=</span>/path/to/boost
+      -DHWLOC_ROOT<span class="o">=</span>/path/to/hwloc
+      -DTCMALLOC_ROOT<span class="o">=</span>/path/to/tcmalloc
+      -DJEMALLOC_ROOT<span class="o">=</span>/path/to/jemalloc
+      <span class="o">[</span>other CMake variable definitions<span class="o">]</span>
       /path/to/source/tree
 </pre></div>
 </div>
@@ -857,229 +512,47 @@ of your <em>HPX</em> source tree.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DBOOST_ROOT<span class="o">=</span>~/packages/boost -DHWLOC_ROOT<span class="o">=</span>/packages/hwloc -DCMAKE_INSTALL_PREFIX<span class="o">=</span>~/packages/hpx ~/downloads/hpx_1.5.1
 </pre></div>
 </div>
-</li>
-<li><p>Invoke GNU make. If you are on a machine with multiple cores, add the -jN flag
-to your make invocation, where N is the number of parallel processes <em>HPX</em>
-gets compiled with.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmake -j4
+</div></blockquote>
+<ul class="simple">
+<li><p>If you want to try <em>HPX</em> without using a custom allocator pass <code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_MALLOC=system</span></code> to CMake:</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/install/path -DHPX_WITH_MALLOC<span class="o">=</span>system ..
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please pay special attention to the section about <a class="reference internal" href="#cmdoption-arg-HPX_WITH_MALLOC-STRING"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_MALLOC:STRING</span></code></a> as this is crucial for getting decent performance.</p>
+</div>
+</div></blockquote>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you are building <em>HPX</em> for a system with more than 64 processing units,
+you must change the CMake variable <code class="docutils literal notranslate"><span class="pre">HPX_WITH_MAX_CPU_COUNT</span></code> (to a value at least as big as the
+number of (virtual) cores on your system). Note that the default value is 64.</p>
 </div>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
 <p>Compiling and linking <em>HPX</em> needs a considerable amount of memory. It is
 advisable that at least 2 GB of memory per parallel process is available.</p>
 </div>
+</li>
+<li><p>Once the configuration is complete, to build the project you run:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake --build . --target install
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="windows">
+<span id="windows-installation"></span><h4>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h4>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Many Linux distributions use <code class="docutils literal notranslate"><span class="pre">make</span></code> as an alias for <code class="docutils literal notranslate"><span class="pre">gmake</span></code>.</p>
+<p>The following build recipes are mostly user-contributed and may be outdated.
+We always welcome updated and new build recipes.</p>
 </div>
-</li>
-<li><p>To complete the build and install <em>HPX</em>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmake install
-</pre></div>
-</div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>These commands will build and install the essential core components of
-<em>HPX</em> only. In order to build and run the tests, please invoke:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmake tests <span class="o">&amp;&amp;</span> gmake <span class="nb">test</span>
-</pre></div>
-</div>
-<p>and in order to build (and install) all examples invoke:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DHPX_WITH_EXAMPLES<span class="o">=</span>On .
-gmake examples
-gmake install
-</pre></div>
-</div>
-</div>
-</li>
-</ul>
-<p>For more detailed information about using CMake, please refer to its documentation
-and also the section <a class="reference internal" href="#building-hpx"><span class="std std-ref">Building HPX</span></a>. Please pay special attention to the
-section about <a class="reference internal" href="#cmdoption-arg-HPX_WITH_MALLOC-STRING"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_MALLOC:STRING</span></code></a> as this is crucial for getting
-decent performance.</p>
-</div>
-<div class="section" id="how-to-install-hpx-on-os-x-mac">
-<span id="macos-installation"></span><h3>How to install <em>HPX</em> on OS X (Mac)<a class="headerlink" href="#how-to-install-hpx-on-os-x-mac" title="Permalink to this headline">¶</a></h3>
-<p>This section describes how to build <em>HPX</em> for OS X (Mac).</p>
-<div class="section" id="build-and-install-a-recent-version-of-boost-using-clang-and-libc">
-<h4>Build (and install) a recent version of Boost, using Clang and libc++<a class="headerlink" href="#build-and-install-a-recent-version-of-boost-using-clang-and-libc" title="Permalink to this headline">¶</a></h4>
-<p>To build Boost with Clang and make it link to libc++ as standard library, you’ll
-need to set up either of the following in your <code class="docutils literal notranslate"><span class="pre">~/user-config.jam</span></code> file:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># user-config.jam (put this file into your home directory)
-# ...
-
-using clang
-    :
-    : &quot;/usr/bin/clang++&quot;
-    : &lt;cxxflags&gt;&quot;-std=c++11 -fcolor-diagnostics&quot;
-      &lt;linkflags&gt;&quot;-stdlib=libc++ -L/path/to/libcxx/lib&quot;
-    ;
-</pre></div>
-</div>
-<p>(Again, remember to replace <code class="docutils literal notranslate"><span class="pre">/path/to</span></code> with whatever you used earlier.)</p>
-<p>Then, you can use one of the following for your build command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>b2 --build-dir<span class="o">=</span>/tmp/build-boost --layout<span class="o">=</span>versioned <span class="nv">toolset</span><span class="o">=</span>clang install -j4
-</pre></div>
-</div>
-<p>or:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>b2 --build-dir<span class="o">=</span>/tmp/build-boost --layout<span class="o">=</span>versioned <span class="nv">toolset</span><span class="o">=</span>clang install -j4
-</pre></div>
-</div>
-<p>We verified this using Boost V1.53. If you use a different version, just
-remember to replace <code class="docutils literal notranslate"><span class="pre">/usr/local/include/boost-1_53</span></code> with whatever prefix
-you used in your installation.</p>
-</div>
-<div class="section" id="build-hpx-finally">
-<h4>Build <em>HPX</em>, finally<a class="headerlink" href="#build-hpx-finally" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /path/to
-git clone https://github.com/STEllAR-GROUP/hpx.git
-mkdir build-hpx <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build-hpx
-</pre></div>
-</div>
-<p>To build with Clang, execute:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake ../hpx <span class="se">\</span>
-    -DCMAKE_CXX_COMPILER<span class="o">=</span>clang++ <span class="se">\</span>
-    -DBOOST_ROOT<span class="o">=</span>/path/to/boost <span class="se">\</span>
-    -DHWLOC_ROOT<span class="o">=</span>/path/to/hwloc <span class="se">\</span>
-    -DHPX_WITH_GENERIC_CONTEXT_COROUTINES<span class="o">=</span>On
-make -j
-</pre></div>
-</div>
-<p>For more detailed information about using CMake, please refer its documentation
-and to the section <a class="reference internal" href="#building-hpx"><span class="std std-ref">Building HPX</span></a>.</p>
-</div>
-<div class="section" id="alternative-installation-method-of-hpx-on-os-x-mac">
-<h4>Alternative installation method of <em>HPX</em> on OS X (Mac)<a class="headerlink" href="#alternative-installation-method-of-hpx-on-os-x-mac" title="Permalink to this headline">¶</a></h4>
-<p>Alternatively, you can install a recent version of gcc as well as all
-required libraries via MacPorts:</p>
-<ol class="arabic">
-<li><p>Install MacPorts</p></li>
-<li><p>Install CMake, gcc, hwloc:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo brew install cmake
-sudo brew install boost
-sudo brew install hwloc
-sudo brew install make
-</pre></div>
-</div>
-</li>
-<li><p>You may also want:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo brew install gperftools
-</pre></div>
-</div>
-</li>
-<li><p>If you need to build Boost manually (the Boost package of MacPorts is built
-with Clang, and unfortunately doesn’t work with a GCC-build version of <em>HPX</em>):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.bz2
-tar xjf boost_1_69_0.tar.bz2
-<span class="nb">pushd</span> boost_1_69_0
-<span class="nb">export</span> <span class="nv">BOOST_ROOT</span><span class="o">=</span><span class="nv">$HOME</span>/boost_1_69_0
-./bootstrap.sh --prefix<span class="o">=</span><span class="nv">$BOOST_DIR</span>
-./b2 -j8
-./b2 -j8 install
-<span class="nb">export</span> <span class="nv">DYLD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$DYLD_LIBRARY_PATH</span>:<span class="nv">$BOOST_ROOT</span>/lib
-<span class="nb">popd</span>
-</pre></div>
-</div>
-</li>
-<li><p>Build <em>HPX</em>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/STEllAR-GROUP/hpx.git
-mkdir hpx-build
-<span class="nb">pushd</span> hpx-build
-<span class="nb">export</span> <span class="nv">HPX_ROOT</span><span class="o">=</span><span class="nv">$HOME</span>/hpx
-cmake -DCMAKE_CXX_COMPILER<span class="o">=</span>g++ <span class="se">\</span>
-    -DCMAKE_CXX_FLAGS<span class="o">=</span><span class="s2">&quot;-Wno-unused-local-typedefs&quot;</span> <span class="se">\</span>
-    -DBOOST_ROOT<span class="o">=</span><span class="nv">$BOOST_ROOT</span> <span class="se">\</span>
-    -DHWLOC_ROOT<span class="o">=</span>/opt/local <span class="se">\</span>
-    -DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="nv">$HOME</span>/hpx <span class="se">\</span>
-    -DHPX_WITH_GENERIC_CONTEXT_COROUTINES<span class="o">=</span>On <span class="se">\</span>
-         <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/../hpx
-make -j8
-make -j8 install
-<span class="nb">export</span> <span class="nv">DYLD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$DYLD_LIBRARY_PATH</span>:<span class="nv">$HPX_ROOT</span>/lib/hpx
-<span class="nb">popd</span>
-</pre></div>
-</div>
-</li>
-<li><p>Note that you need to set <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">HPX_ROOT</span></code> and
-<code class="docutils literal notranslate"><span class="pre">DYLD_LIBRARY_PATH</span></code> (for both <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> and <code class="docutils literal notranslate"><span class="pre">HPX_ROOT</span></code>) every time
-you configure, build, or run an <em>HPX</em> application.</p></li>
-<li><p>Note that you need to set <code class="docutils literal notranslate"><span class="pre">HPX_WITH_GENERIC_CONTEXT_COROUTINES=On</span></code> for
-MacOS.</p></li>
-<li><p>If you want to use <em>HPX</em> with MPI, you need to enable the MPI parcelport, and
-also specify the location of the MPI wrapper scripts. This can be done using
-the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DHPX_WITH_PARCELPORT_MPI<span class="o">=</span>ON <span class="se">\</span>
-     -DCMAKE_CXX_COMPILER<span class="o">=</span>g++ <span class="se">\</span>
-     -DMPI_CXX_COMPILER<span class="o">=</span>openmpic++ <span class="se">\</span>
-     -DCMAKE_CXX_FLAGS<span class="o">=</span><span class="s2">&quot;-Wno-unused-local-typedefs&quot;</span> <span class="se">\</span>
-     -DBOOST_ROOT<span class="o">=</span><span class="nv">$BOOST_DIR</span> <span class="se">\</span>
-     -DHWLOC_ROOT<span class="o">=</span>/opt/local <span class="se">\</span>
-     -DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="nv">$HOME</span>/hpx
-         <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/../hpx
-</pre></div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="section" id="how-to-install-hpx-on-windows">
-<span id="windows-installation"></span><h3>How to install <em>HPX</em> on Windows<a class="headerlink" href="#how-to-install-hpx-on-windows" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="installation-of-required-prerequisites">
-<h4>Installation of required prerequisites<a class="headerlink" href="#installation-of-required-prerequisites" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>Download the Boost c++ libraries from <a class="reference external" href="https://www.boost.org/users/download/">Boost Downloads</a></p></li>
-<li><p>Install the Boost library as explained in the section
-<a class="reference internal" href="#boost-installation"><span class="std std-ref">Installing Boost</span></a></p></li>
-<li><p>Install the hwloc library as explained in the section
-<a class="reference internal" href="#hwloc-installation"><span class="std std-ref">Installing Hwloc</span></a></p></li>
-<li><p>Download the latest version of CMake binaries, which are located under the
-platform section of the downloads page at <a class="reference external" href="https://www.cmake.org/cmake/resources/software.html">CMake Downloads</a>.</p></li>
-<li><p>Download the latest version of <em>HPX</em> from the STE||AR website:
-<a class="reference external" href="https://hpx.stellar-group.org/downloads/"><em>HPX</em> Downloads</a>.</p></li>
-</ul>
-</div>
-<div class="section" id="installation-of-the-hpx-library">
-<h4>Installation of the <em>HPX</em> library<a class="headerlink" href="#installation-of-the-hpx-library" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>Create a build folder. <em>HPX</em> requires an out-of-tree-build. This means that
-you will be unable to run CMake in the <em>HPX</em> source folder.</p></li>
-<li><p>Open up the CMake GUI. In the input box labelled “Where is the source code:”,
-enter the full path to the source folder. The source directory is the one where
-the sources were checked out. CMakeLists.txt files in the source directory as
-well as the subdirectories describe the build to CMake. In addition to this,
-there are CMake scripts (usually ending in .cmake) stored in a special CMake
-directory. CMake does not alter any file in the source directory and doesn’t
-add new ones either. In the input box labelled “Where to build the binaries:”,
-enter the full path to the build folder you created before. The build
-directory is one where all compiler outputs are stored, which includes object
-files and final executables.</p></li>
-<li><p>Add CMake variable definitions (if any) by clicking the “Add Entry” button.
-There are two required variables you need to define: <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> and
-<code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> These (<code class="docutils literal notranslate"><span class="pre">PATH</span></code>) variables need to be set to point to the root
-folder of your Boost and hwloc installations. It is recommended to set
-the variable <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> as well. This determines where the <em>HPX</em>
-libraries will be built and installed. If this (<code class="docutils literal notranslate"><span class="pre">PATH</span></code>) variable is set, it
-has to refer to the directory where the built <em>HPX</em> files should be installed
-to.</p></li>
-<li><p>Press the “Configure” button. A window will pop up asking you which compilers
-to use. Select the Visual Studio 10 (64Bit) compiler (it usually is the
-default if available). The Visual Studio 2012 (64Bit) and Visual Studio 2013
-(64Bit) compilers are supported as well. Note that while it is possible to
-build <em>HPX</em> for x86, we don’t recommend doing so as 32 bit runs are severely
-restricted by a 32 bit Windows system limitation affecting the number of <em>HPX</em>
-threads you can create.</p></li>
-<li><p>Press “Configure” again. Repeat this step until the “Generate” button becomes
-clickable (and until no variable definitions are marked in red anymore).</p></li>
-<li><p>Press “Generate”.</p></li>
-<li><p>Open up the build folder, and double-click hpx.sln.</p></li>
-<li><p>Build the INSTALL target.</p></li>
-</ul>
-<p>For more detailed information about using <a class="reference external" href="https://www.cmake.org">CMake</a> please refer its
-documentation and also the section <a class="reference internal" href="#building-hpx"><span class="std std-ref">Building HPX</span></a>.</p>
-</div>
-<div class="section" id="how-to-build-hpx-under-windows-10-x64-with-visual-studio-2015">
-<span id="howto-win32"></span><h4>How to build <em>HPX</em> under Windows 10 x64 with Visual Studio 2015<a class="headerlink" href="#how-to-build-hpx-under-windows-10-x64-with-visual-studio-2015" title="Permalink to this headline">¶</a></h4>
+<p>To build <em>HPX</em> under Windows 10 x64 with Visual Studio 2015:</p>
 <ul>
 <li><p>Download the CMake V3.18.1 installer (or latest version) from <a class="reference external" href="https://blog.kitware.com/cmake-3-18-1-available-for-download/">here</a></p></li>
 <li><p>Download the hwloc V1.11.0 (or the latest version) from <a class="reference external" href="http://www.open-mpi.org/software/hwloc/v1.11/downloads/hwloc-win64-build-1.11.0.zip">here</a>
@@ -1102,9 +575,9 @@ Please, be patient.</p>
 source code’) to the <em>base directory</em> of the source code you downloaded from
 <em>HPX</em>’s GitHub pages. Here’s an example of CMake path settings, which point to
 the <code class="docutils literal notranslate"><span class="pre">Documents/GitHub/hpx</span></code> folder:</p>
-<div class="figure align-default" id="id19">
+<div class="figure align-default" id="id10">
 <span id="win32-cmake-settings1"></span><img alt="../_images/cmake_settings1.png" src="../_images/cmake_settings1.png" />
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Example CMake path settings.</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Example CMake path settings.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </div>
 <p>Inside ‘Where is the source-code’ enter the base directory of your <em>HPX</em>
 source directory (do not enter the “src” sub-directory!). Inside ‘Where to
@@ -1135,9 +608,9 @@ whitespace, like <code class="docutils literal notranslate"><span class="pre">C:
 “Name”, select <code class="docutils literal notranslate"><span class="pre">PATH</span></code> as Type and put the path-name in the “Path” text field.
 Repeat this for the first three variables.</p>
 <p>This is how variable insertion will look:</p>
-<div class="figure align-default" id="id20">
+<div class="figure align-default" id="id11">
 <span id="win32-cmake-settings2"></span><img alt="../_images/cmake_settings2.png" src="../_images/cmake_settings2.png" />
-<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Example CMake adding entry.</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Example CMake adding entry.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
 </div>
 <p>Alternatively, users could provide <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> instead of
 <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code>; the difference is that <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> should point to
@@ -1157,807 +630,88 @@ button. Now, CMake will put new VS Solution files into the BUILD folder you
 selected at the beginning.</p></li>
 <li><p>Open Visual Studio and load the <code class="docutils literal notranslate"><span class="pre">HPX.sln</span></code> from your build folder.</p></li>
 <li><p>Go to <code class="docutils literal notranslate"><span class="pre">CMakePredefinedTargets</span></code> and build the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> project:</p>
-<div class="figure align-default" id="id21">
+<div class="figure align-default" id="id12">
 <span id="win32-vs-targets"></span><img alt="../_images/vs_targets_install.png" src="../_images/vs_targets_install.png" />
-<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Visual Studio INSTALL target.</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Visual Studio INSTALL target.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </div>
 <p>It will take some time to compile everything, and in the end you should see an
 output similar to this one:</p>
-<div class="figure align-default" id="id22">
+<div class="figure align-default" id="id13">
 <span id="win32-vs-build-output"></span><img alt="../_images/vs_build_output.png" src="../_images/vs_build_output.png" />
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Visual Studio build output.</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Visual Studio build output.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </div>
 </li>
 </ul>
 </div>
 </div>
-<div class="section" id="how-to-install-hpx-on-fedora-distributions">
-<span id="fedora-installation"></span><h3>How to install <em>HPX</em> on Fedora distributions<a class="headerlink" href="#how-to-install-hpx-on-fedora-distributions" title="Permalink to this headline">¶</a></h3>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>There are official <em>HPX</em> packages for Fedora. Unless you want to customize
-your, build you may want to start off with the official packages. Instructions
-can be found on the <a class="reference external" href="https://hpx.stellar-group.org/downloads/"><em>HPX</em> Downloads</a> page.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This section of the manual is based off of our collaborator Patrick Diehl’s
-blog post <a class="reference external" href="http://diehlpk.github.io/2015/08/04/hpx-fedora.html">Installing |hpx| on Fedora 22</a>.</p>
-</div>
-<ul>
-<li><p>Install all packages for minimal installation:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo dnf install gcc-c++ cmake boost-build boost boost-devel hwloc-devel <span class="se">\</span>
-  hwloc papi-devel gperftools-devel docbook-dtds <span class="se">\</span>
-  docbook-style-xsl libsodium-devel doxygen boost-doc hdf5-devel <span class="se">\</span>
-  fop boost-devel boost-openmpi-devel boost-mpich-devel
+<div class="section" id="tests-and-examples">
+<span id="tests-examples"></span><h3>Tests and examples<a class="headerlink" href="#tests-and-examples" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="running-tests">
+<h4>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h4>
+<p>To build the tests:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmake --build . --target tests
 </pre></div>
 </div>
-</li>
-<li><p>Get the development branch of <em>HPX</em>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/STEllAR-GROUP/hpx.git
+<p>To control which tests to run use <code class="docutils literal notranslate"><span class="pre">ctest</span></code>:</p>
+<ul class="simple">
+<li><p>To run single tests, for example a test for <code class="docutils literal notranslate"><span class="pre">for_loop</span></code>:</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ctest --output-on-failure -R tests.unit.modules.algorithms.for_loop
 </pre></div>
 </div>
-</li>
-<li><p>Configure it with CMake:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> hpx
-mkdir build
-<span class="nb">cd</span> build
-cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/hpx ..
-make -j
+<ul class="simple">
+<li><p>To run a whole group of tests:</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ctest --output-on-failure -R tests.unit
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-examples">
+<h4>Running examples<a class="headerlink" href="#running-examples" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>To build (and install) all examples invoke:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DHPX_WITH_EXAMPLES<span class="o">=</span>On .
+make examples
 make install
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To build <em>HPX</em> without examples use:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/hpx -DHPX_WITH_EXAMPLES<span class="o">=</span>Off ..
-</pre></div>
-</div>
-</div>
-</li>
-<li><p>Add the library path of <em>HPX</em> to ldconfig:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo <span class="nb">echo</span> /opt/hpx/lib &gt; /etc/ld.so.conf.d/hpx.conf
-sudo ldconfig
-</pre></div>
-</div>
-</li>
-</ul>
-</div>
-<div class="section" id="how-to-install-hpx-on-arch-distributions">
-<span id="arch-installation"></span><h3>How to install <em>HPX</em> on Arch distributions<a class="headerlink" href="#how-to-install-hpx-on-arch-distributions" title="Permalink to this headline">¶</a></h3>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>There are <em>HPX</em> packages for Arch in the AUR. Unless you want to customize
-your build, you may want to start off with those. Instructions can be found on
-the <a class="reference external" href="https://hpx.stellar-group.org/downloads/"><em>HPX</em> Downloads</a> page.</p>
-</div>
-<ul>
-<li><p>Install all packages for a minimal installation:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo pacman -S gcc clang cmake boost hwloc gperftools
-</pre></div>
-</div>
-</li>
-<li><p>For building the documentation, you will need to further install the following:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo pacman -S doxygen python-pip
-
-pip install --user sphinx sphinx_rtd_theme breathe
-</pre></div>
-</div>
-</li>
-</ul>
-<p>The rest of the installation steps are the same as those for the Fedora
-or Unix variants.</p>
-</div>
-<div class="section" id="how-to-install-hpx-on-debian-based-distributions">
-<h3>How to install <em>HPX</em> on Debian-based distributions<a class="headerlink" href="#how-to-install-hpx-on-debian-based-distributions" title="Permalink to this headline">¶</a></h3>
-<ul>
-<li><p>Install all packages for a minimal installation:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install cmake libboost-all-dev hwloc libgoogle-perftools-dev
-</pre></div>
-</div>
-</li>
-<li><p>To build the documentation you will need to further install the following:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install doxygen python-pip
-
-pip install --user sphinx sphinx_rtd_theme breathe
-</pre></div>
-</div>
-<p>or the following if you prefer to get Python packages from the Debian
-repositories:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install doxygen python-sphinx python-sphinx-rtd-theme python-breathe
-</pre></div>
-</div>
-</li>
-</ul>
-<p>The rest of the installation steps are same as those for the Fedora
-or Unix variants.</p>
-</div>
-</div>
-<div class="section" id="cmake-toolchains-shipped-with-hpx">
-<span id="cmake-toolchains"></span><h2>CMake toolchains shipped with <em>HPX</em><a class="headerlink" href="#cmake-toolchains-shipped-with-hpx" title="Permalink to this headline">¶</a></h2>
-<p>In order to compile <em>HPX</em> for various platforms, we provide a variety of toolchain
-files that take care of setting up various CMake variables like compilers, etc.
-They are located in the <code class="docutils literal notranslate"><span class="pre">cmake/toolchains</span></code> directory:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#arm-gcc"><span class="std std-ref">ARM-gcc</span></a></p></li>
-<li><p><a class="reference internal" href="#bgion-gcc"><span class="std std-ref">BGION-gcc</span></a></p></li>
-<li><p><a class="reference internal" href="#bgq"><span class="std std-ref">BGQ</span></a></p></li>
-<li><p><a class="reference internal" href="#cray"><span class="std std-ref">Cray</span></a></p></li>
-<li><p><a class="reference internal" href="#crayknl"><span class="std std-ref">CrayKNL</span></a></p></li>
-<li><p><a class="reference internal" href="#crayknlstatic"><span class="std std-ref">CrayKNLStatic</span></a></p></li>
-<li><p><a class="reference internal" href="#craystatic"><span class="std std-ref">CrayStatic</span></a></p></li>
-<li><p><a class="reference internal" href="#xeonphi"><span class="std std-ref">XeonPhi</span></a></p></li>
+<li><p>To build the <code class="docutils literal notranslate"><span class="pre">hello_world_1</span></code> example run:</p></li>
 </ul>
-<p>To use them, pass the <code class="docutils literal notranslate"><span class="pre">-DCMAKE_TOOLCHAIN_FILE=&lt;toolchain&gt;</span></code> argument to the
-CMake invocation.</p>
-<div class="section" id="arm-gcc">
-<span id="id6"></span><h3>ARM-gcc<a class="headerlink" href="#arm-gcc" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Copyright (c) 2015 Thomas Heller</span>
-<span class="c">#</span>
-<span class="c"># SPDX-License-Identifier: BSL-1.0</span>
-<span class="c"># Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c"># file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span> <span class="s">Linux</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span> <span class="s">ON</span><span class="p">)</span>
-<span class="c"># Set the gcc Compiler</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">arm-linux-gnueabihf-g++-4.8</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_GENERIC_CONTEXT_COROUTINES</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;enable generic coroutines&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span> <span class="s">NEVER</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PACKAGE</span> <span class="s">ONLY</span><span class="p">)</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make hello_world_1
 </pre></div>
 </div>
-</div>
-<div class="section" id="bgion-gcc">
-<span id="id7"></span><h3>BGION-gcc<a class="headerlink" href="#bgion-gcc" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Copyright (c) 2014 John Biddiscombe</span>
-<span class="c">#</span>
-<span class="c"># SPDX-License-Identifier: BSL-1.0</span>
-<span class="c"># Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c"># file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-<span class="c"># This is the default toolchain file to be used with CNK on a BlueGene/Q. It</span>
-<span class="c"># sets the appropriate compile flags and compiler such that HPX will compile.</span>
-<span class="c"># Note that you still need to provide Boost, hwloc and other utility libraries</span>
-<span class="c"># like a custom allocator yourself.</span>
-<span class="c">#</span>
-<span class="c"># Usage : cmake</span>
-<span class="c"># -DCMAKE_TOOLCHAIN_FILE=~/src/hpx/cmake/toolchains/BGION-gcc.cmake ~/src/hpx</span>
-<span class="c">#</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span> <span class="s">Linux</span><span class="p">)</span>
-<span class="c"># Set the gcc Compiler</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">g++</span><span class="p">)</span>
-<span class="c"># Add flags we need for BGAS compilation</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
-    <span class="s2">&quot;-D__powerpc__ -D__bgion__ -I/gpfs/bbp.cscs.ch/home/biddisco/src/bgas/rdmahelper &quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Initial compiler flags used to compile for BGAS&quot;</span>
-<span class="p">)</span>
-<span class="c"># cmake-format: off</span>
-<span class="c"># the V1R2M2 includes are necessary for some hardware specific features</span>
-<span class="c">#   -DHPX_SMALL_STACK_SIZE=0x200000</span>
-<span class="c">#   -DHPX_MEDIUM_STACK_SIZE=0x200000</span>
-<span class="c">#   -DHPX_LARGE_STACK_SIZE=0x200000</span>
-<span class="c">#   -DHPX_HUGE_STACK_SIZE=0x200000</span>
-<span class="c"># cmake-format: on</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_EXE_LINKER_FLAGS_INIT</span>
-    <span class="s2">&quot;-L/gpfs/bbp.cscs.ch/apps/bgas/tools/gcc/gcc-4.8.2/install/lib64 -latomic -lrt&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;BGAS flags&quot;</span>
-<span class="p">)</span>
-<span class="c"># We do not perform cross compilation here ...</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span> <span class="s">OFF</span><span class="p">)</span>
-<span class="c"># Set our platform name</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PLATFORM</span> <span class="s2">&quot;native&quot;</span><span class="p">)</span>
-<span class="c"># Disable generic coroutines (and use posix version)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_GENERIC_CONTEXT_COROUTINES</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;disable generic coroutines&quot;</span>
-<span class="p">)</span>
-<span class="c"># Always disable the tcp parcelport as it is non-functional on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># Always enable the tcp parcelport as it is currently the only way to</span>
-<span class="c"># communicate on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># We have a bunch of cores on the A2 processor ...</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MAX_CPU_COUNT</span>
-    <span class="s2">&quot;64&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># We have no custom malloc yet</span>
-<span class="nb">if</span><span class="p">(</span><span class="s">NOT</span> <span class="s">DEFINED</span> <span class="s">HPX_WITH_MALLOC</span><span class="p">)</span>
-  <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MALLOC</span>
-      <span class="s2">&quot;system&quot;</span>
-      <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-  <span class="p">)</span>
-<span class="nb">endif</span><span class="p">()</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_HIDDEN_VISIBILITY</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c">#</span>
-<span class="c"># Convenience setup for jb @ bbpbg2.cscs.ch</span>
-<span class="c">#</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">BOOST_ROOT</span> <span class="s2">&quot;/gpfs/bbp.cscs.ch/home/biddisco/apps/gcc-4.8.2/boost_1_56_0&quot;</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HWLOC_ROOT</span> <span class="s2">&quot;/gpfs/bbp.cscs.ch/home/biddisco/apps/gcc-4.8.2/hwloc-1.8.1&quot;</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_BUILD_TYPE</span>
-    <span class="s2">&quot;Debug&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Default build&quot;</span>
-<span class="p">)</span>
-<span class="c">#</span>
-<span class="c"># Testing flags</span>
-<span class="c">#</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">BUILD_TESTING</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Testing enabled by default&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_TESTS</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Testing enabled by default&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_TESTS_BENCHMARKS</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Testing enabled by default&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_TESTS_REGRESSIONS</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Testing enabled by default&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_TESTS_UNIT</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Testing enabled by default&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_TESTS_EXAMPLES</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Testing enabled by default&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_TESTS_EXTERNAL_BUILD</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Turn off build of cmake build tests&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">DART_TESTING_TIMEOUT</span>
-    <span class="s">45</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Life is too short&quot;</span>
-<span class="p">)</span>
-<span class="c"># HPX_WITH_STATIC_LINKING</span>
+<p><em>HPX</em> executables end up in the <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory in your build directory. You
+can now run <code class="docutils literal notranslate"><span class="pre">hello_world_1</span></code> and should see the following output:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./bin/hello_world_1
+Hello World!
 </pre></div>
 </div>
-</div>
-<div class="section" id="bgq">
-<span id="id8"></span><h3>BGQ<a class="headerlink" href="#bgq" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Copyright (c) 2014 Thomas Heller</span>
-<span class="c">#</span>
-<span class="c"># SPDX-License-Identifier: BSL-1.0</span>
-<span class="c"># Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c"># file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-<span class="c">#</span>
-<span class="c"># This is the default toolchain file to be used with CNK on a BlueGene/Q. It sets</span>
-<span class="c"># the appropriate compile flags and compiler such that HPX will compile.</span>
-<span class="c"># Note that you still need to provide Boost, hwloc and other utility libraries</span>
-<span class="c"># like a custom allocator yourself.</span>
-<span class="c">#</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span> <span class="s">Linux</span><span class="p">)</span>
-<span class="c"># Set the Intel Compiler</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">bgclang++11</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">MPI_CXX_COMPILER</span> <span class="s">mpiclang++11</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC &lt;DEFINES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC -dynamic &lt;FLAGS&gt; &lt;CMAKE_CXX_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_CREATE_SHARED_LIBRARY</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_CXX_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
-<span class="c"># and cmake might pick up wrong libraries that way</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span> <span class="s">BOTH</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PACKAGE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="c"># We do a cross compilation here ...</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span> <span class="s">ON</span><span class="p">)</span>
-<span class="c"># Set our platform name</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PLATFORM</span> <span class="s2">&quot;BlueGeneQ&quot;</span><span class="p">)</span>
-<span class="c"># Always disable the tcp parcelport as it is non-functional on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span> <span class="s">OFF</span><span class="p">)</span>
-<span class="c"># Always enable the mpi parcelport as it is currently the only way to</span>
-<span class="c"># communicate on the BGQ.</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span> <span class="s">ON</span><span class="p">)</span>
-<span class="c"># We have a bunch of cores on the BGQ ...</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MAX_CPU_COUNT</span> <span class="s2">&quot;64&quot;</span><span class="p">)</span>
-<span class="c"># We default to tbbmalloc as our allocator on the MIC</span>
-<span class="nb">if</span><span class="p">(</span><span class="s">NOT</span> <span class="s">DEFINED</span> <span class="s">HPX_WITH_MALLOC</span><span class="p">)</span>
-  <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MALLOC</span>
-      <span class="s2">&quot;system&quot;</span>
-      <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-  <span class="p">)</span>
-<span class="nb">endif</span><span class="p">()</span>
+<p>You’ve just run an example which prints <code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">World!</span></code> from the <em>HPX</em> runtime.
+The source for the example is in <code class="docutils literal notranslate"><span class="pre">examples/quickstart/hello_world_1.cpp</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">hello_world_distributed</span></code> example (also available in the
+<code class="docutils literal notranslate"><span class="pre">examples/quickstart</span></code> directory) is a distributed hello world program, which is
+described in <a class="reference internal" href="../examples/hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions: Hello world</span></a>. It provides a gentle introduction to
+the distributed aspects of <em>HPX</em>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Most build targets in <em>HPX</em> have two names: a simple name and
+a hierarchical name corresponding to what type of example or
+test the target is. If you are developing <em>HPX</em> it is often helpful to run
+<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">help</span></code> to get a list of available targets. For example, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">help</span> <span class="pre">|</span>
+<span class="pre">grep</span> <span class="pre">hello_world</span></code> outputs the following:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>... examples.quickstart.hello_world_2
+... hello_world_2
+... examples.quickstart.hello_world_1
+... hello_world_1
+... examples.quickstart.hello_world_distributed
+... hello_world_distributed
 </pre></div>
 </div>
+<p>It is also possible to build, for instance, all quickstart examples using <code class="docutils literal notranslate"><span class="pre">make</span>
+<span class="pre">examples.quickstart</span></code>.</p>
 </div>
-<div class="section" id="cray">
-<span id="id9"></span><h3>Cray<a class="headerlink" href="#cray" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Copyright (c) 2014 Thomas Heller</span>
-<span class="c">#</span>
-<span class="c"># SPDX-License-Identifier: BSL-1.0</span>
-<span class="c"># Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c"># file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-<span class="c">#</span>
-<span class="c"># This is the default toolchain file to be used with Intel Xeon PHIs. It sets</span>
-<span class="c"># the appropriate compile flags and compiler such that HPX will compile.</span>
-<span class="c"># Note that you still need to provide Boost, hwloc and other utility libraries</span>
-<span class="c"># like a custom allocator yourself.</span>
-<span class="c">#</span>
-<span class="c"># set(CMAKE_SYSTEM_NAME Cray-CNK-Intel)</span>
-<span class="nb">if</span><span class="p">(</span><span class="s">HPX_WITH_STATIC_LINKING</span><span class="p">)</span>
-  <span class="nb">set_property</span><span class="p">(</span><span class="s">GLOBAL</span> <span class="s">PROPERTY</span> <span class="s">TARGET_SUPPORTS_SHARED_LIBS</span> <span class="s">FALSE</span><span class="p">)</span>
-<span class="nb">else</span><span class="p">()</span>
-<span class="nb">endif</span><span class="p">()</span>
-<span class="c"># Set the Cray Compiler Wrapper</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">CC</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CXX_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -shared -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC -dynamic &lt;FLAGS&gt; &lt;CMAKE_CXX_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_CREATE_SHARED_LIBRARY</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_CXX_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
-<span class="c"># and cmake might pick up wrong libraries that way</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span> <span class="s">BOTH</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PACKAGE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI_MULTITHREADED</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_LIBFABRIC</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_PROVIDER</span>
-    <span class="s2">&quot;gni&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;See libfabric docs for details, gni,verbs,psm2 etc etc&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_THROTTLE_SENDS</span>
-    <span class="s2">&quot;256&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Max number of messages in flight at once&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_WITH_DEV_MODE</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Custom libfabric logging flag&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_WITH_LOGGING</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Libfabric parcelport logging on/off flag&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_ZERO_COPY_SERIALIZATION_THRESHOLD</span>
-    <span class="s2">&quot;4096&quot;</span>
-    <span class="s">CACHE</span>
-      <span class="s">STRING</span>
-      <span class="s2">&quot;The threshold in bytes to when perform zero copy optimizations (default: 128)&quot;</span>
-<span class="p">)</span>
-<span class="c"># We do a cross compilation here ...</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="crayknl">
-<span id="id10"></span><h3>CrayKNL<a class="headerlink" href="#crayknl" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Copyright (c) 2014 Thomas Heller</span>
-<span class="c">#</span>
-<span class="c"># SPDX-License-Identifier: BSL-1.0</span>
-<span class="c"># Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c"># file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-<span class="c">#</span>
-<span class="c"># This is the default toolchain file to be used with Intel Xeon PHIs. It sets</span>
-<span class="c"># the appropriate compile flags and compiler such that HPX will compile.</span>
-<span class="c"># Note that you still need to provide Boost, hwloc and other utility libraries</span>
-<span class="c"># like a custom allocator yourself.</span>
-<span class="c">#</span>
-<span class="nb">if</span><span class="p">(</span><span class="s">HPX_WITH_STATIC_LINKING</span><span class="p">)</span>
-  <span class="nb">set_property</span><span class="p">(</span><span class="s">GLOBAL</span> <span class="s">PROPERTY</span> <span class="s">TARGET_SUPPORTS_SHARED_LIBS</span> <span class="s">FALSE</span><span class="p">)</span>
-<span class="nb">else</span><span class="p">()</span>
-<span class="nb">endif</span><span class="p">()</span>
-<span class="c"># Set the Cray Compiler Wrapper</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">CC</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CXX_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS</span>
-    <span class="s2">&quot;-fPIC -shared&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -shared -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC -dynamic &lt;FLAGS&gt; &lt;CMAKE_CXX_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_CREATE_SHARED_LIBRARY</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC -shared &lt;CMAKE_SHARED_LIBRARY_CXX_FLAGS&gt; &lt;LANGUAGE_COMPILE_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS&gt; &lt;SONAME_FLAG&gt;&lt;TARGET_SONAME&gt; -o &lt;TARGET&gt; &lt;OBJECTS&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c">#</span>
-<span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
-<span class="c"># and cmake might pick up wrong libraries that way</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span> <span class="s">BOTH</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PACKAGE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI_MULTITHREADED</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_LIBFABRIC</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_PROVIDER</span>
-    <span class="s2">&quot;gni&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;See libfabric docs for details, gni,verbs,psm2 etc etc&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_THROTTLE_SENDS</span>
-    <span class="s2">&quot;256&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Max number of messages in flight at once&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_WITH_DEV_MODE</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Custom libfabric logging flag&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_WITH_LOGGING</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Libfabric parcelport logging on/off flag&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_ZERO_COPY_SERIALIZATION_THRESHOLD</span>
-    <span class="s2">&quot;4096&quot;</span>
-    <span class="s">CACHE</span>
-      <span class="s">STRING</span>
-      <span class="s2">&quot;The threshold in bytes to when perform zero copy optimizations (default: 128)&quot;</span>
-<span class="p">)</span>
-<span class="c"># Set the TBBMALLOC_PLATFORM correctly so that find_package(TBBMalloc) sets the</span>
-<span class="c"># right hints</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">TBBMALLOC_PLATFORM</span>
-    <span class="s2">&quot;mic-knl&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># We have a bunch of cores on the MIC ... increase the default</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MAX_CPU_COUNT</span>
-    <span class="s2">&quot;512&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># We do a cross compilation here ...</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># RDTSCP is available on Xeon/Phis</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_RDTSCP</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="crayknlstatic">
-<span id="id11"></span><h3>CrayKNLStatic<a class="headerlink" href="#crayknlstatic" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Copyright (c) 2014-2017 Thomas Heller</span>
-<span class="c"># Copyright (c) 2017      Bryce Adelstein Lelbach</span>
-<span class="c">#</span>
-<span class="c"># SPDX-License-Identifier: BSL-1.0</span>
-<span class="c"># Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c"># file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_STATIC_LINKING</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_STATIC_EXE_LINKING</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set_property</span><span class="p">(</span><span class="s">GLOBAL</span> <span class="s">PROPERTY</span> <span class="s">TARGET_SUPPORTS_SHARED_LIBS</span> <span class="s">FALSE</span><span class="p">)</span>
-<span class="c"># Set the Cray Compiler Wrapper</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">CC</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -static -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_CXX_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
-<span class="c"># and cmake might pick up wrong libraries that way</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span> <span class="s">BOTH</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PACKAGE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI_MULTITHREADED</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_LIBFABRIC</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_PROVIDER</span>
-    <span class="s2">&quot;gni&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;See libfabric docs for details, gni,verbs,psm2 etc etc&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_THROTTLE_SENDS</span>
-    <span class="s2">&quot;256&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Max number of messages in flight at once&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_WITH_DEV_MODE</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Custom libfabric logging flag&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_WITH_LOGGING</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Libfabric parcelport logging on/off flag&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_ZERO_COPY_SERIALIZATION_THRESHOLD</span>
-    <span class="s2">&quot;4096&quot;</span>
-    <span class="s">CACHE</span>
-      <span class="s">STRING</span>
-      <span class="s2">&quot;The threshold in bytes to when perform zero copy optimizations (default: 128)&quot;</span>
-<span class="p">)</span>
-<span class="c"># Set the TBBMALLOC_PLATFORM correctly so that find_package(TBBMalloc) sets the</span>
-<span class="c"># right hints</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">TBBMALLOC_PLATFORM</span>
-    <span class="s2">&quot;mic-knl&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># We have a bunch of cores on the MIC ... increase the default</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MAX_CPU_COUNT</span>
-    <span class="s2">&quot;512&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># We do a cross compilation here ...</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># RDTSCP is available on Xeon/Phis</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_RDTSCP</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="craystatic">
-<span id="id12"></span><h3>CrayStatic<a class="headerlink" href="#craystatic" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Copyright (c) 2014-2017 Thomas Heller</span>
-<span class="c"># Copyright (c) 2017      Bryce Adelstein Lelbach</span>
-<span class="c">#</span>
-<span class="c"># SPDX-License-Identifier: BSL-1.0</span>
-<span class="c"># Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c"># file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_STATIC_LINKING</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_STATIC_EXE_LINKING</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set_property</span><span class="p">(</span><span class="s">GLOBAL</span> <span class="s">PROPERTY</span> <span class="s">TARGET_SUPPORTS_SHARED_LIBS</span> <span class="s">FALSE</span><span class="p">)</span>
-<span class="c"># Set the Cray Compiler Wrapper</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">CC</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
-    <span class="s2">&quot;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILE_OBJECT</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -static -fPIC &lt;DEFINES&gt; &lt;INCLUDES&gt; &lt;FLAGS&gt; -o &lt;OBJECT&gt; -c &lt;SOURCE&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_LINK_EXECUTABLE</span>
-    <span class="s2">&quot;&lt;CMAKE_CXX_COMPILER&gt; -fPIC &lt;FLAGS&gt; &lt;CMAKE_CXX_LINK_FLAGS&gt; &lt;LINK_FLAGS&gt; &lt;OBJECTS&gt; -o &lt;TARGET&gt; &lt;LINK_LIBRARIES&gt;&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
-<span class="c"># and cmake might pick up wrong libraries that way</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span> <span class="s">BOTH</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PACKAGE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="c"># We do a cross compilation here ...</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># RDTSCP is available on Xeon/Phis</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_RDTSCP</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_TCP</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI_MULTITHREADED</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_LIBFABRIC</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_PROVIDER</span>
-    <span class="s2">&quot;gni&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;See libfabric docs for details, gni,verbs,psm2 etc etc&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_THROTTLE_SENDS</span>
-    <span class="s2">&quot;256&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Max number of messages in flight at once&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_WITH_DEV_MODE</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Custom libfabric logging flag&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PARCELPORT_LIBFABRIC_WITH_LOGGING</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Libfabric parcelport logging on/off flag&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_ZERO_COPY_SERIALIZATION_THRESHOLD</span>
-    <span class="s2">&quot;4096&quot;</span>
-    <span class="s">CACHE</span>
-      <span class="s">STRING</span>
-      <span class="s2">&quot;The threshold in bytes to when perform zero copy optimizations (default: 128)&quot;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="xeonphi">
-<span id="id13"></span><h3>XeonPhi<a class="headerlink" href="#xeonphi" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Copyright (c) 2014 Thomas Heller</span>
-<span class="c">#</span>
-<span class="c"># SPDX-License-Identifier: BSL-1.0</span>
-<span class="c"># Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
-<span class="c"># file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
-<span class="c">#</span>
-<span class="c"># This is the default toolchain file to be used with Intel Xeon PHIs. It sets</span>
-<span class="c"># the appropriate compile flags and compiler such that HPX will compile.</span>
-<span class="c"># Note that you still need to provide Boost, hwloc and other utility libraries</span>
-<span class="c"># like a custom allocator yourself.</span>
-<span class="c">#</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span> <span class="s">Linux</span><span class="p">)</span>
-<span class="c"># Set the Intel Compiler</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span> <span class="s">icpc</span><span class="p">)</span>
-<span class="c"># Add the -mmic compile flag such that everything will be compiled for the</span>
-<span class="c"># correct platform</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS_INIT</span>
-    <span class="s2">&quot;-mmic&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;Initial compiler flags used to compile for the Xeon Phi&quot;</span>
-<span class="p">)</span>
-<span class="c"># Disable searches in the default system paths. We are cross compiling after all</span>
-<span class="c"># and cmake might pick up wrong libraries that way</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span> <span class="s">BOTH</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PACKAGE</span> <span class="s">ONLY</span><span class="p">)</span>
-<span class="c"># We do a cross compilation here ...</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CROSSCOMPILING</span> <span class="s">ON</span><span class="p">)</span>
-<span class="c"># Set our platform name</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_PLATFORM</span> <span class="s2">&quot;XeonPhi&quot;</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_PARCELPORT_MPI</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;Enable the MPI based parcelport.&quot;</span>
-<span class="p">)</span>
-<span class="c"># We have a bunch of cores on the MIC ... increase the default</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MAX_CPU_COUNT</span>
-    <span class="s2">&quot;256&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="c"># We default to tbbmalloc as our allocator on the MIC</span>
-<span class="nb">if</span><span class="p">(</span><span class="s">NOT</span> <span class="s">DEFINED</span> <span class="s">HPX_WITH_MALLOC</span><span class="p">)</span>
-  <span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_MALLOC</span>
-      <span class="s2">&quot;tbbmalloc&quot;</span>
-      <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-  <span class="p">)</span>
-<span class="nb">endif</span><span class="p">()</span>
-<span class="c"># Set the TBBMALLOC_PLATFORM correctly so that find_package(TBBMalloc) sets the</span>
-<span class="c"># right hints</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">TBBMALLOC_PLATFORM</span>
-    <span class="s2">&quot;mic&quot;</span>
-    <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_HIDDEN_VISIBILITY</span>
-    <span class="s">OFF</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span>
-          <span class="s2">&quot;Use -fvisibility=hidden for builds on platforms which support it&quot;</span>
-<span class="p">)</span>
-<span class="c"># RDTSC is available on Xeon/Phis</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">HPX_WITH_RDTSC</span>
-    <span class="s">ON</span>
-    <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span>
-<span class="p">)</span>
-</pre></div>
 </div>
 </div>
 </div>
@@ -2332,7 +1086,7 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_EXECUTABLE_PREFIX-STRING">
 <span id="cmdoption-arg-hpx-with-executable-prefix-string"></span><code class="sig-name descname"><span class="pre">HPX_WITH_EXECUTABLE_PREFIX:STRING</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_EXECUTABLE_PREFIX-STRING" title="Permalink to this definition">¶</a></dt>
-<dd><p>Executable prefix (default none), ‘<a href="#id23"><span class="problematic" id="id24">hpx_</span></a>’ useful for system install.</p>
+<dd><p>Executable prefix (default none), ‘<a href="#id14"><span class="problematic" id="id15">hpx_</span></a>’ useful for system install.</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2888,7 +1642,7 @@ improves the generated diagnostics.</p>
 <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="creating_hpx_projects.html" class="btn btn-neutral float-right" title="Creating HPX projects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="getting_hpx.html" class="btn btn-neutral float-left" title="Getting HPX" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../manual.html" class="btn btn-neutral float-left" title="Manual" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
@@ -2898,10 +1652,10 @@ improves the generated diagnostics.</p>
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>e6ec617</code>.
+        Revision <code>2f76325</code>.
       </span>
       <span class="lastupdated">
-        Last updated on Sep 24, 2021.
+        Last updated on Sep 25, 2021.
       </span>
 
     </p>

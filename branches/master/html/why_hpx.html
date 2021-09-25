@@ -99,13 +99,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#what-is-hpx">What is <em>HPX</em>?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#what-makes-our-systems-slow">What makes our systems slow?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#technology-demands-new-response">Technology demands new response</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#governing-principles-applied-while-developing-hpx">Governing principles applied while developing <em>HPX</em></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#focus-on-latency-hiding-instead-of-latency-avoidance">Focus on latency hiding instead of latency avoidance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#embrace-fine-grained-parallelism-instead-of-heavyweight-threads">Embrace fine-grained parallelism instead of heavyweight threads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#rediscover-constraint-based-synchronization-to-replace-global-barriers">Rediscover constraint-based synchronization to replace global barriers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#adaptive-locality-control-instead-of-static-data-distribution">Adaptive locality control instead of static data distribution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#prefer-moving-work-to-the-data-over-moving-data-to-the-work">Prefer moving work to the data over moving data to the work</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#favor-message-driven-computation-over-message-passing">Favor message driven computation over message passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#governing-principles-applied-while-developing-hpx">Governing principles applied while developing <em>HPX</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#focus-on-latency-hiding-instead-of-latency-avoidance">Focus on latency hiding instead of latency avoidance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embrace-fine-grained-parallelism-instead-of-heavyweight-threads">Embrace fine-grained parallelism instead of heavyweight threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rediscover-constraint-based-synchronization-to-replace-global-barriers">Rediscover constraint-based synchronization to replace global barriers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adaptive-locality-control-instead-of-static-data-distribution">Adaptive locality control instead of static data distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prefer-moving-work-to-the-data-over-moving-data-to-the-work">Prefer moving work to the data over moving data to the work</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#favor-message-driven-computation-over-message-passing">Favor message driven computation over message passing</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick start</a></li>
@@ -374,9 +376,8 @@ already exist, many for more than 30 years. All it takes is to gather
 them into a coherent approach. We’ll highlight some of the derived principles we
 think to be crucial for defeating <strong>SLOW</strong>. Some of those are focused on
 high-performance computing, others are more general.</p>
-</div>
 <div class="section" id="focus-on-latency-hiding-instead-of-latency-avoidance">
-<h2>Focus on latency hiding instead of latency avoidance<a class="headerlink" href="#focus-on-latency-hiding-instead-of-latency-avoidance" title="Permalink to this headline">¶</a></h2>
+<h3>Focus on latency hiding instead of latency avoidance<a class="headerlink" href="#focus-on-latency-hiding-instead-of-latency-avoidance" title="Permalink to this headline">¶</a></h3>
 <p>It is impossible to design a system exposing zero latencies. In an effort to
 come as close as possible to this goal many optimizations are mainly targeted
 towards minimizing latencies. Examples for this can be seen everywhere, such as
@@ -394,7 +395,7 @@ we propose is to go beyond anything we know today and to make latency hiding an
 intrinsic concept of the operation of the whole system stack.</p>
 </div>
 <div class="section" id="embrace-fine-grained-parallelism-instead-of-heavyweight-threads">
-<h2>Embrace fine-grained parallelism instead of heavyweight threads<a class="headerlink" href="#embrace-fine-grained-parallelism-instead-of-heavyweight-threads" title="Permalink to this headline">¶</a></h2>
+<h3>Embrace fine-grained parallelism instead of heavyweight threads<a class="headerlink" href="#embrace-fine-grained-parallelism-instead-of-heavyweight-threads" title="Permalink to this headline">¶</a></h3>
 <p>If we plan to hide latencies even for very short operations, such as fetching
 the contents of a memory cell from main memory (if it is not already cached), we
 need to have very lightweight threads with extremely short context switching
@@ -413,7 +414,7 @@ reschedule the initial task after the required result has been calculated, which
 makes the implementation of latency hiding almost trivial.</p>
 </div>
 <div class="section" id="rediscover-constraint-based-synchronization-to-replace-global-barriers">
-<h2>Rediscover constraint-based synchronization to replace global barriers<a class="headerlink" href="#rediscover-constraint-based-synchronization-to-replace-global-barriers" title="Permalink to this headline">¶</a></h2>
+<h3>Rediscover constraint-based synchronization to replace global barriers<a class="headerlink" href="#rediscover-constraint-based-synchronization-to-replace-global-barriers" title="Permalink to this headline">¶</a></h3>
 <p>The code we write today is riddled with implicit (and explicit) global barriers.
 By “global barriers,” we mean the synchronization of the control flow between
 several (very often all) threads (when using <a class="reference external" href="https://openmp.org/wp/">OpenMP</a>) or processes (<a class="reference external" href="https://en.wikipedia.org/wiki/Message_Passing_Interface">MPI</a>).
@@ -443,7 +444,7 @@ results show that employing dataflow techniques in combination with the other
 ideas, as outlined herein, considerably improves scalability for many problems.</p>
 </div>
 <div class="section" id="adaptive-locality-control-instead-of-static-data-distribution">
-<h2>Adaptive locality control instead of static data distribution<a class="headerlink" href="#adaptive-locality-control-instead-of-static-data-distribution" title="Permalink to this headline">¶</a></h2>
+<h3>Adaptive locality control instead of static data distribution<a class="headerlink" href="#adaptive-locality-control-instead-of-static-data-distribution" title="Permalink to this headline">¶</a></h3>
 <p>While this principle seems to be a given for single desktop or laptop computers
 (the operating system is your friend), it is everything but ubiquitous on modern
 supercomputers, which are usually built from a large number of separate nodes
@@ -469,7 +470,7 @@ and adaptive <a class="reference internal" href="terminology.html#term-Locality"
 space to the applications, even on distributed systems.</p>
 </div>
 <div class="section" id="prefer-moving-work-to-the-data-over-moving-data-to-the-work">
-<h2>Prefer moving work to the data over moving data to the work<a class="headerlink" href="#prefer-moving-work-to-the-data-over-moving-data-to-the-work" title="Permalink to this headline">¶</a></h2>
+<h3>Prefer moving work to the data over moving data to the work<a class="headerlink" href="#prefer-moving-work-to-the-data-over-moving-data-to-the-work" title="Permalink to this headline">¶</a></h3>
 <p>For the best performance it seems obvious to minimize the amount of bytes
 transferred from one part of the system to another. This is true on all levels.
 At the lowest level we try to take advantage of processor memory caches, thus,
@@ -499,7 +500,7 @@ data was placed, i.e., utilizing active messages (for instance based on
 scaling.</p>
 </div>
 <div class="section" id="favor-message-driven-computation-over-message-passing">
-<h2>Favor message driven computation over message passing<a class="headerlink" href="#favor-message-driven-computation-over-message-passing" title="Permalink to this headline">¶</a></h2>
+<h3>Favor message driven computation over message passing<a class="headerlink" href="#favor-message-driven-computation-over-message-passing" title="Permalink to this headline">¶</a></h3>
 <p>Today’s prevalently used programming model on parallel (multi-node) systems is
 MPI. It is based on message passing, as the name implies, which means that
 the receiver has to be aware of a message about to come in. Both codes, the
@@ -519,6 +520,7 @@ action by passing along arguments and—possibly—continuations. <em>HPX</em> c
 this scheme with work-queue based scheduling as described above, which allows
 the system to almost completely overlap any communication with useful work,
 thereby minimizing latencies.</p>
+</div>
 </div>
 </div>
 
@@ -545,10 +547,10 @@ thereby minimizing latencies.</p>
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>e6ec617</code>.
+        Revision <code>2f76325</code>.
       </span>
       <span class="lastupdated">
-        Last updated on Sep 24, 2021.
+        Last updated on Sep 25, 2021.
       </span>
 
     </p>

@@ -248,8 +248,8 @@ program. It prints <code class="docutils literal notranslate"><span class="pre">
 <p>Now, in the directory where you put hello_world.cpp, issue the following
 commands (where <code class="docutils literal notranslate"><span class="pre">$HPX_LOCATION</span></code> is the build directory or
 <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> you used while building <em>HPX</em>):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="nv">$PKG_CONFIG_PATH</span>:<span class="nv">$HPX_LOCATION</span>/lib/pkgconfig
-c++ -o hello_world hello_world.cpp <span class="se">\</span>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="nv">$PKG_CONFIG_PATH</span>:<span class="nv">$HPX_LOCATION</span>/lib/pkgconfig
+<span class="gp">$</span> c++ -o hello_world hello_world.cpp <span class="se">\</span>
    <span class="sb">`</span>pkg-config --cflags --libs hpx_application<span class="sb">`</span><span class="se">\</span>
     -lhpx_iostreams -DHPX_APPLICATION_NAME<span class="o">=</span>hello_world
 </pre></div>
@@ -276,7 +276,7 @@ linker, you will need to add the path <code class="docutils literal notranslate"
 path (for example <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> on Linux).</p>
 </div>
 <p>To test the program, type:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./hello_world
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./hello_world
 </pre></div>
 </div>
 <p>which should print <code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">World!</span></code> and exit.</p>
@@ -397,16 +397,16 @@ code:</p>
 <p>Now, in the directory where you put the files, run the following command to
 build the component library. (where <code class="docutils literal notranslate"><span class="pre">$HPX_LOCATION</span></code> is the build directory or
 <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> you used while building <em>HPX</em>):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="nv">$PKG_CONFIG_PATH</span>:<span class="nv">$HPX_LOCATION</span>/lib/pkgconfig
-c++ -o libhpx_hello_world.so hello_world_component.cpp <span class="se">\</span>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="nv">$PKG_CONFIG_PATH</span>:<span class="nv">$HPX_LOCATION</span>/lib/pkgconfig
+<span class="gp">$</span> c++ -o libhpx_hello_world.so hello_world_component.cpp <span class="se">\</span>
    <span class="sb">`</span>pkg-config --cflags --libs hpx_component<span class="sb">`</span> <span class="se">\</span>
     -lhpx_iostreams -DHPX_COMPONENT_NAME<span class="o">=</span>hpx_hello_world
 </pre></div>
 </div>
 <p>Now pick a directory in which to install your <em>HPX</em> component libraries. For
 this example, we’ll choose a directory named <code class="docutils literal notranslate"><span class="pre">my_hpx_libs</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir ~/my_hpx_libs
-mv libhpx_hello_world.so ~/my_hpx_libs
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir ~/my_hpx_libs
+<span class="gp">$</span> mv libhpx_hello_world.so ~/my_hpx_libs
 </pre></div>
 </div>
 <div class="admonition note">
@@ -427,8 +427,8 @@ You need to add the path <code class="docutils literal notranslate"><span class=
 </div>
 <p>Now, to build the application that uses this component (<code class="docutils literal notranslate"><span class="pre">hello_world_client.cpp</span></code>),
 we do:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="nv">$PKG_CONFIG_PATH</span>:<span class="nv">$HPX_LOCATION</span>/lib/pkgconfig
-c++ -o hello_world_client hello_world_client.cpp <span class="se">\</span>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="nv">$PKG_CONFIG_PATH</span>:<span class="nv">$HPX_LOCATION</span>/lib/pkgconfig
+<span class="gp">$</span> c++ -o hello_world_client hello_world_client.cpp <span class="se">\</span>
    <span class="sb">``</span>pkg-config --cflags --libs hpx_application<span class="sb">``</span><span class="se">\</span>
     -L<span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/my_hpx_libs -lhpx_hello_world -lhpx_iostreams
 </pre></div>
@@ -440,8 +440,8 @@ c++ -o hello_world_client hello_world_client.cpp <span class="se">\</span>
 </div>
 <p>Finally, you’ll need to set your LD_LIBRARY_PATH before you can run the program.
 To run the program, type:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$LD_LIBRARY_PATH</span><span class="s2">:</span><span class="nv">$HOME</span><span class="s2">/my_hpx_libs&quot;</span>
-./hello_world_client
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$LD_LIBRARY_PATH</span><span class="s2">:</span><span class="nv">$HOME</span><span class="s2">/my_hpx_libs&quot;</span>
+<span class="gp">$</span> ./hello_world_client
 </pre></div>
 </div>
 <p>which should print <code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">HPX</span> <span class="pre">World!</span></code> and exit.</p>
@@ -478,7 +478,7 @@ used by <code class="docutils literal notranslate"><span class="pre">find_packag
 <ul>
 <li><p>Set the <code class="docutils literal notranslate"><span class="pre">HPX_DIR</span></code> CMake variable to point to the directory containing the
 <code class="docutils literal notranslate"><span class="pre">HPXConfig.cmake</span></code> script on the command line when you invoke CMake:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DHPX_DIR<span class="o">=</span><span class="nv">$HPX_LOCATION</span>/lib/cmake/HPX ...
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DHPX_DIR<span class="o">=</span><span class="nv">$HPX_LOCATION</span>/lib/cmake/HPX ...
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">$HPX_LOCATION</span></code> is the build directory or <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> you
@@ -486,7 +486,7 @@ used when building/configuring <em>HPX</em>.</p>
 </li>
 <li><p>Set the <code class="docutils literal notranslate"><span class="pre">CMAKE_PREFIX_PATH</span></code> variable to the root directory of your <em>HPX</em>
 build or install location on the command line when you invoke CMake:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake -DCMAKE_PREFIX_PATH<span class="o">=</span><span class="nv">$HPX_LOCATION</span> ...
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake -DCMAKE_PREFIX_PATH<span class="o">=</span><span class="nv">$HPX_LOCATION</span> ...
 </pre></div>
 </div>
 <p>The difference between <code class="docutils literal notranslate"><span class="pre">CMAKE_PREFIX_PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">HPX_DIR</span></code> is that CMake
@@ -610,7 +610,7 @@ in your targets. The <em>HPX</em> include directories are available with the
 <span id="hpxcxx-documentation"></span><h3>Using the <em>HPX</em> compiler wrapper <code class="docutils literal notranslate"><span class="pre">hpxcxx</span></code><a class="headerlink" href="#using-the-hpx-compiler-wrapper-hpxcxx" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">hpxcxx</span></code> compiler wrapper helps to compile a <em>HPX</em> component, application,
 or object file, based on the arguments passed to it.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hpxcxx <span class="o">[</span>--exe<span class="o">=</span>&lt;APPLICATION_NAME&gt; <span class="p">|</span> --comp<span class="o">=</span>&lt;COMPONENT_NAME&gt; <span class="p">|</span> -c<span class="o">]</span> FLAGS FILES
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> hpxcxx <span class="o">[</span>--exe<span class="o">=</span>&lt;APPLICATION_NAME&gt; <span class="p">|</span> --comp<span class="o">=</span>&lt;COMPONENT_NAME&gt; <span class="p">|</span> -c<span class="o">]</span> FLAGS FILES
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">hpxcxx</span></code> command <strong>requires</strong> that either an application or a component is
@@ -717,11 +717,11 @@ Boost in the above example is build with <code class="docutils literal notransla
 flags may vary on your build of Boost.</p>
 </div>
 <p>To build the program, type:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make
 </pre></div>
 </div>
 <p>A successful build should result in hello_world binary. To test, type:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./hello_world
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./hello_world
 </pre></div>
 </div>
 </div>
@@ -865,11 +865,11 @@ code:</p>
 </pre></div>
 </div>
 <p>To build the program, type:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make
 </pre></div>
 </div>
 <p>A successful build should result in hello_world binary. To test, type:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./hello_world
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./hello_world
 </pre></div>
 </div>
 <div class="admonition note">
@@ -908,10 +908,10 @@ pkg-config files and CMake systems are configured with CMake build of
         &#169; Copyright 2008-2020, The STE||AR Group.
       <span class="commit">
         
-        Revision <code>9c2afd9</code>.
+        Revision <code>b8103aa</code>.
       </span>
       <span class="lastupdated">
-        Last updated on Oct 11, 2021.
+        Last updated on Oct 12, 2021.
       </span>
 
     </p>

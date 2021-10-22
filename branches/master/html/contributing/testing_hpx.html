@@ -1685,6 +1685,16 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-performance-tests">
+   Running performance tests
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adding-new-performance-tests">
+   Adding new performance tests
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#issue-tracker">
    Issue tracker
   </a>
@@ -1720,6 +1730,27 @@ This will build all tests and run them once the tests are built successfully.
 After the tests have been built, you can invoke separate tests with the help of
 the <code class="docutils literal notranslate"><span class="pre">ctest</span></code> command. You can list all available test targets using <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">help</span>
 <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">tests</span></code>. Please see the <a class="reference external" href="https://www.cmake.org/cmake/help/latest/manual/ctest.1.html">CTest Documentation</a> for further details.</p>
+</div>
+<div class="section" id="running-performance-tests">
+<h2>Running performance tests<a class="headerlink" href="#running-performance-tests" title="Permalink to this headline">¶</a></h2>
+<p>We run performance tests on Piz Daint for each pull request using Jenkins. To
+run those performance tests locally or on Piz Daint, a script is provided under
+<code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/local_run.sh</span></code> (to be run in the build directory specifying
+the <em>HPX</em> source directory as the argument to the script, default is
+<code class="docutils literal notranslate"><span class="pre">$HOME/projects/hpx_perftests_ci</span></code>.</p>
+</div>
+<div class="section" id="adding-new-performance-tests">
+<h2>Adding new performance tests<a class="headerlink" href="#adding-new-performance-tests" title="Permalink to this headline">¶</a></h2>
+<p>To add a new performance test, you need to wrap the portion of code to benchmark
+with <code class="docutils literal notranslate"><span class="pre">hpx::util::perftests_report</span></code>, passing the test name, the executor name
+and the function to time (can be a lambda). This facility is used to output the
+time results in a json format (format needed to compare the results and plot
+them).  To effectively print them at the end of your test, call
+<code class="docutils literal notranslate"><span class="pre">hpx::util::perftests_print_times</span></code>. To see an example of use, see
+<code class="docutils literal notranslate"><span class="pre">future_overhead_report.cpp</span></code>.
+Finally, you can add the test to the CI report editing the <code class="docutils literal notranslate"><span class="pre">hpx_targets</span></code> for
+the executable name and <code class="docutils literal notranslate"><span class="pre">hpx_test_options</span></code> for the corresponding options to
+use for the run.</p>
 </div>
 <div class="section" id="issue-tracker">
 <h2>Issue tracker<a class="headerlink" href="#issue-tracker" title="Permalink to this headline">¶</a></h2>
@@ -1782,7 +1813,7 @@ and <a class="reference external" href="https://github.com/biddisco/pycicle/">py
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2020, The STE||AR Group.<br/>
-          Last updated on Oct 21, 2021.<br/>
+          Last updated on Oct 22, 2021.<br/>
       </p>
     </div>
   </footer>

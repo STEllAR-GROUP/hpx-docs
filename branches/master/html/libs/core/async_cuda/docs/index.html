@@ -701,11 +701,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../full/compute_cuda/docs/index.html">
-       compute_cuda
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../full/distribution_policies/docs/index.html">
        distribution_policies
       </a>
@@ -1216,11 +1211,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../../full/compute_cuda/api.html">
-     compute_cuda
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../../full/distribution_policies/api.html">
      distribution_policies
     </a>
@@ -1674,19 +1664,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cmake-variables">
-   CMake variables
-  </a>
- </li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -1697,48 +1674,14 @@
                 
   <div class="section" id="async-cuda">
 <span id="modules-async-cuda"></span><h1>async_cuda<a class="headerlink" href="#async-cuda" title="Permalink to this headline">¶</a></h1>
-<p>This library adds a simple API that enables the user to retrieve a future
-from a cuda stream. Typically, a user may launch one or more kernels
-and then get a future from the stream that will become ready when those
-kernels have completed. The act of getting a future from the
-<cite>cuda_stream_helper</cite> object in this library hides the creation of a
-cuda stream event and the attachment of this event to the promise
-that is backing the future returned.</p>
-<p>The usage is best illustrated by looking at an example</p>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a cuda target using device number 0,1,2...</span>
-<span class="n">hpx</span><span class="o">::</span><span class="n">cuda</span><span class="o">::</span><span class="n">experimental</span><span class="o">::</span><span class="n">target</span> <span class="n">target</span><span class="p">(</span><span class="n">device</span><span class="p">);</span>
-<span class="c1">// create a stream helper object</span>
-<span class="n">hpx</span><span class="o">::</span><span class="n">cuda</span><span class="o">::</span><span class="n">experimental</span><span class="o">::</span><span class="n">cuda_future_helper</span> <span class="n">helper</span><span class="p">(</span><span class="n">device</span><span class="p">);</span>
-
-<span class="c1">// launch a kernel and return a future</span>
-<span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">cuda_trivial_kernel</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">3.1415</span><span class="p">;</span>
-<span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="n">helper</span><span class="p">.</span><span class="n">async</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
-
-<span class="c1">// attach a continuation to the future</span>
-<span class="n">f</span><span class="p">.</span><span class="n">then</span><span class="p">([](</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;&amp;&amp;</span> <span class="n">f</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;trivial kernel completed </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<span class="p">}).</span><span class="n">get</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Kernels and CPU work may be freely intermixed/overlapped
-and synchronized with futures.</p>
-<p>It is important to note that multiple kernels may be launched
-without fetching a future, and multiple futures may be obtained
-from the helper. Please refer to the unit tests and examples
-for further examples.</p>
-<div class="section" id="cmake-variables">
-<h2>CMake variables<a class="headerlink" href="#cmake-variables" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_CUDA</span></code> - this is a general option that will enable both <code class="docutils literal notranslate"><span class="pre">HPX_WITH_ASYNC_CUDA</span></code>
-and <code class="docutils literal notranslate"><span class="pre">HPX_WITH_COMPUTE_CUDA</span></code> when turned <code class="docutils literal notranslate"><span class="pre">ON</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_ASYNC_CUDA=ON</span></code> enables the building of this module which requires
-only the presence of CUDA on the system and only exposes cuda+fuures support
-(<code class="docutils literal notranslate"><span class="pre">HPX_WITH_ASYNC_CUDA</span></code> may be used when <code class="docutils literal notranslate"><span class="pre">HPX_WITH_COMPUTE_CUDA=OFF</span></code>).</p>
-<p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_COMPUTE_CUDA=ON</span></code> enables building HPX compute features that allow parallel
-algorithms to be passed through to the GPU/CUDA backend.</p>
+<p>This library adds a simple API that enables the user to retrieve a future  from
+a cuda stream. Typically, a user may launch one or more kernels and then get a
+future from the stream that will become ready when those kernels have completed.
+It is important to note that multiple kernels may be launched without fetching a
+future, and multiple futures may be obtained from the helper. Please refer to
+the unit tests and examples for further examples.</p>
 <p>See the <a class="reference internal" href="../api.html#modules-async-cuda-api"><span class="std std-ref">API reference</span></a> of this module for more
 details.</p>
-</div>
 </div>
 
 
@@ -1787,7 +1730,7 @@ details.</p>
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2021, The STE||AR Group.<br/>
-          Last updated on Nov 30, 2021.<br/>
+          Last updated on Dec 01, 2021.<br/>
       </p>
     </div>
   </footer>

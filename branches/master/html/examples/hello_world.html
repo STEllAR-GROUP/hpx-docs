@@ -1756,7 +1756,7 @@ beginning with <code class="docutils literal notranslate"><span class="pre">main
         <span class="n">futures</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="o">&lt;</span><span class="n">action_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
     <span class="p">}</span>
 
-    <span class="c1">// The non-callback version of hpx::lcos::wait_all takes a single parameter,</span>
+    <span class="c1">// The non-callback version of hpx::wait_all takes a single parameter,</span>
     <span class="c1">// a vector of futures to wait on. hpx::wait_all only returns when</span>
     <span class="c1">// all of the futures have finished.</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">wait_all</span><span class="p">(</span><span class="n">futures</span><span class="p">);</span>
@@ -1828,13 +1828,13 @@ wrapped in the action above:</p>
         <span class="p">}</span>
 
         <span class="c1">// Wait for all of the futures to finish. The callback version of the</span>
-        <span class="c1">// hpx::lcos::wait_each function takes two arguments: a vector of futures,</span>
+        <span class="c1">// hpx::wait_each function takes two arguments: a vector of futures,</span>
         <span class="c1">// and a binary callback.  The callback takes two arguments; the first</span>
         <span class="c1">// is the index of the future in the vector, and the second is the</span>
-        <span class="c1">// return value of the future. hpx::lcos::wait_each doesn&#39;t return until</span>
+        <span class="c1">// return value of the future. hpx::wait_each doesn&#39;t return until</span>
         <span class="c1">// all the futures in the vector have returned.</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">spinlock</span> <span class="n">mtx</span><span class="p">;</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">wait_each</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">unwrapping</span><span class="p">([</span><span class="o">&amp;</span><span class="p">](</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">wait_each</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">unwrapping</span><span class="p">([</span><span class="o">&amp;</span><span class="p">](</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="n">t</span><span class="p">)</span>
             <span class="p">{</span>
                 <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">spinlock</span><span class="o">&gt;</span> <span class="n">lk</span><span class="p">(</span><span class="n">mtx</span><span class="p">);</span>
@@ -1848,13 +1848,13 @@ wrapped in the action above:</p>
 </div>
 <p>Now, before we discuss <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code>, let’s talk about the
 <a class="reference internal" href="../libs/core/async_combinators/api.html#_CPPv4I00EN3hpx9wait_eachEvRR1FRRNSt6vectorI6FutureEE" title="hpx::wait_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::wait_each</span></code></a> function.
-The version of <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::lcos::wait_each</span></code> invokes a callback function
+The version of <a class="reference internal" href="../libs/core/async_combinators/api.html#_CPPv4I00EN3hpx9wait_eachEvRR1FRRNSt6vectorI6FutureEE" title="hpx::wait_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::wait_each</span></code></a> invokes a callback function
 provided by the user, supplying the callback function with the result of the
 future.</p>
 <p>In <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code>, an <code class="docutils literal notranslate"><span class="pre">std::set&lt;&gt;</span></code> called <code class="docutils literal notranslate"><span class="pre">attendance</span></code> keeps
 track of which OS-threads have printed out the hello world message. When the
 OS-thread prints out the statement, the future is marked as ready, and
-<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::lcos::wait_each</span></code> in <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code>. If it is not
+<a class="reference internal" href="../libs/core/async_combinators/api.html#_CPPv4I00EN3hpx9wait_eachEvRR1FRRNSt6vectorI6FutureEE" title="hpx::wait_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::wait_each</span></code></a> in <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code>. If it is not
 executing on the correct OS-thread, it returns a value of -1, which causes
 <code class="docutils literal notranslate"><span class="pre">hello_world_foreman()</span></code> to leave the OS-thread id in <code class="docutils literal notranslate"><span class="pre">attendance</span></code>.</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">hello_world_worker</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">desired</span><span class="p">)</span>

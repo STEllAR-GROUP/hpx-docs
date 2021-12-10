@@ -96,6 +96,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../examples/matrix_multiplication.html">
+     Parallel algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../examples/fibonacci.html">
      Asynchronous execution with actions
     </a>
@@ -1718,6 +1723,11 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#most-important-cmake-options">
+     Most important CMake options
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#build-types">
      Build types
     </a>
@@ -1844,8 +1854,8 @@
 <h3>Supported platforms<a class="headerlink" href="#supported-platforms" title="Permalink to this headline">¶</a></h3>
 <p>At this time, <em>HPX</em> supports the following platforms. Other platforms may
 work, but we do not test <em>HPX</em> with other platforms, so please be warned.</p>
-<table class="table" id="id7">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Supported Platforms for <em>HPX</em></span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id8">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Supported Platforms for <em>HPX</em></span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 19%" />
 <col style="width: 38%" />
@@ -1880,8 +1890,8 @@ work, but we do not test <em>HPX</em> with other platforms, so please be warned.
 <div class="section" id="supported-compilers">
 <h3>Supported compilers<a class="headerlink" href="#supported-compilers" title="Permalink to this headline">¶</a></h3>
 <p>The table below shows the supported compilers for <em>HPX</em>.</p>
-<table class="table" id="id8">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Supported Compilers for <em>HPX</em></span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id9">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Supported Compilers for <em>HPX</em></span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 51%" />
 <col style="width: 49%" />
@@ -1907,8 +1917,8 @@ work, but we do not test <em>HPX</em> with other platforms, so please be warned.
 <div class="section" id="software-and-libraries">
 <h3>Software and libraries<a class="headerlink" href="#software-and-libraries" title="Permalink to this headline">¶</a></h3>
 <p>The table below presents all the necessary prerequisites for building <em>HPX</em>.</p>
-<table class="table" id="id9">
-<caption><span class="caption-number">Table 3 </span><span class="caption-text">Software prerequisites for <em>HPX</em></span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id10">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Software prerequisites for <em>HPX</em></span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 37%" />
 <col style="width: 32%" />
@@ -1970,8 +1980,8 @@ listed below.</p>
 localities. Please set the CMake variable <code class="docutils literal notranslate"><span class="pre">MPI_CXX_COMPILER</span></code> to your MPI
 C++ compiler wrapper if not detected automatically.</p>
 </div>
-<table class="table" id="id10">
-<caption><span class="caption-number">Table 4 </span><span class="caption-text">Optional software prerequisites for <em>HPX</em></span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<table class="table" id="id11">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">Optional software prerequisites for <em>HPX</em></span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -2045,13 +2055,84 @@ specific platform.</p>
 <p>In order to use <em>HPX</em>, only the core libraries are required. In order to use the optional
 libraries, you need to specify them as link dependencies in your build (See
 <a class="reference internal" href="creating_hpx_projects.html#creating-hpx-projects"><span class="std std-ref">Creating HPX projects</span></a>).</p>
-<p>As <em>HPX</em> is a modern C++ library which relies on C++17 by default. The use of
-more recent standards can be opted into explicitly. If you want to force <em>HPX</em>
-to use a specific C++ standard version, you can use the <code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX_STANDARD</span></code>
-CMake variable; e.g. <code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX_STANDARD=20</span></code>.</p>
+</div>
+<div class="section" id="most-important-cmake-options">
+<span id="important-cmake-options"></span><h3>Most important CMake options<a class="headerlink" href="#most-important-cmake-options" title="Permalink to this headline">¶</a></h3>
+<p>While building <em>HPX</em>, you are provided with multiple CMake options which correspond
+to different configurations. Below, there is a set of the most important and frequently
+used CMake options.</p>
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_MALLOC">
+<span id="cmdoption-arg-hpx-with-malloc"></span><code class="sig-name descname"><span class="pre">HPX_WITH_MALLOC</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_MALLOC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a custom allocator. Using a custom allocator tuned for multithreaded applications is very
+important for the performance of <em>HPX</em> applications. When debugging applications, it’s useful to set
+this to <code class="docutils literal notranslate"><span class="pre">system</span></code>, as custom allocators can hide some memory-related bugs. Note that setting this to
+something other than <code class="docutils literal notranslate"><span class="pre">system</span></code> requires an external dependency.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_CUDA">
+<span id="cmdoption-arg-hpx-with-cuda"></span><code class="sig-name descname"><span class="pre">HPX_WITH_CUDA</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_CUDA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable support for CUDA. Use <code class="docutils literal notranslate"><span class="pre">CMAKE_CUDA_COMPILER</span></code> to set the CUDA compiler. This is a standard CMake variable,
+like <code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_COMPILER</span></code>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_PARCELPORT_MPI">
+<span id="cmdoption-arg-hpx-with-parcelport-mpi"></span><code class="sig-name descname"><span class="pre">HPX_WITH_PARCELPORT_MPI</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_PARCELPORT_MPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable the MPI parcelport. This enables the use of MPI for the networking operations in the HPX runtime.
+The default value is <code class="docutils literal notranslate"><span class="pre">OFF</span></code> because it’s not available on all systems and/or requires another dependency. However,
+it is the recommended parcelport.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_PARCELPORT_TCP">
+<span id="cmdoption-arg-hpx-with-parcelport-tcp"></span><code class="sig-name descname"><span class="pre">HPX_WITH_PARCELPORT_TCP</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_PARCELPORT_TCP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable the TCP parcelport. Enables the use of TCP for networking in the runtime. The default value is <code class="docutils literal notranslate"><span class="pre">ON</span></code>.
+However, it’s only recommended for debugging purposes, as it is slower than the MPI parcelport.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_APEX">
+<span id="cmdoption-arg-hpx-with-apex"></span><code class="sig-name descname"><span class="pre">HPX_WITH_APEX</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_APEX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable APEX integration. <a class="reference external" href="https://uo-oaciss.github.io/apex/quickstarthpx/">APEX</a> can be used to profile <em>HPX</em>
+applications. In particular, it provides information about individual tasks in the <em>HPX</em> runtime.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_GENERIC_CONTEXT_COROUTINES">
+<span id="cmdoption-arg-hpx-with-generic-context-coroutines"></span><code class="sig-name descname"><span class="pre">HPX_WITH_GENERIC_CONTEXT_COROUTINES</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_GENERIC_CONTEXT_COROUTINES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable Boost. Context for task context switching. It must be enabled for non-x86 architectures such as ARM and Power.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_MAX_CPU_COUNT">
+<span id="cmdoption-arg-hpx-with-max-cpu-count"></span><code class="sig-name descname"><span class="pre">HPX_WITH_MAX_CPU_COUNT</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_MAX_CPU_COUNT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the maximum CPU count supported by <em>HPX</em>. The default value is 64, and should be set to a number at least as
+high as the number of cores on a system including virtual cores such as hyperthreads.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_CXX_STANDARD">
+<span id="cmdoption-arg-hpx-with-cxx-standard"></span><code class="sig-name descname"><span class="pre">HPX_WITH_CXX_STANDARD</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_CXX_STANDARD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a specific C++ standard version e.g. <code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX_STANDARD=20</span></code>. The default and minimum value is 17.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_EXAMPLES">
+<span id="cmdoption-arg-hpx-with-examples"></span><code class="sig-name descname"><span class="pre">HPX_WITH_EXAMPLES</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_EXAMPLES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build examples.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-arg-HPX_WITH_TESTS">
+<span id="cmdoption-arg-hpx-with-tests"></span><code class="sig-name descname"><span class="pre">HPX_WITH_TESTS</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_TESTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build tests.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="build-types">
-<span id="id6"></span><h3>Build types<a class="headerlink" href="#build-types" title="Permalink to this headline">¶</a></h3>
+<span id="id7"></span><h3>Build types<a class="headerlink" href="#build-types" title="Permalink to this headline">¶</a></h3>
 <p>CMake can be configured to generate project files suitable for builds that
 have enabled debugging support or for an optimized build (without debugging
 support). The CMake variable used to set the build type is
@@ -2191,9 +2272,9 @@ Please, be patient.</p>
 source code’) to the <em>base directory</em> of the source code you downloaded from
 <em>HPX</em>’s GitHub pages. Here’s an example of CMake path settings, which point to
 the <code class="docutils literal notranslate"><span class="pre">Documents/GitHub/hpx</span></code> folder:</p>
-<div class="figure align-default" id="id11">
+<div class="figure align-default" id="id12">
 <span id="win32-cmake-settings1"></span><img alt="../_images/cmake_settings1.png" src="../_images/cmake_settings1.png" />
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Example CMake path settings.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Example CMake path settings.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </div>
 <p>Inside ‘Where is the source-code’ enter the base directory of your <em>HPX</em>
 source directory (do not enter the “src” sub-directory!). Inside ‘Where to
@@ -2224,9 +2305,9 @@ whitespace, like <code class="docutils literal notranslate"><span class="pre">C:
 “Name”, select <code class="docutils literal notranslate"><span class="pre">PATH</span></code> as Type and put the path-name in the “Path” text field.
 Repeat this for the first three variables.</p>
 <p>This is how variable insertion will look:</p>
-<div class="figure align-default" id="id12">
+<div class="figure align-default" id="id13">
 <span id="win32-cmake-settings2"></span><img alt="../_images/cmake_settings2.png" src="../_images/cmake_settings2.png" />
-<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Example CMake adding entry.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Example CMake adding entry.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </div>
 <p>Alternatively, users could provide <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> instead of
 <code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code>; the difference is that <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> should point to
@@ -2246,15 +2327,15 @@ button. Now, CMake will put new VS Solution files into the BUILD folder you
 selected at the beginning.</p></li>
 <li><p>Open Visual Studio and load the <code class="docutils literal notranslate"><span class="pre">HPX.sln</span></code> from your build folder.</p></li>
 <li><p>Go to <code class="docutils literal notranslate"><span class="pre">CMakePredefinedTargets</span></code> and build the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> project:</p>
-<div class="figure align-default" id="id13">
+<div class="figure align-default" id="id14">
 <span id="win32-vs-targets"></span><img alt="../_images/vs_targets_install.png" src="../_images/vs_targets_install.png" />
-<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Visual Studio INSTALL target.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Visual Studio INSTALL target.</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
 </div>
 <p>It will take some time to compile everything, and in the end you should see an
 output similar to this one:</p>
-<div class="figure align-default" id="id14">
+<div class="figure align-default" id="id15">
 <span id="win32-vs-build-output"></span><img alt="../_images/vs_build_output.png" src="../_images/vs_build_output.png" />
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Visual Studio build output.</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Visual Studio build output.</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
 </div>
 </li>
 </ul>
@@ -2695,7 +2776,7 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_EXECUTABLE_PREFIX-STRING">
 <span id="cmdoption-arg-hpx-with-executable-prefix-string"></span><code class="sig-name descname"><span class="pre">HPX_WITH_EXECUTABLE_PREFIX:STRING</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_EXECUTABLE_PREFIX-STRING" title="Permalink to this definition">¶</a></dt>
-<dd><p>Executable prefix (default none), ‘<a href="#id15"><span class="problematic" id="id16">hpx_</span></a>’ useful for system install.</p>
+<dd><p>Executable prefix (default none), ‘<a href="#id16"><span class="problematic" id="id17">hpx_</span></a>’ useful for system install.</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2813,7 +2894,7 @@ generate your specific makefiles/project files.</p>
 <dl class="std option">
 <dt id="cmdoption-arg-HPX_WITH_MAX_CPU_COUNT-STRING">
 <span id="cmdoption-arg-hpx-with-max-cpu-count-string"></span><code class="sig-name descname"><span class="pre">HPX_WITH_MAX_CPU_COUNT:STRING</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-arg-HPX_WITH_MAX_CPU_COUNT-STRING" title="Permalink to this definition">¶</a></dt>
-<dd><p>HPX applications will not use more that this number of OS-Threads (empty string means dynamic) (default: 64)</p>
+<dd><p>HPX applications will not use more that this number of OS-Threads (empty string means dynamic) (default: “”)</p>
 </dd></dl>
 
 <dl class="std option">
@@ -3277,7 +3358,7 @@ improves the generated diagnostics.</p>
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2021, The STE||AR Group.<br/>
-          Last updated on Dec 08, 2021.<br/>
+          Last updated on Dec 10, 2021.<br/>
       </p>
     </div>
   </footer>

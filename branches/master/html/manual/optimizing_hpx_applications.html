@@ -2082,7 +2082,7 @@ as:</p>
         <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">base_performance_counter</span>
             <span class="n">base_type_holder</span><span class="p">;</span>
 
-        <span class="n">base_performance_counter</span><span class="p">()</span> <span class="p">{}</span>
+        <span class="n">base_performance_counter</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
 
         <span class="n">base_performance_counter</span><span class="p">(</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">counter_info</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">info</span><span class="p">)</span>
@@ -2095,6 +2095,14 @@ as:</p>
         <span class="p">{</span>
             <span class="n">base_type_holder</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
             <span class="n">base_type</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="n">hpx</span><span class="o">::</span><span class="n">naming</span><span class="o">::</span><span class="n">address</span> <span class="n">get_current_address</span><span class="p">()</span> <span class="k">const</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">naming</span><span class="o">::</span><span class="n">address</span><span class="p">(</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">naming</span><span class="o">::</span><span class="n">get_gid_from_locality_id</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">get_locality_id</span><span class="p">()),</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">get_component_type</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">&gt;</span><span class="p">(),</span>
+                <span class="k">const_cast</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Derived</span> <span class="k">const</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">)));</span>
         <span class="p">}</span>
     <span class="p">};</span>
 <span class="p">}}</span>    <span class="c1">// namespace hpx::performance_counters</span>

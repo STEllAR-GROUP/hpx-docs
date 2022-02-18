@@ -2217,199 +2217,153 @@
 <dl class="cpp type">
 <dt>
 <span class="target" id="namespacehpx"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">hpx</span></code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx4lcosE">
-<span id="_CPPv3N3hpx4lcosE"></span><span id="_CPPv2N3hpx4lcosE"></span><span id="hpx::lcos"></span><span class="target" id="namespacehpx_1_1lcos"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">lcos</span></code><br /></dt>
-<dd><dl class="cpp type">
-<dt id="_CPPv4N3hpx4lcos5localE">
-<span id="_CPPv3N3hpx4lcos5localE"></span><span id="_CPPv2N3hpx4lcos5localE"></span><span id="hpx::lcos::local"></span><span class="target" id="namespacehpx_1_1lcos_1_1local"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">local</span></code><br /></dt>
 <dd><dl class="cpp class">
-<dt id="_CPPv4N3hpx4lcos5local7barrierE">
-<span id="_CPPv3N3hpx4lcos5local7barrierE"></span><span id="_CPPv2N3hpx4lcos5local7barrierE"></span><span id="hpx::lcos::local::barrier"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">barrier</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrierE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em>#include &lt;barrier.hpp&gt;</em><p>A barrier can be used to synchronize a specific number of threads, blocking all of the entering threads until all of the threads have entered the barrier.</p>
-<p><dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>A <em>barrier</em> is not a LCO in the sense that it has no global id and it can’t be triggered using the action (parcel) mechanism. It is just a low level synchronization primitive allowing to synchronize a given number of <em>threads</em>. </p>
+<dt id="_CPPv4I0EN3hpx7barrierE">
+<span id="_CPPv3I0EN3hpx7barrierE"></span><span id="_CPPv2I0EN3hpx7barrierE"></span><span class="target" id="classhpx_1_1barrier"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">OnCompletion</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">empty_oncompletion</span><span class="pre">&gt;</span><br /><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">barrier</span></code><a class="headerlink" href="#_CPPv4I0EN3hpx7barrierE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;barrier.hpp&gt;</em><p>A barrier is a thread coordination mechanism whose lifetime consists of a sequence of barrier phases, where each phase allows at most an expected number of threads to block until the expected number of threads arrive at the barrier. [ Note: A barrier is useful for managing repeated tasks that are handled by multiple threads. - end note ] Each barrier phase consists of the following steps:</p>
+<p><ul class="simple">
+<li><p>The expected count is decremented by each call to arrive or arrive_and_drop.</p></li>
+<li><p>When the expected count reaches zero, the phase completion step is run. For the specialization with the default value of the CompletionFunction template parameter, the completion step is run as part of the call to arrive or arrive_and_drop that caused the expected count to reach zero. For other specializations, the completion step is run on one of the threads that arrived at the barrier during the phase.</p></li>
+<li><p>When the completion step finishes, the expected count is reset to what was specified by the expected argument to the constructor, possibly adjusted by calls to arrive_and_drop, and the next phase starts.</p></li>
+</ul>
+</p>
+<p>Each phase defines a phase synchronization point. Threads that arrive at the barrier during the phase can block on the phase synchronization point by calling wait, and will remain blocked until the phase completion step is run. The phase completion step that is executed at the end of each phase has the following effects:</p>
+<p><ul class="simple">
+<li><p>Invokes the completion function, equivalent to completion().</p></li>
+<li><p>Unblocks all threads that are blocked on the phase synchronization point.</p></li>
+</ul>
+</p>
+<p>The end of the completion step strongly happens before the returns from all calls that were unblocked by the completion step. For specializations that do not have the default value of the CompletionFunction template parameter, the behavior is undefined if any of the barrier object’s member functions other than wait are called while the completion step is in progress.</p>
+<p>Concurrent invocations of the member functions of barrier, other than its destructor, do not introduce data races. The member functions arrive and arrive_and_drop execute atomically.</p>
+<p>CompletionFunction shall meet the Cpp17MoveConstructible (Table 28) and Cpp17Destructible (Table 32) requirements. std::is_nothrow_invocable_v&lt;CompletionFunction&amp;&gt; shall be true.</p>
+<p>The default value of the CompletionFunction template parameter is an unspecified type, such that, in addition to satisfying the requirements of CompletionFunction, it meets the Cpp17DefaultConstructible requirements (Table 27) and completion() has no effects.</p>
+<p>barrier::arrival_token is an unspecified type, such that it meets the Cpp17MoveConstructible (Table 28), Cpp17MoveAssignable (Table 30), and Cpp17Destructible (Table 32) requirements. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4IEN3hpx7barrierI12OnCompletionE13arrival_tokenE">
+<span id="_CPPv3IEN3hpx7barrierI12OnCompletionE13arrival_tokenE"></span><span id="_CPPv2IEN3hpx7barrierI12OnCompletionE13arrival_tokenE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1barrier_1a39a2eeda6224981dc5aaa92540c8cbf0"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">arrival_token</span></code> <span class="pre">=</span> <span class="pre">bool</span><a class="headerlink" href="#_CPPv4IEN3hpx7barrierI12OnCompletionE13arrival_tokenE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3hpx7barrier7barrierENSt9ptrdiff_tE12OnCompletion">
+<span id="_CPPv3N3hpx7barrier7barrierENSt9ptrdiff_tE12OnCompletion"></span><span id="_CPPv2N3hpx7barrier7barrierENSt9ptrdiff_tE12OnCompletion"></span><span id="hpx::barrier::barrier__std::ptrdiff_t.OnCompletionCE"></span><span class="target" id="classhpx_1_1barrier_1a2b523c9f5b558a12fb9033fd731f375d"></span><em class="property"><span class="pre">constexpr</span></em> <code class="sig-name descname"><span class="pre">barrier</span></code><span class="sig-paren">(</span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">ptrdiff_t</span> <em><span class="pre">expected</span></em>, <span class="pre">OnCompletion</span> <em><span class="pre">completion</span></em> <span class="pre">=</span> <span class="pre">OnCompletion</span><span class="pre">(</span><span class="pre">)</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7barrier7barrierENSt9ptrdiff_tE12OnCompletion" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Preconditions: expected &gt;= 0 is true and expected &lt;= max() is true.</p>
+<p>Effects: Sets both the initial expected count for each barrier phase and the current expected count for the first phase to expected. Initializes completion with std::move(f). Starts the first phase. [Note: If expected is 0 this object can only be destroyed.- end note]</p>
+<p><dl>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist">
+<li><code class="docutils literal notranslate"></code></li>
+</ul>
 </dd>
 </dl>
 </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx4lcos5local7barrier7barrierENSt6size_tE">
-<span id="_CPPv3N3hpx4lcos5local7barrier7barrierENSt6size_tE"></span><span id="_CPPv2N3hpx4lcos5local7barrier7barrierENSt6size_tE"></span><span id="hpx::lcos::local::barrier::barrier__std::s"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1aefb0700d69c5d946e12d1b914ac80ba6"></span><code class="sig-name descname"><span class="pre">barrier</span></code><span class="sig-paren">(</span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <em><span class="pre">number_of_threads</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier7barrierENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx4lcos5local7barrierD0Ev">
-<span id="_CPPv3N3hpx4lcos5local7barrierD0Ev"></span><span id="_CPPv2N3hpx4lcos5local7barrierD0Ev"></span><span id="hpx::lcos::local::barrier::~barrier"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1af4eecf3e2203f98dc1e9aa187928930c"></span><code class="sig-name descname"><span class="pre">~barrier</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrierD0Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx4lcos5local7barrier4waitEv">
-<span id="_CPPv3N3hpx4lcos5local7barrier4waitEv"></span><span id="_CPPv2N3hpx4lcos5local7barrier4waitEv"></span><span id="hpx::lcos::local::barrier::wait"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1ae3374c182ffd12c9975963139b6f9255"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">wait</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier4waitEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The function <em>wait</em> will block the number of entering <em>threads</em> (as given by the constructor parameter <em>number_of_threads</em>), releasing all waiting threads as soon as the last <em>thread</em> entered this function. </p>
 </dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx4lcos5local7barrier8count_upEv">
-<span id="_CPPv3N3hpx4lcos5local7barrier8count_upEv"></span><span id="_CPPv2N3hpx4lcos5local7barrier8count_upEv"></span><span id="hpx::lcos::local::barrier::count_up"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1a6f2c6c9fe9c5ea41dad435fc469fea67"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">count_up</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier8count_upEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The function <em>count_up</em> will increase the number of <em>threads</em> to be waited in <em>wait</em> function. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx4lcos5local7barrier5resetENSt6size_tE">
-<span id="_CPPv3N3hpx4lcos5local7barrier5resetENSt6size_tE"></span><span id="_CPPv2N3hpx4lcos5local7barrier5resetENSt6size_tE"></span><span id="hpx::lcos::local::barrier::reset__std::s"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1aec54a2eacae5882cc87d96f4ca8551f6"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <em><span class="pre">number_of_threads</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier5resetENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The function <em>reset</em> will reset the number of <em>threads</em> as given by the function parameter <em>number_of_threads</em>. the newer coming <em>threads</em> executing the function <em>wait</em> will be waiting until <em>total_</em> is equal to <em>barrier_flag</em>. The last <em>thread</em> exiting the <em>wait</em> function will notify the newer <em>threads</em> waiting and the newer <em>threads</em> will get the reset <em>number_of_threads_</em>. The function <em>reset</em> can be executed while previous <em>threads</em> executing waiting after they have been waken up. Thus <em>total_</em> can not be reset to <em>barrier_flag</em> which will break the comparison condition under the function <em>wait</em>. </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4N3hpx4lcos5local7barrier10mutex_typeE">
-<span id="_CPPv3N3hpx4lcos5local7barrier10mutex_typeE"></span><span id="_CPPv2N3hpx4lcos5local7barrier10mutex_typeE"></span><span id="hpx::lcos::local::barrier::mutex_type"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1a971fa747cae83b6b67a7850f67b5d32c"></span><em class="property"><span class="pre">typedef</span> </em><a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos"><span class="pre">lcos</span></a><span class="pre">::</span><a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcos5localE" title="hpx::lcos::local"><span class="pre">local</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx4lcos5local8spinlockE" title="hpx::lcos::local::spinlock"><span class="pre">spinlock</span></a> <code class="sig-name descname"><span class="pre">mutex_type</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier10mutex_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Members</p>
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local7barrier18number_of_threads_E">
-<span id="_CPPv3N3hpx4lcos5local7barrier18number_of_threads_E"></span><span id="_CPPv2N3hpx4lcos5local7barrier18number_of_threads_E"></span><span id="hpx::lcos::local::barrier::number_of_threads___std::s"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1a40413806a3ddaab217408742324788a8"></span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">number_of_threads_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier18number_of_threads_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local7barrier6total_E">
-<span id="_CPPv3N3hpx4lcos5local7barrier6total_E"></span><span id="_CPPv2N3hpx4lcos5local7barrier6total_E"></span><span id="hpx::lcos::local::barrier::total___std::s"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1acffe7369f27aa7a4780caefa66ce79f7"></span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">total_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier6total_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local7barrier4mtx_E">
-<span id="_CPPv3N3hpx4lcos5local7barrier4mtx_E"></span><span id="_CPPv2N3hpx4lcos5local7barrier4mtx_E"></span><span id="hpx::lcos::local::barrier::mtx___mutex_type"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1a3ad46eca1cbdcc193f3e0d8b756407a8"></span><a class="reference internal" href="#_CPPv4N3hpx4lcos5local7barrier10mutex_typeE" title="hpx::lcos::local::barrier::mutex_type"><span class="pre">mutex_type</span></a> <code class="sig-name descname"><span class="pre">mtx_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local7barrier5cond_E">
-<span id="_CPPv3N3hpx4lcos5local7barrier5cond_E"></span><span id="_CPPv2N3hpx4lcos5local7barrier5cond_E"></span><span id="hpx::lcos::local::barrier::cond___local::detail::condition_variable"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1a8491c6a5dc11328415daf5e13d59f865"></span><a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcos5localE" title="hpx::lcos::local"><span class="pre">local</span></a><span class="pre">::</span><span class="pre">detail</span><span class="pre">::</span><span class="pre">condition_variable</span> <code class="sig-name descname"><span class="pre">cond_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier5cond_E" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Static Attributes</p>
-<dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local7barrier12barrier_flagE">
-<span id="_CPPv3N3hpx4lcos5local7barrier12barrier_flagE"></span><span id="_CPPv2N3hpx4lcos5local7barrier12barrier_flagE"></span><span id="hpx::lcos::local::barrier::barrier_flag__std::s"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1barrier_1acb4ee085262b643d4ccb80669d07dfdb"></span><em class="property"><span class="pre">constexpr</span></em> <a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">barrier_flag</span></code> <span class="pre">=</span> <span class="pre">static_cast</span><span class="pre">&lt;</span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">1</span><span class="pre">)</span> <span class="pre">&lt;&lt;</span> <span class="pre">(</span><span class="pre">CHAR_BIT</span> <span class="pre">*</span> <span class="pre">sizeof(</span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">size_t</span><span class="pre">)</span> <span class="pre">-</span> <span class="pre">1</span><span class="pre">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local7barrier12barrier_flagE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-<dl class="cpp class">
-<dt id="_CPPv4I0EN3hpx4lcos5local13cpp20_barrierE">
-<span id="_CPPv3I0EN3hpx4lcos5local13cpp20_barrierE"></span><span id="_CPPv2I0EN3hpx4lcos5local13cpp20_barrierE"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">OnCompletion</span></code> <span class="pre">=</span> <span class="pre">detail</span><span class="pre">::</span><span class="pre">empty_oncompletion</span><span class="pre">&gt;</span><br /><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">cpp20_barrier</span></code><a class="headerlink" href="#_CPPv4I0EN3hpx4lcos5local13cpp20_barrierE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Types</p>
-<dl class="cpp type">
-<dt id="_CPPv4IEN3hpx4lcos5local13cpp20_barrierI12OnCompletionE13arrival_tokenE">
-<span id="_CPPv3IEN3hpx4lcos5local13cpp20_barrierI12OnCompletionE13arrival_tokenE"></span><span id="_CPPv2IEN3hpx4lcos5local13cpp20_barrierI12OnCompletionE13arrival_tokenE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1acd58b0f086204906b1dd05860c6bb08b"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">arrival_token</span></code> <span class="pre">=</span> <span class="pre">bool</span><a class="headerlink" href="#_CPPv4IEN3hpx4lcos5local13cpp20_barrierI12OnCompletionE13arrival_tokenE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier16HPX_NON_COPYABLEE13cpp20_barrier">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier16HPX_NON_COPYABLEE13cpp20_barrier"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier16HPX_NON_COPYABLEE13cpp20_barrier"></span><span id="hpx::lcos::local::cpp20_barrier::HPX_NON_COPYABLE__cpp20_barrier"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a6ff9898659104602482d984a745f0e0a"></span><code class="sig-name descname"><span class="pre">HPX_NON_COPYABLE</span></code><span class="sig-paren">(</span><span class="pre">cpp20_barrier</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier16HPX_NON_COPYABLEE13cpp20_barrier" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier13cpp20_barrierENSt9ptrdiff_tE12OnCompletion">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier13cpp20_barrierENSt9ptrdiff_tE12OnCompletion"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier13cpp20_barrierENSt9ptrdiff_tE12OnCompletion"></span><span id="hpx::lcos::local::cpp20_barrier::cpp20_barrier__std::ptrdiff_t.OnCompletion"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a48d14b020ae9338e97bf89dca7c3065d"></span><code class="sig-name descname"><span class="pre">cpp20_barrier</span></code><span class="sig-paren">(</span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">ptrdiff_t</span> <em><span class="pre">expected</span></em>, <span class="pre">OnCompletion</span> <em><span class="pre">completion</span></em> <span class="pre">=</span> <span class="pre">OnCompletion</span><span class="pre">(</span><span class="pre">)</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier13cpp20_barrierENSt9ptrdiff_tE12OnCompletion" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
 
 <dl class="cpp function">
 <dt>
-<span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1aa12a8e0a360f3322a002e633c5a1dc89"></span><code class="sig-name descname"><span class="pre">HPX_NODISCARD</span> <span class="pre">arrival_token</span> <span class="pre">hpx::lcos::local::cpp20_barrier::arrive(std::ptrdiff_t</span> <span class="pre">update</span> <span class="pre">=</span> <span class="pre">1)</span></code></dt>
-<dd></dd></dl>
+<span class="target" id="classhpx_1_1barrier_1a143bc5274d35cda6a0a845ff82168f58"></span><code class="sig-name descname"><span class="pre">HPX_NODISCARD</span> <span class="pre">arrival_token</span> <span class="pre">hpx::barrier::arrive(std::ptrdiff_t</span> <span class="pre">update</span> <span class="pre">=</span> <span class="pre">1)</span></code></dt>
+<dd><p>Preconditions: update &gt; 0 is true, and update is less than or equal to the expected count for the current barrier phase.</p>
+<p>Effects: Constructs an object of type arrival_token that is associated with the phase synchronization point for the current phase. Then, decrements the expected count by update.</p>
+<p>Synchronization: The call to arrive strongly happens before the start of the phase completion step for the current phase.</p>
+<p><dl>
+<dt><strong>Return</strong></dt><dd><p>: The constructed arrival_token object.</p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist">
+<li><code class="docutils literal notranslate"></code></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3hpx4lcos5local13cpp20_barrier4waitERR13arrival_token">
-<span id="_CPPv3NK3hpx4lcos5local13cpp20_barrier4waitERR13arrival_token"></span><span id="_CPPv2NK3hpx4lcos5local13cpp20_barrier4waitERR13arrival_token"></span><span id="hpx::lcos::local::cpp20_barrier::wait__arrival_tokenRRC"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a2a0e98993117912b55cd664c074e1115"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">wait</span></code><span class="sig-paren">(</span><span class="pre">arrival_token</span> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">old_phase</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx4lcos5local13cpp20_barrier4waitERR13arrival_token" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<dt id="_CPPv4NK3hpx7barrier4waitERR13arrival_token">
+<span id="_CPPv3NK3hpx7barrier4waitERR13arrival_token"></span><span id="_CPPv2NK3hpx7barrier4waitERR13arrival_token"></span><span id="hpx::barrier::wait__arrival_tokenRRC"></span><span class="target" id="classhpx_1_1barrier_1a2048c27d2f620558761e42c07091f0f9"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">wait</span></code><span class="sig-paren">(</span><span class="pre">arrival_token</span> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">old_phase</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK3hpx7barrier4waitERR13arrival_token" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Preconditions: arrival is associated with the phase synchronization point for the current phase or the immediately preceding phase of the same barrier object.</p>
+<p>Effects: Blocks at the synchronization point associated with HPX_MOVE(arrival) until the phase completion step of the synchronization point’s phase is run. [ Note: If arrival is associated with the synchronization point for a previous phase, the call returns immediately. - end note ]</p>
+<p><dl>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist">
+<li><code class="docutils literal notranslate"></code></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier15arrive_and_waitEv">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier15arrive_and_waitEv"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier15arrive_and_waitEv"></span><span id="hpx::lcos::local::cpp20_barrier::arrive_and_wait"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1ada976a34b5e7fc6700460bac8a5af392"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">arrive_and_wait</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier15arrive_and_waitEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7barrier15arrive_and_waitEv">
+<span id="_CPPv3N3hpx7barrier15arrive_and_waitEv"></span><span id="_CPPv2N3hpx7barrier15arrive_and_waitEv"></span><span id="hpx::barrier::arrive_and_wait"></span><span class="target" id="classhpx_1_1barrier_1acac5ed31b56c3ed7c43640ab5b97cb8d"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">arrive_and_wait</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7barrier15arrive_and_waitEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Effects: Equivalent to: wait(arrive()). </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier15arrive_and_dropEv">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier15arrive_and_dropEv"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier15arrive_and_dropEv"></span><span id="hpx::lcos::local::cpp20_barrier::arrive_and_drop"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a884608e831e337fa4a940acd551790fc"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">arrive_and_drop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier15arrive_and_dropEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<dt id="_CPPv4N3hpx7barrier15arrive_and_dropEv">
+<span id="_CPPv3N3hpx7barrier15arrive_and_dropEv"></span><span id="_CPPv2N3hpx7barrier15arrive_and_dropEv"></span><span id="hpx::barrier::arrive_and_drop"></span><span class="target" id="classhpx_1_1barrier_1aaa4afe569edfff5884f5322e49279dea"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">arrive_and_drop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7barrier15arrive_and_dropEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Preconditions: The expected count for the current barrier phase is greater than zero.</p>
+<p>Effects: Decrements the initial expected count for all subsequent phases by one. Then decrements the expected count for the current phase by one.</p>
+<p>Synchronization: The call to arrive_and_drop strongly happens before the start of the phase completion step for the current phase.</p>
+<p><dl>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist">
+<li><code class="docutils literal notranslate"></code></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Public Static Functions</p>
 <dl class="cpp function">
 <dt>
-<span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1acc8c05bde7ccbd40086a923f3d521118"></span><code class="sig-name descname"><span class="pre">static</span> <span class="pre">constexpr</span> <span class="pre">std::ptrdiff_t()</span> <span class="pre">hpx::lcos::local::cpp20_barrier::max()</span></code></dt>
+<span class="target" id="classhpx_1_1barrier_1ac321cf3df26854928124ecd377b44cb9"></span><code class="sig-name descname"><span class="pre">static</span> <span class="pre">constexpr</span> <span class="pre">std::ptrdiff_t()</span> <span class="pre">hpx::barrier::max()</span></code></dt>
 <dd></dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Private Types</p>
 <dl class="cpp type">
-<dt id="_CPPv4IEN3hpx4lcos5local13cpp20_barrierI12OnCompletionE10mutex_typeE">
-<span id="_CPPv3IEN3hpx4lcos5local13cpp20_barrierI12OnCompletionE10mutex_typeE"></span><span id="_CPPv2IEN3hpx4lcos5local13cpp20_barrierI12OnCompletionE10mutex_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a6a7252ec7971088ebec25308450157f9"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">mutex_type</span></code> <span class="pre">=</span> <a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos"><span class="pre">lcos</span></a><span class="pre">::</span><a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcos5localE" title="hpx::lcos::local"><span class="pre">local</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx4lcos5local8spinlockE" title="hpx::lcos::local::spinlock"><span class="pre">spinlock</span></a><a class="headerlink" href="#_CPPv4IEN3hpx4lcos5local13cpp20_barrierI12OnCompletionE10mutex_typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Functions</p>
-<dl class="cpp function">
-<dt>
-<span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a338ada6d44e99d00c4ed34ed174de7bc"></span><code class="sig-name descname"><span class="pre">HPX_NODISCARD</span> <span class="pre">arrival_token</span> <span class="pre">hpx::lcos::local::cpp20_barrier::arrive_locked(std::unique_lock&lt;</span>&#160; <span class="pre">mutex_type</span>&#160; <span class="pre">&gt;</span> <span class="pre">&amp;</span> <span class="pre">l,</span> <span class="pre">std::ptrdiff_t</span> <span class="pre">update</span> <span class="pre">=</span> <span class="pre">1)</span></code></dt>
+<dt id="_CPPv4IEN3hpx7barrierI12OnCompletionE10mutex_typeE">
+<span id="_CPPv3IEN3hpx7barrierI12OnCompletionE10mutex_typeE"></span><span id="_CPPv2IEN3hpx7barrierI12OnCompletionE10mutex_typeE"></span><span class="pre">template&lt;</span><span class="pre">&gt;</span><br /><span class="target" id="classhpx_1_1barrier_1a1839ea2cfcddfafcdec17b9c53eb81f4"></span><em class="property"><span class="pre">using</span> </em><code class="sig-name descname"><span class="pre">mutex_type</span></code> <span class="pre">=</span> <a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos"><span class="pre">lcos</span></a><span class="pre">::</span><a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcos5localE" title="hpx::lcos::local"><span class="pre">local</span></a><span class="pre">::</span><a class="reference internal" href="#_CPPv4N3hpx4lcos5local8spinlockE" title="hpx::lcos::local::spinlock"><span class="pre">spinlock</span></a><a class="headerlink" href="#_CPPv4IEN3hpx7barrierI12OnCompletionE10mutex_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Private Members</p>
 <dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier4mtx_E">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier4mtx_E"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier4mtx_E"></span><span id="hpx::lcos::local::cpp20_barrier::mtx___mutex_type"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a06136ec32b21ec422a7633de4b319ff2"></span><span class="pre">mutex_type</span> <code class="sig-name descname"><span class="pre">mtx_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7barrier4mtx_E">
+<span id="_CPPv3N3hpx7barrier4mtx_E"></span><span id="_CPPv2N3hpx7barrier4mtx_E"></span><span id="hpx::barrier::mtx___mutex_type"></span><span class="target" id="classhpx_1_1barrier_1a08eec245cc608fe1041a04a686d9c603"></span><span class="pre">mutex_type</span> <code class="sig-name descname"><span class="pre">mtx_</span></code><a class="headerlink" href="#_CPPv4N3hpx7barrier4mtx_E" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier5cond_E">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier5cond_E"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier5cond_E"></span><span id="hpx::lcos::local::cpp20_barrier::cond___local::detail::condition_variable"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a52f26e0c7be7c88ebf2c4bd641483af0"></span><a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcos5localE" title="hpx::lcos::local"><span class="pre">local</span></a><span class="pre">::</span><span class="pre">detail</span><span class="pre">::</span><span class="pre">condition_variable</span> <code class="sig-name descname"><span class="pre">cond_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier5cond_E" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7barrier5cond_E">
+<span id="_CPPv3N3hpx7barrier5cond_E"></span><span id="_CPPv2N3hpx7barrier5cond_E"></span><span id="hpx::barrier::cond___hpx::lcos::local::detail::condition_variable"></span><span class="target" id="classhpx_1_1barrier_1a9acf69fb17cbd93e8c73eebf3b8286a1"></span><a class="reference internal" href="../../../api/full_api.html#_CPPv43hpx" title="hpx"><span class="pre">hpx</span></a><span class="pre">::</span><a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcosE" title="hpx::lcos"><span class="pre">lcos</span></a><span class="pre">::</span><a class="reference internal" href="../algorithms/api.html#_CPPv4N3hpx4lcos5localE" title="hpx::lcos::local"><span class="pre">local</span></a><span class="pre">::</span><span class="pre">detail</span><span class="pre">::</span><span class="pre">condition_variable</span> <code class="sig-name descname"><span class="pre">cond_</span></code><a class="headerlink" href="#_CPPv4N3hpx7barrier5cond_E" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier9expected_E">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier9expected_E"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier9expected_E"></span><span id="hpx::lcos::local::cpp20_barrier::expected___std::ptrdiff_t"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1ad1641432e75d7cb23b84659eba54953f"></span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">ptrdiff_t</span> <code class="sig-name descname"><span class="pre">expected_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier9expected_E" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7barrier9expected_E">
+<span id="_CPPv3N3hpx7barrier9expected_E"></span><span id="_CPPv2N3hpx7barrier9expected_E"></span><span id="hpx::barrier::expected___std::ptrdiff_t"></span><span class="target" id="classhpx_1_1barrier_1abf6ed660d33447137897d934bbeae86a"></span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">ptrdiff_t</span> <code class="sig-name descname"><span class="pre">expected_</span></code><a class="headerlink" href="#_CPPv4N3hpx7barrier9expected_E" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier8arrived_E">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier8arrived_E"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier8arrived_E"></span><span id="hpx::lcos::local::cpp20_barrier::arrived___std::ptrdiff_t"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a11cdf56b263b94ee558d355b2ce5978f"></span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">ptrdiff_t</span> <code class="sig-name descname"><span class="pre">arrived_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier8arrived_E" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7barrier8arrived_E">
+<span id="_CPPv3N3hpx7barrier8arrived_E"></span><span id="_CPPv2N3hpx7barrier8arrived_E"></span><span id="hpx::barrier::arrived___std::ptrdiff_t"></span><span class="target" id="classhpx_1_1barrier_1a6f9658990b1219ac78895490296c9e95"></span><a class="reference internal" href="../coroutines/api.html#_CPPv4St" title="std"><span class="pre">std</span></a><span class="pre">::</span><span class="pre">ptrdiff_t</span> <code class="sig-name descname"><span class="pre">arrived_</span></code><a class="headerlink" href="#_CPPv4N3hpx7barrier8arrived_E" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier11completion_E">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier11completion_E"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier11completion_E"></span><span id="hpx::lcos::local::cpp20_barrier::completion___OnCompletion"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a9d3ff896e3fcc9efca8b8e9b59529572"></span><span class="pre">OnCompletion</span> <code class="sig-name descname"><span class="pre">completion_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier11completion_E" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7barrier11completion_E">
+<span id="_CPPv3N3hpx7barrier11completion_E"></span><span id="_CPPv2N3hpx7barrier11completion_E"></span><span id="hpx::barrier::completion___OnCompletion"></span><span class="target" id="classhpx_1_1barrier_1af14901159b5dd628c060a1fd33c0c1fd"></span><span class="pre">OnCompletion</span> <code class="sig-name descname"><span class="pre">completion_</span></code><a class="headerlink" href="#_CPPv4N3hpx7barrier11completion_E" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp member">
-<dt id="_CPPv4N3hpx4lcos5local13cpp20_barrier6phase_E">
-<span id="_CPPv3N3hpx4lcos5local13cpp20_barrier6phase_E"></span><span id="_CPPv2N3hpx4lcos5local13cpp20_barrier6phase_E"></span><span id="hpx::lcos::local::cpp20_barrier::phase___b"></span><span class="target" id="classhpx_1_1lcos_1_1local_1_1cpp20__barrier_1a68713a08d3480a791a961bc91356089c"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">phase_</span></code><a class="headerlink" href="#_CPPv4N3hpx4lcos5local13cpp20_barrier6phase_E" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3hpx7barrier6phase_E">
+<span id="_CPPv3N3hpx7barrier6phase_E"></span><span id="_CPPv2N3hpx7barrier6phase_E"></span><span id="hpx::barrier::phase___b"></span><span class="target" id="classhpx_1_1barrier_1ad36b2d164fdd71426a30d5173dc7f7fb"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">phase_</span></code><a class="headerlink" href="#_CPPv4N3hpx7barrier6phase_E" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
-</dd></dl>
-
-</dd></dl>
-
 </dd></dl>
 
 </dd></dl>
@@ -2418,11 +2372,11 @@
 <dt>
 <span class="target" id="namespacehpx"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">hpx</span></code><br /></dt>
 <dd><dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx_1_1lcos"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">lcos</span></code><br /></dt>
+<dt id="_CPPv4N3hpx4lcosE">
+<span id="_CPPv3N3hpx4lcosE"></span><span id="_CPPv2N3hpx4lcosE"></span><span id="hpx::lcos"></span><span class="target" id="namespacehpx_1_1lcos"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">lcos</span></code><br /></dt>
 <dd><dl class="cpp type">
-<dt>
-<span class="target" id="namespacehpx_1_1lcos_1_1local"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">local</span></code><br /></dt>
+<dt id="_CPPv4N3hpx4lcos5localE">
+<span id="_CPPv3N3hpx4lcos5localE"></span><span id="_CPPv2N3hpx4lcos5localE"></span><span id="hpx::lcos::local"></span><span class="target" id="namespacehpx_1_1lcos_1_1local"></span><em class="property"><span class="pre">namespace</span> </em><code class="sig-name descname"><span class="pre">local</span></code><br /></dt>
 <dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Typedefs</p>
 <dl class="cpp type">
@@ -5139,7 +5093,7 @@
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2021, The STE||AR Group.<br/>
-          Last updated on Feb 16, 2022.<br/>
+          Last updated on Feb 18, 2022.<br/>
       </p>
     </div>
   </footer>

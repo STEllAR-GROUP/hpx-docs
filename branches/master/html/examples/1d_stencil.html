@@ -2024,8 +2024,8 @@ on the middle partition with that of the possibly remote call of <code class="do
 This algorithmic change, which was implemented in example 7, can be seen below:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// The partitioned operator, it invokes the heat operator above on all elements</span>
     <span class="c1">// of a partition.</span>
-    <span class="k">static</span> <span class="n">partition</span> <span class="nf">heat_part</span><span class="p">(</span><span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">left</span><span class="p">,</span>
-        <span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">middle</span><span class="p">,</span> <span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">right</span><span class="p">)</span>
+    <span class="k">static</span> <span class="n">partition</span> <span class="nf">heat_part</span><span class="p">(</span>
+        <span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">left</span><span class="p">,</span> <span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">middle</span><span class="p">,</span> <span class="n">partition</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">right</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">dataflow</span><span class="p">;</span>
         <span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">unwrapping</span><span class="p">;</span>
@@ -2034,47 +2034,38 @@ This algorithmic change, which was implemented in example 7, can be seen below:<
             <span class="n">middle</span><span class="p">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">partition_server</span><span class="o">::</span><span class="n">middle_partition</span><span class="p">);</span>
 
         <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">partition_data</span><span class="o">&gt;</span> <span class="n">next_middle</span> <span class="o">=</span> <span class="n">middle_data</span><span class="p">.</span><span class="n">then</span><span class="p">(</span>
-            <span class="n">unwrapping</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">middle</span><span class="p">](</span><span class="n">partition_data</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">m</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">partition_data</span>
-                <span class="p">{</span>
-                    <span class="n">HPX_UNUSED</span><span class="p">(</span><span class="n">middle</span><span class="p">);</span>
+            <span class="n">unwrapping</span><span class="p">([</span><span class="n">middle</span><span class="p">](</span><span class="n">partition_data</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">m</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">partition_data</span> <span class="p">{</span>
+                <span class="n">HPX_UNUSED</span><span class="p">(</span><span class="n">middle</span><span class="p">);</span>
 
-                    <span class="c1">// All local operations are performed once the middle data of</span>
-                    <span class="c1">// the previous time step becomes available.</span>
-                    <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">size</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-                    <span class="n">partition_data</span> <span class="n">next</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
-                    <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-                        <span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">heat</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
-                    <span class="k">return</span> <span class="n">next</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">)</span>
-        <span class="p">);</span>
+                <span class="c1">// All local operations are performed once the middle data of</span>
+                <span class="c1">// the previous time step becomes available.</span>
+                <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">size</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+                <span class="n">partition_data</span> <span class="n">next</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+                    <span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">heat</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]);</span>
+                <span class="k">return</span> <span class="n">next</span><span class="p">;</span>
+            <span class="p">}));</span>
 
-        <span class="k">return</span> <span class="n">dataflow</span><span class="p">(</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async</span><span class="p">,</span>
-            <span class="n">unwrapping</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">left</span><span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="n">right</span><span class="p">](</span><span class="n">partition_data</span> <span class="n">next</span><span class="p">,</span> <span class="n">partition_data</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">l</span><span class="p">,</span>
-                    <span class="n">partition_data</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">m</span><span class="p">,</span> <span class="n">partition_data</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">r</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">partition</span>
-                <span class="p">{</span>
-                    <span class="n">HPX_UNUSED</span><span class="p">(</span><span class="n">left</span><span class="p">);</span>
-                    <span class="n">HPX_UNUSED</span><span class="p">(</span><span class="n">right</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">dataflow</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async</span><span class="p">,</span>
+            <span class="n">unwrapping</span><span class="p">([</span><span class="n">left</span><span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="n">right</span><span class="p">](</span><span class="n">partition_data</span> <span class="n">next</span><span class="p">,</span>
+                           <span class="n">partition_data</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">l</span><span class="p">,</span> <span class="n">partition_data</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">m</span><span class="p">,</span>
+                           <span class="n">partition_data</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">r</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">partition</span> <span class="p">{</span>
+                <span class="n">HPX_UNUSED</span><span class="p">(</span><span class="n">left</span><span class="p">);</span>
+                <span class="n">HPX_UNUSED</span><span class="p">(</span><span class="n">right</span><span class="p">);</span>
 
-                    <span class="c1">// Calculate the missing boundary elements once the</span>
-                    <span class="c1">// corresponding data has become available.</span>
-                    <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">size</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-                    <span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">heat</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-                    <span class="n">next</span><span class="p">[</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">heat</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">size</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+                <span class="c1">// Calculate the missing boundary elements once the</span>
+                <span class="c1">// corresponding data has become available.</span>
+                <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">size</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+                <span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">heat</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+                <span class="n">next</span><span class="p">[</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">heat</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">size</span> <span class="o">-</span> <span class="mi">2</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
 
-                    <span class="c1">// The new partition_data will be allocated on the same locality</span>
-                    <span class="c1">// as &#39;middle&#39;.</span>
-                    <span class="k">return</span> <span class="n">partition</span><span class="p">(</span><span class="n">middle</span><span class="p">.</span><span class="n">get_id</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">next</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">),</span>
+                <span class="c1">// The new partition_data will be allocated on the same locality</span>
+                <span class="c1">// as &#39;middle&#39;.</span>
+                <span class="k">return</span> <span class="n">partition</span><span class="p">(</span><span class="n">middle</span><span class="p">.</span><span class="n">get_id</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">next</span><span class="p">));</span>
+            <span class="p">}),</span>
             <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">next_middle</span><span class="p">),</span>
-            <span class="n">left</span><span class="p">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">partition_server</span><span class="o">::</span><span class="n">left_partition</span><span class="p">),</span>
-            <span class="n">middle_data</span><span class="p">,</span>
-            <span class="n">right</span><span class="p">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">partition_server</span><span class="o">::</span><span class="n">right_partition</span><span class="p">)</span>
-        <span class="p">);</span>
+            <span class="n">left</span><span class="p">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">partition_server</span><span class="o">::</span><span class="n">left_partition</span><span class="p">),</span> <span class="n">middle_data</span><span class="p">,</span>
+            <span class="n">right</span><span class="p">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">partition_server</span><span class="o">::</span><span class="n">right_partition</span><span class="p">));</span>
     <span class="p">}</span>
 </pre></div>
 </div>

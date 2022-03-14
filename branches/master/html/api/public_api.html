@@ -3036,14 +3036,14 @@ actions. See <a class="reference internal" href="../manual/writing_distributed_h
 actions.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The alias from <code class="docutils literal notranslate"><span class="pre">hpx::promise</span></code> to <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::promise</span></code> is
+<p>The alias from <code class="docutils literal notranslate"><span class="pre">hpx::promise</span></code> to <a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00EN3hpx4lcos7promiseE" title="hpx::lcos::promise"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::promise</span></code></a> is
 deprecated and will be removed in a future release. The alias
 <code class="docutils literal notranslate"><span class="pre">hpx::distributed::promise</span></code> should be used in new applications.</p>
 </div>
 <div class="section" id="id17">
 <h3>Classes<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00EN3hpx11distributed7promiseE" title="hpx::distributed::promise"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::distributed::promise</span></code></a></p></li>
+<li><p><a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00EN3hpx4lcos7promiseE" title="hpx::lcos::promise"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::promise</span></code></a></p></li>
 </ul>
 </div>
 <div class="section" id="id18">
@@ -3063,15 +3063,18 @@ See <a class="reference internal" href="../manual/writing_single_node_hpx_applic
 compared to the C++ standard library.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>All names except <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::promise</span></code> are also available in
-the top-level <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace.</p>
+<p>All names except <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::promise</span></code> are also available in
+the top-level <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace. <code class="docutils literal notranslate"><span class="pre">hpx::promise</span></code> refers to
+<a class="reference internal" href="../libs/full/async_distributed/api.html#_CPPv4I00EN3hpx4lcos7promiseE" title="hpx::lcos::promise"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::promise</span></code></a>, a distributed variant of
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::promise</span></code>, but will eventually refer to
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::promise</span></code> after a deprecation period.</p>
 </div>
 <div class="section" id="id19">
 <h3>Classes<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::future</span></code></p></li>
 <li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::shared_future</span></code></p></li>
-<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::promise</span></code></p></li>
+<li><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::lcos::local::promise</span></code></p></li>
 <li><p><a class="reference internal" href="../libs/core/async_base/api.html#_CPPv4N3hpx6launchE" title="hpx::launch"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::launch</span></code></a></p></li>
 </ul>
 </div>
@@ -3118,7 +3121,7 @@ the top-level <code class="docutils literal notranslate"><span class="pre">hpx</
     <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">f3</span> <span class="o">=</span>
         <span class="n">f2</span><span class="p">.</span><span class="n">then</span><span class="p">([](</span><span class="n">hpx</span><span class="o">::</span><span class="n">shared_future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;&amp;</span> <span class="n">f</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">f</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">*</span> <span class="mi">3</span><span class="p">;</span> <span class="p">});</span>
 
-    <span class="n">hpx</span><span class="o">::</span><span class="n">promise</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">;</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">promise</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">;</span>
     <span class="k">auto</span> <span class="n">f4</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">get_future</span><span class="p">();</span>
     <span class="n">HPX_ASSERT</span><span class="p">(</span><span class="o">!</span><span class="n">f4</span><span class="p">.</span><span class="n">is_ready</span><span class="p">());</span>
     <span class="n">p</span><span class="p">.</span><span class="n">set_value</span><span class="p">(</span><span class="mf">123.45</span><span class="p">);</span>

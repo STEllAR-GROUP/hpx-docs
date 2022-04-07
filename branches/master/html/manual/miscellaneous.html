@@ -1895,17 +1895,16 @@ calling thread tries to wait for the result of the action by invoking either
         <span class="c1">// Error reporting using exceptions</span>
         <span class="c1">//[exception_diagnostic_information</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-        <span class="k">try</span> <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
             <span class="c1">// invoke raise_exception() which throws an exception</span>
             <span class="n">raise_exception_action</span> <span class="n">do_it</span><span class="p">;</span>
             <span class="n">do_it</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">());</span>
         <span class="p">}</span>
-        <span class="k">catch</span> <span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">exception</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">exception</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
             <span class="c1">// Print just the essential error information.</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;caught exception: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
-
-            <span class="c1">// Print all of the available diagnostic information as stored with</span>
-            <span class="c1">// the exception.</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1924,32 +1923,32 @@ backtrace of the point where the original exception was thrown.</p>
 diagnostics, or to output those using different formatting. For this case, <em>HPX</em>
 exposes a set of lower-level functions as demonstrated in the following code
 snippet:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">//]</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="p">}</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+        <span class="c1">//]</span>
 
         <span class="c1">// Detailed error reporting using exceptions</span>
         <span class="c1">//[exception_diagnostic_elements</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-        <span class="k">try</span> <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
             <span class="c1">// Invoke raise_exception() which throws an exception.</span>
             <span class="n">raise_exception_action</span> <span class="n">do_it</span><span class="p">;</span>
             <span class="n">do_it</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">());</span>
         <span class="p">}</span>
-        <span class="k">catch</span> <span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">exception</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">exception</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
             <span class="c1">// Print the elements of the diagnostic information separately.</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{what}: &quot;</span>        <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_what</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{locality-id}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_locality_id</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{hostname}: &quot;</span>    <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_host_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{pid}: &quot;</span>         <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_process_id</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{function}: &quot;</span>    <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_function_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{file}: &quot;</span>        <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_file_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{line}: &quot;</span>        <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_line_number</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{os-thread}: &quot;</span>   <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_os_thread</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{thread-id}: &quot;</span>   <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_id</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{thread-description}: &quot;</span>
-                <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_description</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{state}: &quot;</span>       <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_state</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{what}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_what</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{locality-id}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_locality_id</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                      <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{hostname}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_host_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{pid}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_process_id</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{function}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_function_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                      <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{file}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_file_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{line}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_line_number</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{os-thread}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_os_thread</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -1963,7 +1962,14 @@ type can be passed as the last argument to the API function. In case of an error
 the error condition will be returned in that <a class="reference internal" href="../libs/core/errors/api/full_api.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::error_code</span></code></a>
 instance. The following example demonstrates extracting the full diagnostic
 information without exception handling:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{stack-trace}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_backtrace</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                      <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{env}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_env</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+        <span class="c1">//]</span>
+
+        <span class="c1">///////////////////////////////////////////////////////////////////////</span>
         <span class="c1">// Error reporting using error code</span>
         <span class="p">{</span>
             <span class="c1">//[error_handling_diagnostic_information</span>
@@ -1977,14 +1983,6 @@ information without exception handling:</p>
             <span class="c1">// but store the error information in this error_code instance instead.</span>
             <span class="n">raise_exception_action</span> <span class="n">do_it</span><span class="p">;</span>
             <span class="n">do_it</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">(),</span> <span class="n">ec</span><span class="p">);</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="p">{</span>
-                <span class="c1">// Print just the essential error information.</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;returned error: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">get_message</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-
-                <span class="c1">// Print all of the available diagnostic information as stored with</span>
-                <span class="c1">// the exception.</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;diagnostic information:&quot;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -2003,7 +2001,16 @@ circumstances it is desirable to output only some of the diagnostics, or to
 output those using different formatting. For this case, <em>HPX</em> exposes a set of
 lower-level functions usable with error codes as demonstrated in the following
 code snippet:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">// Detailed error reporting using error code</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>                <span class="c1">// the exception.</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;diagnostic information:&quot;</span>
+                          <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">diagnostic_information</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+            <span class="c1">//]</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Detailed error reporting using error code</span>
         <span class="p">{</span>
             <span class="c1">//[error_handling_diagnostic_elements</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Detailed error reporting using error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
@@ -2017,24 +2024,16 @@ code snippet:</p>
             <span class="n">raise_exception_action</span> <span class="n">do_it</span><span class="p">;</span>
             <span class="n">do_it</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">(),</span> <span class="n">ec</span><span class="p">);</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">)</span>
+            <span class="p">{</span>
                 <span class="c1">// Print the elements of the diagnostic information separately.</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{what}: &quot;</span>        <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_what</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{locality-id}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_locality_id</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{hostname}: &quot;</span>    <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_host_name</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{pid}: &quot;</span>         <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_process_id</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{function}: &quot;</span>    <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_function_name</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
-                    <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{file}: &quot;</span>        <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_file_name</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{line}: &quot;</span>        <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_line_number</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{os-thread}: &quot;</span>   <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_os_thread</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{thread-id}: &quot;</span>   <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span>
-                    <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_id</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{thread-description}: &quot;</span>
-                    <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_description</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{state}: &quot;</span>       <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_state</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
-                    <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{stack-trace}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_backtrace</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{what}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_what</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{locality-id}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_locality_id</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
+                          <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{hostname}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_host_name</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
+                          <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{pid}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_process_id</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{function}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_function_name</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For more information please refer to the documentation of
@@ -2053,26 +2052,27 @@ code snippet:</p>
 error at the point where it happened as this might impose too much overhead for
 simple scenarios. In this case, <em>HPX</em> provides a lightweight error code facility
 that will hold the error code only. The following snippet demonstrates its use:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="c1">// Error reporting using lightweight error code</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{thread-id}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span>
+                          <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_id</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{thread-description}: &quot;</span>
+                          <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_description</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{state}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_state</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
+                          <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{stack-trace}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_backtrace</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
+                          <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{env}: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hpx</span><span class="o">::</span><span class="n">get_error_env</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+            <span class="c1">//]</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Error reporting using lightweight error code</span>
         <span class="p">{</span>
             <span class="c1">//[lightweight_error_handling_diagnostic_information</span>
             <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error reporting using an lightweight error code</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
             <span class="c1">// Create a new error_code instance.</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">throwmode</span><span class="o">::</span><span class="n">lightweight</span><span class="p">);</span>
-
-            <span class="c1">// If an instance of an error_code is passed as the last argument while</span>
-            <span class="c1">// invoking the action, the function will not throw in case of an error</span>
-            <span class="c1">// but store the error information in this error_code instance instead.</span>
-            <span class="n">raise_exception_action</span> <span class="n">do_it</span><span class="p">;</span>
-            <span class="n">do_it</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">(),</span> <span class="n">ec</span><span class="p">);</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="p">{</span>
-                <span class="c1">// Print just the essential error information.</span>
-                <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;returned error: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">get_message</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-
-                <span class="c1">// Print all of the available diagnostic information as stored with</span>
-                <span class="c1">// the exception.</span>
 </pre></div>
 </div>
 <p>All functions that retrieve other diagnostic elements from the
@@ -2197,7 +2197,7 @@ will appear on the console as long as either of these is explicitly used.</p>
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2021, The STE||AR Group.<br/>
-          Last updated on Apr 06, 2022.<br/>
+          Last updated on Apr 07, 2022.<br/>
       </p>
     </div>
   </footer>

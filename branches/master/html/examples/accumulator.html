@@ -1927,7 +1927,7 @@ template argument passed to locking_hook is used as its base class). The
 following snippet shows the corresponding code:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="k">class</span> <span class="nc">accumulator</span>
       <span class="o">:</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">locking_hook</span><span class="o">&lt;</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">accumulator</span><span class="o">&gt;</span> <span class="o">&gt;</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">accumulator</span><span class="o">&gt;&gt;</span>
 </pre></div>
 </div>
 <p>Our accumulator class will need a data member to store its value in, so let’s
@@ -1936,7 +1936,10 @@ declare a data member:</p>
 </pre></div>
 </div>
 <p>The constructor for this class simply initializes <code class="docutils literal notranslate"><span class="pre">value_</span></code> to 0:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="n">accumulator</span><span class="p">()</span> <span class="o">:</span> <span class="n">value_</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="n">accumulator</span><span class="p">()</span>
+          <span class="o">:</span> <span class="n">value_</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
 </pre></div>
 </div>
 <p>Next, let’s look at the three methods of this component that we will be exposing
@@ -1952,16 +1955,13 @@ wrapping technique is very similar to the one used in the
 <p>The last piece of code in the server class header is the declaration of the
 action type registration code:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span>
-    <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">reset_action</span><span class="p">,</span>
-    <span class="n">accumulator_reset_action</span><span class="p">)</span>
+    <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">reset_action</span><span class="p">,</span> <span class="n">accumulator_reset_action</span><span class="p">)</span>
 
 <span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span>
-    <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">add_action</span><span class="p">,</span>
-    <span class="n">accumulator_add_action</span><span class="p">)</span>
+    <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">add_action</span><span class="p">,</span> <span class="n">accumulator_add_action</span><span class="p">)</span>
 
 <span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span>
-    <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">query_action</span><span class="p">,</span>
-    <span class="n">accumulator_query_action</span><span class="p">)</span>
+    <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">::</span><span class="n">query_action</span><span class="p">,</span> <span class="n">accumulator_query_action</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1975,23 +1975,19 @@ action type registration code:</p>
 <span class="n">HPX_REGISTER_COMPONENT_MODULE</span><span class="p">()</span>
 
 <span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component</span><span class="o">&lt;</span>
-    <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span>
-<span class="o">&gt;</span> <span class="n">accumulator_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component</span><span class="o">&lt;</span><span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">&gt;</span>
+    <span class="n">accumulator_type</span><span class="p">;</span>
 
 <span class="n">HPX_REGISTER_COMPONENT</span><span class="p">(</span><span class="n">accumulator_type</span><span class="p">,</span> <span class="n">accumulator</span><span class="p">)</span>
 
 <span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
 <span class="c1">// Serialization support for accumulator actions.</span>
 <span class="n">HPX_REGISTER_ACTION</span><span class="p">(</span>
-    <span class="n">accumulator_type</span><span class="o">::</span><span class="n">wrapped_type</span><span class="o">::</span><span class="n">reset_action</span><span class="p">,</span>
-    <span class="n">accumulator_reset_action</span><span class="p">)</span>
+    <span class="n">accumulator_type</span><span class="o">::</span><span class="n">wrapped_type</span><span class="o">::</span><span class="n">reset_action</span><span class="p">,</span> <span class="n">accumulator_reset_action</span><span class="p">)</span>
 <span class="n">HPX_REGISTER_ACTION</span><span class="p">(</span>
-    <span class="n">accumulator_type</span><span class="o">::</span><span class="n">wrapped_type</span><span class="o">::</span><span class="n">add_action</span><span class="p">,</span>
-    <span class="n">accumulator_add_action</span><span class="p">)</span>
+    <span class="n">accumulator_type</span><span class="o">::</span><span class="n">wrapped_type</span><span class="o">::</span><span class="n">add_action</span><span class="p">,</span> <span class="n">accumulator_add_action</span><span class="p">)</span>
 <span class="n">HPX_REGISTER_ACTION</span><span class="p">(</span>
-    <span class="n">accumulator_type</span><span class="o">::</span><span class="n">wrapped_type</span><span class="o">::</span><span class="n">query_action</span><span class="p">,</span>
-    <span class="n">accumulator_query_action</span><span class="p">)</span>
+    <span class="n">accumulator_type</span><span class="o">::</span><span class="n">wrapped_type</span><span class="o">::</span><span class="n">query_action</span><span class="p">,</span> <span class="n">accumulator_query_action</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -2015,15 +2011,12 @@ are used to create components:</p>
 <p>Clients, like servers, need to inherit from a base class, this time,
 <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::components::client_base</span></code>:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>    <span class="k">class</span> <span class="nc">accumulator</span>
-      <span class="o">:</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span>
-            <span class="n">accumulator</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">accumulator</span>
-        <span class="o">&gt;</span>
+      <span class="o">:</span> <span class="k">public</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>For readability, we typedef the base class like so:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span>
-            <span class="n">accumulator</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">accumulator</span>
-        <span class="o">&gt;</span> <span class="n">base_type</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>        <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">accumulator</span><span class="o">&gt;</span>
+            <span class="n">base_type</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Here are examples of how to expose actions through a client class:</p>
@@ -2131,7 +2124,7 @@ returned by <a class="reference internal" href="../libs/full/runtime_distributed
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2021, The STE||AR Group.<br/>
-          Last updated on Apr 06, 2022.<br/>
+          Last updated on Apr 07, 2022.<br/>
       </p>
     </div>
   </footer>

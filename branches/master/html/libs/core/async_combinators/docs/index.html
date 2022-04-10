@@ -1809,7 +1809,12 @@
 <p>This module contains combinators for futures. The <code class="docutils literal notranslate"><span class="pre">when_*</span></code> functions allow you
 to turn multiple futures into a single future which is ready when all, any,
 some, or each of the given futures are ready. The <code class="docutils literal notranslate"><span class="pre">wait_*</span></code> combinators are
-equivalent to the <code class="docutils literal notranslate"><span class="pre">when_*</span></code> functions except that they do not return a future.</p>
+equivalent to the <code class="docutils literal notranslate"><span class="pre">when_*</span></code> functions except that they do not return a future.
+Those wait for all futures to become ready before returning to the user. Note
+that the <code class="docutils literal notranslate"><span class="pre">wait_*</span></code> functions will rethrow one of the exceptions from
+exceptional futures.
+The <code class="docutils literal notranslate"><span class="pre">wait_*_nothrow</span></code> combinators are equivalent to the <code class="docutils literal notranslate"><span class="pre">wait_*</span></code> functions
+exception that they do not throw if one of the futures has become exceptional.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">split_future</span></code> combinator takes a single future of a container (e.g.
 <code class="docutils literal notranslate"><span class="pre">tuple</span></code>) and turns it into a container of futures.</p>
 <p>See <a class="reference internal" href="../../lcos_local/docs/index.html#modules-lcos-local"><span class="std std-ref">lcos_local</span></a>, <a class="reference internal" href="../../synchronization/docs/index.html#modules-synchronization"><span class="std std-ref">synchronization</span></a>, and <a class="reference internal" href="../../../full/async_distributed/docs/index.html#modules-async"><span class="std std-ref">async</span></a>

@@ -1965,11 +1965,11 @@ wrapped in the action above:</p>
         <span class="c1">// is the index of the future in the vector, and the second is the</span>
         <span class="c1">// return value of the future. hpx::wait_each doesn&#39;t return until</span>
         <span class="c1">// all the futures in the vector have returned.</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">spinlock</span> <span class="n">mtx</span><span class="p">;</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">spinlock</span> <span class="n">mtx</span><span class="p">;</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">wait_each</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">unwrapping</span><span class="p">([</span><span class="o">&amp;</span><span class="p">](</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="n">t</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">spinlock</span><span class="o">&gt;</span> <span class="n">lk</span><span class="p">(</span><span class="n">mtx</span><span class="p">);</span>
+                <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">spinlock</span><span class="o">&gt;</span> <span class="n">lk</span><span class="p">(</span><span class="n">mtx</span><span class="p">);</span>
                 <span class="n">attendance</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
             <span class="p">}</span>
         <span class="p">}),</span>

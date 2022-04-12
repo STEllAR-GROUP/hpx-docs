@@ -69,7 +69,14 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p class="caption">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   Welcome to the HPX documentation!
+  </a>
+ </li>
+</ul>
+<p class="caption">
  <span class="caption-text">
   User documentation
  </span>
@@ -1767,6 +1774,22 @@
 
             <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/STEllAR-GROUP/hpx"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/STEllAR-GROUP/hpx/issues/new?title=Issue%20on%20page%20%2Fexamples/fibonacci.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -1855,14 +1878,12 @@ elapsed time: 0.233827 [s]
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
 <span class="p">{</span>
     <span class="c1">// Configure application-specific options</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">options_description</span>
-       <span class="n">desc_commandline</span><span class="p">(</span><span class="s">&quot;Usage: &quot;</span> <span class="n">HPX_APPLICATION_STRING</span> <span class="s">&quot; [options]&quot;</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">options_description</span> <span class="n">desc_commandline</span><span class="p">(</span>
+        <span class="s">&quot;Usage: &quot;</span> <span class="n">HPX_APPLICATION_STRING</span> <span class="s">&quot; [options]&quot;</span><span class="p">);</span>
 
-    <span class="n">desc_commandline</span><span class="p">.</span><span class="n">add_options</span><span class="p">()</span>
-        <span class="p">(</span> <span class="s">&quot;n-value&quot;</span><span class="p">,</span>
-          <span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">value</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
-          <span class="s">&quot;n value for the Fibonacci function&quot;</span><span class="p">)</span>
-        <span class="p">;</span>
+    <span class="n">desc_commandline</span><span class="p">.</span><span class="n">add_options</span><span class="p">()(</span><span class="s">&quot;n-value&quot;</span><span class="p">,</span>
+        <span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">value</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+        <span class="s">&quot;n value for the Fibonacci function&quot;</span><span class="p">);</span>
 
     <span class="c1">// Initialize and run HPX</span>
     <span class="n">hpx</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
@@ -1895,7 +1916,7 @@ synchronously, and the answer is printed out.</p>
         <span class="n">hpx</span><span class="o">::</span><span class="n">util</span><span class="o">::</span><span class="n">format_to</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">elapsed</span><span class="p">());</span>
     <span class="p">}</span>
 
-    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span> <span class="c1">// Handles HPX shutdown</span>
+    <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>    <span class="c1">// Handles HPX shutdown</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1946,12 +1967,11 @@ result of the function <code class="docutils literal notranslate"><span class="p
     <span class="c1">// heavy workload.</span>
 
     <span class="n">fibonacci_action</span> <span class="n">fib</span><span class="p">;</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span> <span class="n">n1</span> <span class="o">=</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">fib</span><span class="p">,</span> <span class="n">locality_id</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span> <span class="n">n2</span> <span class="o">=</span>
-        <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">fib</span><span class="p">,</span> <span class="n">locality_id</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span> <span class="n">n1</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">fib</span><span class="p">,</span> <span class="n">locality_id</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span> <span class="n">n2</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">fib</span><span class="p">,</span> <span class="n">locality_id</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
 
-    <span class="k">return</span> <span class="n">n1</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="n">n2</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>   <span class="c1">// wait for the Futures to return their values</span>
+    <span class="k">return</span> <span class="n">n1</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span>
+        <span class="n">n2</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>    <span class="c1">// wait for the Futures to return their values</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -2015,7 +2035,7 @@ producing the n-th value of the Fibonacci sequence.</p>
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2021, The STE||AR Group.<br/>
-          Last updated on Mar 31, 2022.<br/>
+          Last updated on Apr 12, 2022.<br/>
       </p>
     </div>
   </footer>

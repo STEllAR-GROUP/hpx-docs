@@ -69,7 +69,14 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p class="caption">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   Welcome to the HPX documentation!
+  </a>
+ </li>
+</ul>
+<p class="caption">
  <span class="caption-text">
   User documentation
  </span>
@@ -1767,6 +1774,22 @@
 
             <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/STEllAR-GROUP/hpx"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/STEllAR-GROUP/hpx/issues/new?title=Issue%20on%20page%20%2Freleases/whats_new_1_8_0.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -1914,9 +1937,14 @@ changes are the following:
 the <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace.</p>
 </div></blockquote>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">unique_function</span></code> has been renames to <code class="docutils literal notranslate"><span class="pre">move_only_function</span></code> and moved into
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::lcos::latch</span></code> has been moved into the <code class="docutils literal notranslate"><span class="pre">hpx::distributed</span></code> namespace and
+<code class="docutils literal notranslate"><span class="pre">lcos::local::latch</span></code> has been moved into the <code class="docutils literal notranslate"><span class="pre">hpx</span></code> namespace. The
+<code class="docutils literal notranslate"><span class="pre">count_down_and_wait()</span></code> functionality of <code class="docutils literal notranslate"><span class="pre">latch</span></code> has been renamed to
+<code class="docutils literal notranslate"><span class="pre">arrive_and_wait()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unique_function</span></code> has been renamed to <code class="docutils literal notranslate"><span class="pre">move_only_function</span></code> and moved into
 namespace <code class="docutils literal notranslate"><span class="pre">hpx</span></code>. <code class="docutils literal notranslate"><span class="pre">function</span></code> and <code class="docutils literal notranslate"><span class="pre">function_ref</span></code> have been moved into namespace
 <code class="docutils literal notranslate"><span class="pre">hpx</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::lcos::split_future</span></code> changed namespace and is now used as <code class="docutils literal notranslate"><span class="pre">hpx::split_future</span></code>.</p></li>
 </ul>
 </li>
 <li><p>The new LCI (Lightweight Communication Interface) parcelport was added that supports
@@ -1932,6 +1960,7 @@ one sided remote put.
 <div class="section" id="breaking-changes">
 <h2>Breaking changes<a class="headerlink" href="#breaking-changes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><p>Minimum required C++ standard library is C++17.</p></li>
 <li><p>Support for GCC 7 and Clang 8.0.0 and below has been removed.</p></li>
 <li><p>CUDA  version required updated to 11.4.</p></li>
 <li><p>CMake version required updated to 3.18.</p></li>
@@ -1941,6 +1970,7 @@ one sided remote put.
 <code class="docutils literal notranslate"><span class="pre">schedule</span></code>, <code class="docutils literal notranslate"><span class="pre">set_value</span></code>, <code class="docutils literal notranslate"><span class="pre">set_error</span></code>, <code class="docutils literal notranslate"><span class="pre">set_done</span></code>, <code class="docutils literal notranslate"><span class="pre">start</span></code> and <code class="docutils literal notranslate"><span class="pre">connect</span></code>
 inherit <a href="#id2"><span class="problematic" id="id3">``</span></a>hpx::functional::tag`.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tag_dispatch</span></code> was renamed to <code class="docutils literal notranslate"><span class="pre">tag_invoke</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx.max_backgroud_threads</span></code> was renamed to <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_background_threads</span></code>.</p></li>
 <li><p>The following CMake flags were removed after last release deprecation:</p></li>
 </ul>
 <blockquote>
@@ -2002,6 +2032,7 @@ HPX_WITH_ASYNC_CUDA</p>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/5110">Issue #5110</a> - Tests don’t get built</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/5105">Issue #5105</a> - PAPI performance counters not available</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/5002">Issue #5002</a> - hpx::lcos::barrier() results in deadlock</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/4992">Issue #4992</a> - Clang-format the rest of the files</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/4987">Issue #4987</a> - Use std::function in public APIs</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/4871">Issue #4871</a> - HEP: conformance to C++20</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/4822">Issue #4822</a> - Adapt parallel algorithms to C++20</p></li>
@@ -2025,9 +2056,20 @@ HPX_WITH_ASYNC_CUDA</p>
 <div class="section" id="closed-pull-requests">
 <h2>Closed pull requests<a class="headerlink" href="#closed-pull-requests" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5842">PR #5842</a> - change the default value of HPX_WITH_LCI_TAG to v1.7</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5841">PR #5841</a> - Move the split_future facilities into the namespace hpx</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5840">PR #5840</a> - wait_xxx_nothrow functions return whether one of the futures is exceptional</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5837">PR #5837</a> - Moving latch types to hpx and hpx::distributed namespaces</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5835">PR #5835</a> - Add missing compatibility layer for id_type::management_type values</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5834">PR #5834</a> - API docs changes</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5831">PR #5831</a> - Further improvement actions to rotate</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5830">PR #5830</a> - Exposing zero-copy serialization threshold through configuration option</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5829">PR #5829</a> - Attempting to fix failing barrier test</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5827">PR #5827</a> - Add back explicit template parameter to <cite>ignore_while_checking</cite> to compile with nvcc</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5826">PR #5826</a> - Reduce number of allocations while calling async_bulk_execute</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5825">PR #5825</a> - Steal from neighboring NUMA domain only</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5823">PR #5823</a> - Remove obsolete directories and adjust build system</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5822">PR #5822</a> - Clang-format remaining files</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5821">PR #5821</a> - Enable permissive- flag on Windows GitHub actions builders</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5820">PR #5820</a> - Convert throwmode enum to enum class</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5819">PR #5819</a> - Marking customization points for intrusive_ptr as noexcept</p></li>
@@ -2362,7 +2404,7 @@ HPX_WITH_ASYNC_CUDA</p>
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2021, The STE||AR Group.<br/>
-          Last updated on Mar 31, 2022.<br/>
+          Last updated on Apr 12, 2022.<br/>
       </p>
     </div>
   </footer>

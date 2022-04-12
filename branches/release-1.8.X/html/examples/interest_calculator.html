@@ -70,7 +70,14 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p class="caption">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   Welcome to the HPX documentation!
+  </a>
+ </li>
+</ul>
+<p class="caption">
  <span class="caption-text">
   User documentation
  </span>
@@ -1768,6 +1775,22 @@
 
             <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/STEllAR-GROUP/hpx"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/STEllAR-GROUP/hpx/issues/new?title=Issue%20on%20page%20%2Fexamples/interest_calculator.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -1862,17 +1885,16 @@ Boost.Program Options to set our command line variables (see
 <a class="reference internal" href="fibonacci.html#examples-fibonacci"><span class="std std-ref">Asynchronous execution with actions</span></a> for more details). These options set the principal,
 rate, compound period, and time. It is important to note that the units of time
 for <code class="docutils literal notranslate"><span class="pre">cp</span></code> and <code class="docutils literal notranslate"><span class="pre">time</span></code> must be the same.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">options_description</span> <span class="n">cmdline</span><span class="p">(</span><span class="s">&quot;Usage: &quot;</span> <span class="n">HPX_APPLICATION_STRING</span> <span class="s">&quot; [options]&quot;</span><span class="p">);</span>
 
-    <span class="n">cmdline</span><span class="p">.</span><span class="n">add_options</span><span class="p">()</span>
-        <span class="p">(</span><span class="s">&quot;principal&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span> <span class="s">&quot;The principal [$]&quot;</span><span class="p">)</span>
-        <span class="p">(</span><span class="s">&quot;rate&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="s">&quot;The interest rate [%]&quot;</span><span class="p">)</span>
-        <span class="p">(</span><span class="s">&quot;cp&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="s">&quot;The compound period [months]&quot;</span><span class="p">)</span>
-        <span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">12</span><span class="o">*</span><span class="mi">30</span><span class="p">),</span>
-            <span class="s">&quot;The time money is invested [months]&quot;</span><span class="p">)</span>
-    <span class="p">;</span>
+    <span class="n">cmdline</span><span class="p">.</span><span class="n">add_options</span><span class="p">()(</span><span class="s">&quot;principal&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span>
+        <span class="s">&quot;The principal [$]&quot;</span><span class="p">)(</span><span class="s">&quot;rate&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span>
+        <span class="s">&quot;The interest rate [%]&quot;</span><span class="p">)(</span><span class="s">&quot;cp&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span>
+        <span class="s">&quot;The compound period [months]&quot;</span><span class="p">)(</span><span class="s">&quot;time&quot;</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">12</span> <span class="o">*</span> <span class="mi">30</span><span class="p">),</span>
+        <span class="s">&quot;The time money is invested [months]&quot;</span><span class="p">);</span>
 
     <span class="n">hpx</span><span class="o">::</span><span class="n">init_params</span> <span class="n">init_args</span><span class="p">;</span>
     <span class="n">init_args</span><span class="p">.</span><span class="n">desc_cmdline</span> <span class="o">=</span> <span class="n">cmdline</span><span class="p">;</span>
@@ -1882,7 +1904,7 @@ for <code class="docutils literal notranslate"><span class="pre">cp</span></code
 </pre></div>
 </div>
 <p>Next we look at hpx_main.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="n">variables_map</span> <span class="o">&amp;</span> <span class="n">vm</span><span class="p">)</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">hpx_main</span><span class="p">(</span><span class="n">variables_map</span><span class="o">&amp;</span> <span class="n">vm</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="p">{</span>
         <span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">dataflow</span><span class="p">;</span>
@@ -1891,14 +1913,15 @@ for <code class="docutils literal notranslate"><span class="pre">cp</span></code
         <span class="k">using</span> <span class="n">hpx</span><span class="o">::</span><span class="n">unwrapping</span><span class="p">;</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span> <span class="n">here</span> <span class="o">=</span> <span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">();</span>
 
-        <span class="kt">double</span> <span class="n">init_principal</span><span class="o">=</span><span class="n">vm</span><span class="p">[</span><span class="s">&quot;principal&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">//Initial principal</span>
-        <span class="kt">double</span> <span class="n">init_rate</span><span class="o">=</span><span class="n">vm</span><span class="p">[</span><span class="s">&quot;rate&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">//Interest rate</span>
-        <span class="kt">int</span> <span class="n">cp</span><span class="o">=</span><span class="n">vm</span><span class="p">[</span><span class="s">&quot;cp&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">//Length of a compound period</span>
-        <span class="kt">int</span> <span class="n">t</span><span class="o">=</span><span class="n">vm</span><span class="p">[</span><span class="s">&quot;time&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">//Length of time money is invested</span>
+        <span class="kt">double</span> <span class="n">init_principal</span> <span class="o">=</span>
+            <span class="n">vm</span><span class="p">[</span><span class="s">&quot;principal&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span>              <span class="c1">//Initial principal</span>
+        <span class="kt">double</span> <span class="n">init_rate</span> <span class="o">=</span> <span class="n">vm</span><span class="p">[</span><span class="s">&quot;rate&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span>    <span class="c1">//Interest rate</span>
+        <span class="kt">int</span> <span class="n">cp</span> <span class="o">=</span> <span class="n">vm</span><span class="p">[</span><span class="s">&quot;cp&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>     <span class="c1">//Length of a compound period</span>
+        <span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="n">vm</span><span class="p">[</span><span class="s">&quot;time&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>    <span class="c1">//Length of time money is invested</span>
 
-        <span class="n">init_rate</span><span class="o">/=</span><span class="mi">100</span><span class="p">;</span> <span class="c1">//Rate is a % and must be converted</span>
-        <span class="n">t</span><span class="o">/=</span><span class="n">cp</span><span class="p">;</span> <span class="c1">//Determine how many times to iterate interest calculation:</span>
-               <span class="c1">//How many full compound periods can fit in the time invested</span>
+        <span class="n">init_rate</span> <span class="o">/=</span> <span class="mi">100</span><span class="p">;</span>    <span class="c1">//Rate is a % and must be converted</span>
+        <span class="n">t</span> <span class="o">/=</span> <span class="n">cp</span><span class="p">;</span>    <span class="c1">//Determine how many times to iterate interest calculation:</span>
+            <span class="c1">//How many full compound periods can fit in the time invested</span>
 
         <span class="c1">// In non-dataflow terms the implemented algorithm would look like:</span>
         <span class="c1">//</span>
@@ -1919,7 +1942,8 @@ for <code class="docutils literal notranslate"><span class="pre">cp</span></code
 
         <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="n">shared_future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">interest</span> <span class="o">=</span> <span class="n">dataflow</span><span class="p">(</span><span class="n">unwrapping</span><span class="p">(</span><span class="n">calc</span><span class="p">),</span> <span class="n">principal</span><span class="p">,</span> <span class="n">rate</span><span class="p">);</span>
+            <span class="n">shared_future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">interest</span> <span class="o">=</span>
+                <span class="n">dataflow</span><span class="p">(</span><span class="n">unwrapping</span><span class="p">(</span><span class="n">calc</span><span class="p">),</span> <span class="n">principal</span><span class="p">,</span> <span class="n">rate</span><span class="p">);</span>
             <span class="n">principal</span> <span class="o">=</span> <span class="n">dataflow</span><span class="p">(</span><span class="n">unwrapping</span><span class="p">(</span><span class="n">add</span><span class="p">),</span> <span class="n">principal</span><span class="p">,</span> <span class="n">interest</span><span class="p">);</span>
         <span class="p">}</span>
 
@@ -1928,7 +1952,7 @@ for <code class="docutils literal notranslate"><span class="pre">cp</span></code
         <span class="kt">double</span> <span class="n">result</span> <span class="o">=</span> <span class="n">principal</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
 
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Final amount: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Amount made: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">result</span><span class="o">-</span><span class="n">init_principal</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Amount made: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">result</span> <span class="o">-</span> <span class="n">init_principal</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
@@ -2025,7 +2049,7 @@ the initial value of the investment.</p>
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2021, The STE||AR Group.<br/>
-          Last updated on Mar 31, 2022.<br/>
+          Last updated on Apr 12, 2022.<br/>
       </p>
     </div>
   </footer>

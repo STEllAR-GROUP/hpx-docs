@@ -69,7 +69,14 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p class="caption">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   Welcome to the HPX documentation!
+  </a>
+ </li>
+</ul>
+<p class="caption">
  <span class="caption-text">
   User documentation
  </span>
@@ -1767,6 +1774,22 @@
 
             <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/STEllAR-GROUP/hpx"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/STEllAR-GROUP/hpx/issues/new?title=Issue%20on%20page%20%2Fmanual/creating_hpx_projects.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -1973,24 +1996,22 @@ code:</p>
 <p><strong>hello_world_component.cpp</strong></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
-<span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">server</span>
-<span class="p">{</span>
+<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">server</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="n">hello_world</span><span class="o">::</span><span class="n">invoke</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello HPX World!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">}}</span>
+<span class="p">}}</span>    <span class="c1">// namespace examples::server</span>
 
 <span class="n">HPX_REGISTER_COMPONENT_MODULE</span><span class="p">()</span>
 
-<span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component</span><span class="o">&lt;</span>
-    <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span>
-<span class="o">&gt;</span> <span class="n">hello_world_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component</span><span class="o">&lt;</span><span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">&gt;</span>
+    <span class="n">hello_world_type</span><span class="p">;</span>
 
 <span class="n">HPX_REGISTER_COMPONENT</span><span class="p">(</span><span class="n">hello_world_type</span><span class="p">,</span> <span class="n">hello_world</span><span class="p">)</span>
 
@@ -2006,47 +2027,48 @@ code:</p>
 <span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/actions.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/include/lcos.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/components.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/include/lcos.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/serialization.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">server</span>
-<span class="p">{</span>
+<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">server</span> <span class="p">{</span>
     <span class="k">struct</span> <span class="n">HPX_COMPONENT_EXPORT</span> <span class="nl">hello_world</span>
-        <span class="p">:</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">hello_world</span><span class="o">&gt;</span>
+      <span class="p">:</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">hello_world</span><span class="o">&gt;</span>
     <span class="p">{</span>
         <span class="kt">void</span> <span class="n">invoke</span><span class="p">();</span>
         <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">hello_world</span><span class="p">,</span> <span class="n">invoke</span><span class="p">)</span>
     <span class="p">};</span>
-<span class="p">}}</span>
+<span class="p">}}</span>    <span class="c1">// namespace examples::server</span>
 
 <span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span>
     <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">::</span><span class="n">invoke_action</span><span class="p">,</span> <span class="n">hello_world_invoke_action</span><span class="p">)</span>
 
-<span class="k">namespace</span> <span class="n">examples</span>
-<span class="p">{</span>
+<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span>
     <span class="k">struct</span> <span class="nl">hello_world</span>
       <span class="p">:</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span><span class="n">hello_world</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">&gt;</span>
     <span class="p">{</span>
         <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span><span class="n">hello_world</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">&gt;</span>
             <span class="n">base_type</span><span class="p">;</span>
 
-        <span class="n">hello_world</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">hello_world</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span><span class="o">&gt;&amp;&amp;</span> <span class="n">f</span><span class="p">)</span>
           <span class="o">:</span> <span class="n">base_type</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-        <span class="p">{}</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
 
-        <span class="n">hello_world</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span> <span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">hello_world</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span><span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">)</span>
           <span class="o">:</span> <span class="n">base_type</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-        <span class="p">{}</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
 
         <span class="kt">void</span> <span class="n">invoke</span><span class="p">()</span>
         <span class="p">{</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="o">&lt;</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">::</span><span class="n">invoke_action</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">()).</span><span class="n">get</span><span class="p">();</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="o">&lt;</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">::</span><span class="n">invoke_action</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">())</span>
+                <span class="p">.</span><span class="n">get</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">};</span>
-<span class="p">}</span>
+<span class="p">}</span>    <span class="c1">// namespace examples</span>
 
 <span class="cp">#endif</span>
 </pre></div>
@@ -2417,24 +2439,22 @@ code:</p>
 <p><strong>hello_world_component.cpp</strong></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
-<span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/iostream.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;hello_world_component.hpp&quot;</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">server</span>
-<span class="p">{</span>
+<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">server</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="n">hello_world</span><span class="o">::</span><span class="n">invoke</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">hpx</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello HPX World!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">}}</span>
+<span class="p">}}</span>    <span class="c1">// namespace examples::server</span>
 
 <span class="n">HPX_REGISTER_COMPONENT_MODULE</span><span class="p">()</span>
 
-<span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component</span><span class="o">&lt;</span>
-    <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span>
-<span class="o">&gt;</span> <span class="n">hello_world_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component</span><span class="o">&lt;</span><span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">&gt;</span>
+    <span class="n">hello_world_type</span><span class="p">;</span>
 
 <span class="n">HPX_REGISTER_COMPONENT</span><span class="p">(</span><span class="n">hello_world_type</span><span class="p">,</span> <span class="n">hello_world</span><span class="p">)</span>
 
@@ -2450,47 +2470,48 @@ code:</p>
 <span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/hpx.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/actions.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;hpx/include/lcos.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/include/components.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;hpx/include/lcos.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;hpx/serialization.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">server</span>
-<span class="p">{</span>
+<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">server</span> <span class="p">{</span>
     <span class="k">struct</span> <span class="n">HPX_COMPONENT_EXPORT</span> <span class="nl">hello_world</span>
-        <span class="p">:</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">hello_world</span><span class="o">&gt;</span>
+      <span class="p">:</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">hello_world</span><span class="o">&gt;</span>
     <span class="p">{</span>
         <span class="kt">void</span> <span class="n">invoke</span><span class="p">();</span>
         <span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">hello_world</span><span class="p">,</span> <span class="n">invoke</span><span class="p">)</span>
     <span class="p">};</span>
-<span class="p">}}</span>
+<span class="p">}}</span>    <span class="c1">// namespace examples::server</span>
 
 <span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span>
     <span class="n">examples</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">::</span><span class="n">invoke_action</span><span class="p">,</span> <span class="n">hello_world_invoke_action</span><span class="p">)</span>
 
-<span class="k">namespace</span> <span class="n">examples</span>
-<span class="p">{</span>
+<span class="k">namespace</span> <span class="n">examples</span> <span class="p">{</span>
     <span class="k">struct</span> <span class="nl">hello_world</span>
       <span class="p">:</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span><span class="n">hello_world</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">&gt;</span>
     <span class="p">{</span>
         <span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">client_base</span><span class="o">&lt;</span><span class="n">hello_world</span><span class="p">,</span> <span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">&gt;</span>
             <span class="n">base_type</span><span class="p">;</span>
 
-        <span class="n">hello_world</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">hello_world</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span><span class="o">&gt;&amp;&amp;</span> <span class="n">f</span><span class="p">)</span>
           <span class="o">:</span> <span class="n">base_type</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-        <span class="p">{}</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
 
-        <span class="n">hello_world</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span> <span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">hello_world</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">id_type</span><span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">)</span>
           <span class="o">:</span> <span class="n">base_type</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-        <span class="p">{}</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
 
         <span class="kt">void</span> <span class="n">invoke</span><span class="p">()</span>
         <span class="p">{</span>
-            <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="o">&lt;</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">::</span><span class="n">invoke_action</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">()).</span><span class="n">get</span><span class="p">();</span>
+            <span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="o">&lt;</span><span class="n">server</span><span class="o">::</span><span class="n">hello_world</span><span class="o">::</span><span class="n">invoke_action</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">get_id</span><span class="p">())</span>
+                <span class="p">.</span><span class="n">get</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">};</span>
-<span class="p">}</span>
+<span class="p">}</span>    <span class="c1">// namespace examples</span>
 
 <span class="cp">#endif</span>
 </pre></div>
@@ -2614,7 +2635,7 @@ pkg-config files and CMake systems are configured with CMake build of
           By The STE||AR Group<br/>
         
             &copy; Copyright 2008-2021, The STE||AR Group.<br/>
-          Last updated on Mar 31, 2022.<br/>
+          Last updated on Apr 12, 2022.<br/>
       </p>
     </div>
   </footer>

@@ -8821,25 +8821,25 @@
 <span id="id2"></span><h1>Writing distributed <em>HPX</em> applications<a class="headerlink" href="#writing-distributed-hpx-applications" title="Permalink to this headline">¶</a></h1>
 <p>This section focuses on the features of <em>HPX</em> needed to write distributed
 applications, namely the <a class="reference internal" href="../terminology.html#term-Active-Global-Address-Space"><span class="xref std std-term">Active Global Address Space</span></a> (<a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>),
-remotely executable functions (i.e. <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">actions</span></a>), and distributed
-objects (i.e. <a class="reference internal" href="../terminology.html#term-Component"><span class="xref std std-term">components</span></a>).</p>
+remotely executable functions (i.e., <a class="reference internal" href="../terminology.html#term-Action"><span class="xref std std-term">actions</span></a>), and distributed
+objects (i.e., <a class="reference internal" href="../terminology.html#term-Component"><span class="xref std std-term">components</span></a>).</p>
 <div class="section" id="global-names">
 <span id="id3"></span><h2>Global names<a class="headerlink" href="#global-names" title="Permalink to this headline">¶</a></h2>
-<p><em>HPX</em> implements an <a class="reference internal" href="../terminology.html#term-Active-Global-Address-Space"><span class="xref std std-term">Active Global Address Space</span></a> (<a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>) which is
-exposing a single uniform address space spanning all localities an application
-runs on. <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> is a fundamental component of the ParalleX execution
+<p><em>HPX</em> implements an <a class="reference internal" href="../terminology.html#term-Active-Global-Address-Space"><span class="xref std std-term">Active Global Address Space</span></a> (<a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>) which
+exposes a single uniform address space spanning all localities an application
+runs on. AGAS is a fundamental component of the ParalleX execution
 model. Conceptually, there is no rigid demarcation of local or global memory in
-<a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>; all available memory is a part of the same address space.
-<a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> enables named objects to be moved (migrated) across localities
-without having to change the object’s name, i.e., no references to migrated
+AGAS; all available memory is a part of the same address space.
+AGAS enables named objects to be moved (migrated) across localities
+without having to change the object’s name; i.e., no references to migrated
 objects have to be ever updated. This feature has significance for dynamic load
 balancing and in applications where the workflow is highly dynamic, allowing
 work to be migrated from heavily loaded nodes to less loaded nodes. In addition,
-immutability of names ensures that <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> does not have to keep extra
-indirections (“bread crumbs”) when objects move, hence minimizing complexity of
+immutability of names ensures that AGAS does not have to keep extra
+indirections (“bread crumbs”) when objects move, hence, minimizing complexity of
 code management for system developers as well as minimizing overheads in
 maintaining and managing aliases.</p>
-<p>The <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a> implementation in <em>HPX</em> does not automatically expose every
+<p>The AGAS implementation in <em>HPX</em> does not automatically expose every
 local address to the global address space. It is the responsibility of the
 programmer to explicitly define which of the objects have to be globally visible
 and which of the objects are purely local.</p>
@@ -8851,25 +8851,25 @@ is referring to.</p>
 following <em>HPX</em> API functions allow one to retrieve the global addresses of
 localities:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api/find_here.html#_CPPv4N3hpx9find_hereER10error_code" title="hpx::find_here"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_here</span></code></a>: retrieve the global address of the
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api/find_here.html#_CPPv4N3hpx9find_hereER10error_code" title="hpx::find_here"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_here</span></code></a>: retrieves the global address of the
 <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> this function is called on.</p></li>
-<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api/find_all_localities.html#_CPPv4N3hpx19find_all_localitiesER10error_code" title="hpx::find_all_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_all_localities</span></code></a>: retrieve the global addresses of all
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api/find_all_localities.html#_CPPv4N3hpx19find_all_localitiesER10error_code" title="hpx::find_all_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_all_localities</span></code></a>: retrieves the global addresses of all
 localities available to this application (including the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the
 function is being called on).</p></li>
-<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api/find_all_localities.html#_CPPv4N3hpx22find_remote_localitiesER10error_code" title="hpx::find_remote_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_remote_localities</span></code></a>: retrieve the global addresses of
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api/find_all_localities.html#_CPPv4N3hpx22find_remote_localitiesER10error_code" title="hpx::find_remote_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_remote_localities</span></code></a>: retrieves the global addresses of
 all remote localities available to this application (not including the
-<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the function is being called on)</p></li>
-<li><p><a class="reference internal" href="../libs/core/runtime_local/api/get_num_all_localities.html#_CPPv4N3hpx18get_num_localitiesEv" title="hpx::get_num_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_num_localities</span></code></a>: retrieve the number of localities
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the function is being called on).</p></li>
+<li><p><a class="reference internal" href="../libs/core/runtime_local/api/get_num_all_localities.html#_CPPv4N3hpx18get_num_localitiesEv" title="hpx::get_num_localities"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_num_localities</span></code></a>: retrieves the number of localities
 available to this application.</p></li>
-<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api/find_localities.html#_CPPv4N3hpx13find_localityEN10components14component_typeER10error_code" title="hpx::find_locality"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_locality</span></code></a>: retrieve the global address of any
+<li><p><a class="reference internal" href="../libs/full/runtime_distributed/api/find_localities.html#_CPPv4N3hpx13find_localityEN10components14component_typeER10error_code" title="hpx::find_locality"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_locality</span></code></a>: retrieves the global address of any
 <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> supporting the given component type.</p></li>
-<li><p><a class="reference internal" href="../libs/full/async_colocated/api/get_colocation_id.html#_CPPv4N3hpx17get_colocation_idEN6launch11sync_policyERKN3hpx7id_typeER10error_code" title="hpx::get_colocation_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_colocation_id</span></code></a>: retrieve the global address of the
+<li><p><a class="reference internal" href="../libs/full/async_colocated/api/get_colocation_id.html#_CPPv4N3hpx17get_colocation_idEN6launch11sync_policyERKN3hpx7id_typeER10error_code" title="hpx::get_colocation_id"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::get_colocation_id</span></code></a>: retrieves the global address of the
 <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> currently hosting the object with the given global address.</p></li>
 </ul>
 <p>Additionally, the global addresses of localities can be used to create new
 instances of components using the following <em>HPX</em> API function:</p>
 <ul class="simple">
-<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::components::new_</span></code>: Create a new instance of the given
+<li><p><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::components::new_</span></code>: Creates a new instance of the given
 <code class="docutils literal notranslate"><span class="pre">Component</span></code> type on the specified <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p></li>
 </ul>
 <div class="admonition note">
@@ -8877,7 +8877,7 @@ instances of components using the following <em>HPX</em> API function:</p>
 <p><em>HPX</em> does not expose any functionality to delete component instances. All
 global addresses (as represented using <code class="docutils literal notranslate"><span class="pre">hpx::id_type</span></code>) are automatically
 garbage collected. When the last (global) reference to a particular component
-instance goes out of scope the corresponding component instance is
+instance goes out of scope, the corresponding component instance is
 automatically deleted.</p>
 </div>
 </div>
@@ -8885,7 +8885,7 @@ automatically deleted.</p>
 <span id="id4"></span><h2>Applying actions<a class="headerlink" href="#applying-actions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="action-type-definition">
 <span id="id5"></span><h3>Action type definition<a class="headerlink" href="#action-type-definition" title="Permalink to this headline">¶</a></h3>
-<p>Actions are special types we use to describe possibly remote operations. For
+<p>Actions are special types used to describe possibly remote operations. For
 every global function and every member function which has to be invoked
 distantly, a special type must be defined. For any global function the special
 macro <a class="reference internal" href="../libs/full/actions_base/api/plain_action.html#c.HPX_PLAIN_ACTION" title="HPX_PLAIN_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_PLAIN_ACTION</span></code></a> can be used to define the
@@ -8952,8 +8952,8 @@ invocations (here <code class="docutils literal notranslate"><span class="pre">s
 to comprise a globally unique C++ identifier representing the action. This is
 used for serialization purposes.</p>
 </div>
-<p>For member functions of objects which have been registered with <a class="reference internal" href="../terminology.html#term-AGAS"><span class="xref std std-term">AGAS</span></a>
-(e.g. ‘components’) a different registration macro
+<p>For member functions of objects which have been registered with AGAS
+(e.g., ‘components’), a different registration macro
 <a class="reference internal" href="../libs/full/actions_base/api/component_action.html#c.HPX_DEFINE_COMPONENT_ACTION" title="HPX_DEFINE_COMPONENT_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_DEFINE_COMPONENT_ACTION</span></code></a> has to be utilized. Any component needs
 to be declared in a header file and have some special support macros defined in
 a source file. Here is an example demonstrating this. The first snippet has to
@@ -8981,7 +8981,7 @@ go into the header file:</p>
 <span class="n">HPX_REGISTER_ACTION_DECLARATION</span><span class="p">(</span><span class="n">app</span><span class="o">::</span><span class="n">some_component</span><span class="o">::</span><span class="n">some_member_action</span><span class="p">,</span> <span class="n">some_component_some_action</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The next snippet belongs into a source file (e.g. the main application source
+<p>The next snippet belongs in a source file (e.g., the main application source
 file) in the simplest case:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component</span><span class="o">&lt;</span><span class="n">app</span><span class="o">::</span><span class="n">some_component</span><span class="o">&gt;</span> <span class="n">component_type</span><span class="p">;</span>
 <span class="k">typedef</span> <span class="n">app</span><span class="o">::</span><span class="n">some_component</span> <span class="n">some_component</span><span class="p">;</span>
@@ -8994,8 +8994,8 @@ file) in the simplest case:</p>
 <span class="n">HPX_REGISTER_ACTION</span><span class="p">(</span><span class="n">some_component_some_action</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Granted, these macro invocations are a bit more complex than for simple global
-functions, however we believe they are still manageable.</p>
+<p>While these macro invocations are a bit more complex than those for simple global
+functions, they should still be manageable.</p>
 <p>The most important macro invocation is the <a class="reference internal" href="../libs/full/actions_base/api/component_action.html#c.HPX_DEFINE_COMPONENT_ACTION" title="HPX_DEFINE_COMPONENT_ACTION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">HPX_DEFINE_COMPONENT_ACTION</span></code></a> in the header file
 as this defines the action type we need to invoke the member function. For a
 complete example of a simple component action see <a class="reference download internal" download="" href="../_downloads/7b08f088c4a0239d9ff79cffe9cab53c/component_in_executable.cpp"><code class="xref download docutils literal notranslate"><span class="pre">component_in_executable.cpp</span></code></a>.</p>

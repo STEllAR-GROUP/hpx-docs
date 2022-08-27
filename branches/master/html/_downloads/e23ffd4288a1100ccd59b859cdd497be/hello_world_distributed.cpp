@@ -85,43 +85,34 @@ void hello_world_foreman()
         // Each iteration, we create a task for each element in the set of
         // OS-threads that have not said "Hello world". Each of these tasks
         // is encapsulated in a future.
-        std::vector<hpx::future<std::size_t>> futures;
+        std::vector<hpx::lcos::future<std::size_t>> futures;
         futures.reserve(attendance.size());
 
         for (std::size_t worker : attendance)
         {
             // Asynchronously start a new task. The task is encapsulated in a
-            // future that we can query to determine if the task has completed.
-            //
-            // We give the task a hint to run on a particular worker thread
-            // (core) and suggest binding the scheduled thread to the given
-            // core, but no guarantees are given by the scheduler that the task
-            // will actually run on that worker thread. It will however try as
-            // hard as possible to place the new task on the given worker
-            // thread.
+            // future, which we can query to determine if the task has
+            // completed. We give the task a hint to run on a particular worker
+            // thread, but no guarantees are given by the scheduler that the
+            // task will actually run on that worker thread.
             hpx::execution::parallel_executor exec(
-                hpx::threads::thread_priority::bound);
-
-            hpx::threads::thread_schedule_hint hint(
-                hpx::threads::thread_schedule_hint_mode::thread,
-                static_cast<std::int16_t>(worker));
-
-            futures.push_back(
-                hpx::async(hpx::execution::experimental::with_hint(exec, hint),
-                    hello_world_worker, worker));
+                hpx::threads::thread_schedule_hint(
+                    hpx::threads::thread_schedule_hint_mode::thread,
+                    static_cast<std::int16_t>(worker)));
+            futures.push_back(hpx::async(exec, hello_world_worker, worker));
         }
 
         // Wait for all of the futures to finish. The callback version of the
-        // hpx::wait_each function takes two arguments: a vector of futures,
+        // hpx::lcos::wait_each function takes two arguments: a vector of futures,
         // and a binary callback.  The callback takes two arguments; the first
         // is the index of the future in the vector, and the second is the
-        // return value of the future. hpx::wait_each doesn't return until
+        // return value of the future. hpx::lcos::wait_each doesn't return until
         // all the futures in the vector have returned.
-        hpx::spinlock mtx;
-        hpx::wait_each(hpx::unwrapping([&](std::size_t t) {
+        hpx::lcos::local::spinlock mtx;
+        hpx::lcos::wait_each(hpx::unwrapping([&](std::size_t t) {
             if (std::size_t(-1) != t)
             {
-                std::lock_guard<hpx::spinlock> lk(mtx);
+                std::lock_guard<hpx::lcos::local::spinlock> lk(mtx);
                 attendance.erase(t);
             }
         }),
@@ -133,7 +124,7 @@ void hello_world_foreman()
 //[hello_world_action_wrapper
 // Define the boilerplate code necessary for the function 'hello_world_foreman'
 // to be invoked as an HPX action.
-HPX_PLAIN_ACTION(hello_world_foreman, hello_world_foreman_action)
+HPX_PLAIN_ACTION(hello_world_foreman, hello_world_foreman_action);
 //]
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -143,13 +134,13 @@ HPX_PLAIN_ACTION(hello_world_foreman, hello_world_foreman_action)
 int main()
 {
     // Get a list of all available localities.
-    std::vector<hpx::id_type> localities = hpx::find_all_localities();
+    std::vector<hpx::naming::id_type> localities = hpx::find_all_localities();
 
     // Reserve storage space for futures, one for each locality.
-    std::vector<hpx::future<void>> futures;
+    std::vector<hpx::lcos::future<void>> futures;
     futures.reserve(localities.size());
 
-    for (hpx::id_type const& node : localities)
+    for (hpx::naming::id_type const& node : localities)
     {
         // Asynchronously start a new task. The task is encapsulated in a
         // future, which we can query to determine if the task has
@@ -158,7 +149,7 @@ int main()
         futures.push_back(hpx::async<action_type>(node));
     }
 
-    // The non-callback version of hpx::wait_all takes a single parameter,
+    // The non-callback version of hpx::lcos::wait_all takes a single parameter,
     // a vector of futures to wait on. hpx::wait_all only returns when
     // all of the futures have finished.
     hpx::wait_all(futures);

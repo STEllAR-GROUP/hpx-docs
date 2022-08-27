@@ -38,7 +38,8 @@ void register_counter_type()
         // unit of measure
         "",
         // counter type
-        hpx::performance_counters::counter_type::monotonically_increasing);
+        hpx::performance_counters::counter_monotonically_increasing
+    );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -85,7 +86,7 @@ int hpx_main()
         // milliseconds, as specified. Additionally it will be queried during
         // application shutdown, as before.
 
-        hpx::this_thread::suspend(1000);    // wait for one second
+        hpx::this_thread::suspend(1000);   // wait for one second
     }
     return hpx::finalize();
 }

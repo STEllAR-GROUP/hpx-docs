@@ -14,17 +14,21 @@
 
 #include <utility>
 
-namespace examples {
+namespace examples
+{
     ///////////////////////////////////////////////////////////////////////////
     /// Client for the \a server::accumulator component.
     //[accumulator_client_inherit
     class accumulator
-      : public hpx::components::client_base<accumulator, server::accumulator>
+      : public hpx::components::client_base<
+            accumulator, server::accumulator
+        >
     //]
     {
         //[accumulator_base_type
-        typedef hpx::components::client_base<accumulator, server::accumulator>
-            base_type;
+        typedef hpx::components::client_base<
+            accumulator, server::accumulator
+        > base_type;
         //]
 
         typedef server::accumulator::argument_type argument_type;
@@ -32,19 +36,18 @@ namespace examples {
     public:
         /// Default construct an empty client side representation (not
         /// connected to any existing component).
-        accumulator() {}
+        accumulator()
+        {}
 
         /// Create a client side representation for the existing
         /// \a server::accumulator instance with the given GID.
-        accumulator(hpx::future<hpx::id_type>&& id)
+        accumulator(hpx::future<hpx::id_type> && id)
           : base_type(std::move(id))
-        {
-        }
+        {}
 
-        accumulator(hpx::id_type&& id)
+        accumulator(hpx::id_type && id)
           : base_type(std::move(id))
-        {
-        }
+        {}
 
         ///////////////////////////////////////////////////////////////////////
         /// Reset the accumulator's value to 0.
@@ -103,7 +106,7 @@ namespace examples {
         ///////////////////////////////////////////////////////////////////////
         /// Asynchronously query the current value of the accumulator.
         ///
-        /// \returns This function returns an \a hpx::future. When the
+        /// \returns This function returns an \a hpx::lcos::future. When the
         ///          value of this computation is needed, the get() method of
         ///          the future should be called. If the value is available,
         ///          get() will return immediately; otherwise, it will block
@@ -129,4 +132,6 @@ namespace examples {
             return action_type()(this->get_id());
         }
     };
-}    // namespace examples
+}
+
+

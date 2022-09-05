@@ -34,7 +34,7 @@
     <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="io_service" href="../../io_service/api/full_api.html" />
+    <link rel="next" title="hpx/futures/packaged_task.hpp" href="packaged_task.html" />
     <link rel="prev" title="futures" href="full_api.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
@@ -1595,6 +1595,11 @@
       </label>
       <ul>
        <li class="toctree-l4">
+        <a class="reference internal" href="../../async_base/api/async.html">
+         hpx/async_base/async.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
         <a class="reference internal" href="../../async_base/api/launch_policy.html">
          hpx/async_base/launch_policy.hpp
         </a>
@@ -2128,6 +2133,21 @@
       </label>
       <ul>
        <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/bind.html">
+         hpx/functional/bind.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/bind_front.html">
+         hpx/functional/bind_front.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/function.html">
+         hpx/functional/function.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
         <a class="reference internal" href="../../functional/api/invoke.html">
          hpx/functional/invoke.hpp
         </a>
@@ -2135,6 +2155,21 @@
        <li class="toctree-l4">
         <a class="reference internal" href="../../functional/api/invoke_fused.html">
          hpx/functional/invoke_fused.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/move_only_function.html">
+         hpx/functional/move_only_function.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/is_bind_expression.html">
+         hpx/functional/traits/is_bind_expression.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/is_placeholder.html">
+         hpx/functional/traits/is_placeholder.hpp
         </a>
        </li>
       </ul>
@@ -2152,6 +2187,16 @@
        <li class="toctree-l4 current active">
         <a class="current reference internal" href="#">
          hpx/futures/future_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="packaged_task.html">
+         hpx/futures/packaged_task.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="promise.html">
+         hpx/futures/promise.hpp
         </a>
        </li>
       </ul>
@@ -4070,12 +4115,23 @@ title="Print to PDF"
 <dd><dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4I0EN3hpx6futureE">
 <span id="_CPPv3I0EN3hpx6futureE"></span><span id="_CPPv2I0EN3hpx6futureE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">R</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classhpx_1_1future"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">future</span></span></span><a class="headerlink" href="#_CPPv4I0EN3hpx6futureE" title="Permalink to this definition">#</a><br /></dt>
-<dd></dd></dl>
+<dd><div class="docutils container">
+<em>#include &lt;future_fwd.hpp&gt;</em></div>
+<p>The class template <a class="reference internal" href="#classhpx_1_1future"><span class="std std-ref">hpx::future</span></a> provides a mechanism to access the result of asynchronous operations:<ul class="simple">
+<li><p>An asynchronous operation (created via hpx::async, <a class="reference internal" href="packaged_task.html#classhpx_1_1packaged__task"><span class="std std-ref">hpx::packaged_task</span></a>, or <a class="reference internal" href="promise.html#classhpx_1_1promise"><span class="std std-ref">hpx::promise</span></a>) can provide a <a class="reference internal" href="#classhpx_1_1future"><span class="std std-ref">hpx::future</span></a> object to the creator of that asynchronous operation.</p></li>
+<li><p>The creator of the asynchronous operation can then use a variety of methods to query, wait for, or extract a value from the <a class="reference internal" href="#classhpx_1_1future"><span class="std std-ref">hpx::future</span></a>. These methods may block if the asynchronous operation has not yet provided a value.</p></li>
+<li><p>When the asynchronous operation is ready to send a result to the creator, it can do so by modifying shared state (e.g. hpx::promise::set_value) that is linked to the creator’s <a class="reference internal" href="#classhpx_1_1future"><span class="std std-ref">hpx::future</span></a>. Note that <a class="reference internal" href="#classhpx_1_1future"><span class="std std-ref">hpx::future</span></a> references shared state that is not shared with any other asynchronous return objects (as opposed to <a class="reference internal" href="#classhpx_1_1shared__future"><span class="std std-ref">hpx::shared_future</span></a>). </p></li>
+</ul>
+</p>
+</dd></dl>
 
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4I0EN3hpx13shared_futureE">
 <span id="_CPPv3I0EN3hpx13shared_futureE"></span><span id="_CPPv2I0EN3hpx13shared_futureE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">R</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classhpx_1_1shared__future"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">shared_future</span></span></span><a class="headerlink" href="#_CPPv4I0EN3hpx13shared_futureE" title="Permalink to this definition">#</a><br /></dt>
-<dd></dd></dl>
+<dd><div class="docutils container">
+<em>#include &lt;future_fwd.hpp&gt;</em></div>
+<p>The class template <a class="reference internal" href="#classhpx_1_1shared__future"><span class="std std-ref">hpx::shared_future</span></a> provides a mechanism to access the result of asynchronous operations, similar to <a class="reference internal" href="#classhpx_1_1future"><span class="std std-ref">hpx::future</span></a>, except that multiple threads are allowed to wait for the same shared state. Unlike <a class="reference internal" href="#classhpx_1_1future"><span class="std std-ref">hpx::future</span></a>, which is only moveable (so only one instance can refer to any particular asynchronous result), <a class="reference internal" href="#classhpx_1_1shared__future"><span class="std std-ref">hpx::shared_future</span></a> is copyable and multiple shared future objects may refer to the same shared state. Access to the same shared state from multiple threads is safe if each thread does it through its own copy of a <a class="reference internal" href="#classhpx_1_1shared__future"><span class="std std-ref">shared_future</span></a> object. </p>
+</dd></dl>
 
 <dl class="cpp type">
 <dt class="sig sig-object cpp" id="_CPPv4N3hpx4lcosE">
@@ -4114,10 +4170,10 @@ title="Print to PDF"
             <p class="prev-next-title">futures</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../../io_service/api/full_api.html" title="next page">
+    <a class='right-next' id="next-link" href="packaged_task.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">io_service</p>
+        <p class="prev-next-title">hpx/futures/packaged_task.hpp</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -4131,7 +4187,7 @@ title="Print to PDF"
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2022, The STE||AR Group.<br/>
-    Last updated on Sep 04, 2022.<br/>
+    Last updated on Sep 05, 2022.<br/>
 </p>
         </footer>
     </div>

@@ -4896,6 +4896,7 @@ loaded from.</p></td>
 <span class="na">master_ini_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">$[hpx.location]/share/hpx-&lt;version&gt;:$[system.executable_prefix]/share/hpx-&lt;version&gt;:$[system.executable_prefix]/../share/hpx-&lt;version&gt;</span><span class="w"></span>
 <span class="na">ini_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">$[hpx.master_ini_path]/ini</span><span class="w"></span>
 <span class="na">os_threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span><span class="w"></span>
+<span class="na">cores</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">all</span><span class="w"></span>
 <span class="na">localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span><span class="w"></span>
 <span class="na">program_name</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
 <span class="na">cmd_line</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
@@ -4909,6 +4910,8 @@ loaded from.</p></td>
 <span class="na">max_busy_loop_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_MAX_BUSY_LOOP_COUNT:&lt;hpx_busy_loop_count_max&gt;}</span><span class="w"></span>
 <span class="na">max_idle_backoff_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_MAX_IDLE_BACKOFF_TIME:&lt;hpx_idle_backoff_time_max&gt;}</span><span class="w"></span>
 <span class="na">exception_verbosity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_EXCEPTION_VERBOSITY:2}</span><span class="w"></span>
+<span class="na">trace_depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_TRACE_DEPTH:20}</span><span class="w"></span>
+<span class="na">handle_signals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HANDLE_SIGNALS:1}</span><span class="w"></span>
 
 <span class="k">[hpx.stacks]</span><span class="w"></span>
 <span class="na">small_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_SMALL_STACK_SIZE:&lt;hpx_small_stack_size&gt;}</span><span class="w"></span>
@@ -4952,66 +4955,70 @@ separated by <code class="docutils literal notranslate"><span class="pre">':'</s
 <td><p>This setting reflects the number of OS threads used for running
 <em>HPX</em> threads. Defaults to number of detected cores (not hyperthreads/PUs).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.localities</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.cores</span></code></p></td>
+<td><p>This setting reflects the number of cores used for running
+<em>HPX</em> threads. Defaults to number of detected cores (not hyperthreads/PUs).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.localities</span></code></p></td>
 <td><p>This setting reflects the number of localities the application is running
 on. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.program_name</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.program_name</span></code></p></td>
 <td><p>This setting reflects the program name of the application instance.
 Initialized from the command line <code class="docutils literal notranslate"><span class="pre">argv[0]</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.cmd_line</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.cmd_line</span></code></p></td>
 <td><p>This setting reflects the actual command line used to launch this
 application instance.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.lock_detection</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.lock_detection</span></code></p></td>
 <td><p>This setting verifies that no locks are being held while a <em>HPX</em> thread
 is suspended. This setting is applicable only if
 <code class="docutils literal notranslate"><span class="pre">HPX_WITH_VERIFY_LOCKS</span></code> is set during configuration in CMake.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.throw_on_held_lock</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.throw_on_held_lock</span></code></p></td>
 <td><p>This setting causes an exception if during lock detection at least one
 lock is being held while a <em>HPX</em> thread is suspended. This setting is
 applicable only if <code class="docutils literal notranslate"><span class="pre">HPX_WITH_VERIFY_LOCKS</span></code> is set during configuration
 in CMake. This setting has no effect if <code class="docutils literal notranslate"><span class="pre">hpx.lock_detection=0</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.minimal_deadlock_detection</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.minimal_deadlock_detection</span></code></p></td>
 <td><p>This setting enables support for minimal deadlock detection for
 <em>HPX</em> threads. By default this is set to <code class="docutils literal notranslate"><span class="pre">1</span></code> (for Debug builds) or to
 <code class="docutils literal notranslate"><span class="pre">0</span></code> (for Release, RelWithDebInfo, RelMinSize builds). This setting is
 effective only if <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_DEADLOCK_DETECTION</span></code> is set during
 configuration in CMake.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.spinlock_deadlock_detection</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.spinlock_deadlock_detection</span></code></p></td>
 <td><p>This setting verifies that spinlocks don’t spin longer than specified
 using the <code class="docutils literal notranslate"><span class="pre">hpx.spinlock_deadlock_detection_limit</span></code>. This setting is
 applicable only if <code class="docutils literal notranslate"><span class="pre">HPX_WITH_SPINLOCK_DEADLOCK_DETECTION</span></code> is set during
 configuration in CMake. By default this is set to <code class="docutils literal notranslate"><span class="pre">1</span></code> (for Debug
 builds) or to <code class="docutils literal notranslate"><span class="pre">0</span></code> (for Release, RelWithDebInfo, RelMinSize builds).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.spinlock_deadlock_detection_limit</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.spinlock_deadlock_detection_limit</span></code></p></td>
 <td><p>This setting specifies the upper limit of the allowed number of spins that
 spinlocks are allowed to perform. This setting is applicable only if
 <code class="docutils literal notranslate"><span class="pre">HPX_WITH_SPINLOCK_DEADLOCK_DETECTION</span></code> is set during configuration in
 CMake. By default this is set to <code class="docutils literal notranslate"><span class="pre">1000000</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_background_threads</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_background_threads</span></code></p></td>
 <td><p>This setting defines the number of threads in the scheduler, which are
 used to execute background work. By default this is the same as the
 number of cores used for the scheduler.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span></code></p></td>
 <td><p>By default this is defined by the preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_IDLE_LOOP_COUNT_MAX</span></code>. This is an internal setting that you should
 change only if you know exactly what you are doing.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_busy_loop_count</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_busy_loop_count</span></code></p></td>
 <td><p>This setting defines the maximum value of the busy-loop counter in the
 scheduler. By default this is defined by the preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_BUSY_LOOP_COUNT_MAX</span></code>. This is an internal setting that you should
 change only if you know exactly what you are doing.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_idle_backoff_time</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_idle_backoff_time</span></code></p></td>
 <td><p>This setting defines the maximum time (in milliseconds) for the scheduler
 to sleep after being idle for <code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span></code> iterations.
 This setting is applicable only if
@@ -5020,7 +5027,7 @@ CMake. By default this is defined by the preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_IDLE_BACKOFF_TIME_MAX</span></code>. This is an internal setting that you
 should change only if you know exactly what you are doing.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.exception_verbosity</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.exception_verbosity</span></code></p></td>
 <td><p>This setting defines the verbosity of exceptions. Valid values are
 integers. A setting of <code class="docutils literal notranslate"><span class="pre">2</span></code> or higher prints all available information.
 A setting of <code class="docutils literal notranslate"><span class="pre">1</span></code> leaves out the build configuration and environment
@@ -5029,30 +5036,43 @@ thrown exception and the file name, function, and line number where the
 exception was thrown. The default value is <code class="docutils literal notranslate"><span class="pre">2</span></code> or the value of the
 environment variable <code class="docutils literal notranslate"><span class="pre">HPX_EXCEPTION_VERBOSITY</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.small_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.trace_depth</span></code></p></td>
+<td><p>This setting defines the number of stack-levels printed in generated
+stack backtraces. This defaults to <code class="docutils literal notranslate"><span class="pre">20</span></code>, but can be changed using the
+cmake <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_BACKTRACE_DEPTH</span></code> configuration setting.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.handle_signals</span></code></p></td>
+<td><p>This setting defines whether HPX will register signal handlers that will
+print the configuration information (stack backtrace, system information,
+etc.) whenever a signal is raised. The default is <code class="docutils literal notranslate"><span class="pre">1</span></code>. Setting this
+value to <code class="docutils literal notranslate"><span class="pre">0</span></code> can be useful in cases when generating a core-dump on
+segmentation faults or similar signals is desired. This setting has no
+effects on non-Linux platforms.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.small_size</span></code></p></td>
 <td><p>This is initialized to the small stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_SMALL_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x8000</span></code>). This value is used for
 all <em>HPX</em> threads by default, except for the thread running <code class="docutils literal notranslate"><span class="pre">hpx_main</span></code>
 (which runs on a large stack).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.medium_size</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.medium_size</span></code></p></td>
 <td><p>This is initialized to the medium stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_MEDIUM_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x20000</span></code>).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.large_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.large_size</span></code></p></td>
 <td><p>This is initialized to the large stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_LARGE_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x200000</span></code>). This setting is used
 by default for the thread running <code class="docutils literal notranslate"><span class="pre">hpx_main</span></code> only.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.huge_size</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.huge_size</span></code></p></td>
 <td><p>This is initialized to the huge stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_HUGE_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x2000000</span></code>).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.use_guard_pages</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.use_guard_pages</span></code></p></td>
 <td><p>This entry controls whether the coroutine library will generate stack
 guard pages or not. This entry is applicable on Linux only and only if
 the <code class="docutils literal notranslate"><span class="pre">HPX_USE_GENERIC_COROUTINE_CONTEXT</span></code> option is not enabled and the
@@ -6377,10 +6397,10 @@ names to the proper network interconnect.</p>
 <dl class="std option">
 <dt class="sig sig-object std" id="cmdoption-hpx-force_ipv4">
 <span id="cmdoption-hpx-force-ipv4"></span><span class="sig-name descname"><span class="pre">--hpx:force_ipv4</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-hpx-force_ipv4" title="Permalink to this definition">#</a></dt>
-<dd><p>Network hostnames will be resolved to ipv4 adresses instead of using the
+<dd><p>Network hostnames will be resolved to ipv4 addresses instead of using the
 first resolved endpoint. This is especially useful on Windows where the
-local hostname will resolve to an ipv6 adress while remote network hostnames
-are commonly resolved to ipv4 adresses.</p>
+local hostname will resolve to an ipv6 address while remote network hostnames
+are commonly resolved to ipv4 addresses.</p>
 </dd></dl>
 
 <dl class="std option">
@@ -7017,7 +7037,7 @@ activated.</p>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2022, The STE||AR Group.<br/>
-    Last updated on Nov 08, 2022.<br/>
+    Last updated on Nov 11, 2022.<br/>
 </p>
         </footer>
     </div>

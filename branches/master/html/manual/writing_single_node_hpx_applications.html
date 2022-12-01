@@ -5366,23 +5366,23 @@ size of the chunks scheduled. It abstracts the (potentially platform-specific)
 algorithms of determining those chunk sizes.</p>
 <p>The way executor parameters are implemented is aligned with the way executors
 are implemented. All functionalities of concrete executor parameter types are
-exposed and accessible through a corresponding
-<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::executor_parameter_traits</span></code> type.</p>
+exposed and accessible through a corresponding customization point, e.g.
+<code class="docutils literal notranslate"><span class="pre">get_chunk_size()</span></code>.</p>
 <p>With <code class="docutils literal notranslate"><span class="pre">executor_parameter_traits</span></code>, clients access all types of executor
 parameters uniformly:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">chunk_size</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="n">executor_parameter_traits</span><span class="o">&lt;</span><span class="n">my_parameter_t</span><span class="o">&gt;::</span><span class="n">get_chunk_size</span><span class="p">(</span><span class="n">my_parameter</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">my_executor</span><span class="p">,</span><span class="w"> </span><span class="p">[](){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">num_tasks</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">get_chunk_size</span><span class="p">(</span><span class="n">my_parameter</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">my_executor</span><span class="p">,</span><span class="w"> </span><span class="p">[](</span><span class="k">auto</span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">num_cores</span><span class="p">,</span><span class="w"> </span><span class="n">num_tasks</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This call synchronously retrieves the size of a single chunk of loop iterations
 (or similar) to combine for execution on a single <em>HPX</em> thread if the overall
-number of tasks to schedule is given by <code class="docutils literal notranslate"><span class="pre">num_tasks</span></code>. The lambda function
-exposes a means of test-probing the execution of a single iteration for
-performance measurement purposes. The execution parameter type might dynamically
-determine the execution time of one or more tasks in order to calculate the
-chunk size; see <a class="reference internal" href="../libs/core/execution/api/auto_chunk_size.html#_CPPv4N3hpx9execution15auto_chunk_sizeE" title="hpx::execution::auto_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::auto_chunk_size</span></code></a> for an example of
-this executor parameter type.</p>
+number of cores <code class="docutils literal notranslate"><span class="pre">num_cores</span></code> and tasks to schedule is given by <code class="docutils literal notranslate"><span class="pre">num_tasks</span></code>.
+The lambda function exposes a means of test-probing the execution of a single
+iteration for performance measurement purposes. The execution parameter type
+might dynamically determine the execution time of one or more tasks in order
+to calculate the chunk size; see <a class="reference internal" href="../libs/core/execution/api/auto_chunk_size.html#_CPPv4N3hpx9execution15auto_chunk_sizeE" title="hpx::execution::auto_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::auto_chunk_size</span></code></a>
+for an example of this executor parameter type.</p>
 <p>Other functions in the interface exist to discover whether an executor parameter
 type should be invoked once (i.e., it returns a static chunk size; see
 <a class="reference internal" href="../libs/core/execution/api/static_chunk_size.html#_CPPv4N3hpx9execution17static_chunk_sizeE" title="hpx::execution::static_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::static_chunk_size</span></code></a>) or whether it should be invoked
@@ -5609,7 +5609,7 @@ executor associated with the execution policy that was used to call
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2022, The STE||AR Group.<br/>
-    Last updated on Nov 30, 2022.<br/>
+    Last updated on Dec 01, 2022.<br/>
 </p>
         </footer>
     </div>

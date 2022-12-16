@@ -5368,10 +5368,10 @@ are implemented. All functionalities of concrete executor parameter types are
 exposed and accessible through a corresponding customization point, e.g.
 <code class="docutils literal notranslate"><span class="pre">get_chunk_size()</span></code>.</p>
 <p>With <code class="docutils literal notranslate"><span class="pre">executor_parameter_traits</span></code>, clients access all types of executor
-parameters uniformly:</p>
+parameters uniformly, e.g.:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">chunk_size</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">get_chunk_size</span><span class="p">(</span><span class="n">my_parameter</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">my_executor</span><span class="p">,</span><span class="w"> </span><span class="p">[](</span><span class="k">auto</span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">num_cores</span><span class="p">,</span><span class="w"> </span><span class="n">num_tasks</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">get_chunk_size</span><span class="p">(</span><span class="n">my_parameter</span><span class="p">,</span><span class="w"> </span><span class="n">my_executor</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">num_cores</span><span class="p">,</span><span class="w"> </span><span class="n">num_tasks</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This call synchronously retrieves the size of a single chunk of loop iterations
@@ -5380,36 +5380,41 @@ number of cores <code class="docutils literal notranslate"><span class="pre">num
 The lambda function exposes a means of test-probing the execution of a single
 iteration for performance measurement purposes. The execution parameter type
 might dynamically determine the execution time of one or more tasks in order
-to calculate the chunk size; see <a class="reference internal" href="../libs/core/execution/api/auto_chunk_size.html#_CPPv4N3hpx9execution15auto_chunk_sizeE" title="hpx::execution::auto_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::auto_chunk_size</span></code></a>
+to calculate the chunk size; see <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::auto_chunk_size</span></code>
 for an example of this executor parameter type.</p>
 <p>Other functions in the interface exist to discover whether an executor parameter
 type should be invoked once (i.e., it returns a static chunk size; see
-<a class="reference internal" href="../libs/core/execution/api/static_chunk_size.html#_CPPv4N3hpx9execution17static_chunk_sizeE" title="hpx::execution::static_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::static_chunk_size</span></code></a>) or whether it should be invoked
+<a class="reference internal" href="../libs/core/execution/api/static_chunk_size.html#_CPPv4N3hpx9execution12experimental17static_chunk_sizeE" title="hpx::execution::experimental::static_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::experimental::static_chunk_size</span></code></a>) or whether it
+should be invoked
 for each scheduled chunk of work (i.e., it returns a variable chunk size; for an
-example, see <a class="reference internal" href="../libs/core/execution/api/guided_chunk_size.html#_CPPv4N3hpx9execution17guided_chunk_sizeE" title="hpx::execution::guided_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::guided_chunk_size</span></code></a>).</p>
+example, see <a class="reference internal" href="../libs/core/execution/api/guided_chunk_size.html#_CPPv4N3hpx9execution12experimental17guided_chunk_sizeE" title="hpx::execution::experimental::guided_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::experimental::guided_chunk_size</span></code></a>).</p>
 <p>Although this interface appears to require executor parameter type authors to
 implement all different basic operations, none are required. In
 practice, all operations have sensible defaults. However, some executor
 parameter types will naturally specialize all operations for maximum efficiency.</p>
 <p><em>HPX</em>  implements the following executor parameter types:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="../libs/core/execution/api/auto_chunk_size.html#_CPPv4N3hpx9execution15auto_chunk_sizeE" title="hpx::execution::auto_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::auto_chunk_size</span></code></a>: Loop iterations are divided into
-pieces and then assigned to threads. The number of loop iterations combined is
+<li><p><a class="reference internal" href="../libs/core/execution/api/auto_chunk_size.html#_CPPv4N3hpx9execution12experimental15auto_chunk_sizeE" title="hpx::execution::experimental::auto_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::experimental::auto_chunk_size</span></code></a>: Loop iterations
+are divided into pieces and then assigned to threads. The number of loop
+iterations combined is
 determined based on measurements of how long the execution of 1% of the
 overall number of iterations takes. This executor parameter type makes sure
 that as many loop iterations are combined as necessary to run for the amount
 of time specified.</p></li>
-<li><p><a class="reference internal" href="../libs/core/execution/api/static_chunk_size.html#_CPPv4N3hpx9execution17static_chunk_sizeE" title="hpx::execution::static_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::static_chunk_size</span></code></a>: Loop iterations are divided
+<li><p><a class="reference internal" href="../libs/core/execution/api/static_chunk_size.html#_CPPv4N3hpx9execution12experimental17static_chunk_sizeE" title="hpx::execution::experimental::static_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::experimental::static_chunk_size</span></code></a>: Loop iterations
+are divided
 into pieces of a given size and then assigned to threads. If the size is not
 specified, the iterations are, if possible, evenly divided contiguously among
 the threads. This executor parameters type is equivalent to OpenMP’s STATIC
 scheduling directive.</p></li>
-<li><p><a class="reference internal" href="../libs/core/execution/api/dynamic_chunk_size.html#_CPPv4N3hpx9execution18dynamic_chunk_sizeE" title="hpx::execution::dynamic_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::dynamic_chunk_size</span></code></a>: Loop iterations are divided
+<li><p><a class="reference internal" href="../libs/core/execution/api/dynamic_chunk_size.html#_CPPv4N3hpx9execution12experimental18dynamic_chunk_sizeE" title="hpx::execution::experimental::dynamic_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::experimental::dynamic_chunk_size</span></code></a>: Loop iterations
+are divided
 into pieces of a given size and then dynamically scheduled among the cores;
 when a core finishes one chunk, it is dynamically assigned another. If the
 size is not specified, the default chunk size is 1. This executor parameter
 type is equivalent to OpenMP’s DYNAMIC scheduling directive.</p></li>
-<li><p><a class="reference internal" href="../libs/core/execution/api/guided_chunk_size.html#_CPPv4N3hpx9execution17guided_chunk_sizeE" title="hpx::execution::guided_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::guided_chunk_size</span></code></a>: Iterations are dynamically
+<li><p><a class="reference internal" href="../libs/core/execution/api/guided_chunk_size.html#_CPPv4N3hpx9execution12experimental17guided_chunk_sizeE" title="hpx::execution::experimental::guided_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::experimental::guided_chunk_size</span></code></a>: Iterations are
+dynamically
 assigned to cores in blocks as cores request them until no blocks remain to be
 assigned. This is similar to <code class="docutils literal notranslate"><span class="pre">dynamic_chunk_size</span></code> except that the block size
 decreases each time a number of loop iterations is given to a thread. The size
@@ -5608,7 +5613,7 @@ executor associated with the execution policy that was used to call
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2022, The STE||AR Group.<br/>
-    Last updated on Dec 15, 2022.<br/>
+    Last updated on Dec 16, 2022.<br/>
 </p>
         </footer>
     </div>

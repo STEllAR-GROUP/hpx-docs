@@ -38,7 +38,7 @@
     <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="CMake variables used to configure HPX" href="cmake_variables.html" />
+    <link rel="next" title="CMake options" href="cmake_variables.html" />
     <link rel="prev" title="Getting HPX" href="getting_hpx.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
@@ -195,10 +195,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="cmake_variables.html">
-     CMake variables used to configure
-     <em>
-      HPX
-     </em>
+     CMake options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="building_tests_examples.html">
+     Building tests and examples
     </a>
    </li>
    <li class="toctree-l2">
@@ -4314,23 +4316,6 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#tests-and-examples">
-   Tests and examples
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#running-tests">
-     Running tests
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#running-examples">
-     Running examples
-    </a>
-   </li>
-  </ul>
- </li>
 </ul>
 
     </nav>
@@ -4382,23 +4367,6 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#tests-and-examples">
-   Tests and examples
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#running-tests">
-     Running tests
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#running-examples">
-     Running examples
-    </a>
-   </li>
-  </ul>
- </li>
 </ul>
 
                         </nav>
@@ -4418,9 +4386,7 @@ build-generator tool which is not responsible for building the project
 but rather generates the files needed by your build tool (GNU make, Visual
 Studio, etc.) for building <em>HPX</em>. If CMake is not already installed in your
 system, you can download it and install it here: <a class="reference external" href="https://www.cmake.org/cmake/resources/software.html">CMake Downloads</a>.</p>
-<p>Once CMake has been run, the build process can be started. The <em>HPX</em> build
-process is highly configurable through CMake, and various CMake variables
-influence the build process. The build process consists of the following parts:</p>
+<p>Once CMake has been run, the build process can be started. The build process consists of the following parts:</p>
 <ul class="simple">
 <li><p>The <em>HPX</em> core libraries (target <code class="docutils literal notranslate"><span class="pre">core</span></code>): This forms the basic set of <em>HPX</em>
 libraries.</p></li>
@@ -4437,10 +4403,11 @@ and is not enabled by default (enable by setting
 <a class="reference internal" href="cmake_variables.html#cmdoption-arg-HPX_WITH_DOCUMENTATION-BOOL"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_DOCUMENTATION:BOOL</span></code></a><code class="docutils literal notranslate"><span class="pre">=On</span></code>. For more information see
 <a class="reference internal" href="../contributing/documentation.html#documentation"><span class="std std-ref">Documentation</span></a>.</p></li>
 </ul>
-<p>For a complete list of available CMake variables that influence the build of
-<em>HPX</em>, see <a class="reference internal" href="cmake_variables.html#cmake-variables"><span class="std std-ref">CMake variables used to configure HPX</span></a>.</p>
-<p>The variables can be used to refine the recipes that can be found at
-<a class="reference internal" href="#build-recipes"><span class="std std-ref">Platform specific build recipes</span></a> which show some basic steps on how to build <em>HPX</em> for a
+<p>The <em>HPX</em> build process is highly configurable through CMake, and various CMake variables
+influence the build process. A list with the most important CMake variables can be found in
+the section that follows, while the complete list of available CMake variables is in
+<a class="reference internal" href="cmake_variables.html#cmake-variables"><span class="std std-ref">CMake options</span></a>. These variables can be used to refine the recipes that can be found at
+<a class="reference internal" href="#build-recipes"><span class="std std-ref">Platform specific build recipes</span></a>, a section that shows some basic steps on how to build <em>HPX</em> for a
 specific platform.</p>
 <p>In order to use <em>HPX</em>, only the core libraries are required. In order to use the optional
 libraries, you need to specify them as link dependencies in your build (See
@@ -4521,7 +4488,7 @@ high as the number of cores on a system including virtual cores such as hyperthr
 </dd></dl>
 
 <p>For a complete list of available CMake variables that influence the build of
-<em>HPX</em>, see <a class="reference internal" href="cmake_variables.html#cmake-variables"><span class="std std-ref">CMake variables used to configure HPX</span></a>.</p>
+<em>HPX</em>, see <a class="reference internal" href="cmake_variables.html#cmake-variables"><span class="std std-ref">CMake options</span></a>.</p>
 </section>
 <section id="build-types">
 <span id="id4"></span><h2>Build types<a class="headerlink" href="#build-types" title="Permalink to this headline">#</a></h2>
@@ -4743,76 +4710,6 @@ output similar to this one:</p>
 </ul>
 </section>
 </section>
-<section id="tests-and-examples">
-<span id="tests-examples"></span><h2>Tests and examples<a class="headerlink" href="#tests-and-examples" title="Permalink to this headline">#</a></h2>
-<section id="running-tests">
-<h3>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">#</a></h3>
-<p>To build the tests:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake --build . --target tests
-</pre></div>
-</div>
-<p>To control which tests to run use <code class="docutils literal notranslate"><span class="pre">ctest</span></code>:</p>
-<ul class="simple">
-<li><p>To run single tests, for example a test for <code class="docutils literal notranslate"><span class="pre">for_loop</span></code>:</p></li>
-</ul>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ctest --output-on-failure -R tests.unit.modules.algorithms.for_loop
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>To run a whole group of tests:</p></li>
-</ul>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ctest --output-on-failure -R tests.unit
-</pre></div>
-</div>
-</section>
-<section id="running-examples">
-<h3>Running examples<a class="headerlink" href="#running-examples" title="Permalink to this headline">#</a></h3>
-<ul class="simple">
-<li><p>To build (and install) all examples invoke:</p></li>
-</ul>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake -DHPX_WITH_EXAMPLES<span class="o">=</span>On .
-<span class="gp">$ </span>make examples
-<span class="gp">$ </span>make install
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>To build the <code class="docutils literal notranslate"><span class="pre">hello_world_1</span></code> example run:</p></li>
-</ul>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make hello_world_1
-</pre></div>
-</div>
-<p><em>HPX</em> executables end up in the <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory in your build directory. You
-can now run <code class="docutils literal notranslate"><span class="pre">hello_world_1</span></code> and should see the following output:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./bin/hello_world_1
-<span class="go">Hello World!</span>
-</pre></div>
-</div>
-<p>You’ve just run an example which prints <code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">World!</span></code> from the <em>HPX</em> runtime.
-The source for the example is in <code class="docutils literal notranslate"><span class="pre">examples/quickstart/hello_world_1.cpp</span></code>. The
-<code class="docutils literal notranslate"><span class="pre">hello_world_distributed</span></code> example (also available in the
-<code class="docutils literal notranslate"><span class="pre">examples/quickstart</span></code> directory) is a distributed hello world program, which is
-described in <a class="reference internal" href="../examples/hello_world.html#examples-hello-world"><span class="std std-ref">Remote execution with actions</span></a>. It provides a gentle introduction to
-the distributed aspects of <em>HPX</em>.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Most build targets in <em>HPX</em> have two names: a simple name and
-a hierarchical name corresponding to what type of example or
-test the target is. If you are developing <em>HPX</em> it is often helpful to run
-<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">help</span></code> to get a list of available targets. For example, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">help</span> <span class="pre">|</span>
-<span class="pre">grep</span> <span class="pre">hello_world</span></code> outputs the following:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>... examples.quickstart.hello_world_2
-... hello_world_2
-... examples.quickstart.hello_world_1
-... hello_world_1
-... examples.quickstart.hello_world_distributed
-... hello_world_distributed
-</pre></div>
-</div>
-<p>It is also possible to build, for instance, all quickstart examples using <code class="docutils literal notranslate"><span class="pre">make</span>
-<span class="pre">examples.quickstart</span></code>.</p>
-</div>
-</section>
-</section>
 </section>
 
 
@@ -4833,7 +4730,7 @@ test the target is. If you are developing <em>HPX</em> it is often helpful to ru
     <a class='right-next' id="next-link" href="cmake_variables.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">CMake variables used to configure <em>HPX</em></p>
+        <p class="prev-next-title">CMake options</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

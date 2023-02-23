@@ -4356,11 +4356,32 @@ title="Print to PDF"
 <section id="general-changes">
 <h2>General changes<a class="headerlink" href="#general-changes" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p>LCI parcelport was optimized.</p></li>
-<li><p>HPX namespaces collapsed under <cite>hpx::*</cite>. <cite>hpx::parallel</cite> and <cite>hpx::util</cite> are now just <cite>hpx</cite>.</p></li>
-<li><p>Codebase was modernized.</p></li>
-<li><p>Additional facilities on senders/receivers (P2300) integration were added.</p></li>
-<li><p>Further improvement were made on the documentation.</p></li>
+<li><p>Added RISC-V 64bit support. HPX is now compatible with RISC-V architectures which have revolutionized the HPC world.</p></li>
+<li><p>LCI parcelport has been optimized to transfer parcels with fewer messages and use the HPX resource partitioner for
+its progress thread allocation. It should generally provide better performance than before. It also removes its
+dependency on the MPI library.</p></li>
+<li><p>HPX dependency on Boost was further relaxed by replacing headers from Boost.Range, Boost.Tokenizer and Boost.Lockfree.</p></li>
+<li><p>Improvements took place on our parallel algorithms implementation.</p></li>
+<li><p>Our Senders/Receivers (P2300) integration was extended:</p>
+<ul>
+<li><p>Coroutines were integrated with senders/receivers. <code class="docutils literal notranslate"><span class="pre">get_completion_signatures</span></code> now works with awaitable senders.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">with_awaitable_senders</span></code> allows the passed senders to retrieve the value i.e. senders are transparently
+awaitable from within a coroutine.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">when_all_vector</span></code> was added.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sync_wait</span></code> and <code class="docutils literal notranslate"><span class="pre">sync_wait_with_variant</span></code> sender consumers were added. The user can now initiate the execution of
+their asynchronous pipeline by blocking the current thread that executes the main() function until the result
+is retrieved.</p></li>
+<li><p>The combinators for futures (a.k.a. async_combinators) <code class="docutils literal notranslate"><span class="pre">when_*</span></code>, <code class="docutils literal notranslate"><span class="pre">wait_*</span></code>, <code class="docutils literal notranslate"><span class="pre">wait_*_nothrow</span></code> were turned into CPOs
+allowing for end-user customization. For more information on the async_combinators refer to the documentation,
+<a class="reference external" href="https://hpx-docs.stellar-group.org/latest/html/libs/core/async_combinators/docs/index.html?highlight=combinators">https://hpx-docs.stellar-group.org/latest/html/libs/core/async_combinators/docs/index.html?highlight=combinators</a>.</p></li>
+<li><p>The new datapar backend SVE allows simd and par_simd execution policies to exploit dataparalleism in the processors that
+have SVE vector registers like A64FX and Neoverse V1.</p></li>
+<li><p>The documentation for parallel algorithms, container algorithms was further improved. The Public API page was vastly enriched.</p></li>
+<li><p>Copy button shortkey was added at the top-right of code-blocks.</p></li>
+<li><p>Pragma directive that reports warnings as errors on MSVC was fixed.</p></li>
+<li><p>Command line argument <code class="docutils literal notranslate"><span class="pre">--hpx:loopback_network</span></code> was added to facilitie debugging with networks.</p></li>
 </ul>
 </section>
 <section id="breaking-changes">
@@ -4369,17 +4390,36 @@ title="Print to PDF"
 <li><p>Stopped supporting Clang V8, the minimal version supported is now Clang V10.</p></li>
 <li><p>Stopped supporting gcc V8, the minimal version supported is now gcc V9.</p></li>
 <li><p>Stopped supporting Visual Studio 2015, the minimal version supported is
-now Visual Studion 2019.</p></li>
+now Visual Studio 2019.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tag_policy_tag</span></code> et.al. were re-added after HPX V1.8.1 depracation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_chunk_size</span></code> and <code class="docutils literal notranslate"><span class="pre">processing_units_count</span></code> API is now expecting the time for one iteration as an argument.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::parallel::reduce_by_key</span></code> is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::experimental::reduce_by_key</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::parallel::task_block</span></code> is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::experimental::task_block</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::util::mem_fn</span></code> is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::mem_fn</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::util::invoke</span></code>                           is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::invoke</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::util::invoke_r</span></code>                         is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::invoke_r</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::util::invoke_fused</span></code>                     is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::invoke_fused</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::util::invoke_fused_r</span></code>                   is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::invoke_fused_r</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::util::unlock_guard</span></code>                     is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::unlock_guard</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::parallel::v1::reduce_by_key</span></code>            is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::experimental::reduce_by_key</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::parallel::v1::sort_by_key</span></code>              is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::experimental::sort_by_key</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::parallel::task_canceled_exception</span></code>      is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::experimental::task_canceled_exception</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::parallel::task_block</span></code>                   is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::experimental::task_block</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::parallel::define_task_block</span></code>            is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::experimental::define_task_block</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::parallel::define_task_block_restore_thread</span></code> is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">hpx::experimental::define_task_block_restore_thread</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::execution::experimental::task_group</span></code> is deprecated in favor of        <code class="docutils literal notranslate"><span class="pre">hpx::experimental::task_group</span></code>.</p></li>
 </ul>
 </section>
 <section id="closed-issues">
 <h2>Closed issues<a class="headerlink" href="#closed-issues" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6162">Issue #6162</a> - Current master does not compile on ROSTAM</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6108">Issue #6108</a> - cxx17_aligned_new.cpp on msvc fails due to wrong pragma directive</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6045">Issue #6045</a> - Can’t call nullary callables wrapped with <cite>hpx::unwrapping</cite></p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6008">Issue #6008</a> - Missing <cite>constexpr</cite> default constructor for <cite>hpx::mutex</cite></p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/5999">Issue #5999</a> - Add HPX Conda package to conda-forge</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/5998">Issue #5998</a> - Serializing multiple arguments when applying distributed action results in segfault</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/5958">Issue #5958</a> - HPX 1.8.0 and Blaze issues</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/5908">Issue #5908</a> - Windows: duplicated symbols in static builds</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/5802">Issue #5802</a> - Lost status is_ready from future</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/5767">Issue #5767</a> - Performance drop on Piz Daint</p></li>
@@ -4391,8 +4431,36 @@ now Visual Studion 2019.</p></li>
 <section id="closed-pull-requests">
 <h2>Closed pull requests<a class="headerlink" href="#closed-pull-requests" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6179">PR #6179</a> - Taking predicates for algorithms by value</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6178">PR #6178</a> - Changes needed to make chapel_hpx examples work</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6176">PR #6176</a> - Fixing warnings that were generated by PVS Studio</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6174">PR #6174</a> - Replace boost::integer::gcd with std::gcd</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6172">PR #6172</a> - [Docs] Fix example of how to run single/specific test(s)</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6170">PR #6170</a> - Adding missing fallback for processing_units_count customization point</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6169">PR #6169</a> - LCI parcelport: bypass the parcel queue and connection cache.</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6167">PR #6167</a> - Add create_local_communicator API function</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6166">PR #6166</a> - Add missing header for std::intmax_t</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6165">PR #6165</a> - Attempt to work around MSVC problem</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6161">PR #6161</a> - Update EVE integration</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6160">PR #6160</a> - More cleanup for module levels 0 to 10</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6159">PR #6159</a> - Fix minor spelling mistake in generate_issue_pr_list.sh</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6157">PR #6157</a> - Improve index_queue_spawning</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6154">PR #6154</a> - Avoid performing late command line handling twice in distributed runtime</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6152">PR #6152</a> - The -rd and -mr options didn’t work, and they should have been –rd and –mr</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6151">PR #6151</a> - Refactoring the Manual page in documentation</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6148">PR #6148</a> - Investigate the failure of the LCI parcelport.</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6147">PR #6147</a> - Make posix co-routine stacks non-executable</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6146">PR #6146</a> - Avoid ambiguities wrt tag_invoke</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6144">PR #6144</a> - General improvements to scheduling and related fixes</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6140">PR #6140</a> - Fixing background scheduler to properly exit in the end</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6137">PR #6137</a> - Adding example of a simple master/slave distributed application</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6136">PR #6136</a> - Deprecate <cite>execution::experimental::task_group</cite> in favor of <cite>experimental::task_group</cite></p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6135">PR #6135</a> - Fixing warnings reported by MSVC analysis</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6134">PR #6134</a> - Adding notification function for parcelports to be called after early parcel handling</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6132">PR #6132</a> - Fixing to_non_par() for parallel simd policies</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6131">PR #6131</a> - modernize modules from level 25</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6130">PR #6130</a> - Remove the mutex lock in the critical path of get_partitioner.</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6129">PR #6129</a> - Modernize module from levels 22, 23</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6127">PR #6127</a> - Working around gccV9 problem that prevent us from storing enum classes in bit fields</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6126">PR #6126</a> - Deprecate hpx::parallel::task_block in favor of hpx::experimental::ta…</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6125">PR #6125</a> - Making sure sync_wait compiles when used with an lvalue sender involving bulk</p></li>
@@ -4413,6 +4481,7 @@ now Visual Studion 2019.</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6109">PR #6109</a> - Modernize serialization module</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6107">PR #6107</a> - Modernize error module</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6106">PR #6106</a> - Modernizing modules of levels 0 to 5</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6105">PR #6105</a> - Optimizations on LCI parcelport: merge small messages; remove sender mutex lock.</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6104">PR #6104</a> - Adding parameters API: measure_iteration</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6103">PR #6103</a> - Document <cite>task_group</cite> and include in Public API</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6102">PR #6102</a> - Prevent warnings generated by clang-cl</p></li>
@@ -4454,6 +4523,7 @@ now Visual Studion 2019.</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6060">PR #6060</a> - Allow to disable registering signal handlers</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6059">PR #6059</a> - [P2300] Fix: declval cannot be ODR used</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6058">PR #6058</a> - Avoid ambiguity for hpx::get used with std::variant</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6057">PR #6057</a> - Create a dedicated thread pool to run LCI_progress.</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6056">PR #6056</a> - Fix coroutine test for clang</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6055">PR #6055</a> - Patches needed to be able to build HPX 1.8.1 on various platforms</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6054">PR #6054</a> - Use MSVC specific attribute [[msvc::no_unique_address]]</p></li>
@@ -4480,12 +4550,13 @@ now Visual Studion 2019.</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6030">PR #6030</a> - Adding parcelport initialization hook for resource partitioner operation</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6029">PR #6029</a> - Simplify startup code</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6027">PR #6027</a> - Add/Fix documentation in Public API page</p></li>
-<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6026">PR #6026</a> - add option hpx:force_ipv4 to force resolving hostnames to ipv4 adresses</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6026">PR #6026</a> - add option hpx:force_ipv4 to force resolving hostnames to ipv4 addresses</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6025">PR #6025</a> - build(docs): remove leftover sections</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6023">PR #6023</a> - Minor fixes on “How to build on Windows”</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6022">PR #6022</a> - build(doxy): don’t extract private members</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6021">PR #6021</a> - Adding pu_mask to thread_pool_bulk_scheduler</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6020">PR #6020</a> - docs: add cppref NamedRequirements support</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6018">PR #6018</a> - Unseq adaptation for for_each, transform, reduce, transform_reduce, etc.</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6017">PR #6017</a> - loop and transform_loop unseq adaptation</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6016">PR #6016</a> - Config and structural updates to support unseq implementation</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6015">PR #6015</a> - Integrating sync_wait &amp; sync_wait_with_variant</p></li>
@@ -4509,7 +4580,7 @@ now Visual Studion 2019.</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5985">PR #5985</a> - Re-add deprecated tag_policy_tag et.al. types that were removed in V1.8.1</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5981">PR #5981</a> - docs: add docs for condition_variable.hpp</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5980">PR #5980</a> - More work on execution::read</p></li>
-<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5979">PR #5979</a> - Unsupport clang-v8 and clang-v9, switch LSU clang-v13 to C++17</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5979">PR #5979</a> - Unsupported clang-v8 and clang-v9, switch LSU clang-v13 to C++17</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5977">PR #5977</a> - fix: Compilation errors for -std=c++17 builders</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5975">PR #5975</a> - docs: fix &amp; improve parallel algorithms documentation 5</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5974">PR #5974</a> - [P2300] Adapt get completion signatures for awaitable senders</p></li>
@@ -4522,7 +4593,6 @@ now Visual Studion 2019.</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5965">PR #5965</a> - Fixing inspect problems, adding missing header file</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5962">PR #5962</a> - Changes in html page of documentation</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5961">PR #5961</a> - Prevent stalling during shutdown when running hello_world_distributed</p></li>
-<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5956">PR #5956</a> - Adding sync_wait_with_variant</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5955">PR #5955</a> - Fix documentation for container algorithms</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5952">PR #5952</a> - docs: fix &amp; improve parallel algorithms documentation 3</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/5950">PR #5950</a> - Change executors to directly implement the executor CPOs</p></li>
@@ -4568,7 +4638,7 @@ now Visual Studion 2019.</p></li>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on Jan 14, 2023.<br/>
+    Last updated on Feb 23, 2023.<br/>
 </p>
         </footer>
     </div>

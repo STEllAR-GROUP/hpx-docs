@@ -4794,15 +4794,13 @@ is released. The code below shows the basic use of mutexes:</p>
 <span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">mutex</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">([</span><span class="o">&amp;</span><span class="n">m</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">m</span><span class="p">.</span><span class="n">lock</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">scoped_lock</span><span class="w"> </span><span class="n">sl</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
 <span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Thread 1 acquired the mutex&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">m</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="p">});</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">([</span><span class="o">&amp;</span><span class="n">m</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">m</span><span class="p">.</span><span class="n">lock</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">scoped_lock</span><span class="w"> </span><span class="n">sl</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"></span>
 <span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Thread 2 acquired the mutex&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">m</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="p">});</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">wait_all</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="w"> </span><span class="n">f2</span><span class="p">);</span><span class="w"></span>
@@ -4816,9 +4814,21 @@ is released. The code below shows the basic use of mutexes:</p>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<p>In this example, two <em>HPX</em> threads created using <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> are acquiring a <code class="docutils literal notranslate"><span class="pre">hpx::mutex</span> <span class="pre">m</span></code>. The <code class="docutils literal notranslate"><span class="pre">m.lock()</span></code>
-function is called before accessing the shared resource, and <code class="docutils literal notranslate"><span class="pre">m.unlock()</span></code> is called after the access is complete.
-This ensures that only one thread can access the shared resource at a time.</p>
+<p>In this example, two <em>HPX</em> threads created using <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> are acquiring a <code class="docutils literal notranslate"><span class="pre">hpx::mutex</span> <span class="pre">m</span></code>.
+<code class="docutils literal notranslate"><span class="pre">std::scoped_lock</span> <span class="pre">sl(m)</span></code> is used to take ownership of the given mutex <code class="docutils literal notranslate"><span class="pre">m</span></code>. When control leaves
+the scope in which the <code class="docutils literal notranslate"><span class="pre">scoped_lock</span></code> object was created, the <code class="docutils literal notranslate"><span class="pre">scoped_lock</span></code> is destructed and
+the mutex is released.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>A common way to acquire and release mutexes is by using the function <code class="docutils literal notranslate"><span class="pre">m.lock()</span></code> before accessing
+the shared resource, and <code class="docutils literal notranslate"><span class="pre">m.unlock()</span></code> called after the access is complete. However, these functions
+may lead to deadlocks in case of exception(s). That is, if an exception happens when the mutex is locked
+then the code that unlocks the mutex will never be executed, the lock will remain held by the thread
+that acquired it, and other threads will be unable to access the shared resource. This can cause a
+deadlock if the other threads are also waiting to acquire the same lock. For this reason, we suggest
+you use <code class="docutils literal notranslate"><span class="pre">std::scoped_lock</span></code>, which prevents this issue by releasing the lock when control leaves the
+scope in which the <code class="docutils literal notranslate"><span class="pre">scoped_lock</span></code> object was created.</p>
+</div>
 </section>
 <section id="shared-mutex">
 <span id="id8"></span><h3>Shared mutex<a class="headerlink" href="#shared-mutex" title="Permalink to this headline">#</a></h3>
@@ -4864,13 +4874,16 @@ The code below shows how <code class="docutils literal notranslate"><span class=
 
 <span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">cycles</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
 <span class="w">            </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">shared_mutex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ul</span><span class="p">(</span><span class="n">stm</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// scope of unique_lock</span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">shared_mutex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ul</span><span class="p">(</span><span class="n">stm</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;^^^ Writer &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; starting...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-<span class="w">                </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">urng</span><span class="p">)));</span><span class="w"></span>
-<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;vvv Writer &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; finished.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-
-<span class="w">                </span><span class="n">ul</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;^^^ Writer &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; starting...&quot;</span><span class="w"></span>
+<span class="w">                              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">urng</span><span class="p">)));</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;vvv Writer &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; finished.&quot;</span><span class="w"></span>
+<span class="w">                              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
 
 <span class="w">                </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">urng</span><span class="p">)));</span><span class="w"></span>
 <span class="w">            </span><span class="p">}</span><span class="w"></span>
@@ -4891,14 +4904,14 @@ The code below shows how <code class="docutils literal notranslate"><span class=
 
 <span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">cycles</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
 <span class="w">            </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">shared_lock</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">shared_mutex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sl</span><span class="p">(</span><span class="n">stm</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// scope of shared_lock</span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">shared_lock</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">shared_mutex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sl</span><span class="p">(</span><span class="n">stm</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Reader &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; starting...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-<span class="w">                </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">urng</span><span class="p">)));</span><span class="w"></span>
-<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Reader &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; finished.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-
-<span class="w">                </span><span class="n">sl</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span><span class="w"></span>
-
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Reader &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; starting...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">urng</span><span class="p">)));</span><span class="w"></span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Reader &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; finished.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
 <span class="w">                </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">urng</span><span class="p">)));</span><span class="w"></span>
 <span class="w">            </span><span class="p">}</span><span class="w"></span>
 <span class="w">        </span><span class="p">});</span><span class="w"></span>
@@ -4917,9 +4930,9 @@ Both the writer and reader threads use the <code class="docutils literal notrans
 resource.</p>
 <ul class="simple">
 <li><p>For the writer threads, a <code class="docutils literal notranslate"><span class="pre">unique_lock</span></code> on the shared mutex is acquired before each write operation and is released
-after the operation is complete.</p></li>
+after control leaves the scope in which the <code class="docutils literal notranslate"><span class="pre">unique_lock</span></code> object was created.</p></li>
 <li><p>For the reader threads, a <code class="docutils literal notranslate"><span class="pre">shared_lock</span></code> on the shared mutex is acquired before each read operation and is released
-after the operation is complete.</p></li>
+after control leaves the scope in which the <code class="docutils literal notranslate"><span class="pre">shared_lock</span></code> object was created.</p></li>
 </ul>
 <p>Before each operation, both the reader and writer threads sleep for a random time period, which is generated using
 a random number generator. The random time period simulates the processing time of the operation.</p>
@@ -4935,7 +4948,7 @@ tries to acquire the semaphore when the counter is zero, the thread will block u
 the counter by releasing the semaphore. Unlike <code class="docutils literal notranslate"><span class="pre">hpx::mutex</span></code>, an <code class="docutils literal notranslate"><span class="pre">hpx::counting_semaphore</span></code> is not bound to a
 thread, which means that the acquire and release call of a semaphore can happen on different threads.</p></li>
 <li><p>binary semaphore: it is an alias for a <code class="docutils literal notranslate"><span class="pre">hpx::counting_semaphore&lt;1&gt;</span></code>. In this case, the least maximal value
-is 1. <code class="docutils literal notranslate"><span class="pre">hpx::binary_semaphores</span></code> can be used to implement locks.</p></li>
+is 1. <code class="docutils literal notranslate"><span class="pre">hpx::binary_semaphore</span></code> can be used to implement locks.</p></li>
 </ul>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/semaphore.hpp&gt;</span><span class="cp"></span>
@@ -5001,8 +5014,8 @@ guards is freely composable and can never deadlock.</p>
 </pre></div>
 </div>
 <p>If a single method needs to run with multiple guards, use a guard set:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">shared</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">guard</span><span class="o">&gt;</span><span class="w"> </span><span class="n">gu1</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">guard</span><span class="p">());</span><span class="w"></span>
-<span class="n">boost</span><span class="o">::</span><span class="n">shared</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">guard</span><span class="o">&gt;</span><span class="w"> </span><span class="n">gu2</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">guard</span><span class="p">());</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">guard</span><span class="o">&gt;</span><span class="w"> </span><span class="n">gu1</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">guard</span><span class="p">());</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">guard</span><span class="o">&gt;</span><span class="w"> </span><span class="n">gu2</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">lcos</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">guard</span><span class="p">());</span><span class="w"></span>
 <span class="n">gs</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="o">*</span><span class="n">gu1</span><span class="p">);</span><span class="w"></span>
 <span class="n">gs</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="o">*</span><span class="n">gu2</span><span class="p">);</span><span class="w"></span>
 <span class="n">run_guarded</span><span class="p">(</span><span class="n">gs</span><span class="p">,</span><span class="n">task</span><span class="p">);</span><span class="w"></span>
@@ -5543,8 +5556,8 @@ the <code class="docutils literal notranslate"><span class="pre">wait()</span></
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><cite>task groups</cite> and <cite>task blocks`</cite> are both ways to group and synchronize parallel tasks, but
-<cite>task groups`</cite> are used to group multiple tasks together as a single unit, while <cite>task blocks`</cite>
+<p><cite>task groups</cite> and <cite>task blocks</cite> are both ways to group and synchronize parallel tasks, but
+<cite>task groups</cite> are used to group multiple tasks together as a single unit, while <cite>task blocks</cite>
 are used to execute a loop in parallel, with each iteration of the loop executing in a separate
 task. If the difference is not clear yet, continue reading.</p>
 <p>A <cite>task group</cite> is a construct that allows multiple parallel tasks to be grouped together as a
@@ -5563,6 +5576,61 @@ sharing a same address space. These threads can communicate with each other thro
 such as futures or shared data structures.</p>
 <p>The example below demonstrates how to launch multiple threads and synchronize them using a <code class="docutils literal notranslate"><span class="pre">hpx::latch</span></code>
 object. It also shows how to query the state of threads and wait for futures to complete.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/future.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/thread.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">num_threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">wait_for_latch</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">latch</span><span class="o">&amp;</span><span class="w"> </span><span class="n">l</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">l</span><span class="p">.</span><span class="n">arrive_and_wait</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">hpx_main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Spawn a couple of threads</span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">latch</span><span class="w"> </span><span class="n">l</span><span class="p">(</span><span class="n">num_threads</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">results</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">results</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">num_threads</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">num_threads</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">results</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wait_for_latch</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ref</span><span class="p">(</span><span class="n">l</span><span class="p">)));</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Allow spawned threads to reach latch</span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">yield</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Enumerate all suspended threads</span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">enumerate_threads</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="p">[](</span><span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">thread_id_type</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;thread &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="kr">thread</span><span class="o">::</span><span class="n">id</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; is &quot;</span><span class="w"></span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">get_thread_state_name</span><span class="p">(</span><span class="w"></span>
+<span class="w">                             </span><span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">get_thread_state</span><span class="p">(</span><span class="n">id</span><span class="p">))</span><span class="w"></span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w">    </span><span class="c1">// always continue enumeration</span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">thread_schedule_state</span><span class="o">::</span><span class="n">suspended</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Wait for all threads to reach this point.</span>
+<span class="w">    </span><span class="n">l</span><span class="p">.</span><span class="n">arrive_and_wait</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">wait_all</span><span class="p">(</span><span class="n">results</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">hpx_main</span><span class="p">,</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
 <p>In more detail, the <code class="docutils literal notranslate"><span class="pre">wait_for_latch()</span></code> function is a simple helper function that waits for a <code class="docutils literal notranslate"><span class="pre">hpx::latch</span></code>
 object to be released. At this point we remind that <code class="docutils literal notranslate"><span class="pre">hpx::latch</span></code> is a synchronization primitive that
 allows multiple threads to wait for a common event to occur.</p>
@@ -5598,16 +5666,8 @@ C++ Extensions for Parallelism), <a class="reference external" href="http://wg21
 <a class="reference external" href="http://wg21.link/n4406">N4406</a> (Parallel Algorithms Need Executors).</p>
 <section id="using-parallel-algorithms">
 <span id="parallel-algorithms"></span><h3>Using parallel algorithms<a class="headerlink" href="#using-parallel-algorithms" title="Permalink to this headline">#</a></h3>
-<p>A parallel algorithm is a function template described by this document
-which is declared in the (inline) namespace <code class="docutils literal notranslate"><span class="pre">hpx::parallel</span></code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For compilers that do not support inline namespaces, all of the <code class="docutils literal notranslate"><span class="pre">namespace</span>
-<span class="pre">v1</span></code> is imported into the namespace <code class="docutils literal notranslate"><span class="pre">hpx::parallel</span></code>. The effect is similar
-to what inline namespaces would do, namely all names defined in
-<code class="docutils literal notranslate"><span class="pre">hpx::parallel</span></code> are accessible from the namespace <code class="docutils literal notranslate"><span class="pre">hpx::parallel</span></code> as
-well.</p>
-</div>
+<p>A parallel algorithm is a function template declared in the namespace
+<code class="docutils literal notranslate"><span class="pre">hpx::parallel</span></code>.</p>
 <p>All parallel algorithms are very similar in semantics to their sequential
 counterparts (as defined in the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">std</span></code>) with an additional formal
 template parameter named <code class="docutils literal notranslate"><span class="pre">ExecutionPolicy</span></code>. The execution policy is generally
@@ -5628,17 +5688,44 @@ thread.</p>
 <p>It is the caller’s responsibility to ensure correctness, such as making sure that the
 invocation does not introduce data races or deadlocks.</p>
 </div>
-<p>The applications of function objects in parallel algorithms invoked with an
-execution policy of type <a class="reference internal" href="../libs/core/executors/api/execution_policy.html#_CPPv4N3hpx9execution27parallel_unsequenced_policyE" title="hpx::execution::parallel_unsequenced_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::parallel_unsequenced_policy</span></code></a> is, in <em>HPX</em>,
-equivalent to the use of the execution policy <a class="reference internal" href="../libs/core/executors/api/execution_policy.html#_CPPv4N3hpx9execution15parallel_policyE" title="hpx::execution::parallel_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::parallel_policy</span></code></a>.</p>
-<p>Algorithms invoked with an execution policy object of type <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::execution_policy</span></code>
-execute internally as if invoked with the contained execution policy object. No
-exception is thrown when an <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::execution_policy</span></code> contains an execution policy of
-type <a class="reference internal" href="../libs/core/executors/api/execution_policy.html#_CPPv4N3hpx9execution21sequenced_task_policyE" title="hpx::execution::sequenced_task_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::sequenced_task_policy</span></code></a> or <a class="reference internal" href="../libs/core/executors/api/execution_policy.html#_CPPv4N3hpx9execution20parallel_task_policyE" title="hpx::execution::parallel_task_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::parallel_task_policy</span></code></a>
-(which normally turn the algorithm into its asynchronous version). In this case
-the execution is semantically equivalent to the case of passing a
-<a class="reference internal" href="../libs/core/executors/api/execution_policy.html#_CPPv4N3hpx9execution16sequenced_policyE" title="hpx::execution::sequenced_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::sequenced_policy</span></code></a> or <a class="reference internal" href="../libs/core/executors/api/execution_policy.html#_CPPv4N3hpx9execution15parallel_policyE" title="hpx::execution::parallel_policy"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::parallel_policy</span></code></a> contained in the
-<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::parallel::execution_policy</span></code> object respectively.</p>
+<p>The example below demonstrates how to perform a sequential and parallel <a class="reference internal" href="../libs/core/algorithms/api/for_each.html#_CPPv4I00EN3hpx8for_eachE1F6InIter6InIterRR1F" title="hpx::for_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::for_each</span></code></a> loop on a vector of integers.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/algorithm.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/execution.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">hpx_main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">};</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39; &#39;</span><span class="p">;</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Print sequential: &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">for_each</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">print</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Print parallel: &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">for_each</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">execution</span><span class="o">::</span><span class="n">par</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">print</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">hpx_main</span><span class="p">,</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The above code uses <code class="docutils literal notranslate"><span class="pre">hpx::for_each</span></code> to print the elements of the vector <code class="docutils literal notranslate"><span class="pre">v{1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5}</span></code>.
+At first, <code class="docutils literal notranslate"><span class="pre">hpx::for_each()</span></code> is called without an execution policy, which means that it applies
+the lambda function <code class="docutils literal notranslate"><span class="pre">print</span></code> to each element in the vector sequentially. Hence, the elements are
+printed in order.</p>
+<p>Next, <code class="docutils literal notranslate"><span class="pre">hpx::for_each()</span></code> is called with the <code class="docutils literal notranslate"><span class="pre">hpx::execution::par</span></code> execution policy,
+which applies the lambda function <code class="docutils literal notranslate"><span class="pre">print</span></code> to each element in the vector in parallel. Therefore,
+the output order of the elements in the vector is not deterministic and may vary from run to run.</p>
 </section>
 <section id="parallel-exceptions">
 <h3>Parallel exceptions<a class="headerlink" href="#parallel-exceptions" title="Permalink to this headline">#</a></h3>
@@ -5762,6 +5849,9 @@ creating or adding elements to the <a class="reference internal" href="../libs/c
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <table class="colwidths-given table" id="id15">
 <caption><span class="caption-number">Table 13 </span><span class="caption-text">Modifying parallel algorithms of header <a class="reference internal" href="../api/public_api.html#public-api-header-hpx-algorithm"><span class="std std-ref">hpx/algorithm.hpp</span></a></span><a class="headerlink" href="#id15" title="Permalink to this table">#</a></caption>
 <colgroup>
@@ -5888,6 +5978,9 @@ sequence <code class="docutils literal notranslate"><span class="pre">{1,1,1,2,3
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <table class="colwidths-given table" id="id16">
 <caption><span class="caption-number">Table 14 </span><span class="caption-text">Set operations on sorted sequences of header <a class="reference internal" href="../api/public_api.html#public-api-header-hpx-algorithm"><span class="std std-ref">hpx/algorithm.hpp</span></a></span><a class="headerlink" href="#id16" title="Permalink to this table">#</a></caption>
 <colgroup>
@@ -5930,6 +6023,9 @@ sequence <code class="docutils literal notranslate"><span class="pre">{1,1,1,2,3
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <table class="colwidths-given table" id="id17">
 <caption><span class="caption-number">Table 15 </span><span class="caption-text">Heap operations of header <a class="reference internal" href="../api/public_api.html#public-api-header-hpx-algorithm"><span class="std std-ref">hpx/algorithm.hpp</span></a></span><a class="headerlink" href="#id17" title="Permalink to this table">#</a></caption>
 <colgroup>
@@ -5956,6 +6052,9 @@ sequence <code class="docutils literal notranslate"><span class="pre">{1,1,1,2,3
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <table class="colwidths-given table" id="id18">
 <caption><span class="caption-number">Table 16 </span><span class="caption-text">Minimum/maximum operations of header <a class="reference internal" href="../api/public_api.html#public-api-header-hpx-algorithm"><span class="std std-ref">hpx/algorithm.hpp</span></a></span><a class="headerlink" href="#id18" title="Permalink to this table">#</a></caption>
 <colgroup>
@@ -5982,6 +6081,9 @@ sequence <code class="docutils literal notranslate"><span class="pre">{1,1,1,2,3
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <table class="colwidths-given table" id="id19">
 <caption><span class="caption-number">Table 17 </span><span class="caption-text">Partitioning Operations of header <a class="reference internal" href="../api/public_api.html#public-api-header-hpx-algorithm"><span class="std std-ref">hpx/algorithm.hpp</span></a></span><a class="headerlink" href="#id19" title="Permalink to this table">#</a></caption>
 <colgroup>
@@ -6016,6 +6118,9 @@ sequence <code class="docutils literal notranslate"><span class="pre">{1,1,1,2,3
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <table class="colwidths-given table" id="id20">
 <caption><span class="caption-number">Table 18 </span><span class="caption-text">Sorting Operations of header <a class="reference internal" href="../api/public_api.html#public-api-header-hpx-algorithm"><span class="std std-ref">hpx/algorithm.hpp</span></a></span><a class="headerlink" href="#id20" title="Permalink to this table">#</a></caption>
 <colgroup>
@@ -6058,6 +6163,9 @@ sequence <code class="docutils literal notranslate"><span class="pre">{1,1,1,2,3
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <table class="colwidths-given table" id="id21">
 <caption><span class="caption-number">Table 19 </span><span class="caption-text">Numeric Parallel Algorithms of header <a class="reference internal" href="../api/public_api.html#public-api-header-hpx-numeric"><span class="std std-ref">hpx/numeric.hpp</span></a></span><a class="headerlink" href="#id21" title="Permalink to this table">#</a></caption>
 <colgroup>
@@ -6100,6 +6208,9 @@ sequence <code class="docutils literal notranslate"><span class="pre">{1,1,1,2,3
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <table class="colwidths-given table" id="id22">
 <caption><span class="caption-number">Table 20 </span><span class="caption-text">Dynamic Memory Management of header <a class="reference internal" href="../api/public_api.html#public-api-header-hpx-memory"><span class="std std-ref">hpx/memory.hpp</span></a></span><a class="headerlink" href="#id22" title="Permalink to this table">#</a></caption>
 <colgroup>
@@ -6162,6 +6273,9 @@ sequence <code class="docutils literal notranslate"><span class="pre">{1,1,1,2,3
 </tr>
 </tbody>
 </table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <table class="table" id="id23">
 <caption><span class="caption-number">Table 21 </span><span class="caption-text">Index-based for-loops of header <a class="reference internal" href="../api/public_api.html#public-api-header-hpx-algorithm"><span class="std std-ref">hpx/algorithm.hpp</span></a></span><a class="headerlink" href="#id23" title="Permalink to this table">#</a></caption>
 <colgroup>
@@ -6213,8 +6327,9 @@ number of cores <code class="docutils literal notranslate"><span class="pre">num
 The lambda function exposes a means of test-probing the execution of a single
 iteration for performance measurement purposes. The execution parameter type
 might dynamically determine the execution time of one or more tasks in order
-to calculate the chunk size; see <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::auto_chunk_size</span></code>
-for an example of this executor parameter type.</p>
+to calculate the chunk size; see
+<a class="reference internal" href="../libs/core/execution/api/auto_chunk_size.html#_CPPv4N3hpx9execution12experimental15auto_chunk_sizeE" title="hpx::execution::experimental::auto_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::experimental::auto_chunk_size</span></code></a> for an example of
+this executor parameter type.</p>
 <p>Other functions in the interface exist to discover whether an executor parameter
 type should be invoked once (i.e., it returns a static chunk size; see
 <a class="reference internal" href="../libs/core/execution/api/static_chunk_size.html#_CPPv4N3hpx9execution12experimental17static_chunk_sizeE" title="hpx::execution::experimental::static_chunk_size"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::execution::experimental::static_chunk_size</span></code></a>) or whether it
@@ -6294,7 +6409,7 @@ directive.</p></li>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on Mar 28, 2023.<br/>
+    Last updated on Apr 08, 2023.<br/>
 </p>
         </footer>
     </div>

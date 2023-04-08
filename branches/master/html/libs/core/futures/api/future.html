@@ -4500,12 +4500,74 @@ title="Print to PDF"
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4I0EN3hpx6future4thenEDcRR1FR10error_code">
 <span id="_CPPv3I0EN3hpx6future4thenERR1FR10error_code"></span><span id="_CPPv2I0EN3hpx6future4thenERR1FR10error_code"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">F</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classhpx_1_1future_1a67a308c4f670d7364b06492841db227d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">decltype</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">auto</span></span><span class="p"><span class="pre">)</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">then</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3hpx6future4thenEDcRR1FR10error_code" title="hpx::future::then::F"><span class="n"><span class="pre">F</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">f</span></span>, <a class="reference internal" href="../../errors/api/error_code.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><span class="n"><span class="pre">error_code</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ec</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../../errors/api/exception_fwd.html#_CPPv4N3hpx6throwsE" title="hpx::throws"><span class="n"><span class="pre">throws</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3hpx6future4thenEDcRR1FR10error_code" title="Permalink to this definition">#</a><br /></dt>
-<dd></dd></dl>
+<dd><p>Attaches a continuation to <em>*this</em>. The behavior is undefined if <em>*this</em> has no associated shared state (i.e., <em>valid()==false</em> ). </p>
+<p>In cases where <em>decltype(func(*this))</em> is <em>future&lt;R&gt;</em>, the resulting type is <em>future&lt;R&gt;</em> instead of <em>future&lt;future&lt;R&gt;&gt;</em>. Effects:<ul class="simple">
+<li><p>The continuation is called when the object’s shared state is ready (has a value or exception stored).</p></li>
+<li><p>The continuation launches according to the specified launch policy or executor.</p></li>
+<li><p>When the executor or launch policy is not provided the continuation inherits the parent’s launch policy or executor.</p></li>
+<li><p>If the parent was created with <em>std::promise</em> or with a <a class="reference internal" href="packaged_task.html#classhpx_1_1packaged__task"><span class="std std-ref">packaged_task</span></a> (has no associated launch policy), the continuation behaves the same as the third overload with a policy argument of <em>launch::async</em> | <em>launch::deferred</em> and the same argument for <em>func</em>.</p></li>
+<li><p>If the parent has a policy of <em>launch::deferred</em> and the continuation does not have a specified launch policy or scheduler, then the parent is filled by immediately calling <em></em>.wait(), and the policy of the antecedent is <em>launch::deferred</em> </p></li>
+</ul>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Postcondition:<ul class="simple">
+<li><p>The future object is moved to the parameter of the continuation function.</p></li>
+<li><p>valid() == false on original future object immediately after it returns. </p></li>
+</ul>
+</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>F</strong> – The type of the function/function object to use (deduced). F must meet requirements of <em>MoveConstructible</em>. </p></li>
+<li><p><strong>error_code</strong> – The type of error code.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>f</strong> – A continuation to be attached. </p></li>
+<li><p><strong>ec</strong> – Used to hold error code value originated during the operation. Defaults to <em>throws</em> &amp;#8212; A special ‘throw on error’ <em>error_code</em>. </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An object of type <em>future&lt;decltype(func(*this))&gt;</em> that refers to the shared state created by the continuation. </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4I00EN3hpx6future4thenEDcRR2T0RR1FR10error_code">
 <span id="_CPPv3I00EN3hpx6future4thenERR2T0RR1FR10error_code"></span><span id="_CPPv2I00EN3hpx6future4thenERR2T0RR1FR10error_code"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T0</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">F</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classhpx_1_1future_1afd1a5aa87b9f7e01170a56a0c9990479"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">decltype</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">auto</span></span><span class="p"><span class="pre">)</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">then</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3hpx6future4thenEDcRR2T0RR1FR10error_code" title="hpx::future::then::T0"><span class="n"><span class="pre">T0</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">t0</span></span>, <a class="reference internal" href="#_CPPv4I00EN3hpx6future4thenEDcRR2T0RR1FR10error_code" title="hpx::future::then::F"><span class="n"><span class="pre">F</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">f</span></span>, <a class="reference internal" href="../../errors/api/error_code.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><span class="n"><span class="pre">error_code</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ec</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../../errors/api/exception_fwd.html#_CPPv4N3hpx6throwsE" title="hpx::throws"><span class="n"><span class="pre">throws</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3hpx6future4thenEDcRR2T0RR1FR10error_code" title="Permalink to this definition">#</a><br /></dt>
-<dd></dd></dl>
+<dd><p>Attaches a continuation to <em>*this</em>. The behavior is undefined if <em>*this</em> has no associated shared state (i.e., <em>valid()==false</em> ). \copydetail <a class="reference internal" href="#classhpx_1_1future_1a67a308c4f670d7364b06492841db227d"><span class="std std-ref">hpx::future::then</span></a>(F&amp;&amp; f, error_code&amp; ec = throws) </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Postcondition:<ul class="simple">
+<li><p>The future object is moved to the parameter of the continuation function.</p></li>
+<li><p>valid() == false on original future object immediately after it returns. </p></li>
+</ul>
+</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T0</strong> – The type of executor or launch policy. </p></li>
+<li><p><strong>F</strong> – The type of the function/function object to use (deduced). F must meet requirements of <em>MoveConstructible</em>. </p></li>
+<li><p><strong>error_code</strong> – The type of error code.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>t0</strong> – The executor or launch policy to be used. </p></li>
+<li><p><strong>f</strong> – A continuation to be attached. </p></li>
+<li><p><strong>ec</strong> – Used to hold error code value originated during the operation. Defaults to <em>throws</em> &amp;#8212; A special ‘throw on error’ <em>error_code</em>. </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An object of type <em>future&lt;decltype(func(*this))&gt;</em> that refers to the shared state created by the continuation. </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4I00EN3hpx6future10then_allocEDTclN9base_type10then_allocE5alloccl8HPX_MOVEdefpTEcl11HPX_FORWARD1F1fE2ecEERK9AllocatorRR1FR10error_code">
@@ -4654,12 +4716,74 @@ title="Print to PDF"
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4I0ENK3hpx13shared_future4thenEDcRR1FR10error_code">
 <span id="_CPPv3I0ENK3hpx13shared_future4thenERR1FR10error_code"></span><span id="_CPPv2I0ENK3hpx13shared_future4thenERR1FR10error_code"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">F</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classhpx_1_1shared__future_1a428e077e23e1804f764e5472bcc9b0a3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">decltype</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">auto</span></span><span class="p"><span class="pre">)</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">then</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0ENK3hpx13shared_future4thenEDcRR1FR10error_code" title="hpx::shared_future::then::F"><span class="n"><span class="pre">F</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">f</span></span>, <a class="reference internal" href="../../errors/api/error_code.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><span class="n"><span class="pre">error_code</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ec</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../../errors/api/exception_fwd.html#_CPPv4N3hpx6throwsE" title="hpx::throws"><span class="n"><span class="pre">throws</span></span></a><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4I0ENK3hpx13shared_future4thenEDcRR1FR10error_code" title="Permalink to this definition">#</a><br /></dt>
-<dd></dd></dl>
+<dd><p>Attaches a continuation to <em>*this</em>. The behavior is undefined if <em>*this</em> has no associated shared state (i.e., <em>valid()==false</em> ). </p>
+<p>In cases where <em>decltype(func(*this))</em> is <em>future&lt;R&gt;</em>, the resulting type is <em>future&lt;R&gt;</em> instead of <em>future&lt;future&lt;R&gt;&gt;</em>. Effects:<ul class="simple">
+<li><p>The continuation is called when the object’s shared state is ready (has a value or exception stored).</p></li>
+<li><p>The continuation launches according to the specified launch policy or executor.</p></li>
+<li><p>When the executor or launch policy is not provided the continuation inherits the parent’s launch policy or executor.</p></li>
+<li><p>If the parent was created with <em>std::promise</em> or with a <a class="reference internal" href="packaged_task.html#classhpx_1_1packaged__task"><span class="std std-ref">packaged_task</span></a> (has no associated launch policy), the continuation behaves the same as the third overload with a policy argument of <em>launch::async</em> | <em>launch::deferred</em> and the same argument for <em>func</em>.</p></li>
+<li><p>If the parent has a policy of <em>launch::deferred</em> and the continuation does not have a specified launch policy or scheduler, then the parent is filled by immediately calling <em></em>.wait(), and the policy of the antecedent is <em>launch::deferred</em> </p></li>
+</ul>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Postcondition:<ul class="simple">
+<li><p>The future object is moved to the parameter of the continuation function.</p></li>
+<li><p>valid() == false on original future object immediately after it returns. </p></li>
+</ul>
+</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>F</strong> – The type of the function/function object to use (deduced). F must meet requirements of <em>MoveConstructible</em>. </p></li>
+<li><p><strong>error_code</strong> – The type of error code.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>f</strong> – A continuation to be attached. </p></li>
+<li><p><strong>ec</strong> – Used to hold error code value originated during the operation. Defaults to <em>throws</em> &amp;#8212; A special ‘throw on error’ <em>error_code</em>. </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An object of type <em>future&lt;decltype(func(*this))&gt;</em> that refers to the shared state created by the continuation. </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4I00ENK3hpx13shared_future4thenEDcRR2T0RR1FR10error_code">
 <span id="_CPPv3I00ENK3hpx13shared_future4thenERR2T0RR1FR10error_code"></span><span id="_CPPv2I00ENK3hpx13shared_future4thenERR2T0RR1FR10error_code"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T0</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">F</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classhpx_1_1shared__future_1a7814280c80c9e318e8e166fb6b141459"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">decltype</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">auto</span></span><span class="p"><span class="pre">)</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">then</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00ENK3hpx13shared_future4thenEDcRR2T0RR1FR10error_code" title="hpx::shared_future::then::T0"><span class="n"><span class="pre">T0</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">t0</span></span>, <a class="reference internal" href="#_CPPv4I00ENK3hpx13shared_future4thenEDcRR2T0RR1FR10error_code" title="hpx::shared_future::then::F"><span class="n"><span class="pre">F</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">f</span></span>, <a class="reference internal" href="../../errors/api/error_code.html#_CPPv4N3hpx10error_codeE" title="hpx::error_code"><span class="n"><span class="pre">error_code</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ec</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../../errors/api/exception_fwd.html#_CPPv4N3hpx6throwsE" title="hpx::throws"><span class="n"><span class="pre">throws</span></span></a><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4I00ENK3hpx13shared_future4thenEDcRR2T0RR1FR10error_code" title="Permalink to this definition">#</a><br /></dt>
-<dd></dd></dl>
+<dd><p>Attaches a continuation to <em>*this</em>. The behavior is undefined if <em>*this</em> has no associated shared state (i.e., <em>valid()==false</em> ). \copydetail <a class="reference internal" href="#classhpx_1_1future_1a67a308c4f670d7364b06492841db227d"><span class="std std-ref">hpx::future::then</span></a>(F&amp;&amp; f, error_code&amp; ec = throws) </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Postcondition:<ul class="simple">
+<li><p>The future object is moved to the parameter of the continuation function.</p></li>
+<li><p>valid() == false on original future object immediately after it returns. </p></li>
+</ul>
+</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T0</strong> – The type of executor or launch policy. </p></li>
+<li><p><strong>F</strong> – The type of the function/function object to use (deduced). F must meet requirements of <em>MoveConstructible</em>. </p></li>
+<li><p><strong>error_code</strong> – The type of error code.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>t0</strong> – The executor or launch policy to be used. </p></li>
+<li><p><strong>f</strong> – A continuation to be attached. </p></li>
+<li><p><strong>ec</strong> – Used to hold error code value originated during the operation. Defaults to <em>throws</em> &amp;#8212; A special ‘throw on error’ <em>error_code</em>. </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An object of type <em>future&lt;decltype(func(*this))&gt;</em> that refers to the shared state created by the continuation. </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4I00EN3hpx13shared_future10then_allocEDTclN9base_type10then_allocE5alloccl8HPX_MOVEdefpTEcl11HPX_FORWARD1F1fE2ecEERK9AllocatorRR1FR10error_code">
@@ -4825,7 +4949,7 @@ title="Print to PDF"
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on Mar 28, 2023.<br/>
+    Last updated on Apr 08, 2023.<br/>
 </p>
         </footer>
     </div>

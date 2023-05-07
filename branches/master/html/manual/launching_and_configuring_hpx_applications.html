@@ -5282,6 +5282,7 @@ sections, one for each component.</p>
 <span class="na">max_outbound_message_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_MAX_OUTBOUND_MESSAGE_SIZE:&lt;hpx_parcel_max_outbound_message_size&gt;}</span><span class="w"></span>
 <span class="na">array_optimization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_ARRAY_OPTIMIZATION:1}</span><span class="w"></span>
 <span class="na">zero_copy_optimization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_ZERO_COPY_OPTIMIZATION:$[hpx.parcel.array_optimization]}</span><span class="w"></span>
+<span class="na">zero_copy_receive_optimization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_ZERO_COPY_RECEIVE_OPTIMIZATION:$[hpx.parcel.array_optimization]}</span><span class="w"></span>
 <span class="na">async_serialization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_ASYNC_SERIALIZATION:1}</span><span class="w"></span>
 <span class="na">message_handlers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_MESSAGE_HANDLERS:0}</span><span class="w"></span>
 </pre></div>
@@ -5350,22 +5351,28 @@ array optimizations during serialization of <a class="reference internal" href="
 zero copy optimizations during serialization of <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> data. The default
 is the same value as set for <code class="docutils literal notranslate"><span class="pre">hpx.parcel.array_optimization</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_serialization_threshold</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_receive_optimization</span></code></p></td>
+<td><p>This property defines whether this <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> is allowed to utilize
+zero copy optimizations on the receiving end during de-serialization of
+<a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> data. The default is the same value as set for
+<code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_optimization</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_serialization_threshold</span></code></p></td>
 <td><p>This property defines the threshold value (in bytes) starting at which the
 serialization layer will apply zero-copy optimizations for serialized
 entities. The default value is defined by the preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_ZERO_COPY_SERIALIZATION_THRESHOLD</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.async_serialization</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.async_serialization</span></code></p></td>
 <td><p>This property defines whether this <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> is allowed to spawn a
 new thread for serialization (this is both for encoding and decoding
 parcels). The default is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.message_handlers</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.message_handlers</span></code></p></td>
 <td><p>This property defines whether message handlers are loaded. The default is
 <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_background_threads</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_background_threads</span></code></p></td>
 <td><p>This property defines how many cores should be used to perform background
 operations. The default is <code class="docutils literal notranslate"><span class="pre">-1</span></code> (all cores).</p></td>
 </tr>
@@ -5376,6 +5383,7 @@ operations. The default is <code class="docutils literal notranslate"><span clas
 <span class="na">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HAVE_PARCELPORT_TCP:$[hpx.parcel.enabled]}</span><span class="w"></span>
 <span class="na">array_optimization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_TCP_ARRAY_OPTIMIZATION:$[hpx.parcel.array_optimization]}</span><span class="w"></span>
 <span class="na">zero_copy_optimization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_TCP_ZERO_COPY_OPTIMIZATION:$[hpx.parcel.zero_copy_optimization]}</span><span class="w"></span>
+<span class="na">zero_copy_receive_optimization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_TCP_ZERO_COPY_RECEIVE_OPTIMIZATION:$[hpx.parcel.zero_copy_receive_optimization]}</span><span class="w"></span>
 <span class="na">zero_copy_serialization_threshold</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="s">${HPX_PARCEL_TCP_ZERO_COPY_SERIALIZATION_THRESHOLD:$[hpx.parcel.zero_copy_serialization_threshold]}</span><span class="w"></span>
 <span class="na">async_serialization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_TCP_ASYNC_SERIALIZATION:$[hpx.parcel.async_serialization]}</span><span class="w"></span>
 <span class="na">parcel_pool_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_PARCEL_TCP_PARCEL_POOL_SIZE:$[hpx.threadpools.parcel_pool_size]}</span><span class="w"></span>
@@ -5409,48 +5417,54 @@ parcel data. The default is the same value as set for
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.zero_copy_optimization</span></code></p></td>
 <td><p>This property defines whether this <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> is allowed to utilize
-zero copy optimizations in the TCP/IP parcelport during serialization of
+zero copy optimizations during serialization of
 parcel data. The default is the same value as set for
 <code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_optimization</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.zero_copy_serialization_threshold</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.zero_copy_receive_optimization</span></code></p></td>
+<td><p>This property defines whether this <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> is allowed to utilize
+zero copy optimizations on the receiving end in the TCP/IP parcelport during
+de-serialization of <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> data. The default is the same value as set
+for <code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_optimization</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.zero_copy_serialization_threshold</span></code></p></td>
 <td><p>This property defines the threshold value (in bytes) starting at which the
 serialization layer will apply zero-copy optimizations for serialized
 entities. The default is the same value as set for
 <code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_serialization_threshold</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.async_serialization</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.async_serialization</span></code></p></td>
 <td><p>This property defines whether this <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> is allowed to spawn a
 new thread for serialization in the TCP/IP parcelport (this is both for
 encoding and decoding parcels). The default is the same value as set for
 <code class="docutils literal notranslate"><span class="pre">hpx.parcel.async_serialization</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.parcel_pool_size</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.parcel_pool_size</span></code></p></td>
 <td><p>The value of this property defines the number of OS threads created for
 the internal parcel thread pool of the TCP <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> port. The default is
 taken from <code class="docutils literal notranslate"><span class="pre">hpx.threadpools.parcel_pool_size</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_connections</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_connections</span></code></p></td>
 <td><p>This property defines how many network connections between different
 localities are overall kept alive by each <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. The
 default is taken from <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_connections</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_connections_per_locality</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_connections_per_locality</span></code></p></td>
 <td><p>This property defines the maximum number of network connections that one
 <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> will open to another <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. The default is
 taken from <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_connections_per_locality</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_message_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_message_size</span></code></p></td>
 <td><p>This property defines the maximum allowed message size that will be
 transferrable through the <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> layer. The default is taken from
 <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_message_size</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_outbound_message_size</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_outbound_message_size</span></code></p></td>
 <td><p>This property defines the maximum allowed outbound coalesced message size
 that will be transferrable through the <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> layer. The default is
 taken from <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_outbound_connections</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_background_threads</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_background_threads</span></code></p></td>
 <td><p>This property defines how many cores should be used to perform background
 operations. The default is taken from <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_background_threads</span></code>.</p></td>
 </tr>
@@ -5468,6 +5482,7 @@ equivalent CMake variable is <code class="docutils literal notranslate"><span cl
 <span class="na">processor_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;MPI_processor_name&gt;</span><span class="w"></span>
 <span class="na">array_optimization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HAVE_PARCEL_MPI_ARRAY_OPTIMIZATION:$[hpx.parcel.array_optimization]}</span><span class="w"></span>
 <span class="na">zero_copy_optimization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HAVE_PARCEL_MPI_ZERO_COPY_OPTIMIZATION:$[hpx.parcel.zero_copy_optimization]}</span><span class="w"></span>
+<span class="na">zero_copy_receive_optimization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HAVE_PARCEL_MPI_ZERO_COPY_RECEIVE_OPTIMIZATION:$[hpx.parcel.zero_copy_receive_optimization]}</span><span class="w"></span>
 <span class="na">zero_copy_serialization_threshold</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="s">${HPX_PARCEL_MPI_ZERO_COPY_SERIALIZATION_THRESHOLD:$[hpx.parcel.zero_copy_serialization_threshold]}</span><span class="w"></span>
 <span class="na">use_io_pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HAVE_PARCEL_MPI_USE_IO_POOL:$1}</span><span class="w"></span>
 <span class="na">async_serialization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HAVE_PARCEL_MPI_ASYNC_SERIALIZATION:$[hpx.parcel.async_serialization]}</span><span class="w"></span>
@@ -5526,48 +5541,54 @@ zero copy optimizations in the MPI parcelport during serialization of
 parcel data. The default is the same value as set for
 <code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_optimization</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.zero_copy_serialization_threshold</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.zero_copy_receive_optimization</span></code></p></td>
+<td><p>This property defines whether this <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> is allowed to utilize
+zero copy optimizations on the receiving end in the MPI parcelport during
+de-serialization of <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> data. The default is the same value as
+set for <code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_optimization</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.zero_copy_serialization_threshold</span></code></p></td>
 <td><p>This property defines the threshold value (in bytes) starting at which the
 serialization layer will apply zero-copy optimizations for serialized
 entities. The default is the same value as set for
 <code class="docutils literal notranslate"><span class="pre">hpx.parcel.zero_copy_serialization_threshold</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.use_io_pool</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.use_io_pool</span></code></p></td>
 <td><p>This property can be set to run the progress thread inside of <em>HPX</em> threads
 instead of a separate thread pool. The default is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.async_serialization</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.async_serialization</span></code></p></td>
 <td><p>This property defines whether this <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> is allowed to spawn a
 new thread for serialization in the MPI parcelport (this is both for
 encoding and decoding parcels). The default is the same value as set for
 <code class="docutils literal notranslate"><span class="pre">hpx.parcel.async_serialization</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.parcel_pool_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.parcel_pool_size</span></code></p></td>
 <td><p>The value of this property defines the number of OS threads created for
 the internal parcel thread pool of the MPI <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> port. The default is
 taken from <code class="docutils literal notranslate"><span class="pre">hpx.threadpools.parcel_pool_size</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.max_connections</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.max_connections</span></code></p></td>
 <td><p>This property defines how many network connections between different
 localities are overall kept alive by each <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. The
 default is taken from <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_connections</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.max_connections_per_locality</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.max_connections_per_locality</span></code></p></td>
 <td><p>This property defines the maximum number of network connections that one
 <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> will open to another <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. The default is
 taken from <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_connections_per_locality</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.max_message_size</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.max_message_size</span></code></p></td>
 <td><p>This property defines the maximum allowed message size that will be
 transferrable through the <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> layer. The default is taken from
 <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_message_size</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.max_outbound_message_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.max_outbound_message_size</span></code></p></td>
 <td><p>This property defines the maximum allowed outbound coalesced message size
 that will be transferrable through the <a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">parcel</span></a> layer. The default is
 taken from <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_outbound_connections</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.tcp.max_background_threads</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.max_background_threads</span></code></p></td>
 <td><p>This property defines how many cores should be used to perform background
 operations. The default is taken from <code class="docutils literal notranslate"><span class="pre">hpx.parcel.max_background_threads</span></code>.</p></td>
 </tr>
@@ -7076,7 +7097,7 @@ activated.</p>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on May 05, 2023.<br/>
+    Last updated on May 07, 2023.<br/>
 </p>
         </footer>
     </div>

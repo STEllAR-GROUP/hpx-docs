@@ -199,6 +199,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../manual/migration_guide.html">
+     Migration guide
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../manual/building_tests_examples.html">
      Building tests and examples
     </a>
@@ -3165,6 +3170,11 @@
          hpx/components_base/server/managed_component_base.hpp
         </a>
        </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../libs/full/components_base/api/migration_support.html">
+         hpx/components_base/server/migration_support.hpp
+        </a>
+       </li>
       </ul>
      </li>
      <li class="toctree-l3 has-children">
@@ -4260,7 +4270,18 @@ title="Print to PDF"
 Most importantly, we fixed various occasional hanging during startup and shutdown
 in distributed scenarios. We also added support for zero-copy serialization on
 the receiving side to the TCP, MPI, and LCI parcelports. Last but not least, we
-have added support for Visual Studio 2019 and gcc using MINGW on Windows.</p>
+have added support for Visual Studio 2019 and gcc using MINGW on Windows, and
+also support for gcc V13 and clang V15.</p>
+<p>HPX headers are now made consistenly named the same as their standard library
+counterparts, e.g. <cite>#include &lt;thread&gt;</cite> now corresponds to <cite>#include &lt;hpx/thread.hpp&gt;</cite>.
+This significantly simplifies porting existing standards conforming codes to HPX.</p>
+<p>A lot of work has been done to improve and optimize our network communication
+layers. Primary focus of this work was on the LCI parcelport, but we have also
+cleaned up and improved the MPI parcelport.</p>
+<p>Additionally, we have continued working on our documentation. The main focus
+here was on completing the API documentation of the most important API functions.
+We have started adding migration guides for people interested in moving their
+codes away from other, commonplace parallelization frameworks like OpenMP.</p>
 </section>
 <section id="breaking-changes">
 <h2>Breaking changes<a class="headerlink" href="#breaking-changes" title="Permalink to this headline">#</a></h2>
@@ -4268,9 +4289,48 @@ have added support for Visual Studio 2019 and gcc using MINGW on Windows.</p>
 </section>
 <section id="closed-issues">
 <h2>Closed issues<a class="headerlink" href="#closed-issues" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6155">Issue #6155</a> - hpxcxx and hpxrun.py do not work if HPX_WITH_TESTS=OFF</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6164">Issue #6164</a> - HPX_WITH_DATAPAR_BACKEND=EVE causes compile errors with C++17</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6175">Issue #6175</a> - Make sure all our parallel algorithms accept the predicates by value</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6194">Issue #6194</a> - tests.regressions.threads.threads_all_1422 failed at Perlmutter</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6198">Issue #6198</a> - set_intersection/set_difference fails when run with execution::par</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6214">Issue #6214</a> - Broken Links to the Documentation page in readme.rst</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6217">Issue #6217</a> - hpx::make_heap does not terminate when exPolicy is par (or par_unseq) and size of vector is 4</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6246">Issue #6246</a> - HPX fails to compile under cxx 20 (fresh system)</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6247">Issue #6247</a> - HPX 1.9.0 does not compile with GCC on Windows</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6282">Issue #6282</a> - The “attach-debugger” option is broken on the current master branch.</p></li>
+</ul>
 </section>
 <section id="closed-pull-requests">
 <h2>Closed pull requests<a class="headerlink" href="#closed-pull-requests" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6219">PR #6219</a> - Cleaning up #includes in hpx/ folder</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6223">PR #6223</a> - Move documentation from README.rst to index.rst files under libs directory</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6229">PR #6229</a> - Adding zero-copy support on the receiving end of the TCP and MPI parcel ports</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6231">PR #6231</a> - Remove deprecated email from release procedure</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6235">PR #6235</a> - Modernize more modules (levels 12-16)</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6236">PR #6236</a> - Attempt to resolve occasional shutdown hangs in distributed operation</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6239">PR #6239</a> - Fix Optimizing HPX applications page of Manual</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6241">PR #6241</a> - LCI parcelport: Refactor, add more variants, zero copy receives.</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6242">PR #6242</a> - updated deprecated headers</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6243">PR #6243</a> - Adding github action builders using VS2019</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6248">PR #6248</a> - Fix CUDA/HIP Jenkins pipelines</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6250">PR #6250</a> - Resolve gcc problems on Windows</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6251">PR #6251</a> - Attempting to fix problems in barrier causing hangs</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6253">PR #6253</a> - Modernize set_thread_name on Windows</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6256">PR #6256</a> - Fix nvcc/gcc-10 (Octo-Tiger) compilation issue</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6257">PR #6257</a> - Cmake Tests: Delete operator check for size_t arg</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6258">PR #6258</a> - Rewriting wait_some to circumvent data races causing hangs</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6260">PR #6260</a> - Add migration guide to manual</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6262">PR #6262</a> - Fixing wrong command line options in local command line handling</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6266">PR #6266</a> - Attempt to resolve occasional hang in run_loop</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6267">PR #6267</a> - Attempting to fix migration tests</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6278">PR #6278</a> - Making sure the future’s shared state doesn’t go out of scope prematurely</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6279">PR #6279</a> - Re-expose error names</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6281">PR #6281</a> - Creating directory for file copy</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6283">PR #6283</a> - Consistently #include unistd.h for _POSIX_VERSION</p></li>
+</ul>
 </section>
 </section>
 

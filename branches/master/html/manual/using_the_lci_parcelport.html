@@ -4349,14 +4349,26 @@ parcelport. Typically, it would be <code class="docutils literal notranslate"><s
 <p>If you are using <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> or <code class="docutils literal notranslate"><span class="pre">srun</span></code>, you can just pass
 <code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.parcel.lci.priority=1000</span></code>, <code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.parcel.lci.enable=1</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.parcel.bootstrap=lci</span></code> to the <em>HPX</em> applications.</p>
+<p>If you are running on a Cray machine, you need to pass <cite>–mpi=pmix</cite> or <cite>–mpi=pmi2</cite> to srun
+to enable the PMIx or PMI2 support of SLURM since LCI does not support the default Cray PMI.
+For example,</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>srun --mpi<span class="o">=</span>pmix <span class="o">[</span>hpx application<span class="o">]</span>
+</pre></div>
+</div>
 </section>
 <section id="performance-tuning-of-the-lci-parcelport">
 <span id="tune-lci-pp"></span><h2>Performance tuning of the LCI parcelport<a class="headerlink" href="#performance-tuning-of-the-lci-parcelport" title="Permalink to this headline">#</a></h2>
-<p>We encourage users to increase the zero-copy serialization threshold of LCI to <code class="docutils literal notranslate"><span class="pre">8192</span></code> (bytes) by
-either the cmake variable <code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_ZERO_COPY_SERIALIZATION_THRESHOLD=8192</span></code>
-(this will affect all the parcelports) or the command line option
-<code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.parcel.lci.zero_copy_serialization_threshold=8192</span></code>
-(this will only affect the LCI parcelport).</p>
+<p>We encourage users to set the following environmental variables
+when using the LCI parcelport to get better performance.</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span> <span class="nv">LCI_SERVER_MAX_SENDS</span><span class="o">=</span><span class="m">1024</span>
+<span class="gp">$ </span><span class="nb">export</span> <span class="nv">LCI_SERVER_MAX_RECVS</span><span class="o">=</span><span class="m">4096</span>
+<span class="gp">$ </span><span class="nb">export</span> <span class="nv">LCI_SERVER_NUM_PKTS</span><span class="o">=</span><span class="m">65536</span>
+<span class="gp">$ </span><span class="nb">export</span> <span class="nv">LCI_SERVER_MAX_CQES</span><span class="o">=</span><span class="m">65536</span>
+<span class="gp">$ </span><span class="nb">export</span> <span class="nv">LCI_PACKET_SIZE</span><span class="o">=</span><span class="m">12288</span>
+</pre></div>
+</div>
+<p>This setting needs roughly 800MB memory per process. The memory consumption mainly
+comes from the packets, which can be calculated using <cite>LCI_SERVER_NUM_PKTS x LCI_PACKET_SIZE</cite>.</p>
 </section>
 </section>
 
@@ -4392,7 +4404,7 @@ either the cmake variable <code class="docutils literal notranslate"><span class
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on Jun 28, 2023.<br/>
+    Last updated on Jul 08, 2023.<br/>
 </p>
         </footer>
     </div>

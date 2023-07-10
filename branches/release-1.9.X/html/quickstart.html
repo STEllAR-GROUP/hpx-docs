@@ -199,6 +199,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="manual/migration_guide.html">
+     Migration guide
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="manual/building_tests_examples.html">
      Building tests and examples
     </a>
@@ -3165,6 +3170,11 @@
          hpx/components_base/server/managed_component_base.hpp
         </a>
        </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="libs/full/components_base/api/migration_support.html">
+         hpx/components_base/server/migration_support.hpp
+        </a>
+       </li>
       </ul>
      </li>
      <li class="toctree-l3 has-children">
@@ -3732,6 +3742,14 @@
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="releases/whats_new_1_9_1.html">
+     <em>
+      HPX
+     </em>
+     V1.9.1 (TBD)
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="releases/whats_new_1_9_0.html">
      <em>
       HPX
@@ -4252,9 +4270,13 @@ title="Print to PDF"
                 
   <section id="quick-start">
 <span id="quickstart"></span><h1>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">#</a></h1>
-<p>The following steps will help you get started with <em>HPX</em>.</p>
+<p>The following steps will help you get started with <em>HPX</em>. After <a class="reference internal" href="#installing-hpx"><span class="std std-ref">Installing HPX</span></a>, you
+can check how to run a simple example <a class="reference internal" href="#hello-world"><span class="std std-ref">Hello, World!</span></a>. <a class="reference internal" href="#writing-task-based-applications"><span class="std std-ref">Writing task-based applications</span></a>
+explains how you can get started with <em>HPX</em>. You can refer to our <a class="reference internal" href="manual/migration_guide.html#migration-guide"><span class="std std-ref">Migration guide</span></a> if you use
+other APIs for parallelism (like OpenMP, MPI or Intel Threading Building Blocks (TBB)) and you would like to convert your code to
+<em>HPX</em> code.</p>
 <section id="installing-hpx">
-<h2>Installing <em>HPX</em><a class="headerlink" href="#installing-hpx" title="Permalink to this headline">#</a></h2>
+<span id="id2"></span><h2>Installing <em>HPX</em><a class="headerlink" href="#installing-hpx" title="Permalink to this headline">#</a></h2>
 <p>The easiest way to install <em>HPX</em> on your system is by choosing one of the steps
 below:</p>
 <ol class="arabic">
@@ -4289,11 +4311,11 @@ as <code class="docutils literal notranslate"><span class="pre">hpx</span></code
 and use <em>HPX</em>.</p>
 </section>
 <section id="hello-world">
-<h2>Hello, World!<a class="headerlink" href="#hello-world" title="Permalink to this headline">#</a></h2>
+<span id="id3"></span><h2>Hello, World!<a class="headerlink" href="#hello-world" title="Permalink to this headline">#</a></h2>
 <p>To get started with this minimal example you need to create a new project
 directory and a file <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> with the contents below in order to
 build an executable using CMake and <em>HPX</em>:</p>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.18</span><span class="p">)</span>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.19</span><span class="p">)</span>
 <span class="nb">project</span><span class="p">(</span><span class="s">my_hpx_project</span><span class="w"> </span><span class="s">CXX</span><span class="p">)</span>
 <span class="nb">find_package</span><span class="p">(</span><span class="s">HPX</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
 <span class="nb">add_executable</span><span class="p">(</span><span class="s">my_hpx_program</span><span class="w"> </span><span class="s">main.cpp</span><span class="p">)</span>
@@ -4362,7 +4384,7 @@ errors.</p>
 </div>
 </section>
 <section id="writing-task-based-applications">
-<h2>Writing task-based applications<a class="headerlink" href="#writing-task-based-applications" title="Permalink to this headline">#</a></h2>
+<span id="id4"></span><h2>Writing task-based applications<a class="headerlink" href="#writing-task-based-applications" title="Permalink to this headline">#</a></h2>
 <p>So far we haven’t done anything that can’t be done using the C++ standard
 library. In this section we will give a short overview of what you can do with
 <em>HPX</em> on a single node. The essence is to avoid global synchronization and break
@@ -4395,9 +4417,9 @@ like <code class="docutils literal notranslate"><span class="pre">when_all</span
 </ul>
 <p>The following example is a collection of the most commonly used functionality in
 <em>HPX</em>:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/algorithm.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/future.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/algorithm.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/future.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;random&gt;</span><span class="cp"></span>
@@ -4539,7 +4561,7 @@ to a distributed implementation.</p>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on May 22, 2023.<br/>
+    Last updated on Jul 10, 2023.<br/>
 </p>
         </footer>
     </div>

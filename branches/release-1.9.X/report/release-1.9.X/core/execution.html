@@ -33,7 +33,7 @@
         <td><div class='logo'>
             <div class='upper'>HPX</div>
             <div class='lower'>Dependency Report</div>
-            <div class='description'>1.9.0 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/e6d0ded09ddbd0833ff972b0342f1ef507889c23">e6d0ded09d</a>), 2023-05-22 16:01:00</div></div></td></tr></table><hr/>
+            <div class='description'>1.9.1-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/ca2b966e4950fbbb6b1ceaa377f06b268d87a74d">ca2b966e49</a>), 2023-07-10 18:19:55</div></div></td></tr></table><hr/>
 
 
 <h1 id="primary-dependencies">Primary dependencies for <em>core/execution</em></h1>
@@ -513,13 +513,10 @@
     <h3><code>&lt;hpx/iterator_support/traits/is_range.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/execution/executors/fused_bulk_execute.hpp&gt;</code></li>
     </ul>
-  <h2 id="core~lock_registration"><a href="../core/lock_registration.html"><em>core/lock_registration</em></a></h2>
-    <h3><code>&lt;hpx/modules/lock_registration.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/execution/algorithms/run_loop.hpp&gt;</code></li>
-    </ul>
   <h2 id="core~memory"><a href="../core/memory.html"><em>core/memory</em></a></h2>
     <h3><code>&lt;hpx/modules/memory.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/execution/algorithms/make_future.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/execution/algorithms/run_loop.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/execution/algorithms/split.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/execution/algorithms/start_detached.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/execution/detail/future_exec.hpp&gt;</code></li>
@@ -552,7 +549,7 @@
       <li>from <code>&lt;hpx/execution/executors/static_chunk_size.hpp&gt;</code></li>
     </ul>
   <h2 id="core~synchronization"><a href="../core/synchronization.html"><em>core/synchronization</em></a></h2>
-    <h3><code>&lt;hpx/synchronization/condition_variable.hpp&gt;</code></h3><ul>
+    <h3><code>&lt;hpx/synchronization/detail/condition_variable.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/execution/algorithms/run_loop.hpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/synchronization/spinlock.hpp&gt;</code></h3><ul>
@@ -626,6 +623,7 @@
       <li>from <code>&lt;hpx/execution/executors/polymorphic_executor.hpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/thread_support/atomic_count.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/execution/algorithms/run_loop.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/execution/algorithms/split.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/execution/algorithms/start_detached.hpp&gt;</code></li>
     </ul>
@@ -744,7 +742,6 @@
     </ul>
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/execution/algorithms/make_future.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/execution/algorithms/run_loop.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/execution/algorithms/start_detached.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/execution/algorithms/sync_wait.hpp&gt;</code></li>
     </ul>
@@ -774,6 +771,7 @@
   </ul>
   <h2><a href="../core/execution_base.html"><em>core/execution_base</em></a></h2><ul>
     <li><a href="../core/execution_base.html#core~format">adds <em>core/format</em></a></li>
+    <li><a href="../core/execution_base.html#core~lock_registration">adds <em>core/lock_registration</em></a></li>
   </ul>
   <h2><a href="../core/functional.html"><em>core/functional</em></a></h2><ul>
     <li><a href="../core/functional.html#core~debugging">adds <em>core/debugging</em></a></li>
@@ -793,6 +791,7 @@
     <li><a href="../core/synchronization.html#core~concurrency">adds <em>core/concurrency</em></a></li>
     <li><a href="../core/synchronization.html#core~hashing">adds <em>core/hashing</em></a></li>
     <li><a href="../core/synchronization.html#core~itt_notify">adds <em>core/itt_notify</em></a></li>
+    <li><a href="../core/synchronization.html#core~lock_registration">adds <em>core/lock_registration</em></a></li>
     <li><a href="../core/synchronization.html#core~logging">adds <em>core/logging</em></a></li>
   </ul>
   <h2><a href="../core/threading_base.html"><em>core/threading_base</em></a></h2><ul>
@@ -802,6 +801,7 @@
     <li><a href="../core/threading_base.html#core~format">adds <em>core/format</em></a></li>
     <li><a href="../core/threading_base.html#core~hardware">adds <em>core/hardware</em></a></li>
     <li><a href="../core/threading_base.html#core~itt_notify">adds <em>core/itt_notify</em></a></li>
+    <li><a href="../core/threading_base.html#core~lock_registration">adds <em>core/lock_registration</em></a></li>
     <li><a href="../core/threading_base.html#core~logging">adds <em>core/logging</em></a></li>
   </ul>
   <h2><a href="../core/timing.html"><em>core/timing</em></a></h2><ul>
@@ -1162,8 +1162,7 @@
     </ul>
   <h2 id="reverse-core~include_local"><a href="../core/include_local.html"><em>core/include_local</em></a></h2>
     <h3><code>&lt;hpx/modules/execution.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/local/execution.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/local/future.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/execution.hpp&gt;</code></li>
     </ul>
   <h2 id="reverse-core~init_runtime_local"><a href="../core/init_runtime_local.html"><em>core/init_runtime_local</em></a></h2>
     <h3><code>&lt;hpx/execution/detail/execution_parameter_callbacks.hpp&gt;</code></h3><ul>
@@ -1261,6 +1260,7 @@
       <li>from <code>&lt;hpx/include/parallel_executor_parameters.hpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/modules/execution.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/future.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/include/future.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/include/lcos_local.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/include/parallel_execution.hpp&gt;</code></li>
@@ -1284,6 +1284,6 @@
       <li>from <code>&lt;hpx/parallel/segmented_algorithms/detail/scan.hpp&gt;</code></li>
     </ul>
 <hr />
-<p class="footer">Generated on 2023-05-22 16:01:00 from revision 1.9.0 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/e6d0ded09ddbd0833ff972b0342f1ef507889c23">e6d0ded09d</a>)</p>
+<p class="footer">Generated on 2023-07-10 18:19:55 from revision 1.9.1-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/ca2b966e4950fbbb6b1ceaa377f06b268d87a74d">ca2b966e49</a>)</p>
 </body>
 </html>

@@ -199,6 +199,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="migration_guide.html">
+     Migration guide
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="building_tests_examples.html">
      Building tests and examples
     </a>
@@ -3165,6 +3170,11 @@
          hpx/components_base/server/managed_component_base.hpp
         </a>
        </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../libs/full/components_base/api/migration_support.html">
+         hpx/components_base/server/migration_support.hpp
+        </a>
+       </li>
       </ul>
      </li>
      <li class="toctree-l3 has-children">
@@ -3731,6 +3741,14 @@
    </i>
   </label>
   <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../releases/whats_new_1_9_1.html">
+     <em>
+      HPX
+     </em>
+     V1.9.1 (TBD)
+    </a>
+   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../releases/whats_new_1_9_0.html">
      <em>
@@ -4490,9 +4508,9 @@ before performing any further operations, leading to a more consistent and accur
 barrier’s synchronization point, they can re-use the same barrier. It is thus useful for
 managing repeated tasks, or phases of a larger task, that are handled by multiple threads.
 The code below shows how barriers can be used to synchronize two threads:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/barrier.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/future.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/barrier.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/future.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
@@ -4542,10 +4560,10 @@ being modified by multiple threads. Hence, it blocks one or more threads until a
 modifies a shared variable (the condition) and notifies the <code class="docutils literal notranslate"><span class="pre">condition_variable</span></code>. The code below
 shows how two threads modifying the shared variable <code class="docutils literal notranslate"><span class="pre">data</span></code> can be synchronized using the
 <code class="docutils literal notranslate"><span class="pre">condition_variable</span></code>:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/condition_variable.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/mutex.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/thread.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/condition_variable.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/mutex.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/thread.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span><span class="cp"></span>
@@ -4676,9 +4694,9 @@ calling the <code class="docutils literal notranslate"><span class="pre">arrive_
 mutex is used to protect data structures from race conditions and other synchronization-related issues. When
 a thread acquires a mutex, other threads that try to access the same resource will be blocked until the mutex
 is released. The code below shows the basic use of mutexes:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/future.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/mutex.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/future.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/mutex.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
@@ -4843,9 +4861,9 @@ thread, which means that the acquire and release call of a semaphore can happen 
 <li><p>binary semaphore: it is an alias for a <code class="docutils literal notranslate"><span class="pre">hpx::counting_semaphore&lt;1&gt;</span></code>. In this case, the least maximal value
 is 1. <code class="docutils literal notranslate"><span class="pre">hpx::binary_semaphore</span></code> can be used to implement locks.</p></li>
 </ul>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/semaphore.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/thread.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/semaphore.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/thread.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
@@ -5413,8 +5431,9 @@ implementation of <cite>tbb::task_group</cite> of the <a class="reference extern
 <p>The example below shows that to use a task group, you simply create an <code class="docutils literal notranslate"><span class="pre">hpx::task_group</span></code> object
 and add tasks to it using the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method. Once all the tasks have been added, you can call
 the <code class="docutils literal notranslate"><span class="pre">wait()</span></code> method to synchronize the tasks and wait for them to complete.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/parallel/task_group.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/experimental/task_group.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span><span class="cp"></span>
+
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">task1</span><span class="p">()</span><span class="w"></span>
@@ -5469,9 +5488,9 @@ sharing a same address space. These threads can communicate with each other thro
 such as futures or shared data structures.</p>
 <p>The example below demonstrates how to launch multiple threads and synchronize them using a <code class="docutils literal notranslate"><span class="pre">hpx::latch</span></code>
 object. It also shows how to query the state of threads and wait for futures to complete.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/future.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/thread.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/future.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/thread.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
@@ -5582,9 +5601,9 @@ thread.</p>
 invocation does not introduce data races or deadlocks.</p>
 </div>
 <p>The example below demonstrates how to perform a sequential and parallel <a class="reference internal" href="../libs/core/algorithms/api/for_each.html#_CPPv4I00EN3hpx8for_eachE1F6InIter6InIterRR1F" title="hpx::for_each"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::for_each</span></code></a> loop on a vector of integers.</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/algorithm.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/execution.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/local/init.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/algorithm.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/execution.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span><span class="cp"></span>
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
@@ -6302,7 +6321,7 @@ directive.</p></li>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on May 22, 2023.<br/>
+    Last updated on Jul 10, 2023.<br/>
 </p>
         </footer>
     </div>

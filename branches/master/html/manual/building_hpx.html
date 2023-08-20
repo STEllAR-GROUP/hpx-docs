@@ -4572,16 +4572,16 @@ between <code class="docutils literal notranslate"><span class="pre">Release</sp
 <li><p>If your dependencies are in custom locations, you may need to tell CMake where to find them by passing one or more options to CMake as shown below:</p></li>
 </ul>
 <blockquote>
-<div><div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake -DBOOST_ROOT<span class="o">=</span>/path/to/boost
-<span class="go">      -DHWLOC_ROOT=/path/to/hwloc</span>
-<span class="go">      -DTCMALLOC_ROOT=/path/to/tcmalloc</span>
-<span class="go">      -DJEMALLOC_ROOT=/path/to/jemalloc</span>
+<div><div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake -DBoost_ROOT<span class="o">=</span>/path/to/boost
+<span class="go">      -DHwloc_ROOT=/path/to/hwloc</span>
+<span class="go">      -DTcmalloc_ROOT=/path/to/tcmalloc</span>
+<span class="go">      -DJemalloc_ROOT=/path/to/jemalloc</span>
 <span class="go">      [other CMake variable definitions]</span>
 <span class="go">      /path/to/source/tree</span>
 </pre></div>
 </div>
 <p>For instance:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake -DBOOST_ROOT<span class="o">=</span>~/packages/boost -DHWLOC_ROOT<span class="o">=</span>/packages/hwloc -DCMAKE_INSTALL_PREFIX<span class="o">=</span>~/packages/hpx ~/downloads/hpx_1.5.1
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake -DBoost_ROOT<span class="o">=</span>~/packages/boost -DHwloc_ROOT<span class="o">=</span>/packages/hwloc -DCMAKE_INSTALL_PREFIX<span class="o">=</span>~/packages/hpx ~/downloads/hpx_1.5.1
 </pre></div>
 </div>
 </div></blockquote>
@@ -4661,14 +4661,14 @@ will happen. This is important because the building machinery will do an
 in any way. Instead, it will generate Visual Studio Solution Files, which
 will build <em>HPX</em> packages out of the <em>HPX</em> source tree.</p>
 </li>
-<li><p>Set three new environment variables (in CMake, not in Windows environment):
-<code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">ASIO_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>. The meaning of
+<li><p>Set new configuration variables (in CMake, not in Windows environment):
+<code class="docutils literal notranslate"><span class="pre">Boost_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">Hwloc_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">Asio_ROOT</span></code>, <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>. The meaning of
 these variables is as follows:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code> the <em>HPX</em> root directory of the unpacked Boost headers/cpp files.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">HWLOC_ROOT</span></code> the <em>HPX</em> root directory of the unpacked Portable Hardware Locality
+<li><p><code class="docutils literal notranslate"><span class="pre">Boost_ROOT</span></code> the <em>HPX</em> root directory of the unpacked Boost headers/cpp files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Hwloc_ROOT</span></code> the <em>HPX</em> root directory of the unpacked Portable Hardware Locality
 files.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ASIO_ROOT</span></code> the <em>HPX</em> root directory of the unpacked ASIO files. Alternatively use
+<li><p><code class="docutils literal notranslate"><span class="pre">Asio_ROOT</span></code> the <em>HPX</em> root directory of the unpacked ASIO files. Alternatively use
 <code class="docutils literal notranslate"><span class="pre">HPX_WITH_FETCH_ASIO</span></code> with value <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> the <em>HPX</em> root directory where the future builds of <em>HPX</em>
 should be installed.</p>
@@ -4690,13 +4690,13 @@ Repeat this for the first three variables.</p>
 <p><span class="caption-number">Fig. 4 </span><span class="caption-text">Example CMake adding entry.</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Alternatively, users could provide <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> instead of
-<code class="docutils literal notranslate"><span class="pre">BOOST_ROOT</span></code>; the difference is that <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> should point to
+<p>Alternatively, users could provide <code class="docutils literal notranslate"><span class="pre">Boost_LIBRARYDIR</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">Boost_ROOT</span></code>; the difference is that <code class="docutils literal notranslate"><span class="pre">Boost_LIBRARYDIR</span></code> should point to
 the subdirectory inside Boost root where all the compiled DLLs/LIBs are. For
-example, <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> may point to the <code class="docutils literal notranslate"><span class="pre">bin.v2</span></code> subdirectory under
+example, <code class="docutils literal notranslate"><span class="pre">Boost_LIBRARYDIR</span></code> may point to the <code class="docutils literal notranslate"><span class="pre">bin.v2</span></code> subdirectory under
 the Boost rootdir. It is important to keep the meanings of these two variables
-separated from each other: <code class="docutils literal notranslate"><span class="pre">BOOST_DIR</span></code> points to the ROOT folder of the
-Boost library. <code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code> points to the subdir inside the Boost root
+separated from each other: <code class="docutils literal notranslate"><span class="pre">Boost_DIR</span></code> points to the ROOT folder of the
+Boost library. <code class="docutils literal notranslate"><span class="pre">Boost_LIBRARYDIR</span></code> points to the subdir inside the Boost root
 folder where the compiled binaries are.</p>
 </li>
 <li><p>Click the ‘Configure’ button of CMake-GUI. You will be immediately presented with a
@@ -4760,7 +4760,7 @@ output similar to this one:</p>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on Aug 19, 2023.<br/>
+    Last updated on Aug 20, 2023.<br/>
 </p>
         </footer>
     </div>

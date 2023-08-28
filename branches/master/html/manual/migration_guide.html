@@ -4446,6 +4446,43 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   MPI
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-send-mpi-recv">
+     MPI_Send &amp; MPI_Recv
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-gather">
+     MPI_Gather
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-scatter">
+     MPI_Scatter
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-allgather">
+     MPI_Allgather
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-allreduce">
+     MPI_Allreduce
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-alltoall">
+     MPI_Alltoall
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
     </nav>
@@ -4620,6 +4657,43 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   MPI
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-send-mpi-recv">
+     MPI_Send &amp; MPI_Recv
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-gather">
+     MPI_Gather
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-scatter">
+     MPI_Scatter
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-allgather">
+     MPI_Allgather
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-allreduce">
+     MPI_Allreduce
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mpi-alltoall">
+     MPI_Alltoall
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
                         </nav>
@@ -4633,7 +4707,7 @@ title="Print to PDF"
   <section id="migration-guide">
 <span id="id2"></span><h1>Migration guide<a class="headerlink" href="#migration-guide" title="Permalink to this headline">#</a></h1>
 <p>The Migration Guide serves as a valuable resource for developers seeking to transition their
-parallel computing applications from different APIs (i.e. OpenMP, Intel Threading Building Blocks (TBB)) to <em>HPX</em>. <em>HPX</em>, an
+parallel computing applications from different APIs (i.e. OpenMP, Intel Threading Building Blocks (TBB), MPI) to <em>HPX</em>. <em>HPX</em>, an
 advanced C++ library, offers a versatile and high-performance platform for parallel and distributed
 computing, providing a wide range of features and capabilities. This guide aims to assist developers
 in understanding the key differences between different APIs and <em>HPX</em>, and it provides step-by-step
@@ -5502,6 +5576,751 @@ parallel execution, allowing for efficient sorting across available threads.</p>
 <p><em>HPX</em> drew inspiration from Intel Threading Building Blocks (TBB) to introduce the <a class="reference internal" href="../libs/core/algorithms/api/task_group.html#_CPPv4N3hpx12experimental10task_groupE" title="hpx::experimental::task_group"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::experimental::task_group</span></code></a>
 feature. Therefore, utilizing <a class="reference internal" href="../libs/core/algorithms/api/task_group.html#_CPPv4N3hpx12experimental10task_groupE" title="hpx::experimental::task_group"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::experimental::task_group</span></code></a> provides an
 equivalent functionality to <cite>tbb::task_group</cite>.</p>
+</section>
+</section>
+<section id="id7">
+<h2>MPI<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<p>MPI is a standardized communication protocol and library that allows multiple processes or
+nodes in a parallel computing system to exchange data and coordinate their execution.</p>
+<section id="mpi-send-mpi-recv">
+<h3>MPI_Send &amp; MPI_Recv<a class="headerlink" href="#mpi-send-mpi-recv" title="Permalink to this headline">#</a></h3>
+<p>Let’s assume we have the following simple message passing code where each process sends a
+message to the next process in a circular manner. The exchanged message is modified and printed
+to the console.</p>
+<p>MPI code:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstddef&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdint&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;mpi.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">times</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">num_localities</span><span class="p">;</span><span class="w"></span>
+<span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">this_locality</span><span class="p">;</span><span class="w"></span>
+<span class="n">MPI_Comm_rank</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">this_locality</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">next_locality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">this_locality</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">num_localities</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">msg_vec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">msg_vec</span><span class="p">[</span><span class="n">this_locality</span><span class="p">];</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">recv_msg</span><span class="p">;</span><span class="w"></span>
+<span class="n">MPI_Request</span><span class="w"> </span><span class="n">request_send</span><span class="p">,</span><span class="w"> </span><span class="n">request_recv</span><span class="p">;</span><span class="w"></span>
+<span class="n">MPI_Status</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cnt</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">times</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cnt</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">MPI_Isend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span><span class="w"> </span><span class="n">next_locality</span><span class="p">,</span><span class="w"> </span><span class="n">cnt</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="o">&amp;</span><span class="n">request_send</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Irecv</span><span class="p">(</span><span class="o">&amp;</span><span class="n">recv_msg</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span><span class="w"> </span><span class="n">next_locality</span><span class="p">,</span><span class="w"> </span><span class="n">cnt</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="o">&amp;</span><span class="n">request_recv</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">MPI_Wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">request_send</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">request_recv</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Time: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">cnt</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">this_locality</span><span class="w"></span>
+<span class="w">            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; received msg: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">recv_msg</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">recv_msg</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">recv_msg</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">MPI_Finalize</span><span class="p">();</span><span class="w"></span>
+<span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> equivalent:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/config.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/algorithm.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/hpx_init.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/modules/collectives.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstddef&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdint&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">hpx</span><span class="o">::</span><span class="nn">collectives</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="k">const</span><span class="o">*</span><span class="w"> </span><span class="n">channel_communicator_name</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;/example/channel_communicator/&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// the number of times</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">times</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">hpx_main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_num_localities</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_locality_id</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// allocate channel communicator</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">comm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_channel_communicator</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">channel_communicator_name</span><span class="p">,</span><span class="w"> </span><span class="n">num_sites_arg</span><span class="p">(</span><span class="n">num_localities</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="n">this_site_arg</span><span class="p">(</span><span class="n">this_locality</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">next_locality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">this_locality</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">num_localities</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">msg_vec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">msg_vec</span><span class="p">[</span><span class="n">this_locality</span><span class="p">];</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// send values to another locality</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">setf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">set</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span><span class="w"> </span><span class="n">that_site_arg</span><span class="p">(</span><span class="n">next_locality</span><span class="p">),</span><span class="w"> </span><span class="n">msg</span><span class="p">,</span><span class="w"> </span><span class="n">tag_arg</span><span class="p">(</span><span class="n">cnt</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">got_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span><span class="w"> </span><span class="n">that_site_arg</span><span class="p">(</span><span class="n">next_locality</span><span class="p">),</span><span class="w"> </span><span class="n">tag_arg</span><span class="p">(</span><span class="n">cnt</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">setf</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cnt</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">times</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">cnt</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">done_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">got_msg</span><span class="p">.</span><span class="n">then</span><span class="p">([</span><span class="o">&amp;</span><span class="p">](</span><span class="k">auto</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">rec_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Time: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">cnt</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">this_locality</span><span class="w"></span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; received msg: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">rec_msg</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">            </span><span class="c1">// change msg by adding 10</span>
+<span class="w">            </span><span class="n">rec_msg</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">            </span><span class="c1">// start next round</span>
+<span class="w">            </span><span class="n">setf</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                </span><span class="n">set</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span><span class="w"> </span><span class="n">that_site_arg</span><span class="p">(</span><span class="n">next_locality</span><span class="p">),</span><span class="w"> </span><span class="n">rec_msg</span><span class="p">,</span><span class="w"> </span><span class="n">tag_arg</span><span class="p">(</span><span class="n">cnt</span><span class="p">));</span><span class="w"></span>
+<span class="w">            </span><span class="n">got_msg</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                </span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span><span class="w"> </span><span class="n">that_site_arg</span><span class="p">(</span><span class="n">next_locality</span><span class="p">),</span><span class="w"> </span><span class="n">tag_arg</span><span class="p">(</span><span class="n">cnt</span><span class="p">));</span><span class="w"></span>
+<span class="w">            </span><span class="n">setf</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="p">});</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">done_msg</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="cp">#endif</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="cp">#if !defined(HPX_COMPUTE_DEVICE_CODE)</span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">init_params</span><span class="w"> </span><span class="n">params</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">params</span><span class="p">.</span><span class="n">cfg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;--hpx:run-hpx-main&quot;</span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="p">);</span><span class="w"></span>
+<span class="cp">#else</span>
+<span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">argc</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="n">argv</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="cp">#endif</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To perform message passing between different processes in <em>HPX</em> we can use a channel communicator.
+To understand this example, let’s focus on the <cite>hpx_main()</cite> function:</p>
+<ul class="simple">
+<li><p><cite>hpx::get_num_localities(hpx::launch::sync)</cite> retrieves the number of localities, while
+<cite>hpx::get_locality_id()</cite> returns the ID of the current locality.</p></li>
+<li><p><cite>create_channel_communicator</cite> function is used to create a channel to serve the communication.
+This function takes several arguments, including the launch policy (<cite>hpx::launch::sync</cite>), the
+name of the communicator (<cite>channel_communicator_name</cite>), the number of localities, and the ID
+of the current locality.</p></li>
+<li><p>The communication follows a ring pattern, where each process (or locality) sends a message to
+its neighbor in a circular manner. This means that the messages circulate around the localities,
+ensuring that the communication wraps around when reaching the end of the locality sequence.
+To achieve this, the <cite>next_locality</cite> variable is calculated as the ID of the next locality in
+the ring.</p></li>
+<li><p>The initial values for the communication are set (<cite>msg_vec</cite>, <cite>cnt</cite>, <cite>msg</cite>).</p></li>
+<li><p>The <cite>set()</cite> function is called to send the message to the next locality in the ring. The message
+is sent asynchronously and is associated with a tag (<cite>cnt</cite>).</p></li>
+<li><p>The <cite>get()</cite> function is called to receive a message from the next locality. It is also associated
+with the same tag as the <cite>set()</cite> operation.</p></li>
+<li><p>The <cite>setf.get()</cite> call blocks until the message sending operation is complete.</p></li>
+<li><p>A continuation is set up using the function <cite>then()</cite> to handle the received message.
+Inside the continuation:</p>
+<ul>
+<li><p>The received message value (<cite>rec_msg</cite>) is retrieved using <cite>f.get()</cite>.</p></li>
+<li><p>The received message is printed to the console and then modified by adding 10.</p></li>
+<li><p>The <cite>set()</cite> and <cite>get()</cite> operations are repeated to send and receive the modified message to
+the next locality.</p></li>
+<li><p>The <cite>setf.get()</cite> call blocks until the new message sending operation is complete.</p></li>
+</ul>
+</li>
+<li><p>The <cite>done_msg.get()</cite> call blocks until the continuation is complete for the current loop iteration.</p></li>
+</ul>
+<p>Having said that, we conclude to the following table:</p>
+<table class="table" id="id8">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text"><em>HPX</em> equivalent functions of MPI</span><a class="headerlink" href="#id8" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Open MPI function</p></th>
+<th class="head"><p><em>HPX</em> equivalent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MPI_Comm_size</p></td>
+<td><p><cite>hpx::get_num_localities</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>MPI_Comm_rank</p></td>
+<td><p><cite>hpx::get_locality_id()</cite></p></td>
+</tr>
+<tr class="row-even"><td><p>MPI_Isend</p></td>
+<td><p><cite>hpx::collectives::set()</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>MPI_Irecv</p></td>
+<td><p><cite>hpx::collectives::get()</cite></p></td>
+</tr>
+<tr class="row-even"><td><p>MPI_Wait</p></td>
+<td><p><cite>hpx::collectives::get()</cite> used with a future i.e. <cite>setf.get()</cite></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mpi-gather">
+<h3>MPI_Gather<a class="headerlink" href="#mpi-gather" title="Permalink to this headline">#</a></h3>
+<p>The following code gathers data from all processes to the root process and verifies
+the gathered data in the root process.</p>
+<p>MPI code:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;mpi.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;numeric&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">num_localities</span><span class="p">,</span><span class="w"> </span><span class="n">this_locality</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_rank</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">this_locality</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">local_data</span><span class="p">;</span><span class="w"> </span><span class="c1">// Data to be gathered</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">this_locality</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">local_data</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">num_localities</span><span class="p">);</span><span class="w"> </span><span class="c1">// Resize the vector on the root process</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Each process calculates its local data value</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">my_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">this_locality</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// Gather data from all processes to the root process (process 0)</span>
+<span class="w">        </span><span class="n">MPI_Gather</span><span class="p">(</span><span class="o">&amp;</span><span class="n">my_data</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span><span class="w"> </span><span class="n">local_data</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// Only the root process (process 0) will print the gathered data</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">this_locality</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Gathered data on the root: &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_localities</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">local_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">MPI_Finalize</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> equivalent:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_num_localities</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_locality_id</span><span class="p">();</span><span class="w"></span>
+
+<span class="c1">// test functionality based on immediate local result value</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">gather_direct_client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_communicator</span><span class="p">(</span><span class="n">gather_direct_basename</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">num_sites_arg</span><span class="p">(</span><span class="n">num_localities</span><span class="p">),</span><span class="w"> </span><span class="n">this_site_arg</span><span class="p">(</span><span class="n">this_locality</span><span class="p">));</span><span class="w"></span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">this_locality</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">overall_result</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">            </span><span class="n">gather_here</span><span class="p">(</span><span class="n">gather_direct_client</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="p">(</span><span class="mi">42</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">overall_result</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Gathered data on the root:&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">sol</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">HPX_TEST</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">sol</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sol</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">overall_result</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">            </span><span class="n">gather_there</span><span class="p">(</span><span class="n">gather_direct_client</span><span class="p">,</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">overall_result</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This code will print 10 times the following message:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Gathered</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">root</span><span class="o">:</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="mi">43</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> uses two functions to implement the functionality of <cite>MPI_Gather</cite>: <cite>hpx::gather_here</cite> and
+<cite>hpx::gather_there</cite>. <cite>hpx::gather_here</cite> is gathering data from all localities to the locality
+with ID 0 (root locality). <cite>hpx::gather_there</cite> allows non-root localities to participate in the
+gather operation by sending data to the root locality. In more detail:</p>
+<ul class="simple">
+<li><p><cite>hpx::get_num_localities(hpx::launch::sync)</cite> retrieves the number of localities, while
+<cite>hpx::get_locality_id()</cite> returns the ID of the current locality.</p></li>
+<li><p>The function <cite>create_communicator()</cite> is used to create a communicator called
+<cite>gather_direct_client</cite>.</p></li>
+<li><p>If the current locality is the root (its ID is equal to 0):</p>
+<ul>
+<li><p>the <cite>hpx::gather_here</cite> function is used to perform the gather operation. It collects data from all
+other localities into the <cite>overall_result</cite> future object. The function arguments provide the necessary
+information, such as the base name for the gather operation (<cite>gather_direct_basename</cite>), the value
+to be gathered (<cite>value</cite>), the number of localities (<cite>num_localities</cite>), the current locality ID
+(<cite>this_locality</cite>), and the generation number (related to the gather operation).</p></li>
+<li><p>The <cite>get()</cite> member function of the <cite>overall_result</cite> future is used to retrieve the gathered data.</p></li>
+<li><p>The next <cite>for</cite> loop is used to verify the correctness of the gathered data (<cite>sol</cite>). <cite>HPX_TEST</cite>
+is a macro provided by the <em>HPX</em> testing utilities to perform similar testing with the Standard
+C++ macro <cite>assert</cite>.</p></li>
+</ul>
+</li>
+<li><p>If the current locality is not the root:</p>
+<ul>
+<li><p>The <cite>hpx::gather_there</cite> function is used to participate in the gather operation initiated by
+the root locality. It sends the data (in this case, the value <cite>this_locality + 42</cite>) to the root
+locality, indicating that it should be included in the gathering.</p></li>
+<li><p>The <cite>get()</cite> member function of the <cite>overall_result</cite> future is used to wait for the gather operation
+to complete for this locality.</p></li>
+</ul>
+</li>
+</ul>
+<table class="table" id="id9">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text"><em>HPX</em> equivalent functions of MPI</span><a class="headerlink" href="#id9" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Open MPI function</p></th>
+<th class="head"><p><em>HPX</em> equivalent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MPI_Comm_size</p></td>
+<td><p><cite>hpx::get_num_localities</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>MPI_Comm_rank</p></td>
+<td><p><cite>hpx::get_locality_id()</cite></p></td>
+</tr>
+<tr class="row-even"><td><p>MPI_Gather</p></td>
+<td><p><cite>hpx::gather_here()</cite> and <cite>hpx::gather_there()</cite> both used with <cite>get()</cite></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mpi-scatter">
+<h3>MPI_Scatter<a class="headerlink" href="#mpi-scatter" title="Permalink to this headline">#</a></h3>
+<p>The following code gathers data from all processes to the root process and verifies
+the gathered data in the root process.</p>
+<p>MPI code:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;mpi.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">num_localities</span><span class="p">,</span><span class="w"> </span><span class="n">this_locality</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_rank</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">this_locality</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_localities</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">(</span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">this_locality</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Fill the data vector on the root locality (locality 0)</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_localities</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">local_data</span><span class="p">;</span><span class="w"> </span><span class="c1">// Variable to store the received data</span>
+
+<span class="w">    </span><span class="c1">// Scatter data from the root locality to all other localities</span>
+<span class="w">    </span><span class="n">MPI_Scatter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">local_data</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Now, each locality has its own local_data</span>
+
+<span class="w">    </span><span class="c1">// Print the local_data on each locality</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; received &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">local_data</span><span class="w"></span>
+<span class="w">                </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">MPI_Finalize</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> equivalent:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_num_localities</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">);</span><span class="w"></span>
+<span class="n">HPX_TEST_LTE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_locality_id</span><span class="p">();</span><span class="w"></span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">scatter_direct_client</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">collectives</span><span class="o">::</span><span class="n">create_communicator</span><span class="p">(</span><span class="n">scatter_direct_basename</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">num_sites_arg</span><span class="p">(</span><span class="n">num_localities</span><span class="p">),</span><span class="w"> </span><span class="n">this_site_arg</span><span class="p">(</span><span class="n">this_locality</span><span class="p">));</span><span class="w"></span>
+
+<span class="c1">// test functionality based on immediate local result value</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">this_locality</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">(</span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">iota</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">            </span><span class="n">scatter_to</span><span class="p">(</span><span class="n">scatter_direct_client</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">data</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">HPX_TEST_EQ</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">this_locality</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">            </span><span class="n">scatter_from</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">scatter_direct_client</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">HPX_TEST_EQ</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">this_locality</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; received &quot;</span><span class="w"></span>
+<span class="w">                  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For num_localities = 2 and since we run for 10 iterations this code will print
+the following message:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">43</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">44</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">45</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">46</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">47</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">48</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">49</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">50</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">51</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="mi">52</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> uses two functions to implement the functionality of <cite>MPI_Scatter</cite>: <cite>hpx::scatter_to</cite> and
+<cite>hpx::scatter_from</cite>. <cite>hpx::scatter_to</cite> is distributing the data from the locality with ID 0
+(root locality) to all other localities. <cite>hpx::scatter_from</cite> allows non-root localities to receive
+the data from the root locality. In more detail:</p>
+<ul class="simple">
+<li><p><cite>hpx::get_num_localities(hpx::launch::sync)</cite> retrieves the number of localities, while
+<cite>hpx::get_locality_id()</cite> returns the ID of the current locality.</p></li>
+<li><p>The function <cite>hpx::collectives::create_communicator()</cite> is used to create a communicator called
+<cite>scatter_direct_client</cite>.</p></li>
+<li><p>If the current locality is the root (its ID is equal to 0):</p>
+<ul>
+<li><p>The data vector is filled with values ranging from <cite>42 + i</cite> to <cite>42 + i + num_localities - 1</cite>.</p></li>
+<li><p>The <cite>hpx::scatter_to</cite> function is used to perform the scatter operation using the communicator
+<cite>scatter_direct_client</cite>. This scatters the data vector to other localities and
+returns a future representing the result.</p></li>
+<li><p><cite>HPX_TEST_EQ</cite> is a macro provided by the <em>HPX</em> testing utilities to test the distributed values.</p></li>
+</ul>
+</li>
+<li><p>If the current locality is not the root:</p>
+<ul>
+<li><p>The <cite>hpx::scatter_from</cite> function is used to collect the data by the root locality.</p></li>
+<li><p><cite>HPX_TEST_EQ</cite> is a macro provided by the <em>HPX</em> testing utilities to test the collected values.</p></li>
+</ul>
+</li>
+</ul>
+<table class="table" id="id10">
+<caption><span class="caption-number">Table 7 </span><span class="caption-text"><em>HPX</em> equivalent functions of MPI</span><a class="headerlink" href="#id10" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Open MPI function</p></th>
+<th class="head"><p><em>HPX</em> equivalent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MPI_Comm_size</p></td>
+<td><p><cite>hpx::get_num_localities</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>MPI_Comm_rank</p></td>
+<td><p><cite>hpx::get_locality_id()</cite></p></td>
+</tr>
+<tr class="row-even"><td><p>MPI_Scatter</p></td>
+<td><p><cite>hpx::scatter_to()</cite> and <cite>hpx::scatter_from()</cite></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mpi-allgather">
+<h3>MPI_Allgather<a class="headerlink" href="#mpi-allgather" title="Permalink to this headline">#</a></h3>
+<p>The following code gathers data from all processes and sends the data to all
+processes.</p>
+<p>MPI code:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdint&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;mpi.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_rank</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rank</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">size</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Get the number of MPI processes</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Get the MPI process rank</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rank</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">here</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Perform an all-gather operation to gather values from all processes.</span>
+<span class="w">    </span><span class="n">MPI_Allgather</span><span class="p">(</span><span class="o">&amp;</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_UINT32_T</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_UINT32_T</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Print the result.</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; has values:&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">MPI_Finalize</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> equivalent:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_num_localities</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_locality_id</span><span class="p">();</span><span class="w"></span>
+
+<span class="c1">// test functionality based on immediate local result value</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">all_gather_direct_client</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">create_communicator</span><span class="p">(</span><span class="n">all_gather_direct_basename</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">num_sites_arg</span><span class="p">(</span><span class="n">num_localities</span><span class="p">),</span><span class="w"> </span><span class="n">this_site_arg</span><span class="p">(</span><span class="n">here</span><span class="p">));</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">here</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">overall_result</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">all_gather</span><span class="p">(</span><span class="n">all_gather_direct_client</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">overall_result</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; has values:&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For num_localities = 2 this code will print the following message:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Locality</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">values</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">values</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> uses the function <cite>all_gather</cite> to implement the functionality of <cite>MPI_Allgather</cite>. In more
+detail:</p>
+<ul class="simple">
+<li><p><cite>hpx::get_num_localities(hpx::launch::sync)</cite> retrieves the number of localities, while
+<cite>hpx::get_locality_id()</cite> returns the ID of the current locality.</p></li>
+<li><p>The function <cite>hpx::collectives::create_communicator()</cite> is used to create a communicator called
+<cite>all_gather_direct_client</cite>.</p></li>
+<li><p>The values that the localities exchange with each other are equal to each locality’s ID.</p></li>
+<li><p>The gather operation is performed using <cite>all_gather</cite>. The result is stored in an <cite>hpx::future</cite>
+object called <cite>overall_result</cite>, which represents a future result that can be retrieved later when
+needed.</p></li>
+<li><p>The <cite>get()</cite> function waits until the result is available and then stores it in the vector called <cite>r</cite>.</p></li>
+</ul>
+</section>
+<section id="mpi-allreduce">
+<h3>MPI_Allreduce<a class="headerlink" href="#mpi-allreduce" title="Permalink to this headline">#</a></h3>
+<p>The following code combines values from all processes and distributes the result back to all processes.</p>
+<p>MPI code:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdint&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;mpi.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_rank</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rank</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">size</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Get the number of MPI processes</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Get the MPI process rank</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rank</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Create a communicator for the all reduce operation.</span>
+<span class="w">    </span><span class="n">MPI_Comm</span><span class="w"> </span><span class="n">all_reduce_direct_client</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_split</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">all_reduce_direct_client</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Perform the all reduce operation to calculate the sum of &#39;here&#39; values.</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">here</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Allreduce</span><span class="p">(</span><span class="o">&amp;</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">res</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_UINT32_T</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_SUM</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">all_reduce_direct_client</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">rank</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; has value: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">MPI_Finalize</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> equivalent:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_num_localities</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_locality_id</span><span class="p">();</span><span class="w"></span>
+
+<span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">all_reduce_direct_client</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">create_communicator</span><span class="p">(</span><span class="n">all_reduce_direct_basename</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">num_sites_arg</span><span class="p">(</span><span class="n">num_localities</span><span class="p">),</span><span class="w"> </span><span class="n">this_site_arg</span><span class="p">(</span><span class="n">here</span><span class="p">));</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">here</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">overall_result</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">all_reduce</span><span class="p">(</span><span class="n">all_reduce_direct_client</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">plus</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="p">{});</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">overall_result</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; has value: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For num_localities = 2 this code will print the following message:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Locality</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> uses the function <cite>all_reduce</cite> to implement the functionality of <cite>MPI_Allreduce</cite>. In more
+detail:</p>
+<ul class="simple">
+<li><p><cite>hpx::get_num_localities(hpx::launch::sync)</cite> retrieves the number of localities, while
+<cite>hpx::get_locality_id()</cite> returns the ID of the current locality.</p></li>
+<li><p>The function <cite>hpx::collectives::create_communicator()</cite> is used to create a communicator called
+<cite>all_reduce_direct_client</cite>.</p></li>
+<li><p>The value of each locality is equal to its ID.</p></li>
+<li><p>The reduce operation is performed using <cite>all_reduce</cite>. The result is stored in an <cite>hpx::future</cite>
+object called <cite>overall_result</cite>, which represents a future result that can be retrieved later when
+needed.</p></li>
+<li><p>The <cite>get()</cite> function waits until the result is available and then stores it in the variable <cite>res</cite>.</p></li>
+</ul>
+</section>
+<section id="mpi-alltoall">
+<h3>MPI_Alltoall<a class="headerlink" href="#mpi-alltoall" title="Permalink to this headline">#</a></h3>
+<p>The following code cGathers data from and scatters data to all processes.</p>
+<p>MPI code:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdint&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;mpi.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_rank</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rank</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">size</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Get the number of MPI processes</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Get the MPI process rank</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rank</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Create a communicator for all-to-all operation.</span>
+<span class="w">    </span><span class="n">MPI_Comm</span><span class="w"> </span><span class="n">all_to_all_direct_client</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">MPI_Comm_split</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">all_to_all_direct_client</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">values</span><span class="p">(</span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">fill</span><span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">this_locality</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Create vectors to store received values.</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Perform an all-to-all operation to exchange values with other localities.</span>
+<span class="w">    </span><span class="n">MPI_Alltoall</span><span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_UINT32_T</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_UINT32_T</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="n">all_to_all_direct_client</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Print the results.</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; has values:&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">MPI_Finalize</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> equivalent:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">num_localities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_num_localities</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_locality_id</span><span class="p">();</span><span class="w"></span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">all_to_all_direct_client</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">create_communicator</span><span class="p">(</span><span class="n">all_to_all_direct_basename</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">num_sites_arg</span><span class="p">(</span><span class="n">num_localities</span><span class="p">),</span><span class="w"> </span><span class="n">this_site_arg</span><span class="p">(</span><span class="n">this_locality</span><span class="p">));</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">values</span><span class="p">(</span><span class="n">num_localities</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">fill</span><span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">this_locality</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">overall_result</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">all_to_all</span><span class="p">(</span><span class="n">all_to_all_direct_client</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">values</span><span class="p">));</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">overall_result</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locality &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; has values:&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For num_localities = 2 this code will print the following message:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Locality</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">values</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">Locality</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">values</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>HPX</em> uses the function <cite>all_to_all</cite> to implement the functionality of <cite>MPI_Alltoall</cite>. In more
+detail:</p>
+<ul class="simple">
+<li><p><cite>hpx::get_num_localities(hpx::launch::sync)</cite> retrieves the number of localities, while
+<cite>hpx::get_locality_id()</cite> returns the ID of the current locality.</p></li>
+<li><p>The function <cite>hpx::collectives::create_communicator()</cite> is used to create a communicator called
+<cite>all_to_all_direct_client</cite>.</p></li>
+<li><p>The value each locality sends is equal to its ID.</p></li>
+<li><p>The all-to-all operation is performed using <cite>all_to_all</cite>. The result is stored in an <cite>hpx::future</cite>
+object called <cite>overall_result</cite>, which represents a future result that can be retrieved later when
+needed.</p></li>
+<li><p>The <cite>get()</cite> function waits until the result is available and then stores it in the variable <cite>r</cite>.</p></li>
+</ul>
 </section>
 </section>
 </section>

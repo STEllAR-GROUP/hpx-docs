@@ -4434,9 +4434,13 @@ program is encoded.</p>
 <span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">options_description</span><span class="w"> </span><span class="n">desc_commandline</span><span class="p">(</span><span class="w"></span>
 <span class="w">        </span><span class="s">&quot;Usage: &quot;</span><span class="w"> </span><span class="n">HPX_APPLICATION_STRING</span><span class="w"> </span><span class="s">&quot; [options]&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">    </span><span class="n">desc_commandline</span><span class="p">.</span><span class="n">add_options</span><span class="p">()(</span><span class="s">&quot;n-value&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">value</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w"></span>
-<span class="w">        </span><span class="s">&quot;n value for the Fibonacci function&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// clang-format off</span>
+<span class="w">    </span><span class="n">desc_commandline</span><span class="p">.</span><span class="n">add_options</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="s">&quot;n-value&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">value</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;n value for the Fibonacci function&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// clang-format on</span>
 
 <span class="w">    </span><span class="c1">// Initialize and run HPX</span>
 <span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init_params</span><span class="w"> </span><span class="n">init_args</span><span class="p">;</span><span class="w"></span>
@@ -4454,6 +4458,9 @@ time it takes to do the computation, the <code class="docutils literal notransla
 synchronously, and the answer is printed out.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">hpx_main</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">variables_map</span><span class="o">&amp;</span><span class="w"> </span><span class="n">vm</span><span class="p">)</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">add_scheduler_mode</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">threads</span><span class="o">::</span><span class="n">policies</span><span class="o">::</span><span class="n">scheduler_mode</span><span class="o">::</span><span class="n">fast_idle_mode</span><span class="p">);</span><span class="w"></span>
+
 <span class="w">    </span><span class="c1">// extract command line argument, i.e. fib(N)</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vm</span><span class="p">[</span><span class="s">&quot;n-value&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
 
@@ -4479,15 +4486,10 @@ asynchronous. To understand what is happening we have to look inside the
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"></span>
 
-<span class="w">    </span><span class="c1">// Invoking the Fibonacci algorithm twice is inefficient.</span>
-<span class="w">    </span><span class="c1">// However, we intentionally demonstrate it this way to create some</span>
-<span class="w">    </span><span class="c1">// heavy workload.</span>
-
 <span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">n1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">fibonacci</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">n2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">async</span><span class="p">(</span><span class="n">fibonacci</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">n2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">n1</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
-<span class="w">        </span><span class="n">n2</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w">    </span><span class="c1">// wait for the Futures to return their values</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">n1</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n2</span><span class="p">;</span><span class="w">    </span><span class="c1">// wait for the Future to return their values</span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
@@ -4550,7 +4552,7 @@ efficiently chain together multiple tasks.</p>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on Aug 29, 2023.<br/>
+    Last updated on Aug 30, 2023.<br/>
 </p>
         </footer>
     </div>

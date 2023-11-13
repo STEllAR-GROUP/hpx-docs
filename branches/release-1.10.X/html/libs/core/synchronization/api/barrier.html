@@ -885,6 +885,11 @@
      Public API
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../api/public_distributed_api.html">
+     Public distributed API
+    </a>
+   </li>
    <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="../../../../api/full_api.html">
      Full API
@@ -1938,6 +1943,11 @@
        <li class="toctree-l4">
         <a class="reference internal" href="../../execution/api/auto_chunk_size.html">
          hpx/execution/executors/auto_chunk_size.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/default_parameters.html">
+         hpx/execution/executors/default_parameters.hpp
         </a>
        </li>
        <li class="toctree-l4">
@@ -4343,10 +4353,7 @@ title="Print to PDF"
 <span id="_CPPv3N3hpx7barrier7barrierENSt9ptrdiff_tE12OnCompletion"></span><span id="_CPPv2N3hpx7barrier7barrierENSt9ptrdiff_tE12OnCompletion"></span><span id="hpx::barrier::barrier__std::ptrdiff_t.OnCompletionCE"></span><span class="target" id="classhpx_1_1barrier_1a2b523c9f5b558a12fb9033fd731f375d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">barrier</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../coroutines/api/thread_id_type.html#_CPPv4St" title="std"><span class="n"><span class="pre">std</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ptrdiff_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">expected</span></span>, <a class="reference internal" href="#_CPPv4I0EN3hpx7barrierE" title="hpx::barrier::OnCompletion"><span class="n"><span class="pre">OnCompletion</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">completion</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN3hpx7barrierE" title="hpx::barrier::OnCompletion"><span class="n"><span class="pre">OnCompletion</span></span></a><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3hpx7barrier7barrierENSt9ptrdiff_tE12OnCompletion" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Preconditions: expected &gt;= 0 is true and expected &lt;= max() is true.</p>
 <p>Effects: Sets both the initial expected count for each barrier phase and the current expected count for the first phase to expected. Initializes completion with std::move(f). Starts the first phase. [Note: If expected is 0 this object can only be destroyed.- end note]</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws </dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
+<p>Throws: Any exception thrown by CompletionFunction’s move constructor. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -4360,9 +4367,12 @@ title="Print to PDF"
 <dd><p>Preconditions: update &gt; 0 is true, and update is less than or equal to the expected count for the current barrier phase.</p>
 <p>Effects: Constructs an object of type arrival_token that is associated with the phase synchronization point for the current phase. Then, decrements the expected count by update.</p>
 <p>Synchronization: The call to arrive strongly happens before the start of the phase completion step for the current phase.</p>
+<p>
+Error conditions: Any of the error conditions allowed for mutex types([thread.mutex.requirements.mutex]). [Note: This call can cause the completion step for the current phase to start.- end note] </p>
 <dl class="field-list simple">
-<dt class="field-odd">Throws </dt>
-<dd class="field-odd"><p></p></dd>
+<dt class="field-odd">Throws</dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">system_error</span></span></span> – when an exception is required ([thread.req.exception]).</p>
+</dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>: The constructed arrival_token object.</p>
 </dd>
@@ -4375,8 +4385,9 @@ title="Print to PDF"
 <dd><p>Preconditions: arrival is associated with the phase synchronization point for the current phase or the immediately preceding phase of the same barrier object.</p>
 <p>Effects: Blocks at the synchronization point associated with HPX_MOVE(arrival) until the phase completion step of the synchronization point’s phase is run. [ Note: If arrival is associated with the synchronization point for a previous phase, the call returns immediately. - end note ]</p>
 <dl class="field-list simple">
-<dt class="field-odd">Throws </dt>
-<dd class="field-odd"><p></p></dd>
+<dt class="field-odd">Throws</dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">system_error</span></span></span> – when an exception is required ([thread.req.exception]). Error conditions: Any of the error conditions allowed for mutex types ([thread.mutex.requirements.mutex]). </p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -4393,8 +4404,9 @@ title="Print to PDF"
 <p>Effects: Decrements the initial expected count for all subsequent phases by one. Then decrements the expected count for the current phase by one.</p>
 <p>Synchronization: The call to arrive_and_drop strongly happens before the start of the phase completion step for the current phase.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Throws </dt>
-<dd class="field-odd"><p></p></dd>
+<dt class="field-odd">Throws</dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">system_error</span></span></span> – when an exception is required ([thread.req.exception]).Error conditions: Any of the error conditions allowed for mutex types ([thread.mutex.requirements.mutex]). [Note: This call can cause the completion step for the current phase to start.- end note] </p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -4486,7 +4498,7 @@ title="Print to PDF"
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on Oct 16, 2023.<br/>
+    Last updated on Nov 13, 2023.<br/>
 </p>
         </footer>
     </div>

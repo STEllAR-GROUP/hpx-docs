@@ -5309,7 +5309,7 @@ performance counter based on the Sine example, which you can find in the
 directory <code class="docutils literal notranslate"><span class="pre">examples/performance_counters/sine/</span></code>.</p>
 <p>The base class is defined in the header file <a class="reference download internal" download="" href="../_downloads/d3b25bcbf98f8a7fc6a27e4befa7e1fe/base_performance_counter.hpp"><code class="xref download docutils literal notranslate"><span class="pre">base_performance_counter.cpp</span></code></a>
 as:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//  Copyright (c) 2007-2018 Hartmut Kaiser</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//  Copyright (c) 2007-2023 Hartmut Kaiser</span>
 <span class="c1">//</span>
 <span class="c1">//  SPDX-License-Identifier: BSL-1.0</span>
 <span class="c1">//  Distributed under the Boost Software License, Version 1.0. (See accompanying</span>
@@ -5323,17 +5323,20 @@ as:</p>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/components_base/server/component_base.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/performance_counters/counters.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/performance_counters/server/base_performance_counter.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/runtime_local/get_locality_id.hpp&gt;</span><span class="cp"></span>
 
 <span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
 <span class="c1">//[performance_counter_base_class</span>
-<span class="k">namespace</span><span class="w"> </span><span class="nn">hpx</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">performance_counters</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">hpx</span><span class="o">::</span><span class="nn">performance_counters</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
 <span class="w">    </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Derived</span><span class="o">&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">base_performance_counter</span><span class="p">;</span><span class="w"></span>
-<span class="p">}}</span><span class="w">    </span><span class="c1">// namespace hpx::performance_counters</span>
+<span class="p">}</span><span class="w">    </span><span class="c1">// namespace hpx::performance_counters</span>
 <span class="c1">//]</span>
 
 <span class="c1">///////////////////////////////////////////////////////////////////////////////</span>
-<span class="k">namespace</span><span class="w"> </span><span class="nn">hpx</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">performance_counters</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">hpx</span><span class="o">::</span><span class="nn">performance_counters</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
 <span class="w">    </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Derived</span><span class="o">&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">base_performance_counter</span><span class="w"></span>
 <span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">server</span><span class="o">::</span><span class="n">base_performance_counter</span><span class="w"></span>
@@ -5349,7 +5352,7 @@ as:</p>
 
 <span class="w">        </span><span class="n">base_performance_counter</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w"></span>
 
-<span class="w">        </span><span class="n">base_performance_counter</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">explicit</span><span class="w"> </span><span class="n">base_performance_counter</span><span class="p">(</span><span class="w"></span>
 <span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">performance_counters</span><span class="o">::</span><span class="n">counter_info</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">info</span><span class="p">)</span><span class="w"></span>
 <span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="n">base_type_holder</span><span class="p">(</span><span class="n">info</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="p">{</span><span class="w"></span>
@@ -5370,7 +5373,7 @@ as:</p>
 <span class="w">                </span><span class="k">const_cast</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Derived</span><span class="w"> </span><span class="k">const</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">)));</span><span class="w"></span>
 <span class="w">        </span><span class="p">}</span><span class="w"></span>
 <span class="w">    </span><span class="p">};</span><span class="w"></span>
-<span class="p">}}</span><span class="w">    </span><span class="c1">// namespace hpx::performance_counters</span>
+<span class="p">}</span><span class="w">    </span><span class="c1">// namespace hpx::performance_counters</span>
 </pre></div>
 </div>
 <p>The single template parameter is expected to receive the type of the
@@ -8720,7 +8723,7 @@ instructions on using APEX with <em>HPX</em>.</p>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2023, The STE||AR Group.<br/>
-    Last updated on Nov 22, 2023.<br/>
+    Last updated on Dec 02, 2023.<br/>
 </p>
         </footer>
     </div>

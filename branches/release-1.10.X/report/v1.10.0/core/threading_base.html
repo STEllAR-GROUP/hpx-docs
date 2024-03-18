@@ -33,7 +33,7 @@
         <td><div class='logo'>
             <div class='upper'>HPX</div>
             <div class='lower'>Dependency Report</div>
-            <div class='description'>1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/b20178d10fd6121a99c911164830796634252a55">b20178d10f</a>), 2023-11-13 16:54:27</div></div></td></tr></table><hr/>
+            <div class='description'>1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/200ca7ca7152c757ccb91b0d4e735af9ad3a1fb0">200ca7ca71</a>), 2024-03-18 16:09:59</div></div></td></tr></table><hr/>
 
 
 <h1 id="primary-dependencies">Primary dependencies for <em>core/threading_base</em></h1>
@@ -201,7 +201,9 @@
     </ul>
   <h2 id="core~debugging"><a href="../core/debugging.html"><em>core/debugging</em></a></h2>
     <h3><code>&lt;hpx/debugging/backtrace.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/threading_base/detail/reset_backtrace.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/threading_base/thread_data.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/threading_base/thread_helpers.hpp&gt;</code></li>
       <li>from <code>&lt;libs/core/threading_base/src/execution_agent.cpp&gt;</code></li>
       <li>from <code>&lt;libs/core/threading_base/src/thread_helpers.cpp&gt;</code></li>
     </ul>
@@ -209,8 +211,6 @@
       <li>from <code>&lt;hpx/threading_base/print.hpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/modules/debugging.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/threading_base/detail/reset_backtrace.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/threading_base/thread_helpers.hpp&gt;</code></li>
       <li>from <code>&lt;libs/core/threading_base/src/detail/reset_backtrace.cpp&gt;</code></li>
     </ul>
   <h2 id="core~errors"><a href="../core/errors.html"><em>core/errors</em></a></h2>
@@ -317,6 +317,9 @@
     <h3><code>&lt;hpx/functional/traits/is_action.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/threading_base/thread_description.hpp&gt;</code></li>
     </ul>
+    <h3><code>&lt;hpx/modules/functional.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;libs/core/threading_base/src/execution_agent.cpp&gt;</code></li>
+    </ul>
   <h2 id="core~hardware"><a href="../core/hardware.html"><em>core/hardware</em></a></h2>
     <h3><code>&lt;hpx/hardware/timestamp.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/threading_base/src/thread_pool_base.cpp&gt;</code></li>
@@ -389,6 +392,7 @@
     <li><a href="../core/affinity.html#core~datastructures">adds <em>core/datastructures</em></a></li>
   </ul>
   <h2><a href="../core/allocator_support.html"><em>core/allocator_support</em></a></h2><ul>
+    <li><a href="../core/allocator_support.html#core~config_registry">adds <em>core/config_registry</em></a></li>
     <li><a href="../core/allocator_support.html#core~preprocessor">adds <em>core/preprocessor</em></a></li>
   </ul>
   <h2><a href="../core/assertion.html"><em>core/assertion</em></a></h2><ul>
@@ -545,6 +549,12 @@
     <h3><code>&lt;hpx/threading_base/register_thread.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/futures/src/detail/execute_thread.cpp&gt;</code></li>
     </ul>
+    <h3><code>&lt;hpx/threading_base/scheduler_base.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/futures/futures_factory.hpp&gt;</code></li>
+    </ul>
+    <h3><code>&lt;hpx/threading_base/scoped_annotation.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/futures/packaged_continuation.hpp&gt;</code></li>
+    </ul>
     <h3><code>&lt;hpx/threading_base/set_thread_state.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/futures/src/detail/execute_thread.cpp&gt;</code></li>
     </ul>
@@ -610,7 +620,6 @@
   <h2 id="reverse-core~runtime_local"><a href="../core/runtime_local.html"><em>core/runtime_local</em></a></h2>
     <h3><code>&lt;hpx/modules/threading_base.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/runtime_local/interval_timer.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/runtime_local/thread_stacktrace.hpp&gt;</code></li>
       <li>from <code>&lt;libs/core/runtime_local/src/custom_exception_info.cpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/threading_base/callback_notifier.hpp&gt;</code></h3><ul>
@@ -647,6 +656,7 @@
     </ul>
     <h3><code>&lt;hpx/threading_base/threading_base_fwd.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/runtime_local/run_as_hpx_thread.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/runtime_local/thread_stacktrace.hpp&gt;</code></li>
     </ul>
   <h2 id="reverse-core~schedulers"><a href="../core/schedulers.html"><em>core/schedulers</em></a></h2>
     <h3><code>&lt;hpx/threading_base/print.hpp&gt;</code></h3><ul>
@@ -699,14 +709,15 @@
       <li>from <code>&lt;hpx/schedulers/thread_queue_mc.hpp&gt;</code></li>
     </ul>
   <h2 id="reverse-core~synchronization"><a href="../core/synchronization.html"><em>core/synchronization</em></a></h2>
-    <h3><code>&lt;hpx/modules/threading_base.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/synchronization/mutex.hpp&gt;</code></li>
-    </ul>
     <h3><code>&lt;hpx/threading_base/thread_data.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/synchronization/src/mutex.cpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/threading_base/thread_helpers.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/synchronization/src/detail/condition_variable.cpp&gt;</code></li>
+    </ul>
+    <h3><code>&lt;hpx/threading_base/threading_base_fwd.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/synchronization/mutex.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/synchronization/stop_token.hpp&gt;</code></li>
     </ul>
   <h2 id="reverse-core~thread_pool_util"><a href="../core/thread_pool_util.html"><em>core/thread_pool_util</em></a></h2>
     <h3><code>&lt;hpx/threading_base/scheduler_base.hpp&gt;</code></h3><ul>
@@ -722,7 +733,6 @@
   <h2 id="reverse-core~thread_pools"><a href="../core/thread_pools.html"><em>core/thread_pools</em></a></h2>
     <h3><code>&lt;hpx/threading_base/callback_notifier.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/thread_pools/scheduled_thread_pool.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/thread_pools/scheduled_thread_pool_impl.hpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/threading_base/create_thread.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/thread_pools/scheduled_thread_pool_impl.hpp&gt;</code></li>
@@ -804,9 +814,6 @@
     </ul>
     <h3><code>&lt;hpx/threading_base/scheduler_state.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/modules/threadmanager.hpp&gt;</code></li>
-    </ul>
-    <h3><code>&lt;hpx/threading_base/set_thread_state.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;libs/core/threadmanager/src/threadmanager.cpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/threading_base/thread_data.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/threadmanager/src/threadmanager.cpp&gt;</code></li>
@@ -960,6 +967,6 @@
       <li>from <code>&lt;libs/full/runtime_distributed/src/applier.cpp&gt;</code></li>
     </ul>
 <hr />
-<p class="footer">Generated on 2023-11-13 16:54:27 from revision 1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/b20178d10fd6121a99c911164830796634252a55">b20178d10f</a>)</p>
+<p class="footer">Generated on 2024-03-18 16:09:59 from revision 1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/200ca7ca7152c757ccb91b0d4e735af9ad3a1fb0">200ca7ca71</a>)</p>
 </body>
 </html>

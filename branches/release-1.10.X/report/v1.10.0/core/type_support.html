@@ -33,13 +33,12 @@
         <td><div class='logo'>
             <div class='upper'>HPX</div>
             <div class='lower'>Dependency Report</div>
-            <div class='description'>1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/b20178d10fd6121a99c911164830796634252a55">b20178d10f</a>), 2023-11-13 16:54:30</div></div></td></tr></table><hr/>
+            <div class='description'>1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/200ca7ca7152c757ccb91b0d4e735af9ad3a1fb0">200ca7ca71</a>), 2024-03-18 16:10:01</div></div></td></tr></table><hr/>
 
 
 <h1 id="primary-dependencies">Primary dependencies for <em>core/type_support</em></h1>
   <h2 id="core~assertion"><a href="../core/assertion.html"><em>core/assertion</em></a></h2>
     <h3><code>&lt;hpx/assert.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/type_support/extra_data.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/type_support/generator.hpp&gt;</code></li>
     </ul>
   <h2 id="core~concepts"><a href="../core/concepts.html"><em>core/concepts</em></a></h2>
@@ -53,6 +52,7 @@
       <li>from <code>&lt;hpx/type_support/construct_at.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/type_support/decay.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/type_support/default_sentinel.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/type_support/extra_data.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/type_support/generator.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/type_support/identity.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/type_support/pack.hpp&gt;</code></li>
@@ -88,7 +88,6 @@
       <li>from <code>&lt;hpx/parallel/algorithms/uninitialized_copy.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/parallel/algorithms/uninitialized_fill.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/parallel/algorithms/uninitialized_move.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/parallel/algorithms/uninitialized_relocate.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/parallel/algorithms/uninitialized_value_construct.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/parallel/unseq/reduce_helpers.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/parallel/unseq/simd_helpers.hpp&gt;</code></li>
@@ -161,6 +160,7 @@
     </ul>
     <h3><code>&lt;hpx/type_support/is_contiguous_iterator.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/algorithms/traits/pointer_category.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/parallel/algorithms/uninitialized_relocate.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/parallel/util/transfer.hpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/type_support/is_relocatable.hpp&gt;</code></h3><ul>
@@ -173,7 +173,7 @@
       <li>from <code>&lt;hpx/parallel/spmd_block.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/parallel/util/prefetching.hpp&gt;</code></li>
     </ul>
-    <h3><code>&lt;hpx/type_support/uninitialized_relocate_n_primitive.hpp&gt;</code></h3><ul>
+    <h3><code>&lt;hpx/type_support/uninitialized_relocation_primitives.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/parallel/algorithms/uninitialized_relocate.hpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
@@ -432,6 +432,15 @@
     <h3><code>&lt;hpx/type_support/generator.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/generator.hpp&gt;</code></li>
     </ul>
+    <h3><code>&lt;hpx/type_support/is_relocatable.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/memory.hpp&gt;</code></li>
+    </ul>
+    <h3><code>&lt;hpx/type_support/is_trivially_relocatable.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/memory.hpp&gt;</code></li>
+    </ul>
+    <h3><code>&lt;hpx/type_support/relocate_at.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/memory.hpp&gt;</code></li>
+    </ul>
   <h2 id="reverse-core~init_runtime_local"><a href="../core/init_runtime_local.html"><em>core/init_runtime_local</em></a></h2>
     <h3><code>&lt;hpx/type_support/pack.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/init_runtime_local/src/init_runtime_local.cpp&gt;</code></li>
@@ -476,7 +485,6 @@
   <h2 id="reverse-core~lock_registration"><a href="../core/lock_registration.html"><em>core/lock_registration</em></a></h2>
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/lock_registration/detail/register_locks.hpp&gt;</code></li>
-      <li>from <code>&lt;libs/core/lock_registration/src/register_locks.cpp&gt;</code></li>
     </ul>
   <h2 id="reverse-core~logging"><a href="../core/logging.html"><em>core/logging</em></a></h2>
     <h3><code>&lt;hpx/modules/type_support.hpp&gt;</code></h3><ul>
@@ -510,6 +518,10 @@
     <h3><code>&lt;hpx/type_support/static.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/resource_partitioner/src/detail_partitioner.cpp&gt;</code></li>
     </ul>
+  <h2 id="reverse-core~runtime_local"><a href="../core/runtime_local.html"><em>core/runtime_local</em></a></h2>
+    <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;libs/core/runtime_local/src/runtime_local.cpp&gt;</code></li>
+    </ul>
   <h2 id="reverse-core~schedulers"><a href="../core/schedulers.html"><em>core/schedulers</em></a></h2>
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/schedulers/local_workrequesting_scheduler.hpp&gt;</code></li>
@@ -538,7 +550,6 @@
       <li>from <code>&lt;libs/core/serialization/src/detail/polymorphic_intrusive_factory.cpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/serialization/detail/polymorphic_id_factory.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/serialization/traits/brace_initializable_traits.hpp&gt;</code></li>
     </ul>
   <h2 id="reverse-core~static_reinit"><a href="../core/static_reinit.html"><em>core/static_reinit</em></a></h2>
@@ -549,15 +560,8 @@
       <li>from <code>&lt;libs/core/static_reinit/src/static_reinit.cpp&gt;</code></li>
     </ul>
   <h2 id="reverse-core~synchronization"><a href="../core/synchronization.html"><em>core/synchronization</em></a></h2>
-    <h3><code>&lt;hpx/type_support/construct_at.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/synchronization/channel_mpmc.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/synchronization/channel_mpsc.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/synchronization/channel_spsc.hpp&gt;</code></li>
-    </ul>
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/synchronization/condition_variable.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/latch.hpp&gt;</code></li>
-      <li>from <code>&lt;libs/core/synchronization/src/detail/condition_variable.cpp&gt;</code></li>
     </ul>
   <h2 id="reverse-core~tag_invoke"><a href="../core/tag_invoke.html"><em>core/tag_invoke</em></a></h2>
     <h3><code>&lt;hpx/type_support/meta.hpp&gt;</code></h3><ul>
@@ -610,7 +614,6 @@
     </ul>
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/actions_base/traits/action_remote_result.hpp&gt;</code></li>
-      <li>from <code>&lt;libs/full/actions_base/src/detail/action_factory.cpp&gt;</code></li>
     </ul>
   <h2 id="reverse-full~agas_base"><a href="../full/agas_base.html"><em>full/agas_base</em></a></h2>
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
@@ -650,7 +653,6 @@
       <li>from <code>&lt;hpx/async_distributed/detail/promise_lco.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/async_distributed/trigger.hpp&gt;</code></li>
       <li>from <code>&lt;libs/full/async_distributed/src/base_lco_with_value.cpp&gt;</code></li>
-      <li>from <code>&lt;libs/full/async_distributed/src/trigger_lco.cpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/type_support/void_guard.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/async_distributed/base_lco_with_value.hpp&gt;</code></li>
@@ -703,10 +705,6 @@
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/components_base/server/component_base.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/components_base/server/locking_hook.hpp&gt;</code></li>
-    </ul>
-  <h2 id="reverse-full~compute"><a href="../full/compute.html"><em>full/compute</em></a></h2>
-    <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/compute/host/target_distribution_policy.hpp&gt;</code></li>
     </ul>
   <h2 id="reverse-full~include"><a href="../full/include.html"><em>full/include</em></a></h2>
     <h3><code>&lt;hpx/modules/type_support.hpp&gt;</code></h3><ul>
@@ -779,6 +777,6 @@
       <li>from <code>&lt;hpx/parallel/segmented_algorithms/detail/scan.hpp&gt;</code></li>
     </ul>
 <hr />
-<p class="footer">Generated on 2023-11-13 16:54:30 from revision 1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/b20178d10fd6121a99c911164830796634252a55">b20178d10f</a>)</p>
+<p class="footer">Generated on 2024-03-18 16:10:01 from revision 1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/200ca7ca7152c757ccb91b0d4e735af9ad3a1fb0">200ca7ca71</a>)</p>
 </body>
 </html>

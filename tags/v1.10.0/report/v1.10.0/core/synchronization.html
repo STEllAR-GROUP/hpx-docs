@@ -33,7 +33,7 @@
         <td><div class='logo'>
             <div class='upper'>HPX</div>
             <div class='lower'>Dependency Report</div>
-            <div class='description'>1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/b20178d10fd6121a99c911164830796634252a55">b20178d10f</a>), 2023-11-13 16:54:24</div></div></td></tr></table><hr/>
+            <div class='description'>1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/200ca7ca7152c757ccb91b0d4e735af9ad3a1fb0">200ca7ca71</a>), 2024-03-18 16:09:57</div></div></td></tr></table><hr/>
 
 
 <h1 id="primary-dependencies">Primary dependencies for <em>core/synchronization</em></h1>
@@ -61,6 +61,7 @@
     <h3><code>&lt;hpx/concurrency/cache_line_data.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/synchronization/detail/condition_variable.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/latch.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/synchronization/shared_mutex.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/spinlock_pool.hpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/modules/concurrency.hpp&gt;</code></h3><ul>
@@ -165,7 +166,6 @@
       <li>from <code>&lt;libs/core/synchronization/src/detail/condition_variable.cpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/modules/execution_base.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/synchronization/stop_token.hpp&gt;</code></li>
       <li>from <code>&lt;libs/core/synchronization/src/stop_token.cpp&gt;</code></li>
     </ul>
   <h2 id="core~functional"><a href="../core/functional.html"><em>core/functional</em></a></h2>
@@ -184,6 +184,7 @@
   <h2 id="core~lock_registration"><a href="../core/lock_registration.html"><em>core/lock_registration</em></a></h2>
     <h3><code>&lt;hpx/lock_registration/detail/register_locks.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/synchronization/condition_variable.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/synchronization/shared_mutex.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/spinlock.hpp&gt;</code></li>
       <li>from <code>&lt;libs/core/synchronization/src/mutex.cpp&gt;</code></li>
     </ul>
@@ -196,6 +197,7 @@
       <li>from <code>&lt;hpx/synchronization/barrier.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/condition_variable.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/counting_semaphore.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/synchronization/shared_mutex.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/sliding_semaphore.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/stop_token.hpp&gt;</code></li>
       <li>from <code>&lt;libs/core/synchronization/src/detail/condition_variable.cpp&gt;</code></li>
@@ -214,6 +216,7 @@
     <h3><code>&lt;hpx/thread_support/assert_owns_lock.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/synchronization/barrier.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/condition_variable.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/synchronization/shared_mutex.hpp&gt;</code></li>
       <li>from <code>&lt;libs/core/synchronization/src/detail/condition_variable.cpp&gt;</code></li>
       <li>from <code>&lt;libs/core/synchronization/src/detail/counting_semaphore.cpp&gt;</code></li>
       <li>from <code>&lt;libs/core/synchronization/src/detail/sliding_semaphore.cpp&gt;</code></li>
@@ -227,14 +230,15 @@
       <li>from <code>&lt;libs/core/synchronization/src/detail/condition_variable.cpp&gt;</code></li>
     </ul>
   <h2 id="core~threading_base"><a href="../core/threading_base.html"><em>core/threading_base</em></a></h2>
-    <h3><code>&lt;hpx/modules/threading_base.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/synchronization/mutex.hpp&gt;</code></li>
-    </ul>
     <h3><code>&lt;hpx/threading_base/thread_data.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/synchronization/src/mutex.cpp&gt;</code></li>
     </ul>
     <h3><code>&lt;hpx/threading_base/thread_helpers.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;libs/core/synchronization/src/detail/condition_variable.cpp&gt;</code></li>
+    </ul>
+    <h3><code>&lt;hpx/threading_base/threading_base_fwd.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/synchronization/mutex.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/synchronization/stop_token.hpp&gt;</code></li>
     </ul>
   <h2 id="core~timing"><a href="../core/timing.html"><em>core/timing</em></a></h2>
     <h3><code>&lt;hpx/timing/steady_clock.hpp&gt;</code></h3><ul>
@@ -246,20 +250,14 @@
       <li>from <code>&lt;libs/core/synchronization/src/mutex.cpp&gt;</code></li>
     </ul>
   <h2 id="core~type_support"><a href="../core/type_support.html"><em>core/type_support</em></a></h2>
-    <h3><code>&lt;hpx/type_support/construct_at.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/synchronization/channel_mpmc.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/synchronization/channel_mpsc.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/synchronization/channel_spsc.hpp&gt;</code></li>
-    </ul>
     <h3><code>&lt;hpx/type_support/unused.hpp&gt;</code></h3><ul>
-      <li>from <code>&lt;hpx/synchronization/condition_variable.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/synchronization/latch.hpp&gt;</code></li>
-      <li>from <code>&lt;libs/core/synchronization/src/detail/condition_variable.cpp&gt;</code></li>
     </ul>
 
 
 <h1 id="secondary-dependencies">Secondary dependencies for <em>core/synchronization</em></h1>
   <h2><a href="../core/allocator_support.html"><em>core/allocator_support</em></a></h2><ul>
+    <li><a href="../core/allocator_support.html#core~config_registry">adds <em>core/config_registry</em></a></li>
     <li><a href="../core/allocator_support.html#core~preprocessor">adds <em>core/preprocessor</em></a></li>
   </ul>
   <h2><a href="../core/assertion.html"><em>core/assertion</em></a></h2><ul>
@@ -402,6 +400,9 @@
       <li>from <code>&lt;hpx/stop_token.hpp&gt;</code></li>
     </ul>
   <h2 id="reverse-core~lcos_local"><a href="../core/lcos_local.html"><em>core/lcos_local</em></a></h2>
+    <h3><code>&lt;hpx/synchronization/condition_variable.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/lcos_local/conditional_cv.hpp&gt;</code></li>
+    </ul>
     <h3><code>&lt;hpx/synchronization/no_mutex.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/lcos_local/and_gate.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/lcos_local/channel.hpp&gt;</code></li>
@@ -443,6 +444,10 @@
       <li>from <code>&lt;hpx/threading/jthread.hpp&gt;</code></li>
     </ul>
   <h2 id="reverse-full~agas"><a href="../full/agas.html"><em>full/agas</em></a></h2>
+    <h3><code>&lt;hpx/synchronization/shared_mutex.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/agas/addressing_service.hpp&gt;</code></li>
+      <li>from <code>&lt;libs/full/agas/src/addressing_service.cpp&gt;</code></li>
+    </ul>
     <h3><code>&lt;hpx/synchronization/spinlock.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/agas/addressing_service.hpp&gt;</code></li>
     </ul>
@@ -469,10 +474,16 @@
       <li>from <code>&lt;hpx/collectives/detail/communicator.hpp&gt;</code></li>
     </ul>
   <h2 id="reverse-full~components_base"><a href="../full/components_base.html"><em>full/components_base</em></a></h2>
+    <h3><code>&lt;hpx/modules/synchronization.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;libs/full/components_base/src/server/one_size_heap_list.cpp&gt;</code></li>
+    </ul>
+    <h3><code>&lt;hpx/synchronization/shared_mutex.hpp&gt;</code></h3><ul>
+      <li>from <code>&lt;hpx/components_base/server/one_size_heap_list.hpp&gt;</code></li>
+      <li>from <code>&lt;hpx/components_base/server/wrapper_heap_list.hpp&gt;</code></li>
+    </ul>
     <h3><code>&lt;hpx/synchronization/spinlock.hpp&gt;</code></h3><ul>
       <li>from <code>&lt;hpx/components_base/server/locking_hook.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/components_base/server/migration_support.hpp&gt;</code></li>
-      <li>from <code>&lt;hpx/components_base/server/one_size_heap_list.hpp&gt;</code></li>
       <li>from <code>&lt;hpx/components_base/server/wrapper_heap.hpp&gt;</code></li>
       <li>from <code>&lt;libs/full/components_base/src/component_type.cpp&gt;</code></li>
       <li>from <code>&lt;libs/full/components_base/src/server/wrapper_heap.cpp&gt;</code></li>
@@ -534,6 +545,6 @@
       <li>from <code>&lt;hpx/runtime_distributed/server/runtime_support.hpp&gt;</code></li>
     </ul>
 <hr />
-<p class="footer">Generated on 2023-11-13 16:54:24 from revision 1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/b20178d10fd6121a99c911164830796634252a55">b20178d10f</a>)</p>
+<p class="footer">Generated on 2024-03-18 16:09:57 from revision 1.10.0-rc1 (<a href="https://github.com/STEllAR-GROUP/hpx/commit/200ca7ca7152c757ccb91b0d4e735af9ad3a1fb0">200ca7ca71</a>)</p>
 </body>
 </html>

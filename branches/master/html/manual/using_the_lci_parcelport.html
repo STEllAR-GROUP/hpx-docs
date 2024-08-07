@@ -4506,11 +4506,15 @@ variable to <code class="docutils literal notranslate"><span class="pre">master<
 <section id="run-hpx-with-the-lci-parcelport">
 <span id="run-lci-pp"></span><h2>Run <em>HPX</em> with the LCI parcelport<a class="headerlink" href="#run-hpx-with-the-lci-parcelport" title="Permalink to this headline">#</a></h2>
 <p>We use the same mechanisms as MPI to launch LCI, so you can use the same way you run MPI parcelport to run LCI
-parcelport. Typically, it would be <code class="docutils literal notranslate"><span class="pre">hpxrun</span></code>, <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>, or <code class="docutils literal notranslate"><span class="pre">srun</span></code>.</p>
-<p>If you are using <code class="docutils literal notranslate"><span class="pre">hpxrun.py</span></code>, just pass <code class="docutils literal notranslate"><span class="pre">--parcelport</span> <span class="pre">lci</span></code> to the scripts.</p>
+parcelport. Typically, it would be <code class="docutils literal notranslate"><span class="pre">hpxrun.py</span></code>, <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>, or <code class="docutils literal notranslate"><span class="pre">srun</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">hpxrun.py</span></code> serves as a wrapper for <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> and <code class="docutils literal notranslate"><span class="pre">srun</span></code>.
+If you are using <code class="docutils literal notranslate"><span class="pre">hpxrun.py</span></code>, pass <code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">lci</span></code> to the scripts. You also need to pass either <code class="docutils literal notranslate"><span class="pre">-r</span> <span class="pre">mpi</span></code> or
+<code class="docutils literal notranslate"><span class="pre">-r</span> <span class="pre">srun</span></code> to select the correct run wrapper according to the platform.</p>
 <p>If you are using <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> or <code class="docutils literal notranslate"><span class="pre">srun</span></code>, you can just pass
 <code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.parcel.lci.priority=1000</span></code>, <code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.parcel.lci.enable=1</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.parcel.bootstrap=lci</span></code> to the <em>HPX</em> applications.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">hpxrun.py</span></code> argument <code class="docutils literal notranslate"><span class="pre">-r</span> <span class="pre">none</span></code> (the default option for the run wrapper) and its corresponding <em>HPX</em> arguments
+<code class="docutils literal notranslate"><span class="pre">--hpx:hpx</span></code> and <code class="docutils literal notranslate"><span class="pre">--hpx:agas</span></code> do not work for the MPI or the LCI parcelport.</p>
 </section>
 <section id="performance-tuning-of-the-lci-parcelport">
 <span id="tune-lci-pp"></span><h2>Performance tuning of the LCI parcelport<a class="headerlink" href="#performance-tuning-of-the-lci-parcelport" title="Permalink to this headline">#</a></h2>
@@ -4560,7 +4564,7 @@ comes from the packets, which can be calculated using <cite>LCI_SERVER_NUM_PKTS 
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2024, The STE||AR Group.<br/>
-    Last updated on Jul 25, 2024.<br/>
+    Last updated on Aug 07, 2024.<br/>
 </p>
         </footer>
     </div>

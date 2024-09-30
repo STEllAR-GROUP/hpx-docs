@@ -1916,7 +1916,7 @@
        </li>
        <li class="toctree-l4">
         <a class="reference internal" href="../libs/core/errors/api/throw_exception.html">
-         HPX_THROW_EXCEPTION, HPX_THROWS_IF
+         HPX_THROW_EXCEPTION, HPX_THROW_BAD_ALLOC, HPX_THROWS_IF
         </a>
        </li>
       </ul>
@@ -5003,6 +5003,7 @@ loaded from.</p></td>
 <span class="na">exception_verbosity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_EXCEPTION_VERBOSITY:2}</span><span class="w"></span>
 <span class="na">trace_depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_TRACE_DEPTH:20}</span><span class="w"></span>
 <span class="na">handle_signals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HANDLE_SIGNALS:1}</span><span class="w"></span>
+<span class="na">handle_failed_new</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HANDLE_FAILED_NEW:1}</span><span class="w"></span>
 
 <span class="k">[hpx.stacks]</span><span class="w"></span>
 <span class="na">small_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_SMALL_STACK_SIZE:&lt;hpx_small_stack_size&gt;}</span><span class="w"></span>
@@ -5137,33 +5138,40 @@ cmake <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THRE
 print the configuration information (stack backtrace, system information,
 etc.) whenever a signal is raised. The default is <code class="docutils literal notranslate"><span class="pre">1</span></code>. Setting this
 value to <code class="docutils literal notranslate"><span class="pre">0</span></code> can be useful in cases when generating a core-dump on
-segmentation faults or similar signals is desired. This setting has no
-effects on non-Linux platforms.</p></td>
+segmentation faults or similar signals is desired.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.small_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.handle_failed_new</span></code></p></td>
+<td><p>This setting defines whether HPX will register a handler for failed
+allocationsthat will print the configuration information
+(stack backtrace, system information, etc.) whenever an allocation fails.
+The default is <code class="docutils literal notranslate"><span class="pre">1</span></code>. Setting this value to <code class="docutils literal notranslate"><span class="pre">0</span></code> can be useful in cases
+when generating a core-dump on segmentation faults or similar signals
+is desired.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.small_size</span></code></p></td>
 <td><p>This is initialized to the small stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_SMALL_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x8000</span></code>). This value is used for
 all <em>HPX</em> threads by default, except for the thread running <code class="docutils literal notranslate"><span class="pre">hpx_main</span></code>
 (which runs on a large stack).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.medium_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.medium_size</span></code></p></td>
 <td><p>This is initialized to the medium stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_MEDIUM_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x20000</span></code>).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.large_size</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.large_size</span></code></p></td>
 <td><p>This is initialized to the large stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_LARGE_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x200000</span></code>). This setting is used
 by default for the thread running <code class="docutils literal notranslate"><span class="pre">hpx_main</span></code> only.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.huge_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.huge_size</span></code></p></td>
 <td><p>This is initialized to the huge stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_HUGE_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x2000000</span></code>).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.use_guard_pages</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.use_guard_pages</span></code></p></td>
 <td><p>This entry controls whether the coroutine library will generate stack
 guard pages or not. This entry is applicable on Linux only and only if
 the <code class="docutils literal notranslate"><span class="pre">HPX_USE_GENERIC_COROUTINE_CONTEXT</span></code> option is not enabled and the
@@ -7151,7 +7159,7 @@ activated.</p>
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2024, The STE||AR Group.<br/>
-    Last updated on Sep 23, 2024.<br/>
+    Last updated on Sep 30, 2024.<br/>
 </p>
         </footer>
     </div>

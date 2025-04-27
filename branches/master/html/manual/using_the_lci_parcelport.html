@@ -4565,6 +4565,28 @@ when using the LCI parcelport to get better performance.</p>
 </div>
 <p>This setting needs roughly 800MB memory per process. The memory consumption mainly
 comes from the packets, which can be calculated using <cite>LCI_SERVER_NUM_PKTS x LCI_PACKET_SIZE</cite>.</p>
+<p>In addition, users can tune the following command-line options
+when using the LCI parcelport to get better performance.</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-hpx-ini">
+<span class="sig-name descname"><span class="pre">--hpx:ini</span></span><span class="sig-prename descclassname"><span class="pre">=hpx.parcel.lci.ndevices=&lt;int&gt;</span></span><a class="headerlink" href="#cmdoption-hpx-ini" title="Permalink to this definition">#</a></dt>
+<dd><p>The number of LCI devices to use. The default value is 2.
+An LCI device represents a collection of network resources.
+More devices lead to lower thread contention, but too many devices
+may lead to load imbalance or hardware overhead.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-0">
+<span class="sig-name descname"><span class="pre">--hpx:ini</span></span><span class="sig-prename descclassname"><span class="pre">=hpx.parcel.lci.progress_type=&lt;worker|rp&gt;</span></span><a class="headerlink" href="#cmdoption-0" title="Permalink to this definition">#</a></dt>
+<dd><p>The way to progress the LCI device. The default value is <code class="docutils literal notranslate"><span class="pre">worker</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">worker</span></code> option uses all worker threads to progress the LCI devices.
+The <code class="docutils literal notranslate"><span class="pre">rp</span></code> option uses dedicated pinned threads to progress the LCI devices.
+Normally, the <code class="docutils literal notranslate"><span class="pre">worker</span></code> option gives better performance, but the <code class="docutils literal notranslate"><span class="pre">rp</span></code> option
+has been observed with better performance on some clusters with
+prior generation of InfiniBand hardware.</p>
+</dd></dl>
+
 </section>
 </section>
 
@@ -4600,7 +4622,7 @@ comes from the packets, which can be calculated using <cite>LCI_SERVER_NUM_PKTS 
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2025, The STE||AR Group.<br/>
-    Last updated on Apr 25, 2025.<br/>
+    Last updated on Apr 27, 2025.<br/>
 </p>
         </footer>
     </div>

@@ -11,8 +11,8 @@
 |hpx| V1.11.0 (May 31, 2025)
 ============================
 
-Please note that this release is the last verision of HPX that supports C++17. All
-future versions of HPX will require compilation using C++20 or above.
+This release is the last verision of HPX that supports C++17. Future versions
+of HPX will require compilation using C++20 or above.
 
 General changes
 ===============
@@ -21,7 +21,20 @@ General changes
   communicator objects that are accessible through new APIs:
   ``hpx::collectives::get_world_communicator()`` refers to all localities and
   ``hpx::collectives::get_local_communicator()`` refers to all threads on the
-  calling locality.
+  calling locality. We unified the interfaces of the different communicator objects.
+- Added ``hpx::experimental::run_on_all`` allowing to run a given function
+  (possibly concurrently) using a given execution policy.
+- Added a helper object ``hpx::runtime_manager`` that simplifies the initialization
+  of HPX without needing to modify the ``main`` function of the application.
+- We improved the compatibility with various accelerator frameworks (SYCL,
+  OneAPI).
+- Applied build system changes that allow building HPX without any prerequisites.
+  This requires to pass ``-DHPX_WITH_FETCH_HWLOC=On`` and ``-DHPX_WITH_FETCH_BOOST=On``
+  to the |cmake|_ configuration.
+- We have performed a lot of code cleanup and refactoring to improve the overall
+  code quality and decrease compile times.
+- Added the ``hpx::contains`` and ``hpx::contains_subrange`` parallel algorithms.
+- Adapted many of HPX' parallel algorithms to be usable with senders/receivers.
 
 Breaking changes
 ================
@@ -34,8 +47,9 @@ Breaking changes
 - The CMake configuration parameter ``HPX_WITH_RUN_MAIN_EVERYWHERE`` is now
   deprecated and will be removed in the future. Use the preprocessor macro
   ``HPX_HAVE_RUN_MAIN_EVERYWHERE`` on a target-by-target case instead.
+- Removed the dysfunctional libfabric parcelport.
 
-- Removed features that were deprecated starting V1.8:
+- Removed features that were long deprecated (starting V1.8):
   - ``hpx::flush``, ``hpx::endl``, ``hpx::async_flush``, ``hpx::async_endl``
   - Various enumerator types are now only available as ``class enum``
     requiring explicit scoped use of the enumerator values
@@ -49,7 +63,7 @@ Breaking changes
   - ``hpx::assertion::source_location`` is now only available as
     ``hpx::source_location``
   - ``hpx::lcos::split_future`` is now only available as ``hpx::split_future``
-  - ``hpx::lcos::wait`` and friends have been removed alltogether
+  - ``hpx::lcos::wait`` and friends have been removed altogether
   - ``hpx::lcos::wait_any`` and friends are now only available as
     ``hpx::wait_any``
   - ``hpx::lcos::wait_some`` and friends are now only available as
@@ -108,6 +122,7 @@ Breaking changes
 Closed issues
 =============
 
+* :hpx-issue:`6699` - Catch lower-level runtime error 
 * :hpx-issue:`6696` - HPX master breaks with Kokkos
 * :hpx-issue:`6691` - minimum_category doesn't work with custom iterator categories
 * :hpx-issue:`6681` - build break - missing ';'
@@ -129,6 +144,7 @@ Closed issues
 Closed pull requests
 ====================
 
+* :hpx-pr:`6701` - Attempting to fix shutdown hang on exception_info 
 * :hpx-pr:`6698` - Making sure .hpp.in files are not being installed
 * :hpx-pr:`6697` - Minor docs fix
 * :hpx-pr:`6695` - Adding missing ';'
@@ -138,6 +154,7 @@ Closed pull requests
 * :hpx-pr:`6689` - Fix unreachable code warning in wait_all
 * :hpx-pr:`6687` - lci pp: change default ndevices=2 and progress_type=worker; improve document
 * :hpx-pr:`6686` - lci pp: upgrade LCI autofetch target to 1.7.9
+* :hpx-pr:`6685` - Improve run_on_all implementation and tests
 * :hpx-pr:`6683` - Fix bad element comparison for reduce_by_key
 * :hpx-pr:`6682` - Add C++23 std::generator equivalence test and fix missing semicolon
 * :hpx-pr:`6680` - Add oneapi device init workaround

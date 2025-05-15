@@ -4454,8 +4454,8 @@ title="Print to PDF"
                 
   <section id="hpx-v1-11-0-may-31-2025">
 <span id="hpx-1-11-0"></span><h1><em>HPX</em> V1.11.0 (May 31, 2025)<a class="headerlink" href="#hpx-v1-11-0-may-31-2025" title="Permalink to this headline">#</a></h1>
-<p>Please note that this release is the last verision of HPX that supports C++17. All
-future versions of HPX will require compilation using C++20 or above.</p>
+<p>This release is the last verision of HPX that supports C++17. Future versions
+of HPX will require compilation using C++20 or above.</p>
 <section id="general-changes">
 <h2>General changes<a class="headerlink" href="#general-changes" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
@@ -4463,7 +4463,20 @@ future versions of HPX will require compilation using C++20 or above.</p>
 communicator objects that are accessible through new APIs:
 <code class="docutils literal notranslate"><span class="pre">hpx::collectives::get_world_communicator()</span></code> refers to all localities and
 <code class="docutils literal notranslate"><span class="pre">hpx::collectives::get_local_communicator()</span></code> refers to all threads on the
-calling locality.</p></li>
+calling locality. We unified the interfaces of the different communicator objects.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">hpx::experimental::run_on_all</span></code> allowing to run a given function
+(possibly concurrently) using a given execution policy.</p></li>
+<li><p>Added a helper object <code class="docutils literal notranslate"><span class="pre">hpx::runtime_manager</span></code> that simplifies the initialization
+of HPX without needing to modify the <code class="docutils literal notranslate"><span class="pre">main</span></code> function of the application.</p></li>
+<li><p>We improved the compatibility with various accelerator frameworks (SYCL,
+OneAPI).</p></li>
+<li><p>Applied build system changes that allow building HPX without any prerequisites.
+This requires to pass <code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_FETCH_HWLOC=On</span></code> and <code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_FETCH_BOOST=On</span></code>
+to the <a class="reference external" href="https://www.cmake.org">CMake</a> configuration.</p></li>
+<li><p>We have performed a lot of code cleanup and refactoring to improve the overall
+code quality and decrease compile times.</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">hpx::contains</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx::contains_subrange</span></code> parallel algorithms.</p></li>
+<li><p>Adapted many of HPX’ parallel algorithms to be usable with senders/receivers.</p></li>
 </ul>
 </section>
 <section id="breaking-changes">
@@ -4477,7 +4490,8 @@ continue functioning correctly.</p></li>
 <li><p>The CMake configuration parameter <code class="docutils literal notranslate"><span class="pre">HPX_WITH_RUN_MAIN_EVERYWHERE</span></code> is now
 deprecated and will be removed in the future. Use the preprocessor macro
 <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_RUN_MAIN_EVERYWHERE</span></code> on a target-by-target case instead.</p></li>
-<li><p>Removed features that were deprecated starting V1.8:
+<li><p>Removed the dysfunctional libfabric parcelport.</p></li>
+<li><p>Removed features that were long deprecated (starting V1.8):
 - <code class="docutils literal notranslate"><span class="pre">hpx::flush</span></code>, <code class="docutils literal notranslate"><span class="pre">hpx::endl</span></code>, <code class="docutils literal notranslate"><span class="pre">hpx::async_flush</span></code>, <code class="docutils literal notranslate"><span class="pre">hpx::async_endl</span></code>
 - Various enumerator types are now only available as <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">enum</span></code></p>
 <blockquote>
@@ -4494,7 +4508,7 @@ deprecated and will be removed in the future. Use the preprocessor macro
 <li><p><code class="docutils literal notranslate"><span class="pre">hpx::assertion::source_location</span></code> is now only available as
 <code class="docutils literal notranslate"><span class="pre">hpx::source_location</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hpx::lcos::split_future</span></code> is now only available as <code class="docutils literal notranslate"><span class="pre">hpx::split_future</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hpx::lcos::wait</span></code> and friends have been removed alltogether</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::lcos::wait</span></code> and friends have been removed altogether</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hpx::lcos::wait_any</span></code> and friends are now only available as
 <code class="docutils literal notranslate"><span class="pre">hpx::wait_any</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hpx::lcos::wait_some</span></code> and friends are now only available as
@@ -4556,6 +4570,7 @@ available as <code class="docutils literal notranslate"><span class="pre">hpx::c
 <section id="closed-issues">
 <h2>Closed issues<a class="headerlink" href="#closed-issues" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6699">Issue #6699</a> - Catch lower-level runtime error</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6696">Issue #6696</a> - HPX master breaks with Kokkos</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6691">Issue #6691</a> - minimum_category doesn’t work with custom iterator categories</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/issues/6681">Issue #6681</a> - build break - missing ‘;’</p></li>
@@ -4578,6 +4593,7 @@ available as <code class="docutils literal notranslate"><span class="pre">hpx::c
 <section id="closed-pull-requests">
 <h2>Closed pull requests<a class="headerlink" href="#closed-pull-requests" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6701">PR #6701</a> - Attempting to fix shutdown hang on exception_info</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6698">PR #6698</a> - Making sure .hpp.in files are not being installed</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6697">PR #6697</a> - Minor docs fix</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6695">PR #6695</a> - Adding missing ‘;’</p></li>
@@ -4587,6 +4603,7 @@ available as <code class="docutils literal notranslate"><span class="pre">hpx::c
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6689">PR #6689</a> - Fix unreachable code warning in wait_all</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6687">PR #6687</a> - lci pp: change default ndevices=2 and progress_type=worker; improve document</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6686">PR #6686</a> - lci pp: upgrade LCI autofetch target to 1.7.9</p></li>
+<li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6685">PR #6685</a> - Improve run_on_all implementation and tests</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6683">PR #6683</a> - Fix bad element comparison for reduce_by_key</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6682">PR #6682</a> - Add C++23 std::generator equivalence test and fix missing semicolon</p></li>
 <li><p><a class="reference external" href="https://github.com/STEllAR-GROUP/hpx/pull/6680">PR #6680</a> - Add oneapi device init workaround</p></li>
@@ -4741,7 +4758,7 @@ available as <code class="docutils literal notranslate"><span class="pre">hpx::c
     By The STE||AR Group<br/>
   
       &copy; Copyright 2008-2025, The STE||AR Group.<br/>
-    Last updated on May 13, 2025.<br/>
+    Last updated on May 15, 2025.<br/>
 </p>
         </footer>
     </div>

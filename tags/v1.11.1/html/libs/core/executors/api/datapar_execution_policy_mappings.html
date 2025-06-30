@@ -1,0 +1,4451 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>hpx/executors/datapar/execution_policy_mappings.hpp &#8212; HPX v1.11.1 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="filesystem" href="../../filesystem/api/full_api.html" />
+    <link rel="prev" title="hpx/executors/datapar/execution_policy.hpp" href="datapar_execution_policy.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../../_static/HPX_STELLAR_blue.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">HPX v1.11.1 documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../index.html">
+                    HPX documentation
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  User documentation
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../quickstart.html">
+   Quick start
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../examples.html">
+   Examples
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../examples/fibonacci_local.html">
+     Asynchronous execution
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../examples/matrix_multiplication.html">
+     Parallel algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../examples/fibonacci.html">
+     Asynchronous execution with actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../examples/hello_world.html">
+     Remote execution with actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../examples/accumulator.html">
+     Components and actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../examples/interest_calculator.html">
+     Dataflow
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../examples/1d_stencil.html">
+     Local to remote
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../examples/serialization.html">
+     Serializing user-defined types
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../manual.html">
+   Manual
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/prerequisites.html">
+     Prerequisites
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/getting_hpx.html">
+     Getting
+     <em>
+      HPX
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/building_hpx.html">
+     Building
+     <em>
+      HPX
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/cmake_variables.html">
+     CMake options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/migration_guide.html">
+     Migration guide
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/building_tests_examples.html">
+     Building tests and examples
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/creating_hpx_projects.html">
+     Creating
+     <em>
+      HPX
+     </em>
+     projects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/starting_the_hpx_runtime.html">
+     Starting the
+     <em>
+      HPX
+     </em>
+     runtime
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/launching_and_configuring_hpx_applications.html">
+     Launching and configuring
+     <em>
+      HPX
+     </em>
+     applications
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/writing_single_node_hpx_applications.html">
+     Writing single-node applications
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/writing_distributed_hpx_applications.html">
+     Writing distributed applications
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/running_on_batch_systems.html">
+     Running on batch systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/debugging_hpx_applications.html">
+     Debugging
+     <em>
+      HPX
+     </em>
+     applications
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/optimizing_hpx_applications.html">
+     Optimizing
+     <em>
+      HPX
+     </em>
+     applications
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/using_the_lci_parcelport.html">
+     Using the LCI parcelport
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/hpx_runtime_and_resources.html">
+     <em>
+      HPX
+     </em>
+     runtime and resources
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/miscellaneous.html">
+     Miscellaneous
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../manual/troubleshooting.html">
+     Troubleshooting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../terminology.html">
+   Terminology
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../why_hpx.html">
+   Why
+   <em>
+    HPX
+   </em>
+   ?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../additional_material.html">
+   Additional material
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Modules
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../overview.html">
+   Overview
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../modules.html">
+     Core modules
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../affinity/docs/index.html">
+       affinity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../algorithms/docs/index.html">
+       algorithms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../allocator_support/docs/index.html">
+       allocator_support
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../asio/docs/index.html">
+       asio
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../assertion/docs/index.html">
+       assertion
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../async_base/docs/index.html">
+       async_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../async_combinators/docs/index.html">
+       async_combinators
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../async_cuda/docs/index.html">
+       async_cuda
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../async_local/docs/index.html">
+       async_local
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../async_mpi/docs/index.html">
+       async_mpi
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../async_sycl/docs/index.html">
+       async_sycl
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../batch_environments/docs/index.html">
+       batch_environments
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cache/docs/index.html">
+       cache
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../concepts/docs/index.html">
+       concepts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../concurrency/docs/index.html">
+       concurrency
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../config/docs/index.html">
+       config
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../config_registry/docs/index.html">
+       config_registry
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../coroutines/docs/index.html">
+       coroutines
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../datastructures/docs/index.html">
+       datastructures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../debugging/docs/index.html">
+       debugging
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../errors/docs/index.html">
+       errors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../execution/docs/index.html">
+       execution
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../execution_base/docs/index.html">
+       execution_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../docs/index.html">
+       executors
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filesystem/docs/index.html">
+       filesystem
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../format/docs/index.html">
+       format
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../functional/docs/index.html">
+       functional
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../futures/docs/index.html">
+       futures
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../hardware/docs/index.html">
+       hardware
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../hashing/docs/index.html">
+       hashing
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../include_local/docs/index.html">
+       include_local
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../io_service/docs/index.html">
+       io_service
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../iterator_support/docs/index.html">
+       iterator_support
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../itt_notify/docs/index.html">
+       itt_notify
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../lci_base/docs/index.html">
+       lci_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../lcos_local/docs/index.html">
+       lcos_local
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../lock_registration/docs/index.html">
+       lock_registration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../logging/docs/index.html">
+       logging
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../memory/docs/index.html">
+       memory
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mpi_base/docs/index.html">
+       mpi_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../pack_traversal/docs/index.html">
+       pack_traversal
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plugin/docs/index.html">
+       plugin
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../prefix/docs/index.html">
+       prefix
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../preprocessor/docs/index.html">
+       preprocessor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../program_options/docs/index.html">
+       program_options
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../properties/docs/index.html">
+       properties
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../resiliency/docs/index.html">
+       resiliency
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../resource_partitioner/docs/index.html">
+       resource_partitioner
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../runtime_configuration/docs/index.html">
+       runtime_configuration
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../schedulers/docs/index.html">
+       schedulers
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../serialization/docs/index.html">
+       serialization
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../static_reinit/docs/index.html">
+       static_reinit
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../string_util/docs/index.html">
+       string_util
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../synchronization/docs/index.html">
+       synchronization
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../testing/docs/index.html">
+       testing
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../thread_pool_util/docs/index.html">
+       thread_pool_util
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../thread_pools/docs/index.html">
+       thread_pools
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../thread_support/docs/index.html">
+       thread_support
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../threading/docs/index.html">
+       threading
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../threading_base/docs/index.html">
+       threading_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../threadmanager/docs/index.html">
+       thread_manager
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../timed_execution/docs/index.html">
+       timed_execution
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../timing/docs/index.html">
+       timing
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../topology/docs/index.html">
+       topology
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../type_support/docs/index.html">
+       type_support
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../util/docs/index.html">
+       util
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../version/docs/index.html">
+       version
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../full/modules.html">
+     Main
+     <em>
+      HPX
+     </em>
+     modules
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/actions/docs/index.html">
+       actions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/actions_base/docs/index.html">
+       actions_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/agas/docs/index.html">
+       agas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/agas_base/docs/index.html">
+       agas_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/async_colocated/docs/index.html">
+       async_colocated
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/async_distributed/docs/index.html">
+       async_distributed
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/checkpoint/docs/index.html">
+       checkpoint
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/checkpoint_base/docs/index.html">
+       checkpoint_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/collectives/docs/index.html">
+       collectives
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/command_line_handling/docs/index.html">
+       command_line_handling
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/components/docs/index.html">
+       components
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/components_base/docs/index.html">
+       components_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/compute/docs/index.html">
+       compute
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/distribution_policies/docs/index.html">
+       distribution_policies
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/executors_distributed/docs/index.html">
+       executors_distributed
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/include/docs/index.html">
+       include
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/init_runtime/docs/index.html">
+       init_runtime
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/lcos_distributed/docs/index.html">
+       lcos_distributed
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/naming/docs/index.html">
+       naming
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/naming_base/docs/index.html">
+       naming_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/parcelport_lci/docs/index.html">
+       parcelport_lci
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/parcelport_mpi/docs/index.html">
+       parcelport_mpi
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/parcelport_tcp/docs/index.html">
+       parcelport_tcp
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/parcelset/docs/index.html">
+       parcelset
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/parcelset_base/docs/index.html">
+       parcelset_base
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/performance_counters/docs/index.html">
+       performance_counters
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/plugin_factories/docs/index.html">
+       plugin_factories
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/resiliency_distributed/docs/index.html">
+       resiliency_distributed
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/runtime_components/docs/index.html">
+       runtime_components
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/runtime_distributed/docs/index.html">
+       runtime_distributed
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/segmented_algorithms/docs/index.html">
+       segmented_algorithms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../full/statistics/docs/index.html">
+       statistics
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../../../api.html">
+   API reference
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../api/public_api.html">
+     Public API
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../api/public_distributed_api.html">
+     Public distributed API
+    </a>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../../../../api/full_api.html">
+     Full API
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../algorithms/api/full_api.html">
+       algorithms
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+      <label for="toctree-checkbox-8">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/run_on_all.html">
+         hpx::experimental::run_on_all
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/task_block.html">
+         hpx::experimental::task_canceled_exception, hpx::experimental::task_block, hpx::experimental::define_task_block, hpx::experimental::define_task_block_restore_thread
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/task_group.html">
+         hpx::experimental::task_group
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/adjacent_difference.html">
+         hpx::adjacent_difference
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/adjacent_find.html">
+         hpx::adjacent_find
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/all_any_none.html">
+         hpx::all_of, hpx::any_of, hpx::none_of
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/copy.html">
+         hpx::copy, hpx::copy_n, hpx::copy_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/count.html">
+         hpx::count, hpx::count_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/destroy.html">
+         hpx::destroy, hpx::destroy_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/ends_with.html">
+         hpx::ends_with
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/equal.html">
+         hpx::equal
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/exclusive_scan.html">
+         hpx::exclusive_scan
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/fill.html">
+         hpx::fill, hpx::fill_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/find.html">
+         hpx::find, hpx::find_if, hpx::find_if_not, hpx::find_end, hpx::find_first_of
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_each.html">
+         hpx::for_each, hpx::for_each_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop.html">
+         hpx::experimental::for_loop, hpx::experimental::for_loop_strided, hpx::experimental::for_loop_n, hpx::experimental::for_loop_n_strided
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop_induction.html">
+         hpx::experimental::induction
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop_reduction_base.html">
+         hpx::experimental::reduction
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop_reduction_bit_and.html">
+         hpx::experimental::reduction_bit_and
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop_reduction_bit_or.html">
+         hpx::experimental::reduction_bit_or
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop_reduction_bit_xor.html">
+         hpx::experimental::reduction_bit_xor
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop_reduction_max.html">
+         hpx::experimental::reduction_max
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop_reduction_min.html">
+         hpx::experimental::reduction_min
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop_reduction_multiplies.html">
+         hpx::experimental::reduction_multiplies
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/for_loop_reduction_plus.html">
+         hpx::experimental::reduction_plus
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/generate.html">
+         hpx::generate, hpx::generate_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/includes.html">
+         hpx::includes
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/inclusive_scan.html">
+         hpx::inclusive_scan
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/is_heap.html">
+         hpx::is_heap, hpx::is_heap_until
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/is_partitioned.html">
+         hpx::is_partitioned
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/is_sorted.html">
+         hpx::is_sorted, hpx::is_sorted_until
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/lexicographical_compare.html">
+         hpx::lexicographical_compare
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/make_heap.html">
+         hpx::make_heap
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/merge.html">
+         hpx::merge, hpx::inplace_merge
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/minmax.html">
+         hpx::min_element, hpx::max_element, hpx::minmax_element
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/mismatch.html">
+         hpx::mismatch
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/move.html">
+         hpx::move
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/nth_element.html">
+         hpx::nth_element
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/partial_sort.html">
+         hpx::partial_sort
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/partial_sort_copy.html">
+         hpx::partial_sort_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/partition.html">
+         hpx::partition, hpx::stable_partition, hpx::partition_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/reduce.html">
+         hpx::reduce
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/reduce_by_key.html">
+         hpx::reduce_by_key
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/reduce_deterministic.html">
+         hpx::reduce_deterministic
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/remove.html">
+         hpx::remove, hpx::remove_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/remove_copy.html">
+         hpx::remove_copy, hpx::remove_copy_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/replace.html">
+         hpx::replace, hpx::replace_if, hpx::replace_copy, hpx::replace_copy_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/reverse.html">
+         hpx::reverse, hpx::reverse_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/rotate.html">
+         hpx::rotate, hpx::rotate_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/search.html">
+         hpx::search, hpx::search_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/set_difference.html">
+         hpx::set_difference
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/set_intersection.html">
+         hpx::set_intersection
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/set_symmetric_difference.html">
+         hpx::set_symmetric_difference
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/set_union.html">
+         hpx::set_union
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/shift_left.html">
+         hpx::shift_left
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/shift_right.html">
+         hpx::shift_right
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/sort.html">
+         hpx::sort
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/sort_by_key.html">
+         hpx::experimental::sort_by_key
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/stable_sort.html">
+         hpx::stable_sort
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/starts_with.html">
+         hpx::starts_with
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/swap_ranges.html">
+         hpx::swap_ranges
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/transform.html">
+         hpx::transform
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/transform_exclusive_scan.html">
+         hpx::transform_exclusive_scan
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/transform_inclusive_scan.html">
+         hpx::transform_inclusive_scan
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/transform_reduce.html">
+         hpx::transform_reduce
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/transform_reduce_binary.html">
+         hpx/parallel/algorithms/transform_reduce_binary.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/uninitialized_copy.html">
+         hpx::uninitialized_copy, hpx::uninitialized_copy_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/uninitialized_default_construct.html">
+         hpx::uninitialized_default_construct, hpx::uninitialized_default_construct_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/uninitialized_fill.html">
+         hpx::uninitialized_fill, hpx::uninitialized_fill_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/uninitialized_move.html">
+         hpx::uninitialized_move, hpx::uninitialized_move_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/uninitialized_relocate.html">
+         hpx::uninitialized_relocate, hpx::uninitialized_relocate_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/uninitialized_value_construct.html">
+         hpx::uninitialized_value_construct, hpx::uninitialized_value_construct_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/unique.html">
+         hpx::unique, hpx::unique_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_adjacent_difference.html">
+         hpx::ranges::adjacent_difference
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_adjacent_find.html">
+         hpx::ranges::adjacent_find
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_all_any_none.html">
+         hpx::ranges::all_of, hpx::ranges::any_of, hpx::ranges::none_of
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_copy.html">
+         hpx::ranges::copy, hpx::ranges::copy_n, hpx::ranges::copy_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_count.html">
+         hpx::ranges::count, hpx::ranges::count_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_destroy.html">
+         hpx::ranges::destroy, hpx::ranges::destroy_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_ends_with.html">
+         hpx::ranges::ends_with
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_equal.html">
+         hpx::ranges::equal
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_exclusive_scan.html">
+         hpx::ranges::exclusive_scan
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_fill.html">
+         hpx::ranges::fill, hpx::ranges::fill_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_find.html">
+         hpx::ranges::find, hpx::ranges::find_if, hpx::ranges::find_if_not, hpx::ranges::find_end, hpx::ranges::find_first_of
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_for_each.html">
+         hpx::ranges::for_each, hpx::ranges::for_each_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_for_loop.html">
+         hpx::ranges::experimental::for_loop, hpx::ranges::experimental::for_loop_strided, hpx::ranges::experimental::for_loop_n, hpx::ranges::experimental::for_loop_n_strided
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_generate.html">
+         hpx::ranges::generate, hpx::ranges::generate_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_includes.html">
+         hpx::ranges::includes
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_inclusive_scan.html">
+         hpx::ranges::inclusive_scan
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_is_heap.html">
+         hpx::ranges::is_heap, hpx::ranges::is_heap_until
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_is_partitioned.html">
+         hpx::ranges::is_partitioned
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_is_sorted.html">
+         hpx::ranges::is_sorted, hpx::ranges::is_sorted_until
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_lexicographical_compare.html">
+         hpx::ranges::lexicographical_compare
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_make_heap.html">
+         hpx::ranges::make_heap
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_merge.html">
+         hpx::ranges::merge, hpx::ranges::inplace_merge
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_minmax.html">
+         hpx::ranges::min_element, hpx::ranges::max_element, hpx::ranges::minmax_element
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_mismatch.html">
+         hpx::ranges::mismatch
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_move.html">
+         hpx::ranges::move
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_nth_element.html">
+         hpx::ranges::nth_element
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_partial_sort.html">
+         hpx::ranges::partial_sort
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_partial_sort_copy.html">
+         hpx::ranges::partial_sort_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_partition.html">
+         hpx::ranges::partition, hpx::ranges::stable_partition, hpx::ranges::partition_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_reduce.html">
+         hpx::ranges::reduce
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_remove.html">
+         hpx::ranges::remove, hpx::ranges::remove_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_remove_copy.html">
+         hpx::ranges::remove_copy, hpx::ranges::remove_copy_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_replace.html">
+         hpx::ranges::replace, hpx::ranges::replace_if, hpx::ranges::replace_copy, hpx::ranges::replace_copy_if
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_reverse.html">
+         hpx::ranges::reverse, hpx::ranges::reverse_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_rotate.html">
+         hpx::ranges::rotate, hpx::ranges::rotate_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_search.html">
+         hpx::ranges::search, hpx::ranges::search_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_set_difference.html">
+         hpx::ranges::set_difference
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_set_intersection.html">
+         hpx::ranges::set_intersection
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_set_symmetric_difference.html">
+         hpx::ranges::set_symmetric_difference
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_set_union.html">
+         hpx::ranges::set_union
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_shift_left.html">
+         hpx::ranges::shift_left
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_shift_right.html">
+         hpx::ranges::shift_right
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_sort.html">
+         hpx::ranges::sort
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_stable_sort.html">
+         hpx::ranges::stable_sort
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_starts_with.html">
+         hpx::ranges::starts_with
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_swap_ranges.html">
+         hpx::ranges::swap_ranges
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_transform.html">
+         hpx::ranges::transform
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_transform_exclusive_scan.html">
+         hpx::ranges::transform_exclusive_scan
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_transform_inclusive_scan.html">
+         hpx::ranges::transform_inclusive_scan
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_transform_reduce.html">
+         hpx::ranges::transform_reduce
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_uninitialized_copy.html">
+         hpx::ranges::uninitialized_copy, hpx::ranges::uninitialized_copy_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_uninitialized_default_construct.html">
+         hpx::ranges::uninitialized_default_construct, hpx::ranges::uninitialized_default_construct_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_uninitialized_fill.html">
+         hpx::ranges::uninitialized_fill, hpx::ranges::uninitialized_fill_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_uninitialized_move.html">
+         hpx::ranges::uninitialized_move, hpx::ranges::uninitialized_move_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_uninitialized_value_construct.html">
+         hpx::ranges::uninitialized_value_construct, hpx::ranges::uninitialized_value_construct_n
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/container_algorithms_unique.html">
+         hpx::ranges::unique, hpx::ranges::unique_copy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../algorithms/api/range.html">
+         hpx/parallel/util/range.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../asio/api/full_api.html">
+       asio
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+      <label for="toctree-checkbox-9">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../asio/api/asio_util.html">
+         hpx/asio/asio_util.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../assertion/api/full_api.html">
+       assertion
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+      <label for="toctree-checkbox-10">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../assertion/api/evaluate_assert.html">
+         hpx/assertion/evaluate_assert.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../assertion/api/source_location.html">
+         HPX_CURRENT_SOURCE_LOCATION, hpx::source_location
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../assertion/api/assertion.html">
+         HPX_ASSERT, HPX_ASSERT_MSG
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../async_base/api/full_api.html">
+       async_base
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+      <label for="toctree-checkbox-11">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_base/api/async.html">
+         hpx::async
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_base/api/dataflow.html">
+         hpx::dataflow
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_base/api/launch_policy.html">
+         hpx::launch
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_base/api/post.html">
+         hpx::post
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_base/api/sync.html">
+         hpx::sync
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../async_combinators/api/full_api.html">
+       async_combinators
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+      <label for="toctree-checkbox-12">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_combinators/api/split_future.html">
+         hpx/async_combinators/split_future.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_combinators/api/wait_all.html">
+         hpx::wait_all
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_combinators/api/wait_any.html">
+         hpx::wait_any
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_combinators/api/wait_each.html">
+         hpx::wait_each
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_combinators/api/wait_some.html">
+         hpx::wait_some
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_combinators/api/when_all.html">
+         hpx::when_all
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_combinators/api/when_any.html">
+         hpx::when_any
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_combinators/api/when_each.html">
+         hpx::when_each
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_combinators/api/when_some.html">
+         hpx::when_some
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../async_cuda/api/full_api.html">
+       async_cuda
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+      <label for="toctree-checkbox-13">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_cuda/api/cublas_executor.html">
+         hpx/async_cuda/cublas_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_cuda/api/cuda_executor.html">
+         hpx/async_cuda/cuda_executor.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../async_mpi/api/full_api.html">
+       async_mpi
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+      <label for="toctree-checkbox-14">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_mpi/api/mpi_executor.html">
+         hpx/async_mpi/mpi_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../async_mpi/api/transform_mpi.html">
+         hpx/async_mpi/transform_mpi.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../cache/api/full_api.html">
+       cache
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+      <label for="toctree-checkbox-15">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../cache/api/local_cache.html">
+         hpx/cache/local_cache.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../cache/api/lru_cache.html">
+         hpx/cache/lru_cache.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../cache/api/entry.html">
+         hpx/cache/entries/entry.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../cache/api/fifo_entry.html">
+         hpx/cache/entries/fifo_entry.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../cache/api/lfu_entry.html">
+         hpx/cache/entries/lfu_entry.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../cache/api/lru_entry.html">
+         hpx/cache/entries/lru_entry.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../cache/api/size_entry.html">
+         hpx/cache/entries/size_entry.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../cache/api/local_statistics.html">
+         hpx/cache/statistics/local_statistics.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../cache/api/no_statistics.html">
+         hpx/cache/statistics/no_statistics.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../compute_local/api/full_api.html">
+       compute_local
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+      <label for="toctree-checkbox-16">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../compute_local/api/vector.html">
+         hpx/compute_local/vector.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../compute_local/api/block_executor.html">
+         hpx/compute_local/host/block_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../compute_local/api/block_fork_join_executor.html">
+         hpx/compute_local/host/block_fork_join_executor.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../config/api/full_api.html">
+       config
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+      <label for="toctree-checkbox-17">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../config/api/endian.html">
+         hpx/config/endian.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../coroutines/api/full_api.html">
+       coroutines
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+      <label for="toctree-checkbox-18">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../coroutines/api/thread_enums.html">
+         hpx/coroutines/thread_enums.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../coroutines/api/thread_id_type.html">
+         hpx/coroutines/thread_id_type.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../datastructures/api/full_api.html">
+       datastructures
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+      <label for="toctree-checkbox-19">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../datastructures/api/any.html">
+         hpx::any_nonser. hpx::bad_any_cast, hpx::unique_any_nonser, hpx::any_cast, hpx::make_any_nonser, hpx::make_unique_any_nonser
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../datastructures/api/tuple.html">
+         hpx::ignore, hpx::tuple, hpx::tuple_size, hpx::tuple_element, hpx::make_tuple, hpx::tie, hpx::forward_as_tuple, hpx::tuple_cat, hpx::get
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../datastructures/api/serializable_any.html">
+         hpx::any, hpx::make_any
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../debugging/api/full_api.html">
+       debugging
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+      <label for="toctree-checkbox-20">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../debugging/api/print.html">
+         hpx/debugging/print.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../errors/api/full_api.html">
+       errors
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+      <label for="toctree-checkbox-21">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../errors/api/error.html">
+         hpx/errors/error.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../errors/api/error_code.html">
+         hpx::error_code
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../errors/api/exception.html">
+         hpx::exception
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../errors/api/exception_fwd.html">
+         hpx/errors/exception_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../errors/api/exception_list.html">
+         hpx/errors/exception_list.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../errors/api/throw_exception.html">
+         HPX_THROW_EXCEPTION, HPX_THROW_BAD_ALLOC, HPX_THROWS_IF
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../execution/api/full_api.html">
+       execution
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+      <label for="toctree-checkbox-22">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/adaptive_static_chunk_size.html">
+         hpx/execution/executors/adaptive_static_chunk_size.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/auto_chunk_size.html">
+         hpx::execution::experimental::auto_chunk_size
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/default_parameters.html">
+         hpx/execution/executors/default_parameters.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/dynamic_chunk_size.html">
+         hpx::execution::experimental::dynamic_chunk_size
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/execution.html">
+         hpx/execution/executors/execution.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/execution_information.html">
+         hpx/execution/executors/execution_information.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/execution_parameters.html">
+         hpx/execution/executors/execution_parameters.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/execution_parameters_fwd.html">
+         hpx/execution/executors/execution_parameters_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/guided_chunk_size.html">
+         hpx::execution::experimental::guided_chunk_size
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/num_cores.html">
+         hpx::execution::experimental::num_cores
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/persistent_auto_chunk_size.html">
+         hpx::execution::experimental::persistent_auto_chunk_size
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/polymorphic_executor.html">
+         hpx/execution/executors/polymorphic_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/rebind_executor.html">
+         hpx/execution/executors/rebind_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/static_chunk_size.html">
+         hpx::execution::experimental::static_chunk_size
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution/api/is_execution_policy.html">
+         hpx/execution/traits/is_execution_policy.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../execution_base/api/full_api.html">
+       execution_base
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution_base/api/execution.html">
+         hpx/execution_base/execution.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution_base/api/receiver.html">
+         hpx/execution_base/receiver.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../execution_base/api/is_executor_parameters.html">
+         hpx/execution_base/traits/is_executor_parameters.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 current active has-children">
+      <a class="reference internal" href="full_api.html">
+       executors
+      </a>
+      <input checked="" class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+      <label for="toctree-checkbox-24">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul class="current">
+       <li class="toctree-l4">
+        <a class="reference internal" href="annotating_executor.html">
+         hpx/executors/annotating_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="current_executor.html">
+         hpx/executors/current_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="exception_list.html">
+         hpx/executors/exception_list.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="execution_policy.html">
+         hpx::execution::seq, hpx::execution::par, hpx::execution::par_unseq, hpx::execution::task, hpx::execution::sequenced_policy, hpx::execution::parallel_policy, hpx::execution::parallel_unsequenced_policy, hpx::execution::sequenced_task_policy, hpx::execution::parallel_task_policy
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="execution_policy_annotation.html">
+         hpx/executors/execution_policy_annotation.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="execution_policy_mappings.html">
+         hpx/executors/execution_policy_mappings.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="execution_policy_parameters.html">
+         hpx/executors/execution_policy_parameters.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="execution_policy_scheduling_property.html">
+         hpx/executors/execution_policy_scheduling_property.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="explicit_scheduler_executor.html">
+         hpx/executors/explicit_scheduler_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="fork_join_executor.html">
+         hpx/executors/fork_join_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="parallel_executor.html">
+         hpx/executors/parallel_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="parallel_executor_aggregated.html">
+         hpx/executors/parallel_executor_aggregated.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="restricted_thread_pool_executor.html">
+         hpx/executors/restricted_thread_pool_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="scheduler_executor.html">
+         hpx/executors/scheduler_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="sequenced_executor.html">
+         hpx/executors/sequenced_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="service_executors.html">
+         hpx/executors/service_executors.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="std_execution_policy.html">
+         hpx/executors/std_execution_policy.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="thread_pool_scheduler.html">
+         hpx/executors/thread_pool_scheduler.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="datapar_execution_policy.html">
+         hpx/executors/datapar/execution_policy.hpp
+        </a>
+       </li>
+       <li class="toctree-l4 current active">
+        <a class="current reference internal" href="#">
+         hpx/executors/datapar/execution_policy_mappings.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../filesystem/api/full_api.html">
+       filesystem
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+      <label for="toctree-checkbox-25">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../filesystem/api/filesystem.html">
+         hpx/modules/filesystem.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../functional/api/full_api.html">
+       functional
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+      <label for="toctree-checkbox-26">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/bind.html">
+         hpx::bind, hpx::placeholders::_1, hpx::placeholders::_2, …, hpx::placeholders::_9
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/bind_back.html">
+         hpx::bind_back
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/bind_front.html">
+         hpx::bind_front
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/function.html">
+         hpx::function
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/function_ref.html">
+         hpx::function_ref
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/invoke.html">
+         hpx::invoke
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/invoke_fused.html">
+         hpx::invoke_fused, hpx::invoke_fused_r
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/mem_fn.html">
+         hpx::mem_fn
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/move_only_function.html">
+         hpx::move_only_function
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/reference_wrapper.html">
+         hpx::reference_wrapper, hpx::ref, hpx::cref
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/scope_exit.html">
+         hpx::experimental::scope_exit
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/scope_fail.html">
+         hpx::experimental::scope_fail
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/scope_success.html">
+         hpx::experimental::scope_success
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/is_bind_expression.html">
+         hpx::is_bind_expression
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../functional/api/is_placeholder.html">
+         hpx::is_placeholder
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../futures/api/full_api.html">
+       futures
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+      <label for="toctree-checkbox-27">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../futures/api/future.html">
+         hpx::future, hpx::shared_future, hpx::make_future, hpx::make_shared_future, hpx::make_ready_future, hpx::make_ready_future_alloc, hpx::make_ready_future_at, hpx::make_ready_future_after, hpx::make_exceptional_future
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../futures/api/future_fwd.html">
+         hpx/futures/future_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../futures/api/packaged_task.html">
+         hpx::packaged_task
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../futures/api/promise.html">
+         hpx::promise
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../io_service/api/full_api.html">
+       io_service
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+      <label for="toctree-checkbox-28">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../io_service/api/io_service_pool.html">
+         hpx/io_service/io_service_pool.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../lcos_local/api/full_api.html">
+       lcos_local
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
+      <label for="toctree-checkbox-29">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../lcos_local/api/trigger.html">
+         hpx/lcos_local/trigger.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../pack_traversal/api/full_api.html">
+       pack_traversal
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
+      <label for="toctree-checkbox-30">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../pack_traversal/api/pack_traversal.html">
+         hpx/pack_traversal/pack_traversal.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../pack_traversal/api/pack_traversal_async.html">
+         hpx/pack_traversal/pack_traversal_async.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../pack_traversal/api/unwrap.html">
+         hpx::functional::unwrap, hpx::functional::unwrap_n, hpx::functional::unwrap_all, hpx::unwrap, hpx::unwrap_n, hpx::unwrap_all, hpx::unwrapping, hpx::unwrapping_n, hpx::unwrapping_all
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../preprocessor/api/full_api.html">
+       preprocessor
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" type="checkbox"/>
+      <label for="toctree-checkbox-31">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../preprocessor/api/cat.html">
+         hpx/preprocessor/cat.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../preprocessor/api/expand.html">
+         hpx/preprocessor/expand.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../preprocessor/api/nargs.html">
+         hpx/preprocessor/nargs.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../preprocessor/api/stringize.html">
+         hpx/preprocessor/stringize.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../preprocessor/api/strip_parens.html">
+         hpx/preprocessor/strip_parens.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../resiliency/api/full_api.html">
+       resiliency
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/>
+      <label for="toctree-checkbox-32">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../resiliency/api/replay_executor.html">
+         hpx/resiliency/replay_executor.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../resiliency/api/replicate_executor.html">
+         hpx/resiliency/replicate_executor.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../runtime_configuration/api/full_api.html">
+       runtime_configuration
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/>
+      <label for="toctree-checkbox-33">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_configuration/api/component_commandline_base.html">
+         hpx::components::component_commandline_base
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_configuration/api/component_factory_base.html">
+         HPX_REGISTER_COMPONENT_MODULE
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_configuration/api/component_registry_base.html">
+         hpx/runtime_configuration/component_registry_base.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_configuration/api/plugin_registry_base.html">
+         hpx/runtime_configuration/plugin_registry_base.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_configuration/api/runtime_mode.html">
+         hpx::runtime_mode
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../runtime_local/api/full_api.html">
+       runtime_local
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/>
+      <label for="toctree-checkbox-34">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/component_startup_shutdown_base.html">
+         hpx/runtime_local/component_startup_shutdown_base.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/custom_exception_info.html">
+         hpx/runtime_local/custom_exception_info.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/get_locality_id.html">
+         hpx::get_locality_id
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/get_locality_name.html">
+         hpx::get_locality_name
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/get_num_all_localities.html">
+         hpx::get_initial_num_localities, hpx::get_num_localities
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/get_os_thread_count.html">
+         hpx/runtime_local/get_os_thread_count.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/get_thread_name.html">
+         hpx::get_thread_name
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/get_worker_thread_num.html">
+         hpx/runtime_local/get_worker_thread_num.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/report_error.html">
+         hpx/runtime_local/report_error.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/runtime_local.html">
+         hpx/runtime_local/runtime_local.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/runtime_local_fwd.html">
+         hpx::register_thread, hpx::unregister_thread, hpx::get_os_thread_data, hpx::enumerate_os_threads, hpx::get_runtime_instance_number, hpx::register_on_exit, hpx::is_starting, hpx::tolerate_node_faults, hpx::is_running, hpx::is_stopped, hpx::is_stopped_or_shutting_down, hpx::get_num_worker_threads, hpx::get_system_uptime
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/service_executors.html">
+         hpx/runtime_local/service_executors.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/shutdown_function.html">
+         hpx::shutdown_function_type, hpx::register_pre_shutdown_function, hpx::register_shutdown_function
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/startup_function.html">
+         hpx::startup_function_type, hpx::register_pre_startup_function, hpx::register_startup_function
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/thread_hooks.html">
+         hpx/runtime_local/thread_hooks.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../runtime_local/api/thread_pool_helpers.html">
+         hpx/runtime_local/thread_pool_helpers.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../serialization/api/full_api.html">
+       serialization
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" type="checkbox"/>
+      <label for="toctree-checkbox-35">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../serialization/api/base_object.html">
+         hpx/serialization/base_object.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../synchronization/api/full_api.html">
+       synchronization
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" type="checkbox"/>
+      <label for="toctree-checkbox-36">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/barrier.html">
+         hpx::barrier
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/binary_semaphore.html">
+         hpx::binary_semaphore
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/condition_variable.html">
+         hpx::condition_variable, hpx::condition_variable_any, hpx::cv_status
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/counting_semaphore.html">
+         hpx::counting_semaphore
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/event.html">
+         hpx/synchronization/event.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/latch.html">
+         hpx::latch
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/mutex.html">
+         hpx::mutex, hpx::timed_mutex
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/no_mutex.html">
+         hpx::no_mutex
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/once.html">
+         hpx::once_flag, hpx::call_once
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/recursive_mutex.html">
+         hpx::recursive_mutex
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/shared_mutex.html">
+         hpx::shared_mutex
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/sliding_semaphore.html">
+         hpx/synchronization/sliding_semaphore.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/spinlock.html">
+         hpx::spinlock
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../synchronization/api/stop_token.html">
+         hpx::nostopstate, hpx::stop_callback, hpx::stop_source, hpx::stop_token, hpx::nostopstate_t
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../tag_invoke/api/full_api.html">
+       tag_invoke
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" type="checkbox"/>
+      <label for="toctree-checkbox-37">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../tag_invoke/api/is_invocable.html">
+         hpx::is_invocable, hpx::is_invocable_r
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../thread_pool_util/api/full_api.html">
+       thread_pool_util
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" type="checkbox"/>
+      <label for="toctree-checkbox-38">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../thread_pool_util/api/thread_pool_suspension_helpers.html">
+         hpx/thread_pool_util/thread_pool_suspension_helpers.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../thread_support/api/full_api.html">
+       thread_support
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" type="checkbox"/>
+      <label for="toctree-checkbox-39">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../thread_support/api/unlock_guard.html">
+         hpx::unlock_guard
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../threading/api/full_api.html">
+       threading
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-40" name="toctree-checkbox-40" type="checkbox"/>
+      <label for="toctree-checkbox-40">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading/api/jthread.html">
+         hpx::jthread
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading/api/thread.html">
+         hpx::thread, hpx::this_thread::yield, hpx::this_thread::get_id, hpx::this_thread::sleep_for, hpx::this_thread::sleep_until
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../threading_base/api/full_api.html">
+       threading_base
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-41" name="toctree-checkbox-41" type="checkbox"/>
+      <label for="toctree-checkbox-41">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/annotated_function.html">
+         hpx::annotated_function
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/print.html">
+         hpx/threading_base/print.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/register_thread.html">
+         hpx/threading_base/register_thread.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/scoped_annotation.html">
+         hpx::scoped_annotation
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/thread_data.html">
+         hpx/threading_base/thread_data.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/thread_description.html">
+         hpx/threading_base/thread_description.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/thread_helpers.html">
+         hpx/threading_base/thread_helpers.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/thread_num_tss.html">
+         hpx::get_worker_thread_num, hpx::get_local_worker_thread_num, hpx::get_local_worker_thread_num, hpx::get_thread_pool_num, hpx::get_thread_pool_num
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/thread_pool_base.html">
+         hpx/threading_base/thread_pool_base.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threading_base/api/threading_base_fwd.html">
+         hpx/threading_base/threading_base_fwd.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../threadmanager/api/full_api.html">
+       threadmanager
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" type="checkbox"/>
+      <label for="toctree-checkbox-42">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../threadmanager/api/threadmanager.html">
+         hpx/modules/threadmanager.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../timed_execution/api/full_api.html">
+       timed_execution
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-43" name="toctree-checkbox-43" type="checkbox"/>
+      <label for="toctree-checkbox-43">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../timed_execution/api/timed_execution.html">
+         hpx/timed_execution/timed_execution.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../timed_execution/api/timed_execution_fwd.html">
+         hpx/timed_execution/timed_execution_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../timed_execution/api/timed_executors.html">
+         hpx/timed_execution/timed_executors.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../timed_execution/api/is_timed_executor.html">
+         hpx/timed_execution/traits/is_timed_executor.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../timing/api/full_api.html">
+       timing
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-44" name="toctree-checkbox-44" type="checkbox"/>
+      <label for="toctree-checkbox-44">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../timing/api/high_resolution_clock.html">
+         hpx::chrono::high_resolution_clock
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../timing/api/high_resolution_timer.html">
+         hpx::chrono::high_resolution_timer
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../topology/api/full_api.html">
+       topology
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-45" name="toctree-checkbox-45" type="checkbox"/>
+      <label for="toctree-checkbox-45">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../topology/api/cpu_mask.html">
+         hpx/topology/cpu_mask.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../topology/api/topology.html">
+         hpx/topology/topology.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../util/api/full_api.html">
+       util
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-46" name="toctree-checkbox-46" type="checkbox"/>
+      <label for="toctree-checkbox-46">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../util/api/insert_checked.html">
+         hpx/util/insert_checked.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../util/api/sed_transform.html">
+         hpx/util/sed_transform.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/actions/api/full_api.html">
+       actions
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-47" name="toctree-checkbox-47" type="checkbox"/>
+      <label for="toctree-checkbox-47">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions/api/action_support.html">
+         hpx/actions/action_support.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions/api/actions_fwd.html">
+         hpx/actions/actions_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions/api/base_action.html">
+         hpx/actions/base_action.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions/api/transfer_action.html">
+         hpx/actions/transfer_action.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions/api/transfer_base_action.html">
+         hpx/actions/transfer_base_action.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/actions_base/api/full_api.html">
+       actions_base
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-48" name="toctree-checkbox-48" type="checkbox"/>
+      <label for="toctree-checkbox-48">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions_base/api/actions_base_fwd.html">
+         hpx/actions_base/actions_base_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions_base/api/actions_base_support.html">
+         hpx/actions_base/actions_base_support.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions_base/api/basic_action.html">
+         HPX_REGISTER_ACTION_DECLARATION, HPX_REGISTER_ACTION
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions_base/api/basic_action_fwd.html">
+         hpx/actions_base/basic_action_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions_base/api/component_action.html">
+         HPX_DEFINE_COMPONENT_ACTION
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions_base/api/lambda_to_action.html">
+         hpx/actions_base/lambda_to_action.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions_base/api/plain_action.html">
+         hpx/actions_base/plain_action.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions_base/api/preassigned_action_id.html">
+         hpx/actions_base/preassigned_action_id.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/actions_base/api/action_remote_result.html">
+         hpx/actions_base/traits/action_remote_result.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/agas/api/full_api.html">
+       agas
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-49" name="toctree-checkbox-49" type="checkbox"/>
+      <label for="toctree-checkbox-49">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/agas/api/addressing_service.html">
+         hpx/agas/addressing_service.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/agas_base/api/full_api.html">
+       agas_base
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-50" name="toctree-checkbox-50" type="checkbox"/>
+      <label for="toctree-checkbox-50">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/agas_base/api/primary_namespace.html">
+         hpx/agas_base/server/primary_namespace.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/async_colocated/api/full_api.html">
+       async_colocated
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-51" name="toctree-checkbox-51" type="checkbox"/>
+      <label for="toctree-checkbox-51">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_colocated/api/get_colocation_id.html">
+         hpx::get_colocation_id
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/async_distributed/api/full_api.html">
+       async_distributed
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-52" name="toctree-checkbox-52" type="checkbox"/>
+      <label for="toctree-checkbox-52">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/async.html">
+         hpx::async (distributed)
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/base_lco.html">
+         hpx/async_distributed/base_lco.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/base_lco_with_value.html">
+         hpx/async_distributed/base_lco_with_value.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/dataflow.html">
+         hpx::dataflow (distributed)
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/lcos_fwd.html">
+         hpx::distributed::promise
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/packaged_action.html">
+         hpx/async_distributed/packaged_action.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/post.html">
+         hpx::post (distributed)
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/promise.html">
+         hpx/async_distributed/promise.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/sync.html">
+         hpx::sync (distributed)
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/transfer_continuation_action.html">
+         hpx/async_distributed/transfer_continuation_action.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/trigger_lco.html">
+         hpx/async_distributed/trigger_lco.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/async_distributed/api/trigger_lco_fwd.html">
+         hpx/async_distributed/trigger_lco_fwd.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/checkpoint/api/full_api.html">
+       checkpoint
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/>
+      <label for="toctree-checkbox-53">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/checkpoint/api/checkpoint.html">
+         hpx/checkpoint/checkpoint.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/checkpoint_base/api/full_api.html">
+       checkpoint_base
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-54" name="toctree-checkbox-54" type="checkbox"/>
+      <label for="toctree-checkbox-54">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/checkpoint_base/api/checkpoint_data.html">
+         hpx/checkpoint_base/checkpoint_data.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/collectives/api/full_api.html">
+       collectives
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-55" name="toctree-checkbox-55" type="checkbox"/>
+      <label for="toctree-checkbox-55">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/all_gather.html">
+         hpx/collectives/all_gather.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/all_reduce.html">
+         hpx/collectives/all_reduce.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/all_to_all.html">
+         hpx/collectives/all_to_all.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/argument_types.html">
+         hpx/collectives/argument_types.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/barrier.html">
+         hpx::distributed::barrier
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/broadcast.html">
+         hpx/collectives/broadcast.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/broadcast_direct.html">
+         hpx/collectives/broadcast_direct.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/channel_communicator.html">
+         hpx/collectives/channel_communicator.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/communication_set.html">
+         hpx/collectives/communication_set.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/create_communicator.html">
+         hpx/collectives/create_communicator.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/exclusive_scan.html">
+         hpx/collectives/exclusive_scan.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/fold.html">
+         hpx/collectives/fold.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/gather.html">
+         hpx/collectives/gather.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/inclusive_scan.html">
+         hpx/collectives/inclusive_scan.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/latch.html">
+         hpx::distributed::latch
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/reduce.html">
+         hpx/collectives/reduce.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/reduce_direct.html">
+         hpx/collectives/reduce_direct.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/collectives/api/scatter.html">
+         hpx/collectives/scatter.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/components/api/full_api.html">
+       components
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-56" name="toctree-checkbox-56" type="checkbox"/>
+      <label for="toctree-checkbox-56">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components/api/basename_registration.html">
+         hpx/components/basename_registration.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components/api/basename_registration_fwd.html">
+         hpx/components/basename_registration_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components/api/client.html">
+         hpx::components::client
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components/api/client_base.html">
+         hpx::components::client_base
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components/api/get_ptr.html">
+         hpx/components/get_ptr.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/components_base/api/full_api.html">
+       components_base
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-57" name="toctree-checkbox-57" type="checkbox"/>
+      <label for="toctree-checkbox-57">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components_base/api/agas_interface.html">
+         hpx/components_base/agas_interface.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components_base/api/component_commandline.html">
+         HPX_REGISTER_COMMANDLINE_MODULE
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components_base/api/component_startup_shutdown.html">
+         HPX_REGISTER_STARTUP_MODULE
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components_base/api/component_type.html">
+         hpx/components_base/component_type.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components_base/api/components_base_fwd.html">
+         hpx::components::component, hpx::components::component_base
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components_base/api/get_lva.html">
+         hpx/components_base/get_lva.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components_base/api/fixed_component_base.html">
+         hpx/components_base/server/fixed_component_base.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components_base/api/managed_component_base.html">
+         hpx/components_base/server/managed_component_base.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/components_base/api/migration_support.html">
+         hpx/components_base/server/migration_support.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/compute/api/full_api.html">
+       compute
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-58" name="toctree-checkbox-58" type="checkbox"/>
+      <label for="toctree-checkbox-58">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/compute/api/target_distribution_policy.html">
+         hpx/compute/host/target_distribution_policy.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/distribution_policies/api/full_api.html">
+       distribution_policies
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-59" name="toctree-checkbox-59" type="checkbox"/>
+      <label for="toctree-checkbox-59">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/distribution_policies/api/binpacking_distribution_policy.html">
+         hpx/distribution_policies/binpacking_distribution_policy.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/distribution_policies/api/colocating_distribution_policy.html">
+         hpx/distribution_policies/colocating_distribution_policy.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/distribution_policies/api/default_distribution_policy.html">
+         hpx/distribution_policies/default_distribution_policy.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/distribution_policies/api/target_distribution_policy.html">
+         hpx/distribution_policies/target_distribution_policy.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/distribution_policies/api/unwrapping_result_policy.html">
+         hpx/distribution_policies/unwrapping_result_policy.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/executors_distributed/api/full_api.html">
+       executors_distributed
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-60" name="toctree-checkbox-60" type="checkbox"/>
+      <label for="toctree-checkbox-60">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/executors_distributed/api/distribution_policy_executor.html">
+         hpx/executors_distributed/distribution_policy_executor.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/init_runtime/api/full_api.html">
+       init_runtime
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-61" name="toctree-checkbox-61" type="checkbox"/>
+      <label for="toctree-checkbox-61">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/init_runtime/api/hpx_finalize.html">
+         hpx::finalize, hpx::disconnect
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/init_runtime/api/hpx_init.html">
+         hpx/hpx_init.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/init_runtime/api/hpx_init_impl.html">
+         hpx::init
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/init_runtime/api/hpx_init_params.html">
+         hpx::init_params
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/init_runtime/api/hpx_start.html">
+         hpx/hpx_start.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/init_runtime/api/hpx_start_impl.html">
+         hpx::start
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/init_runtime/api/hpx_suspend.html">
+         hpx::suspend, hpx::resume
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/naming_base/api/full_api.html">
+       naming_base
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-62" name="toctree-checkbox-62" type="checkbox"/>
+      <label for="toctree-checkbox-62">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/naming_base/api/unmanaged.html">
+         hpx/naming_base/unmanaged.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/parcelset/api/full_api.html">
+       parcelset
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-63" name="toctree-checkbox-63" type="checkbox"/>
+      <label for="toctree-checkbox-63">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/parcelset/api/connection_cache.html">
+         hpx/parcelset/connection_cache.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/parcelset/api/message_handler_fwd.html">
+         hpx/parcelset/message_handler_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/parcelset/api/parcelhandler.html">
+         hpx/parcelset/parcelhandler.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/parcelset/api/parcelset_fwd.html">
+         hpx/parcelset/parcelset_fwd.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/parcelset_base/api/full_api.html">
+       parcelset_base
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-64" name="toctree-checkbox-64" type="checkbox"/>
+      <label for="toctree-checkbox-64">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/parcelset_base/api/parcelport.html">
+         hpx/parcelset_base/parcelport.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/parcelset_base/api/parcelset_base_fwd.html">
+         hpx/parcelset_base/parcelset_base_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/parcelset_base/api/set_parcel_write_handler.html">
+         hpx/parcelset_base/set_parcel_write_handler.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/performance_counters/api/full_api.html">
+       performance_counters
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-65" name="toctree-checkbox-65" type="checkbox"/>
+      <label for="toctree-checkbox-65">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/performance_counters/api/counter_creators.html">
+         hpx/performance_counters/counter_creators.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/performance_counters/api/counters.html">
+         hpx/performance_counters/counters.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/performance_counters/api/counters_fwd.html">
+         hpx/performance_counters/counters_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/performance_counters/api/manage_counter_type.html">
+         hpx/performance_counters/manage_counter_type.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/performance_counters/api/registry.html">
+         hpx/performance_counters/registry.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/plugin_factories/api/full_api.html">
+       plugin_factories
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-66" name="toctree-checkbox-66" type="checkbox"/>
+      <label for="toctree-checkbox-66">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/plugin_factories/api/binary_filter_factory.html">
+         hpx/plugin_factories/binary_filter_factory.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/plugin_factories/api/message_handler_factory.html">
+         hpx/plugin_factories/message_handler_factory.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/plugin_factories/api/parcelport_factory.html">
+         hpx/plugin_factories/parcelport_factory.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/plugin_factories/api/plugin_registry.html">
+         hpx/plugin_factories/plugin_registry.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/runtime_components/api/full_api.html">
+       runtime_components
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-67" name="toctree-checkbox-67" type="checkbox"/>
+      <label for="toctree-checkbox-67">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_components/api/component_factory.html">
+         HPX_REGISTER_COMPONENT
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_components/api/component_registry.html">
+         hpx/runtime_components/component_registry.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_components/api/components_fwd.html">
+         hpx/runtime_components/components_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_components/api/derived_component_factory.html">
+         hpx/runtime_components/derived_component_factory.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_components/api/new.html">
+         hpx::new_
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/runtime_distributed/api/full_api.html">
+       runtime_distributed
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-68" name="toctree-checkbox-68" type="checkbox"/>
+      <label for="toctree-checkbox-68">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/runtime_distributed.html">
+         hpx/runtime_distributed.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/applier.html">
+         hpx/runtime_distributed/applier.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/applier_fwd.html">
+         hpx/runtime_distributed/applier_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/copy_component.html">
+         hpx/runtime_distributed/copy_component.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/find_all_localities.html">
+         hpx::find_root_locality, hpx::find_all_localities, hpx::find_remote_localities
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/find_here.html">
+         hpx/runtime_distributed/find_here.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/find_localities.html">
+         hpx::find_locality
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/get_locality_name.html">
+         hpx/runtime_distributed/get_locality_name.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/get_num_localities.html">
+         hpx/runtime_distributed/get_num_localities.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/migrate_component.html">
+         hpx/runtime_distributed/migrate_component.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/runtime_fwd.html">
+         hpx/runtime_distributed/runtime_fwd.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/runtime_support.html">
+         hpx/runtime_distributed/runtime_support.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/server_copy_component.html">
+         hpx/runtime_distributed/server/copy_component.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/server_runtime_support.html">
+         hpx/runtime_distributed/server/runtime_support.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/runtime_distributed/api/stubs_runtime_support.html">
+         hpx/runtime_distributed/stubs/runtime_support.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../full/segmented_algorithms/api/full_api.html">
+       segmented_algorithms
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-69" name="toctree-checkbox-69" type="checkbox"/>
+      <label for="toctree-checkbox-69">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/adjacent_difference.html">
+         hpx/parallel/segmented_algorithms/adjacent_difference.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/adjacent_find.html">
+         hpx/parallel/segmented_algorithms/adjacent_find.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/all_any_none.html">
+         hpx/parallel/segmented_algorithms/all_any_none.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/count.html">
+         hpx/parallel/segmented_algorithms/count.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/exclusive_scan.html">
+         hpx/parallel/segmented_algorithms/exclusive_scan.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/fill.html">
+         hpx/parallel/segmented_algorithms/fill.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/for_each.html">
+         hpx/parallel/segmented_algorithms/for_each.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/generate.html">
+         hpx/parallel/segmented_algorithms/generate.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/inclusive_scan.html">
+         hpx/parallel/segmented_algorithms/inclusive_scan.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/minmax.html">
+         hpx/parallel/segmented_algorithms/minmax.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/reduce.html">
+         hpx/parallel/segmented_algorithms/reduce.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/transform.html">
+         hpx/parallel/segmented_algorithms/transform.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/transform_exclusive_scan.html">
+         hpx/parallel/segmented_algorithms/transform_exclusive_scan.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/transform_inclusive_scan.html">
+         hpx/parallel/segmented_algorithms/transform_inclusive_scan.hpp
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../full/segmented_algorithms/api/transform_reduce.html">
+         hpx/parallel/segmented_algorithms/transform_reduce.hpp
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Developer documentation
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../contributing.html">
+   Contributing to
+   <em>
+    HPX
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-70" name="toctree-checkbox-70" type="checkbox"/>
+  <label for="toctree-checkbox-70">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../contributing/contributing.html">
+     Contributing to
+     <em>
+      HPX
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../contributing/governance.html">
+     <em>
+      HPX
+     </em>
+     governance model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../contributing/release_procedure.html">
+     Release procedure for
+     <em>
+      HPX
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../contributing/testing_hpx.html">
+     Testing
+     <em>
+      HPX
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../contributing/docker_image.html">
+     Using docker for development
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../contributing/documentation.html">
+     Documentation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../contributing/modules.html">
+     Module structure
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Other
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../releases.html">
+   Releases
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-71" name="toctree-checkbox-71" type="checkbox"/>
+  <label for="toctree-checkbox-71">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_11_1.html">
+     <em>
+      HPX
+     </em>
+     V1.11.1 (TBD)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_11_0.html">
+     <em>
+      HPX
+     </em>
+     V1.11.0 (Jun 30, 2025)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_10_0.html">
+     <em>
+      HPX
+     </em>
+     V1.10.0 (May 29, 2024)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_9_1.html">
+     <em>
+      HPX
+     </em>
+     V1.9.1 (August 4, 2023)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_9_0.html">
+     <em>
+      HPX
+     </em>
+     V1.9.0 (May 2, 2023)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_8_1.html">
+     <em>
+      HPX
+     </em>
+     V1.8.1 (Aug 5, 2022)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_8_0.html">
+     <em>
+      HPX
+     </em>
+     V1.8.0 (May 18, 2022)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_7_1.html">
+     <em>
+      HPX
+     </em>
+     V1.7.1 (Aug 12, 2021)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_7_0.html">
+     <em>
+      HPX
+     </em>
+     V1.7.0 (Jul 14, 2021)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_6_0.html">
+     <em>
+      HPX
+     </em>
+     V1.6.0 (Feb 17, 2021)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_5_1.html">
+     <em>
+      HPX
+     </em>
+     V1.5.1 (Sep 30, 2020)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_5_0.html">
+     <em>
+      HPX
+     </em>
+     V1.5.0 (Sep 02, 2020)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_4_1.html">
+     <em>
+      HPX
+     </em>
+     V1.4.1 (Feb 12, 2020)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_4_0.html">
+     <em>
+      HPX
+     </em>
+     V1.4.0 (January 15, 2020)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_3_0.html">
+     <em>
+      HPX
+     </em>
+     V1.3.0 (May 23, 2019)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_2_1.html">
+     <em>
+      HPX
+     </em>
+     V1.2.1 (Feb 19, 2019)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_2_0.html">
+     <em>
+      HPX
+     </em>
+     V1.2.0 (Nov 12, 2018)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_1_0.html">
+     <em>
+      HPX
+     </em>
+     V1.1.0 (Mar 24, 2018)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_1_0_0.html">
+     <em>
+      HPX
+     </em>
+     V1.0.0 (Apr 24, 2017)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_9_99.html">
+     <em>
+      HPX
+     </em>
+     V0.9.99 (Jul 15, 2016)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_9_11.html">
+     <em>
+      HPX
+     </em>
+     V0.9.11 (Nov 11, 2015)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_9_10.html">
+     <em>
+      HPX
+     </em>
+     V0.9.10 (Mar 24, 2015)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_9_9.html">
+     <em>
+      HPX
+     </em>
+     V0.9.9 (Oct 31, 2014, codename Spooky)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_9_8.html">
+     <em>
+      HPX
+     </em>
+     V0.9.8 (Mar 24, 2014)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_9_7.html">
+     <em>
+      HPX
+     </em>
+     V0.9.7 (Nov 13, 2013)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_9_6.html">
+     <em>
+      HPX
+     </em>
+     V0.9.6 (Jul 30, 2013)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_9_5.html">
+     <em>
+      HPX
+     </em>
+     V0.9.5 (Jan 16, 2013)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_9_0.html">
+     <em>
+      HPX
+     </em>
+     V0.9.0 (Jul 5, 2012)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_8_1.html">
+     <em>
+      HPX
+     </em>
+     V0.8.1 (Apr 21, 2012)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_8_0.html">
+     <em>
+      HPX
+     </em>
+     V0.8.0 (Mar 23, 2012)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/whats_new_0_7_0.html">
+     <em>
+      HPX
+     </em>
+     V0.7.0 (Dec 12, 2011)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../releases/new_namespaces_1_9_0.html">
+     <em>
+      HPX
+     </em>
+     V1.9.0 Namespace changes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../citing.html">
+   Citing
+   <em>
+    HPX
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../users.html">
+   <em>
+    HPX
+   </em>
+   users
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../about_hpx.html">
+   About
+   <em>
+    HPX
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-72" name="toctree-checkbox-72" type="checkbox"/>
+  <label for="toctree-checkbox-72">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../about_hpx/history.html">
+     History
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../about_hpx/people.html">
+     People
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/STEllAR-GROUP/hpx"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/STEllAR-GROUP/hpx/issues/new?title=Issue%20on%20page%20%2Flibs/core/executors/api/datapar_execution_policy_mappings.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../../_sources/libs/core/executors/api/datapar_execution_policy_mappings.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>hpx/executors/datapar/execution_policy_mappings.hpp</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="hpx-executors-datapar-execution-policy-mappings-hpp">
+<span id="modules-hpx-executors-datapar-execution-policy-mappings-hpp-api"></span><h1>hpx/executors/datapar/execution_policy_mappings.hpp<a class="headerlink" href="#hpx-executors-datapar-execution-policy-mappings-hpp" title="Permalink to this headline">#</a></h1>
+<p>Defined in header hpx/executors/datapar/execution_policy_mappings.hpp.</p>
+<p>See <a class="reference internal" href="../../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names and headers that are part of the public
+<em>HPX</em> API.</p>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="datapar_execution_policy.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">hpx/executors/datapar/execution_policy.hpp</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../../filesystem/api/full_api.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">filesystem</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By The STE||AR Group<br/>
+  
+      &copy; Copyright 2008-2025, The STE||AR Group.<br/>
+    Last updated on Jun 30, 2025.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

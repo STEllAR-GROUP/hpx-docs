@@ -20,6 +20,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
    /libs/core/execution/api/adaptive_static_chunk_size.rst
    /libs/core/execution/api/auto_chunk_size.rst
+   /libs/core/execution/api/collect_chunking_parameters.rst
    /libs/core/execution/api/default_parameters.rst
    /libs/core/execution/api/dynamic_chunk_size.rst
    /libs/core/execution/api/execution.rst
@@ -27,6 +28,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/execution/api/execution_parameters.rst
    /libs/core/execution/api/execution_parameters_fwd.rst
    /libs/core/execution/api/guided_chunk_size.rst
+   /libs/core/execution/api/max_num_chunks.rst
    /libs/core/execution/api/num_cores.rst
    /libs/core/execution/api/persistent_auto_chunk_size.rst
    /libs/core/execution/api/polymorphic_executor.rst

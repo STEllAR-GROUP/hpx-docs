@@ -521,6 +521,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../execution/api/full_api.html">execution</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-22"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/adaptive_static_chunk_size.html">hpx/execution/executors/adaptive_static_chunk_size.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/auto_chunk_size.html">hpx::execution::experimental::auto_chunk_size</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../execution/api/collect_chunking_parameters.html">hpx::execution::experimental::collect_chunking_parameters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/default_parameters.html">hpx/execution/executors/default_parameters.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/dynamic_chunk_size.html">hpx::execution::experimental::dynamic_chunk_size</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/execution.html">hpx/execution/executors/execution.hpp</a></li>
@@ -528,6 +529,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/execution_parameters.html">hpx/execution/executors/execution_parameters.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/execution_parameters_fwd.html">hpx/execution/executors/execution_parameters_fwd.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/guided_chunk_size.html">hpx::execution::experimental::guided_chunk_size</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../execution/api/max_num_chunks.html">hpx::execution::experimental::max_num_chunks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/num_cores.html">hpx::execution::experimental::num_cores</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/persistent_auto_chunk_size.html">hpx::execution::experimental::persistent_auto_chunk_size</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../execution/api/polymorphic_executor.html">hpx/execution/executors/polymorphic_executor.hpp</a></li>
@@ -1230,7 +1232,7 @@ document.write(`
 <dl class="cpp enumerator">
 <dt class="sig sig-object cpp" id="_CPPv4N3hpx7threads21thread_schedule_state10terminatedE">
 <span id="_CPPv3N3hpx7threads21thread_schedule_state10terminatedE"></span><span id="_CPPv2N3hpx7threads21thread_schedule_state10terminatedE"></span><span class="target" id="thread__enums_8hpp_1a4d93e4d4edcee289da341df4b3802e71add4b8c762f1258f89c4383961c5be121"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">terminated</span></span></span><a class="headerlink" href="#_CPPv4N3hpx7threads21thread_schedule_state10terminatedE" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>thread has been stopped an may be garbage collected </p>
+<dd><p>thread has been stopped and may be garbage collected </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
@@ -1309,6 +1311,12 @@ document.write(`
 <dt class="sig sig-object cpp" id="_CPPv4N3hpx7threads15thread_priority5boundE">
 <span id="_CPPv3N3hpx7threads15thread_priority5boundE"></span><span id="_CPPv2N3hpx7threads15thread_priority5boundE"></span><span class="target" id="thread__enums_8hpp_1a89185d37d360bdc7e185a18b5f94f628ab9f2b582ee75a7259c62ce162cebe368"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bound</span></span></span><a class="headerlink" href="#_CPPv4N3hpx7threads15thread_priority5boundE" title="Permalink to this definition">#</a><br /></dt>
 <dd><p>Task goes onto a special high priority queue and will never be stolen by another thread after initial assignment. This should be used for thread placement tasks such as OpenMP type for loops. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N3hpx7threads15thread_priority15initially_boundE">
+<span id="_CPPv3N3hpx7threads15thread_priority15initially_boundE"></span><span id="_CPPv2N3hpx7threads15thread_priority15initially_boundE"></span><span class="target" id="thread__enums_8hpp_1a89185d37d360bdc7e185a18b5f94f628a183790fc347c5550ffb8ceba53f78979"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initially_bound</span></span></span><a class="headerlink" href="#_CPPv4N3hpx7threads15thread_priority15initially_boundE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Task initially goes onto a special high priority queue and will never be stolen by another thread after initial assignment. If the thread is rescheduled later, it will use normal priority. </p>
 </dd></dl>
 
 </dd></dl>
@@ -1650,6 +1658,24 @@ document.write(`
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3hpx7threads20thread_schedule_hint20thread_schedule_hintE21thread_placement_hint">
+<span id="_CPPv3N3hpx7threads20thread_schedule_hint20thread_schedule_hintE21thread_placement_hint"></span><span id="_CPPv2N3hpx7threads20thread_schedule_hint20thread_schedule_hintE21thread_placement_hint"></span><span id="hpx::threads::thread_schedule_hint::thread_schedule_hint__thread_placement_hintCE"></span><span class="target" id="structhpx_1_1threads_1_1thread__schedule__hint_1af1ac84f212a84b255e26c33feda660b1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">thread_schedule_hint</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx7threads21thread_placement_hintE" title="hpx::threads::thread_placement_hint"><span class="n"><span class="pre">thread_placement_hint</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">placement</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N3hpx7threads20thread_schedule_hint20thread_schedule_hintE21thread_placement_hint" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Construct a hint with the given placement hint. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3hpx7threads20thread_schedule_hint20thread_schedule_hintE21thread_execution_hint">
+<span id="_CPPv3N3hpx7threads20thread_schedule_hint20thread_schedule_hintE21thread_execution_hint"></span><span id="_CPPv2N3hpx7threads20thread_schedule_hint20thread_schedule_hintE21thread_execution_hint"></span><span id="hpx::threads::thread_schedule_hint::thread_schedule_hint__thread_execution_hintCE"></span><span class="target" id="structhpx_1_1threads_1_1thread__schedule__hint_1a29ba983fa323354be6d508cccd56a03d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">thread_schedule_hint</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx7threads21thread_execution_hintE" title="hpx::threads::thread_execution_hint"><span class="n"><span class="pre">thread_execution_hint</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">runs_as_child</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N3hpx7threads20thread_schedule_hint20thread_schedule_hintE21thread_execution_hint" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Construct a hint with the given execution hint. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3hpx7threads20thread_schedule_hint20thread_schedule_hintE19thread_sharing_hint">
+<span id="_CPPv3N3hpx7threads20thread_schedule_hint20thread_schedule_hintE19thread_sharing_hint"></span><span id="_CPPv2N3hpx7threads20thread_schedule_hint20thread_schedule_hintE19thread_sharing_hint"></span><span id="hpx::threads::thread_schedule_hint::thread_schedule_hint__thread_sharing_hintCE"></span><span class="target" id="structhpx_1_1threads_1_1thread__schedule__hint_1a4258c03fd8439f9c00a07e8fdcfd24ff"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">thread_schedule_hint</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3hpx7threads19thread_sharing_hintE" title="hpx::threads::thread_sharing_hint"><span class="n"><span class="pre">thread_sharing_hint</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sharing</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N3hpx7threads20thread_schedule_hint20thread_schedule_hintE19thread_sharing_hint" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Construct a hint with the given sharing hint. </p>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK3hpx7threads20thread_schedule_hint14placement_modeEv">
 <span id="_CPPv3NK3hpx7threads20thread_schedule_hint14placement_modeEv"></span><span id="_CPPv2NK3hpx7threads20thread_schedule_hint14placement_modeEv"></span><span id="hpx::threads::thread_schedule_hint::placement_modeCCE"></span><span class="target" id="structhpx_1_1threads_1_1thread__schedule__hint_1ac0ee063ac9edf309725f420317c2f5bc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3hpx7threads21thread_placement_hintE" title="hpx::threads::thread_placement_hint"><span class="n"><span class="pre">thread_placement_hint</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">placement_mode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK3hpx7threads20thread_schedule_hint14placement_modeEv" title="Permalink to this definition">#</a><br /></dt>
 <dd></dd></dl>
@@ -1788,7 +1814,7 @@ By The STE||AR Group
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 01, 2025.
+  Last updated on Aug 17, 2025.
   <br/>
 </p>
   </div>

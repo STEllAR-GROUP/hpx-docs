@@ -1508,6 +1508,15 @@ CMake target <code class="docutils literal notranslate"><span class="pre">HPX::w
 executables if you are using the macros described below
 (<a class="reference internal" href="#using-hpx-cmake-macros"><span class="std std-ref">Using macros to create new targets</span></a>). See <a class="reference internal" href="starting_the_hpx_runtime.html#minimal"><span class="std std-ref">Re-use the main() function as the main HPX entry point</span></a> for more information on
 implicitly using <code class="docutils literal notranslate"><span class="pre">main()</span></code> as the entry point.</p>
+<p>If you want to use the facilities exposed by <code class="docutils literal notranslate"><span class="pre">hpx::runtime_manager</span></code> in binaries
+that were not linked as executables (e.g., in shared libraries), you will need
+make your cmake target explicitly depend on the <code class="docutils literal notranslate"><span class="pre">HPX::init</span></code> target:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_library</span><span class="p">(</span><span class="s">hello_world_component</span><span class="w"> </span><span class="s">SHARED</span><span class="w"> </span><span class="s">hello_world_component.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">hello_world_component</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">HPX::init</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Otherwise you may see compilation errors complaining about the header file
+<code class="docutils literal notranslate"><span class="pre">hpx/runtime_manager.hpp</span></code> not being found.</p>
 <p>Creating a component requires setting two additional compile definitions:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_compile_options</span><span class="p">(</span><span class="s">hello_world_component</span>
 <span class="w">  </span><span class="s">HPX_COMPONENT_NAME=hello_world</span>
@@ -1971,7 +1980,7 @@ By The STE||AR Group
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 28, 2025.
+  Last updated on Aug 29, 2025.
   <br/>
 </p>
   </div>

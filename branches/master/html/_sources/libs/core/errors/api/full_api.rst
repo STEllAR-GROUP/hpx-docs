@@ -23,4 +23,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/errors/api/exception.rst
    /libs/core/errors/api/exception_fwd.rst
    /libs/core/errors/api/exception_list.rst
+   /libs/core/errors/api/macros.rst
    /libs/core/errors/api/throw_exception.rst

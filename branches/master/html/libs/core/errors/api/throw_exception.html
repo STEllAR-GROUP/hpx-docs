@@ -52,7 +52,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="execution" href="../../execution/api/full_api.html" />
-    <link rel="prev" title="hpx/errors/exception_list.hpp" href="exception_list.html" />
+    <link rel="prev" title="hpx/errors/macros.hpp" href="macros.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -437,9 +437,10 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../assertion/api/full_api.html">assertion</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../assertion/api/api.html">hpx/assertion/api.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../assertion/api/evaluate_assert.html">hpx/assertion/evaluate_assert.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../assertion/api/macros.html">HPX_ASSERT, HPX_ASSERT_MSG</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../assertion/api/source_location.html">HPX_CURRENT_SOURCE_LOCATION, hpx::source_location</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../assertion/api/assertion.html">HPX_ASSERT, HPX_ASSERT_MSG</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../async_base/api/full_api.html">async_base</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -515,6 +516,7 @@
 <li class="toctree-l4"><a class="reference internal" href="exception.html">hpx::exception</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exception_fwd.html">hpx/errors/exception_fwd.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exception_list.html">hpx/errors/exception_list.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="macros.html">hpx/errors/macros.hpp</a></li>
 <li class="toctree-l4 current active"><a class="current reference internal" href="#">HPX_THROW_EXCEPTION, HPX_THROW_BAD_ALLOC, HPX_THROWS_IF</a></li>
 </ul>
 </li>
@@ -1184,72 +1186,9 @@ document.write(`
                   
   <section id="hpx-throw-exception-hpx-throw-bad-alloc-hpx-throws-if">
 <span id="modules-hpx-errors-throw-exception-hpp-api"></span><h1>HPX_THROW_EXCEPTION, HPX_THROW_BAD_ALLOC, HPX_THROWS_IF<a class="headerlink" href="#hpx-throw-exception-hpx-throw-bad-alloc-hpx-throws-if" title="Permalink to this heading">#</a></h1>
-<p>Defined in header <a class="reference external" href="http://github.com/STEllAR-GROUP/hpx/blob/04b747deff5f24af84b685ab07833d322c6d82fb/libs/core/include_local/include/hpx/exception.hpp">hpx/exception.hpp</a>.</p>
+<p>Defined in header <a class="reference external" href="http://github.com/STEllAR-GROUP/hpx/blob/acf07297232076fd53c9aca5bb02280e48a73447/libs/core/include_local/include/hpx/exception.hpp">hpx/exception.hpp</a>.</p>
 <p>See <a class="reference internal" href="../../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names and headers that are part of the public
 <em>HPX</em> API.</p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.HPX_THROW_EXCEPTION">
-<span class="target" id="throw__exception_8hpp_1a3802776b8d10e5bbfa7ef62a74edbad5"></span><span class="sig-name descname"><span class="n"><span class="pre">HPX_THROW_EXCEPTION</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">errcode</span></span>, <span class="n"><span class="pre">f</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROW_EXCEPTION" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Throw a <a class="reference internal" href="exception.html#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> initialized from the given parameters. </p>
-<p>The macro <em>HPX_THROW_EXCEPTION</em> can be used to throw a <a class="reference internal" href="exception.html#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a>. The purpose of this macro is to prepend the source file name and line number of the position where the exception is thrown to the error message. Moreover, this associates additional diagnostic information with the exception, such as file name and line number, locality id and thread id, and stack backtrace from the point where the exception was thrown.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code the new exception should encapsulate. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">raise_exception</span><span class="p">()</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// Throw a hpx::exception initialized from the given parameters.</span>
-<span class="w">    </span><span class="c1">// Additionally associate with this exception some detailed</span>
-<span class="w">    </span><span class="c1">// diagnostic information about the throw-site.</span>
-<span class="w">    </span><span class="n">HPX_THROW_EXCEPTION</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">error</span><span class="o">::</span><span class="n">no_success</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;raise_exception&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">       </span><span class="s">&quot;simulated error&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
- <dl class="simple">
-<dt><strong>Example:</strong></dt><dd><p></p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.HPX_THROW_BAD_ALLOC">
-<span class="target" id="throw__exception_8hpp_1a5e5a5dbc1312c76f3a5d365c3f939ad1"></span><span class="sig-name descname"><span class="n"><span class="pre">HPX_THROW_BAD_ALLOC</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">f</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROW_BAD_ALLOC" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Throw a <a class="reference internal" href="exception.html#classhpx_1_1bad__alloc__exception"><span class="std std-ref">hpx::bad_alloc_exception</span></a> initialized from the given parameters. </p>
-<p>The macro <em>HPX_THROW_BAD_ALLOC</em> can be used to throw a <a class="reference internal" href="exception.html#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a>. The purpose of this macro is to prepend the source file name and line number of the position where the exception is thrown to the error message. Moreover, this associates additional diagnostic information with the exception, such as file name and line number, locality id and thread id, and stack backtrace from the point where the exception was thrown.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code the new exception should encapsulate. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">raise_exception</span><span class="p">()</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// Throw a hpx::exception initialized from the given parameters.</span>
-<span class="w">    </span><span class="c1">// Additionally associate with this exception some detailed</span>
-<span class="w">    </span><span class="c1">// diagnostic information about the throw-site.</span>
-<span class="w">    </span><span class="n">HPX_THROW_BAD_ALLOC</span><span class="p">(</span><span class="s">&quot;raise_exception&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;simulated error&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
- <dl class="simple">
-<dt><strong>Example:</strong></dt><dd><p></p>
-</dd>
-</dl>
-</p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.HPX_THROWS_IF">
-<span class="target" id="throw__exception_8hpp_1a65137f68eec80c9c8a3156fd795569f5"></span><span class="sig-name descname"><span class="n"><span class="pre">HPX_THROWS_IF</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ec</span></span>, <span class="n"><span class="pre">errcode</span></span>, <span class="n"><span class="pre">f</span></span>, <span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROWS_IF" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Either throw a <a class="reference internal" href="exception.html#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a> or initialize <em><a class="reference internal" href="error_code.html#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. </p>
-<p>The macro <em>HPX_THROWS_IF</em> can be used to either throw a <em><a class="reference internal" href="exception.html#classhpx_1_1exception"><span class="std std-ref">hpx::exception</span></a></em> or to initialize a <em><a class="reference internal" href="error_code.html#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> from the given parameters. If &amp;ec == &amp;hpx::throws, the semantics of this macro are equivalent to <em>HPX_THROW_EXCEPTION</em>. If &amp;ec != &amp;hpx::throws, the <em><a class="reference internal" href="error_code.html#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> instance <code class="docutils literal notranslate"><span class="pre">ec</span></code> is initialized instead.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">errcode</span></code> holds the hpx::error code from which the new exception should be initialized. The parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is expected to hold the name of the function exception is thrown from and the parameter <code class="docutils literal notranslate"><span class="pre">msg</span></code> holds the error message the new exception should encapsulate. </p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.HPX_THROWS_BAD_ALLOC_IF">
-<span class="target" id="throw__exception_8hpp_1a18301551d760097be3a88f2092d7c35c"></span><span class="sig-name descname"><span class="n"><span class="pre">HPX_THROWS_BAD_ALLOC_IF</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ec</span></span>, <span class="n"><span class="pre">f</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_THROWS_BAD_ALLOC_IF" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Either throw a <a class="reference internal" href="exception.html#classhpx_1_1bad__alloc__exception"><span class="std std-ref">hpx::bad_alloc_exception</span></a> or <em><a class="reference internal" href="error_code.html#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> to out_of_memory. </p>
-<p>The macro <em>HPX_THROWS_BAD_ALLOC_IF</em> can be used to either throw a <em><a class="reference internal" href="exception.html#classhpx_1_1bad__alloc__exception"><span class="std std-ref">hpx::bad_alloc_exception</span></a></em> or to initialize a <em><a class="reference internal" href="error_code.html#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> to <em>hpx::error::out_of_memory</em>. If &amp;ec == &amp;hpx::throws, the semantics of this macro are equivalent to <em>HPX_THROW_BAD_ALLOC</em>. If &amp;ec != &amp;hpx::throws, the <em><a class="reference internal" href="error_code.html#classhpx_1_1error__code"><span class="std std-ref">hpx::error_code</span></a></em> instance <code class="docutils literal notranslate"><span class="pre">ec</span></code> is initialized instead. </p>
-</dd></dl>
-
-</div>
 <dl class="cpp type">
 <dt class="sig sig-object cpp" id="_CPPv43hpx">
 <span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">hpx</span></span></span><br /></dt>
@@ -1270,12 +1209,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="exception_list.html"
+       href="macros.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">hpx/errors/exception_list.hpp</p>
+        <p class="prev-next-title">hpx/errors/macros.hpp</p>
       </div>
     </a>
     <a class="right-next"
@@ -1324,7 +1263,7 @@ By The STE||AR Group
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 30, 2025.
+  Last updated on Sep 01, 2025.
   <br/>
 </p>
   </div>

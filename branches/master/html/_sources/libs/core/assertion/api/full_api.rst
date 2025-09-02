@@ -18,6 +18,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
+   /libs/core/assertion/api/api.rst
    /libs/core/assertion/api/evaluate_assert.rst
+   /libs/core/assertion/api/macros.rst
    /libs/core/assertion/api/source_location.rst
-   /libs/core/assertion/api/assertion.rst

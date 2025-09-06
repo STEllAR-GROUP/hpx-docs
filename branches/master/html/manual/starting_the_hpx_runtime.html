@@ -1312,7 +1312,7 @@ function will be invoked as the first <em>HPX</em> thread of your application). 
 <p>The thread executing the function <a class="reference internal" href="../libs/full/init_runtime/api/hpx_init_impl.html#_CPPv4N3hpx4initENSt8functionIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init</span></code></a> will block waiting for
 the runtime system to exit. The value returned from <code class="docutils literal notranslate"><span class="pre">hpx_main</span></code> will be
 returned from <a class="reference internal" href="../libs/full/init_runtime/api/hpx_init_impl.html#_CPPv4N3hpx4initENSt8functionIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::init"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::init</span></code></a> after the runtime system has stopped.</p>
-<p>The function <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx8finalizeEddR10error_code" title="hpx::finalize"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::finalize</span></code></a> has to be called on one of the <em>HPX</em>
+<p>The function <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx8finalizeEddRN3hpx10error_codeE" title="hpx::finalize"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::finalize</span></code></a> has to be called on one of the <em>HPX</em>
 localities in order to signal that all work has been scheduled and the runtime
 system should be stopped after the scheduled work has been executed.</p>
 <p>This method of invoking <em>HPX</em> has the advantage of the user being able to decide
@@ -1361,14 +1361,14 @@ function will be invoked as the first <em>HPX</em> thread of your application). 
 <em>HPX</em> API functions can be used from within this function.</p>
 <p>The thread executing the function <a class="reference internal" href="../libs/full/init_runtime/api/hpx_start_impl.html#_CPPv4N3hpx5startENSt8functionIFiRN3hpx15program_options13variables_mapEEEEiPPcRK11init_params" title="hpx::start"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::start</span></code></a> will <em>not</em> block
 waiting for the runtime system to exit, but will return immediately.
-The function <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx8finalizeEddR10error_code" title="hpx::finalize"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::finalize</span></code></a> has to be called on one of the <em>HPX</em>
+The function <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx8finalizeEddRN3hpx10error_codeE" title="hpx::finalize"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::finalize</span></code></a> has to be called on one of the <em>HPX</em>
 localities in order to signal that all work has been scheduled and the runtime
 system should be stopped after the scheduled work has been executed.</p>
 <p>This method of invoking <em>HPX</em> is useful for applications where the main thread
-is used for special operations, such a GUIs. The function <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx4stopER10error_code" title="hpx::stop"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::stop</span></code></a>
+is used for special operations, such a GUIs. The function <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx4stopERN3hpx10error_codeE" title="hpx::stop"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::stop</span></code></a>
 can be used to wait for the <em>HPX</em> runtime system to exit and should at least be
 used as the last function called in <code class="docutils literal notranslate"><span class="pre">main()</span></code>. The value returned from
-<code class="docutils literal notranslate"><span class="pre">hpx_main</span></code> will be returned from <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx4stopER10error_code" title="hpx::stop"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::stop</span></code></a> after the runtime
+<code class="docutils literal notranslate"><span class="pre">hpx_main</span></code> will be returned from <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx4stopERN3hpx10error_codeE" title="hpx::stop"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::stop</span></code></a> after the runtime
 system has stopped.</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/hpx_start.hpp&gt;</span><span class="cp"></span>
 
@@ -1483,8 +1483,8 @@ so that they are ready to accept new work. <a class="reference internal" href=".
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="../libs/full/init_runtime/api/hpx_suspend.html#_CPPv4N3hpx7suspendER10error_code" title="hpx::suspend"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::suspend</span></code></a> does not wait for <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx8finalizeEddR10error_code" title="hpx::finalize"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::finalize</span></code></a> to be
-called. Only call <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx8finalizeEddR10error_code" title="hpx::finalize"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::finalize</span></code></a> when you wish to fully stop the
+<p><a class="reference internal" href="../libs/full/init_runtime/api/hpx_suspend.html#_CPPv4N3hpx7suspendER10error_code" title="hpx::suspend"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::suspend</span></code></a> does not wait for <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx8finalizeEddRN3hpx10error_codeE" title="hpx::finalize"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::finalize</span></code></a> to be
+called. Only call <a class="reference internal" href="../libs/full/init_runtime/api/hpx_finalize.html#_CPPv4N3hpx8finalizeEddRN3hpx10error_codeE" title="hpx::finalize"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::finalize</span></code></a> when you wish to fully stop the
 <em>HPX</em> runtime.</p>
 </div>
 <div class="admonition warning">

@@ -18,6 +18,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
+   /libs/core/errors/api/define_error_info.rst
    /libs/core/errors/api/error.rst
    /libs/core/errors/api/error_code.rst
    /libs/core/errors/api/exception.rst

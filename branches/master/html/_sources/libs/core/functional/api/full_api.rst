@@ -23,7 +23,6 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/functional/api/bind_front.rst
    /libs/core/functional/api/function.rst
    /libs/core/functional/api/function_ref.rst
-   /libs/core/functional/api/invoke.rst
    /libs/core/functional/api/invoke_fused.rst
    /libs/core/functional/api/mem_fn.rst
    /libs/core/functional/api/move_only_function.rst

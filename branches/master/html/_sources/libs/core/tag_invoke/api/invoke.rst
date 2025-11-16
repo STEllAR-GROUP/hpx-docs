@@ -17,4 +17,4 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 .. autodoxygenfile:: hpx/functional/invoke.hpp
-   :project: functional
+   :project: tag_invoke

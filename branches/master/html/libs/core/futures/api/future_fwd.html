@@ -1203,6 +1203,19 @@ document.write(`
 </dd></dl>
 
 <dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN3hpx7promiseE">
+<span id="_CPPv3I0EN3hpx7promiseE"></span><span id="_CPPv2I0EN3hpx7promiseE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">R</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classhpx_1_1promise"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">promise</span></span></span><a class="headerlink" href="#_CPPv4I0EN3hpx7promiseE" title="Permalink to this definition">#</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;promise.hpp&gt;</em></div>
+<p>The class template <a class="reference internal" href="promise.html#classhpx_1_1promise"><span class="std std-ref">hpx::promise</span></a> provides a facility to store a value or an exception that is later acquired asynchronously via a <a class="reference internal" href="#classhpx_1_1future"><span class="std std-ref">hpx::future</span></a> object created by the <a class="reference internal" href="promise.html#classhpx_1_1promise"><span class="std std-ref">hpx::promise</span></a> object. Note that the <a class="reference internal" href="promise.html#classhpx_1_1promise"><span class="std std-ref">hpx::promise</span></a> object is meant to be used only once. Each promise is associated with a shared state, which contains some state information and a result which may be not yet evaluated, evaluated to a value (possibly void) or evaluated to an exception. A promise may do three things with the shared state:<ul class="simple">
+<li><p>make ready: the promise stores the result or the exception in the shared state. Marks the state ready and unblocks any thread waiting on a future associated with the shared state.</p></li>
+<li><p>release: the promise gives up its reference to the shared state. If this was the last such reference, the shared state is destroyed. Unless this was a shared state created by hpx::async which is not yet ready, this operation does not block.</p></li>
+<li><p>abandon: the promise stores the exception of type hpx::future_error with error code hpx::error::broken_promise, makes the shared state ready, and then releases it. The promise is the “push” end of the promise-future communication channel: the operation that stores a value in the shared state synchronizes-with (as defined in hpx::memory_order) the successful return from any function that is waiting on the shared state (such as hpx::future::get). Concurrent access to the same shared state may conflict otherwise: for example multiple callers of hpx::shared_future::get must either all be read-only or provide external synchronization. </p></li>
+</ul>
+</p>
+</dd></dl>
+
+<dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv4I0EN3hpx13shared_futureE">
 <span id="_CPPv3I0EN3hpx13shared_futureE"></span><span id="_CPPv2I0EN3hpx13shared_futureE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">R</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classhpx_1_1shared__future"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">shared_future</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="../../algorithms/api/adjacent_difference.html#_CPPv43hpx" title="hpx"><span class="n"><span class="pre">hpx</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="future.html#_CPPv4N3hpx4lcosE" title="hpx::lcos"><span class="n"><span class="pre">lcos</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">detail</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">future_base</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="future.html#_CPPv4I0EN3hpx13shared_futureE" title="hpx::shared_future"><span class="n"><span class="pre">shared_future</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="future.html#_CPPv4I0EN3hpx13shared_futureE" title="hpx::shared_future::R"><span class="n"><span class="pre">R</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="future.html#_CPPv4I0EN3hpx13shared_futureE" title="hpx::shared_future::R"><span class="n"><span class="pre">R</span></span></a><span class="p"><span class="pre">&gt;</span></span><br /></dt>
 <dd><div class="docutils container">
@@ -1290,7 +1303,7 @@ By The STE||AR Group
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Nov 22, 2025.
+  Last updated on Nov 25, 2025.
   <br/>
 </p>
   </div>

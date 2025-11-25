@@ -11,7 +11,7 @@
 hpx::jthread
 -------------------------------------------------------------------------------
 
-Defined in header :hpx-header:`libs/core/include_local/include,hpx/thread.hpp`.
+Defined in header hpx/jthread.hpp.
 
 See :ref:`public_api` for a list of names and headers that are part of the public
 |hpx| API.

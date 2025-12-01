@@ -33,6 +33,7 @@ refer to the full documentation below.
    /libs/core/cache/api/full_api.rst
    /libs/core/compute_local/api/full_api.rst
    /libs/core/config/api/full_api.rst
+   /libs/core/contracts/api/full_api.rst
    /libs/core/coroutines/api/full_api.rst
    /libs/core/datastructures/api/full_api.rst
    /libs/core/debugging/api/full_api.rst

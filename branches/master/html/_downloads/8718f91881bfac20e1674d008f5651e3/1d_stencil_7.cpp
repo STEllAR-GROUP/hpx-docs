@@ -16,6 +16,8 @@
 #include <hpx/modules/type_support.hpp>
 #include <hpx/serialization.hpp>
 
+#include <boost/shared_array.hpp>
+
 #include <cstddef>
 #include <cstdint>
 #include <iostream>

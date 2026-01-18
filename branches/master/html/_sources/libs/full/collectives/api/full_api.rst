@@ -26,7 +26,6 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/full/collectives/api/broadcast.rst
    /libs/full/collectives/api/broadcast_direct.rst
    /libs/full/collectives/api/channel_communicator.rst
-   /libs/full/collectives/api/communication_set.rst
    /libs/full/collectives/api/create_communicator.rst
    /libs/full/collectives/api/exclusive_scan.rst
    /libs/full/collectives/api/fold.rst

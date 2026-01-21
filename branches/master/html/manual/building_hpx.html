@@ -1191,6 +1191,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-information">Basic information</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#most-important-cmake-options">Most important CMake options</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-types">Build types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-cmake-presets">Using CMake Presets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-specific-build-recipes">Platform specific build recipes</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unix-variants">Unix variants</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">Windows</a></li>
@@ -1354,6 +1355,31 @@ builds. Please make sure that applications built against <em>HPX</em> use the sa
 build type as you used to build <em>HPX</em>. For CMake builds, this means that
 the <code class="docutils literal notranslate"><span class="pre">CMAKE_BUILD_TYPE</span></code> variables have to match and for projects not using
 <a class="reference external" href="https://www.cmake.org">CMake</a>, the <code class="docutils literal notranslate"><span class="pre">HPX_DEBUG</span></code> macro has to be set in debug mode.</p>
+</div>
+</section>
+<section id="using-cmake-presets">
+<span id="cmake-presets"></span><h2>Using CMake Presets<a class="headerlink" href="#using-cmake-presets" title="Permalink to this heading">#</a></h2>
+<p><em>HPX</em> provides a <code class="docutils literal notranslate"><span class="pre">CMakePresets.json</span></code> file which includes a variety of pre-defined build configurations.
+These presets allow you to easily configure the build for common scenarios without needing to manually specify multiple CMake variables.</p>
+<p>To use a preset, you can use the <code class="docutils literal notranslate"><span class="pre">--preset</span></code> option with CMake:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake --preset &lt;preset-name&gt;
+<span class="gp">$ </span>cmake --build --preset &lt;preset-name&gt;
+</pre></div>
+</div>
+<p>Some of the available presets include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">default</span></code>: Standard release build with tests and examples enabled.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">minimal</span></code>: Minimal build with only core features (no tests, examples, or tools).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">full</span></code>: Full build with all standard features enabled.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">debug</span></code>: Debug build with symbols and debug-optimized settings.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">performance</span></code>: Build optimized for performance analysis with APEX profiling.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cuda</span></code>: Build with CUDA support (requires CUDA toolkit).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sycl</span></code>: Build with SYCL support (requires compatible compiler).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sanitizer-address</span></code>: Build with AddressSanitizer enabled.</p></li>
+</ul>
+<p>For a full list of available presets, you can run:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake --list-presets
+</pre></div>
 </div>
 </section>
 <section id="platform-specific-build-recipes">
@@ -1604,6 +1630,7 @@ output similar to this one:</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-information">Basic information</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#most-important-cmake-options">Most important CMake options</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-types">Build types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-cmake-presets">Using CMake Presets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-specific-build-recipes">Platform specific build recipes</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unix-variants">Unix variants</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#windows">Windows</a></li>
@@ -1641,7 +1668,7 @@ By The STE||AR Group
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Jan 18, 2026.
+  Last updated on Jan 20, 2026.
   <br/>
 </p>
   </div>

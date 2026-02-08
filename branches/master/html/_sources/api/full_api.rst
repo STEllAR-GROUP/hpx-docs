@@ -31,6 +31,7 @@ refer to the full documentation below.
    /libs/core/async_cuda/api/full_api.rst
    /libs/core/async_mpi/api/full_api.rst
    /libs/core/cache/api/full_api.rst
+   /libs/core/checkpoint_base/api/full_api.rst
    /libs/core/compute_local/api/full_api.rst
    /libs/core/config/api/full_api.rst
    /libs/core/contracts/api/full_api.rst
@@ -70,7 +71,6 @@ refer to the full documentation below.
    /libs/full/async_colocated/api/full_api.rst
    /libs/full/async_distributed/api/full_api.rst
    /libs/full/checkpoint/api/full_api.rst
-   /libs/full/checkpoint_base/api/full_api.rst
    /libs/full/collectives/api/full_api.rst
    /libs/full/components/api/full_api.rst
    /libs/full/components_base/api/full_api.rst

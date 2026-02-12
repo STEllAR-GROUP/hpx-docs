@@ -32,5 +32,6 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/runtime_local/api/service_executors.rst
    /libs/core/runtime_local/api/shutdown_function.rst
    /libs/core/runtime_local/api/startup_function.rst
+   /libs/core/runtime_local/api/termination_detection.rst
    /libs/core/runtime_local/api/thread_hooks.rst
    /libs/core/runtime_local/api/thread_pool_helpers.rst

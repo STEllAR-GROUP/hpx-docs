@@ -8,7 +8,7 @@
 .. _modules_hpx/parallel/container_algorithms/find.hpp_api:
 
 -------------------------------------------------------------------------------
-hpx::ranges::find, hpx::ranges::find_if, hpx::ranges::find_if_not, hpx::ranges::find_end, hpx::ranges::find_first_of
+hpx::ranges::find, hpx::ranges::find_if, hpx::ranges::find_if_not, hpx::ranges::find_end, hpx::ranges::find_first_of, hpx::ranges::find_last, hpx::ranges::find_last_if, hpx::ranges::find_last_if_not
 -------------------------------------------------------------------------------
 
 Defined in header :hpx-header:`libs/full/include/include,hpx/algorithm.hpp`.

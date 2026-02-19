@@ -102,6 +102,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/algorithms/api/container_algorithms_exclusive_scan.rst
    /libs/core/algorithms/api/container_algorithms_fill.rst
    /libs/core/algorithms/api/container_algorithms_find.rst
+   /libs/core/algorithms/api/fold.rst
    /libs/core/algorithms/api/container_algorithms_for_each.rst
    /libs/core/algorithms/api/container_algorithms_for_loop.rst
    /libs/core/algorithms/api/container_algorithms_generate.rst

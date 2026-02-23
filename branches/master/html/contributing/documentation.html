@@ -146,6 +146,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User documentation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../examples/fibonacci_local.html">Asynchronous execution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/matrix_multiplication.html">Parallel algorithms</a></li>
@@ -177,7 +178,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../manual/using_the_lcw_parcelport.html">Using the LCW parcelport</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../manual/hpx_runtime_and_resources.html"><em>HPX</em> runtime and resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../manual/executors.html">Executors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../manual/miscellaneous.html">Miscellaneous</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../manual/error_handling.html">Error handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../manual/iostreams.html">The <em>HPX</em> I/O-streams component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../manual/troubleshooting.html">Troubleshooting</a></li>
 </ul>
 </li>
@@ -1205,6 +1207,12 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-documentation">Building documentation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#style-guide">Style guide</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-documentation">API documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-new-api-documentation">Adding new API documentation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documenting-headers">Documenting headers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-to-the-public-api-reference">Adding to the public API reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#including-examples">Including examples</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -1304,6 +1312,46 @@ either to existing or new source files, make sure that you add the documented
 source files to the <code class="docutils literal notranslate"><span class="pre">doxygen_dependencies</span></code> variable in
 <code class="docutils literal notranslate"><span class="pre">docs/CMakeLists.txt</span></code>.</p>
 </section>
+<section id="adding-new-api-documentation">
+<h2>Adding new API documentation<a class="headerlink" href="#adding-new-api-documentation" title="Permalink to this heading">#</a></h2>
+<p>When you add new public APIs to <em>HPX</em>, follow these guidelines to ensure the
+documentation is correctly generated and easy to use.</p>
+<section id="documenting-headers">
+<h3>Documenting headers<a class="headerlink" href="#documenting-headers" title="Permalink to this heading">#</a></h3>
+<p>At the top of a new header file, include the standard Doxygen documentation block.
+For example, if the new feature is called <cite>my_new_feature</cite>, you should:</p>
+<ul class="simple">
+<li><p>List the name of the new file under <code class="docutils literal notranslate"><span class="pre">\file</span></code>.</p></li>
+<li><p>Specify the page name with <code class="docutils literal notranslate"><span class="pre">\page</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">hpx::my_new_feature</span></code>).</p></li>
+<li><p>Reference the existing header that will include your new file under <code class="docutils literal notranslate"><span class="pre">\headerfile</span></code>.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">/// \file my_new_feature.hpp</span>
+<span class="c1">/// \page hpx::my_new_feature</span>
+<span class="c1">/// \headerfile hpx/existing_header_of_new_feature.hpp</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-to-the-public-api-reference">
+<h3>Adding to the public API reference<a class="headerlink" href="#adding-to-the-public-api-reference" title="Permalink to this heading">#</a></h3>
+<p>For the documentation to appear in the generated API reference, add your new API to
+<code class="docutils literal notranslate"><span class="pre">docs/sphinx/api/public_api.rst</span></code> under the appropriate table (usually “Functions”) for
+the relevant header (for example, <code class="docutils literal notranslate"><span class="pre">hpx/existing_header_of_new_feature.hpp</span></code>).</p>
+</section>
+<section id="including-examples">
+<h3>Including examples<a class="headerlink" href="#including-examples" title="Permalink to this heading">#</a></h3>
+<p>Do <strong>not</strong> inline examples in the API reference. If you want to provide an example
+of how to use the new API, there are two recommended options:</p>
+<ol class="arabic simple">
+<li><p><strong>Documentation page option</strong>
+Edit an existing relevant manual page to explain the new functionality and include a code example.
+Use this option if you want to provide additional context about how the API works.</p></li>
+<li><p><strong>Standalone examples option</strong>
+Create a separate example under <code class="docutils literal notranslate"><span class="pre">docs/sphinx/examples/</span></code>. Examples in this directory are
+typically more comprehensive and executable, making them suitable for richer or more
+complex scenarios.</p></li>
+</ol>
+</section>
+</section>
 </section>
 
 
@@ -1358,6 +1406,12 @@ source files to the <code class="docutils literal notranslate"><span class="pre"
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-documentation">Building documentation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#style-guide">Style guide</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-documentation">API documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-new-api-documentation">Adding new API documentation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documenting-headers">Documenting headers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-to-the-public-api-reference">Adding to the public API reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#including-examples">Including examples</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -1390,7 +1444,7 @@ By The STE||AR Group
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Feb 21, 2026.
+  Last updated on Feb 23, 2026.
   <br/>
 </p>
   </div>

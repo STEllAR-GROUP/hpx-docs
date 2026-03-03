@@ -2291,6 +2291,10 @@ to the console.</p>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">this_locality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_locality_id</span><span class="p">();</span><span class="w"></span>
 
 <span class="w">    </span><span class="c1">// allocate channel communicator</span>
+<span class="w">    </span><span class="c1">// NOTE: The communicator object must be kept alive until all</span>
+<span class="w">    </span><span class="c1">// participating sites have successfully connected. Destroying it</span>
+<span class="w">    </span><span class="c1">// prematurely may cause other sites to hang. Consider using a barrier</span>
+<span class="w">    </span><span class="c1">// after creation if the communicator would otherwise go out of scope.</span>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">comm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_channel_communicator</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span><span class="w"></span>
 <span class="w">        </span><span class="n">channel_communicator_name</span><span class="p">,</span><span class="w"> </span><span class="n">num_sites_arg</span><span class="p">(</span><span class="n">num_localities</span><span class="p">),</span><span class="w"></span>
 <span class="w">        </span><span class="n">this_site_arg</span><span class="p">(</span><span class="n">this_locality</span><span class="p">));</span><span class="w"></span>
@@ -3417,7 +3421,7 @@ By The STE||AR Group
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Mar 01, 2026.
+  Last updated on Mar 03, 2026.
   <br/>
 </p>
   </div>

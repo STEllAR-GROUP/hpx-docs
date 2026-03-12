@@ -46,6 +46,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/algorithms/api/generate.rst
    /libs/core/algorithms/api/includes.rst
    /libs/core/algorithms/api/inclusive_scan.rst
+   /libs/core/algorithms/api/iota.rst
    /libs/core/algorithms/api/is_heap.rst
    /libs/core/algorithms/api/is_partitioned.rst
    /libs/core/algorithms/api/is_sorted.rst
@@ -108,6 +109,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/algorithms/api/container_algorithms_generate.rst
    /libs/core/algorithms/api/container_algorithms_includes.rst
    /libs/core/algorithms/api/container_algorithms_inclusive_scan.rst
+   /libs/core/algorithms/api/container_algorithms_iota.rst
    /libs/core/algorithms/api/container_algorithms_is_heap.rst
    /libs/core/algorithms/api/container_algorithms_is_partitioned.rst
    /libs/core/algorithms/api/container_algorithms_is_sorted.rst

@@ -29,6 +29,8 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/full/segmented_algorithms/api/inclusive_scan.rst
    /libs/full/segmented_algorithms/api/minmax.rst
    /libs/full/segmented_algorithms/api/reduce.rst
+   /libs/full/segmented_algorithms/api/replace.rst
+   /libs/full/segmented_algorithms/api/replace_copy.rst
    /libs/full/segmented_algorithms/api/transform.rst
    /libs/full/segmented_algorithms/api/transform_exclusive_scan.rst
    /libs/full/segmented_algorithms/api/transform_inclusive_scan.rst

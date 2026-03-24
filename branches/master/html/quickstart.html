@@ -942,6 +942,7 @@
 <li class="toctree-l4"><a class="reference internal" href="libs/full/segmented_algorithms/api/for_each.html">hpx/parallel/segmented_algorithms/for_each.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="libs/full/segmented_algorithms/api/generate.html">hpx/parallel/segmented_algorithms/generate.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="libs/full/segmented_algorithms/api/inclusive_scan.html">hpx/parallel/segmented_algorithms/inclusive_scan.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="libs/full/segmented_algorithms/api/is_sorted.html">hpx/parallel/segmented_algorithms/is_sorted.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="libs/full/segmented_algorithms/api/minmax.html">hpx/parallel/segmented_algorithms/minmax.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="libs/full/segmented_algorithms/api/reduce.html">hpx/parallel/segmented_algorithms/reduce.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="libs/full/segmented_algorithms/api/replace.html">hpx/parallel/segmented_algorithms/replace.hpp</a></li>
@@ -1248,6 +1249,29 @@ below:</p>
 </pre></div>
 </div>
 </li>
+<li><p><strong>Conan</strong></p>
+<p>You can also use the <a class="reference external" href="https://conan.io/">Conan</a> package manager to build
+and use <em>HPX</em> in your projects. First, export the <em>HPX</em> recipe from the <em>HPX</em>
+repository to your local Conan cache:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git clone https://github.com/STEllAR-GROUP/hpx.git
+<span class="gp">$ </span><span class="nb">cd</span> hpx
+<span class="gp">$ </span>conan create . --build<span class="o">=</span>missing
+</pre></div>
+</div>
+<p>This builds <em>HPX</em> and makes it available in your local Conan cache. You can
+then use it in your Conan-based projects by adding it to your <code class="docutils literal notranslate"><span class="pre">conanfile.txt</span></code>:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[requires]</span><span class="w"></span>
+<span class="na">hpx/2.0.0</span><span class="w"></span>
+
+<span class="k">[generators]</span><span class="w"></span>
+<span class="na">CMakeDeps</span><span class="w"></span>
+<span class="na">CMakeToolchain</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Then use <code class="docutils literal notranslate"><span class="pre">find_package(HPX</span> <span class="pre">REQUIRED)</span></code> in your <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> as usual.
+Conan will automatically handle building <em>HPX</em> with your chosen configuration
+options and provide the necessary CMake integration files.</p>
+</li>
 <li><p><strong>Fedora</strong></p>
 <p>Installation can be done with
 <a class="reference external" href="https://fedoraproject.org/wiki/DNF">Fedora</a> as well:</p>
@@ -1266,7 +1290,7 @@ as <code class="docutils literal notranslate"><span class="pre">hpx</span></code
 and use <em>HPX</em>.</p>
 </section>
 <section id="hello-world">
-<span id="id3"></span><h2>Hello, World!<a class="headerlink" href="#hello-world" title="Permalink to this heading">#</a></h2>
+<span id="id4"></span><h2>Hello, World!<a class="headerlink" href="#hello-world" title="Permalink to this heading">#</a></h2>
 <p>To get started with this minimal example you need to create a new project
 directory and a file <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> with the contents below in order to
 build an executable using <a class="reference external" href="https://www.cmake.org">CMake</a> and <em>HPX</em>:</p>
@@ -1342,7 +1366,7 @@ errors.</p>
 </div>
 </section>
 <section id="writing-task-based-applications">
-<span id="id4"></span><h2>Writing task-based applications<a class="headerlink" href="#writing-task-based-applications" title="Permalink to this heading">#</a></h2>
+<span id="id5"></span><h2>Writing task-based applications<a class="headerlink" href="#writing-task-based-applications" title="Permalink to this heading">#</a></h2>
 <p>So far we haven’t done anything that can’t be done using the C++ standard
 library. In this section we will give a short overview of what you can do with
 <em>HPX</em> on a single node. The essence is to avoid global synchronization and break
@@ -1571,7 +1595,7 @@ By The HPX project
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Mar 23, 2026.
+  Last updated on Mar 24, 2026.
   <br/>
 </p>
   </div>

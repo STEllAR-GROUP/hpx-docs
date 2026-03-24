@@ -18,5 +18,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/coroutines/api/thread_enums.rst
    /libs/core/coroutines/api/thread_id_type.rst
+   /libs/core/coroutines/api/thread_enums.rst

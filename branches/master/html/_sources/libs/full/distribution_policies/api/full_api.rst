@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    :maxdepth: 1
 
    /libs/full/distribution_policies/api/default_distribution_policy.rst
-   /libs/full/distribution_policies/api/binpacking_distribution_policy.rst
-   /libs/full/distribution_policies/api/target_distribution_policy.rst
    /libs/full/distribution_policies/api/unwrapping_result_policy.rst
+   /libs/full/distribution_policies/api/target_distribution_policy.rst
+   /libs/full/distribution_policies/api/binpacking_distribution_policy.rst
    /libs/full/distribution_policies/api/colocating_distribution_policy.rst

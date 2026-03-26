@@ -18,7 +18,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/full/plugin_factories/api/binary_filter_factory.rst
+   /libs/full/plugin_factories/api/parcelport_factory.rst
    /libs/full/plugin_factories/api/plugin_registry.rst
    /libs/full/plugin_factories/api/message_handler_factory.rst
-   /libs/full/plugin_factories/api/parcelport_factory.rst
+   /libs/full/plugin_factories/api/binary_filter_factory.rst

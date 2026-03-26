@@ -18,6 +18,6 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/execution_base/api/receiver.rst
    /libs/core/execution_base/api/execution.rst
+   /libs/core/execution_base/api/receiver.rst
    /libs/core/execution_base/api/is_executor_parameters.rst

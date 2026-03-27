@@ -18,8 +18,8 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/full/performance_counters/api/counter_creators.rst
    /libs/full/performance_counters/api/counters.rst
-   /libs/full/performance_counters/api/counters_fwd.rst
-   /libs/full/performance_counters/api/manage_counter_type.rst
    /libs/full/performance_counters/api/registry.rst
+   /libs/full/performance_counters/api/counters_fwd.rst
+   /libs/full/performance_counters/api/counter_creators.rst
+   /libs/full/performance_counters/api/manage_counter_type.rst

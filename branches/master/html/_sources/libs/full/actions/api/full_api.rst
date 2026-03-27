@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    :maxdepth: 1
 
    /libs/full/actions/api/action_support.rst
-   /libs/full/actions/api/actions_fwd.rst
    /libs/full/actions/api/base_action.rst
    /libs/full/actions/api/transfer_action.rst
    /libs/full/actions/api/transfer_base_action.rst
+   /libs/full/actions/api/actions_fwd.rst

@@ -19,5 +19,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    :maxdepth: 1
 
    /libs/core/compute_local/api/vector.rst
-   /libs/core/compute_local/api/block_executor.rst
    /libs/core/compute_local/api/block_fork_join_executor.rst
+   /libs/core/compute_local/api/block_executor.rst

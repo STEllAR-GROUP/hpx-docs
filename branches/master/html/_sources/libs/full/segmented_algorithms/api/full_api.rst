@@ -36,3 +36,4 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/full/segmented_algorithms/api/reduce.rst
    /libs/full/segmented_algorithms/api/count.rst
    /libs/full/segmented_algorithms/api/all_any_none.rst
+   /libs/full/segmented_algorithms/api/equal.rst

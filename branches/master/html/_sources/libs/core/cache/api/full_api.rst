@@ -20,10 +20,10 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
    /libs/core/cache/api/lru_cache.rst
    /libs/core/cache/api/local_cache.rst
-   /libs/core/cache/api/fifo_entry.rst
-   /libs/core/cache/api/lfu_entry.rst
-   /libs/core/cache/api/entry.rst
    /libs/core/cache/api/size_entry.rst
+   /libs/core/cache/api/fifo_entry.rst
    /libs/core/cache/api/lru_entry.rst
-   /libs/core/cache/api/local_statistics.rst
+   /libs/core/cache/api/entry.rst
+   /libs/core/cache/api/lfu_entry.rst
    /libs/core/cache/api/no_statistics.rst
+   /libs/core/cache/api/local_statistics.rst

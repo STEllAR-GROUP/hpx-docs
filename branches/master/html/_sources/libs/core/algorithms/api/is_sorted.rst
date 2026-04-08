@@ -5,10 +5,10 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _modules_hpx/parallel/algorithms/is_sorted.hpp_api:
+.. _modules_hpx/parallel/container_algorithms/is_sorted.hpp_api:
 
 -------------------------------------------------------------------------------
-hpx::is_sorted, hpx::is_sorted_until
+hpx::ranges::is_sorted, hpx::ranges::is_sorted_until
 -------------------------------------------------------------------------------
 
 Defined in header :hpx-header:`libs/full/include/include,hpx/algorithm.hpp`.
@@ -16,5 +16,5 @@ Defined in header :hpx-header:`libs/full/include/include,hpx/algorithm.hpp`.
 See :ref:`public_api` for a list of names and headers that are part of the public
 |hpx| API.
 
-.. autodoxygenfile:: hpx/parallel/algorithms/is_sorted.hpp
+.. autodoxygenfile:: hpx/parallel/container_algorithms/is_sorted.hpp
    :project: algorithms

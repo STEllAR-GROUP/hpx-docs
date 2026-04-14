@@ -3025,7 +3025,8 @@ The corresponding cmake configuration constant is
 <td><p><code class="docutils literal notranslate"><span class="pre">/parcelport/count/&lt;connection_type&gt;/&lt;cache_statistics&gt;</span></code></p>
 <p>where:</p>
 <p><code class="docutils literal notranslate"><span class="pre">&lt;cache_statistics&gt;</span></code> is one of the following: <code class="docutils literal notranslate"><span class="pre">cache/insertions</span></code>,
-<code class="docutils literal notranslate"><span class="pre">cache/evictions</span></code>, <code class="docutils literal notranslate"><span class="pre">cache/hits</span></code>, <code class="docutils literal notranslate"><span class="pre">cache/misses</span></code></p>
+<code class="docutils literal notranslate"><span class="pre">cache/evictions</span></code>, <code class="docutils literal notranslate"><span class="pre">cache/hits</span></code>, <code class="docutils literal notranslate"><span class="pre">cache/misses</span></code>,
+<code class="docutils literal notranslate"><span class="pre">cache/reclaims</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> is one of the following: <code class="docutils literal notranslate"><span class="pre">tcp</span></code>, <code class="docutils literal notranslate"><span class="pre">mpi</span></code></p>
 </td>
 </tr>
@@ -3053,7 +3054,92 @@ The corresponding cmake configuration constant is
 </tbody>
 </table>
 <table class="colwidths-given table" id="id39">
-<caption><span class="caption-number">Table 49 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">Parcel</span></a> layer performance counter <code class="docutils literal notranslate"><span class="pre">/parcelqueue/length/&lt;operation&gt;</span></code></span><a class="headerlink" href="#id39" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 49 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">Parcel</span></a> layer performance counter <code class="docutils literal notranslate"><span class="pre">/parcelport/count/&lt;connection_type&gt;/cache-reservation-failures</span></code></span><a class="headerlink" href="#id39" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Counter type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/parcelport/count/&lt;connection_type&gt;/cache-reservation-failures</span></code></p>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> is one of the following: <code class="docutils literal notranslate"><span class="pre">tcp</span></code>, <code class="docutils literal notranslate"><span class="pre">mpi</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Counter instance formatting</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
+<p>where <code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the counter
+should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Description</p></td>
+<td><p>Returns the cumulative number of times <code class="docutils literal notranslate"><span class="pre">get_or_reserve()</span></code> returned
+<code class="docutils literal notranslate"><span class="pre">false</span></code> because every connection slot in the connection cache was
+already checked out (pool saturation). This is distinct from ordinary
+cache misses, which occur whenever a new connection to a <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>
+is first created and do not cause parcel deferral. A non-zero and
+growing value of this counter means that outgoing parcels are being
+silently queued until a connection is reclaimed; raising
+<code class="docutils literal notranslate"><span class="pre">hpx.max_connections</span></code> or <code class="docutils literal notranslate"><span class="pre">hpx.max_connections_per_locality</span></code> in the
+ini configuration will relieve the saturation.</p>
+<p>When pool exhaustion is detected, <em>HPX</em> also emits a warning-level log
+message (throttled to at most once every five seconds) of the form:
+<code class="docutils literal notranslate"><span class="pre">parcelport</span> <span class="pre">connection</span> <span class="pre">cache</span> <span class="pre">exhausted:</span> <span class="pre">N/M</span> <span class="pre">connections</span> <span class="pre">in</span> <span class="pre">use,</span> <span class="pre">K</span>
+<span class="pre">deferred</span> <span class="pre">reservation(s)</span> <span class="pre">since</span> <span class="pre">last</span> <span class="pre">reset</span></code>.</p>
+<p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
+only if the compile time constant <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_PARCELPORT_MPI</span></code> was defined
+while compiling the <em>HPX</em> core library (which is not defined by default).
+The corresponding cmake configuration constant is
+<code class="docutils literal notranslate"><span class="pre">HPX_WITH_PARCELPORT_MPI</span></code>.</p>
+<p>Please see <a class="reference internal" href="cmake_variables.html#cmake-variables"><span class="std std-ref">CMake options</span></a> for more details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given table" id="id40">
+<caption><span class="caption-number">Table 50 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">Parcel</span></a> layer performance counters <code class="docutils literal notranslate"><span class="pre">/parcelport/count/&lt;connection_type&gt;/cache-connections</span></code> and <code class="docutils literal notranslate"><span class="pre">/parcelport/count/&lt;connection_type&gt;/cache-max-connections</span></code></span><a class="headerlink" href="#id40" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Counter type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/parcelport/count/&lt;connection_type&gt;/cache-connections</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">/parcelport/count/&lt;connection_type&gt;/cache-max-connections</span></code></p>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;connection_type&gt;</span></code> is one of the following: <code class="docutils literal notranslate"><span class="pre">tcp</span></code>, <code class="docutils literal notranslate"><span class="pre">mpi</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Counter instance formatting</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">locality#*/total</span></code></p>
+<p>where <code class="docutils literal notranslate"><span class="pre">*</span></code> is the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id of the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> the counter
+should be queried for. The <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a> id is a (zero based) number
+identifying the <a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Description</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cache-connections</span></code> returns the current number of connections tracked
+by the connection cache for the given connection type on the given
+<a class="reference internal" href="../terminology.html#term-Locality"><span class="xref std std-term">locality</span></a>. This includes both connections that are currently
+checked out and connections that are idle and available for reuse.</p>
+<p><code class="docutils literal notranslate"><span class="pre">cache-max-connections</span></code> returns the configured upper limit on the
+total number of connections the cache is allowed to hold. This value is
+fixed at startup and corresponds to the <code class="docutils literal notranslate"><span class="pre">hpx.max_connections</span></code> ini key.</p>
+<p>Together these two counters give the pool utilisation ratio. If
+<code class="docutils literal notranslate"><span class="pre">cache-connections</span></code> is consistently equal to <code class="docutils literal notranslate"><span class="pre">cache-max-connections</span></code>
+and <code class="docutils literal notranslate"><span class="pre">cache-reservation-failures</span></code> is increasing, the connection pool is
+saturated and the limit should be raised.</p>
+<p>The performance counters for the connection type <code class="docutils literal notranslate"><span class="pre">mpi</span></code> are available
+only if the compile time constant <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_PARCELPORT_MPI</span></code> was defined
+while compiling the <em>HPX</em> core library (which is not defined by default).
+The corresponding cmake configuration constant is
+<code class="docutils literal notranslate"><span class="pre">HPX_WITH_PARCELPORT_MPI</span></code>.</p>
+<p>Please see <a class="reference internal" href="cmake_variables.html#cmake-variables"><span class="std std-ref">CMake options</span></a> for more details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given table" id="id41">
+<caption><span class="caption-number">Table 51 </span><span class="caption-text"><a class="reference internal" href="../terminology.html#term-Parcel"><span class="xref std std-term">Parcel</span></a> layer performance counter <code class="docutils literal notranslate"><span class="pre">/parcelqueue/length/&lt;operation&gt;</span></code></span><a class="headerlink" href="#id41" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3077,8 +3163,8 @@ identifying the <a class="reference internal" href="../terminology.html#term-Loc
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id40">
-<caption><span class="caption-number">Table 50 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/cumulative</span></code></span><a class="headerlink" href="#id40" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id42">
+<caption><span class="caption-number">Table 52 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/cumulative</span></code></span><a class="headerlink" href="#id42" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3122,8 +3208,8 @@ constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_T
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id41">
-<caption><span class="caption-number">Table 51 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/average</span></code></span><a class="headerlink" href="#id41" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id43">
+<caption><span class="caption-number">Table 53 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/average</span></code></span><a class="headerlink" href="#id43" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3166,8 +3252,8 @@ of measure for this counter is nanosecond [ns].</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id42">
-<caption><span class="caption-number">Table 52 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/average-overhead</span></code></span><a class="headerlink" href="#id42" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id44">
+<caption><span class="caption-number">Table 54 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/average-overhead</span></code></span><a class="headerlink" href="#id44" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3211,8 +3297,8 @@ unit of measure for this counter is nanosecond [ns].</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id43">
-<caption><span class="caption-number">Table 53 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/cumulative-phases</span></code></span><a class="headerlink" href="#id43" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id45">
+<caption><span class="caption-number">Table 55 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/cumulative-phases</span></code></span><a class="headerlink" href="#id45" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3255,8 +3341,8 @@ nanosecond [ns].</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id44">
-<caption><span class="caption-number">Table 54 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/average-phase</span></code></span><a class="headerlink" href="#id44" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id46">
+<caption><span class="caption-number">Table 56 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/average-phase</span></code></span><a class="headerlink" href="#id46" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3300,8 +3386,8 @@ unit of measure for this counter is nanosecond [ns].</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id45">
-<caption><span class="caption-number">Table 55 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/average-phase-overhead</span></code></span><a class="headerlink" href="#id45" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id47">
+<caption><span class="caption-number">Table 57 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/average-phase-overhead</span></code></span><a class="headerlink" href="#id47" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3345,8 +3431,8 @@ unit of measure for this counter is nanosecond [ns].</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id46">
-<caption><span class="caption-number">Table 56 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/overall</span></code></span><a class="headerlink" href="#id46" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id48">
+<caption><span class="caption-number">Table 58 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/overall</span></code></span><a class="headerlink" href="#id48" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3388,8 +3474,8 @@ nanosecond [ns].</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id47">
-<caption><span class="caption-number">Table 57 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/cumulative</span></code></span><a class="headerlink" href="#id47" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id49">
+<caption><span class="caption-number">Table 59 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/cumulative</span></code></span><a class="headerlink" href="#id49" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3431,8 +3517,8 @@ is available only if the configuration time constants
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id48">
-<caption><span class="caption-number">Table 58 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/cumulative-overheads</span></code></span><a class="headerlink" href="#id48" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id50">
+<caption><span class="caption-number">Table 60 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/cumulative-overheads</span></code></span><a class="headerlink" href="#id50" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3476,8 +3562,8 @@ The unit of measure for this counter is nanosecond [ns].</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id49">
-<caption><span class="caption-number">Table 59 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">threads/count/instantaneous/&lt;thread-state&gt;</span></code></span><a class="headerlink" href="#id49" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id51">
+<caption><span class="caption-number">Table 61 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">threads/count/instantaneous/&lt;thread-state&gt;</span></code></span><a class="headerlink" href="#id51" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3522,8 +3608,8 @@ name is <code class="docutils literal notranslate"><span class="pre">worker-thre
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id50">
-<caption><span class="caption-number">Table 60 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">threads/wait-time/&lt;thread-state&gt;</span></code></span><a class="headerlink" href="#id50" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id52">
+<caption><span class="caption-number">Table 62 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">threads/wait-time/&lt;thread-state&gt;</span></code></span><a class="headerlink" href="#id52" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3576,8 +3662,8 @@ nanosecond [ns].</p>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id51">
-<caption><span class="caption-number">Table 61 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/idle-rate</span></code></span><a class="headerlink" href="#id51" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id53">
+<caption><span class="caption-number">Table 63 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/idle-rate</span></code></span><a class="headerlink" href="#id53" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3615,8 +3701,8 @@ configuration time constant <code class="docutils literal notranslate"><span cla
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id52">
-<caption><span class="caption-number">Table 62 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/creation-idle-rate</span></code></span><a class="headerlink" href="#id52" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id54">
+<caption><span class="caption-number">Table 64 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/creation-idle-rate</span></code></span><a class="headerlink" href="#id54" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3655,8 +3741,8 @@ counter is available only if the configuration time constants
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id53">
-<caption><span class="caption-number">Table 63 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/cleanup-idle-rate</span></code></span><a class="headerlink" href="#id53" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id55">
+<caption><span class="caption-number">Table 65 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/cleanup-idle-rate</span></code></span><a class="headerlink" href="#id55" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3696,8 +3782,8 @@ configuration time constants <code class="docutils literal notranslate"><span cl
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id54">
-<caption><span class="caption-number">Table 64 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threadqueue/length</span></code></span><a class="headerlink" href="#id54" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id56">
+<caption><span class="caption-number">Table 66 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threadqueue/length</span></code></span><a class="headerlink" href="#id56" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3732,8 +3818,8 @@ on the given <a class="reference internal" href="../terminology.html#term-Locali
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id55">
-<caption><span class="caption-number">Table 65 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stack-unbinds</span></code></span><a class="headerlink" href="#id55" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id57">
+<caption><span class="caption-number">Table 67 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stack-unbinds</span></code></span><a class="headerlink" href="#id57" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3757,8 +3843,8 @@ not available on Windows based platforms.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id56">
-<caption><span class="caption-number">Table 66 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stack-recycles</span></code></span><a class="headerlink" href="#id56" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id58">
+<caption><span class="caption-number">Table 68 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stack-recycles</span></code></span><a class="headerlink" href="#id58" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3780,8 +3866,8 @@ based) number identifying the <a class="reference internal" href="../terminology
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id57">
-<caption><span class="caption-number">Table 67 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stolen-from-pending</span></code></span><a class="headerlink" href="#id57" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id59">
+<caption><span class="caption-number">Table 69 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stolen-from-pending</span></code></span><a class="headerlink" href="#id59" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3809,8 +3895,8 @@ on). This counter is available only if the configuration time constant
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id58">
-<caption><span class="caption-number">Table 68 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/pending-misses</span></code></span><a class="headerlink" href="#id58" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id60">
+<caption><span class="caption-number">Table 70 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/pending-misses</span></code></span><a class="headerlink" href="#id60" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3848,8 +3934,8 @@ time constant <code class="docutils literal notranslate"><span class="pre">HPX_W
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id59">
-<caption><span class="caption-number">Table 69 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/pending-accesses</span></code></span><a class="headerlink" href="#id59" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id61">
+<caption><span class="caption-number">Table 71 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/pending-accesses</span></code></span><a class="headerlink" href="#id61" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3887,8 +3973,8 @@ time constant <code class="docutils literal notranslate"><span class="pre">HPX_W
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id60">
-<caption><span class="caption-number">Table 70 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stolen-from-staged</span></code></span><a class="headerlink" href="#id60" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id62">
+<caption><span class="caption-number">Table 72 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stolen-from-staged</span></code></span><a class="headerlink" href="#id62" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3926,8 +4012,8 @@ counter is available only if the configuration time constant
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id61">
-<caption><span class="caption-number">Table 71 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stolen-to-pending</span></code></span><a class="headerlink" href="#id61" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id63">
+<caption><span class="caption-number">Table 73 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stolen-to-pending</span></code></span><a class="headerlink" href="#id63" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -3965,8 +4051,8 @@ available only if the configuration time constant
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id62">
-<caption><span class="caption-number">Table 72 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stolen-to-staged</span></code></span><a class="headerlink" href="#id62" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id64">
+<caption><span class="caption-number">Table 74 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/stolen-to-staged</span></code></span><a class="headerlink" href="#id64" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4005,8 +4091,8 @@ counter is available only if the configuration time constant
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id63">
-<caption><span class="caption-number">Table 73 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/objects</span></code></span><a class="headerlink" href="#id63" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id65">
+<caption><span class="caption-number">Table 75 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/count/objects</span></code></span><a class="headerlink" href="#id65" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4038,8 +4124,8 @@ does not reflect the number of actually executed (retired) <em>HPX</em>-threads.
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id64">
-<caption><span class="caption-number">Table 74 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/scheduler/utilization/instantaneous</span></code></span><a class="headerlink" href="#id64" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id66">
+<caption><span class="caption-number">Table 76 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/scheduler/utilization/instantaneous</span></code></span><a class="headerlink" href="#id66" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4069,8 +4155,8 @@ id (given by <code class="docutils literal notranslate"><span class="pre">*</spa
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id65">
-<caption><span class="caption-number">Table 75 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/idle-loop-count/instantaneous</span></code></span><a class="headerlink" href="#id65" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id67">
+<caption><span class="caption-number">Table 77 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/idle-loop-count/instantaneous</span></code></span><a class="headerlink" href="#id67" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4104,8 +4190,8 @@ pool-name is specified the counter refers to the ‘default’ pool.</p>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id66">
-<caption><span class="caption-number">Table 76 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/busy-loop-count/instantaneous</span></code></span><a class="headerlink" href="#id66" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id68">
+<caption><span class="caption-number">Table 78 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/busy-loop-count/instantaneous</span></code></span><a class="headerlink" href="#id68" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4140,8 +4226,8 @@ worker thread or the accumulated value for all worker threads.</p></td>
 </tbody>
 </table>
 <hr class="docutils" />
-<table class="colwidths-given table" id="id67">
-<caption><span class="caption-number">Table 77 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/background-work-duration</span></code></span><a class="headerlink" href="#id67" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id69">
+<caption><span class="caption-number">Table 79 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/background-work-duration</span></code></span><a class="headerlink" href="#id69" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4179,8 +4265,8 @@ unit of measure for this counter is nanosecond [ns].</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id68">
-<caption><span class="caption-number">Table 78 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/background-overhead</span></code></span><a class="headerlink" href="#id68" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id70">
+<caption><span class="caption-number">Table 80 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/background-overhead</span></code></span><a class="headerlink" href="#id70" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4217,8 +4303,8 @@ unit of measure displayed for this counter is 0.1%.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id69">
-<caption><span class="caption-number">Table 79 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/background-send-duration</span></code></span><a class="headerlink" href="#id69" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id71">
+<caption><span class="caption-number">Table 81 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/background-send-duration</span></code></span><a class="headerlink" href="#id71" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4260,8 +4346,8 @@ parcelport only.</p>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id70">
-<caption><span class="caption-number">Table 80 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/background-send-overhead</span></code></span><a class="headerlink" href="#id70" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id72">
+<caption><span class="caption-number">Table 82 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/background-send-overhead</span></code></span><a class="headerlink" href="#id72" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4301,8 +4387,8 @@ parcelport only.</p>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id71">
-<caption><span class="caption-number">Table 81 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/background-receive-duration</span></code></span><a class="headerlink" href="#id71" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id73">
+<caption><span class="caption-number">Table 83 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/time/background-receive-duration</span></code></span><a class="headerlink" href="#id73" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4344,8 +4430,8 @@ parcelport only.</p>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id72">
-<caption><span class="caption-number">Table 82 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/background-receive-overhead</span></code></span><a class="headerlink" href="#id72" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id74">
+<caption><span class="caption-number">Table 84 </span><span class="caption-text">Thread manager performance counter <code class="docutils literal notranslate"><span class="pre">/threads/background-receive-overhead</span></code></span><a class="headerlink" href="#id74" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4385,8 +4471,8 @@ parcelport only.</p>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id73">
-<caption><span class="caption-number">Table 83 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/count/component</span></code></span><a class="headerlink" href="#id73" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id75">
+<caption><span class="caption-number">Table 85 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/count/component</span></code></span><a class="headerlink" href="#id75" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4414,8 +4500,8 @@ second parameter to the macro <a class="reference internal" href="../libs/full/r
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id74">
-<caption><span class="caption-number">Table 84 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/count/action-invocation</span></code></span><a class="headerlink" href="#id74" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id76">
+<caption><span class="caption-number">Table 86 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/count/action-invocation</span></code></span><a class="headerlink" href="#id76" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4446,8 +4532,8 @@ to the macro <a class="reference internal" href="../libs/full/actions_base/api/b
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id75">
-<caption><span class="caption-number">Table 85 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/count/remote-action-invocation</span></code></span><a class="headerlink" href="#id75" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id77">
+<caption><span class="caption-number">Table 87 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/count/remote-action-invocation</span></code></span><a class="headerlink" href="#id77" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4476,8 +4562,8 @@ to the macro <a class="reference internal" href="../libs/full/actions_base/api/b
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id76">
-<caption><span class="caption-number">Table 86 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/uptime</span></code></span><a class="headerlink" href="#id76" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id78">
+<caption><span class="caption-number">Table 88 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/uptime</span></code></span><a class="headerlink" href="#id78" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4500,8 +4586,8 @@ number identifying the <a class="reference internal" href="../terminology.html#t
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id77">
-<caption><span class="caption-number">Table 87 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/memory/virtual</span></code></span><a class="headerlink" href="#id77" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id79">
+<caption><span class="caption-number">Table 89 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/memory/virtual</span></code></span><a class="headerlink" href="#id79" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4524,8 +4610,8 @@ referenced <a class="reference internal" href="../terminology.html#term-Locality
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id78">
-<caption><span class="caption-number">Table 88 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/memory/resident</span></code></span><a class="headerlink" href="#id78" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id80">
+<caption><span class="caption-number">Table 90 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/memory/resident</span></code></span><a class="headerlink" href="#id80" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4548,8 +4634,8 @@ referenced <a class="reference internal" href="../terminology.html#term-Locality
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id79">
-<caption><span class="caption-number">Table 89 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/memory/total</span></code></span><a class="headerlink" href="#id79" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id81">
+<caption><span class="caption-number">Table 91 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/memory/total</span></code></span><a class="headerlink" href="#id81" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4577,8 +4663,8 @@ Windows systems only.</p>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id80">
-<caption><span class="caption-number">Table 90 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/read_bytes_issued</span></code></span><a class="headerlink" href="#id80" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id82">
+<caption><span class="caption-number">Table 92 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/read_bytes_issued</span></code></span><a class="headerlink" href="#id82" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4603,8 +4689,8 @@ through the /proc file system.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id81">
-<caption><span class="caption-number">Table 91 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/write_bytes_issued</span></code></span><a class="headerlink" href="#id81" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id83">
+<caption><span class="caption-number">Table 93 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/write_bytes_issued</span></code></span><a class="headerlink" href="#id83" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4629,8 +4715,8 @@ through the /proc file system.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id82">
-<caption><span class="caption-number">Table 92 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/read_syscalls</span></code></span><a class="headerlink" href="#id82" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id84">
+<caption><span class="caption-number">Table 94 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/read_syscalls</span></code></span><a class="headerlink" href="#id84" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4654,8 +4740,8 @@ related data through the /proc file system.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id83">
-<caption><span class="caption-number">Table 93 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/write_syscalls</span></code></span><a class="headerlink" href="#id83" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id85">
+<caption><span class="caption-number">Table 95 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/write_syscalls</span></code></span><a class="headerlink" href="#id85" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4679,8 +4765,8 @@ related data through the /proc file system.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id84">
-<caption><span class="caption-number">Table 94 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/read_bytes_transferred</span></code></span><a class="headerlink" href="#id84" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id86">
+<caption><span class="caption-number">Table 96 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/read_bytes_transferred</span></code></span><a class="headerlink" href="#id86" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4704,8 +4790,8 @@ related data through the /proc file system.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id85">
-<caption><span class="caption-number">Table 95 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/write_bytes_transferred</span></code></span><a class="headerlink" href="#id85" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id87">
+<caption><span class="caption-number">Table 97 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/write_bytes_transferred</span></code></span><a class="headerlink" href="#id87" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4729,8 +4815,8 @@ related data through the /proc file system.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id86">
-<caption><span class="caption-number">Table 96 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/write_bytes_cancelled</span></code></span><a class="headerlink" href="#id86" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id88">
+<caption><span class="caption-number">Table 98 </span><span class="caption-text">General performance counter <code class="docutils literal notranslate"><span class="pre">/runtime/io/write_bytes_cancelled</span></code></span><a class="headerlink" href="#id88" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4755,8 +4841,8 @@ related data through the /proc file system.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id87">
-<caption><span class="caption-number">Table 97 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/papi/&lt;papi_event&gt;</span></code></span><a class="headerlink" href="#id87" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id89">
+<caption><span class="caption-number">Table 99 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/papi/&lt;papi_event&gt;</span></code></span><a class="headerlink" href="#id89" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4796,8 +4882,8 @@ constant <code class="docutils literal notranslate"><span class="pre">HPX_WITH_P
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id88">
-<caption><span class="caption-number">Table 98 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/average</span></code></span><a class="headerlink" href="#id88" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id90">
+<caption><span class="caption-number">Table 100 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/average</span></code></span><a class="headerlink" href="#id90" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4826,8 +4912,8 @@ The default value is <code class="docutils literal notranslate"><span class="pre
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id89">
-<caption><span class="caption-number">Table 99 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/rolling_average</span></code></span><a class="headerlink" href="#id89" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id91">
+<caption><span class="caption-number">Table 101 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/rolling_average</span></code></span><a class="headerlink" href="#id91" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4858,8 +4944,8 @@ be reset during evaluation <code class="docutils literal notranslate"><span clas
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id90">
-<caption><span class="caption-number">Table 100 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/stddev</span></code></span><a class="headerlink" href="#id90" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id92">
+<caption><span class="caption-number">Table 102 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/stddev</span></code></span><a class="headerlink" href="#id92" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4888,8 +4974,8 @@ The default value is <code class="docutils literal notranslate"><span class="pre
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id91">
-<caption><span class="caption-number">Table 101 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/rolling_stddev</span></code></span><a class="headerlink" href="#id91" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id93">
+<caption><span class="caption-number">Table 103 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/rolling_stddev</span></code></span><a class="headerlink" href="#id93" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4920,8 +5006,8 @@ during evaluation <code class="docutils literal notranslate"><span class="pre">1
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id92">
-<caption><span class="caption-number">Table 102 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/median</span></code></span><a class="headerlink" href="#id92" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id94">
+<caption><span class="caption-number">Table 104 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/median</span></code></span><a class="headerlink" href="#id94" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4950,8 +5036,8 @@ The default value is <code class="docutils literal notranslate"><span class="pre
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id93">
-<caption><span class="caption-number">Table 103 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/max</span></code></span><a class="headerlink" href="#id93" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id95">
+<caption><span class="caption-number">Table 105 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/max</span></code></span><a class="headerlink" href="#id95" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -4979,8 +5065,8 @@ The default value is <code class="docutils literal notranslate"><span class="pre
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id94">
-<caption><span class="caption-number">Table 104 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/rolling_max</span></code></span><a class="headerlink" href="#id94" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id96">
+<caption><span class="caption-number">Table 106 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/rolling_max</span></code></span><a class="headerlink" href="#id96" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5011,8 +5097,8 @@ during evaluation <code class="docutils literal notranslate"><span class="pre">1
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id95">
-<caption><span class="caption-number">Table 105 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/min</span></code></span><a class="headerlink" href="#id95" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id97">
+<caption><span class="caption-number">Table 107 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/min</span></code></span><a class="headerlink" href="#id97" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5040,8 +5126,8 @@ The default value is <code class="docutils literal notranslate"><span class="pre
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id96">
-<caption><span class="caption-number">Table 106 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/rolling_min</span></code></span><a class="headerlink" href="#id96" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id98">
+<caption><span class="caption-number">Table 108 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/statistics/rolling_min</span></code></span><a class="headerlink" href="#id98" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5072,8 +5158,8 @@ during evaluation <code class="docutils literal notranslate"><span class="pre">1
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id97">
-<caption><span class="caption-number">Table 107 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/add</span></code></span><a class="headerlink" href="#id97" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id99">
+<caption><span class="caption-number">Table 109 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/add</span></code></span><a class="headerlink" href="#id99" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5093,8 +5179,8 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id98">
-<caption><span class="caption-number">Table 108 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/subtract</span></code></span><a class="headerlink" href="#id98" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id100">
+<caption><span class="caption-number">Table 110 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/subtract</span></code></span><a class="headerlink" href="#id100" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5114,8 +5200,8 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id99">
-<caption><span class="caption-number">Table 109 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/multiply</span></code></span><a class="headerlink" href="#id99" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id101">
+<caption><span class="caption-number">Table 111 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/multiply</span></code></span><a class="headerlink" href="#id101" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5135,8 +5221,8 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id100">
-<caption><span class="caption-number">Table 110 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/divide</span></code></span><a class="headerlink" href="#id100" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id102">
+<caption><span class="caption-number">Table 112 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/divide</span></code></span><a class="headerlink" href="#id102" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5156,8 +5242,8 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id101">
-<caption><span class="caption-number">Table 111 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/mean</span></code></span><a class="headerlink" href="#id101" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id103">
+<caption><span class="caption-number">Table 113 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/mean</span></code></span><a class="headerlink" href="#id103" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5177,8 +5263,8 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id102">
-<caption><span class="caption-number">Table 112 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/variance</span></code></span><a class="headerlink" href="#id102" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id104">
+<caption><span class="caption-number">Table 114 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/variance</span></code></span><a class="headerlink" href="#id104" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5198,8 +5284,8 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id103">
-<caption><span class="caption-number">Table 113 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/median</span></code></span><a class="headerlink" href="#id103" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id105">
+<caption><span class="caption-number">Table 115 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/median</span></code></span><a class="headerlink" href="#id105" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5219,8 +5305,8 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id104">
-<caption><span class="caption-number">Table 114 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/min</span></code></span><a class="headerlink" href="#id104" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id106">
+<caption><span class="caption-number">Table 116 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/min</span></code></span><a class="headerlink" href="#id106" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5240,8 +5326,8 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id105">
-<caption><span class="caption-number">Table 115 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/max</span></code></span><a class="headerlink" href="#id105" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id107">
+<caption><span class="caption-number">Table 117 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/max</span></code></span><a class="headerlink" href="#id107" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5261,8 +5347,8 @@ accessed. Any wildcards in the counter names will be expanded.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id106">
-<caption><span class="caption-number">Table 116 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/count</span></code></span><a class="headerlink" href="#id106" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id108">
+<caption><span class="caption-number">Table 118 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/arithmetics/count</span></code></span><a class="headerlink" href="#id108" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5307,8 +5393,8 @@ equivalent to specifying both counters separately to <code class="docutils liter
 </pre></div>
 </div>
 </div>
-<table class="colwidths-given table" id="id107">
-<caption><span class="caption-number">Table 117 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/count/parcels</span></code></span><a class="headerlink" href="#id107" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id109">
+<caption><span class="caption-number">Table 119 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/count/parcels</span></code></span><a class="headerlink" href="#id109" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5337,8 +5423,8 @@ to the macro <a class="reference internal" href="../libs/full/actions_base/api/b
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id108">
-<caption><span class="caption-number">Table 118 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/count/messages</span></code></span><a class="headerlink" href="#id108" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id110">
+<caption><span class="caption-number">Table 120 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/count/messages</span></code></span><a class="headerlink" href="#id110" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5367,8 +5453,8 @@ to the macro <a class="reference internal" href="../libs/full/actions_base/api/b
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id109">
-<caption><span class="caption-number">Table 119 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/count/average-parcels-per-message</span></code></span><a class="headerlink" href="#id109" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id111">
+<caption><span class="caption-number">Table 121 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/count/average-parcels-per-message</span></code></span><a class="headerlink" href="#id111" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5398,8 +5484,8 @@ to the macro <a class="reference internal" href="../libs/full/actions_base/api/b
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id110">
-<caption><span class="caption-number">Table 120 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/time/average-parcel-arrival</span></code></span><a class="headerlink" href="#id110" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id112">
+<caption><span class="caption-number">Table 122 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/time/average-parcel-arrival</span></code></span><a class="headerlink" href="#id112" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />
@@ -5429,8 +5515,8 @@ to the macro <a class="reference internal" href="../libs/full/actions_base/api/b
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id111">
-<caption><span class="caption-number">Table 121 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/time/parcel-arrival-histogram</span></code></span><a class="headerlink" href="#id111" title="Permalink to this table">#</a></caption>
+<table class="colwidths-given table" id="id113">
+<caption><span class="caption-number">Table 123 </span><span class="caption-text">Performance counter <code class="docutils literal notranslate"><span class="pre">/coalescing/time/parcel-arrival-histogram</span></code></span><a class="headerlink" href="#id113" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 80%" />

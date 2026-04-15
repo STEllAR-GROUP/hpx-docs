@@ -19,6 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    :maxdepth: 1
 
    /libs/full/segmented_algorithms/api/adjacent_find.rst
+   /libs/full/segmented_algorithms/api/mismatch.rst
    /libs/full/segmented_algorithms/api/inclusive_scan.rst
    /libs/full/segmented_algorithms/api/minmax.rst
    /libs/full/segmented_algorithms/api/transform_exclusive_scan.rst

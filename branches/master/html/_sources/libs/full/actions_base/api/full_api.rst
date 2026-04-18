@@ -26,4 +26,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/full/actions_base/api/actions_base_fwd.rst
    /libs/full/actions_base/api/basic_action.rst
    /libs/full/actions_base/api/preassigned_action_id.rst
+   /libs/full/actions_base/api/macros.rst
    /libs/full/actions_base/api/action_remote_result.rst

@@ -775,6 +775,7 @@
 <li class="toctree-l4"><a class="reference internal" href="actions_base_fwd.html">hpx/actions_base/actions_base_fwd.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="basic_action.html">HPX_REGISTER_ACTION_DECLARATION, HPX_REGISTER_ACTION</a></li>
 <li class="toctree-l4"><a class="reference internal" href="preassigned_action_id.html">hpx/actions_base/preassigned_action_id.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="macros.html">hpx/actions_base/macros.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="action_remote_result.html">hpx/actions_base/traits/action_remote_result.hpp</a></li>
 </ul>
 </li>
@@ -1223,118 +1224,6 @@ document.write(`
 <p>Defined in header hpx/actions_base/plain_action.hpp.</p>
 <p>See <a class="reference internal" href="../../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names and headers that are part of the public
 <em>HPX</em> API.</p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.HPX_DEFINE_PLAIN_ACTION">
-<span class="target" id="plain__action_8hpp_1a8c78d9a115479f073aac617f2020956e"></span><span class="sig-name descname"><span class="n"><span class="pre">HPX_DEFINE_PLAIN_ACTION</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_DEFINE_PLAIN_ACTION" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Defines a plain action type. </p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">app</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">some_global_function</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-
-<span class="w">    </span><span class="c1">// This will define the action type &#39;app::some_global_action&#39; which</span>
-<span class="w">    </span><span class="c1">// represents the function &#39;app::some_global_function&#39;.</span>
-<span class="w">    </span><span class="n">HPX_DEFINE_PLAIN_ACTION</span><span class="p">(</span><span class="n">some_global_function</span><span class="p">,</span><span class="w"> </span><span class="n">some_global_action</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-<dl class="simple">
-<dt><strong>Example:</strong></dt><dd><p></p>
-</dd>
-</dl>
-</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Usually this macro will not be used in user code unless the intent is to avoid defining the action_type in global namespace. Normally, the use of the macro <em>HPX_PLAIN_ACTION</em> is recommended.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The macro <em>HPX_DEFINE_PLAIN_ACTION</em> can be used with 1 or 2 arguments. The second argument is optional. The default value for the second argument (the typename of the defined action) is derived from the name of the function (as passed as the first argument) by appending ‘_action’. The second argument can be omitted only if the first argument with an appended suffix ‘_action’ resolves to a valid, unqualified C++ type name. </p>
-</div>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.HPX_DECLARE_PLAIN_ACTION">
-<span class="target" id="plain__action_8hpp_1affeaad07c1a009b85c3260d6262e3038"></span><span class="sig-name descname"><span class="n"><span class="pre">HPX_DECLARE_PLAIN_ACTION</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_DECLARE_PLAIN_ACTION" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Declares a plain action type. </p>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.HPX_PLAIN_ACTION">
-<span class="target" id="plain__action_8hpp_1a1b32262e97e6b341e400ad2f74de7ac5"></span><span class="sig-name descname"><span class="n"><span class="pre">HPX_PLAIN_ACTION</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PLAIN_ACTION" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Defines a plain action type based on the given function <em>func</em> and registers it with HPX. </p>
-<p>The macro <em>HPX_PLAIN_ACTION</em> can be used to define a plain action (e.g. an action encapsulating a global or free function) based on the given function <em>func</em>. It defines the action type <em>name</em> representing the given function. This macro additionally registers the newly define action type with HPX.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">func</span></code> is a global or free (non-member) function which should be encapsulated into a plain action. The parameter <code class="docutils literal notranslate"><span class="pre">name</span></code> is the name of the action type defined by this macro.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">app</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">some_global_function</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="c1">// This will define the action type &#39;some_global_action&#39; which</span>
-<span class="c1">// represents the function &#39;app::some_global_function&#39;.</span>
-<span class="n">HPX_PLAIN_ACTION</span><span class="p">(</span><span class="n">app</span><span class="o">::</span><span class="n">some_global_function</span><span class="p">,</span><span class="w"> </span><span class="n">some_global_action</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-<dl class="simple">
-<dt><strong>Example:</strong></dt><dd><p></p>
-</dd>
-</dl>
-</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The macro <em>HPX_PLAIN_ACTION</em> has to be used at global namespace even if the wrapped function is located in some other namespace. The newly defined action type is placed into the global namespace as well.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The macro <em>HPX_PLAIN_ACTION_ID</em> can be used with 1, 2, or 3 arguments. The second and third arguments are optional. The default value for the second argument (the typename of the defined action) is derived from the name of the function (as passed as the first argument) by appending ‘_action’. The second argument can be omitted only if the first argument with an appended suffix ‘_action’ resolves to a valid, unqualified C++ type name. The default value for the third argument is <em>hpx::components::factory_state::check</em>.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Only one of the forms of this macro <em>HPX_PLAIN_ACTION</em> or <em>HPX_PLAIN_ACTION_ID</em> should be used for a particular action, never both. </p>
-</div>
-</dd></dl>
-
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.HPX_PLAIN_ACTION_ID">
-<span class="target" id="plain__action_8hpp_1a3151acb6c4793d0472079e21f0fca05b"></span><span class="sig-name descname"><span class="n"><span class="pre">HPX_PLAIN_ACTION_ID</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">func</span></span>, <span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_PLAIN_ACTION_ID" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Defines a plain action type based on the given function <em>func</em> and registers it with HPX. </p>
-<p>The macro <em>HPX_PLAIN_ACTION_ID</em> can be used to define a plain action (e.g. an action encapsulating a global or free function) based on the given function <em>func</em>. It defines the action type <em>actionname</em> representing the given function.</p>
-<p>The parameter <em>actionid</em> specifies a unique integer value which will be used to represent the action during serialization.</p>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">func</span></code> is a global or free (non-member) function which should be encapsulated into a plain action. The parameter <code class="docutils literal notranslate"><span class="pre">name</span></code> is the name of the action type defined by this macro.</p>
-<p>The second parameter has to be usable as a plain (non-qualified) C++ identifier, it should not contain special characters which cannot be part of a C++ identifier, such as ‘&lt;’, ‘&gt;’, or ‘:’.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">app</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">some_global_function</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="c1">// This will define the action type &#39;some_global_action&#39; which</span>
-<span class="c1">// represents the function &#39;app::some_global_function&#39;.</span>
-<span class="n">HPX_PLAIN_ACTION_ID</span><span class="p">(</span><span class="n">app</span><span class="o">::</span><span class="n">some_global_function</span><span class="p">,</span><span class="w"> </span><span class="n">some_global_action</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">some_unique_id</span><span class="p">);</span><span class="w"></span>
-</pre></div>
-</div>
-<dl class="simple">
-<dt><strong>Example:</strong></dt><dd><p></p>
-</dd>
-</dl>
-</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The macro <em>HPX_PLAIN_ACTION_ID</em> has to be used at global namespace even if the wrapped function is located in some other namespace. The newly defined action type is placed into the global namespace as well.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Only one of the forms of this macro <em>HPX_PLAIN_ACTION</em> or <em>HPX_PLAIN_ACTION_ID</em> should be used for a particular action, never both. </p>
-</div>
-</dd></dl>
-
-</div>
 <dl class="cpp type">
 <dt class="sig sig-object cpp" id="_CPPv43hpx">
 <span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">hpx</span></span></span><br /></dt>
@@ -1419,7 +1308,7 @@ By The HPX project
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Apr 17, 2026.
+  Last updated on Apr 18, 2026.
   <br/>
 </p>
   </div>

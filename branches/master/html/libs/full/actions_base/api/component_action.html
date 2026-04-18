@@ -775,6 +775,7 @@
 <li class="toctree-l4"><a class="reference internal" href="actions_base_fwd.html">hpx/actions_base/actions_base_fwd.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="basic_action.html">HPX_REGISTER_ACTION_DECLARATION, HPX_REGISTER_ACTION</a></li>
 <li class="toctree-l4"><a class="reference internal" href="preassigned_action_id.html">hpx/actions_base/preassigned_action_id.hpp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="macros.html">hpx/actions_base/macros.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="action_remote_result.html">hpx/actions_base/traits/action_remote_result.hpp</a></li>
 </ul>
 </li>
@@ -1223,49 +1224,6 @@ document.write(`
 <p>Defined in header hpx/components.hpp.</p>
 <p>See <a class="reference internal" href="../../../../api/public_api.html#public-api"><span class="std std-ref">Public API</span></a> for a list of names and headers that are part of the public
 <em>HPX</em> API.</p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
-<dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.HPX_DEFINE_COMPONENT_ACTION">
-<span class="target" id="component__action_8hpp_1a155152f9f75f6aa5cae3f0434b84540f"></span><span class="sig-name descname"><span class="n"><span class="pre">HPX_DEFINE_COMPONENT_ACTION</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.HPX_DEFINE_COMPONENT_ACTION" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Registers a member function of a component as an action type with HPX. </p>
-<p>The macro <em>HPX_DEFINE_COMPONENT_ACTION</em> can be used to register a member function of a component as an action type named <em>action_type</em>.</p>
-<p>The parameter <em>component</em> is the type of the component exposing the member function <em>func</em> which should be associated with the newly defined action type. The parameter <code class="docutils literal notranslate"><span class="pre">action_type</span></code> is the name of the action type to register with HPX.</p>
-<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">app</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// Define a simple component exposing one action &#39;print_greeting&#39;</span>
-<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="nc">HPX_COMPONENT_EXPORT</span><span class="w"> </span><span class="n">server</span><span class="w"></span>
-<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">component_base</span><span class="o">&lt;</span><span class="n">server</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="nf">print_greeting</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hey, how are you?</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-
-<span class="w">        </span><span class="c1">// Component actions need to be declared, this also defines the</span>
-<span class="w">        </span><span class="c1">// type &#39;print_greeting_action&#39; representing the action.</span>
-<span class="w">        </span><span class="n">HPX_DEFINE_COMPONENT_ACTION</span><span class="p">(</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="n">print_greeting</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">print_greeting_action</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">};</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-<dl class="simple">
-<dt><strong>Example:</strong></dt><dd><p></p>
-</dd>
-</dl>
-</p>
-<p>The first argument must provide the type name of the component the action is defined for.</p>
-<p>The second argument must provide the member function name the action should wrap.</p>
-<p>
-The default value for the third argument (the typename of the defined action) is derived from the name of the function (as passed as the second argument) by appending ‘_action’. The third argument can be omitted only if the second argument with an appended suffix ‘_action’ resolves to a valid, unqualified C++ type name. </p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The macro <em>HPX_DEFINE_COMPONENT_ACTION</em> can be used with 2 or 3 arguments. The third argument is optional.</p>
-</div>
-</dd></dl>
-
-</div>
 <dl class="cpp type">
 <dt class="sig sig-object cpp" id="_CPPv43hpx">
 <span id="_CPPv33hpx"></span><span id="_CPPv23hpx"></span><span id="hpx"></span><span class="target" id="namespacehpx"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">hpx</span></span></span><br /></dt>
@@ -1345,7 +1303,7 @@ By The HPX project
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Apr 17, 2026.
+  Last updated on Apr 18, 2026.
   <br/>
 </p>
   </div>

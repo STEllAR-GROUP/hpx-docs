@@ -18,5 +18,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/util/api/sed_transform.rst
    /libs/core/util/api/insert_checked.rst
+   /libs/core/util/api/sed_transform.rst

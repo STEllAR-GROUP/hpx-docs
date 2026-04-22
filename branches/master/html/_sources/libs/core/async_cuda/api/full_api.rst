@@ -18,5 +18,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/async_cuda/api/cublas_executor.rst
    /libs/core/async_cuda/api/cuda_executor.rst
+   /libs/core/async_cuda/api/cublas_executor.rst

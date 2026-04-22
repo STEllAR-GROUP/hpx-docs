@@ -18,8 +18,8 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/full/runtime_components/api/component_registry.rst
-   /libs/full/runtime_components/api/derived_component_factory.rst
-   /libs/full/runtime_components/api/component_factory.rst
    /libs/full/runtime_components/api/components_fwd.rst
+   /libs/full/runtime_components/api/component_factory.rst
+   /libs/full/runtime_components/api/component_registry.rst
    /libs/full/runtime_components/api/new.rst
+   /libs/full/runtime_components/api/derived_component_factory.rst

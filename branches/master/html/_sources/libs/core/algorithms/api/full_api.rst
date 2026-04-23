@@ -120,6 +120,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/algorithms/api/algorithms_generate.rst
    /libs/core/algorithms/api/algorithms_set_difference.rst
    /libs/core/algorithms/api/algorithms_remove.rst
+   /libs/core/algorithms/api/for_each_index.rst
    /libs/core/algorithms/api/algorithms_swap_ranges.rst
    /libs/core/algorithms/api/algorithms_exclusive_scan.rst
    /libs/core/algorithms/api/algorithms_is_heap.rst

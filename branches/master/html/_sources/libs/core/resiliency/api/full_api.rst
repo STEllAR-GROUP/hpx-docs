@@ -18,5 +18,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/resiliency/api/replay_executor.rst
    /libs/core/resiliency/api/replicate_executor.rst
+   /libs/core/resiliency/api/replay_executor.rst

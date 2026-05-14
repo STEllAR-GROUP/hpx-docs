@@ -18,6 +18,6 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
+   /libs/full/parcelset_base/api/set_parcel_write_handler.rst
    /libs/full/parcelset_base/api/parcelset_base_fwd.rst
    /libs/full/parcelset_base/api/parcelport.rst
-   /libs/full/parcelset_base/api/set_parcel_write_handler.rst

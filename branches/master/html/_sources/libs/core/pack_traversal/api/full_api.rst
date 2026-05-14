@@ -18,6 +18,6 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
+   /libs/core/pack_traversal/api/pack_traversal.rst
    /libs/core/pack_traversal/api/unwrap.rst
    /libs/core/pack_traversal/api/pack_traversal_async.rst
-   /libs/core/pack_traversal/api/pack_traversal.rst

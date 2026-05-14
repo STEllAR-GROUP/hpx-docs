@@ -18,5 +18,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/timing/api/high_resolution_clock.rst
    /libs/core/timing/api/high_resolution_timer.rst
+   /libs/core/timing/api/high_resolution_clock.rst

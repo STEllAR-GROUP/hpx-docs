@@ -18,6 +18,6 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/datastructures/api/any.rst
    /libs/core/datastructures/api/tuple.rst
+   /libs/core/datastructures/api/any.rst
    /libs/core/datastructures/api/serializable_any.rst

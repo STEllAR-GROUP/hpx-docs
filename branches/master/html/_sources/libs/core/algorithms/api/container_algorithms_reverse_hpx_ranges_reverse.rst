@@ -25,9 +25,9 @@ See also:
 
 .. doxygenfunction:: hpx::ranges::reverse(Iter first, Sent sent)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reverse(Rng &&rng)
+.. doxygenfunction:: hpx::ranges::reverse(Rng && rng)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reverse(ExPolicy &&policy, Iter first, Sent sent)
+.. doxygenfunction:: hpx::ranges::reverse(ExPolicy && policy, Iter first, Sent sent)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reverse(ExPolicy &&policy, Rng &&rng)
+.. doxygenfunction:: hpx::ranges::reverse(ExPolicy && policy, Rng && rng)
    :project: hpx

@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::sort(RandomIt first, RandomIt last, Comp &&comp, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::sort(RandomIt first, RandomIt last, Comp && comp, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::sort(ExPolicy &&policy, RandomIt first, RandomIt last, Comp &&comp, Proj &&proj)
+.. doxygenfunction:: hpx::sort(ExPolicy && policy, RandomIt first, RandomIt last, Comp && comp, Proj && proj)
    :project: hpx

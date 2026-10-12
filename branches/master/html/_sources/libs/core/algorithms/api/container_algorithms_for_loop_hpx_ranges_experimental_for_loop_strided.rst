@@ -25,11 +25,11 @@ See also:
    - :ref:`hpx::ranges::experimental::for_loop_n <modules_container_algorithms_for_loop_hpx_ranges_experimental_for_loop_n_api>`
    - :ref:`hpx::ranges::experimental::for_loop_n_strided <modules_container_algorithms_for_loop_hpx_ranges_experimental_for_loop_n_strided_api>`
 
-.. doxygenfunction:: hpx::ranges::experimental::for_loop_strided(ExPolicy &&policy, Iter first, Sent last, S stride, Args &&... args)
+.. doxygenfunction:: hpx::ranges::experimental::for_loop_strided(ExPolicy && policy, Iter first, Sent last, S stride, Args &&... args)
    :project: hpx
 .. doxygenfunction:: hpx::ranges::experimental::for_loop_strided(Iter first, Sent last, S stride, Args &&... args)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::experimental::for_loop_strided(ExPolicy &&policy, Rng &&rng, S stride, Args &&... args)
+.. doxygenfunction:: hpx::ranges::experimental::for_loop_strided(ExPolicy && policy, Rng && rng, S stride, Args &&... args)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::experimental::for_loop_strided(Rng &&rng, S stride, Args &&... args)
+.. doxygenfunction:: hpx::ranges::experimental::for_loop_strided(Rng && rng, S stride, Args &&... args)
    :project: hpx

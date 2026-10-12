@@ -21,5 +21,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
 .. doxygenfunction:: hpx::get_locality_name()
    :project: hpx
-.. doxygenfunction:: hpx::get_locality_name(hpx::id_type const &id)
+.. doxygenfunction:: hpx::get_locality_name(hpx::id_type const & id)
    :project: hpx

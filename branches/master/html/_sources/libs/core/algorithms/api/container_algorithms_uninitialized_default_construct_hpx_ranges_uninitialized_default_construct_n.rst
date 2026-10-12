@@ -25,5 +25,5 @@ See also:
 
 .. doxygenfunction:: hpx::ranges::uninitialized_default_construct_n(FwdIter first, Size count)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::uninitialized_default_construct_n(ExPolicy &&policy, FwdIter first, Size count)
+.. doxygenfunction:: hpx::ranges::uninitialized_default_construct_n(ExPolicy && policy, FwdIter first, Size count)
    :project: hpx

@@ -25,5 +25,5 @@ See also:
 
 .. doxygenfunction:: hpx::rotate_copy(FwdIter first, FwdIter new_first, FwdIter last, OutIter dest_first)
    :project: hpx
-.. doxygenfunction:: hpx::rotate_copy(ExPolicy &&policy, FwdIter1 first, FwdIter1 new_first, FwdIter1 last, FwdIter2 dest_first)
+.. doxygenfunction:: hpx::rotate_copy(ExPolicy && policy, FwdIter1 first, FwdIter1 new_first, FwdIter1 last, FwdIter2 dest_first)
    :project: hpx

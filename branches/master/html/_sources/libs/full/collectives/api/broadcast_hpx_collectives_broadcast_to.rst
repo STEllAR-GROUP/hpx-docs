@@ -23,13 +23,13 @@ See also:
 
    - :ref:`hpx::collectives::broadcast_from <modules_broadcast_hpx_collectives_broadcast_from_api>`
 
-.. doxygenfunction:: hpx::collectives::broadcast_to(char const *basename, T &&local_result, num_sites_arg num_sites=num_sites_arg(), this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::broadcast_to(char const * basename, T && local_result, num_sites_arg num_sites, this_site_arg this_site, generation_arg generation)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::broadcast_to(communicator comm, T &&local_result, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::broadcast_to(communicator comm, T && local_result, this_site_arg this_site, generation_arg generation)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::broadcast_to(communicator comm, generation_arg generation, T &&local_result, this_site_arg this_site=this_site_arg())
+.. doxygenfunction:: hpx::collectives::broadcast_to(communicator comm, generation_arg generation, T && local_result, this_site_arg this_site)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::broadcast_to(hpx::launch::sync_policy policy, char const *basename, T &&local_result, num_sites_arg num_sites=num_sites_arg(), this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::broadcast_to(hpx::launch::sync_policy policy, char const * basename, T && local_result, num_sites_arg num_sites, this_site_arg this_site, generation_arg generation)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::broadcast_to(hpx::launch::sync_policy policy, communicator comm, T &&local_result, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::broadcast_to(hpx::launch::sync_policy policy, communicator comm, T && local_result, this_site_arg this_site, generation_arg generation)
    :project: hpx

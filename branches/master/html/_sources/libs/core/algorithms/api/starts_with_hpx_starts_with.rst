@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::starts_with(InIter1 first1, InIter1 last1, InIter2 first2, InIter2 last2, Pred && pred)
+.. doxygenfunction:: hpx::starts_with(InIter1 first1, InIter1 last1, InIter2 first2, InIter2 last2, Pred &&pred=Pred())
    :project: hpx
-.. doxygenfunction:: hpx::starts_with(ExPolicy && policy, InIter1 first1, InIter1 last1, InIter2 first2, InIter2 last2, Pred && pred)
+.. doxygenfunction:: hpx::starts_with(ExPolicy &&policy, InIter1 first1, InIter1 last1, InIter2 first2, InIter2 last2, Pred &&pred=Pred())
    :project: hpx

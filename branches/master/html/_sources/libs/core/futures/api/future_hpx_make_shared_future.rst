@@ -30,11 +30,11 @@ See also:
    - :ref:`hpx::make_ready_future_after <modules_future_hpx_make_ready_future_after_api>`
    - :ref:`hpx::make_exceptional_future <modules_future_hpx_make_exceptional_future_api>`
 
-.. doxygenfunction:: hpx::make_shared_future(hpx::future< R > && f)
+.. doxygenfunction:: hpx::make_shared_future(hpx::future< R > &&f) noexcept
    :project: hpx
-.. doxygenfunction:: hpx::make_shared_future(hpx::shared_future< R > & f)
+.. doxygenfunction:: hpx::make_shared_future(hpx::shared_future< R > &f) noexcept
    :project: hpx
-.. doxygenfunction:: hpx::make_shared_future(hpx::shared_future< R > && f)
+.. doxygenfunction:: hpx::make_shared_future(hpx::shared_future< R > &&f) noexcept
    :project: hpx
-.. doxygenfunction:: hpx::make_shared_future(hpx::shared_future< R > const & f)
+.. doxygenfunction:: hpx::make_shared_future(hpx::shared_future< R > const &f) noexcept
    :project: hpx

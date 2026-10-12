@@ -24,7 +24,7 @@ See also:
    - :ref:`hpx::find_root_locality <modules_find_all_localities_hpx_find_root_locality_api>`
    - :ref:`hpx::find_all_localities <modules_find_all_localities_hpx_find_all_localities_api>`
 
-.. doxygenfunction:: hpx::find_remote_localities(error_code & ec)
+.. doxygenfunction:: hpx::find_remote_localities(error_code &ec=throws)
    :project: hpx
-.. doxygenfunction:: hpx::find_remote_localities(components::component_type type, error_code & ec)
+.. doxygenfunction:: hpx::find_remote_localities(components::component_type type, error_code &ec=throws)
    :project: hpx

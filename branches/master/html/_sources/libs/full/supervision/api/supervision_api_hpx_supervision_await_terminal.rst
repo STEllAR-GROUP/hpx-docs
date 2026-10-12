@@ -31,11 +31,11 @@ See also:
    - :ref:`hpx::supervision::check_admission <modules_supervision_api_hpx_supervision_check_admission_api>`
    - :ref:`hpx::supervision::is_valid_transition <modules_supervision_api_hpx_supervision_is_valid_transition_api>`
 
-.. doxygenfunction:: hpx::supervision::await_terminal(hpx::id_type const & locality, hpx::id_type const & target, std::uint64_t epoch, std::optional< std::chrono::steady_clock::duration > timeout)
+.. doxygenfunction:: hpx::supervision::await_terminal(hpx::id_type const &locality, hpx::id_type const &target, std::uint64_t epoch=0, std::optional< std::chrono::steady_clock::duration > timeout=std::nullopt)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::await_terminal(hpx::launch::sync_policy, hpx::id_type const & locality, hpx::id_type const & target, std::uint64_t epoch, std::optional< std::chrono::steady_clock::duration > timeout, hpx::error_code & ec)
+.. doxygenfunction:: hpx::supervision::await_terminal(hpx::launch::sync_policy, hpx::id_type const &locality, hpx::id_type const &target, std::uint64_t epoch=0, std::optional< std::chrono::steady_clock::duration > timeout=std::nullopt, hpx::error_code &ec=hpx::throws)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::await_terminal(hpx::id_type const & target, std::uint64_t epoch, std::optional< std::chrono::steady_clock::duration > timeout)
+.. doxygenfunction:: hpx::supervision::await_terminal(hpx::id_type const &target, std::uint64_t epoch=0, std::optional< std::chrono::steady_clock::duration > timeout=std::nullopt)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::await_terminal(hpx::launch::sync_policy, hpx::id_type const & target, std::uint64_t epoch, std::optional< std::chrono::steady_clock::duration > timeout, hpx::error_code & ec)
+.. doxygenfunction:: hpx::supervision::await_terminal(hpx::launch::sync_policy, hpx::id_type const &target, std::uint64_t epoch=0, std::optional< std::chrono::steady_clock::duration > timeout=std::nullopt, hpx::error_code &ec=hpx::throws)
    :project: hpx

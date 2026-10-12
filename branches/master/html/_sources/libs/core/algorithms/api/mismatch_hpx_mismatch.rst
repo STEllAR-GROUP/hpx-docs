@@ -19,19 +19,19 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::mismatch(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred && op)
+.. doxygenfunction:: hpx::mismatch(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred &&op)
    :project: hpx
-.. doxygenfunction:: hpx::mismatch(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2)
+.. doxygenfunction:: hpx::mismatch(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2)
    :project: hpx
-.. doxygenfunction:: hpx::mismatch(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, Pred && op)
+.. doxygenfunction:: hpx::mismatch(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, Pred &&op)
    :project: hpx
-.. doxygenfunction:: hpx::mismatch(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2)
+.. doxygenfunction:: hpx::mismatch(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2)
    :project: hpx
-.. doxygenfunction:: hpx::mismatch(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred && op)
+.. doxygenfunction:: hpx::mismatch(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred &&op)
    :project: hpx
 .. doxygenfunction:: hpx::mismatch(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2)
    :project: hpx
-.. doxygenfunction:: hpx::mismatch(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, Pred && op)
+.. doxygenfunction:: hpx::mismatch(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, Pred &&op)
    :project: hpx
 .. doxygenfunction:: hpx::mismatch(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2)
    :project: hpx

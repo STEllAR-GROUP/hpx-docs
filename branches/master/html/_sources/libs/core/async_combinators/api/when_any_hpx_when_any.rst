@@ -21,7 +21,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
 .. doxygenfunction:: hpx::when_any(InputIter first, InputIter last)
    :project: hpx
-.. doxygenfunction:: hpx::when_any(Range & values)
+.. doxygenfunction:: hpx::when_any(Range &values)
    :project: hpx
 .. doxygenfunction:: hpx::when_any(T &&... futures)
    :project: hpx

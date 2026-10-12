@@ -27,9 +27,9 @@ See also:
 
 .. doxygenfunction:: hpx::wait_any(InputIter first, InputIter last)
    :project: hpx
-.. doxygenfunction:: hpx::wait_any(std::vector< future< R >> & futures)
+.. doxygenfunction:: hpx::wait_any(std::vector< future< R >> &futures)
    :project: hpx
-.. doxygenfunction:: hpx::wait_any(std::array< future< R >, N > & futures)
+.. doxygenfunction:: hpx::wait_any(std::array< future< R >, N > &futures)
    :project: hpx
 .. doxygenfunction:: hpx::wait_any(T &&... futures)
    :project: hpx

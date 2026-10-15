@@ -19,9 +19,9 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::mem_fn(M C::* pm)
+.. doxygenfunction:: hpx::mem_fn(M C::*pm) noexcept
    :project: hpx
-.. doxygenfunction:: hpx::mem_fn(R(C::*)(Ps...) pm)
+.. doxygenfunction:: hpx::mem_fn(R(C::*pm)(Ps...)) noexcept
    :project: hpx
-.. doxygenfunction:: hpx::mem_fn(R(C::*)(Ps...) const pm)
+.. doxygenfunction:: hpx::mem_fn(R(C::*pm)(Ps...) const) noexcept
    :project: hpx

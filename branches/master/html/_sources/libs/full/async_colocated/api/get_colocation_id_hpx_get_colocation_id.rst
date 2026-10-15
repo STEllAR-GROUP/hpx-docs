@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::get_colocation_id(launch::sync_policy, hpx::id_type const & id, error_code & ec)
+.. doxygenfunction:: hpx::get_colocation_id(launch::sync_policy, hpx::id_type const &id, error_code &ec=throws)
    :project: hpx
-.. doxygenfunction:: hpx::get_colocation_id(hpx::id_type const & id)
+.. doxygenfunction:: hpx::get_colocation_id(hpx::id_type const &id)
    :project: hpx

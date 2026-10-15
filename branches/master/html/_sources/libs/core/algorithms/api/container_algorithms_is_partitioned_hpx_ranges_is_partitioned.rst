@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::is_partitioned(FwdIter first, Sent last, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::is_partitioned(FwdIter first, Sent last, Pred &&pred, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::is_partitioned(ExPolicy && policy, FwdIter first, Sent last, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::is_partitioned(ExPolicy &&policy, FwdIter first, Sent last, Pred &&pred, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::is_partitioned(Rng && rng, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::is_partitioned(Rng &&rng, Pred &&pred, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::is_partitioned(ExPolicy && policy, Rng && rng, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::is_partitioned(ExPolicy &&policy, Rng &&rng, Pred &&pred, Proj &&proj=Proj())
    :project: hpx

@@ -26,11 +26,11 @@ See also:
    - :ref:`hpx::find_if_not <modules_find_hpx_find_if_not_api>`
    - :ref:`hpx::find_first_of <modules_find_hpx_find_first_of_api>`
 
-.. doxygenfunction:: hpx::find_end(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred && op)
+.. doxygenfunction:: hpx::find_end(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred &&op=Pred())
    :project: hpx
-.. doxygenfunction:: hpx::find_end(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2)
+.. doxygenfunction:: hpx::find_end(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2)
    :project: hpx
-.. doxygenfunction:: hpx::find_end(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred && op)
+.. doxygenfunction:: hpx::find_end(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred &&op=Pred())
    :project: hpx
 .. doxygenfunction:: hpx::find_end(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2)
    :project: hpx

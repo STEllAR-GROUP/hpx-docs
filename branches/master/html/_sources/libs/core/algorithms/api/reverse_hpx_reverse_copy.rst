@@ -25,5 +25,5 @@ See also:
 
 .. doxygenfunction:: hpx::reverse_copy(BidirIter first, BidirIter last, OutIter dest)
    :project: hpx
-.. doxygenfunction:: hpx::reverse_copy(ExPolicy && policy, BidirIter first, BidirIter last, FwdIter dest)
+.. doxygenfunction:: hpx::reverse_copy(ExPolicy &&policy, BidirIter first, BidirIter last, FwdIter dest)
    :project: hpx

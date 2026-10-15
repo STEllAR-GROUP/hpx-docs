@@ -25,5 +25,5 @@ See also:
 
 .. doxygenfunction:: hpx::ranges::uninitialized_copy_n(InIter first1, Size count, FwdIter first2, Sent2 last2)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::uninitialized_copy_n(ExPolicy && policy, FwdIter1 first1, Size count, FwdIter2 first2, Sent2 last2)
+.. doxygenfunction:: hpx::ranges::uninitialized_copy_n(ExPolicy &&policy, FwdIter1 first1, Size count, FwdIter2 first2, Sent2 last2)
    :project: hpx

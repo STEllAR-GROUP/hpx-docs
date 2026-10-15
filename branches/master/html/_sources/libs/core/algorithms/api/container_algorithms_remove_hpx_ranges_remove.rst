@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::remove_if <modules_container_algorithms_remove_hpx_ranges_remove_if_api>`
 
-.. doxygenfunction:: hpx::ranges::remove(Iter first, Sent last, T const & value, Proj && proj)
+.. doxygenfunction:: hpx::ranges::remove(Iter first, Sent last, T const &value, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::remove(Rng && rng, T const & value, Proj && proj)
+.. doxygenfunction:: hpx::ranges::remove(Rng &&rng, T const &value, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::remove(ExPolicy && policy, FwdIter first, Sent last, T const & value, Proj && proj)
+.. doxygenfunction:: hpx::ranges::remove(ExPolicy &&policy, FwdIter first, Sent last, T const &value, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::remove(ExPolicy && policy, Rng && rng, T const & value, Proj && proj)
+.. doxygenfunction:: hpx::ranges::remove(ExPolicy &&policy, Rng &&rng, T const &value, Proj &&proj=Proj())
    :project: hpx

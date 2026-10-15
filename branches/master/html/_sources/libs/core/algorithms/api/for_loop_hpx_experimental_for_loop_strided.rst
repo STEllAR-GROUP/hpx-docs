@@ -27,5 +27,5 @@ See also:
 
 .. doxygenfunction:: hpx::experimental::for_loop_strided(std::decay_t< I > first, I last, S stride, Args &&... args)
    :project: hpx
-.. doxygenfunction:: hpx::experimental::for_loop_strided(ExPolicy &&policy, std::decay_t< I > first, I last, S stride, Args &&... args)
+.. doxygenfunction:: hpx::experimental::for_loop_strided(ExPolicy && policy, std::decay_t< I > first, I last, S stride, Args &&... args)
    :project: hpx

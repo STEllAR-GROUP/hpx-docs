@@ -24,11 +24,11 @@ See also:
    - :ref:`hpx::reference_wrapper <modules_reference_wrapper_hpx_reference_wrapper_api>`
    - :ref:`hpx::cref <modules_reference_wrapper_hpx_cref_api>`
 
-.. doxygenfunction:: hpx::ref(T &val) noexcept
+.. doxygenfunction:: hpx::ref(T & val)
    :project: hpx
-.. doxygenfunction:: hpx::ref(T const &&)=delete
+.. doxygenfunction:: hpx::ref(T const &&)
    :project: hpx
-.. doxygenfunction:: hpx::ref(reference_wrapper< T > val) noexcept
+.. doxygenfunction:: hpx::ref(reference_wrapper< T > val)
    :project: hpx
-.. doxygenfunction:: hpx::ref(T &&val) noexcept
+.. doxygenfunction:: hpx::ref(T && val)
    :project: hpx

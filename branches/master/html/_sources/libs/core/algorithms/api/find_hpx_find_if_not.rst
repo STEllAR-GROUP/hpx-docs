@@ -26,7 +26,7 @@ See also:
    - :ref:`hpx::find_end <modules_find_hpx_find_end_api>`
    - :ref:`hpx::find_first_of <modules_find_hpx_find_first_of_api>`
 
-.. doxygenfunction:: hpx::find_if_not(ExPolicy &&policy, FwdIter first, FwdIter last, F &&f)
+.. doxygenfunction:: hpx::find_if_not(ExPolicy && policy, FwdIter first, FwdIter last, F && f)
    :project: hpx
-.. doxygenfunction:: hpx::find_if_not(FwdIter first, FwdIter last, F &&f)
+.. doxygenfunction:: hpx::find_if_not(FwdIter first, FwdIter last, F && f)
    :project: hpx

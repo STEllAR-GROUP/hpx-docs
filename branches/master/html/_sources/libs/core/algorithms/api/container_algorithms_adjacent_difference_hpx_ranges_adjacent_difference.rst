@@ -21,17 +21,17 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
 .. doxygenfunction:: hpx::ranges::adjacent_difference(FwdIter1 first, Sent last, FwdIter2 dest)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_difference(Rng &&rng, FwdIter2 dest)
+.. doxygenfunction:: hpx::ranges::adjacent_difference(Rng && rng, FwdIter2 dest)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_difference(ExPolicy &&policy, FwdIter1 first, Sent last, FwdIter2 dest)
+.. doxygenfunction:: hpx::ranges::adjacent_difference(ExPolicy && policy, FwdIter1 first, Sent last, FwdIter2 dest)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_difference(ExPolicy &&policy, Rng &&rng, FwdIter2 dest)
+.. doxygenfunction:: hpx::ranges::adjacent_difference(ExPolicy && policy, Rng && rng, FwdIter2 dest)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_difference(FwdIter1 first, Sent last, FwdIter2 dest, Op &&op)
+.. doxygenfunction:: hpx::ranges::adjacent_difference(FwdIter1 first, Sent last, FwdIter2 dest, Op && op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_difference(Rng &&rng, FwdIter2 dest, Op &&op)
+.. doxygenfunction:: hpx::ranges::adjacent_difference(Rng && rng, FwdIter2 dest, Op && op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_difference(ExPolicy &&policy, FwdIter1 first, Sent last, FwdIter2 dest, Op &&op)
+.. doxygenfunction:: hpx::ranges::adjacent_difference(ExPolicy && policy, FwdIter1 first, Sent last, FwdIter2 dest, Op && op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_difference(ExPolicy &&policy, Rng &&rng, FwdIter2 dest, Op &&op)
+.. doxygenfunction:: hpx::ranges::adjacent_difference(ExPolicy && policy, Rng && rng, FwdIter2 dest, Op && op)
    :project: hpx

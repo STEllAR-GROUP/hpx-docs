@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::annotated_function(F &&f, char const *=nullptr) noexcept
+.. doxygenfunction:: hpx::annotated_function(F && f, char const *)
    :project: hpx
-.. doxygenfunction:: hpx::annotated_function(F &&f, std::string const &) noexcept
+.. doxygenfunction:: hpx::annotated_function(F && f, std::string const &)
    :project: hpx

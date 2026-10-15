@@ -19,13 +19,13 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::init(std::function< int(hpx::program_options::variables_map &)> f, int argc, char **argv, init_params const &params=init_params())
+.. doxygenfunction:: hpx::init(std::function< int(hpx::program_options::variables_map &)> f, int argc, char ** argv, init_params const & params)
    :project: hpx
-.. doxygenfunction:: hpx::init(std::function< int(int, char **)> f, int argc, char **argv, init_params const &params=init_params())
+.. doxygenfunction:: hpx::init(std::function< int(int, char **)> f, int argc, char ** argv, init_params const & params)
    :project: hpx
-.. doxygenfunction:: hpx::init(int argc, char **argv, init_params const &params=init_params())
+.. doxygenfunction:: hpx::init(int argc, char ** argv, init_params const & params)
    :project: hpx
-.. doxygenfunction:: hpx::init(std::nullptr_t f, int argc, char **argv, init_params const &params=init_params())
+.. doxygenfunction:: hpx::init(std::nullptr_t f, int argc, char ** argv, init_params const & params)
    :project: hpx
-.. doxygenfunction:: hpx::init(init_params const &params=init_params())
+.. doxygenfunction:: hpx::init(init_params const & params)
    :project: hpx

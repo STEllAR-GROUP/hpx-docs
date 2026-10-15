@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::ranges::generate <modules_container_algorithms_generate_hpx_ranges_generate_api>`
 
-.. doxygenfunction:: hpx::ranges::generate_n(ExPolicy &&policy, FwdIter first, Size count, F &&f)
+.. doxygenfunction:: hpx::ranges::generate_n(ExPolicy && policy, FwdIter first, Size count, F && f)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::generate_n(FwdIter first, Size count, F &&f)
+.. doxygenfunction:: hpx::ranges::generate_n(FwdIter first, Size count, F && f)
    :project: hpx

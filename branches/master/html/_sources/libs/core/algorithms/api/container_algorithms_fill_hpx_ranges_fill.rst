@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::fill_n <modules_container_algorithms_fill_hpx_ranges_fill_n_api>`
 
-.. doxygenfunction:: hpx::ranges::fill(ExPolicy &&policy, Rng &&rng, T const &value)
+.. doxygenfunction:: hpx::ranges::fill(ExPolicy && policy, Rng && rng, T const & value)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::fill(ExPolicy &&policy, Iter first, Sent last, T const &value)
+.. doxygenfunction:: hpx::ranges::fill(ExPolicy && policy, Iter first, Sent last, T const & value)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::fill(Rng &&rng, T const &value)
+.. doxygenfunction:: hpx::ranges::fill(Rng && rng, T const & value)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::fill(Iter first, Sent last, T const &value)
+.. doxygenfunction:: hpx::ranges::fill(Iter first, Sent last, T const & value)
    :project: hpx

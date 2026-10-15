@@ -25,9 +25,9 @@ See also:
 
 .. doxygenfunction:: hpx::ranges::reverse_copy(Iter first, Sent last, OutIter result)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reverse_copy(Rng &&rng, OutIter result)
+.. doxygenfunction:: hpx::ranges::reverse_copy(Rng && rng, OutIter result)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reverse_copy(ExPolicy &&policy, Iter first, Sent last, FwdIter result)
+.. doxygenfunction:: hpx::ranges::reverse_copy(ExPolicy && policy, Iter first, Sent last, FwdIter result)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reverse_copy(ExPolicy &&policy, Rng &&rng, OutIter result)
+.. doxygenfunction:: hpx::ranges::reverse_copy(ExPolicy && policy, Rng && rng, OutIter result)
    :project: hpx

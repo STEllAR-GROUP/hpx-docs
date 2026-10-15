@@ -27,3 +27,4 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/full/runtime_components/api/components_fwd.rst
    /libs/full/runtime_components/api/reflect_client.rst
    /libs/full/runtime_components/api/new_hpx_new.rst
+   /libs/full/runtime_components/api/new_local_new.rst

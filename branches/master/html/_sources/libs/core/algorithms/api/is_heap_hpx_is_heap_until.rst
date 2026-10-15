@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::is_heap <modules_is_heap_hpx_is_heap_api>`
 
-.. doxygenfunction:: hpx::is_heap_until(ExPolicy &&policy, RandIter first, RandIter last, Comp &&comp=Comp())
+.. doxygenfunction:: hpx::is_heap_until(ExPolicy && policy, RandIter first, RandIter last, Comp && comp)
    :project: hpx
-.. doxygenfunction:: hpx::is_heap_until(RandIter first, RandIter last, Comp &&comp=Comp())
+.. doxygenfunction:: hpx::is_heap_until(RandIter first, RandIter last, Comp && comp)
    :project: hpx

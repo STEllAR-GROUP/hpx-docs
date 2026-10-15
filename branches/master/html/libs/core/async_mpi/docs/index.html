@@ -1569,7 +1569,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -1585,6 +1587,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-and-finalizing-mpi">Initializing and finalizing MPI</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -1681,8 +1691,54 @@ though not all have been tested at the time of writing
 <code class="docutils literal notranslate"><span class="pre">MPI_xxx(...,</span> <span class="pre">MPI_Comm</span> <span class="pre">comm,</span> <span class="pre">MPI_Request</span> <span class="pre">*request)</span></code>
 - internally these two parameters will be substituted by the executor and future data
 parameters that are supplied by template instantiations inside the <code class="docutils literal notranslate"><span class="pre">hpx::mpi</span></code> code.</p>
+<section id="initializing-and-finalizing-mpi">
+<h2>Initializing and finalizing MPI<a class="headerlink" href="#initializing-and-finalizing-mpi" title="Link to this heading">#</a></h2>
+<p>MPI futures only become ready while MPI request polling is enabled. Enable it
+for the scope in which they are used, either with an
+<code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental::enable_user_polling</span></code> object or with
+<code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental::init</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental::finalize</span></code>.</p>
+<p>MPI itself is finalized by whoever initialized it, and <em>HPX</em> follows this rule:</p>
+<ul class="simple">
+<li><p>If the application calls <code class="docutils literal notranslate"><span class="pre">MPI_Init</span></code> (or <code class="docutils literal notranslate"><span class="pre">MPI_Init_thread</span></code>) before
+starting the <em>HPX</em> runtime, <em>HPX</em> uses MPI as is and never finalizes it.
+MPI remains usable after the runtime has stopped, and the application
+calls <code class="docutils literal notranslate"><span class="pre">MPI_Finalize</span></code> itself. The MPI parcelport requires
+<code class="docutils literal notranslate"><span class="pre">MPI_THREAD_MULTIPLE</span></code> (or <code class="docutils literal notranslate"><span class="pre">MPI_THREAD_SERIALIZED</span></code> if
+<code class="docutils literal notranslate"><span class="pre">hpx.parcel.mpi.multithreaded=0</span></code>), and
+<code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental::init(true)</span></code> requires <code class="docutils literal notranslate"><span class="pre">MPI_THREAD_MULTIPLE</span></code>.</p></li>
+<li><p>If <em>HPX</em> initializes MPI, it also finalizes it. This is the case for the
+MPI parcelport, which initializes MPI while the runtime starts, and for
+<code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental::init(true)</span></code>, which initializes MPI if it is not
+initialized yet and finalizes it in <code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental::finalize</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental::enable_user_polling</span></code> neither initializes nor
+finalizes MPI.</p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// the application owns MPI</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">provided</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">MPI_Init_thread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_THREAD_MULTIPLE</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">provided</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// MPI can still be used here</span>
+<span class="w">    </span><span class="n">MPI_Finalize</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If <em>HPX</em> has initialized MPI, the application must not call <code class="docutils literal notranslate"><span class="pre">MPI_Init</span></code>
+or <code class="docutils literal notranslate"><span class="pre">MPI_Finalize</span></code>. Initializing MPI twice is erroneous, and finalizing
+MPI while the runtime still uses it makes the application hang or abort.
+Use <code class="docutils literal notranslate"><span class="pre">MPI_Initialized</span></code> to check whether MPI is initialized already.
+MPI cannot be used after the runtime has stopped in this case, so
+initialize MPI in the application if it is needed beyond that.</p>
+</div>
 <p>See the <span class="xref std std-ref">API reference</span> of this module for more
 details.</p>
+</section>
 </section>
 
 
@@ -1720,6 +1776,21 @@ details.</p>
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-and-finalizing-mpi">Initializing and finalizing MPI</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

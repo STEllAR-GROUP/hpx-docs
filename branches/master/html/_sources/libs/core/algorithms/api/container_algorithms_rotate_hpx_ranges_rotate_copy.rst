@@ -25,9 +25,9 @@ See also:
 
 .. doxygenfunction:: hpx::ranges::rotate_copy(FwdIter first, FwdIter middle, Sent last, OutIter dest_first)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::rotate_copy(ExPolicy &&policy, FwdIter1 first, FwdIter1 middle, Sent last, FwdIter2 dest_first)
+.. doxygenfunction:: hpx::ranges::rotate_copy(ExPolicy && policy, FwdIter1 first, FwdIter1 middle, Sent last, FwdIter2 dest_first)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::rotate_copy(Rng &&rng, std::ranges::iterator_t< Rng > middle, OutIter dest_first)
+.. doxygenfunction:: hpx::ranges::rotate_copy(Rng && rng, std::ranges::iterator_t< Rng > middle, OutIter dest_first)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::rotate_copy(ExPolicy &&policy, Rng &&rng, std::ranges::iterator_t< Rng > middle, OutIter dest_first)
+.. doxygenfunction:: hpx::ranges::rotate_copy(ExPolicy && policy, Rng && rng, std::ranges::iterator_t< Rng > middle, OutIter dest_first)
    :project: hpx

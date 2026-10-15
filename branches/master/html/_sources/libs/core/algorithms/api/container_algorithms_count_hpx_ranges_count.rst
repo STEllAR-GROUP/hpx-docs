@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::count_if <modules_container_algorithms_count_hpx_ranges_count_if_api>`
 
-.. doxygenfunction:: hpx::ranges::count(ExPolicy &&policy, Rng &&rng, T const &value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::count(ExPolicy && policy, Rng && rng, T const & value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::count(ExPolicy &&policy, Iter first, Sent last, T const &value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::count(ExPolicy && policy, Iter first, Sent last, T const & value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::count(Rng &&rng, T const &value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::count(Rng && rng, T const & value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::count(Iter first, Sent last, T const &value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::count(Iter first, Sent last, T const & value, Proj && proj)
    :project: hpx

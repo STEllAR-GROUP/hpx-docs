@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::collectives::broadcast_to <modules_broadcast_hpx_collectives_broadcast_to_api>`
 
-.. doxygenfunction:: hpx::collectives::broadcast_from(char const *basename, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg(), root_site_arg root_site=root_site_arg())
+.. doxygenfunction:: hpx::collectives::broadcast_from(char const * basename, this_site_arg this_site, generation_arg generation, root_site_arg root_site)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::broadcast_from(communicator comm, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::broadcast_from(communicator comm, this_site_arg this_site, generation_arg generation)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::broadcast_from(hpx::launch::sync_policy policy, char const *basename, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg(), root_site_arg root_site=root_site_arg())
+.. doxygenfunction:: hpx::collectives::broadcast_from(hpx::launch::sync_policy policy, char const * basename, this_site_arg this_site, generation_arg generation, root_site_arg root_site)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::broadcast_from(hpx::launch::sync_policy policy, communicator comm, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::broadcast_from(hpx::launch::sync_policy policy, communicator comm, this_site_arg this_site, generation_arg generation)
    :project: hpx

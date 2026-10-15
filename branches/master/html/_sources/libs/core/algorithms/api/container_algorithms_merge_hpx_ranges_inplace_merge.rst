@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::merge <modules_container_algorithms_merge_hpx_ranges_merge_api>`
 
-.. doxygenfunction:: hpx::ranges::inplace_merge(ExPolicy &&policy, Rng &&rng, Iter middle, Comp &&comp=Comp(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::inplace_merge(ExPolicy && policy, Rng && rng, Iter middle, Comp && comp, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inplace_merge(ExPolicy &&policy, Iter first, Iter middle, Sent last, Comp &&comp=Comp(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::inplace_merge(ExPolicy && policy, Iter first, Iter middle, Sent last, Comp && comp, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inplace_merge(Rng &&rng, Iter middle, Comp &&comp=Comp(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::inplace_merge(Rng && rng, Iter middle, Comp && comp, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inplace_merge(Iter first, Iter middle, Sent last, Comp &&comp=Comp(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::inplace_merge(Iter first, Iter middle, Sent last, Comp && comp, Proj && proj)
    :project: hpx

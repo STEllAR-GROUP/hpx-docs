@@ -26,5 +26,5 @@ See also:
 
 .. doxygenfunction:: hpx::get_worker_thread_num() noexcept
    :project: hpx
-.. doxygenfunction:: hpx::get_worker_thread_num(error_code &ec) noexcept
+.. doxygenfunction:: hpx::get_worker_thread_num(error_code & ec)
    :project: hpx

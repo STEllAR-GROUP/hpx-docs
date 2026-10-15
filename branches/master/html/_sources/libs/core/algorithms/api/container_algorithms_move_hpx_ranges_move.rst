@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::move(ExPolicy &&policy, Iter1 first, Sent1 last, Iter2 dest)
+.. doxygenfunction:: hpx::ranges::move(ExPolicy && policy, Iter1 first, Sent1 last, Iter2 dest)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::move(ExPolicy &&policy, Rng &&rng, Iter2 dest)
+.. doxygenfunction:: hpx::ranges::move(ExPolicy && policy, Rng && rng, Iter2 dest)
    :project: hpx
 .. doxygenfunction:: hpx::ranges::move(Iter1 first, Sent1 last, Iter2 dest)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::move(Rng &&rng, Iter2 dest)
+.. doxygenfunction:: hpx::ranges::move(Rng && rng, Iter2 dest)
    :project: hpx

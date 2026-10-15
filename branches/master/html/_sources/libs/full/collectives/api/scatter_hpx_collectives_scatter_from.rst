@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::collectives::scatter_to <modules_scatter_hpx_collectives_scatter_to_api>`
 
-.. doxygenfunction:: hpx::collectives::scatter_from(char const *basename, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg(), root_site_arg root_site=root_site_arg())
+.. doxygenfunction:: hpx::collectives::scatter_from(char const * basename, this_site_arg this_site, generation_arg generation, root_site_arg root_site)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::scatter_from(communicator comm, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::scatter_from(communicator comm, this_site_arg this_site, generation_arg generation)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::scatter_from(hpx::launch::sync_policy, char const *basename, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg(), root_site_arg root_site=root_site_arg())
+.. doxygenfunction:: hpx::collectives::scatter_from(hpx::launch::sync_policy, char const * basename, this_site_arg this_site, generation_arg generation, root_site_arg root_site)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::scatter_from(hpx::launch::sync_policy, communicator comm, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::scatter_from(hpx::launch::sync_policy, communicator comm, this_site_arg this_site, generation_arg generation)
    :project: hpx

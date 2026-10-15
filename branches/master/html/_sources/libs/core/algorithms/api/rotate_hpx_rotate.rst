@@ -25,5 +25,5 @@ See also:
 
 .. doxygenfunction:: hpx::rotate(FwdIter first, FwdIter new_first, FwdIter last)
    :project: hpx
-.. doxygenfunction:: hpx::rotate(ExPolicy &&policy, FwdIter first, FwdIter new_first, FwdIter last)
+.. doxygenfunction:: hpx::rotate(ExPolicy && policy, FwdIter first, FwdIter new_first, FwdIter last)
    :project: hpx

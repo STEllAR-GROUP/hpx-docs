@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::destroy <modules_destroy_hpx_destroy_api>`
 
-.. doxygenfunction:: hpx::destroy_n(ExPolicy &&policy, FwdIter first, Size count)
+.. doxygenfunction:: hpx::destroy_n(ExPolicy && policy, FwdIter first, Size count)
    :project: hpx
 .. doxygenfunction:: hpx::destroy_n(FwdIter first, Size count)
    :project: hpx

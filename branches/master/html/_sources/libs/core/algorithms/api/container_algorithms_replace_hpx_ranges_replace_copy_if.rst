@@ -25,11 +25,11 @@ See also:
    - :ref:`hpx::ranges::replace_if <modules_container_algorithms_replace_hpx_ranges_replace_if_api>`
    - :ref:`hpx::ranges::replace_copy <modules_container_algorithms_replace_hpx_ranges_replace_copy_api>`
 
-.. doxygenfunction:: hpx::ranges::replace_copy_if(InIter first, Sent sent, OutIter dest, Pred &&pred, T const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace_copy_if(InIter first, Sent sent, OutIter dest, Pred && pred, T const & new_value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::replace_copy_if(Rng &&rng, OutIter dest, Pred &&pred, T const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace_copy_if(Rng && rng, OutIter dest, Pred && pred, T const & new_value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::replace_copy_if(ExPolicy &&policy, FwdIter1 first, Sent sent, FwdIter2 dest, Pred &&pred, T const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace_copy_if(ExPolicy && policy, FwdIter1 first, Sent sent, FwdIter2 dest, Pred && pred, T const & new_value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::replace_copy_if(ExPolicy &&policy, Rng &&rng, FwdIter dest, Pred &&pred, T const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace_copy_if(ExPolicy && policy, Rng && rng, FwdIter dest, Pred && pred, T const & new_value, Proj && proj)
    :project: hpx

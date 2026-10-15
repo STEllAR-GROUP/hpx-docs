@@ -1617,6 +1617,11 @@ and <code class="docutils literal notranslate"><span class="pre">hpx::execution:
 variants), which select the number of vector lanes explicitly. Execution
 policy properties, including <code class="docutils literal notranslate"><span class="pre">num_lanes</span></code>, are exposed through
 <code class="docutils literal notranslate"><span class="pre">hpx::execution::policy_traits</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged</span></code> now only applies to other
+workers stealing staged tasks. A worker always converts its own staged
+tasks, even if there are fewer of them than the configured minimum; before,
+such tasks were never run, so any non-zero setting could hang applications.
+The default (<code class="docutils literal notranslate"><span class="pre">0</span></code>) is not affected.</p></li>
 </ul>
 </section>
 <section id="breaking-changes">

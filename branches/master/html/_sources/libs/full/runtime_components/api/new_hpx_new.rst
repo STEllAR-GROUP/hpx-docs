@@ -19,15 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-See also:
-
-   - :ref:`local_new <modules_new_local_new_api>`
-
-.. doxygenfunction:: hpx::new_(id_type const & locality, Ts &&... vs)
+.. doxygenfunction:: hpx::new_(id_type const &locality, Ts &&... vs)
    :project: hpx
-.. doxygenfunction:: hpx::new_(id_type const & locality, std::size_t count, Ts &&... vs)
+.. doxygenfunction:: hpx::new_(id_type const &locality, std::size_t count, Ts &&... vs)
    :project: hpx
-.. doxygenfunction:: hpx::new_(DistPolicy const & policy, Ts &&... vs)
+.. doxygenfunction:: hpx::new_(DistPolicy const &policy, Ts &&... vs)
    :project: hpx
-.. doxygenfunction:: hpx::new_(DistPolicy const & policy, std::size_t count, Ts &&... vs)
+.. doxygenfunction:: hpx::new_(DistPolicy const &policy, std::size_t count, Ts &&... vs)
    :project: hpx

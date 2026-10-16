@@ -32,7 +32,7 @@ See also:
 
 .. doxygenfunction:: hpx::make_ready_future(Ts &&... ts)
    :project: hpx
-.. doxygenfunction:: hpx::make_ready_future(T && init)
+.. doxygenfunction:: hpx::make_ready_future(T &&init)
    :project: hpx
 .. doxygenfunction:: hpx::make_ready_future()
    :project: hpx

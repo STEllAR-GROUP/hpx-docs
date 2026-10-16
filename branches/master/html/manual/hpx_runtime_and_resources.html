@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>HPX runtime and resources &#8212; HPX 2.0.0-rc1 documentation</title>
+    <title>HPX runtime and resources &#8212; HPX 2.0.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=7ec4965c"></script>
+    <script src="../_static/documentation_options.js?v=ce394494"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -52,7 +52,7 @@
     <link rel="prev" title="Using the LCW parcelport" href="using_the_lcw_parcelport.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Oct 15, 2026"/>
+    <meta name="docbuild:last-update" content="Oct 16, 2026"/>
   </head>
   
   
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0-rc1 documentation - Home"/>
-    <script>document.write(`<img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0-rc1 documentation - Home"/>`);</script>
+    <img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -553,7 +553,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/components_fwd.html">hpx/runtime_components/components_fwd.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/reflect_client.html">hpx/runtime_components/reflect_client.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/new_hpx_new.html">hpx::new_</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/new_local_new.html">local_new</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../libs/full/runtime_distributed/api/full_api.html">runtime_distributed</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -1357,7 +1356,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../releases.html">Releases</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (Oct 31, 2026)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (TBD)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_11_0.html"><em>HPX</em> V1.11.0 (Jun 30, 2025)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_10_0.html"><em>HPX</em> V1.10.0 (May 29, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_9_1.html"><em>HPX</em> V1.9.1 (August 4, 2023)</a></li>
@@ -1750,21 +1749,6 @@ priority instead of using a separate thread pool.</p>
 <p>The <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hpx::resource::partitioner</span></code> is now created during <em>HPX</em> runtime
 initialization without explicit action needed from the user. To specify some of
 the initialization parameters you can use the <a class="reference internal" href="../libs/full/init_runtime/api/hpx_init_params_hpx_init_params.html#modules-hpx-init-params-hpx-init-params-api"><span class="std std-ref">hpx::init_params</span></a>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">hpx_main</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Setup the init parameters</span>
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init_params</span><span class="w"> </span><span class="n">init_args</span><span class="p">;</span>
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">hpx_main</span><span class="p">,</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="n">init_args</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 <p>The resource partitioner callback is the interface to add thread pools to the
 <em>HPX</em> runtime and to assign resources to the thread pools.  In order to create
 custom thread pools you can specify the resource partitioner callback
@@ -1782,51 +1766,6 @@ iterate through the topology to add the wanted processing units to the thread
 pool. Below is an example of adding all processing units from the first NUMA
 domain to a custom thread pool, unless there is only one NUMA domain in which
 case we leave the first processing unit for the default thread pool:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/init.hpp&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/modules/resource_partitioner.hpp&gt;</span>
-
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">hpx_main</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">init_resource_partitioner_handler</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">partitioner</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rp</span><span class="p">,</span>
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">program_options</span><span class="o">::</span><span class="n">variables_map</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*vm*/</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">rp</span><span class="p">.</span><span class="n">create_thread_pool</span><span class="p">(</span><span class="s">&quot;my-thread-pool&quot;</span><span class="p">);</span>
-
-<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">one_numa_domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rp</span><span class="p">.</span><span class="n">numa_domains</span><span class="p">().</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">skipped_first_pu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
-
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">numa_domain</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rp</span><span class="p">.</span><span class="n">numa_domains</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
-
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">core</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">cores</span><span class="p">())</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">resource</span><span class="o">::</span><span class="n">pu</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">pus</span><span class="p">())</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">one_numa_domain</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">skipped_first_pu</span><span class="p">)</span>
-<span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="n">skipped_first_pu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
-<span class="w">                </span><span class="k">continue</span><span class="p">;</span>
-<span class="w">            </span><span class="p">}</span>
-
-<span class="w">            </span><span class="n">rp</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;my-thread-pool&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// Set the callback to init the thread_pools</span>
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init_params</span><span class="w"> </span><span class="n">init_args</span><span class="p">;</span>
-<span class="w">    </span><span class="n">init_args</span><span class="p">.</span><span class="n">rp_callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">init_resource_partitioner_handler</span><span class="p">;</span>
-
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">hpx_main</span><span class="p">,</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="n">init_args</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Whatever processing units are not assigned to a thread pool by the time
@@ -2055,7 +1994,7 @@ By The HPX project
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Oct 15, 2026.
+  Last updated on Oct 16, 2026.
   <br/>
 </p>
   </div>

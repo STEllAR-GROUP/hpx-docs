@@ -24,11 +24,11 @@ See also:
    - :ref:`hpx::ranges::partition <modules_container_algorithms_partition_hpx_ranges_partition_api>`
    - :ref:`hpx::ranges::partition_copy <modules_container_algorithms_partition_hpx_ranges_partition_copy_api>`
 
-.. doxygenfunction:: hpx::ranges::stable_partition(Rng && rng, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::stable_partition(Rng &&rng, Pred &&pred, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::stable_partition(ExPolicy && policy, Rng && rng, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::stable_partition(ExPolicy &&policy, Rng &&rng, Pred &&pred, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::stable_partition(BidirIter first, Sent last, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::stable_partition(BidirIter first, Sent last, Pred &&pred, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::stable_partition(ExPolicy && policy, BidirIter first, Sent last, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::stable_partition(ExPolicy &&policy, BidirIter first, Sent last, Pred &&pred, Proj &&proj=Proj())
    :project: hpx

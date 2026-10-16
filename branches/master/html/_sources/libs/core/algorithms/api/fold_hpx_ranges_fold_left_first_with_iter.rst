@@ -27,7 +27,7 @@ See also:
    - :ref:`hpx::ranges::fold_right_last <modules_fold_hpx_ranges_fold_right_last_api>`
    - :ref:`hpx::ranges::fold_left_with_iter <modules_fold_hpx_ranges_fold_left_with_iter_api>`
 
-.. doxygenfunction:: hpx::ranges::fold_left_first_with_iter(InIter first, Sent last, F f)
+.. doxygenfunction:: hpx::ranges::fold_left_first_with_iter(InIter first, Sent last, F f) -> fold_left_first_with_iter_result< InIter, hpx::optional< std::decay_t< std::invoke_result_t< F &, std::iter_reference_t< InIter >, std::iter_reference_t< InIter >>>>>
    :project: hpx
-.. doxygenfunction:: hpx::ranges::fold_left_first_with_iter(Rng && rng, F f)
+.. doxygenfunction:: hpx::ranges::fold_left_first_with_iter(Rng &&rng, F f) -> fold_left_first_with_iter_result< std::ranges::iterator_t< Rng >, hpx::optional< std::decay_t< std::invoke_result_t< F &, std::ranges::range_reference_t< Rng >, std::ranges::range_reference_t< Rng >>>>>
    :project: hpx

@@ -52,7 +52,7 @@
     <link rel="prev" title="Getting HPX" href="getting_hpx.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Oct 16, 2026"/>
+    <meta name="docbuild:last-update" content="Oct 17, 2026"/>
   </head>
   
   
@@ -1713,7 +1713,11 @@ build and attach instructions.</p>
 <span class="sig-name descname"><span class="pre">HPX_WITH_ITTNOTIFY</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-HPX_WITH_ITTNOTIFY" title="Link to this definition">#</a></dt>
 <dd><p>Enable <a class="reference external" href="https://github.com/intel/ittapi">Intel ITT API</a> integration. Requires VTune or any other Intel ITT API
 provider; point <code class="docutils literal notranslate"><span class="pre">Amplifier_ROOT</span></code> at the install (the name is legacy;
-it accepts any ITTNotify installation).</p>
+it accepts any ITTNotify installation). Task lifecycle and work-stealing
+events are emitted as well, see <a class="reference internal" href="#cmdoption-arg-HPX_WITH_TRACING_LIFECYCLE_EVENTS"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_TRACING_LIFECYCLE_EVENTS</span></code></a>
+and <a class="reference internal" href="#cmdoption-arg-HPX_WITH_TRACING_WORK_STEALING_EVENTS"><code class="xref std std-option docutils literal notranslate"><span class="pre">HPX_WITH_TRACING_WORK_STEALING_EVENTS</span></code></a>; they are only emitted
+when ITTNotify is enabled at runtime with
+<code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.use_itt_notify=1</span></code>.</p>
 </dd></dl>
 
 <dl class="std option">
@@ -1730,7 +1734,9 @@ enabled. Defaults to <code class="docutils literal notranslate"><span class="pre
 <dd><p>Emit per-task lifecycle events (staged, created, executing, yielded, suspended, resumed, completed,
 deleted). Defaults to <code class="docutils literal notranslate"><span class="pre">ON</span></code>. Turn <code class="docutils literal notranslate"><span class="pre">OFF</span></code> to compile out the per-task hooks and their runtime
 connection check when profiling a workload where only causal or work-stealing events matter. The
-saving applies on Tracy builds; the other backends already treat these hooks as no-ops.</p>
+saving applies on Tracy and ITTNotify builds; the other backends already treat these hooks as
+no-ops. On ITTNotify builds, turning this <code class="docutils literal notranslate"><span class="pre">OFF</span></code> restores the earlier behavior of not emitting
+these events.</p>
 </dd></dl>
 
 <dl class="std option">
@@ -1748,8 +1754,9 @@ these hooks as no-ops.</p>
 <span class="sig-name descname"><span class="pre">HPX_WITH_TRACING_WORK_STEALING_EVENTS</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-HPX_WITH_TRACING_WORK_STEALING_EVENTS" title="Link to this definition">#</a></dt>
 <dd><p>Emit the work-stealing signal when a worker steals a task from another worker. Defaults to <code class="docutils literal notranslate"><span class="pre">ON</span></code>.
 Turn <code class="docutils literal notranslate"><span class="pre">OFF</span></code> when profiling a workload with heavy work stealing where the signal itself is not
-being consumed. The saving applies on Tracy builds; the other backends already treat this hook as
-a no-op.</p>
+being consumed. The saving applies on Tracy and ITTNotify builds; the other backends already
+treat this hook as a no-op. On ITTNotify builds, turning this <code class="docutils literal notranslate"><span class="pre">OFF</span></code> restores the earlier
+behavior of not emitting this event.</p>
 </dd></dl>
 
 <dl class="std option">
@@ -1761,8 +1768,8 @@ via the <code class="docutils literal notranslate"><span class="pre">hpx.tracing
 positive integer; the CMake configure step rejects non-integer or non-positive values.
 Only the lifecycle events are sampled - causal events fire unconditionally so the
 causal-chain view stays intact at any rate. <code class="docutils literal notranslate"><span class="pre">task_staged</span></code> is also unconditional
-because it fires before per-task state exists to consult. Other backends already treat
-lifecycle hooks as no-ops.</p>
+because it fires before per-task state exists to consult. The ITTNotify backend ignores
+the rate and emits every task; the other backends already treat lifecycle hooks as no-ops.</p>
 </dd></dl>
 
 <dl class="std option">
@@ -2143,7 +2150,7 @@ By The HPX project
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Oct 16, 2026.
+  Last updated on Oct 17, 2026.
   <br/>
 </p>
   </div>

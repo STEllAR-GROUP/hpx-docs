@@ -52,7 +52,7 @@
     <link rel="prev" title="Starting the HPX runtime" href="starting_the_hpx_runtime.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Oct 16, 2026"/>
+    <meta name="docbuild:last-update" content="Oct 17, 2026"/>
   </head>
   
   
@@ -2058,6 +2058,8 @@ exactly what you are doing.</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[hpx.thread_queue]</span>
 <span class="na">min_tasks_to_steal_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MIN_TASKS_TO_STEAL_PENDING:0}</span>
 <span class="na">min_tasks_to_steal_staged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MIN_TASKS_TO_STEAL_STAGED:0}</span>
+<span class="na">min_tasks_to_steal_staged_early</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MIN_TASKS_TO_STEAL_STAGED_EARLY:10}</span>
+<span class="na">idle_loop_count_steal_staged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_IDLE_LOOP_COUNT_STEAL_STAGED:30}</span>
 <span class="na">min_add_new_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MIN_ADD_NEW_COUNT:10}</span>
 <span class="na">max_add_new_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MAX_ADD_NEW_COUNT:10}</span>
 <span class="na">max_delete_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MAX_DELETE_COUNT:1000}</span>
@@ -2077,6 +2079,24 @@ work. The default is to allow stealing always.</p></td>
 <td><p>The value of this property defines the number of staged <em>HPX</em> tasks that
 need to be available before neighboring cores are allowed to steal work.
 The default is to allow stealing always.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.idle_loop_count_steal_staged</span></code></p></td>
+<td><p>The value of this property defines the number of consecutive empty
+scheduling loop iterations after which a core starts stealing staged
+<em>HPX</em> tasks from other cores (local priority queue scheduler only, other
+schedulers start after <code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span> <span class="pre">/</span> <span class="pre">2</span></code> iterations). It
+has no effect if fast idle mode is on, which steals staged tasks right
+away.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged_early</span></code></p></td>
+<td><p>The value of this property defines the number of staged <em>HPX</em> tasks that
+need to be available before neighboring cores are allowed to steal work
+shortly after running out of work, i.e. after
+<code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.idle_loop_count_steal_staged</span></code> iterations (local
+priority queue scheduler only). Cores that have been idle for
+<code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span> <span class="pre">/</span> <span class="pre">2</span></code> iterations steal staged tasks
+regardless. Leaving a few staged tasks to the core they were placed on
+keeps them close to the data in that core’s caches.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_add_new_count</span></code></p></td>
 <td><p>The value of this property defines the minimal number of tasks to be
@@ -4049,7 +4069,7 @@ By The HPX project
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Oct 16, 2026.
+  Last updated on Oct 17, 2026.
   <br/>
 </p>
   </div>

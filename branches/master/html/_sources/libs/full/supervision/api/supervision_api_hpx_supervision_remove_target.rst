@@ -31,9 +31,9 @@ See also:
    - :ref:`hpx::supervision::await_terminal <modules_supervision_api_hpx_supervision_await_terminal_api>`
    - :ref:`hpx::supervision::is_valid_transition <modules_supervision_api_hpx_supervision_is_valid_transition_api>`
 
-.. doxygenfunction:: hpx::supervision::remove_target(hpx::id_type const &locality, hpx::id_type const &target)
+.. doxygenfunction:: hpx::supervision::remove_target(hpx::id_type const & locality, hpx::id_type const & target)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::remove_target(hpx::launch::sync_policy, hpx::id_type const &locality, hpx::id_type const &target, hpx::error_code &ec=hpx::throws)
+.. doxygenfunction:: hpx::supervision::remove_target(hpx::launch::sync_policy, hpx::id_type const & locality, hpx::id_type const & target, hpx::error_code & ec)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::remove_target(hpx::id_type const &target, hpx::error_code &ec=hpx::throws)
+.. doxygenfunction:: hpx::supervision::remove_target(hpx::id_type const & target, hpx::error_code & ec)
    :project: hpx

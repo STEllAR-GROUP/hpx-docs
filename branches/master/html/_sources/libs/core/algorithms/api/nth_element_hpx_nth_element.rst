@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::nth_element(RandomIt first, RandomIt nth, RandomIt last, Pred &&pred=Pred())
+.. doxygenfunction:: hpx::nth_element(RandomIt first, RandomIt nth, RandomIt last, Pred && pred)
    :project: hpx
-.. doxygenfunction:: hpx::nth_element(ExPolicy &&policy, RandomIt first, RandomIt nth, RandomIt last, Pred &&pred=Pred())
+.. doxygenfunction:: hpx::nth_element(ExPolicy && policy, RandomIt first, RandomIt nth, RandomIt last, Pred && pred)
    :project: hpx

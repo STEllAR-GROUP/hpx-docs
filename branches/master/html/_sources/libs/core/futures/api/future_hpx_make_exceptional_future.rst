@@ -30,7 +30,7 @@ See also:
    - :ref:`hpx::make_ready_future_at <modules_future_hpx_make_ready_future_at_api>`
    - :ref:`hpx::make_ready_future_after <modules_future_hpx_make_ready_future_after_api>`
 
-.. doxygenfunction:: hpx::make_exceptional_future(std::exception_ptr const &e)
+.. doxygenfunction:: hpx::make_exceptional_future(std::exception_ptr const & e)
    :project: hpx
 .. doxygenfunction:: hpx::make_exceptional_future(E e)
    :project: hpx

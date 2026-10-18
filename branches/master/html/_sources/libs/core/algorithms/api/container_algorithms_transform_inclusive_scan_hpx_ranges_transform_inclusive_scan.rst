@@ -19,19 +19,19 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(InIter first, Sent last, OutIter dest, BinOp &&binary_op, UnOp &&unary_op)
+.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(InIter first, Sent last, OutIter dest, BinOp && binary_op, UnOp && unary_op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(ExPolicy &&policy, FwdIter1 first, Sent last, FwdIter2 dest, BinOp &&binary_op, UnOp &&unary_op)
+.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(ExPolicy && policy, FwdIter1 first, Sent last, FwdIter2 dest, BinOp && binary_op, UnOp && unary_op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(Rng &&rng, O dest, BinOp &&binary_op, UnOp &&unary_op)
+.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(Rng && rng, O dest, BinOp && binary_op, UnOp && unary_op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(ExPolicy &&policy, Rng &&rng, O dest, BinOp &&binary_op, UnOp &&unary_op)
+.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(ExPolicy && policy, Rng && rng, O dest, BinOp && binary_op, UnOp && unary_op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(InIter first, Sent last, OutIter dest, BinOp &&binary_op, UnOp &&unary_op, T init)
+.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(InIter first, Sent last, OutIter dest, BinOp && binary_op, UnOp && unary_op, T init)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(ExPolicy &&policy, FwdIter1 first, Sent last, FwdIter2 dest, BinOp &&binary_op, UnOp &&unary_op, T init)
+.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(ExPolicy && policy, FwdIter1 first, Sent last, FwdIter2 dest, BinOp && binary_op, UnOp && unary_op, T init)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(Rng &&rng, O dest, BinOp &&binary_op, UnOp &&unary_op, T init)
+.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(Rng && rng, O dest, BinOp && binary_op, UnOp && unary_op, T init)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(ExPolicy &&policy, Rng &&rng, O dest, BinOp &&binary_op, UnOp &&unary_op, T init)
+.. doxygenfunction:: hpx::ranges::transform_inclusive_scan(ExPolicy && policy, Rng && rng, O dest, BinOp && binary_op, UnOp && unary_op, T init)
    :project: hpx

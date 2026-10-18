@@ -24,7 +24,7 @@ See also:
    - :ref:`hpx::min_element <modules_minmax_hpx_min_element_api>`
    - :ref:`hpx::max_element <modules_minmax_hpx_max_element_api>`
 
-.. doxygenfunction:: hpx::minmax_element(FwdIter first, FwdIter last, F &&f)
+.. doxygenfunction:: hpx::minmax_element(FwdIter first, FwdIter last, F && f)
    :project: hpx
-.. doxygenfunction:: hpx::minmax_element(ExPolicy &&policy, FwdIter first, FwdIter last, F &&f)
+.. doxygenfunction:: hpx::minmax_element(ExPolicy && policy, FwdIter first, FwdIter last, F && f)
    :project: hpx

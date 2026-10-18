@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::partial_sort_copy(InIter first, Sent1 last, RandIter r_first, Sent2 r_last, Comp &&comp=Comp(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
+.. doxygenfunction:: hpx::ranges::partial_sort_copy(InIter first, Sent1 last, RandIter r_first, Sent2 r_last, Comp && comp, Proj1 && proj1, Proj2 && proj2)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::partial_sort_copy(ExPolicy &&policy, FwdIter first, Sent1 last, RandIter r_first, Sent2 r_last, Comp &&comp=Comp(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
+.. doxygenfunction:: hpx::ranges::partial_sort_copy(ExPolicy && policy, FwdIter first, Sent1 last, RandIter r_first, Sent2 r_last, Comp && comp, Proj1 && proj1, Proj2 && proj2)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::partial_sort_copy(Rng1 &&rng1, Rng2 &&rng2, Comp &&comp=Comp(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
+.. doxygenfunction:: hpx::ranges::partial_sort_copy(Rng1 && rng1, Rng2 && rng2, Comp && comp, Proj1 && proj1, Proj2 && proj2)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::partial_sort_copy(ExPolicy &&policy, Rng1 &&rng1, Rng2 &&rng2, Comp &&comp=Comp(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
+.. doxygenfunction:: hpx::ranges::partial_sort_copy(ExPolicy && policy, Rng1 && rng1, Rng2 && rng2, Comp && comp, Proj1 && proj1, Proj2 && proj2)
    :project: hpx

@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::collectives::reduce_there <modules_reduce_hpx_collectives_reduce_there_api>`
 
-.. doxygenfunction:: hpx::collectives::reduce_here(char const *basename, T &&result, F &&op, num_sites_arg num_sites=num_sites_arg(), this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::reduce_here(char const * basename, T && result, F && op, num_sites_arg num_sites, this_site_arg this_site, generation_arg generation)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::reduce_here(communicator comm, T &&result, F &&op, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::reduce_here(communicator comm, T && result, F && op, this_site_arg this_site, generation_arg generation)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::reduce_here(hpx::launch::sync_policy, char const *basename, T &&result, F &&op, num_sites_arg num_sites=num_sites_arg(), this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::reduce_here(hpx::launch::sync_policy, char const * basename, T && result, F && op, num_sites_arg num_sites, this_site_arg this_site, generation_arg generation)
    :project: hpx
-.. doxygenfunction:: hpx::collectives::reduce_here(hpx::launch::sync_policy, communicator comm, T &&result, F &&op, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
+.. doxygenfunction:: hpx::collectives::reduce_here(hpx::launch::sync_policy, communicator comm, T && result, F && op, this_site_arg this_site, generation_arg generation)
    :project: hpx

@@ -25,7 +25,7 @@ See also:
    - :ref:`hpx::replace_if <modules_replace_hpx_replace_if_api>`
    - :ref:`hpx::replace_copy <modules_replace_hpx_replace_copy_api>`
 
-.. doxygenfunction:: hpx::replace_copy_if(InIter first, InIter last, OutIter dest, Pred &&pred, T const &new_value)
+.. doxygenfunction:: hpx::replace_copy_if(InIter first, InIter last, OutIter dest, Pred && pred, T const & new_value)
    :project: hpx
-.. doxygenfunction:: hpx::replace_copy_if(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, Pred &&pred, T const &new_value)
+.. doxygenfunction:: hpx::replace_copy_if(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, Pred && pred, T const & new_value)
    :project: hpx

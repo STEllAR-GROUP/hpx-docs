@@ -1627,13 +1627,13 @@ document.write(`
 <span id="hpx-2-0-0"></span><h1><em>HPX</em> V2.0.0 (Oct 31, 2026)<a class="headerlink" href="#hpx-v2-0-0-oct-31-2026" title="Link to this heading">#</a></h1>
 <p><em>HPX</em> V2.0.0 is one of the largest releases in the project’s history, touching
 the language baseline, the execution model, the networking layer, the build
-system, and observability tooling. The inventories below cover over 700 pull
-requests with merge commits in the release comparison, two additional PRs
-incorporated through transplanted changes, and more than 150 closed milestone
+system, and observability tooling. The inventories below cover over 740 pull
+requests with merge commits in the release comparison, eight additional PRs
+incorporated through transplanted changes, and more than 140 closed milestone
 issues. The sections below expand on each major theme.</p>
 <p>This release is the result of a broad community effort. Since V1.11.0,
-roughly 100 contributors have authored more than 4,000 commits, and over
-80 of them made their first contribution to <em>HPX</em> during this release cycle.
+more than 90 contributors have authored more than 4,000 commits, and over
+75 of them made their first contribution to <em>HPX</em> during this release cycle.
 We are grateful to everyone who contributed code, documentation, tests,
 bug reports, and reviews. Your work made this release possible.</p>
 <section id="language-and-standard-baseline">
@@ -1695,7 +1695,8 @@ maintainers evaluate the transition.</p></li>
 </li>
 <li><p><strong>Early contract support</strong> - <em>HPX</em> API functions have begun to be annotated
 with C++26 contract preconditions/postconditions, starting with sorting
-and heap algorithms (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7434">PR #7434</a>).</p></li>
+and heap algorithms (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7434">PR #7434</a>). <code class="docutils literal notranslate"><span class="pre">HPX_CONTRACT_ASSERT</span></code> falls back
+onto <code class="docutils literal notranslate"><span class="pre">HPX_ASSERT</span></code> if contracts are disabled (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7700">PR #7700</a>).</p></li>
 </ul>
 </section>
 <section id="senders-receivers-overhaul">
@@ -1709,7 +1710,10 @@ foundation, usable from both C++20 and C++26:</p>
 <code class="docutils literal notranslate"><span class="pre">set_stopped</span></code> handling for <code class="docutils literal notranslate"><span class="pre">any_sender</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7453">PR #7453</a>),
 <code class="docutils literal notranslate"><span class="pre">get_allocator</span></code> query support for schedulers (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7320">PR #7320</a>),
 allocator support for <code class="docutils literal notranslate"><span class="pre">when_all_vector</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7346">PR #7346</a>), and
-<code class="docutils literal notranslate"><span class="pre">get_completion_domain</span></code> advertisement on <code class="docutils literal notranslate"><span class="pre">run_loop</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7276">PR #7276</a>).</p></li>
+<code class="docutils literal notranslate"><span class="pre">get_completion_domain</span></code> advertisement on <code class="docutils literal notranslate"><span class="pre">run_loop</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7276">PR #7276</a>).
+Scheduler executors accept sized and unsized forward ranges with distinct
+sentinels as bulk shapes without traversing them repeatedly
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7651">PR #7651</a>).</p></li>
 <li><p>Distributed and accelerator adaptors were updated to integrate cleanly
 with <a class="reference external" href="https://github.com/NVIDIA/stdexec">stdexec</a>: <code class="docutils literal notranslate"><span class="pre">async_mpi</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7341">PR #7341</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7318">PR #7318</a>,
 <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7277">PR #7277</a>), <code class="docutils literal notranslate"><span class="pre">async_cuda</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7330">PR #7330</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7374">PR #7374</a>), and the
@@ -1724,7 +1728,9 @@ e.g. <code class="docutils literal notranslate"><span class="pre">set_intersecti
 <li><p>Miscellaneous but important bug fixes: a lifetime race in
 <code class="docutils literal notranslate"><span class="pre">sync_wait</span></code>’s notify path (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7394">PR #7394</a>), a silent hang in
 <code class="docutils literal notranslate"><span class="pre">make_future</span></code> with <code class="docutils literal notranslate"><span class="pre">run_loop_scheduler</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7437">PR #7437</a>), and a
-future/promise bridge redesign (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7355">PR #7355</a>).</p></li>
+future/promise bridge redesign (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7355">PR #7355</a>). The pinned <a class="reference external" href="https://github.com/NVIDIA/stdexec">stdexec</a> is
+patched so that <code class="docutils literal notranslate"><span class="pre">exec::async_scope::on_empty()</span></code> compiles with nvcc
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7676">Issue #7676</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7695">PR #7695</a>).</p></li>
 </ul>
 </section>
 <section id="runtime-and-execution-apis">
@@ -1736,7 +1742,10 @@ uses the default pool; the overload taking a pool reference supports named
 pools obtained through <code class="docutils literal notranslate"><span class="pre">hpx::resource::get_thread_pool</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7579">PR #7579</a>).</p></li>
 <li><p>Execution-policy traits and the independent
 <code class="docutils literal notranslate"><span class="pre">rebind_policy_executor_t</span></code> / <code class="docutils literal notranslate"><span class="pre">rebind_policy_parameters_t</span></code> utilities
-support inspecting and adapting policies (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7550">PR #7550</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7551">PR #7551</a>).</p></li>
+support inspecting and adapting policies (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7550">PR #7550</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7551">PR #7551</a>).
+The customization points <code class="docutils literal notranslate"><span class="pre">construct_rebound_policy_executor</span></code> and
+<code class="docutils literal notranslate"><span class="pre">construct_rebound_policy_parameters</span></code> let policies that carry additional
+state preserve it when being rebound (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7585">PR #7585</a>).</p></li>
 <li><p>Thrust integration adds HPX execution policies for Thrust algorithms in
 CUDA builds (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/6744">PR #6744</a>), controlled by <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THRUST</span></code>.</p></li>
 <li><p>New concurrent containers include vector, queue, unordered map, and
@@ -1807,6 +1816,21 @@ deserialization vulnerability reported in <a class="reference external" href="ht
 (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7334">PR #7334</a>).</p></li>
 </ul>
 </li>
+<li><p>Non-blocking calls on distributed clients whose id is not resolved yet
+(e.g. a client created from <code class="docutils literal notranslate"><span class="pre">find_from_basename</span></code>) no longer block: the
+<code class="docutils literal notranslate"><span class="pre">launch::async</span></code> and <code class="docutils literal notranslate"><span class="pre">launch::apply</span></code> overloads of <code class="docutils literal notranslate"><span class="pre">channel</span></code>,
+<code class="docutils literal notranslate"><span class="pre">send_channel</span></code> and <code class="docutils literal notranslate"><span class="pre">receive_channel</span></code>, as well as <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> and
+<code class="docutils literal notranslate"><span class="pre">hpx::post</span></code> with a client target, are deferred until the id is
+available. <code class="docutils literal notranslate"><span class="pre">hpx::post</span></code> to such a client now returns <code class="docutils literal notranslate"><span class="pre">false</span></code>. MPI is now
+only finalized by whoever initialized it;
+<code class="docutils literal notranslate"><span class="pre">hpx::mpi::experimental::finalize</span></code> used to finalize MPI underneath the
+MPI parcelport (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/5919">Issue #5919</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7693">PR #7693</a>).</p></li>
+<li><p>On Windows, a refused TCP connection attempt now fails immediately instead
+of after about two seconds of SYN retransmissions. As refused attempts are
+retried up to 1000 times, sending a parcel to a locality whose process is
+gone could block the sending thread for more than half an hour
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7741">PR #7741</a>). The TCP parcelport no longer terminates its I/O thread if
+a shutdown races with the cleanup of a send operation (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7720">PR #7720</a>).</p></li>
 </ul>
 </section>
 <section id="observability-tracing">
@@ -1840,6 +1864,17 @@ and markers (<a class="reference external" href="https://github.com/TheHPXProjec
 consumers can find them through HPX (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7654">PR #7654</a>), and Tracy export
 annotations were moved off class heads to build with GCC 11 and 12
 (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7669">PR #7669</a>).</p></li>
+<li><p><a class="reference external" href="http://uo-oaciss.github.io/apex">APEX</a> can now be used with the local runtime
+(<code class="docutils literal notranslate"><span class="pre">HPX_WITH_DISTRIBUTED_RUNTIME=OFF</span></code>) (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/4567">Issue #4567</a>,
+<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7686">PR #7686</a>).</p></li>
+<li><p>The <a class="reference external" href="https://github.com/intel/ittapi">Intel ITT API</a> backend now emits task lifecycle and work-stealing events
+when ITTNotify is enabled at runtime (<code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.use_itt_notify=1</span></code>):
+each task is shown as an overlapped task with its execution segments, and
+stolen tasks are marked. This is <code class="docutils literal notranslate"><span class="pre">ON</span></code> by default for
+<code class="docutils literal notranslate"><span class="pre">HPX_WITH_ITTNOTIFY=ON</span></code> builds; pass
+<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_TRACING_LIFECYCLE_EVENTS=OFF</span></code> and
+<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_TRACING_WORK_STEALING_EVENTS=OFF</span></code> to the <a class="reference external" href="https://www.cmake.org">CMake</a>
+configuration to get the earlier behavior (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7675">PR #7675</a>).</p></li>
 </ul>
 </section>
 <section id="collectives-infrastructure">
@@ -1914,7 +1949,13 @@ single-segment subrange handling bug in segmented <code class="docutils literal 
 <code class="docutils literal notranslate"><span class="pre">zip_iterator</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/6752">Issue #6752</a>).</p></li>
 <li><p><strong>Distributed segmented merge</strong>: added <code class="docutils literal notranslate"><span class="pre">merge</span></code> support for segmented
 input and output ranges distributed across localities, with sequential,
-parallel, and task execution policies (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7545">PR #7545</a>).</p></li>
+parallel, and task execution policies (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7545">PR #7545</a>), also with C++20
+modules enabled (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7698">PR #7698</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7707">PR #7707</a>).</p></li>
+<li><p><strong>Strided loops</strong>: <code class="docutils literal notranslate"><span class="pre">for_loop_strided</span></code>, <code class="docutils literal notranslate"><span class="pre">for_loop_n_strided</span></code> and
+their range variants now follow N4755: <code class="docutils literal notranslate"><span class="pre">for_loop_n_strided</span></code> invokes the
+body <code class="docutils literal notranslate"><span class="pre">n</span></code> times, the stride must be positive, and live-out induction
+variables advance by the number of iterations (see Breaking changes
+below, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7703">PR #7703</a>).</p></li>
 <li><p><strong>Datapar/SIMD</strong>: fixing <a class="reference external" href="https://github.com/jfalcou/eve">EVE - the Expressive Vector Engine</a>/simd unaligned load/store broadcast bugs
 (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7435">PR #7435</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7287">Issue #7287</a>), and guarding a mismatched SIMD
 path on <code class="docutils literal notranslate"><span class="pre">zip_iterator</span></code> compatibility (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7328">PR #7328</a>).</p></li>
@@ -1924,6 +1965,14 @@ variants) to select vector lane counts explicitly. Datapar loops and
 algorithms use the policy’s lane count, exposed through
 <code class="docutils literal notranslate"><span class="pre">hpx::execution::policy_traits</span></code>. Existing SIMD policies retain the
 native lane count (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7674">PR #7674</a>).</p></li>
+<li><p><strong>Boolean chunk results</strong>: the partitioners no longer collect chunk
+results of type <code class="docutils literal notranslate"><span class="pre">bool</span></code> in a <code class="docutils literal notranslate"><span class="pre">std::vector&lt;bool&gt;</span></code>, whose elements share
+memory locations, so that concurrently finishing chunks could lose a
+result. This made <code class="docutils literal notranslate"><span class="pre">hpx::ranges::contains</span></code> return <code class="docutils literal notranslate"><span class="pre">false</span></code> sporadically
+for values in the range (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7736">PR #7736</a>).</p></li>
+<li><p><strong>Chunk iterators</strong>: decrementing <code class="docutils literal notranslate"><span class="pre">chunk_size_iterator</span></code> and
+<code class="docutils literal notranslate"><span class="pre">chunk_size_idx_iterator</span></code> over a bidirectional iterator no longer hangs
+with MSVC (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7735">PR #7735</a>).</p></li>
 </ul>
 </section>
 <section id="scheduler-threading-improvements">
@@ -1951,7 +2000,50 @@ when one is requested (<a class="reference external" href="https://github.com/Th
 <li><p><strong>Fork dispatch</strong>: fixed <code class="docutils literal notranslate"><span class="pre">hpx::launch::fork</span></code> tasks remaining
 unscheduled when launched from a plain OS thread or an HPX thread in
 another pool. Both <code class="docutils literal notranslate"><span class="pre">post</span></code> and <code class="docutils literal notranslate"><span class="pre">async</span></code> now schedule the task directly
-when an immediate handoff is unavailable (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7687">PR #7687</a>).</p></li>
+when an immediate handoff is unavailable (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7687">PR #7687</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7699">PR #7699</a>).</p></li>
+<li><p><strong>Staged task stealing</strong>: <code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged</span></code>
+now only applies to other workers stealing staged tasks. A worker always
+converts its own staged tasks, even if there are fewer of them than the
+configured minimum; before, such tasks were never run, so any non-zero
+setting could hang applications. The default (<code class="docutils literal notranslate"><span class="pre">0</span></code>) is not affected
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7730">PR #7730</a>).</p></li>
+<li><p><strong>Spin-wait hints</strong>: <code class="docutils literal notranslate"><span class="pre">HPX_SMT_PAUSE</span></code> now emits <code class="docutils literal notranslate"><span class="pre">yield</span></code> on ARM and
+AArch64 (<code class="docutils literal notranslate"><span class="pre">__yield()</span></code> with MSVC) (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7727">PR #7727</a>).</p></li>
+<li><p><strong>Scheduler contention</strong>: the local priority queue scheduler starts
+stealing staged tasks after 30 empty scheduling loop iterations instead of
+<code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span> <span class="pre">/</span> <span class="pre">2</span></code> (100000 by default), but until the latter
+only from workers holding at least 10 staged tasks. Both can be changed
+with the new settings <code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.idle_loop_count_steal_staged</span></code> and
+<code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged_early</span></code>. New work items now
+only wake workers that are backing off, and a worker that finds work resets
+its own idle backoff (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7725">PR #7725</a>).</p></li>
+<li><p><strong>Work-requesting schedulers</strong>: these schedulers never actually stole
+tasks. They do now, which also required fixing a reference leak for every
+stolen thread with <code class="docutils literal notranslate"><span class="pre">local-workrequesting-mc</span></code> and a hang when suspending
+worker threads (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7726">PR #7726</a>). Idle workers now send steal requests right
+away, as the schedulers stay in fast idle mode (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7746">Issue #7746</a>,
+<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7755">PR #7755</a>).</p></li>
+<li><p><strong>Bound threads</strong>: a thread with <code class="docutils literal notranslate"><span class="pre">thread_priority::bound</span></code> that yields
+with <code class="docutils literal notranslate"><span class="pre">pending_boost</span></code>, for instance while spinning on a contended
+spinlock, now stays on its worker thread. Before, it could resume on a
+different OS thread, which aborted if it held a <code class="docutils literal notranslate"><span class="pre">std::mutex</span></code>
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7740">PR #7740</a>).</p></li>
+<li><p><strong>Background threads</strong>: a background thread that yielded in the middle of
+its work is no longer dropped when its worker thread stops; this could
+leave a parcel half sent and hang the shutdown of a locality
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7723">PR #7723</a>). Creating background threads is now tested with every
+scheduler (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/6190">Issue #6190</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7749">PR #7749</a>), and the background thread
+helpers are exported from the C++20 module (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7758">Issue #7758</a>,
+<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7759">PR #7759</a>).</p></li>
+<li><p><strong>Scheduler settings</strong>: <code class="docutils literal notranslate"><span class="pre">--hpx:queuing=!&lt;name&gt;</span></code> selected an empty
+scheduler name and always failed, and <code class="docutils literal notranslate"><span class="pre">--hpx:high-priority-threads</span></code> is
+now only accepted for schedulers that have high priority queues
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7743">Issue #7743</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7749">PR #7749</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7757">PR #7757</a>). The default of
+<code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.max_delete_count</span></code> is now
+<code class="docutils literal notranslate"><span class="pre">HPX_THREAD_QUEUE_MAX_DELETE_COUNT</span></code>, <code class="docutils literal notranslate"><span class="pre">min_add_new_count</span></code> is limited to
+<code class="docutils literal notranslate"><span class="pre">max_add_new_count</span></code>, and the shared priority scheduler cleans up all
+terminated threads once <code class="docutils literal notranslate"><span class="pre">max_terminated_threads</span></code> is exceeded
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7748">Issue #7748</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7754">PR #7754</a>).</p></li>
 </ul>
 </section>
 <section id="build-ci-modernization">
@@ -1983,6 +2075,16 @@ collisions (<code class="docutils literal notranslate"><span class="pre">BLOCK_S
 <li><p>A Linux CI workflow with <code class="docutils literal notranslate"><span class="pre">_GLIBCXX_DEBUG</span></code> enabled was added
 (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7673">PR #7673</a>), and the parallel scheduler tests were fixed on
 Clang 16 (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7679">PR #7679</a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HPX_WITH_MALLOC</span></code> was silently ignored with MSVC: the selected allocator
+was not linked. It is now, and the Windows release CI builds with
+<a class="reference external" href="http://microsoft.github.io/mimalloc/">mi-malloc</a> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7732">PR #7732</a>).</p></li>
+<li><p>The configuration tests are no longer compiled with warnings treated as
+errors, so warnings caused by a packager’s compiler flags no longer make
+feature checks such as the one for <code class="docutils literal notranslate"><span class="pre">std::atomic</span></code> fail
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7719">Issue #7719</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7729">PR #7729</a>).</p></li>
+<li><p>Tests no longer use names that the Windows SDK headers define as macros
+or types (such as <code class="docutils literal notranslate"><span class="pre">SIZE</span></code>), and the inspect tool’s <code class="docutils literal notranslate"><span class="pre">--windows_macro</span></code>
+check now reports them (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7738">PR #7738</a>).</p></li>
 </ul>
 </section>
 <section id="security-robustness-fixes">
@@ -1993,10 +2095,15 @@ deserialization / type-confusion issue in shared-pointer serialization
 was fixed (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7333">Issue #7333</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7334">PR #7334</a>).</p></li>
 <li><p><strong>Data races</strong>: a race in <code class="docutils literal notranslate"><span class="pre">hostname_print_helper::get_hostname()</span></code> on
 worker-thread startup (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7520">Issue #7520</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7525">PR #7525</a>, with a regression
-test added in <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7546">PR #7546</a>).</p></li>
+test added in <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7546">PR #7546</a>), and on the wait counter of the scheduler’s
+idle backoff (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7701">Issue #7701</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7702">PR #7702</a>).</p></li>
 <li><p><strong>Synchronization</strong>: corrected timed semaphore waits (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7617">PR #7617</a>),
 a deadlock and race in <code class="docutils literal notranslate"><span class="pre">latch::reset</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7555">PR #7555</a>),
 and handling of spurious wakeups in <code class="docutils literal notranslate"><span class="pre">hpx::barrier</span></code> (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7611">PR #7611</a>).
+<code class="docutils literal notranslate"><span class="pre">hpx::barrier::arrive_and_wait</span></code> no longer reads the phase after the
+lock was released (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7685">PR #7685</a>), and <code class="docutils literal notranslate"><span class="pre">timed_mutex::try_lock_until</span></code>
+now keeps waiting until the deadline instead of giving up after the first
+wakeup (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7714">PR #7714</a>).
 The memory order used after a condition-variable wakeup in future
 <code class="docutils literal notranslate"><span class="pre">wait()</span></code> was upgraded from relaxed to acquire (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7677">PR #7677</a>).</p></li>
 <li><p><strong>AGAS garbage collection</strong>: fixed background collection when networking
@@ -2009,31 +2116,11 @@ was replaced with safer string operations (<a class="reference external" href="h
 <code class="docutils literal notranslate"><span class="pre">exception_ptr::load()</span></code> was fixed (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7278">PR #7278</a>), along with a
 semantic mismatch in serialization archive flags
 (<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7034">Issue #7034</a>). Collection sizes read from archives are now checked
-before use (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7594">PR #7594</a>).</p></li>
-<li><p>The ITTNotify backend now emits task lifecycle and work-stealing events when
-ITTNotify is enabled at runtime (<code class="docutils literal notranslate"><span class="pre">--hpx:ini=hpx.use_itt_notify=1</span></code>). This is
-<code class="docutils literal notranslate"><span class="pre">ON</span></code> by default for <code class="docutils literal notranslate"><span class="pre">HPX_WITH_ITTNOTIFY=ON</span></code> builds; pass
-<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_TRACING_LIFECYCLE_EVENTS=OFF</span></code> and
-<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_TRACING_WORK_STEALING_EVENTS=OFF</span></code> to the <a class="reference external" href="https://www.cmake.org">CMake</a> configuration
-to get the earlier behavior.</p></li>
-<li><p><strong>Fixed-size SIMD policies</strong>: added <code class="docutils literal notranslate"><span class="pre">hpx::execution::fixed_size_simd&lt;N&gt;</span></code>
-and <code class="docutils literal notranslate"><span class="pre">hpx::execution::par_fixed_size_simd&lt;N&gt;</span></code> (plus their <code class="docutils literal notranslate"><span class="pre">task</span></code>
-variants), which select the number of vector lanes explicitly. Execution
-policy properties, including <code class="docutils literal notranslate"><span class="pre">num_lanes</span></code>, are exposed through
-<code class="docutils literal notranslate"><span class="pre">hpx::execution::policy_traits</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged</span></code> now only applies to other
-workers stealing staged tasks. A worker always converts its own staged
-tasks, even if there are fewer of them than the configured minimum; before,
-such tasks were never run, so any non-zero setting could hang applications.
-The default (<code class="docutils literal notranslate"><span class="pre">0</span></code>) is not affected.</p></li>
-<li><p><strong>Scheduler contention</strong>: the local priority queue scheduler starts stealing
-staged tasks after 30 empty scheduling loop iterations instead of
-<code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span> <span class="pre">/</span> <span class="pre">2</span></code> (100000 by default), but until the latter
-only from workers holding at least 10 staged tasks. Both can be changed with
-the new settings <code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.idle_loop_count_steal_staged</span></code> and
-<code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged_early</span></code>. New work items now
-only wake workers that are backing off, and a worker that finds work resets
-its own idle backoff.</p></li>
+before use (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7594">PR #7594</a>), as is the length of a checkpoint read from a
+stream (<a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7705">PR #7705</a>).</p></li>
+<li><p><strong>Process launching</strong>: failures while setting up a child process, such as
+a failed change of the working directory, are now reported
+(<a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7646">Issue #7646</a>, <a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7649">PR #7649</a>).</p></li>
 </ul>
 </section>
 <section id="breaking-changes">
@@ -2071,25 +2158,30 @@ large by a factor of the stride.</p></li>
 <section id="closed-issues-and-pull-requests">
 <h2>Closed Issues and Pull Requests<a class="headerlink" href="#closed-issues-and-pull-requests" title="Link to this heading">#</a></h2>
 <p>The lists below were reconciled against release-2.0.X at
-<code class="docutils literal notranslate"><span class="pre">5d466501ae29d98b655cff5b7fa27d63d067af9a</span></code>, using release-1.11.X at
-<code class="docutils literal notranslate"><span class="pre">4823cb5b41cc6ec5ab3a49741541927f24704bf3</span></code> as the baseline (including its
-maintenance backports, rather than only the v1.11.0 tag).</p>
-<p>There are 697 merged PRs whose merge commits are reachable from the release
+<code class="docutils literal notranslate"><span class="pre">0580e58850ea6a46b9603e0bfb5bc9c0fe8718e1</span></code>, using the v1.11.0 tag
+(<code class="docutils literal notranslate"><span class="pre">c9b81b401fbe6ba4a0306feff71d18ef01c71b34</span></code>) as the baseline.</p>
+<p>There are 742 merged PRs whose merge commits are reachable from the release
 and absent from that baseline, including PRs outside milestone 2.0.0. The
-140 closed issues are the milestone inventory; closure does not necessarily
+148 closed issues are the milestone inventory; closure does not necessarily
 mean an implementation was delivered. Closed, unmerged PRs are excluded.
-Two further PRs with verified transplanted changes are recorded separately
+Eight further PRs with verified transplanted changes are recorded separately
 below the generated list.</p>
 </section>
 <section id="closed-issues">
 <h2>Closed issues<a class="headerlink" href="#closed-issues" title="Link to this heading">#</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7758">Issue #7758</a> - C++20 Modules CI fails since #7723: background thread helpers are not exported</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7748">Issue #7748</a> - Small defects in the handling of hpx.thread_queue parameters</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7746">Issue #7746</a> - local_workrequesting_scheduler loses fast_idle_mode, so idle workers send steal requests only after max_idle_loop_count / 2 iterations</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7719">Issue #7719</a> - hpx-2.0.0 packaging: HPX needs support for C++11 std::atomic</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7701">Issue #7701</a> - Possible data race on <cite>wait_count</cite> in <cite>scheduler_base.cpp</cite></p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7680">Issue #7680</a> - shared_future::get() documentation incorrectly states that it invalidates the future</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7662">Issue #7662</a> - Add auto-wrapping for main for MSVC</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7659">Issue #7659</a> - Conan requires CMake aliases for Asio and Hwloc</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7656">Issue #7656</a> - <cite>hpx-top</cite> and <cite>hpx_stat_viewer</cite> are not installed</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7650">Issue #7650</a> - any_sender.hpp: constexpr empty_vtable fails to compile in MinGW shared (DLL) builds</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7647">Issue #7647</a> - Error using HPX built with <cite>HPX_WITH_TRACY=TRUE</cite></p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7622">Issue #7622</a> - for_loop_strided: a negative stride crashes under par and does not match P0075r2</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7613">Issue #7613</a> - <cite>HPX_REGISTER_CHANNEL(type, name)</cite> 2-arg form still fails for written-out template types</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7608">Issue #7608</a> - debugging: refresh DbgHelp module list after SymInitialize</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/7592">Issue #7592</a> - Re-enable auto-linking on Windows for static builds</p></li>
@@ -2208,17 +2300,20 @@ below the generated list.</p>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/6345">Issue #6345</a> - Initialization hangs when only setting –hpx:cores</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/6240">Issue #6240</a> - HPX does not compile with G++ version prior to 9.3.</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/6232">Issue #6232</a> - Par performance of hpx::reverse</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/6190">Issue #6190</a> - –hpx:queuing=shared fails for distributed runs</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/6163">Issue #6163</a> - Expose global termination detection through a new API</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/6014">Issue #6014</a> - Support C++20 modules</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/5918">Issue #5918</a> - HpxChannels Registration fails for written out template types</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/5907">Issue #5907</a> - HPX_DEBUG/CMAKE_BUILD_TYPE not correctly decoupled/consistently used.</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/5903">Issue #5903</a> - Support for Windows HPC Pack</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/5497">Issue #5497</a> - Start using C++17 features unconditionally</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/5189">Issue #5189</a> - Shared priority scheduler does not always create a new thread</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/5045">Issue #5045</a> - Implement P0443/P1897/P2300</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/4702">Issue #4702</a> - Prefer enum class over unscoped enums</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/4697">Issue #4697</a> - get_num_localities and get_locality_id should return size_t</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/4672">Issue #4672</a> - Consistently use hpx::function_* instead of std::function</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/4657">Issue #4657</a> - HEP 1 implementation tracker</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/4568">Issue #4568</a> - Make performance counters work locally</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/4367">Issue #4367</a> - Rewrite history to remove unneeded binary files</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/4329">Issue #4329</a> - HPX 2</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/issues/4074">Issue #4074</a> - HPX module “configurations”</p></li>
@@ -2228,15 +2323,54 @@ below the generated list.</p>
 <section id="merged-pull-requests">
 <h2>Merged pull requests<a class="headerlink" href="#merged-pull-requests" title="Link to this heading">#</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7759">PR #7759</a> - Export the background thread helpers from the HPX.Core module</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7757">PR #7757</a> - Fix command line scheduler option handling</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7755">PR #7755</a> - Keep work-requesting schedulers in fast idle mode</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7754">PR #7754</a> - Fix thread queue parameter handling</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7749">PR #7749</a> - Cover background thread creation under every scheduler</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7741">PR #7741</a> - Make refused TCP connection attempts fail fast on Windows</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7740">PR #7740</a> - Keep bound threads on their worker thread when they yield with pending_boost</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7738">PR #7738</a> - Avoid names that collide with the Windows SDK and check for them in inspect</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7736">PR #7736</a> - Don’t collect bool chunk results in a std::vector&lt;bool&gt;</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7735">PR #7735</a> - Fix chunk_size_iterator decrement for bidirectional iterators on MSVC</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7732">PR #7732</a> - Pass /INCLUDE for custom allocators to the linker on MSVC</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7731">PR #7731</a> - Update performance baseline</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7730">PR #7730</a> - Don’t apply min_tasks_to_steal_staged to a queue’s own staged tasks</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7729">PR #7729</a> - Update HPX_AddConfigTest.cmake</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7728">PR #7728</a> - Pass build configuration to Jenkins CTest driver</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7727">PR #7727</a> - Use yield for HPX_SMT_PAUSE on AArch64</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7726">PR #7726</a> - Make the work-requesting schedulers actually steal</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7725">PR #7725</a> - Reduce cross-core contention in the scheduling loop and local_priority_queue_scheduler</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7723">PR #7723</a> - Don’t drop a yielded background thread at shutdown</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7722">PR #7722</a> - build(deps): bump github/codeql-action from 4.38.2 to 4.38.3</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7720">PR #7720</a> - Don’t crash the TCP sender when shutdown races its cleanup</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7717">PR #7717</a> - Fix networking requirements for segmented merge tests</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7714">PR #7714</a> - synchronization: keep waiting in timed_mutex::try_lock_until until timeout or lock</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7709">PR #7709</a> - Adding explicit timeouts to test</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7707">PR #7707</a> - Enable C++20 modules for segmented merge</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7706">PR #7706</a> - Convert a range length to std::size_t explicitly</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7705">PR #7705</a> - Check the checkpoint length read off a stream before using it</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7704">PR #7704</a> - Convert counter path indices to pool indices explicitly</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7703">PR #7703</a> - Fix the stride semantics of the strided for_loop algorithms</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7702">PR #7702</a> - Make idle_backoff_data::wait_count atomic</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7700">PR #7700</a> - Let HPX_CONTRACT_ASSERT fall back onto HPX_ASSERT if contracts are disabled</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7699">PR #7699</a> - fix fork scheduling hint</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7698">PR #7698</a> - Fix segmented merge tests with C++20 modules</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7695">PR #7695</a> - Patch stdexec async_scope::on_empty() for nvcc</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7693">PR #7693</a> - Fix blocking client calls on unresolved ids and MPI finalize ownership</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7692">PR #7692</a> - Make rnd_future_reduce’s random generator thread-local</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7689">PR #7689</a> - build(deps): bump lukka/get-cmake from 4.4.2 to 4.4.4</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7688">PR #7688</a> - Make replicate vote tests deterministic</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7687">PR #7687</a> - Fix launch::fork dropping tasks from OS threads</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7686">PR #7686</a> - Enable Apex for local runtime</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7685">PR #7685</a> - synchronization: don’t access barrier phase after releasing the lock in arrive_and_wait</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7684">PR #7684</a> - docs: use correct HPX::iostreams_component target name in quickstart</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7683">PR #7683</a> - godbolt-minimal: pass /SUBSYSTEM:CONSOLE in the raw MSVC path</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7682">PR #7682</a> - Ensure shared priority scheduler creates thread when requested</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7681">PR #7681</a> - futures: fix shared_future::get() postcondition in docs</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7679">PR #7679</a> - Fix parallel scheduler tests on Clang 16</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7677">PR #7677</a> - fix(futures): upgrade memory_order_relaxed to acquire after cond_var wakeup in wait()</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7675">PR #7675</a> - tracing: task lifecycle and work stealing for the ITT backend</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7674">PR #7674</a> - Enable specifying the number of vector lanes to use with SIMD execution policies</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7673">PR #7673</a> - Add Linux CI workflow with _GLIBCXX_DEBUG enabled</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7669">PR #7669</a> - tracing: move export off Tracy class heads for GCC 11 and 12</p></li>
@@ -2250,19 +2384,19 @@ below the generated list.</p>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7654">PR #7654</a> - cmake: export the Tracy targets so consumers can find HPX</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7653">PR #7653</a> - Make partitioned vector iterators model random access</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7652">PR #7652</a> - execution_base: use the static empty vtable fallback on all Windows builds</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7651">PR #7651</a> - Preserve range shapes in scheduler executors</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7649">PR #7649</a> - Report process setup failures without compiler warnings</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7644">PR #7644</a> - godbolt-minimal: CI-test and document the raw MSVC hpx_main path</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7643">PR #7643</a> - lcos_local: cancel pending get/set requests when closing a one_element_channel</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7642">PR #7642</a> - Bump dawidd6/action-download-artifact from 24 to 25</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7641">PR #7641</a> - Bump github/codeql-action from 4.38.1 to 4.38.2</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7640">PR #7640</a> - Fix/coroutine asan stack recycling</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7637">PR #7637</a> - Update Collective Benchmark</p></li>
-<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7636">PR #7636</a> - tracing: fill in the ITT backend ? shared domain, regions, markers</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7636">PR #7636</a> - tracing: fill in the ITT backend - shared domain, regions, markers</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7635">PR #7635</a> - components_base: fix wrapper heap reclamation</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7634">PR #7634</a> - Mark zero-copy save chunks as const and harden vector chunk tests</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7633">PR #7633</a> - Add companion concepts for futures, execution policies, and iterators</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7632">PR #7632</a> - Re-enable auto-linking on Windows (dynamic linking, C++20 modules)</p></li>
-<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7631">PR #7631</a> - debugging: suppress C4251 warning in dbghelp_symbol_cache.hpp</p></li>
-<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7637">PR #7637</a> - Update Collective Benchmark</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7631">PR #7631</a> - debugging: suppress C4251 warning in dbghelp_symbol_cache.hpp</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7630">PR #7630</a> - Clarify nostack fork_join leaf use and harden UINT32 range / exception paths.</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7629">PR #7629</a> - Recycle terminated thread_data before malloc on recursive async spawn</p></li>
@@ -2285,6 +2419,7 @@ below the generated list.</p>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7606">PR #7606</a> - Re-enable auto-linking on Windows(static linking, no C++20 modules) (#7592)</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7605">PR #7605</a> - build(deps): bump github/codeql-action from 4.38.0 to 4.38.1</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7604">PR #7604</a> - thrust: rename policy_traits test to thrust_policy_traits to avoid ta…</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7603">PR #7603</a> - Fix build warnings of documentation</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7601">PR #7601</a> - debugging: cache DbgHelp symbol lookups</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7600">PR #7600</a> - Use std::size_t for matrix and block sizes in the transpose examples</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7599">PR #7599</a> - actions: emit a stub on device so the action types exist</p></li>
@@ -2298,6 +2433,7 @@ below the generated list.</p>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7588">PR #7588</a> - Carry the idle and busy loop counts as std::int64_t</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7587">PR #7587</a> - docs: document future callback and async reference pitfalls (#2589)</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7586">PR #7586</a> - Take a std::size_t item count in the bulk dequeue path</p></li>
+<li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7585">PR #7585</a> - Add construction-side customization points to pair with rebind_policy_executor_t/rebind_policy_parameters_t</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7582">PR #7582</a> - Return std::int64_t from the queue holder thread counters</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7581">PR #7581</a> - Raise documentation build step timeouts to restore headroom</p></li>
 <li><p><a class="reference external" href="https://github.com/TheHPXProject/hpx/pull/7579">PR #7579</a> - Add get_parallel_scheduler(pool) for named HPX thread pools</p></li>

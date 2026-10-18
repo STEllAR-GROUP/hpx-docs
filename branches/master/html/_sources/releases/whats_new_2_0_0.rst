@@ -13,14 +13,14 @@
 
 |hpx| V2.0.0 is one of the largest releases in the project's history, touching
 the language baseline, the execution model, the networking layer, the build
-system, and observability tooling. The inventories below cover over 700 pull
-requests with merge commits in the release comparison, two additional PRs
-incorporated through transplanted changes, and more than 150 closed milestone
+system, and observability tooling. The inventories below cover over 740 pull
+requests with merge commits in the release comparison, eight additional PRs
+incorporated through transplanted changes, and more than 140 closed milestone
 issues. The sections below expand on each major theme.
 
 This release is the result of a broad community effort. Since V1.11.0,
-roughly 100 contributors have authored more than 4,000 commits, and over
-80 of them made their first contribution to |hpx| during this release cycle.
+more than 90 contributors have authored more than 4,000 commits, and over
+75 of them made their first contribution to |hpx| during this release cycle.
 We are grateful to everyone who contributed code, documentation, tests,
 bug reports, and reviews. Your work made this release possible.
 
@@ -84,7 +84,8 @@ experimental compiler support, well ahead of formal standardization:
 
 - **Early contract support** - |hpx| API functions have begun to be annotated
   with C++26 contract preconditions/postconditions, starting with sorting
-  and heap algorithms (:hpx-pr:`7434`).
+  and heap algorithms (:hpx-pr:`7434`). ``HPX_CONTRACT_ASSERT`` falls back
+  onto ``HPX_ASSERT`` if contracts are disabled (:hpx-pr:`7700`).
 
 Senders/Receivers Overhaul
 ==========================
@@ -99,6 +100,9 @@ foundation, usable from both C++20 and C++26:
   ``get_allocator`` query support for schedulers (:hpx-pr:`7320`),
   allocator support for ``when_all_vector`` (:hpx-pr:`7346`), and
   ``get_completion_domain`` advertisement on ``run_loop`` (:hpx-pr:`7276`).
+  Scheduler executors accept sized and unsized forward ranges with distinct
+  sentinels as bulk shapes without traversing them repeatedly
+  (:hpx-pr:`7651`).
 - Distributed and accelerator adaptors were updated to integrate cleanly
   with |stdexec|_: ``async_mpi`` (:hpx-pr:`7341`, :hpx-pr:`7318`,
   :hpx-pr:`7277`), ``async_cuda`` (:hpx-pr:`7330`, :hpx-pr:`7374`), and the
@@ -113,7 +117,9 @@ foundation, usable from both C++20 and C++26:
 - Miscellaneous but important bug fixes: a lifetime race in
   ``sync_wait``'s notify path (:hpx-pr:`7394`), a silent hang in
   ``make_future`` with ``run_loop_scheduler`` (:hpx-pr:`7437`), and a
-  future/promise bridge redesign (:hpx-pr:`7355`).
+  future/promise bridge redesign (:hpx-pr:`7355`). The pinned |stdexec|_ is
+  patched so that ``exec::async_scope::on_empty()`` compiles with nvcc
+  (:hpx-issue:`7676`, :hpx-pr:`7695`).
 
 Runtime and Execution APIs
 ==========================
@@ -125,6 +131,9 @@ Runtime and Execution APIs
 - Execution-policy traits and the independent
   ``rebind_policy_executor_t`` / ``rebind_policy_parameters_t`` utilities
   support inspecting and adapting policies (:hpx-pr:`7550`, :hpx-pr:`7551`).
+  The customization points ``construct_rebound_policy_executor`` and
+  ``construct_rebound_policy_parameters`` let policies that carry additional
+  state preserve it when being rebound (:hpx-pr:`7585`).
 - Thrust integration adds HPX execution policies for Thrust algorithms in
   CUDA builds (:hpx-pr:`6744`), controlled by ``HPX_WITH_THRUST``.
 - New concurrent containers include vector, queue, unordered map, and
@@ -193,6 +202,22 @@ Networking / Parcelport Work
     deserialization vulnerability reported in :hpx-issue:`7333`
     (:hpx-pr:`7334`).
 
+- Non-blocking calls on distributed clients whose id is not resolved yet
+  (e.g. a client created from ``find_from_basename``) no longer block: the
+  ``launch::async`` and ``launch::apply`` overloads of ``channel``,
+  ``send_channel`` and ``receive_channel``, as well as ``hpx::async`` and
+  ``hpx::post`` with a client target, are deferred until the id is
+  available. ``hpx::post`` to such a client now returns ``false``. MPI is now
+  only finalized by whoever initialized it;
+  ``hpx::mpi::experimental::finalize`` used to finalize MPI underneath the
+  MPI parcelport (:hpx-issue:`5919`, :hpx-pr:`7693`).
+- On Windows, a refused TCP connection attempt now fails immediately instead
+  of after about two seconds of SYN retransmissions. As refused attempts are
+  retried up to 1000 times, sending a parcel to a locality whose process is
+  gone could block the sending thread for more than half an hour
+  (:hpx-pr:`7741`). The TCP parcelport no longer terminates its I/O thread if
+  a shutdown races with the cleanup of a send operation (:hpx-pr:`7720`).
+
 Observability / Tracing
 =======================
 
@@ -224,6 +249,17 @@ Observability / Tracing
   consumers can find them through HPX (:hpx-pr:`7654`), and Tracy export
   annotations were moved off class heads to build with GCC 11 and 12
   (:hpx-pr:`7669`).
+- |apex|_ can now be used with the local runtime
+  (``HPX_WITH_DISTRIBUTED_RUNTIME=OFF``) (:hpx-issue:`4567`,
+  :hpx-pr:`7686`).
+- The |ittnotify|_ backend now emits task lifecycle and work-stealing events
+  when ITTNotify is enabled at runtime (``--hpx:ini=hpx.use_itt_notify=1``):
+  each task is shown as an overlapped task with its execution segments, and
+  stolen tasks are marked. This is ``ON`` by default for
+  ``HPX_WITH_ITTNOTIFY=ON`` builds; pass
+  ``-DHPX_WITH_TRACING_LIFECYCLE_EVENTS=OFF`` and
+  ``-DHPX_WITH_TRACING_WORK_STEALING_EVENTS=OFF`` to the |cmake|_
+  configuration to get the earlier behavior (:hpx-pr:`7675`).
 
 Collectives Infrastructure
 ==========================
@@ -298,7 +334,13 @@ the parallel algorithms library:
   ``zip_iterator`` (:hpx-issue:`6752`).
 - **Distributed segmented merge**: added ``merge`` support for segmented
   input and output ranges distributed across localities, with sequential,
-  parallel, and task execution policies (:hpx-pr:`7545`).
+  parallel, and task execution policies (:hpx-pr:`7545`), also with C++20
+  modules enabled (:hpx-pr:`7698`, :hpx-pr:`7707`).
+- **Strided loops**: ``for_loop_strided``, ``for_loop_n_strided`` and
+  their range variants now follow N4755: ``for_loop_n_strided`` invokes the
+  body ``n`` times, the stride must be positive, and live-out induction
+  variables advance by the number of iterations (see Breaking changes
+  below, :hpx-pr:`7703`).
 - **Datapar/SIMD**: fixing |eve|_/simd unaligned load/store broadcast bugs
   (:hpx-pr:`7435`, :hpx-issue:`7287`), and guarding a mismatched SIMD
   path on ``zip_iterator`` compatibility (:hpx-pr:`7328`).
@@ -308,6 +350,14 @@ the parallel algorithms library:
   algorithms use the policy's lane count, exposed through
   ``hpx::execution::policy_traits``. Existing SIMD policies retain the
   native lane count (:hpx-pr:`7674`).
+- **Boolean chunk results**: the partitioners no longer collect chunk
+  results of type ``bool`` in a ``std::vector<bool>``, whose elements share
+  memory locations, so that concurrently finishing chunks could lose a
+  result. This made ``hpx::ranges::contains`` return ``false`` sporadically
+  for values in the range (:hpx-pr:`7736`).
+- **Chunk iterators**: decrementing ``chunk_size_iterator`` and
+  ``chunk_size_idx_iterator`` over a bidirectional iterator no longer hangs
+  with MSVC (:hpx-pr:`7735`).
 
 Scheduler / Threading Improvements
 ==================================
@@ -334,7 +384,50 @@ Scheduler / Threading Improvements
 - **Fork dispatch**: fixed ``hpx::launch::fork`` tasks remaining
   unscheduled when launched from a plain OS thread or an HPX thread in
   another pool. Both ``post`` and ``async`` now schedule the task directly
-  when an immediate handoff is unavailable (:hpx-pr:`7687`).
+  when an immediate handoff is unavailable (:hpx-pr:`7687`, :hpx-pr:`7699`).
+- **Staged task stealing**: ``hpx.thread_queue.min_tasks_to_steal_staged``
+  now only applies to other workers stealing staged tasks. A worker always
+  converts its own staged tasks, even if there are fewer of them than the
+  configured minimum; before, such tasks were never run, so any non-zero
+  setting could hang applications. The default (``0``) is not affected
+  (:hpx-pr:`7730`).
+- **Spin-wait hints**: ``HPX_SMT_PAUSE`` now emits ``yield`` on ARM and
+  AArch64 (``__yield()`` with MSVC) (:hpx-pr:`7727`).
+- **Scheduler contention**: the local priority queue scheduler starts
+  stealing staged tasks after 30 empty scheduling loop iterations instead of
+  ``hpx.max_idle_loop_count / 2`` (100000 by default), but until the latter
+  only from workers holding at least 10 staged tasks. Both can be changed
+  with the new settings ``hpx.thread_queue.idle_loop_count_steal_staged`` and
+  ``hpx.thread_queue.min_tasks_to_steal_staged_early``. New work items now
+  only wake workers that are backing off, and a worker that finds work resets
+  its own idle backoff (:hpx-pr:`7725`).
+- **Work-requesting schedulers**: these schedulers never actually stole
+  tasks. They do now, which also required fixing a reference leak for every
+  stolen thread with ``local-workrequesting-mc`` and a hang when suspending
+  worker threads (:hpx-pr:`7726`). Idle workers now send steal requests right
+  away, as the schedulers stay in fast idle mode (:hpx-issue:`7746`,
+  :hpx-pr:`7755`).
+- **Bound threads**: a thread with ``thread_priority::bound`` that yields
+  with ``pending_boost``, for instance while spinning on a contended
+  spinlock, now stays on its worker thread. Before, it could resume on a
+  different OS thread, which aborted if it held a ``std::mutex``
+  (:hpx-pr:`7740`).
+- **Background threads**: a background thread that yielded in the middle of
+  its work is no longer dropped when its worker thread stops; this could
+  leave a parcel half sent and hang the shutdown of a locality
+  (:hpx-pr:`7723`). Creating background threads is now tested with every
+  scheduler (:hpx-issue:`6190`, :hpx-pr:`7749`), and the background thread
+  helpers are exported from the C++20 module (:hpx-issue:`7758`,
+  :hpx-pr:`7759`).
+- **Scheduler settings**: ``--hpx:queuing=!<name>`` selected an empty
+  scheduler name and always failed, and ``--hpx:high-priority-threads`` is
+  now only accepted for schedulers that have high priority queues
+  (:hpx-issue:`7743`, :hpx-pr:`7749`, :hpx-pr:`7757`). The default of
+  ``hpx.thread_queue.max_delete_count`` is now
+  ``HPX_THREAD_QUEUE_MAX_DELETE_COUNT``, ``min_add_new_count`` is limited to
+  ``max_add_new_count``, and the shared priority scheduler cleans up all
+  terminated threads once ``max_terminated_threads`` is exceeded
+  (:hpx-issue:`7748`, :hpx-pr:`7754`).
 
 Build / CI Modernization
 ========================
@@ -365,6 +458,16 @@ Build / CI Modernization
 - A Linux CI workflow with ``_GLIBCXX_DEBUG`` enabled was added
   (:hpx-pr:`7673`), and the parallel scheduler tests were fixed on
   Clang 16 (:hpx-pr:`7679`).
+- ``HPX_WITH_MALLOC`` was silently ignored with MSVC: the selected allocator
+  was not linked. It is now, and the Windows release CI builds with
+  |mimalloc|_ (:hpx-pr:`7732`).
+- The configuration tests are no longer compiled with warnings treated as
+  errors, so warnings caused by a packager's compiler flags no longer make
+  feature checks such as the one for ``std::atomic`` fail
+  (:hpx-issue:`7719`, :hpx-pr:`7729`).
+- Tests no longer use names that the Windows SDK headers define as macros
+  or types (such as ``SIZE``), and the inspect tool's ``--windows_macro``
+  check now reports them (:hpx-pr:`7738`).
 
 Security / Robustness Fixes
 ===========================
@@ -374,10 +477,15 @@ Security / Robustness Fixes
   was fixed (:hpx-issue:`7333`, :hpx-pr:`7334`).
 - **Data races**: a race in ``hostname_print_helper::get_hostname()`` on
   worker-thread startup (:hpx-issue:`7520`, :hpx-pr:`7525`, with a regression
-  test added in :hpx-pr:`7546`).
+  test added in :hpx-pr:`7546`), and on the wait counter of the scheduler's
+  idle backoff (:hpx-issue:`7701`, :hpx-pr:`7702`).
 - **Synchronization**: corrected timed semaphore waits (:hpx-pr:`7617`),
   a deadlock and race in ``latch::reset`` (:hpx-pr:`7555`),
   and handling of spurious wakeups in ``hpx::barrier`` (:hpx-pr:`7611`).
+  ``hpx::barrier::arrive_and_wait`` no longer reads the phase after the
+  lock was released (:hpx-pr:`7685`), and ``timed_mutex::try_lock_until``
+  now keeps waiting until the deadline instead of giving up after the first
+  wakeup (:hpx-pr:`7714`).
   The memory order used after a condition-variable wakeup in future
   ``wait()`` was upgraded from relaxed to acquire (:hpx-pr:`7677`).
 - **AGAS garbage collection**: fixed background collection when networking
@@ -390,32 +498,11 @@ Security / Robustness Fixes
   ``exception_ptr::load()`` was fixed (:hpx-pr:`7278`), along with a
   semantic mismatch in serialization archive flags
   (:hpx-issue:`7034`). Collection sizes read from archives are now checked
-  before use (:hpx-pr:`7594`).
-
-- The ITTNotify backend now emits task lifecycle and work-stealing events when
-  ITTNotify is enabled at runtime (``--hpx:ini=hpx.use_itt_notify=1``). This is
-  ``ON`` by default for ``HPX_WITH_ITTNOTIFY=ON`` builds; pass
-  ``-DHPX_WITH_TRACING_LIFECYCLE_EVENTS=OFF`` and
-  ``-DHPX_WITH_TRACING_WORK_STEALING_EVENTS=OFF`` to the |cmake|_ configuration
-  to get the earlier behavior.
-- **Fixed-size SIMD policies**: added ``hpx::execution::fixed_size_simd<N>``
-  and ``hpx::execution::par_fixed_size_simd<N>`` (plus their ``task``
-  variants), which select the number of vector lanes explicitly. Execution
-  policy properties, including ``num_lanes``, are exposed through
-  ``hpx::execution::policy_traits``.
-- ``hpx.thread_queue.min_tasks_to_steal_staged`` now only applies to other
-  workers stealing staged tasks. A worker always converts its own staged
-  tasks, even if there are fewer of them than the configured minimum; before,
-  such tasks were never run, so any non-zero setting could hang applications.
-  The default (``0``) is not affected.
-- **Scheduler contention**: the local priority queue scheduler starts stealing
-  staged tasks after 30 empty scheduling loop iterations instead of
-  ``hpx.max_idle_loop_count / 2`` (100000 by default), but until the latter
-  only from workers holding at least 10 staged tasks. Both can be changed with
-  the new settings ``hpx.thread_queue.idle_loop_count_steal_staged`` and
-  ``hpx.thread_queue.min_tasks_to_steal_staged_early``. New work items now
-  only wake workers that are backing off, and a worker that finds work resets
-  its own idle backoff.
+  before use (:hpx-pr:`7594`), as is the length of a checkpoint read from a
+  stream (:hpx-pr:`7705`).
+- **Process launching**: failures while setting up a child process, such as
+  a failed change of the working directory, are now reported
+  (:hpx-issue:`7646`, :hpx-pr:`7649`).
 
 Breaking changes
 ================
@@ -453,26 +540,31 @@ Closed Issues and Pull Requests
 ==================================
 
 The lists below were reconciled against release-2.0.X at
-``5d466501ae29d98b655cff5b7fa27d63d067af9a``, using release-1.11.X at
-``4823cb5b41cc6ec5ab3a49741541927f24704bf3`` as the baseline (including its
-maintenance backports, rather than only the v1.11.0 tag).
+``0580e58850ea6a46b9603e0bfb5bc9c0fe8718e1``, using the v1.11.0 tag
+(``c9b81b401fbe6ba4a0306feff71d18ef01c71b34``) as the baseline.
 
-There are 697 merged PRs whose merge commits are reachable from the release
+There are 742 merged PRs whose merge commits are reachable from the release
 and absent from that baseline, including PRs outside milestone 2.0.0. The
-140 closed issues are the milestone inventory; closure does not necessarily
+148 closed issues are the milestone inventory; closure does not necessarily
 mean an implementation was delivered. Closed, unmerged PRs are excluded.
-Two further PRs with verified transplanted changes are recorded separately
+Eight further PRs with verified transplanted changes are recorded separately
 below the generated list.
 
 Closed issues
 =============
 
+* :hpx-issue:`7758` - C++20 Modules CI fails since #7723: background thread helpers are not exported
+* :hpx-issue:`7748` - Small defects in the handling of hpx.thread_queue parameters
+* :hpx-issue:`7746` - local_workrequesting_scheduler loses fast_idle_mode, so idle workers send steal requests only after max_idle_loop_count / 2 iterations
+* :hpx-issue:`7719` - hpx-2.0.0 packaging: HPX needs support for C++11 std::atomic
+* :hpx-issue:`7701` - Possible data race on `wait_count` in `scheduler_base.cpp`
 * :hpx-issue:`7680` - shared_future::get() documentation incorrectly states that it invalidates the future
 * :hpx-issue:`7662` - Add auto-wrapping for main for MSVC
 * :hpx-issue:`7659` - Conan requires CMake aliases for Asio and Hwloc
 * :hpx-issue:`7656` - `hpx-top` and `hpx_stat_viewer` are not installed
 * :hpx-issue:`7650` - any_sender.hpp: constexpr empty_vtable fails to compile in MinGW shared (DLL) builds
 * :hpx-issue:`7647` - Error using HPX built with `HPX_WITH_TRACY=TRUE`
+* :hpx-issue:`7622` - for_loop_strided: a negative stride crashes under par and does not match P0075r2
 * :hpx-issue:`7613` - `HPX_REGISTER_CHANNEL(type, name)` 2-arg form still fails for written-out template types
 * :hpx-issue:`7608` - debugging: refresh DbgHelp module list after SymInitialize
 * :hpx-issue:`7592` - Re-enable auto-linking on Windows for static builds
@@ -591,17 +683,20 @@ Closed issues
 * :hpx-issue:`6345` - Initialization hangs when only setting --hpx:cores
 * :hpx-issue:`6240` - HPX does not compile with G++ version prior to 9.3.
 * :hpx-issue:`6232` - Par performance of hpx::reverse
+* :hpx-issue:`6190` - --hpx:queuing=shared fails for distributed runs
 * :hpx-issue:`6163` - Expose global termination detection through a new API
 * :hpx-issue:`6014` - Support C++20 modules
 * :hpx-issue:`5918` - HpxChannels Registration fails for written out template types
 * :hpx-issue:`5907` - HPX_DEBUG/CMAKE_BUILD_TYPE not correctly decoupled/consistently used.
 * :hpx-issue:`5903` - Support for Windows HPC Pack
 * :hpx-issue:`5497` - Start using C++17 features unconditionally
+* :hpx-issue:`5189` - Shared priority scheduler does not always create a new thread
 * :hpx-issue:`5045` - Implement P0443/P1897/P2300
 * :hpx-issue:`4702` - Prefer enum class over unscoped enums
 * :hpx-issue:`4697` - get_num_localities and get_locality_id should return size_t
 * :hpx-issue:`4672` - Consistently use hpx::function_* instead of std::function
 * :hpx-issue:`4657` - HEP 1 implementation tracker
+* :hpx-issue:`4568` - Make performance counters work locally
 * :hpx-issue:`4367` - Rewrite history to remove unneeded binary files
 * :hpx-issue:`4329` - HPX 2
 * :hpx-issue:`4074` - HPX module "configurations"
@@ -610,15 +705,54 @@ Closed issues
 Merged pull requests
 ====================
 
+* :hpx-pr:`7759` - Export the background thread helpers from the HPX.Core module
+* :hpx-pr:`7757` - Fix command line scheduler option handling
+* :hpx-pr:`7755` - Keep work-requesting schedulers in fast idle mode
+* :hpx-pr:`7754` - Fix thread queue parameter handling
+* :hpx-pr:`7749` - Cover background thread creation under every scheduler
+* :hpx-pr:`7741` - Make refused TCP connection attempts fail fast on Windows
+* :hpx-pr:`7740` - Keep bound threads on their worker thread when they yield with pending_boost
+* :hpx-pr:`7738` - Avoid names that collide with the Windows SDK and check for them in inspect
+* :hpx-pr:`7736` - Don't collect bool chunk results in a std::vector<bool>
+* :hpx-pr:`7735` - Fix chunk_size_iterator decrement for bidirectional iterators on MSVC
+* :hpx-pr:`7732` - Pass /INCLUDE for custom allocators to the linker on MSVC
+* :hpx-pr:`7731` - Update performance baseline
+* :hpx-pr:`7730` - Don't apply min_tasks_to_steal_staged to a queue's own staged tasks
+* :hpx-pr:`7729` - Update HPX_AddConfigTest.cmake
+* :hpx-pr:`7728` - Pass build configuration to Jenkins CTest driver
+* :hpx-pr:`7727` - Use yield for HPX_SMT_PAUSE on AArch64
+* :hpx-pr:`7726` - Make the work-requesting schedulers actually steal
+* :hpx-pr:`7725` - Reduce cross-core contention in the scheduling loop and local_priority_queue_scheduler
+* :hpx-pr:`7723` - Don't drop a yielded background thread at shutdown
+* :hpx-pr:`7722` - build(deps): bump github/codeql-action from 4.38.2 to 4.38.3
+* :hpx-pr:`7720` - Don't crash the TCP sender when shutdown races its cleanup
+* :hpx-pr:`7717` - Fix networking requirements for segmented merge tests
+* :hpx-pr:`7714` - synchronization: keep waiting in timed_mutex::try_lock_until until timeout or lock
+* :hpx-pr:`7709` - Adding explicit timeouts to test
+* :hpx-pr:`7707` - Enable C++20 modules for segmented merge
+* :hpx-pr:`7706` - Convert a range length to std::size_t explicitly
+* :hpx-pr:`7705` - Check the checkpoint length read off a stream before using it
+* :hpx-pr:`7704` - Convert counter path indices to pool indices explicitly
+* :hpx-pr:`7703` - Fix the stride semantics of the strided for_loop algorithms
+* :hpx-pr:`7702` - Make idle_backoff_data::wait_count atomic
+* :hpx-pr:`7700` - Let HPX_CONTRACT_ASSERT fall back onto HPX_ASSERT if contracts are disabled
+* :hpx-pr:`7699` - fix fork scheduling hint
+* :hpx-pr:`7698` - Fix segmented merge tests with C++20 modules
+* :hpx-pr:`7695` - Patch stdexec async_scope::on_empty() for nvcc
+* :hpx-pr:`7693` - Fix blocking client calls on unresolved ids and MPI finalize ownership
+* :hpx-pr:`7692` - Make rnd_future_reduce's random generator thread-local
 * :hpx-pr:`7689` - build(deps): bump lukka/get-cmake from 4.4.2 to 4.4.4
 * :hpx-pr:`7688` - Make replicate vote tests deterministic
 * :hpx-pr:`7687` - Fix launch::fork dropping tasks from OS threads
+* :hpx-pr:`7686` - Enable Apex for local runtime
+* :hpx-pr:`7685` - synchronization: don't access barrier phase after releasing the lock in arrive_and_wait
 * :hpx-pr:`7684` - docs: use correct HPX::iostreams_component target name in quickstart
 * :hpx-pr:`7683` - godbolt-minimal: pass /SUBSYSTEM:CONSOLE in the raw MSVC path
 * :hpx-pr:`7682` - Ensure shared priority scheduler creates thread when requested
 * :hpx-pr:`7681` - futures: fix shared_future::get() postcondition in docs
 * :hpx-pr:`7679` - Fix parallel scheduler tests on Clang 16
 * :hpx-pr:`7677` - fix(futures): upgrade memory_order_relaxed to acquire after cond_var wakeup in wait()
+* :hpx-pr:`7675` - tracing: task lifecycle and work stealing for the ITT backend
 * :hpx-pr:`7674` - Enable specifying the number of vector lanes to use with SIMD execution policies
 * :hpx-pr:`7673` - Add Linux CI workflow with _GLIBCXX_DEBUG enabled
 * :hpx-pr:`7669` - tracing: move export off Tracy class heads for GCC 11 and 12
@@ -632,19 +766,19 @@ Merged pull requests
 * :hpx-pr:`7654` - cmake: export the Tracy targets so consumers can find HPX
 * :hpx-pr:`7653` - Make partitioned vector iterators model random access
 * :hpx-pr:`7652` - execution_base: use the static empty vtable fallback on all Windows builds
+* :hpx-pr:`7651` - Preserve range shapes in scheduler executors
+* :hpx-pr:`7649` - Report process setup failures without compiler warnings
 * :hpx-pr:`7644` - godbolt-minimal: CI-test and document the raw MSVC hpx_main path
 * :hpx-pr:`7643` - lcos_local: cancel pending get/set requests when closing a one_element_channel
 * :hpx-pr:`7642` - Bump dawidd6/action-download-artifact from 24 to 25
 * :hpx-pr:`7641` - Bump github/codeql-action from 4.38.1 to 4.38.2
 * :hpx-pr:`7640` - Fix/coroutine asan stack recycling
 * :hpx-pr:`7637` - Update Collective Benchmark
-* :hpx-pr:`7636` - tracing: fill in the ITT backend ? shared domain, regions, markers
+* :hpx-pr:`7636` - tracing: fill in the ITT backend - shared domain, regions, markers
 * :hpx-pr:`7635` - components_base: fix wrapper heap reclamation
 * :hpx-pr:`7634` - Mark zero-copy save chunks as const and harden vector chunk tests
 * :hpx-pr:`7633` - Add companion concepts for futures, execution policies, and iterators
 * :hpx-pr:`7632` - Re-enable auto-linking on Windows (dynamic linking, C++20 modules)
-* :hpx-pr:`7631` - debugging: suppress C4251 warning in dbghelp_symbol_cache.hpp
-* :hpx-pr:`7637` - Update Collective Benchmark
 * :hpx-pr:`7631` - debugging: suppress C4251 warning in dbghelp_symbol_cache.hpp
 * :hpx-pr:`7630` - Clarify nostack fork_join leaf use and harden UINT32 range / exception paths.
 * :hpx-pr:`7629` - Recycle terminated thread_data before malloc on recursive async spawn
@@ -667,6 +801,7 @@ Merged pull requests
 * :hpx-pr:`7606` - Re-enable auto-linking on Windows(static linking, no C++20 modules) (#7592)
 * :hpx-pr:`7605` - build(deps): bump github/codeql-action from 4.38.0 to 4.38.1
 * :hpx-pr:`7604` - thrust: rename policy_traits test to thrust_policy_traits to avoid ta...
+* :hpx-pr:`7603` - Fix build warnings of documentation
 * :hpx-pr:`7601` - debugging: cache DbgHelp symbol lookups
 * :hpx-pr:`7600` - Use std::size_t for matrix and block sizes in the transpose examples
 * :hpx-pr:`7599` - actions: emit a stub on device so the action types exist
@@ -680,6 +815,7 @@ Merged pull requests
 * :hpx-pr:`7588` - Carry the idle and busy loop counts as std::int64_t
 * :hpx-pr:`7587` - docs: document future callback and async reference pitfalls (#2589)
 * :hpx-pr:`7586` - Take a std::size_t item count in the bulk dequeue path
+* :hpx-pr:`7585` - Add construction-side customization points to pair with rebind_policy_executor_t/rebind_policy_parameters_t
 * :hpx-pr:`7582` - Return std::int64_t from the queue holder thread counters
 * :hpx-pr:`7581` - Raise documentation build step timeouts to restore headroom
 * :hpx-pr:`7579` - Add get_parallel_scheduler(pool) for named HPX thread pools

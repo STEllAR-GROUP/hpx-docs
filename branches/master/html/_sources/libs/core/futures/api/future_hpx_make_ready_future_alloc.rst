@@ -30,9 +30,9 @@ See also:
    - :ref:`hpx::make_ready_future_after <modules_future_hpx_make_ready_future_after_api>`
    - :ref:`hpx::make_exceptional_future <modules_future_hpx_make_exceptional_future_api>`
 
-.. doxygenfunction:: hpx::make_ready_future_alloc(Allocator const & a, Ts &&... ts)
+.. doxygenfunction:: hpx::make_ready_future_alloc(Allocator const &a, Ts &&... ts)
    :project: hpx
-.. doxygenfunction:: hpx::make_ready_future_alloc(Allocator const & a, T && init)
+.. doxygenfunction:: hpx::make_ready_future_alloc(Allocator const &a, T &&init)
    :project: hpx
-.. doxygenfunction:: hpx::make_ready_future_alloc(Allocator const & a)
+.. doxygenfunction:: hpx::make_ready_future_alloc(Allocator const &a)
    :project: hpx

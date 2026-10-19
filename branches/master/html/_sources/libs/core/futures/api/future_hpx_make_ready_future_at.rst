@@ -30,7 +30,7 @@ See also:
    - :ref:`hpx::make_ready_future_after <modules_future_hpx_make_ready_future_after_api>`
    - :ref:`hpx::make_exceptional_future <modules_future_hpx_make_exceptional_future_api>`
 
-.. doxygenfunction:: hpx::make_ready_future_at(hpx::chrono::steady_time_point const & abs_time, T && init)
+.. doxygenfunction:: hpx::make_ready_future_at(hpx::chrono::steady_time_point const &abs_time, T &&init)
    :project: hpx
-.. doxygenfunction:: hpx::make_ready_future_at(hpx::chrono::steady_time_point const & abs_time)
+.. doxygenfunction:: hpx::make_ready_future_at(hpx::chrono::steady_time_point const &abs_time)
    :project: hpx

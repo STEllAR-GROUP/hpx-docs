@@ -19,17 +19,17 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::transform(ExPolicy && policy, FwdIter1 first, Sent1 last, FwdIter2 dest, F && f, Proj && proj)
+.. doxygenfunction:: hpx::ranges::transform(ExPolicy &&policy, FwdIter1 first, Sent1 last, FwdIter2 dest, F &&f, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform(ExPolicy && policy, Rng && rng, FwdIter dest, F && f, Proj && proj)
+.. doxygenfunction:: hpx::ranges::transform(ExPolicy &&policy, Rng &&rng, FwdIter dest, F &&f, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform(ExPolicy && policy, FwdIter1 first1, Sent1 last1, FwdIter2 first2, Sent2 last2, FwdIter3 dest, F && f, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::transform(ExPolicy &&policy, FwdIter1 first1, Sent1 last1, FwdIter2 first2, Sent2 last2, FwdIter3 dest, F &&f, Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform(FwdIter1 first, Sent1 last, FwdIter2 dest, F && f, Proj && proj)
+.. doxygenfunction:: hpx::ranges::transform(FwdIter1 first, Sent1 last, FwdIter2 dest, F &&f, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform(Rng && rng, FwdIter dest, F && f, Proj && proj)
+.. doxygenfunction:: hpx::ranges::transform(Rng &&rng, FwdIter dest, F &&f, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform(FwdIter1 first1, Sent1 last1, FwdIter2 first2, Sent2 last2, FwdIter3 dest, F && f, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::transform(FwdIter1 first1, Sent1 last1, FwdIter2 first2, Sent2 last2, FwdIter3 dest, F &&f, Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::transform(Rng1 && rng1, Rng2 && rng2, FwdIter dest, F && f, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::transform(Rng1 &&rng1, Rng2 &&rng2, FwdIter dest, F &&f, Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx

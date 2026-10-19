@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::adjacent_find(FwdIter first, Sent last, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::adjacent_find(FwdIter first, Sent last, Pred &&pred=Pred(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_find(ExPolicy && policy, FwdIter first, Sent last, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::adjacent_find(ExPolicy &&policy, FwdIter first, Sent last, Pred &&pred=Pred(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_find(Rng && rng, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::adjacent_find(Rng &&rng, Pred &&pred=Pred(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::adjacent_find(ExPolicy && policy, Rng && rng, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::ranges::adjacent_find(ExPolicy &&policy, Rng &&rng, Pred &&pred=Pred(), Proj &&proj=Proj())
    :project: hpx

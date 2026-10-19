@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::make_heap(ExPolicy && policy, RndIter first, RndIter last, Comp && comp)
+.. doxygenfunction:: hpx::make_heap(ExPolicy &&policy, RndIter first, RndIter last, Comp &&comp)
    :project: hpx
-.. doxygenfunction:: hpx::make_heap(ExPolicy && policy, RndIter first, RndIter last)
+.. doxygenfunction:: hpx::make_heap(ExPolicy &&policy, RndIter first, RndIter last)
    :project: hpx
-.. doxygenfunction:: hpx::make_heap(RndIter first, RndIter last, Comp && comp)
+.. doxygenfunction:: hpx::make_heap(RndIter first, RndIter last, Comp &&comp)
    :project: hpx
 .. doxygenfunction:: hpx::make_heap(RndIter first, RndIter last)
    :project: hpx

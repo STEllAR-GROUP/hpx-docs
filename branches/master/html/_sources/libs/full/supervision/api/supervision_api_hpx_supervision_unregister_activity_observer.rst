@@ -31,9 +31,9 @@ See also:
    - :ref:`hpx::supervision::await_terminal <modules_supervision_api_hpx_supervision_await_terminal_api>`
    - :ref:`hpx::supervision::is_valid_transition <modules_supervision_api_hpx_supervision_is_valid_transition_api>`
 
-.. doxygenfunction:: hpx::supervision::unregister_activity_observer(hpx::id_type const & locality, hpx::id_type const & observer_handle)
+.. doxygenfunction:: hpx::supervision::unregister_activity_observer(hpx::id_type const &locality, hpx::id_type const &observer_handle)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::unregister_activity_observer(hpx::launch::sync_policy, hpx::id_type const & locality, hpx::id_type const & observer_handle, hpx::error_code & ec)
+.. doxygenfunction:: hpx::supervision::unregister_activity_observer(hpx::launch::sync_policy, hpx::id_type const &locality, hpx::id_type const &observer_handle, hpx::error_code &ec=hpx::throws)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::unregister_activity_observer(hpx::id_type const & observer_handle, hpx::error_code & ec)
+.. doxygenfunction:: hpx::supervision::unregister_activity_observer(hpx::id_type const &observer_handle, hpx::error_code &ec=hpx::throws)
    :project: hpx

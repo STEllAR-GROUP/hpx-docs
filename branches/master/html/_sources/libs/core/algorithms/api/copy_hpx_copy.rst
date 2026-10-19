@@ -24,7 +24,7 @@ See also:
    - :ref:`hpx::copy_n <modules_copy_hpx_copy_n_api>`
    - :ref:`hpx::copy_if <modules_copy_hpx_copy_if_api>`
 
-.. doxygenfunction:: hpx::copy(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest)
+.. doxygenfunction:: hpx::copy(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest)
    :project: hpx
 .. doxygenfunction:: hpx::copy(FwdIter1 first, FwdIter1 last, FwdIter2 dest)
    :project: hpx

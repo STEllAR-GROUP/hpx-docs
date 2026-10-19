@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::generate_n <modules_generate_hpx_generate_n_api>`
 
-.. doxygenfunction:: hpx::generate(ExPolicy && policy, FwdIter first, FwdIter last, F && f)
+.. doxygenfunction:: hpx::generate(ExPolicy &&policy, FwdIter first, FwdIter last, F &&f)
    :project: hpx
-.. doxygenfunction:: hpx::generate(FwdIter first, FwdIter last, F && f)
+.. doxygenfunction:: hpx::generate(FwdIter first, FwdIter last, F &&f)
    :project: hpx

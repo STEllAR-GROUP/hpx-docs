@@ -21,9 +21,9 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
 .. doxygenfunction:: hpx::ranges::shift_left(FwdIter first, Sent last, Size n)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::shift_left(ExPolicy &&policy, FwdIter first, Sent last, Size n)
+.. doxygenfunction:: hpx::ranges::shift_left(ExPolicy && policy, FwdIter first, Sent last, Size n)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::shift_left(Rng &&rng, Size n)
+.. doxygenfunction:: hpx::ranges::shift_left(Rng && rng, Size n)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::shift_left(ExPolicy &&policy, Rng &&rng, Size n)
+.. doxygenfunction:: hpx::ranges::shift_left(ExPolicy && policy, Rng && rng, Size n)
    :project: hpx

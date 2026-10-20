@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::destroy_n <modules_container_algorithms_destroy_hpx_ranges_destroy_n_api>`
 
-.. doxygenfunction:: hpx::ranges::destroy(ExPolicy &&policy, Rng &&rng)
+.. doxygenfunction:: hpx::ranges::destroy(ExPolicy && policy, Rng && rng)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::destroy(ExPolicy &&policy, Iter first, Sent last)
+.. doxygenfunction:: hpx::ranges::destroy(ExPolicy && policy, Iter first, Sent last)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::destroy(Rng &&rng)
+.. doxygenfunction:: hpx::ranges::destroy(Rng && rng)
    :project: hpx
 .. doxygenfunction:: hpx::ranges::destroy(Iter first, Sent last)
    :project: hpx

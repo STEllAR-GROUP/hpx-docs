@@ -25,11 +25,11 @@ See also:
    - :ref:`hpx::ranges::replace_copy <modules_container_algorithms_replace_hpx_ranges_replace_copy_api>`
    - :ref:`hpx::ranges::replace_copy_if <modules_container_algorithms_replace_hpx_ranges_replace_copy_if_api>`
 
-.. doxygenfunction:: hpx::ranges::replace(Iter first, Sent sent, T1 const &old_value, T2 const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace(Iter first, Sent sent, T1 const & old_value, T2 const & new_value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::replace(Rng &&rng, T1 const &old_value, T2 const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace(Rng && rng, T1 const & old_value, T2 const & new_value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::replace(ExPolicy &&policy, Iter first, Sent sent, T1 const &old_value, T2 const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace(ExPolicy && policy, Iter first, Sent sent, T1 const & old_value, T2 const & new_value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::replace(ExPolicy &&policy, Rng &&rng, T1 const &old_value, T2 const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace(ExPolicy && policy, Rng && rng, T1 const & old_value, T2 const & new_value, Proj && proj)
    :project: hpx

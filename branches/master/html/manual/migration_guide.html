@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Migration guide &#8212; HPX 2.0.0 documentation</title>
+    <title>Migration guide &#8212; HPX 2.0.0-rc1 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=ce394494"></script>
+    <script src="../_static/documentation_options.js?v=7ec4965c"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0 documentation - Home"/>
-    <script>document.write(`<img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0 documentation - Home"/>`);</script>
+    <img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0-rc1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0-rc1 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -553,6 +553,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/components_fwd.html">hpx/runtime_components/components_fwd.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/reflect_client.html">hpx/runtime_components/reflect_client.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/new_hpx_new.html">hpx::new_</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/new_local_new.html">local_new</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../libs/full/runtime_distributed/api/full_api.html">runtime_distributed</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -1356,7 +1357,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../releases.html">Releases</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (TBD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (Oct 31, 2026)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_11_0.html"><em>HPX</em> V1.11.0 (Jun 30, 2025)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_10_0.html"><em>HPX</em> V1.10.0 (May 29, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_9_1.html"><em>HPX</em> V1.9.1 (August 4, 2023)</a></li>
@@ -2481,6 +2482,7 @@ for explicit consideration. <cite>input.begin()</cite> and <cite>input.end()</ci
 and end of the sequence of elements the algorithm will be applied to respectively.
 <cite>output.begin()</cite> refers to the beginning of the destination, while the last argument
 specifies the function which will be invoked for each of the values of the input sequence.</p>
+<p># .. seealso:</p>
 <p>Apart from <a class="reference internal" href="../libs/core/algorithms/api/inclusive_scan_hpx_inclusive_scan.html#modules-inclusive-scan-hpx-inclusive-scan-api"><span class="std std-ref">hpx::inclusive_scan</span></a>, <em>HPX</em> provides its users with <a class="reference internal" href="../libs/core/algorithms/api/exclusive_scan_hpx_exclusive_scan.html#modules-exclusive-scan-hpx-exclusive-scan-api"><span class="std std-ref">hpx::exclusive_scan</span></a>.
 The key difference between inclusive scan and exclusive scan lies in the treatment of the current element
 during the scan operation. In an inclusive scan, each element in the output sequence includes the
@@ -3701,7 +3703,7 @@ with <code class="docutils literal notranslate"><span class="pre">-freflection-l
 <p>Reflection support is auto-detected by HPX’s CMake build system via
 <code class="docutils literal notranslate"><span class="pre">hpx_check_for_cxx26_reflection()</span></code> in
 <code class="docutils literal notranslate"><span class="pre">cmake/HPX_PerformCxxFeatureTests.cmake</span></code>. No manual flag is required
-when using a supported compiler — <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_CXX26_REFLECTION</span></code> is set
+when using a supported compiler ? <code class="docutils literal notranslate"><span class="pre">HPX_HAVE_CXX26_REFLECTION</span></code> is set
 automatically.</p>
 </section>
 <section id="existing-code-requires-no-changes">
@@ -3710,7 +3712,7 @@ automatically.</p>
 <code class="docutils literal notranslate"><span class="pre">HPX_DEFINE_COMPONENT_ACTION</span></code>, and related macros requires zero source
 changes. When <code class="docutils literal notranslate"><span class="pre">HPX_WITH_CXX26_REFLECTION=ON</span></code>, these macros automatically
 use the reflection-based implementation internally. No
-<code class="docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code> calls are needed — registration is automatic.</p>
+<code class="docutils literal notranslate"><span class="pre">HPX_REGISTER_ACTION</span></code> calls are needed ? registration is automatic.</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// This works unchanged with or without reflection enabled.</span>
 <span class="c1">// When HPX_WITH_CXX26_REFLECTION=ON, it automatically uses</span>
 <span class="c1">// reflect_action&lt;^^some_function&gt; internally.</span>
@@ -3769,7 +3771,7 @@ use the reflection-based implementation internally. No
 </section>
 <section id="explicit-migration-direct-component-actions">
 <h3>Explicit migration: direct component actions<a class="headerlink" href="#explicit-migration-direct-component-actions" title="Link to this heading">#</a></h3>
-<p>Direct actions execute without spawning a new HPX thread — locally they
+<p>Direct actions execute without spawning a new HPX thread ? locally they
 run inline on the calling thread, and remotely on the target locality’s
 existing HPX thread. The reflection-based API preserves this behavior:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Before: three-step macro sequence</span>

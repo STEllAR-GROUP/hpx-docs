@@ -25,5 +25,5 @@ See also:
 
 .. doxygenfunction:: hpx::uninitialized_copy(InIter first, InIter last, FwdIter dest)
    :project: hpx
-.. doxygenfunction:: hpx::uninitialized_copy(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest)
+.. doxygenfunction:: hpx::uninitialized_copy(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest)
    :project: hpx

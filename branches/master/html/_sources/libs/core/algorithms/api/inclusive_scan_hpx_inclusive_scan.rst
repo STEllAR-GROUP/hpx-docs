@@ -21,13 +21,13 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
 .. doxygenfunction:: hpx::inclusive_scan(InIter first, InIter last, OutIter dest)
    :project: hpx
-.. doxygenfunction:: hpx::inclusive_scan(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest)
+.. doxygenfunction:: hpx::inclusive_scan(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest)
    :project: hpx
-.. doxygenfunction:: hpx::inclusive_scan(InIter first, InIter last, OutIter dest, Op &&op)
+.. doxygenfunction:: hpx::inclusive_scan(InIter first, InIter last, OutIter dest, Op && op)
    :project: hpx
-.. doxygenfunction:: hpx::inclusive_scan(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, Op &&op)
+.. doxygenfunction:: hpx::inclusive_scan(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, Op && op)
    :project: hpx
-.. doxygenfunction:: hpx::inclusive_scan(InIter first, InIter last, OutIter dest, Op &&op, T init)
+.. doxygenfunction:: hpx::inclusive_scan(InIter first, InIter last, OutIter dest, Op && op, T init)
    :project: hpx
-.. doxygenfunction:: hpx::inclusive_scan(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, Op &&op, T init)
+.. doxygenfunction:: hpx::inclusive_scan(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, Op && op, T init)
    :project: hpx

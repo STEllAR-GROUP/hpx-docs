@@ -25,11 +25,11 @@ See also:
    - :ref:`hpx::ranges::replace_if <modules_container_algorithms_replace_hpx_ranges_replace_if_api>`
    - :ref:`hpx::ranges::replace_copy_if <modules_container_algorithms_replace_hpx_ranges_replace_copy_if_api>`
 
-.. doxygenfunction:: hpx::ranges::replace_copy(InIter first, Sent sent, OutIter dest, T1 const &old_value, T2 const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace_copy(InIter first, Sent sent, OutIter dest, T1 const & old_value, T2 const & new_value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::replace_copy(Rng &&rng, OutIter dest, T1 const &old_value, T2 const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace_copy(Rng && rng, OutIter dest, T1 const & old_value, T2 const & new_value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::replace_copy(ExPolicy &&policy, FwdIter1 first, Sent sent, FwdIter2 dest, T1 const &old_value, T2 const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace_copy(ExPolicy && policy, FwdIter1 first, Sent sent, FwdIter2 dest, T1 const & old_value, T2 const & new_value, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::replace_copy(ExPolicy &&policy, Rng &&rng, FwdIter dest, T1 const &old_value, T2 const &new_value, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::replace_copy(ExPolicy && policy, Rng && rng, FwdIter dest, T1 const & old_value, T2 const & new_value, Proj && proj)
    :project: hpx

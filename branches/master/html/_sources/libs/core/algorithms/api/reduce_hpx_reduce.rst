@@ -19,13 +19,13 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::reduce(ExPolicy &&policy, FwdIter first, FwdIter last, T init, F &&f)
+.. doxygenfunction:: hpx::reduce(ExPolicy && policy, FwdIter first, FwdIter last, T init, F && f)
    :project: hpx
-.. doxygenfunction:: hpx::reduce(ExPolicy &&policy, FwdIter first, FwdIter last, T init)
+.. doxygenfunction:: hpx::reduce(ExPolicy && policy, FwdIter first, FwdIter last, T init)
    :project: hpx
-.. doxygenfunction:: hpx::reduce(ExPolicy &&policy, FwdIter first, FwdIter last)
+.. doxygenfunction:: hpx::reduce(ExPolicy && policy, FwdIter first, FwdIter last)
    :project: hpx
-.. doxygenfunction:: hpx::reduce(FwdIter first, FwdIter last, T init, F &&f)
+.. doxygenfunction:: hpx::reduce(FwdIter first, FwdIter last, T init, F && f)
    :project: hpx
 .. doxygenfunction:: hpx::reduce(FwdIter first, FwdIter last, T init)
    :project: hpx

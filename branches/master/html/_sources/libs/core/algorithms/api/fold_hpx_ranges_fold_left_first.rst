@@ -29,5 +29,5 @@ See also:
 
 .. doxygenfunction:: hpx::ranges::fold_left_first(InIter first, Sent last, F f)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::fold_left_first(Rng &&rng, F f)
+.. doxygenfunction:: hpx::ranges::fold_left_first(Rng && rng, F f)
    :project: hpx

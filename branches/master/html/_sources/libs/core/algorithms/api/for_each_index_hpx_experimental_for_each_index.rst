@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::experimental::for_each_index(Mapping const &mapping, Fun fun)
+.. doxygenfunction:: hpx::experimental::for_each_index(Mapping const & mapping, Fun fun)
    :project: hpx
-.. doxygenfunction:: hpx::experimental::for_each_index(ExPolicy &&policy, Mapping const &mapping, Fun fun)
+.. doxygenfunction:: hpx::experimental::for_each_index(ExPolicy && policy, Mapping const & mapping, Fun fun)
    :project: hpx

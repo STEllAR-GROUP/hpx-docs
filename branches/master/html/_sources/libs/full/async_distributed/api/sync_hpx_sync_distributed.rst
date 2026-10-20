@@ -22,9 +22,9 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. seealso::
    :hpx:func:`hpx::sync`
 
-.. doxygenfunction:: hpx::sync(F &&f, Ts &&... ts)
+.. doxygenfunction:: hpx::sync(F && f, Ts &&... ts)
    :project: hpx
-.. doxygenfunction:: hpx::sync(F &&f, Ts &&... ts) -> decltype(detail::sync_action_dispatch< Action, std::decay_t< F >>::call(std::forward< F >(f), std::forward< Ts >(ts)...))
+.. doxygenfunction:: hpx::sync(F && f, Ts &&... ts)
    :project: hpx
-.. doxygenfunction:: hpx::sync(Action &&action, Target &&target, Ts &&... ts)
+.. doxygenfunction:: hpx::sync(Action && action, Target && target, Ts &&... ts)
    :project: hpx

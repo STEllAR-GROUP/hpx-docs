@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::ranges::destroy <modules_container_algorithms_destroy_hpx_ranges_destroy_api>`
 
-.. doxygenfunction:: hpx::ranges::destroy_n(ExPolicy &&policy, FwdIter first, Size count)
+.. doxygenfunction:: hpx::ranges::destroy_n(ExPolicy && policy, FwdIter first, Size count)
    :project: hpx
 .. doxygenfunction:: hpx::ranges::destroy_n(FwdIter first, Size count)
    :project: hpx

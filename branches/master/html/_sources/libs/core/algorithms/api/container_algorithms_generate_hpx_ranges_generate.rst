@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::generate_n <modules_container_algorithms_generate_hpx_ranges_generate_n_api>`
 
-.. doxygenfunction:: hpx::ranges::generate(ExPolicy &&policy, Rng &&rng, F &&f)
+.. doxygenfunction:: hpx::ranges::generate(ExPolicy && policy, Rng && rng, F && f)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::generate(ExPolicy &&policy, Iter first, Sent last, F &&f)
+.. doxygenfunction:: hpx::ranges::generate(ExPolicy && policy, Iter first, Sent last, F && f)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::generate(Rng &&rng, F &&f)
+.. doxygenfunction:: hpx::ranges::generate(Rng && rng, F && f)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::generate(Iter first, Sent last, F &&f)
+.. doxygenfunction:: hpx::ranges::generate(Iter first, Sent last, F && f)
    :project: hpx

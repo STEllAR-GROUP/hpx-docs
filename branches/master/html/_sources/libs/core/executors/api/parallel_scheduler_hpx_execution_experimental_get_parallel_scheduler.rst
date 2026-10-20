@@ -26,5 +26,5 @@ See also:
 
 .. doxygenfunction:: hpx::execution::experimental::get_parallel_scheduler()
    :project: hpx
-.. doxygenfunction:: hpx::execution::experimental::get_parallel_scheduler(hpx::threads::thread_pool_base &pool)
+.. doxygenfunction:: hpx::execution::experimental::get_parallel_scheduler(hpx::threads::thread_pool_base & pool)
    :project: hpx

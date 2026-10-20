@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::remove_copy_if <modules_remove_copy_hpx_remove_copy_if_api>`
 
-.. doxygenfunction:: hpx::remove_copy(InIter first, InIter last, OutIter dest, T const &value)
+.. doxygenfunction:: hpx::remove_copy(InIter first, InIter last, OutIter dest, T const & value)
    :project: hpx
-.. doxygenfunction:: hpx::remove_copy(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, T const &value)
+.. doxygenfunction:: hpx::remove_copy(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, T const & value)
    :project: hpx

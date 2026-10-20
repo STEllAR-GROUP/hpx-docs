@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::uninitialized_fill_n <modules_container_algorithms_uninitialized_fill_hpx_ranges_uninitialized_fill_n_api>`
 
-.. doxygenfunction:: hpx::ranges::uninitialized_fill(FwdIter first, Sent last, T const & value)
+.. doxygenfunction:: hpx::ranges::uninitialized_fill(FwdIter first, Sent last, T const &value)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::uninitialized_fill(ExPolicy && policy, FwdIter first, Sent last, T const & value)
+.. doxygenfunction:: hpx::ranges::uninitialized_fill(ExPolicy &&policy, FwdIter first, Sent last, T const &value)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::uninitialized_fill(Rng && rng, T const & value)
+.. doxygenfunction:: hpx::ranges::uninitialized_fill(Rng &&rng, T const &value)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::uninitialized_fill(ExPolicy && policy, Rng && rng, T const & value)
+.. doxygenfunction:: hpx::ranges::uninitialized_fill(ExPolicy &&policy, Rng &&rng, T const &value)
    :project: hpx

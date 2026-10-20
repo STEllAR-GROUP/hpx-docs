@@ -24,11 +24,11 @@ See also:
    - :ref:`hpx::ranges::all_of <modules_container_algorithms_all_any_none_hpx_ranges_all_of_api>`
    - :ref:`hpx::ranges::none_of <modules_container_algorithms_all_any_none_hpx_ranges_none_of_api>`
 
-.. doxygenfunction:: hpx::ranges::any_of(ExPolicy && policy, Rng && rng, F && f, Proj && proj)
+.. doxygenfunction:: hpx::ranges::any_of(ExPolicy &&policy, Rng &&rng, F &&f, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::any_of(ExPolicy && policy, Iter first, Sent last, F && f, Proj && proj)
+.. doxygenfunction:: hpx::ranges::any_of(ExPolicy &&policy, Iter first, Sent last, F &&f, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::any_of(Rng && rng, F && f, Proj && proj)
+.. doxygenfunction:: hpx::ranges::any_of(Rng &&rng, F &&f, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::any_of(Iter first, Sent last, F && f, Proj && proj)
+.. doxygenfunction:: hpx::ranges::any_of(Iter first, Sent last, F &&f, Proj &&proj=Proj())
    :project: hpx

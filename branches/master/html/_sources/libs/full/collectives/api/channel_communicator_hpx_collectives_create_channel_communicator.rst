@@ -25,7 +25,7 @@ See also:
    - :ref:`hpx::collectives::get <modules_channel_communicator_hpx_collectives_get_api>`
    - :ref:`hpx::collectives::set <modules_channel_communicator_hpx_collectives_set_api>`
 
-.. doxygenfunction:: hpx::collectives::create_channel_communicator(char const * basename, num_sites_arg num_sites, this_site_arg this_site)
+.. doxygenfunction:: hpx::collectives::create_channel_communicator(char const *basename, num_sites_arg num_sites=num_sites_arg(), this_site_arg this_site=this_site_arg())
    :project: hpx
-.. doxygenfunction:: hpx::collectives::create_channel_communicator(hpx::launch::sync_policy, char const * basename, num_sites_arg num_sites, this_site_arg this_site)
+.. doxygenfunction:: hpx::collectives::create_channel_communicator(hpx::launch::sync_policy, char const *basename, num_sites_arg num_sites=num_sites_arg(), this_site_arg this_site=this_site_arg())
    :project: hpx

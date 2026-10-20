@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::for_each <modules_for_each_hpx_for_each_api>`
 
-.. doxygenfunction:: hpx::for_each_n(InIter first, Size count, F && f)
+.. doxygenfunction:: hpx::for_each_n(InIter first, Size count, F &&f)
    :project: hpx
-.. doxygenfunction:: hpx::for_each_n(ExPolicy && policy, FwdIter first, Size count, F && f)
+.. doxygenfunction:: hpx::for_each_n(ExPolicy &&policy, FwdIter first, Size count, F &&f)
    :project: hpx

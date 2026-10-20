@@ -19,27 +19,27 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::reduce(ExPolicy && policy, FwdIter first, Sent last, T init, F && f)
+.. doxygenfunction:: hpx::ranges::reduce(ExPolicy &&policy, FwdIter first, Sent last, T init, F &&f)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reduce(ExPolicy && policy, Rng && rng, T init, F && f)
+.. doxygenfunction:: hpx::ranges::reduce(ExPolicy &&policy, Rng &&rng, T init, F &&f)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reduce(ExPolicy && policy, FwdIter first, Sent last, T init)
+.. doxygenfunction:: hpx::ranges::reduce(ExPolicy &&policy, FwdIter first, Sent last, T init)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reduce(ExPolicy && policy, Rng && rng, T init)
+.. doxygenfunction:: hpx::ranges::reduce(ExPolicy &&policy, Rng &&rng, T init)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reduce(ExPolicy && policy, FwdIter first, Sent last)
+.. doxygenfunction:: hpx::ranges::reduce(ExPolicy &&policy, FwdIter first, Sent last)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reduce(ExPolicy && policy, Rng && rng)
+.. doxygenfunction:: hpx::ranges::reduce(ExPolicy &&policy, Rng &&rng)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reduce(FwdIter first, Sent last, T init, F && f)
+.. doxygenfunction:: hpx::ranges::reduce(FwdIter first, Sent last, T init, F &&f)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reduce(Rng && rng, T init, F && f)
+.. doxygenfunction:: hpx::ranges::reduce(Rng &&rng, T init, F &&f)
    :project: hpx
 .. doxygenfunction:: hpx::ranges::reduce(FwdIter first, Sent last, T init)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reduce(Rng && rng, T init)
+.. doxygenfunction:: hpx::ranges::reduce(Rng &&rng, T init)
    :project: hpx
 .. doxygenfunction:: hpx::ranges::reduce(FwdIter first, Sent last)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::reduce(Rng && rng)
+.. doxygenfunction:: hpx::ranges::reduce(Rng &&rng)
    :project: hpx

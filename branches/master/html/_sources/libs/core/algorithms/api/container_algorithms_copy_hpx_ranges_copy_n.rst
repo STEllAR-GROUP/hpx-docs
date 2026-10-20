@@ -24,7 +24,7 @@ See also:
    - :ref:`hpx::ranges::copy <modules_container_algorithms_copy_hpx_ranges_copy_api>`
    - :ref:`hpx::ranges::copy_if <modules_container_algorithms_copy_hpx_ranges_copy_if_api>`
 
-.. doxygenfunction:: hpx::ranges::copy_n(ExPolicy && policy, FwdIter1 first, Size count, FwdIter2 dest)
+.. doxygenfunction:: hpx::ranges::copy_n(ExPolicy &&policy, FwdIter1 first, Size count, FwdIter2 dest)
    :project: hpx
 .. doxygenfunction:: hpx::ranges::copy_n(FwdIter1 first, Size count, FwdIter2 dest)
    :project: hpx

@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::collectives::gather_here <modules_gather_hpx_collectives_gather_here_api>`
 
-.. doxygenfunction:: hpx::collectives::gather_there(char const * basename, T && result, this_site_arg this_site, generation_arg generation, root_site_arg root_site)
+.. doxygenfunction:: hpx::collectives::gather_there(char const *basename, T &&result, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg(), root_site_arg root_site=root_site_arg())
    :project: hpx
-.. doxygenfunction:: hpx::collectives::gather_there(communicator comm, T && result, this_site_arg this_site, generation_arg generation)
+.. doxygenfunction:: hpx::collectives::gather_there(communicator comm, T &&result, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
    :project: hpx
-.. doxygenfunction:: hpx::collectives::gather_there(hpx::launch::sync_policy, char const * basename, T && result, this_site_arg this_site, generation_arg generation, root_site_arg root_site)
+.. doxygenfunction:: hpx::collectives::gather_there(hpx::launch::sync_policy, char const *basename, T &&result, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg(), root_site_arg root_site=root_site_arg())
    :project: hpx
-.. doxygenfunction:: hpx::collectives::gather_there(hpx::launch::sync_policy, communicator comm, T && result, this_site_arg this_site, generation_arg generation)
+.. doxygenfunction:: hpx::collectives::gather_there(hpx::launch::sync_policy, communicator comm, T &&result, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
    :project: hpx

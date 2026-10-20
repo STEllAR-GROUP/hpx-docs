@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::remove_if <modules_remove_hpx_remove_if_api>`
 
-.. doxygenfunction:: hpx::remove(FwdIter first, FwdIter last, T const & value)
+.. doxygenfunction:: hpx::remove(FwdIter first, FwdIter last, T const &value)
    :project: hpx
-.. doxygenfunction:: hpx::remove(ExPolicy && policy, FwdIter first, FwdIter last, T const & value)
+.. doxygenfunction:: hpx::remove(ExPolicy &&policy, FwdIter first, FwdIter last, T const &value)
    :project: hpx

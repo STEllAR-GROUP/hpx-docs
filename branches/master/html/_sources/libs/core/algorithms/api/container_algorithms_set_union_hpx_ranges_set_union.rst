@@ -19,9 +19,9 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::set_union(ExPolicy && policy, Iter1 first1, Sent1 last1, Iter2 first2, Sent2 last2, Iter3 dest, Pred && op, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::set_union(ExPolicy &&policy, Iter1 first1, Sent1 last1, Iter2 first2, Sent2 last2, Iter3 dest, Pred &&op=Pred(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::set_union(ExPolicy && policy, Rng1 && rng1, Rng2 && rng2, Iter3 dest, Pred && op, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::set_union(ExPolicy &&policy, Rng1 &&rng1, Rng2 &&rng2, Iter3 dest, Pred &&op=Pred(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::set_union(Rng1 && rng1, Rng2 && rng2, Iter3 dest, Pred && op, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::set_union(Rng1 &&rng1, Rng2 &&rng2, Iter3 dest, Pred &&op=Pred(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx

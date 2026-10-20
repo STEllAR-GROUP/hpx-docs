@@ -19,19 +19,19 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::inclusive_scan(InIter first, Sent last, OutIter dest, Op && op)
+.. doxygenfunction:: hpx::ranges::inclusive_scan(InIter first, Sent last, OutIter dest, Op &&op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inclusive_scan(ExPolicy && policy, FwdIter1 first, Sent last, FwdIter2 dest, Op && op)
+.. doxygenfunction:: hpx::ranges::inclusive_scan(ExPolicy &&policy, FwdIter1 first, Sent last, FwdIter2 dest, Op &&op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inclusive_scan(Rng && rng, O dest, Op && op)
+.. doxygenfunction:: hpx::ranges::inclusive_scan(Rng &&rng, O dest, Op &&op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inclusive_scan(ExPolicy && policy, Rng && rng, O dest, Op && op)
+.. doxygenfunction:: hpx::ranges::inclusive_scan(ExPolicy &&policy, Rng &&rng, O dest, Op &&op)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inclusive_scan(InIter first, Sent last, OutIter dest, Op && op, T init)
+.. doxygenfunction:: hpx::ranges::inclusive_scan(InIter first, Sent last, OutIter dest, Op &&op, T init)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inclusive_scan(ExPolicy && policy, InIter first, Sent last, OutIter dest, Op && op, T init)
+.. doxygenfunction:: hpx::ranges::inclusive_scan(ExPolicy &&policy, InIter first, Sent last, OutIter dest, Op &&op, T init)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inclusive_scan(Rng && rng, O dest, Op && op, T init)
+.. doxygenfunction:: hpx::ranges::inclusive_scan(Rng &&rng, O dest, Op &&op, T init)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::inclusive_scan(ExPolicy && policy, Rng && rng, O dest, Op && op, T init)
+.. doxygenfunction:: hpx::ranges::inclusive_scan(ExPolicy &&policy, Rng &&rng, O dest, Op &&op, T init)
    :project: hpx

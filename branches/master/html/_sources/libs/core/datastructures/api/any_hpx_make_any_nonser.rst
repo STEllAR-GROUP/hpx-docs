@@ -30,5 +30,5 @@ See also:
    :project: hpx
 .. doxygenfunction:: hpx::make_any_nonser(std::initializer_list< U > il, Ts &&... ts)
    :project: hpx
-.. doxygenfunction:: hpx::make_any_nonser(T && t)
+.. doxygenfunction:: hpx::make_any_nonser(T &&t)
    :project: hpx

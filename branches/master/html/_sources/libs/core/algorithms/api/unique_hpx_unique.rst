@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::unique_copy <modules_unique_hpx_unique_copy_api>`
 
-.. doxygenfunction:: hpx::unique(FwdIter first, FwdIter last, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::unique(FwdIter first, FwdIter last, Pred &&pred=Pred(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::unique(ExPolicy && policy, FwdIter first, FwdIter last, Pred && pred, Proj && proj)
+.. doxygenfunction:: hpx::unique(ExPolicy &&policy, FwdIter first, FwdIter last, Pred &&pred=Pred(), Proj &&proj=Proj())
    :project: hpx

@@ -22,5 +22,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
    /libs/full/parcelset/api/connection_cache.rst
    /libs/full/parcelset/api/message_handler_fwd.rst
-   /libs/full/parcelset/api/parcelhandler.rst
    /libs/full/parcelset/api/parcelset_fwd.rst
+   /libs/full/parcelset/api/parcelhandler.rst

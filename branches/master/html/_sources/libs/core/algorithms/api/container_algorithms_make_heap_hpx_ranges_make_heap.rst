@@ -19,19 +19,19 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::make_heap(ExPolicy && policy, Iter first, Sent last, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::make_heap(ExPolicy &&policy, Iter first, Sent last, Comp &&comp, Proj &&proj=Proj{})
    :project: hpx
-.. doxygenfunction:: hpx::ranges::make_heap(ExPolicy && policy, Rng && rng, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::make_heap(ExPolicy &&policy, Rng &&rng, Comp &&comp, Proj &&proj=Proj{})
    :project: hpx
-.. doxygenfunction:: hpx::ranges::make_heap(ExPolicy && policy, Iter first, Sent last, Proj && proj)
+.. doxygenfunction:: hpx::ranges::make_heap(ExPolicy &&policy, Iter first, Sent last, Proj &&proj=Proj{})
    :project: hpx
-.. doxygenfunction:: hpx::ranges::make_heap(ExPolicy && policy, Rng && rng, Proj && proj)
+.. doxygenfunction:: hpx::ranges::make_heap(ExPolicy &&policy, Rng &&rng, Proj &&proj=Proj{})
    :project: hpx
-.. doxygenfunction:: hpx::ranges::make_heap(Iter first, Sent last, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::make_heap(Iter first, Sent last, Comp &&comp, Proj &&proj=Proj{})
    :project: hpx
-.. doxygenfunction:: hpx::ranges::make_heap(Rng && rng, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::make_heap(Rng &&rng, Comp &&comp, Proj &&proj=Proj{})
    :project: hpx
-.. doxygenfunction:: hpx::ranges::make_heap(Iter first, Sent last, Proj && proj)
+.. doxygenfunction:: hpx::ranges::make_heap(Iter first, Sent last, Proj &&proj=Proj{})
    :project: hpx
-.. doxygenfunction:: hpx::ranges::make_heap(Rng && rng, Proj && proj)
+.. doxygenfunction:: hpx::ranges::make_heap(Rng &&rng, Proj &&proj=Proj{})
    :project: hpx

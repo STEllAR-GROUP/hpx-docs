@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::is_heap_until <modules_container_algorithms_is_heap_hpx_ranges_is_heap_until_api>`
 
-.. doxygenfunction:: hpx::ranges::is_heap(ExPolicy && policy, Rng && rng, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::is_heap(ExPolicy &&policy, Rng &&rng, Comp &&comp=Comp(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::is_heap(ExPolicy && policy, Iter first, Sent last, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::is_heap(ExPolicy &&policy, Iter first, Sent last, Comp &&comp=Comp(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::is_heap(Rng && rng, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::is_heap(Rng &&rng, Comp &&comp=Comp(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::is_heap(Iter first, Sent last, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::is_heap(Iter first, Sent last, Comp &&comp=Comp(), Proj &&proj=Proj())
    :project: hpx

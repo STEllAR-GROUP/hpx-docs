@@ -20,11 +20,6 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/datastructures/api/any_hpx_any_nonser_hpx_bad_any_cast.rst
-   /libs/core/datastructures/api/any_hpx_unique_any_nonser.rst
-   /libs/core/datastructures/api/any_hpx_any_cast.rst
-   /libs/core/datastructures/api/any_hpx_make_any_nonser.rst
-   /libs/core/datastructures/api/any_hpx_make_unique_any_nonser.rst
    /libs/core/datastructures/api/tuple_hpx_ignore.rst
    /libs/core/datastructures/api/tuple_hpx_tuple.rst
    /libs/core/datastructures/api/tuple_hpx_tuple_size.rst
@@ -34,5 +29,10 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/datastructures/api/tuple_hpx_forward_as_tuple.rst
    /libs/core/datastructures/api/tuple_hpx_tuple_cat.rst
    /libs/core/datastructures/api/tuple_hpx_get.rst
+   /libs/core/datastructures/api/any_hpx_any_nonser_hpx_bad_any_cast.rst
+   /libs/core/datastructures/api/any_hpx_unique_any_nonser.rst
+   /libs/core/datastructures/api/any_hpx_any_cast.rst
+   /libs/core/datastructures/api/any_hpx_make_any_nonser.rst
+   /libs/core/datastructures/api/any_hpx_make_unique_any_nonser.rst
    /libs/core/datastructures/api/serializable_any_hpx_any.rst
    /libs/core/datastructures/api/serializable_any_hpx_make_any.rst

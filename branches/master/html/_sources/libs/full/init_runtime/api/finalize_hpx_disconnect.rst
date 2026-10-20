@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::finalize <modules_finalize_hpx_finalize_api>`
 
-.. doxygenfunction:: hpx::disconnect(hpx::error_code & ec)
+.. doxygenfunction:: hpx::disconnect(hpx::error_code &ec=throws)
    :project: hpx
-.. doxygenfunction:: hpx::disconnect(hpx::chrono::steady_duration shutdown_timeout, hpx::error_code & ec)
+.. doxygenfunction:: hpx::disconnect(hpx::chrono::steady_duration shutdown_timeout, hpx::error_code &ec=throws)
    :project: hpx

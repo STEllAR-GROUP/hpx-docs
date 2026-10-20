@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::adjacent_find(InIter first, InIter last, Pred && pred)
+.. doxygenfunction:: hpx::adjacent_find(InIter first, InIter last, Pred &&pred=Pred())
    :project: hpx
-.. doxygenfunction:: hpx::adjacent_find(ExPolicy && policy, FwdIter first, FwdIter last, Pred && pred)
+.. doxygenfunction:: hpx::adjacent_find(ExPolicy &&policy, FwdIter first, FwdIter last, Pred &&pred=Pred())
    :project: hpx

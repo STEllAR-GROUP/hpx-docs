@@ -20,7 +20,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/tag_invoke/api/invoke_hpx_invoke.rst
    /libs/core/tag_invoke/api/tag_invoke.rst
+   /libs/core/tag_invoke/api/invoke_hpx_invoke.rst
    /libs/core/tag_invoke/api/is_invocable_hpx_is_invocable.rst
    /libs/core/tag_invoke/api/is_invocable_hpx_is_invocable_r.rst

@@ -25,7 +25,7 @@ See also:
    - :ref:`hpx::experimental::task_block <modules_task_block_hpx_experimental_task_block_api>`
    - :ref:`hpx::experimental::define_task_block_restore_thread <modules_task_block_hpx_experimental_define_task_block_restore_thread_api>`
 
-.. doxygenfunction:: hpx::experimental::define_task_block(ExPolicy && policy, F && f)
+.. doxygenfunction:: hpx::experimental::define_task_block(ExPolicy &&policy, F &&f)
    :project: hpx
-.. doxygenfunction:: hpx::experimental::define_task_block(F && f)
+.. doxygenfunction:: hpx::experimental::define_task_block(F &&f)
    :project: hpx

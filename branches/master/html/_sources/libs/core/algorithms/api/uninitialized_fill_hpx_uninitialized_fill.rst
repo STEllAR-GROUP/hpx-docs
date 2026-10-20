@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::uninitialized_fill_n <modules_uninitialized_fill_hpx_uninitialized_fill_n_api>`
 
-.. doxygenfunction:: hpx::uninitialized_fill(FwdIter first, FwdIter last, T const & value)
+.. doxygenfunction:: hpx::uninitialized_fill(FwdIter first, FwdIter last, T const &value)
    :project: hpx
-.. doxygenfunction:: hpx::uninitialized_fill(ExPolicy && policy, FwdIter first, FwdIter last, T const & value)
+.. doxygenfunction:: hpx::uninitialized_fill(ExPolicy &&policy, FwdIter first, FwdIter last, T const &value)
    :project: hpx

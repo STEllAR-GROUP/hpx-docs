@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::inplace_merge <modules_merge_hpx_inplace_merge_api>`
 
-.. doxygenfunction:: hpx::merge(ExPolicy && policy, RandIter1 first1, RandIter1 last1, RandIter2 first2, RandIter2 last2, RandIter3 dest, Comp && comp)
+.. doxygenfunction:: hpx::merge(ExPolicy &&policy, RandIter1 first1, RandIter1 last1, RandIter2 first2, RandIter2 last2, RandIter3 dest, Comp &&comp=Comp())
    :project: hpx
-.. doxygenfunction:: hpx::merge(RandIter1 first1, RandIter1 last1, RandIter2 first2, RandIter2 last2, RandIter3 dest, Comp && comp)
+.. doxygenfunction:: hpx::merge(RandIter1 first1, RandIter1 last1, RandIter2 first2, RandIter2 last2, RandIter3 dest, Comp &&comp=Comp())
    :project: hpx

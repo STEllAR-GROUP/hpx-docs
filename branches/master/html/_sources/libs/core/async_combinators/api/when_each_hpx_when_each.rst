@@ -19,9 +19,9 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::when_each(F && f, std::vector< Future > && futures)
+.. doxygenfunction:: hpx::when_each(F &&f, std::vector< Future > &&futures)
    :project: hpx
-.. doxygenfunction:: hpx::when_each(F && f, Iterator begin, Iterator end)
+.. doxygenfunction:: hpx::when_each(F &&f, Iterator begin, Iterator end)
    :project: hpx
-.. doxygenfunction:: hpx::when_each(F && f, Ts &&... futures)
+.. doxygenfunction:: hpx::when_each(F &&f, Ts &&... futures)
    :project: hpx

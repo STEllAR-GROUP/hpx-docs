@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::collectives::inclusive_scan(char const * basename, T && result, F && op, num_sites_arg num_sites, this_site_arg this_site, generation_arg generation, root_site_arg root_site)
+.. doxygenfunction:: hpx::collectives::inclusive_scan(char const *basename, T &&result, F &&op, num_sites_arg num_sites=num_sites_arg(), this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg(), root_site_arg root_site=root_site_arg())
    :project: hpx
-.. doxygenfunction:: hpx::collectives::inclusive_scan(communicator comm, T && result, F && op, this_site_arg this_site, generation_arg generation)
+.. doxygenfunction:: hpx::collectives::inclusive_scan(communicator comm, T &&result, F &&op, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
    :project: hpx
-.. doxygenfunction:: hpx::collectives::inclusive_scan(hpx::launch::sync_policy, char const * basename, T && result, F && op, num_sites_arg num_sites, this_site_arg this_site, generation_arg generation, root_site_arg root_site)
+.. doxygenfunction:: hpx::collectives::inclusive_scan(hpx::launch::sync_policy, char const *basename, T &&result, F &&op, num_sites_arg num_sites=num_sites_arg(), this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg(), root_site_arg root_site=root_site_arg())
    :project: hpx
-.. doxygenfunction:: hpx::collectives::inclusive_scan(hpx::launch::sync_policy, communicator comm, T && result, F && op, this_site_arg this_site, generation_arg generation)
+.. doxygenfunction:: hpx::collectives::inclusive_scan(hpx::launch::sync_policy, communicator comm, T &&result, F &&op, this_site_arg this_site=this_site_arg(), generation_arg generation=generation_arg())
    :project: hpx

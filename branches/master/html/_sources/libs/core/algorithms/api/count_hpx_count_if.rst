@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::count <modules_count_hpx_count_api>`
 
-.. doxygenfunction:: hpx::count_if(ExPolicy && policy, FwdIter first, FwdIter last, F && f)
+.. doxygenfunction:: hpx::count_if(ExPolicy &&policy, FwdIter first, FwdIter last, F &&f)
    :project: hpx
-.. doxygenfunction:: hpx::count_if(InIter first, InIter last, F && f)
+.. doxygenfunction:: hpx::count_if(InIter first, InIter last, F &&f)
    :project: hpx

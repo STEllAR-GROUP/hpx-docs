@@ -20,10 +20,10 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
+   /libs/core/resiliency/api/resiliency_cpos.rst
+   /libs/core/resiliency/api/async_replay_executor.rst
+   /libs/core/resiliency/api/async_replay.rst
+   /libs/core/resiliency/api/async_replicate_executor.rst
+   /libs/core/resiliency/api/async_replicate.rst
    /libs/core/resiliency/api/replicate_executor.rst
    /libs/core/resiliency/api/replay_executor.rst
-   /libs/core/resiliency/api/async_replicate_executor.rst
-   /libs/core/resiliency/api/async_replay.rst
-   /libs/core/resiliency/api/resiliency_cpos.rst
-   /libs/core/resiliency/api/async_replicate.rst
-   /libs/core/resiliency/api/async_replay_executor.rst

@@ -20,5 +20,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /components/component_storage/api/migrate_from_storage.rst
    /components/component_storage/api/migrate_to_storage.rst
+   /components/component_storage/api/migrate_from_storage.rst

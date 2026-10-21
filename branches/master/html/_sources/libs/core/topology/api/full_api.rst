@@ -20,5 +20,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/topology/api/topology.rst
    /libs/core/topology/api/cpu_mask.rst
+   /libs/core/topology/api/topology.rst

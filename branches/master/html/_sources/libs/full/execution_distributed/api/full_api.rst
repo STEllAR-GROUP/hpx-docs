@@ -20,7 +20,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
+   /libs/full/execution_distributed/api/distributed_bulk_sender.rst
    /libs/full/execution_distributed/api/distributed_continues_on_sender.rst
    /libs/full/execution_distributed/api/distributed_then_sender.rst
    /libs/full/execution_distributed/api/distributed_scheduler.rst
-   /libs/full/execution_distributed/api/distributed_bulk_sender.rst

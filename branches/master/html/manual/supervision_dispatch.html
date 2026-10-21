@@ -1655,12 +1655,12 @@ needing to make an authoritative, synchronous round-trip for every dispatch.</p>
 follow, the one-shot nature of peer discovery, the distinction between the
 locally cached peer state and the registry’s authoritative state, and how that
 distinction shows up in the two-tier admission check used by fenced dispatch.
-For the detailed semantics of individual lifecycle events, <code class="docutils literal notranslate"><span class="pre">check_admission</span></code>,
-and <code class="docutils literal notranslate"><span class="pre">dispatch_outcome</span></code> values, see <a class="reference internal" href="../libs/full/supervision/docs/index.html#modules-supervision"><span class="std std-ref">Supervision module</span></a>; this page does
+For the detailed semantics of individual lifecycle events, <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_check_admission.html#modules-supervision-api-hpx-supervision-check-admission-api"><span class="std std-ref">check_admission</span></a>,
+and <code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">dispatch_outcome</span></code> values, see <a class="reference internal" href="../libs/full/supervision/docs/index.html#modules-supervision"><span class="std std-ref">Supervision module</span></a>; this page does
 not repeat that reference material. For the API reference of the
 dispatch-specific types and functions this component introduces -
-<code class="docutils literal notranslate"><span class="pre">registry</span></code>, <code class="docutils literal notranslate"><span class="pre">discovery::discover_and_join</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">dispatch_work</span></code> - see <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#modules-supervision-dispatch"><span class="std std-ref">Supervision dispatch module</span></a>.</p>
+<a class="reference internal" href="../components/supervision_dispatch/api/registry_hpx_supervision_registry.html#modules-registry-hpx-supervision-registry-api"><span class="std std-ref">registry</span></a>, <a class="reference internal" href="../components/supervision_dispatch/api/discovery_hpx_supervision_discover_and_join.html#modules-discovery-hpx-supervision-discover-and-join-api"><span class="std std-ref">discover_and_join</span></a>, and
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work</span></a> - see <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#modules-supervision-dispatch"><span class="std std-ref">Supervision dispatch module</span></a>.</p>
 <section id="initialization-and-shutdown-ordering">
 <h2>Initialization and shutdown ordering<a class="headerlink" href="#initialization-and-shutdown-ordering" title="Link to this heading">#</a></h2>
 <p>Supervision dispatch is brought up with a single call to
@@ -1677,68 +1677,71 @@ dispatch-specific types and functions this component introduces -
 <span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">init()</span></code> performs, in order:</p>
+<p><a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a> performs, in order:</p>
 <ol class="arabic simple">
-<li><p>Creation of a local <code class="docutils literal notranslate"><span class="pre">registry</span></code> component for this locality.</p></li>
+<li><p>Creation of a local <a class="reference internal" href="../components/supervision_dispatch/api/registry_hpx_supervision_registry.html#modules-registry-hpx-supervision-registry-api"><span class="std std-ref">registry</span></a> component for this locality.</p></li>
 <li><p>Publication of <code class="docutils literal notranslate"><span class="pre">event::started</span></code> on the locality - <em>before</em> the
 component’s symbol name is registered with AGAS, so that no peer can
 discover and join a not-yet-started locality.</p></li>
 <li><p>Registration of the symbol name.</p></li>
 <li><p>A single <a class="reference internal" href="../components/supervision_dispatch/api/discovery_hpx_supervision_discover_and_join.html#modules-discovery-hpx-supervision-discover-and-join-api"><span class="std std-ref">hpx::supervision::discover_and_join</span></a> pass that joins
-every peer registry reachable within <code class="docutils literal notranslate"><span class="pre">discovery_timeout</span></code>. Its result is
-a list of <code class="docutils literal notranslate"><span class="pre">joined_discovery_result</span></code> (peer paired with the shadow id its
-<code class="docutils literal notranslate"><span class="pre">join()</span></code> call was assigned); peers that time out mid-pass are omitted
-from that list entirely rather than leaving a gap in it.</p></li>
+every peer registry discovered and joined within <code class="docutils literal notranslate"><span class="pre">discovery_timeout</span></code>.
+Its result is a list of <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4N3hpx11supervision15discovered_peerE" title="hpx::supervision::discovered_peer"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">discovered_peer</span></code></a> (the peer’s locality paired
+with the <code class="docutils literal notranslate"><span class="pre">join_epoch</span></code> its <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">join()</span></code></a> call returned); peers that time out
+during discovery or during their <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">join()</span></code></a> call are omitted from that
+list entirely rather than leaving a gap in it. Peers that did join stay in
+the result even if the final visibility poll runs out of time before
+<a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry14snapshot_peersEv" title="hpx::supervision::registry::snapshot_peers"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">snapshot_peers()</span></code></a> reflects them.</p></li>
 </ol>
-<p><code class="docutils literal notranslate"><span class="pre">init()</span></code> is idempotent: calling it while already active is a no-op, and
+<p><a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a> is idempotent: calling it while already active is a no-op, and
 concurrent callers attach to a single in-flight initialization rather than
-racing to create duplicate registries. <code class="docutils literal notranslate"><span class="pre">finalize()</span></code> mirrors this
+racing to create duplicate registries. <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_finalize.html#modules-dispatch-api-hpx-supervision-finalize-api"><span class="std std-ref">finalize()</span></a> mirrors this
 ordering in reverse - it publishes <code class="docutils literal notranslate"><span class="pre">event::completed</span></code> for the local
-locality, unregisters the symbol name, and releases the <code class="docutils literal notranslate"><span class="pre">registry</span></code> component -
-and is always safe to call speculatively (e.g. during shutdown) even if <code class="docutils literal notranslate"><span class="pre">init()</span></code>
+locality, unregisters the symbol name, and releases the <a class="reference internal" href="../components/supervision_dispatch/api/registry_hpx_supervision_registry.html#modules-registry-hpx-supervision-registry-api"><span class="std std-ref">registry</span></a> component -
+and is always safe to call speculatively (e.g. during shutdown) even if <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a>
 was never called, since it is a no-op unless the runtime is currently active.</p>
-<p>Applications should treat <code class="docutils literal notranslate"><span class="pre">init()</span></code>/<code class="docutils literal notranslate"><span class="pre">finalize()</span></code> as a matched pair around
+<p>Applications should treat <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a>/<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_finalize.html#modules-dispatch-api-hpx-supervision-finalize-api"><span class="std std-ref">finalize()</span></a> as a matched pair around
 the portion of the program that performs supervised, fenced dispatch, and
-should not assume any lifecycle event is visible to peers before <code class="docutils literal notranslate"><span class="pre">init()</span></code>’s
+should not assume any lifecycle event is visible to peers before <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a>’s
 future (or synchronous call) has completed.</p>
-<p>Calling <code class="docutils literal notranslate"><span class="pre">init()</span></code> again after it has already succeeded is a documented
+<p>Calling <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a> again after it has already succeeded is a documented
 no-op: it returns an already-ready future without repeating any of the four
-steps above, and in particular does <strong>not</strong> re-run <code class="docutils literal notranslate"><span class="pre">discover_and_join()</span></code>.
+steps above, and in particular does <strong>not</strong> re-run <a class="reference internal" href="../components/supervision_dispatch/api/discovery_hpx_supervision_discover_and_join.html#modules-discovery-hpx-supervision-discover-and-join-api"><span class="std std-ref">discover_and_join()</span></a>.
 Peers that started, or otherwise became discoverable, after the first
-<code class="docutils literal notranslate"><span class="pre">init()</span></code> call completed are <em>not</em> retroactively added to the registry by a
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a> call completed are <em>not</em> retroactively added to the registry by a
 second call – the one-shot discovery behavior described below applies
-equally to repeated <code class="docutils literal notranslate"><span class="pre">init()</span></code> calls, not just the first one. To pick up such
-a peer, join it explicitly via <code class="docutils literal notranslate"><span class="pre">registry::join()</span></code>. Calling <code class="docutils literal notranslate"><span class="pre">init()</span></code> while
+equally to repeated <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a> calls, not just the first one. To pick up such
+a peer, join it explicitly via <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">registry::join()</span></code></a>. Calling <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a> while
 a previous call is still in progress attaches to that same in-flight
 initialization rather than starting a second one; calling it while
-<code class="docutils literal notranslate"><span class="pre">finalize()</span></code> is concurrently in progress fails immediately with
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_finalize.html#modules-dispatch-api-hpx-supervision-finalize-api"><span class="std std-ref">finalize()</span></a> is concurrently in progress fails immediately with
 <code class="docutils literal notranslate"><span class="pre">hpx::error::invalid_status</span></code> rather than queuing behind it.</p>
 </section>
 <section id="what-is-a-target-and-how-is-it-introduced">
 <h2>What is a target, and how is it introduced<a class="headerlink" href="#what-is-a-target-and-how-is-it-introduced" title="Link to this heading">#</a></h2>
-<p>A “target” is nothing more than an <code class="docutils literal notranslate"><span class="pre">hpx::id_type</span></code> - the id of any locality or
+<p>A “target” is nothing more than an <a class="reference internal" href="../libs/full/naming_base/api/id_type_hpx_id_type.html#modules-id-type-hpx-id-type-api"><span class="std std-ref">hpx::id_type</span></a> - the id of any locality or
 component whose lifecycle should be tracked. It is not a distinct kind of
 object, and there is no separate handle or wrapper type: the same id you’d
 use to invoke an action on a component is what you pass as <code class="docutils literal notranslate"><span class="pre">target</span></code> to
-<code class="docutils literal notranslate"><span class="pre">publish_event()</span></code>, <code class="docutils literal notranslate"><span class="pre">check_admission()</span></code>, <code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code>, and the rest
+<a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_publish_event.html#modules-supervision-api-hpx-supervision-publish-event-api"><span class="std std-ref">publish_event()</span></a>, <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_check_admission.html#modules-supervision-api-hpx-supervision-check-admission-api"><span class="std std-ref">check_admission()</span></a>, <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a>, and the rest
 of the supervision API.</p>
-<p>Because <code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code> resolves <code class="docutils literal notranslate"><span class="pre">target</span></code> via <code class="docutils literal notranslate"><span class="pre">hpx::colocated()</span></code> to
+<p>Because <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a> resolves <code class="docutils literal notranslate"><span class="pre">target</span></code> via <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::colocated()</span></code> to
 find the locality to dispatch to, a target must also be independently
 resolvable by AGAS to some locality - this is a separate requirement from
 having recorded supervision state, and it is not something supervision
 dispatch itself grants. Any id obtained the ordinary way (creating a
-component, <code class="docutils literal notranslate"><span class="pre">hpx::find_here()</span></code>, a symbolic-name lookup, a peer’s joined
+component, <a class="reference internal" href="../libs/full/runtime_distributed/api/find_here.html#_CPPv4N3hpx9find_hereER10error_code" title="hpx::find_here"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_here()</span></code></a>, a symbolic-name lookup, a peer’s joined
 registry id) already satisfies this. If a target id can no longer be
 resolved to a locality - for instance, because the underlying component was
-already destroyed and unregistered - <code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code> fails when
-<code class="docutils literal notranslate"><span class="pre">hpx::colocated()</span></code> cannot resolve it, <em>before</em> either admission check
+already destroyed and unregistered - <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a> fails when
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::colocated()</span></code> cannot resolve it, <em>before</em> either admission check
 runs; this is a distinct failure mode from <code class="docutils literal notranslate"><span class="pre">hpx::error::target_fenced</span></code> and
 is not something publishing <code class="docutils literal notranslate"><span class="pre">event::started</span></code> can paper over.</p>
 <p>In practice, two kinds of ids show up as targets in this component:</p>
 <ul class="simple">
 <li><p>The registry id of peer localities, once joined via
 <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::supervision::registry::join</span></code></a> - these are the targets whose
-shadow state feeds <code class="docutils literal notranslate"><span class="pre">registry::snapshot_peers()</span></code> and local admission
+shadow state feeds <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry14snapshot_peersEv" title="hpx::supervision::registry::snapshot_peers"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">registry::snapshot_peers()</span></code></a> and local admission
 filtering.</p></li>
 <li><p>The ids of individual localities/components that fenced work is dispatched
 against via <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">hpx::supervision::dispatch_work</span></a>
@@ -1765,13 +1768,13 @@ recorded state is rejected as an invalid transition. Put simply:</p>
 </pre></div>
 </div>
 <p>Before a target’s first <code class="docutils literal notranslate"><span class="pre">started</span></code> publication, it has no recorded state at
-all: <code class="docutils literal notranslate"><span class="pre">query_state()</span></code> reports it as <code class="docutils literal notranslate"><span class="pre">unknown</span></code> rather than as any specific
-lifecycle stage, and <code class="docutils literal notranslate"><span class="pre">check_admission()</span></code> for an epoch-0, never-published
+all: <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_query_state.html#modules-supervision-api-hpx-supervision-query-state-api"><span class="std std-ref">query_state()</span></a> reports it as <code class="docutils literal notranslate"><span class="pre">unknown</span></code> rather than as any specific
+lifecycle stage, and <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_check_admission.html#modules-supervision-api-hpx-supervision-check-admission-api"><span class="std std-ref">check_admission()</span></a> for an epoch-0, never-published
 target behaves as admitting (there is nothing latched to fence against yet).
 Once introduced, a target’s tracked state persists on the supervision manager
 that owns it until either it reaches a terminal event that is superseded by a
 higher epoch (see “Epochs and when to change them” below), or it is
-explicitly forgotten via <code class="docutils literal notranslate"><span class="pre">remove_target()</span></code> - typically done by callers
+explicitly forgotten via <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_remove_target.html#modules-supervision-api-hpx-supervision-remove-target-api"><span class="std std-ref">remove_target()</span></a> - typically done by callers
 that know a given id will never be queried or observed again locally, e.g.
 after a failed registration attempt or once a peer has been evicted from the
 registry, to avoid accumulating unbounded per-target state.</p>
@@ -1784,7 +1787,7 @@ is locally recorded for a target id, on a single locality.</p>
 <span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">remove_target</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span><span class="w"> </span><span class="n">locality</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>See <a class="reference internal" href="../libs/full/supervision/docs/index.html#modules-supervision"><span class="std std-ref">Supervision module</span></a> for the full semantics of <code class="docutils literal notranslate"><span class="pre">remove_target</span></code>,
+<p>See <a class="reference internal" href="../libs/full/supervision/docs/index.html#modules-supervision"><span class="std std-ref">Supervision module</span></a> for the full semantics of <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_remove_target.html#modules-supervision-api-hpx-supervision-remove-target-api"><span class="std std-ref">remove_target</span></a>,
 and <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#modules-supervision-dispatch"><span class="std std-ref">Supervision dispatch module</span></a> for this component’s own API
 reference.</p>
 <p>A few points worth calling out:</p>
@@ -1806,7 +1809,7 @@ removal, publishing <code class="docutils literal notranslate"><span class="pre"
 if the id had never been seen before - epoch resets to whatever the new
 <code class="docutils literal notranslate"><span class="pre">started</span></code> publication specifies.</p></li>
 <li><p><strong>Safe to call from within the target’s own observer callback.</strong> Calling
-<code class="docutils literal notranslate"><span class="pre">remove_target()</span></code> on <code class="docutils literal notranslate"><span class="pre">target</span></code> from inside one of <code class="docutils literal notranslate"><span class="pre">target</span></code>’s own
+<a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_remove_target.html#modules-supervision-api-hpx-supervision-remove-target-api"><span class="std std-ref">remove_target()</span></a> on <code class="docutils literal notranslate"><span class="pre">target</span></code> from inside one of <code class="docutils literal notranslate"><span class="pre">target</span></code>’s own
 observer callbacks is supported and does not deadlock.</p></li>
 </ul>
 <p>Removing a target is the natural cleanup step once it is known to be
@@ -1821,15 +1824,15 @@ accumulate indefinitely over the lifetime of a long-running application.</p>
 <p>Applications observe two distinct, overlapping state machines.</p>
 <section id="per-locality-dispatcher-lifecycle">
 <h3>Per-locality dispatcher lifecycle<a class="headerlink" href="#per-locality-dispatcher-lifecycle" title="Link to this heading">#</a></h3>
-<p>Tracked once per locality (<code class="docutils literal notranslate"><span class="pre">dispatch_api.cpp</span></code>), driven by <code class="docutils literal notranslate"><span class="pre">init()</span></code>/
-<code class="docutils literal notranslate"><span class="pre">finalize()</span></code>:</p>
+<p>Tracked once per locality (<code class="docutils literal notranslate"><span class="pre">dispatch_api.cpp</span></code>), driven by <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a>/
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_finalize.html#modules-dispatch-api-hpx-supervision-finalize-api"><span class="std std-ref">finalize()</span></a>:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>uninitialized -&gt; initializing -&gt; active -&gt; finalizing -&gt; uninitialized
 </pre></div>
 </div>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">uninitialized</span></code>: no local registry exist.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">initializing</span></code>: registry creation, <code class="docutils literal notranslate"><span class="pre">event::started</span></code>
-publication, symbol registration, and the one-shot <code class="docutils literal notranslate"><span class="pre">discover_and_join()</span></code>
+publication, symbol registration, and the one-shot <a class="reference internal" href="../components/supervision_dispatch/api/discovery_hpx_supervision_discover_and_join.html#modules-discovery-hpx-supervision-discover-and-join-api"><span class="std std-ref">discover_and_join()</span></a>
 pass are in progress. Concurrent callers attach to the same in-flight
 initialization rather than racing.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">active</span></code>: heartbeat and failure-detection background tasks are running.</p></li>
@@ -1837,14 +1840,14 @@ initialization rather than racing.</p></li>
 published, and the symbol name is being unregistered before component
 release.</p></li>
 </ul>
-<p><code class="docutils literal notranslate"><span class="pre">init()</span></code>/<code class="docutils literal notranslate"><span class="pre">finalize()</span></code> are idempotent no-ops when already in the target
+<p><a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a>/<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_finalize.html#modules-dispatch-api-hpx-supervision-finalize-api"><span class="std std-ref">finalize()</span></a> are idempotent no-ops when already in the target
 state. A failure during <code class="docutils literal notranslate"><span class="pre">initializing</span></code> unregisters any names already
 registered and returns to <code class="docutils literal notranslate"><span class="pre">uninitialized</span></code> rather than leaving the locality
 stuck mid-transition.</p>
 </section>
 <section id="per-target-lifecycle-event">
 <h3>Per-target lifecycle event<a class="headerlink" href="#per-target-lifecycle-event" title="Link to this heading">#</a></h3>
-<p>Reported by an actor about itself (<code class="docutils literal notranslate"><span class="pre">hpx::supervision::event</span></code>), tracked per
+<p>Reported by an actor about itself (<code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">hpx::supervision::event</span></code>), tracked per
 epoch and mirrored into peer shadows:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>unknown -&gt; started -&gt; running -&gt; suspending -&gt; completed
                     \-&gt; failed
@@ -1863,7 +1866,7 @@ may become unavailable.</p>
 participate at all. The per-target event state machine governs whether <em>a
 specific peer</em> remains eligible for fenced dispatch. Failure detection moves
 a peer’s locally cached shadow toward <code class="docutils literal notranslate"><span class="pre">failed</span></code> only when a timeout on
-<code class="docutils literal notranslate"><span class="pre">await_terminal</span></code> coincides with an unchanged event sequence number - a
+<a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_await_terminal.html#modules-supervision-api-hpx-supervision-await-terminal-api"><span class="std std-ref">await_terminal</span></a> coincides with an unchanged event sequence number - a
 timeout alone is not sufficient, since the peer may simply still be
 <code class="docutils literal notranslate"><span class="pre">running</span></code>. This local <code class="docutils literal notranslate"><span class="pre">failed</span></code> marking never touches the peer’s own
 authoritative state; it only affects what this locality’s client-side
@@ -1880,7 +1883,7 @@ that localty’s event sequence number and timestamp advancing even when the
 application itself has nothing new to report.</p>
 <section id="why-this-is-needed">
 <h3>Why this is needed<a class="headerlink" href="#why-this-is-needed" title="Link to this heading">#</a></h3>
-<p>Failure detection works by calling <code class="docutils literal notranslate"><span class="pre">await_terminal()</span></code> with a timeout
+<p>Failure detection works by calling <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_await_terminal.html#modules-supervision-api-hpx-supervision-await-terminal-api"><span class="std std-ref">await_terminal()</span></a> with a timeout
 against each joined peer’s shadow. On its own, a bare timeout on that call is
 ambiguous: it fires identically whether the peer has crashed, or the peer is
 simply alive and quietly idle – <code class="docutils literal notranslate"><span class="pre">running</span></code> is a stable state that can
@@ -1892,7 +1895,7 @@ perfectly healthy but quiet, or fail to fence peers that have genuinely died.</p
 source of forward progress – its event sequence number – independent of
 whatever the application is actually doing. This lets
 <code class="docutils literal notranslate"><span class="pre">peer_is_alive_but_silent()</span></code> compare a peer’s sequence number immediately
-before and after an <code class="docutils literal notranslate"><span class="pre">await_terminal()</span></code> timeout:</p>
+before and after an <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_await_terminal.html#modules-supervision-api-hpx-supervision-await-terminal-api"><span class="std std-ref">await_terminal()</span></a> timeout:</p>
 <ul class="simple">
 <li><p>If the sequence number <strong>advanced</strong> during the timeout window, the peer’s
 heartbeat kept running, so the peer is alive but simply not reporting a
@@ -1917,27 +1920,27 @@ window – making a missed heartbeat a meaningful signal rather than noise
 from timing jitter.</p></li>
 <li><p><strong>Started and stopped in lockstep with failure detection.</strong> Both
 background tasks are started together, immediately after the one-shot
-<code class="docutils literal notranslate"><span class="pre">discover_and_join()</span></code> pass inside <code class="docutils literal notranslate"><span class="pre">init()</span></code>, and both are signaled to
-stop and joined together during <code class="docutils literal notranslate"><span class="pre">finalize()</span></code>, before <code class="docutils literal notranslate"><span class="pre">event::completed</span></code>
+<a class="reference internal" href="../components/supervision_dispatch/api/discovery_hpx_supervision_discover_and_join.html#modules-discovery-hpx-supervision-discover-and-join-api"><span class="std std-ref">discover_and_join()</span></a> pass inside <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a>, and both are signaled to
+stop and joined together during <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_finalize.html#modules-dispatch-api-hpx-supervision-finalize-api"><span class="std std-ref">finalize()</span></a>, before <code class="docutils literal notranslate"><span class="pre">event::completed</span></code>
 is published and either symbol name is unregistered.</p></li>
 <li><p><strong>Entirely internal.</strong> Applications do not start, stop, or configure the
 heartbeat directly, and do not need to publish any events themselves to
-keep it running – it is a side effect of calling <code class="docutils literal notranslate"><span class="pre">init()</span></code>, and requires
+keep it running – it is a side effect of calling <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a>, and requires
 no ongoing application action beyond staying inside the
-<code class="docutils literal notranslate"><span class="pre">init()</span></code>/<code class="docutils literal notranslate"><span class="pre">finalize()</span></code> bracket.</p></li>
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a>/<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_finalize.html#modules-dispatch-api-hpx-supervision-finalize-api"><span class="std std-ref">finalize()</span></a> bracket.</p></li>
 </ul>
 <p>In short, the heartbeat is what makes failure detection’s timeout-based
 stall check meaningful at all: without it, a timeout by itself would not be
 able to distinguish “no news” from “no pulse.”</p>
 <p>This is also why fenced dispatch depends on the heartbeat working correctly,
-not just on failure detection running. <code class="docutils literal notranslate"><span class="pre">check_admission()</span></code> - whether
+not just on failure detection running. <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_check_admission.html#modules-supervision-api-hpx-supervision-check-admission-api"><span class="std std-ref">check_admission()</span></a> - whether
 called as the caller’s local, non-authoritative early-out or as the target’s
-own authoritative re-check inside <code class="docutils literal notranslate"><span class="pre">invoke_fenced_action()</span></code> - ultimately
+own authoritative re-check inside <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_invoke_fenced_action.html#modules-dispatch-work-hpx-supervision-invoke-fenced-action-api"><span class="std std-ref">invoke_fenced_action()</span></a> - ultimately
 answers “is this target still available” by consulting whatever lifecycle
 state has been latched for it, which for peers is only ever updated to
 <code class="docutils literal notranslate"><span class="pre">failed</span></code> once failure detection has genuine evidence of a stall. Without
 the heartbeat, that evidence would not exist: a silent-but-alive peer and a
-genuinely dead one would look identical to <code class="docutils literal notranslate"><span class="pre">await_terminal()</span></code>, and
+genuinely dead one would look identical to <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_await_terminal.html#modules-supervision-api-hpx-supervision-await-terminal-api"><span class="std std-ref">await_terminal()</span></a>, and
 admission would have no reliable basis for deciding whether it is safe to
 keep dispatching work to that locality. In short, the heartbeat is not just
 an internal detail of failure detection - it is what makes the fencing
@@ -1947,22 +1950,22 @@ place.</p>
 </section>
 <section id="one-shot-discovery-and-staleness">
 <h2>One-shot discovery and staleness<a class="headerlink" href="#one-shot-discovery-and-staleness" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">discover_and_join()</span></code> pass performed by <code class="docutils literal notranslate"><span class="pre">init()</span></code> runs exactly once. It
+<p>The <a class="reference internal" href="../components/supervision_dispatch/api/discovery_hpx_supervision_discover_and_join.html#modules-discovery-hpx-supervision-discover-and-join-api"><span class="std std-ref">discover_and_join()</span></a> pass performed by <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a> runs exactly once. It
 finds whichever peer registries are reachable <em>at that moment</em> and
 joins them; it does not re-run periodically, and peers that join the system
 later are not automatically discovered by localities that have already
 initialized. This has two practical implications:</p>
 <ul class="simple">
-<li><p>A locality’s set of known peers is fixed at <code class="docutils literal notranslate"><span class="pre">init()</span></code> time (plus any peers
-joined explicitly afterwards via <code class="docutils literal notranslate"><span class="pre">registry::join()</span></code>). It does not grow on
+<li><p>A locality’s set of known peers is fixed at <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a> time (plus any peers
+joined explicitly afterwards via <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">registry::join()</span></code></a>). It does not grow on
 its own as new peers appear.</p></li>
 <li><p>Because failure detection (see below) only tracks peers that have actually
 been joined, a peer that starts too late to be discovered is invisible to
 both admission filtering and fencing until it is joined explicitly.</p></li>
 </ul>
 <p>Applications that need a stable, complete peer set at some later point should
-join peers explicitly (<code class="docutils literal notranslate"><span class="pre">registry::join()</span></code>) rather than relying on rediscovery
-after <code class="docutils literal notranslate"><span class="pre">init()</span></code>.</p>
+join peers explicitly (<a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">registry::join()</span></code></a>) rather than relying on rediscovery
+after <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a>.</p>
 </section>
 <section id="shadow-state-versus-the-authoritative-registry">
 <h2>Shadow state versus the authoritative registry<a class="headerlink" href="#shadow-state-versus-the-authoritative-registry" title="Link to this heading">#</a></h2>
@@ -1970,7 +1973,7 @@ after <code class="docutils literal notranslate"><span class="pre">init()</span>
 <em>shadow</em> target owned by the joining registry - a lightweight, locally
 readable copy of that peer’s most recently observed state, updated as
 lifecycle and heartbeat events arrive. This shadow state is what
-<code class="docutils literal notranslate"><span class="pre">registry::snapshot_peers()</span></code> and the local admission check consult.</p>
+<a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry14snapshot_peersEv" title="hpx::supervision::registry::snapshot_peers"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">registry::snapshot_peers()</span></code></a> and the local admission check consult.</p>
 <p>It is important to keep two things distinct:</p>
 <ul class="simple">
 <li><p><strong>Shadow state</strong> (local): a locally cached view of a peer’s lifecycle,
@@ -1991,30 +1994,35 @@ peer actually going silent and that silence being locally observed.</p>
 <h2>How registries stay synchronized<a class="headerlink" href="#how-registries-stay-synchronized" title="Link to this heading">#</a></h2>
 <p>The shadow-mirroring described above is not maintained by polling. It is
 driven entirely by event-based observer callbacks, registered once at
-<code class="docutils literal notranslate"><span class="pre">registry::join()</span></code> time and then firing automatically for the lifetime of
+<a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">registry::join()</span></code></a> time and then firing automatically for the lifetime of
 the joined peer.</p>
 <section id="registration-at-join-time">
 <h3>Registration, at join time<a class="headerlink" href="#registration-at-join-time" title="Link to this heading">#</a></h3>
-<p>When <code class="docutils literal notranslate"><span class="pre">registry::join(peer_locality)</span></code> is called, the local registry does
-two things before returning a shadow id to the caller. A peer’s identity
-<em>is</em> its locality since exactly one registry exists per locality.</p>
+<p>When <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">registry::join(peer_locality)</span></code></a> is called for a peer that is not
+already fully joined, the local registry does two things before returning a
+<a class="reference internal" href="../components/supervision_dispatch/api/server_registry.html#_CPPv4N3hpx11supervision11joined_peerE" title="hpx::supervision::joined_peer"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">joined_peer</span></code></a> to the caller. A peer’s identity <em>is</em> its locality since
+exactly one registry exists per locality, so <code class="docutils literal notranslate"><span class="pre">joined_peer::target</span></code> is
+<code class="docutils literal notranslate"><span class="pre">peer_locality</span></code> itself, paired with the <code class="docutils literal notranslate"><span class="pre">join_epoch</span></code> it was joined at;
+the shadow id below is internal to the registry and never returned. If the
+peer is already fully joined, <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">join()</span></code></a> returns the existing
+<a class="reference internal" href="../components/supervision_dispatch/api/server_registry.html#_CPPv4N3hpx11supervision11joined_peerE" title="hpx::supervision::joined_peer"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">joined_peer</span></code></a> without repeating either step.</p>
 <ol class="arabic simple">
 <li><p><strong>Seeds the shadow with the peer’s current state.</strong> It performs a single,
-synchronous <code class="docutils literal notranslate"><span class="pre">query_state()</span></code> call against <code class="docutils literal notranslate"><span class="pre">peer_locality</span></code> to read
+synchronous <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_query_state.html#modules-supervision-api-hpx-supervision-query-state-api"><span class="std std-ref">query_state()</span></a> call against <code class="docutils literal notranslate"><span class="pre">peer_locality</span></code> to read
 whatever epoch the peer is currently in, then publishes <code class="docutils literal notranslate"><span class="pre">event::started</span></code>
 for that epoch onto a freshly minted shadow id. This seed step exists so
 the shadow reflects the peer’s state as of joining, rather than starting
 from <code class="docutils literal notranslate"><span class="pre">unknown</span></code> and waiting for the first subsequent event to arrive.</p></li>
 <li><p><strong>Registers a lifecycle-event observer</strong> on <code class="docutils literal notranslate"><span class="pre">peer_locality</span></code> (via
-<code class="docutils literal notranslate"><span class="pre">hpx::supervision::register_observer()</span></code>), along with an
-activity-transition observer (via <code class="docutils literal notranslate"><span class="pre">register_activity_observer()</span></code>,
+<a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_register_observer.html#modules-supervision-api-hpx-supervision-register-observer-api"><span class="std std-ref">hpx::supervision::register_observer()</span></a>), along with an
+activity-transition observer (via <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_register_activity_observer.html#modules-supervision-api-hpx-supervision-register-activity-observer-api"><span class="std std-ref">register_activity_observer()</span></a>,
 currently a no-op placeholder reserved for future use). These
 registrations live on the peer’s own locality and are what make the
 subsequent synchronization automatic: no further polling or explicit
 refresh call from the local registry is needed.</p></li>
 </ol>
 <p>Both registrations are made atomically with respect to concurrent
-<code class="docutils literal notranslate"><span class="pre">join()</span></code> calls for the same peer (a reservation is taken in <code class="docutils literal notranslate"><span class="pre">peers_</span></code>
+<a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">join()</span></code></a> calls for the same peer (a reservation is taken in <code class="docutils literal notranslate"><span class="pre">peers_</span></code>
 before either remote call is issued), and either observer failing to
 register cleanly rolls back the other, so a peer is never left half-joined.</p>
 </section>
@@ -2029,10 +2037,10 @@ epoch it actually occurred in. No round trip is initiated by the joining
 side to “check in” on a peer; synchronization is entirely push-driven by
 whichever locality actually observes the peer’s own state changing.</p>
 <p>If the mirrored event is terminal (<code class="docutils literal notranslate"><span class="pre">completed</span></code> or <code class="docutils literal notranslate"><span class="pre">failed</span></code>), the
-callback additionally schedules - via <code class="docutils literal notranslate"><span class="pre">hpx::post()</span></code>, deferred rather than
+callback additionally schedules - via <a class="reference internal" href="../libs/core/async_base/api/post_hpx_post.html#modules-post-hpx-post-api"><span class="std std-ref">hpx::post()</span></a>, deferred rather than
 inline, since the callback itself does not hold the registry’s lock - the
 peer’s eviction from <code class="docutils literal notranslate"><span class="pre">peers_</span></code>. Once evicted, the peer no longer appears in
-<code class="docutils literal notranslate"><span class="pre">registry::snapshot_peers()</span></code>, and its observer registrations are
+<a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry14snapshot_peersEv" title="hpx::supervision::registry::snapshot_peers"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">registry::snapshot_peers()</span></code></a>, and its observer registrations are
 unregistered on the peer’s locality so nothing is left listening for further
 events from a peer that has already reached a terminal state.</p>
 </section>
@@ -2054,7 +2062,7 @@ localities have each independently joined the same peer, a single event
 published by that peer notifies every one of their registries in the same
 pass, each mirroring the event onto its own local shadow. This reach is
 scoped to the publishing target, however – only localities that have
-actually called <code class="docutils literal notranslate"><span class="pre">join()</span></code> against that specific peer are registered as
+actually called <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry4joinERKN3hpx7id_typeE" title="hpx::supervision::registry::join"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">join()</span></code></a> against that specific peer are registered as
 observers and receive its events. A locality that has not joined a given
 peer is not notified when that peer publishes, regardless of whether it
 participates in supervision dispatch generally.</p>
@@ -2065,8 +2073,8 @@ participates in supervision dispatch generally.</p>
 <p>This shadow/authoritative distinction is exactly why fenced dispatch performs
 <em>two</em> admission checks rather than one:</p>
 <ul class="simple">
-<li><p><strong>Client-side filtering</strong> (<code class="docutils literal notranslate"><span class="pre">check_admission()</span></code> called directly by the
-caller, or peer filtering based on <code class="docutils literal notranslate"><span class="pre">registry::snapshot_peers()</span></code>) consults
+<li><p><strong>Client-side filtering</strong> (<a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_check_admission.html#modules-supervision-api-hpx-supervision-check-admission-api"><span class="std std-ref">check_admission()</span></a> called directly by the
+caller, or peer filtering based on <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4NK3hpx11supervision8registry14snapshot_peersEv" title="hpx::supervision::registry::snapshot_peers"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">registry::snapshot_peers()</span></code></a>) consults
 only the locally cached shadow state. It is fast and involves no remote
 round-trip, but its answer can be stale: it may say a peer is admitted when
 the peer has, in fact, already latched a terminal event that just hasn’t
@@ -2074,8 +2082,8 @@ propagated back yet. This check is an optimization - a cheap way to avoid
 dispatching work that is <em>already known locally</em> to be pointless - and
 must never be treated as authoritative.</p></li>
 <li><p><strong>Fenced-dispatch admission</strong> (the re-check performed inside
-<code class="docutils literal notranslate"><span class="pre">invoke_fenced_action()</span></code>, once the dispatched action has actually reached
-the target’s own locality via <code class="docutils literal notranslate"><span class="pre">hpx::colocated</span></code>) runs on the same
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_invoke_fenced_action.html#modules-dispatch-work-hpx-supervision-invoke-fenced-action-api"><span class="std std-ref">invoke_fenced_action()</span></a>, once the dispatched action has actually reached
+the target’s own locality via <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::colocated</span></code>) runs on the same
 locality/thread that owns the target’s authoritative supervision state, with
 no suspension point between the check and the action invocation that
 follows it. This is the check that actually decides whether the wrapped
@@ -2111,7 +2119,7 @@ has gone terminal.</p></li>
 <p>The same epoch value is consulted end-to-end: <code class="docutils literal notranslate"><span class="pre">check_admission(target,</span>
 <span class="pre">epoch)</span></code> compares the <em>epoch you pass in</em> against the target’s current epoch,
 not just whether the target is terminal in some absolute sense. This is why
-both <code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code>’s local check and <code class="docutils literal notranslate"><span class="pre">invoke_fenced_action()</span></code>’s
+both <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a>’s local check and <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_invoke_fenced_action.html#modules-dispatch-work-hpx-supervision-invoke-fenced-action-api"><span class="std std-ref">invoke_fenced_action()</span></a>’s
 remote re-check take an explicit <code class="docutils literal notranslate"><span class="pre">epoch</span></code> argument rather than operating on
 “the” state of the target.</p>
 <section id="when-to-keep-the-epoch-the-same">
@@ -2144,45 +2152,45 @@ protection rather than fixing the underlying condition.</p>
 </section>
 <section id="how-fenced-work-is-invoked">
 <h2>How fenced work is invoked<a class="headerlink" href="#how-fenced-work-is-invoked" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">hpx::supervision::dispatch_work&lt;action_type&gt;(target,</span> <span class="pre">epoch,</span> <span class="pre">action,</span> <span class="pre">args...)</span></code>
+<p><code class="docutils literal notranslate"><span class="pre">hpx::supervision::dispatch_work&lt;Action&gt;(target,</span> <span class="pre">epoch,</span> <span class="pre">args...)</span></code>
 is the entry point callers use. It performs two distinct steps, on two different localities:</p>
 <ol class="arabic">
 <li><p><strong>Local, non-authoritative early-out (caller’s locality).</strong>
-<code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code> first calls <code class="docutils literal notranslate"><span class="pre">check_admission(target,</span> <span class="pre">epoch)</span></code> against
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a> first calls <code class="docutils literal notranslate"><span class="pre">check_admission(target,</span> <span class="pre">epoch)</span></code> against
 the caller’s own locally cached shadow state. If this reports
-<code class="docutils literal notranslate"><span class="pre">dispatch_outcome::rejected_fenced</span></code>, <code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code> returns an
+<code class="docutils literal notranslate"><span class="pre">dispatch_outcome::rejected_fenced</span></code>, <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a> returns an
 already-exceptional future carrying <code class="docutils literal notranslate"><span class="pre">hpx::error::target_fenced</span></code>
 immediately - no parcel is ever sent, and the wrapped action is never
 invoked. This is purely an optimization to avoid a wasted round trip; it
 is not authoritative, since the shadow state it consults can be stale (see
 the sections above).</p></li>
 <li><p><strong>Colocated dispatch and authoritative re-check (target’s locality).</strong>
-If the local check does not reject, <code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code> wraps the caller’s
-action in a generated <code class="docutils literal notranslate"><span class="pre">fenced_action</span></code> and dispatches it via
-<code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> to <code class="docutils literal notranslate"><span class="pre">hpx::colocated(target)</span></code> - i.e. it runs on the same
+If the local check does not reject, <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a> wraps the caller’s
+action in a generated <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4I000DpEN3hpx11supervision13fenced_actionE" title="hpx::supervision::fenced_action"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">fenced_action</span></code></a> and dispatches it via
+<a class="reference internal" href="../libs/core/async_base/api/async_hpx_async.html#modules-async-hpx-async-api"><span class="std std-ref">hpx::async</span></a> to <code class="docutils literal notranslate"><span class="pre">hpx::colocated(target)</span></code> - i.e. it runs on the same
 locality that hosts <code class="docutils literal notranslate"><span class="pre">target</span></code> and owns its authoritative supervision
 state. The action body that actually runs there is
-<code class="docutils literal notranslate"><span class="pre">invoke_fenced_action()</span></code>, which performs a <em>second</em>
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_invoke_fenced_action.html#modules-dispatch-work-hpx-supervision-invoke-fenced-action-api"><span class="std std-ref">invoke_fenced_action()</span></a>, which performs a <em>second</em>
 <code class="docutils literal notranslate"><span class="pre">check_admission(target,</span> <span class="pre">epoch)</span></code> call. Because this call executes on
 the same locality/thread that owns the target’s supervision state, with
 no suspension point before the wrapped action runs immediately afterward
-(via <code class="docutils literal notranslate"><span class="pre">hpx::sync</span></code>, invoked directly/locally with no further parcel hop),
+(via <a class="reference internal" href="../libs/core/async_base/api/sync_hpx_sync.html#modules-sync-hpx-sync-api"><span class="std std-ref">hpx::sync</span></a>, invoked directly/locally with no further parcel hop),
 this second check is authoritative. If it also reports
 <code class="docutils literal notranslate"><span class="pre">rejected_fenced</span></code> - meaning the target latched a terminal event for
 this epoch sometime between the caller’s stale check and this point -
-<code class="docutils literal notranslate"><span class="pre">invoke_fenced_action()</span></code> throws <code class="docutils literal notranslate"><span class="pre">hpx::error::target_fenced</span></code> instead of
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_invoke_fenced_action.html#modules-dispatch-work-hpx-supervision-invoke-fenced-action-api"><span class="std std-ref">invoke_fenced_action()</span></a> throws <code class="docutils literal notranslate"><span class="pre">hpx::error::target_fenced</span></code> instead of
 invoking the action.</p>
 <p>Note that “dispatched to the target’s locality” does not imply a network
 round-trip: <code class="docutils literal notranslate"><span class="pre">hpx::colocated(target)</span></code> resolves to whichever locality
 actually hosts <code class="docutils literal notranslate"><span class="pre">target</span></code>, including the invoking locality itself when
 <code class="docutils literal notranslate"><span class="pre">target</span></code> happens to be local. In that case no parcel is sent, but
-<code class="docutils literal notranslate"><span class="pre">invoke_fenced_action()</span></code> - and, if admitted, the wrapped action inside
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_invoke_fenced_action.html#modules-dispatch-work-hpx-supervision-invoke-fenced-action-api"><span class="std std-ref">invoke_fenced_action()</span></a> - and, if admitted, the wrapped action inside
 it - still each run on a newly spawned HPX thread rather than inline on the
 calling thread, exactly as an unfenced <code class="docutils literal notranslate"><span class="pre">hpx::async&lt;Action&gt;(target,</span> <span class="pre">args...)</span></code>
 call behaves when <code class="docutils literal notranslate"><span class="pre">target</span></code> is local: it schedules a new thread rather than
 invoking the action synchronously in place. The one exception, on both sides,
 is an action explicitly declared as a <code class="docutils literal notranslate"><span class="pre">direct_action</span></code>, which HPX is
-permitted to invoke inline when the target is local; <code class="docutils literal notranslate"><span class="pre">fenced_action</span></code> itself
+permitted to invoke inline when the target is local; <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4I000DpEN3hpx11supervision13fenced_actionE" title="hpx::supervision::fenced_action"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">fenced_action</span></code></a> itself
 is an ordinary action, and the wrapped user <code class="docutils literal notranslate"><span class="pre">Action</span></code> follows whatever
 declaration the caller gave it. Either way, fenced dispatch adds only the
 two-tier admission check described above - it does not change whether or
@@ -2209,7 +2217,7 @@ dispatch_work(action, target, epoch, args...)
 </div>
 <p>Only <code class="docutils literal notranslate"><span class="pre">target</span></code> (not <code class="docutils literal notranslate"><span class="pre">epoch</span></code>) is forwarded into the wrapped action’s own
 argument list; the epoch is fencing metadata consumed entirely by the
-dispatch machinery. A convenience overload of <code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code> accepts an
+dispatch machinery. A convenience overload of <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a> accepts an
 action instance directly rather than only an action type, but follows the
 identical two-check flow described above.</p>
 <section id="relationship-to-unfenced-dispatch">
@@ -2232,7 +2240,7 @@ action’s own arguments (<code class="docutils literal notranslate"><span class
 forwarded to <code class="docutils literal notranslate"><span class="pre">Action</span></code> verbatim).</p></li>
 </ol>
 <p>Both a template-argument form and an instance-argument form are available for
-<code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code>, mirroring the two ways <code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> can be called:</p>
+<a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a>, mirroring the two ways <a class="reference internal" href="../libs/core/async_base/api/async_hpx_async.html#modules-async-hpx-async-api"><span class="std std-ref">hpx::async</span></a> can be called:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Action specified as an explicit template argument (as above):</span>
 <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">result_type</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">dispatch_work</span><span class="o">&lt;</span><span class="n">Action</span><span class="o">&gt;</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">...);</span>
@@ -2250,8 +2258,15 @@ behavior (same two-check admission flow, same exception on fencing, same
 argument forwarding to <code class="docutils literal notranslate"><span class="pre">Action</span></code>). It exists purely so that call sites
 already holding an action instance - rather than naming the action type
 directly – don’t need an extra step to obtain one, the same convenience
-<code class="docutils literal notranslate"><span class="pre">hpx::async</span></code> itself offers by accepting either an action type or an action
+<a class="reference internal" href="../libs/core/async_base/api/async_hpx_async.html#modules-async-hpx-async-api"><span class="std std-ref">hpx::async</span></a> itself offers by accepting either an action type or an action
 instance.</p>
+<p>A further overload, <code class="docutils literal notranslate"><span class="pre">dispatch_work(Action,</span> <span class="pre">discovered_peer</span> <span class="pre">const&amp;,</span>
+<span class="pre">args...)</span></code>, takes a peer returned by <code class="docutils literal notranslate"><span class="pre">discover_and_join()</span></code> in place of an
+explicit <code class="docutils literal notranslate"><span class="pre">target</span></code>/<code class="docutils literal notranslate"><span class="pre">epoch</span></code> pair and forwards to
+<code class="docutils literal notranslate"><span class="pre">dispatch_work&lt;Action&gt;(peer.locality,</span> <span class="pre">peer.join_epoch,</span> <span class="pre">args...)</span></code>. A peer
+that was never joined (<code class="docutils literal notranslate"><span class="pre">join_epoch</span> <span class="pre">==</span> <span class="pre">unjoined_epoch</span></code>, e.g. one returned by
+<a class="reference internal" href="../components/supervision_dispatch/api/discovery_hpx_supervision_discover_peers.html#modules-discovery-hpx-supervision-discover-peers-api"><span class="std std-ref">discover_peers()</span></a> alone) is rejected up front with the same
+<code class="docutils literal notranslate"><span class="pre">hpx::error::target_fenced</span></code> exceptional future.</p>
 <p>Everything else - <code class="docutils literal notranslate"><span class="pre">target</span></code>, the returned <code class="docutils literal notranslate"><span class="pre">hpx::future&lt;result_type&gt;</span></code>, and
 how the caller consumes it (<code class="docutils literal notranslate"><span class="pre">.get()</span></code>, continuations, etc.) - stays the
 same. The only additional caller-side responsibility is handling
@@ -2261,8 +2276,8 @@ dispatch never invokes <code class="docutils literal notranslate"><span class="p
 </section>
 <section id="observing-whether-an-action-was-fenced">
 <h3>Observing whether an action was fenced<a class="headerlink" href="#observing-whether-an-action-was-fenced" title="Link to this heading">#</a></h3>
-<p>From the caller’s point of view, <code class="docutils literal notranslate"><span class="pre">dispatch_work()</span></code> always returns an
-<code class="docutils literal notranslate"><span class="pre">hpx::future</span></code>. Whether the fence was detected locally (early-out, no
+<p>From the caller’s point of view, <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work()</span></a> always returns an
+<a class="reference internal" href="../libs/core/futures/api/future_hpx_future.html#modules-future-hpx-future-api"><span class="std std-ref">hpx::future</span></a>. Whether the fence was detected locally (early-out, no
 dispatch sent) or remotely (authoritative re-check on the target’s own
 locality), the future becomes exceptional in exactly the same way, so callers
 do not need to special-case which side caught it:</p>
@@ -2315,26 +2330,40 @@ elapsed.</p>
 <h3>Fencing a silent peer<a class="headerlink" href="#fencing-a-silent-peer" title="Link to this heading">#</a></h3>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/supervision_dispatch.hpp&gt;</span>
 
-<span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">registry</span><span class="w"> </span><span class="nf">local_registry</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">());</span>
+<span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">registry</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">);</span>
 
-<span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">joined_peer</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">peer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">local_registry</span><span class="p">.</span><span class="n">join</span><span class="p">(</span>
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">,</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">());</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">discovered_peer</span><span class="o">&gt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">peers</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">discover_and_join</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
 
-<span class="c1">// ... time passes; the peer&#39;s heartbeat stops ...</span>
+<span class="c1">// ... time passes; one peer&#39;s heartbeat stops ...</span>
 
-<span class="c1">// Client-side filtering: cheap, but only as fresh as the last observed</span>
-<span class="c1">// heartbeat/lifecycle event mirrored onto `shadow`.</span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">peer</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">local_registry</span><span class="p">.</span><span class="n">snapshot_peers</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">sync</span><span class="p">))</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">peer</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">peers</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">peer</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">lifecycle_state</span><span class="o">::</span><span class="n">failed</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// Client-side filtering: cheap, but only as fresh as the last</span>
+<span class="w">    </span><span class="c1">// heartbeat/lifecycle event mirrored onto this peer&#39;s local shadow.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">check_admission</span><span class="p">(</span><span class="n">peer</span><span class="p">.</span><span class="n">locality</span><span class="p">,</span><span class="w"> </span><span class="n">peer</span><span class="p">.</span><span class="n">join_epoch</span><span class="p">)</span><span class="w"> </span><span class="o">==</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">dispatch_outcome</span><span class="o">::</span><span class="n">rejected_fenced</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// Skip obviously-dead peers before even attempting dispatch.</span>
 <span class="w">        </span><span class="k">continue</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
+
 <span class="w">    </span><span class="c1">// Attempt fenced dispatch anyway; the target-side re-check inside</span>
-<span class="w">    </span><span class="c1">// invoke_fenced_action() is authoritative and will reject the action</span>
+<span class="w">    </span><span class="c1">// invoke_fenced_action() is authoritative and rejects the action</span>
 <span class="w">    </span><span class="c1">// with hpx::error::target_fenced if the peer has latched a terminal</span>
 <span class="w">    </span><span class="c1">// event we haven&#39;t observed locally yet.</span>
+<span class="w">    </span><span class="k">try</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">dispatch_work</span><span class="p">(</span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="n">peer</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">...).</span><span class="n">get</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">exception</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">get_error</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">error</span><span class="o">::</span><span class="n">target_fenced</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -2345,39 +2374,45 @@ elapsed.</p>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/supervision_dispatch.hpp&gt;</span>
 
 <span class="n">hpx</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">result_type</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span>
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">dispatch_work</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">...);</span>
+<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">dispatch_work</span><span class="p">(</span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">epoch</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">...);</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">wait_all_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">==</span>
-<span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">future_status</span><span class="o">::</span><span class="n">ready</span><span class="p">)</span>
+<span class="c1">// wait_all_for() rethrows if `f` becomes ready with an exception, so it</span>
+<span class="c1">// has to sit inside the try block along with f.get().</span>
+<span class="k">try</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="k">try</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">wait_all_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">==</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">future_status</span><span class="o">::</span><span class="n">ready</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="n">result_type</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
 <span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">exception</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="k">else</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">get_error</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">error</span><span class="o">::</span><span class="n">target_fenced</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Authoritative rejection: the target latched a terminal</span>
-<span class="w">            </span><span class="c1">// event for this epoch before the action could run.</span>
-<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Dispatch did not complete within the timeout; the target may</span>
+<span class="w">        </span><span class="c1">// be slow, unreachable, or the shadow state used for client-side</span>
+<span class="w">        </span><span class="c1">// filtering may be stale.</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
-<span class="k">else</span>
+<span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">exception</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="c1">// Dispatch did not complete within the timeout; the target may be</span>
-<span class="w">    </span><span class="c1">// slow, unreachable, or the shadow state used for client-side</span>
-<span class="w">    </span><span class="c1">// filtering may be stale.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">get_error</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">error</span><span class="o">::</span><span class="n">target_fenced</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Authoritative rejection: the target latched a terminal event</span>
+<span class="w">        </span><span class="c1">// for this epoch before the action could run.</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">throw</span><span class="p">;</span><span class="w">    </span><span class="c1">// the dispatch or the action itself failed</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </section>
 <section id="querying-state-and-publishing-events-through-a-handle">
 <h3>Querying state and publishing events through a handle<a class="headerlink" href="#querying-state-and-publishing-events-through-a-handle" title="Link to this heading">#</a></h3>
-<p>The handle returned by <code class="docutils literal notranslate"><span class="pre">init()</span></code> also doubles as the argument to a small
-family of convenience overloads of <code class="docutils literal notranslate"><span class="pre">query_state()</span></code>/<code class="docutils literal notranslate"><span class="pre">publish_event()</span></code>
+<p>The handle returned by <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_api_hpx_supervision_init.html#modules-dispatch-api-hpx-supervision-init-api"><span class="std std-ref">init()</span></a> also doubles as the argument to a small
+family of convenience overloads of <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_query_state.html#modules-supervision-api-hpx-supervision-query-state-api"><span class="std std-ref">query_state()</span></a>/<a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_publish_event.html#modules-supervision-api-hpx-supervision-publish-event-api"><span class="std std-ref">publish_event()</span></a>
 that resolve locality and target automatically, instead of requiring the
-caller to extract <code class="docutils literal notranslate"><span class="pre">handle.get_id()</span></code> and <code class="docutils literal notranslate"><span class="pre">hpx::find_here()</span></code> manually:</p>
+caller to extract <code class="docutils literal notranslate"><span class="pre">handle.get_id()</span></code> and <a class="reference internal" href="../libs/full/runtime_distributed/api/find_here.html#_CPPv4N3hpx9find_hereER10error_code" title="hpx::find_here"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hpx::find_here()</span></code></a> manually:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hpx/supervision_dispatch.hpp&gt;</span>
 
 <span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">registry</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span>
@@ -2394,7 +2429,7 @@ caller to extract <code class="docutils literal notranslate"><span class="pre">h
 </pre></div>
 </div>
 <p>Querying a peer’s state after joining it follows the same pattern, using a
-<code class="docutils literal notranslate"><span class="pre">discovered_peer</span></code> in place of an explicit locality/target pair:</p>
+<a class="reference internal" href="../components/supervision_dispatch/docs/index.html#_CPPv4N3hpx11supervision15discovered_peerE" title="hpx::supervision::discovered_peer"><code class="xref cpp cpp-struct docutils literal notranslate"><span class="pre">discovered_peer</span></code></a> in place of an explicit locality/target pair:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">peer</span><span class="w"> </span><span class="o">:</span>
 <span class="w">    </span><span class="n">hpx</span><span class="o">::</span><span class="n">supervision</span><span class="o">::</span><span class="n">discover_and_join</span><span class="p">(</span><span class="n">handle</span><span class="p">))</span>
 <span class="p">{</span>
@@ -2411,11 +2446,11 @@ lifecycle events it self, never on behalf of a peer’s.</p>
 when to publish <code class="docutils literal notranslate"><span class="pre">started</span></code>/<code class="docutils literal notranslate"><span class="pre">running</span></code>/a terminal event for a worker’s own
 locality, and how a supervisor queries peer worker state through the handle
 above - is available in <code class="docutils literal notranslate"><span class="pre">components/supervision_dispatch/examples/plain_worker.cpp</span></code>.</p>
-<p>See <a class="reference internal" href="../libs/full/supervision/docs/index.html#modules-supervision"><span class="std std-ref">Supervision module</span></a> for the full semantics of <code class="docutils literal notranslate"><span class="pre">check_admission</span></code>,
-<code class="docutils literal notranslate"><span class="pre">dispatch_outcome</span></code>, and the individual lifecycle events referenced above,
+<p>See <a class="reference internal" href="../libs/full/supervision/docs/index.html#modules-supervision"><span class="std std-ref">Supervision module</span></a> for the full semantics of <a class="reference internal" href="../libs/full/supervision/api/supervision_api_hpx_supervision_check_admission.html#modules-supervision-api-hpx-supervision-check-admission-api"><span class="std std-ref">check_admission</span></a>,
+<code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">dispatch_outcome</span></code>, and the individual lifecycle events referenced above,
 and <a class="reference internal" href="../components/supervision_dispatch/docs/index.html#modules-supervision-dispatch"><span class="std std-ref">Supervision dispatch module</span></a> for the API reference of this
-component’s own types and functions (<code class="docutils literal notranslate"><span class="pre">registry</span></code>, <code class="docutils literal notranslate"><span class="pre">discovery</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">dispatch_work</span></code>).</p>
+component’s own types and functions (<a class="reference internal" href="../components/supervision_dispatch/api/registry_hpx_supervision_registry.html#modules-registry-hpx-supervision-registry-api"><span class="std std-ref">registry</span></a>, <a class="reference internal" href="../components/supervision_dispatch/api/discovery_hpx_supervision_discover_and_join.html#modules-discovery-hpx-supervision-discover-and-join-api"><span class="std std-ref">discover_and_join</span></a>,
+and <a class="reference internal" href="../components/supervision_dispatch/api/dispatch_work_hpx_supervision_dispatch_work.html#modules-dispatch-work-hpx-supervision-dispatch-work-api"><span class="std std-ref">dispatch_work</span></a>).</p>
 </section>
 </section>
 </section>

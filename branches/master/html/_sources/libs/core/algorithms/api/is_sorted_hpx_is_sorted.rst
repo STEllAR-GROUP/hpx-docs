@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::is_sorted_until <modules_is_sorted_hpx_is_sorted_until_api>`
 
-.. doxygenfunction:: hpx::is_sorted(FwdIter first, FwdIter last, Pred &&pred=Pred())
+.. doxygenfunction:: hpx::is_sorted(FwdIter first, FwdIter last, Pred && pred)
    :project: hpx
-.. doxygenfunction:: hpx::is_sorted(ExPolicy &&policy, FwdIter first, FwdIter last, Pred &&pred=Pred())
+.. doxygenfunction:: hpx::is_sorted(ExPolicy && policy, FwdIter first, FwdIter last, Pred && pred)
    :project: hpx

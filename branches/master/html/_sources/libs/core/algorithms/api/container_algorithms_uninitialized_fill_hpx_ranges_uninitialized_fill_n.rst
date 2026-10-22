@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::ranges::uninitialized_fill <modules_container_algorithms_uninitialized_fill_hpx_ranges_uninitialized_fill_api>`
 
-.. doxygenfunction:: hpx::ranges::uninitialized_fill_n(FwdIter first, Size count, T const &value)
+.. doxygenfunction:: hpx::ranges::uninitialized_fill_n(FwdIter first, Size count, T const & value)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::uninitialized_fill_n(ExPolicy &&policy, FwdIter first, Size count, T const &value)
+.. doxygenfunction:: hpx::ranges::uninitialized_fill_n(ExPolicy && policy, FwdIter first, Size count, T const & value)
    :project: hpx

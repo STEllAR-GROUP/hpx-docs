@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::unique_copy <modules_container_algorithms_unique_hpx_ranges_unique_copy_api>`
 
-.. doxygenfunction:: hpx::ranges::unique(FwdIter first, Sent last, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::unique(FwdIter first, Sent last, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::unique(ExPolicy &&policy, FwdIter first, Sent last, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::unique(ExPolicy && policy, FwdIter first, Sent last, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::unique(Rng &&rng, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::unique(Rng && rng, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::unique(ExPolicy &&policy, Rng &&rng, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::unique(ExPolicy && policy, Rng && rng, Pred && pred, Proj && proj)
    :project: hpx

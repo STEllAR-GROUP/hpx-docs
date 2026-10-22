@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::lexicographical_compare(InIter1 first1, Sent1 last1, InIter2 first2, Sent2 last2, Pred &&pred=Pred(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
+.. doxygenfunction:: hpx::ranges::lexicographical_compare(InIter1 first1, Sent1 last1, InIter2 first2, Sent2 last2, Pred && pred, Proj1 && proj1, Proj2 && proj2)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::lexicographical_compare(ExPolicy &&policy, FwdIter1 first1, Sent1 last1, FwdIter2 first2, Sent2 last2, Pred &&pred=Pred(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
+.. doxygenfunction:: hpx::ranges::lexicographical_compare(ExPolicy && policy, FwdIter1 first1, Sent1 last1, FwdIter2 first2, Sent2 last2, Pred && pred, Proj1 && proj1, Proj2 && proj2)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::lexicographical_compare(Rng1 &&rng1, Rng2 &&rng2, Pred &&pred=Pred(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
+.. doxygenfunction:: hpx::ranges::lexicographical_compare(Rng1 && rng1, Rng2 && rng2, Pred && pred, Proj1 && proj1, Proj2 && proj2)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::lexicographical_compare(ExPolicy &&policy, Rng1 &&rng1, Rng2 &&rng2, Pred &&pred=Pred(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
+.. doxygenfunction:: hpx::ranges::lexicographical_compare(ExPolicy && policy, Rng1 && rng1, Rng2 && rng2, Pred && pred, Proj1 && proj1, Proj2 && proj2)
    :project: hpx

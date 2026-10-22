@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::ranges::for_each <modules_container_algorithms_for_each_hpx_ranges_for_each_api>`
 
-.. doxygenfunction:: hpx::ranges::for_each_n(InIter first, Size count, F &&f, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::for_each_n(InIter first, Size count, F && f, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::for_each_n(ExPolicy &&policy, FwdIter first, Size count, F &&f, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::for_each_n(ExPolicy && policy, FwdIter first, Size count, F && f, Proj && proj)
    :project: hpx

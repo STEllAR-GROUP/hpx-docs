@@ -25,5 +25,5 @@ See also:
 
 .. doxygenfunction:: hpx::uninitialized_default_construct(FwdIter first, FwdIter last)
    :project: hpx
-.. doxygenfunction:: hpx::uninitialized_default_construct(ExPolicy &&policy, FwdIter first, FwdIter last)
+.. doxygenfunction:: hpx::uninitialized_default_construct(ExPolicy && policy, FwdIter first, FwdIter last)
    :project: hpx

@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::search <modules_search_hpx_search_api>`
 
-.. doxygenfunction:: hpx::search_n(FwdIter first, std::size_t count, FwdIter2 s_first, FwdIter2 s_last, Pred &&op=Pred())
+.. doxygenfunction:: hpx::search_n(FwdIter first, std::size_t count, FwdIter2 s_first, FwdIter2 s_last, Pred && op)
    :project: hpx
-.. doxygenfunction:: hpx::search_n(ExPolicy &&policy, FwdIter first, std::size_t count, FwdIter2 s_first, FwdIter2 s_last, Pred &&op=Pred())
+.. doxygenfunction:: hpx::search_n(ExPolicy && policy, FwdIter first, std::size_t count, FwdIter2 s_first, FwdIter2 s_last, Pred && op)
    :project: hpx

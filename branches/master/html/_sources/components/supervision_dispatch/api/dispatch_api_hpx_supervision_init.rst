@@ -24,7 +24,7 @@ See also:
    - :ref:`hpx::supervision::finalize <modules_dispatch_api_hpx_supervision_finalize_api>`
    - :ref:`hpx::supervision::is_initialized <modules_dispatch_api_hpx_supervision_is_initialized_api>`
 
-.. doxygenfunction:: hpx::supervision::init(hpx::chrono::steady_duration const &discovery_timeout=default_discovery_timeout)
+.. doxygenfunction:: hpx::supervision::init(hpx::chrono::steady_duration const & discovery_timeout)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::init(hpx::launch::sync_policy policy, hpx::chrono::steady_duration const &discovery_timeout=default_discovery_timeout)
+.. doxygenfunction:: hpx::supervision::init(hpx::launch::sync_policy policy, hpx::chrono::steady_duration const & discovery_timeout)
    :project: hpx

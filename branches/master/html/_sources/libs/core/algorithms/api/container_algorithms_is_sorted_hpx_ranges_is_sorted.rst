@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::is_sorted_until <modules_container_algorithms_is_sorted_hpx_ranges_is_sorted_until_api>`
 
-.. doxygenfunction:: hpx::ranges::is_sorted(FwdIter first, Sent last, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::is_sorted(FwdIter first, Sent last, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::is_sorted(ExPolicy &&policy, FwdIter first, Sent last, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::is_sorted(ExPolicy && policy, FwdIter first, Sent last, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::is_sorted(Rng &&rng, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::is_sorted(Rng && rng, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::is_sorted(ExPolicy &&policy, Rng &&rng, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::is_sorted(ExPolicy && policy, Rng && rng, Pred && pred, Proj && proj)
    :project: hpx

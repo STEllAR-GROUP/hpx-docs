@@ -24,7 +24,7 @@ See also:
    - :ref:`hpx::partition <modules_partition_hpx_partition_api>`
    - :ref:`hpx::partition_copy <modules_partition_hpx_partition_copy_api>`
 
-.. doxygenfunction:: hpx::stable_partition(BidirIter first, BidirIter last, F && f, Proj && proj)
+.. doxygenfunction:: hpx::stable_partition(BidirIter first, BidirIter last, F &&f, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::stable_partition(ExPolicy && policy, BidirIter first, BidirIter last, F && f, Proj && proj)
+.. doxygenfunction:: hpx::stable_partition(ExPolicy &&policy, BidirIter first, BidirIter last, F &&f, Proj &&proj=Proj())
    :project: hpx

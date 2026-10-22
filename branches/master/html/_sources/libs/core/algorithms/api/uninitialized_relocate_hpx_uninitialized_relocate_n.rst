@@ -25,5 +25,5 @@ See also:
 
 .. doxygenfunction:: hpx::uninitialized_relocate_n(InIter first, Size count, FwdIter dest)
    :project: hpx
-.. doxygenfunction:: hpx::uninitialized_relocate_n(ExPolicy && policy, InIter first, Size count, FwdIter dest)
+.. doxygenfunction:: hpx::uninitialized_relocate_n(ExPolicy &&policy, InIter first, Size count, FwdIter dest)
    :project: hpx

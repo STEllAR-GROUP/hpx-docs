@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::lexicographical_compare(InIter1 first1, InIter1 last1, InIter2 first2, InIter2 last2, Pred && pred)
+.. doxygenfunction:: hpx::lexicographical_compare(InIter1 first1, InIter1 last1, InIter2 first2, InIter2 last2, Pred &&pred)
    :project: hpx
-.. doxygenfunction:: hpx::lexicographical_compare(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred && pred)
+.. doxygenfunction:: hpx::lexicographical_compare(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred &&pred)
    :project: hpx

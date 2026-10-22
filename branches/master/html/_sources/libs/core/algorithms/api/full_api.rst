@@ -20,176 +20,172 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/algorithms/api/run_on_all_hpx_experimental_run_on_all.rst
-   /libs/core/algorithms/api/task_group_hpx_experimental_task_group.rst
    /libs/core/algorithms/api/task_block_hpx_experimental_task_canceled_exception.rst
    /libs/core/algorithms/api/task_block_hpx_experimental_task_block.rst
    /libs/core/algorithms/api/task_block_hpx_experimental_define_task_block.rst
    /libs/core/algorithms/api/task_block_hpx_experimental_define_task_block_restore_thread.rst
+   /libs/core/algorithms/api/run_on_all_hpx_experimental_run_on_all.rst
+   /libs/core/algorithms/api/task_group_hpx_experimental_task_group.rst
+   /libs/core/algorithms/api/range.rst
+   /libs/core/algorithms/api/shift_left_hpx_shift_left.rst
+   /libs/core/algorithms/api/all_any_none_hpx_all_of.rst
+   /libs/core/algorithms/api/all_any_none_hpx_any_of.rst
+   /libs/core/algorithms/api/all_any_none_hpx_none_of.rst
+   /libs/core/algorithms/api/transform_reduce_binary.rst
+   /libs/core/algorithms/api/search_hpx_search.rst
+   /libs/core/algorithms/api/search_hpx_search_n.rst
+   /libs/core/algorithms/api/nth_element_hpx_nth_element.rst
+   /libs/core/algorithms/api/remove_hpx_remove.rst
+   /libs/core/algorithms/api/remove_hpx_remove_if.rst
+   /libs/core/algorithms/api/for_each_index_hpx_experimental_for_each_index.rst
+   /libs/core/algorithms/api/make_heap_hpx_make_heap.rst
+   /libs/core/algorithms/api/partial_sort_copy_hpx_partial_sort_copy.rst
+   /libs/core/algorithms/api/is_heap_hpx_is_heap.rst
+   /libs/core/algorithms/api/is_heap_hpx_is_heap_until.rst
    /libs/core/algorithms/api/for_loop_hpx_experimental_for_loop.rst
    /libs/core/algorithms/api/for_loop_hpx_experimental_for_loop_strided.rst
    /libs/core/algorithms/api/for_loop_hpx_experimental_for_loop_n.rst
    /libs/core/algorithms/api/for_loop_hpx_experimental_for_loop_n_strided.rst
-   /libs/core/algorithms/api/uninitialized_fill_hpx_uninitialized_fill.rst
-   /libs/core/algorithms/api/uninitialized_fill_hpx_uninitialized_fill_n.rst
-   /libs/core/algorithms/api/sort_by_key_hpx_experimental_sort_by_key.rst
-   /libs/core/algorithms/api/set_intersection_hpx_set_intersection.rst
-   /libs/core/algorithms/api/nth_element_hpx_nth_element.rst
-   /libs/core/algorithms/api/partial_sort_hpx_partial_sort.rst
-   /libs/core/algorithms/api/exclusive_scan_hpx_exclusive_scan.rst
-   /libs/core/algorithms/api/lexicographical_compare_hpx_lexicographical_compare.rst
-   /libs/core/algorithms/api/uninitialized_relocate_hpx_uninitialized_relocate.rst
-   /libs/core/algorithms/api/uninitialized_relocate_hpx_uninitialized_relocate_n.rst
-   /libs/core/algorithms/api/uninitialized_move_hpx_uninitialized_move.rst
-   /libs/core/algorithms/api/uninitialized_move_hpx_uninitialized_move_n.rst
-   /libs/core/algorithms/api/remove_hpx_remove.rst
-   /libs/core/algorithms/api/remove_hpx_remove_if.rst
-   /libs/core/algorithms/api/copy_hpx_copy.rst
-   /libs/core/algorithms/api/copy_hpx_copy_n.rst
-   /libs/core/algorithms/api/copy_hpx_copy_if.rst
-   /libs/core/algorithms/api/unique_hpx_unique.rst
-   /libs/core/algorithms/api/unique_hpx_unique_copy.rst
-   /libs/core/algorithms/api/for_loop_reduction_bit_or_hpx_experimental_reduction_bit_or.rst
-   /libs/core/algorithms/api/for_loop_reduction_bit_xor_hpx_experimental_reduction_bit_xor.rst
-   /libs/core/algorithms/api/for_loop_reduction_base_hpx_experimental_reduction.rst
-   /libs/core/algorithms/api/destroy_hpx_destroy.rst
-   /libs/core/algorithms/api/destroy_hpx_destroy_n.rst
-   /libs/core/algorithms/api/move_hpx_move.rst
-   /libs/core/algorithms/api/sort_hpx_sort.rst
-   /libs/core/algorithms/api/uninitialized_default_construct_hpx_uninitialized_default_construct.rst
-   /libs/core/algorithms/api/uninitialized_default_construct_hpx_uninitialized_default_construct_n.rst
-   /libs/core/algorithms/api/fill_hpx_fill.rst
-   /libs/core/algorithms/api/fill_hpx_fill_n.rst
-   /libs/core/algorithms/api/set_union_hpx_set_union.rst
-   /libs/core/algorithms/api/adjacent_find_hpx_adjacent_find.rst
-   /libs/core/algorithms/api/all_any_none_hpx_all_of.rst
-   /libs/core/algorithms/api/all_any_none_hpx_any_of.rst
-   /libs/core/algorithms/api/all_any_none_hpx_none_of.rst
-   /libs/core/algorithms/api/inclusive_scan_hpx_inclusive_scan.rst
-   /libs/core/algorithms/api/mismatch_hpx_mismatch.rst
    /libs/core/algorithms/api/generate_hpx_generate.rst
    /libs/core/algorithms/api/generate_hpx_generate_n.rst
-   /libs/core/algorithms/api/count_hpx_count.rst
-   /libs/core/algorithms/api/count_hpx_count_if.rst
-   /libs/core/algorithms/api/partial_sort_copy_hpx_partial_sort_copy.rst
-   /libs/core/algorithms/api/search_hpx_search.rst
-   /libs/core/algorithms/api/search_hpx_search_n.rst
-   /libs/core/algorithms/api/for_loop_reduction_max_hpx_experimental_reduction_max.rst
-   /libs/core/algorithms/api/starts_with_hpx_starts_with.rst
+   /libs/core/algorithms/api/for_loop_induction_hpx_experimental_induction.rst
+   /libs/core/algorithms/api/includes_hpx_includes.rst
+   /libs/core/algorithms/api/remove_copy_hpx_remove_copy.rst
+   /libs/core/algorithms/api/remove_copy_hpx_remove_copy_if.rst
+   /libs/core/algorithms/api/sort_hpx_sort.rst
+   /libs/core/algorithms/api/transform_hpx_transform.rst
    /libs/core/algorithms/api/uninitialized_value_construct_hpx_uninitialized_value_construct.rst
    /libs/core/algorithms/api/uninitialized_value_construct_hpx_uninitialized_value_construct_n.rst
-   /libs/core/algorithms/api/merge_hpx_merge.rst
-   /libs/core/algorithms/api/merge_hpx_inplace_merge.rst
-   /libs/core/algorithms/api/reverse_hpx_reverse.rst
-   /libs/core/algorithms/api/reverse_hpx_reverse_copy.rst
+   /libs/core/algorithms/api/is_partitioned_hpx_is_partitioned.rst
+   /libs/core/algorithms/api/minmax_hpx_min_element.rst
+   /libs/core/algorithms/api/minmax_hpx_max_element.rst
+   /libs/core/algorithms/api/minmax_hpx_minmax_element.rst
+   /libs/core/algorithms/api/inclusive_scan_hpx_inclusive_scan.rst
+   /libs/core/algorithms/api/fill_hpx_fill.rst
+   /libs/core/algorithms/api/fill_hpx_fill_n.rst
+   /libs/core/algorithms/api/stable_sort_hpx_stable_sort.rst
+   /libs/core/algorithms/api/uninitialized_relocate_hpx_uninitialized_relocate.rst
+   /libs/core/algorithms/api/uninitialized_relocate_hpx_uninitialized_relocate_n.rst
+   /libs/core/algorithms/api/transform_exclusive_scan_hpx_transform_exclusive_scan.rst
+   /libs/core/algorithms/api/reduce_by_key_hpx_reduce_by_key.rst
+   /libs/core/algorithms/api/uninitialized_copy_hpx_uninitialized_copy.rst
+   /libs/core/algorithms/api/uninitialized_copy_hpx_uninitialized_copy_n.rst
+   /libs/core/algorithms/api/exclusive_scan_hpx_exclusive_scan.rst
+   /libs/core/algorithms/api/destroy_hpx_destroy.rst
+   /libs/core/algorithms/api/destroy_hpx_destroy_n.rst
+   /libs/core/algorithms/api/for_loop_reduction_max_hpx_experimental_reduction_max.rst
+   /libs/core/algorithms/api/shift_right_hpx_shift_right.rst
    /libs/core/algorithms/api/set_symmetric_difference_hpx_set_symmetric_difference.rst
-   /libs/core/algorithms/api/replace_hpx_replace.rst
-   /libs/core/algorithms/api/replace_hpx_replace_if.rst
-   /libs/core/algorithms/api/replace_hpx_replace_copy.rst
-   /libs/core/algorithms/api/replace_hpx_replace_copy_if.rst
-   /libs/core/algorithms/api/for_loop_reduction_multiplies_hpx_experimental_reduction_multiplies.rst
+   /libs/core/algorithms/api/for_each_hpx_for_each.rst
+   /libs/core/algorithms/api/for_each_hpx_for_each_n.rst
+   /libs/core/algorithms/api/set_difference_hpx_set_difference.rst
+   /libs/core/algorithms/api/for_loop_reduction_plus_hpx_experimental_reduction_plus.rst
+   /libs/core/algorithms/api/partition_hpx_partition.rst
+   /libs/core/algorithms/api/partition_hpx_stable_partition.rst
+   /libs/core/algorithms/api/partition_hpx_partition_copy.rst
+   /libs/core/algorithms/api/set_intersection_hpx_set_intersection.rst
    /libs/core/algorithms/api/find_hpx_find.rst
    /libs/core/algorithms/api/find_hpx_find_if.rst
    /libs/core/algorithms/api/find_hpx_find_if_not.rst
    /libs/core/algorithms/api/find_hpx_find_end.rst
    /libs/core/algorithms/api/find_hpx_find_first_of.rst
-   /libs/core/algorithms/api/ends_with_hpx_ends_with.rst
-   /libs/core/algorithms/api/stable_sort_hpx_stable_sort.rst
-   /libs/core/algorithms/api/transform_inclusive_scan_hpx_transform_inclusive_scan.rst
-   /libs/core/algorithms/api/includes_hpx_includes.rst
-   /libs/core/algorithms/api/is_partitioned_hpx_is_partitioned.rst
-   /libs/core/algorithms/api/partition_hpx_partition.rst
-   /libs/core/algorithms/api/partition_hpx_stable_partition.rst
-   /libs/core/algorithms/api/partition_hpx_partition_copy.rst
-   /libs/core/algorithms/api/adjacent_difference_hpx_adjacent_difference.rst
-   /libs/core/algorithms/api/iota.rst
-   /libs/core/algorithms/api/for_loop_reduction_bit_and_hpx_experimental_reduction_bit_and.rst
-   /libs/core/algorithms/api/transform_exclusive_scan_hpx_transform_exclusive_scan.rst
-   /libs/core/algorithms/api/for_each_hpx_for_each.rst
-   /libs/core/algorithms/api/for_each_hpx_for_each_n.rst
-   /libs/core/algorithms/api/transform_reduce_hpx_transform_reduce.rst
-   /libs/core/algorithms/api/transform_reduce_binary.rst
-   /libs/core/algorithms/api/for_each_index_hpx_experimental_for_each_index.rst
-   /libs/core/algorithms/api/is_heap_hpx_is_heap.rst
-   /libs/core/algorithms/api/is_heap_hpx_is_heap_until.rst
+   /libs/core/algorithms/api/count_hpx_count.rst
+   /libs/core/algorithms/api/count_hpx_count_if.rst
+   /libs/core/algorithms/api/move_hpx_move.rst
    /libs/core/algorithms/api/reduce_deterministic_hpx_reduce_deterministic.rst
-   /libs/core/algorithms/api/equal_hpx_equal.rst
-   /libs/core/algorithms/api/reduce_by_key_hpx_reduce_by_key.rst
-   /libs/core/algorithms/api/rotate_hpx_rotate.rst
-   /libs/core/algorithms/api/rotate_hpx_rotate_copy.rst
-   /libs/core/algorithms/api/for_loop_induction_hpx_experimental_induction.rst
-   /libs/core/algorithms/api/uninitialized_copy_hpx_uninitialized_copy.rst
-   /libs/core/algorithms/api/uninitialized_copy_hpx_uninitialized_copy_n.rst
-   /libs/core/algorithms/api/shift_left_hpx_shift_left.rst
-   /libs/core/algorithms/api/shift_right_hpx_shift_right.rst
-   /libs/core/algorithms/api/reduce_hpx_reduce.rst
-   /libs/core/algorithms/api/swap_ranges_hpx_swap_ranges.rst
-   /libs/core/algorithms/api/for_loop_reduction_plus_hpx_experimental_reduction_plus.rst
-   /libs/core/algorithms/api/set_difference_hpx_set_difference.rst
-   /libs/core/algorithms/api/remove_copy_hpx_remove_copy.rst
-   /libs/core/algorithms/api/remove_copy_hpx_remove_copy_if.rst
-   /libs/core/algorithms/api/transform_hpx_transform.rst
+   /libs/core/algorithms/api/adjacent_difference_hpx_adjacent_difference.rst
+   /libs/core/algorithms/api/transform_reduce_hpx_transform_reduce.rst
+   /libs/core/algorithms/api/for_loop_reduction_bit_or_hpx_experimental_reduction_bit_or.rst
    /libs/core/algorithms/api/is_sorted_hpx_is_sorted.rst
    /libs/core/algorithms/api/is_sorted_hpx_is_sorted_until.rst
+   /libs/core/algorithms/api/for_loop_reduction_bit_and_hpx_experimental_reduction_bit_and.rst
+   /libs/core/algorithms/api/starts_with_hpx_starts_with.rst
+   /libs/core/algorithms/api/iota.rst
+   /libs/core/algorithms/api/adjacent_find_hpx_adjacent_find.rst
+   /libs/core/algorithms/api/for_loop_reduction_multiplies_hpx_experimental_reduction_multiplies.rst
+   /libs/core/algorithms/api/transform_inclusive_scan_hpx_transform_inclusive_scan.rst
    /libs/core/algorithms/api/for_loop_reduction_min_hpx_experimental_reduction_min.rst
-   /libs/core/algorithms/api/make_heap_hpx_make_heap.rst
-   /libs/core/algorithms/api/minmax_hpx_min_element.rst
-   /libs/core/algorithms/api/minmax_hpx_max_element.rst
-   /libs/core/algorithms/api/minmax_hpx_minmax_element.rst
+   /libs/core/algorithms/api/uninitialized_move_hpx_uninitialized_move.rst
+   /libs/core/algorithms/api/uninitialized_move_hpx_uninitialized_move_n.rst
+   /libs/core/algorithms/api/mismatch_hpx_mismatch.rst
+   /libs/core/algorithms/api/replace_hpx_replace.rst
+   /libs/core/algorithms/api/replace_hpx_replace_if.rst
+   /libs/core/algorithms/api/replace_hpx_replace_copy.rst
+   /libs/core/algorithms/api/replace_hpx_replace_copy_if.rst
+   /libs/core/algorithms/api/ends_with_hpx_ends_with.rst
+   /libs/core/algorithms/api/swap_ranges_hpx_swap_ranges.rst
+   /libs/core/algorithms/api/uninitialized_default_construct_hpx_uninitialized_default_construct.rst
+   /libs/core/algorithms/api/uninitialized_default_construct_hpx_uninitialized_default_construct_n.rst
+   /libs/core/algorithms/api/equal_hpx_equal.rst
+   /libs/core/algorithms/api/merge_hpx_merge.rst
+   /libs/core/algorithms/api/merge_hpx_inplace_merge.rst
+   /libs/core/algorithms/api/partial_sort_hpx_partial_sort.rst
+   /libs/core/algorithms/api/reverse_hpx_reverse.rst
+   /libs/core/algorithms/api/reverse_hpx_reverse_copy.rst
+   /libs/core/algorithms/api/reduce_hpx_reduce.rst
+   /libs/core/algorithms/api/unique_hpx_unique.rst
+   /libs/core/algorithms/api/unique_hpx_unique_copy.rst
+   /libs/core/algorithms/api/uninitialized_fill_hpx_uninitialized_fill.rst
+   /libs/core/algorithms/api/uninitialized_fill_hpx_uninitialized_fill_n.rst
+   /libs/core/algorithms/api/set_union_hpx_set_union.rst
+   /libs/core/algorithms/api/rotate_hpx_rotate.rst
+   /libs/core/algorithms/api/rotate_hpx_rotate_copy.rst
+   /libs/core/algorithms/api/lexicographical_compare_hpx_lexicographical_compare.rst
+   /libs/core/algorithms/api/for_loop_reduction_base_hpx_experimental_reduction.rst
+   /libs/core/algorithms/api/sort_by_key_hpx_experimental_sort_by_key.rst
+   /libs/core/algorithms/api/for_loop_reduction_bit_xor_hpx_experimental_reduction_bit_xor.rst
+   /libs/core/algorithms/api/copy_hpx_copy.rst
+   /libs/core/algorithms/api/copy_hpx_copy_n.rst
+   /libs/core/algorithms/api/copy_hpx_copy_if.rst
+   /libs/core/algorithms/api/container_algorithms_shift_left_hpx_ranges_shift_left.rst
+   /libs/core/algorithms/api/container_algorithms_all_any_none_hpx_ranges_all_of.rst
+   /libs/core/algorithms/api/container_algorithms_all_any_none_hpx_ranges_any_of.rst
+   /libs/core/algorithms/api/container_algorithms_all_any_none_hpx_ranges_none_of.rst
+   /libs/core/algorithms/api/container_algorithms_search_hpx_ranges_search.rst
+   /libs/core/algorithms/api/container_algorithms_search_hpx_ranges_search_n.rst
+   /libs/core/algorithms/api/container_algorithms_nth_element_hpx_ranges_nth_element.rst
+   /libs/core/algorithms/api/container_algorithms_remove_hpx_ranges_remove.rst
+   /libs/core/algorithms/api/container_algorithms_remove_hpx_ranges_remove_if.rst
+   /libs/core/algorithms/api/container_algorithms_make_heap_hpx_ranges_make_heap.rst
+   /libs/core/algorithms/api/container_algorithms_partial_sort_copy_hpx_ranges_partial_sort_copy.rst
+   /libs/core/algorithms/api/container_algorithms_is_heap_hpx_ranges_is_heap.rst
+   /libs/core/algorithms/api/container_algorithms_is_heap_hpx_ranges_is_heap_until.rst
    /libs/core/algorithms/api/container_algorithms_for_loop_hpx_ranges_experimental_for_loop.rst
    /libs/core/algorithms/api/container_algorithms_for_loop_hpx_ranges_experimental_for_loop_strided.rst
    /libs/core/algorithms/api/container_algorithms_for_loop_hpx_ranges_experimental_for_loop_n.rst
    /libs/core/algorithms/api/container_algorithms_for_loop_hpx_ranges_experimental_for_loop_n_strided.rst
-   /libs/core/algorithms/api/container_algorithms_uninitialized_fill_hpx_ranges_uninitialized_fill.rst
-   /libs/core/algorithms/api/container_algorithms_uninitialized_fill_hpx_ranges_uninitialized_fill_n.rst
-   /libs/core/algorithms/api/container_algorithms_set_intersection_hpx_ranges_set_intersection.rst
-   /libs/core/algorithms/api/container_algorithms_nth_element_hpx_ranges_nth_element.rst
-   /libs/core/algorithms/api/container_algorithms_partial_sort_hpx_ranges_partial_sort.rst
-   /libs/core/algorithms/api/container_algorithms_exclusive_scan_hpx_ranges_exclusive_scan.rst
-   /libs/core/algorithms/api/container_algorithms_lexicographical_compare_hpx_ranges_lexicographical_compare.rst
-   /libs/core/algorithms/api/container_algorithms_uninitialized_move_hpx_ranges_uninitialized_move.rst
-   /libs/core/algorithms/api/container_algorithms_uninitialized_move_hpx_ranges_uninitialized_move_n.rst
-   /libs/core/algorithms/api/container_algorithms_remove_hpx_ranges_remove.rst
-   /libs/core/algorithms/api/container_algorithms_remove_hpx_ranges_remove_if.rst
-   /libs/core/algorithms/api/container_algorithms_copy_hpx_ranges_copy.rst
-   /libs/core/algorithms/api/container_algorithms_copy_hpx_ranges_copy_n.rst
-   /libs/core/algorithms/api/container_algorithms_copy_hpx_ranges_copy_if.rst
-   /libs/core/algorithms/api/container_algorithms_unique_hpx_ranges_unique.rst
-   /libs/core/algorithms/api/container_algorithms_unique_hpx_ranges_unique_copy.rst
-   /libs/core/algorithms/api/container_algorithms_destroy_hpx_ranges_destroy.rst
-   /libs/core/algorithms/api/container_algorithms_destroy_hpx_ranges_destroy_n.rst
-   /libs/core/algorithms/api/container_algorithms_move_hpx_ranges_move.rst
-   /libs/core/algorithms/api/container_algorithms_sort_hpx_ranges_sort.rst
-   /libs/core/algorithms/api/container_algorithms_uninitialized_default_construct_hpx_ranges_uninitialized_default_construct.rst
-   /libs/core/algorithms/api/container_algorithms_uninitialized_default_construct_hpx_ranges_uninitialized_default_construct_n.rst
-   /libs/core/algorithms/api/container_algorithms_fill_hpx_ranges_fill.rst
-   /libs/core/algorithms/api/container_algorithms_fill_hpx_ranges_fill_n.rst
-   /libs/core/algorithms/api/container_algorithms_set_union_hpx_ranges_set_union.rst
-   /libs/core/algorithms/api/container_algorithms_adjacent_find_hpx_ranges_adjacent_find.rst
-   /libs/core/algorithms/api/container_algorithms_all_any_none_hpx_ranges_all_of.rst
-   /libs/core/algorithms/api/container_algorithms_all_any_none_hpx_ranges_any_of.rst
-   /libs/core/algorithms/api/container_algorithms_all_any_none_hpx_ranges_none_of.rst
-   /libs/core/algorithms/api/container_algorithms_inclusive_scan_hpx_ranges_inclusive_scan.rst
-   /libs/core/algorithms/api/container_algorithms_mismatch_hpx_ranges_mismatch.rst
    /libs/core/algorithms/api/container_algorithms_generate_hpx_ranges_generate.rst
    /libs/core/algorithms/api/container_algorithms_generate_hpx_ranges_generate_n.rst
-   /libs/core/algorithms/api/container_algorithms_count_hpx_ranges_count.rst
-   /libs/core/algorithms/api/container_algorithms_count_hpx_ranges_count_if.rst
-   /libs/core/algorithms/api/container_algorithms_partial_sort_copy_hpx_ranges_partial_sort_copy.rst
-   /libs/core/algorithms/api/container_algorithms_search_hpx_ranges_search.rst
-   /libs/core/algorithms/api/container_algorithms_search_hpx_ranges_search_n.rst
-   /libs/core/algorithms/api/container_algorithms_starts_with_hpx_ranges_starts_with.rst
+   /libs/core/algorithms/api/container_algorithms_includes_hpx_ranges_includes.rst
+   /libs/core/algorithms/api/container_algorithms_remove_copy_hpx_ranges_remove_copy.rst
+   /libs/core/algorithms/api/container_algorithms_remove_copy_hpx_ranges_remove_copy_if.rst
+   /libs/core/algorithms/api/container_algorithms_sort_hpx_ranges_sort.rst
+   /libs/core/algorithms/api/container_algorithms_transform_hpx_ranges_transform.rst
    /libs/core/algorithms/api/container_algorithms_uninitialized_value_construct_hpx_ranges_uninitialized_value_construct.rst
    /libs/core/algorithms/api/container_algorithms_uninitialized_value_construct_hpx_ranges_uninitialized_value_construct_n.rst
-   /libs/core/algorithms/api/container_algorithms_merge_hpx_ranges_merge.rst
-   /libs/core/algorithms/api/container_algorithms_merge_hpx_ranges_inplace_merge.rst
-   /libs/core/algorithms/api/container_algorithms_reverse_hpx_ranges_reverse.rst
-   /libs/core/algorithms/api/container_algorithms_reverse_hpx_ranges_reverse_copy.rst
+   /libs/core/algorithms/api/container_algorithms_is_partitioned_hpx_ranges_is_partitioned.rst
+   /libs/core/algorithms/api/container_algorithms_minmax_hpx_ranges_min_element.rst
+   /libs/core/algorithms/api/container_algorithms_minmax_hpx_ranges_max_element.rst
+   /libs/core/algorithms/api/container_algorithms_minmax_hpx_ranges_minmax_element.rst
+   /libs/core/algorithms/api/container_algorithms_inclusive_scan_hpx_ranges_inclusive_scan.rst
+   /libs/core/algorithms/api/container_algorithms_fill_hpx_ranges_fill.rst
+   /libs/core/algorithms/api/container_algorithms_fill_hpx_ranges_fill_n.rst
+   /libs/core/algorithms/api/container_algorithms_stable_sort_hpx_ranges_stable_sort.rst
+   /libs/core/algorithms/api/container_algorithms_transform_exclusive_scan_hpx_ranges_transform_exclusive_scan.rst
+   /libs/core/algorithms/api/container_algorithms_uninitialized_copy_hpx_ranges_uninitialized_copy.rst
+   /libs/core/algorithms/api/container_algorithms_uninitialized_copy_hpx_ranges_uninitialized_copy_n.rst
+   /libs/core/algorithms/api/container_algorithms_exclusive_scan_hpx_ranges_exclusive_scan.rst
+   /libs/core/algorithms/api/container_algorithms_destroy_hpx_ranges_destroy.rst
+   /libs/core/algorithms/api/container_algorithms_destroy_hpx_ranges_destroy_n.rst
+   /libs/core/algorithms/api/container_algorithms_shift_right_hpx_ranges_shift_right.rst
    /libs/core/algorithms/api/container_algorithms_set_symmetric_difference_hpx_ranges_set_symmetric_difference.rst
-   /libs/core/algorithms/api/container_algorithms_replace_hpx_ranges_replace.rst
-   /libs/core/algorithms/api/container_algorithms_replace_hpx_ranges_replace_if.rst
-   /libs/core/algorithms/api/container_algorithms_replace_hpx_ranges_replace_copy.rst
-   /libs/core/algorithms/api/container_algorithms_replace_hpx_ranges_replace_copy_if.rst
+   /libs/core/algorithms/api/container_algorithms_for_each_hpx_ranges_for_each.rst
+   /libs/core/algorithms/api/container_algorithms_for_each_hpx_ranges_for_each_n.rst
+   /libs/core/algorithms/api/container_algorithms_set_difference_hpx_ranges_set_difference.rst
+   /libs/core/algorithms/api/container_algorithms_partition_hpx_ranges_partition.rst
+   /libs/core/algorithms/api/container_algorithms_partition_hpx_ranges_stable_partition.rst
+   /libs/core/algorithms/api/container_algorithms_partition_hpx_ranges_partition_copy.rst
+   /libs/core/algorithms/api/container_algorithms_set_intersection_hpx_ranges_set_intersection.rst
    /libs/core/algorithms/api/container_algorithms_find_hpx_ranges_find.rst
    /libs/core/algorithms/api/container_algorithms_find_hpx_ranges_find_if.rst
    /libs/core/algorithms/api/container_algorithms_find_hpx_ranges_find_if_not.rst
@@ -198,45 +194,49 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/algorithms/api/container_algorithms_find_hpx_ranges_find_last.rst
    /libs/core/algorithms/api/container_algorithms_find_hpx_ranges_find_last_if.rst
    /libs/core/algorithms/api/container_algorithms_find_hpx_ranges_find_last_if_not.rst
-   /libs/core/algorithms/api/container_algorithms_ends_with_hpx_ranges_ends_with.rst
-   /libs/core/algorithms/api/container_algorithms_stable_sort_hpx_ranges_stable_sort.rst
-   /libs/core/algorithms/api/container_algorithms_transform_inclusive_scan_hpx_ranges_transform_inclusive_scan.rst
-   /libs/core/algorithms/api/container_algorithms_includes_hpx_ranges_includes.rst
-   /libs/core/algorithms/api/container_algorithms_is_partitioned_hpx_ranges_is_partitioned.rst
-   /libs/core/algorithms/api/container_algorithms_partition_hpx_ranges_partition.rst
-   /libs/core/algorithms/api/container_algorithms_partition_hpx_ranges_stable_partition.rst
-   /libs/core/algorithms/api/container_algorithms_partition_hpx_ranges_partition_copy.rst
-   /libs/core/algorithms/api/container_algorithms_adjacent_difference_hpx_ranges_adjacent_difference.rst
+   /libs/core/algorithms/api/container_algorithms_count_hpx_ranges_count.rst
+   /libs/core/algorithms/api/container_algorithms_count_hpx_ranges_count_if.rst
+   /libs/core/algorithms/api/container_algorithms_move_hpx_ranges_move.rst
    /libs/core/algorithms/api/fold_hpx_ranges_fold_left.rst
    /libs/core/algorithms/api/fold_hpx_ranges_fold_left_first.rst
    /libs/core/algorithms/api/fold_hpx_ranges_fold_right.rst
    /libs/core/algorithms/api/fold_hpx_ranges_fold_right_last.rst
    /libs/core/algorithms/api/fold_hpx_ranges_fold_left_with_iter.rst
    /libs/core/algorithms/api/fold_hpx_ranges_fold_left_first_with_iter.rst
-   /libs/core/algorithms/api/container_algorithms_iota.rst
-   /libs/core/algorithms/api/container_algorithms_transform_exclusive_scan_hpx_ranges_transform_exclusive_scan.rst
-   /libs/core/algorithms/api/container_algorithms_for_each_hpx_ranges_for_each.rst
-   /libs/core/algorithms/api/container_algorithms_for_each_hpx_ranges_for_each_n.rst
+   /libs/core/algorithms/api/container_algorithms_adjacent_difference_hpx_ranges_adjacent_difference.rst
    /libs/core/algorithms/api/container_algorithms_transform_reduce_hpx_ranges_transform_reduce.rst
-   /libs/core/algorithms/api/container_algorithms_is_heap_hpx_ranges_is_heap.rst
-   /libs/core/algorithms/api/container_algorithms_is_heap_hpx_ranges_is_heap_until.rst
-   /libs/core/algorithms/api/container_algorithms_equal_hpx_ranges_equal.rst
-   /libs/core/algorithms/api/container_algorithms_rotate_hpx_ranges_rotate.rst
-   /libs/core/algorithms/api/container_algorithms_rotate_hpx_ranges_rotate_copy.rst
-   /libs/core/algorithms/api/container_algorithms_uninitialized_copy_hpx_ranges_uninitialized_copy.rst
-   /libs/core/algorithms/api/container_algorithms_uninitialized_copy_hpx_ranges_uninitialized_copy_n.rst
-   /libs/core/algorithms/api/container_algorithms_shift_left_hpx_ranges_shift_left.rst
-   /libs/core/algorithms/api/container_algorithms_shift_right_hpx_ranges_shift_right.rst
-   /libs/core/algorithms/api/container_algorithms_reduce_hpx_ranges_reduce.rst
-   /libs/core/algorithms/api/container_algorithms_swap_ranges_hpx_ranges_swap_ranges.rst
-   /libs/core/algorithms/api/container_algorithms_set_difference_hpx_ranges_set_difference.rst
-   /libs/core/algorithms/api/container_algorithms_remove_copy_hpx_ranges_remove_copy.rst
-   /libs/core/algorithms/api/container_algorithms_remove_copy_hpx_ranges_remove_copy_if.rst
-   /libs/core/algorithms/api/container_algorithms_transform_hpx_ranges_transform.rst
    /libs/core/algorithms/api/container_algorithms_is_sorted_hpx_ranges_is_sorted.rst
    /libs/core/algorithms/api/container_algorithms_is_sorted_hpx_ranges_is_sorted_until.rst
-   /libs/core/algorithms/api/container_algorithms_make_heap_hpx_ranges_make_heap.rst
-   /libs/core/algorithms/api/container_algorithms_minmax_hpx_ranges_min_element.rst
-   /libs/core/algorithms/api/container_algorithms_minmax_hpx_ranges_max_element.rst
-   /libs/core/algorithms/api/container_algorithms_minmax_hpx_ranges_minmax_element.rst
-   /libs/core/algorithms/api/range.rst
+   /libs/core/algorithms/api/container_algorithms_starts_with_hpx_ranges_starts_with.rst
+   /libs/core/algorithms/api/container_algorithms_iota.rst
+   /libs/core/algorithms/api/container_algorithms_adjacent_find_hpx_ranges_adjacent_find.rst
+   /libs/core/algorithms/api/container_algorithms_transform_inclusive_scan_hpx_ranges_transform_inclusive_scan.rst
+   /libs/core/algorithms/api/container_algorithms_uninitialized_move_hpx_ranges_uninitialized_move.rst
+   /libs/core/algorithms/api/container_algorithms_uninitialized_move_hpx_ranges_uninitialized_move_n.rst
+   /libs/core/algorithms/api/container_algorithms_mismatch_hpx_ranges_mismatch.rst
+   /libs/core/algorithms/api/container_algorithms_replace_hpx_ranges_replace.rst
+   /libs/core/algorithms/api/container_algorithms_replace_hpx_ranges_replace_if.rst
+   /libs/core/algorithms/api/container_algorithms_replace_hpx_ranges_replace_copy.rst
+   /libs/core/algorithms/api/container_algorithms_replace_hpx_ranges_replace_copy_if.rst
+   /libs/core/algorithms/api/container_algorithms_ends_with_hpx_ranges_ends_with.rst
+   /libs/core/algorithms/api/container_algorithms_swap_ranges_hpx_ranges_swap_ranges.rst
+   /libs/core/algorithms/api/container_algorithms_uninitialized_default_construct_hpx_ranges_uninitialized_default_construct.rst
+   /libs/core/algorithms/api/container_algorithms_uninitialized_default_construct_hpx_ranges_uninitialized_default_construct_n.rst
+   /libs/core/algorithms/api/container_algorithms_equal_hpx_ranges_equal.rst
+   /libs/core/algorithms/api/container_algorithms_merge_hpx_ranges_merge.rst
+   /libs/core/algorithms/api/container_algorithms_merge_hpx_ranges_inplace_merge.rst
+   /libs/core/algorithms/api/container_algorithms_partial_sort_hpx_ranges_partial_sort.rst
+   /libs/core/algorithms/api/container_algorithms_reverse_hpx_ranges_reverse.rst
+   /libs/core/algorithms/api/container_algorithms_reverse_hpx_ranges_reverse_copy.rst
+   /libs/core/algorithms/api/container_algorithms_reduce_hpx_ranges_reduce.rst
+   /libs/core/algorithms/api/container_algorithms_unique_hpx_ranges_unique.rst
+   /libs/core/algorithms/api/container_algorithms_unique_hpx_ranges_unique_copy.rst
+   /libs/core/algorithms/api/container_algorithms_uninitialized_fill_hpx_ranges_uninitialized_fill.rst
+   /libs/core/algorithms/api/container_algorithms_uninitialized_fill_hpx_ranges_uninitialized_fill_n.rst
+   /libs/core/algorithms/api/container_algorithms_set_union_hpx_ranges_set_union.rst
+   /libs/core/algorithms/api/container_algorithms_rotate_hpx_ranges_rotate.rst
+   /libs/core/algorithms/api/container_algorithms_rotate_hpx_ranges_rotate_copy.rst
+   /libs/core/algorithms/api/container_algorithms_lexicographical_compare_hpx_ranges_lexicographical_compare.rst
+   /libs/core/algorithms/api/container_algorithms_copy_hpx_ranges_copy.rst
+   /libs/core/algorithms/api/container_algorithms_copy_hpx_ranges_copy_n.rst
+   /libs/core/algorithms/api/container_algorithms_copy_hpx_ranges_copy_if.rst

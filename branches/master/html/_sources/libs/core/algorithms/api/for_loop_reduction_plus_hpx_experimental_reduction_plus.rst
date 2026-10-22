@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::experimental::reduction_plus(T & var)
+.. doxygenfunction:: hpx::experimental::reduction_plus(T &var)
    :project: hpx
-.. doxygenfunction:: hpx::experimental::reduction_plus(T & var, T const & identity)
+.. doxygenfunction:: hpx::experimental::reduction_plus(T &var, T const &identity)
    :project: hpx

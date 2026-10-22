@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::distributed::barrier(std::string const & base_name)
+.. doxygenfunction:: hpx::distributed::barrier(std::string const &base_name)
    :project: hpx
-.. doxygenfunction:: hpx::distributed::barrier(std::string const & base_name, std::size_t num)
+.. doxygenfunction:: hpx::distributed::barrier(std::string const &base_name, std::size_t num)
    :project: hpx
-.. doxygenfunction:: hpx::distributed::barrier(std::string const & base_name, std::size_t num, std::size_t rank)
+.. doxygenfunction:: hpx::distributed::barrier(std::string const &base_name, std::size_t num, std::size_t rank)
    :project: hpx
-.. doxygenfunction:: hpx::distributed::barrier(std::string const & base_name, std::vector< std::size_t > const & ranks, std::size_t rank)
+.. doxygenfunction:: hpx::distributed::barrier(std::string const &base_name, std::vector< std::size_t > const &ranks, std::size_t rank)
    :project: hpx

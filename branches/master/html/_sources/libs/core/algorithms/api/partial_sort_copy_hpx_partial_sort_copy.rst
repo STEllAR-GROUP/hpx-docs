@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::partial_sort_copy(InIter first, InIter last, RandIter d_first, RandIter d_last, Comp && comp)
+.. doxygenfunction:: hpx::partial_sort_copy(InIter first, InIter last, RandIter d_first, RandIter d_last, Comp &&comp=Comp())
    :project: hpx
-.. doxygenfunction:: hpx::partial_sort_copy(ExPolicy && policy, FwdIter first, FwdIter last, RandIter d_first, RandIter d_last, Comp && comp)
+.. doxygenfunction:: hpx::partial_sort_copy(ExPolicy &&policy, FwdIter first, FwdIter last, RandIter d_first, RandIter d_last, Comp &&comp=Comp())
    :project: hpx

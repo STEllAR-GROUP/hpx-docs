@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::is_partitioned(FwdIter first, FwdIter last, Pred && pred)
+.. doxygenfunction:: hpx::is_partitioned(FwdIter first, FwdIter last, Pred &&pred)
    :project: hpx
-.. doxygenfunction:: hpx::is_partitioned(ExPolicy && policy, FwdIter first, FwdIter last, Pred && pred)
+.. doxygenfunction:: hpx::is_partitioned(ExPolicy &&policy, FwdIter first, FwdIter last, Pred &&pred)
    :project: hpx

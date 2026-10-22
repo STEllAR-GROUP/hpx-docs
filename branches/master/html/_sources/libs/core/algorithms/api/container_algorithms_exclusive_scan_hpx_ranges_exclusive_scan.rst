@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::exclusive_scan(InIter first, Sent last, OutIter dest, T init, Op && op)
+.. doxygenfunction:: hpx::ranges::exclusive_scan(InIter first, Sent last, OutIter dest, T init, Op &&op=Op())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::exclusive_scan(ExPolicy && policy, FwdIter1 first, Sent last, FwdIter2 dest, T init, Op && op)
+.. doxygenfunction:: hpx::ranges::exclusive_scan(ExPolicy &&policy, FwdIter1 first, Sent last, FwdIter2 dest, T init, Op &&op=Op())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::exclusive_scan(Rng && rng, O dest, T init, Op && op)
+.. doxygenfunction:: hpx::ranges::exclusive_scan(Rng &&rng, O dest, T init, Op &&op=Op())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::exclusive_scan(ExPolicy && policy, Rng && rng, O dest, T init, Op && op)
+.. doxygenfunction:: hpx::ranges::exclusive_scan(ExPolicy &&policy, Rng &&rng, O dest, T init, Op &&op=Op())
    :project: hpx

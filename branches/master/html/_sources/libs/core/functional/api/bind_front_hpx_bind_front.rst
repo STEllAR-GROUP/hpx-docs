@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::bind_front(F && f, Ts &&... vs)
+.. doxygenfunction:: hpx::bind_front(F &&f, Ts &&... vs)
    :project: hpx
-.. doxygenfunction:: hpx::bind_front(F && f)
+.. doxygenfunction:: hpx::bind_front(F &&f)
    :project: hpx

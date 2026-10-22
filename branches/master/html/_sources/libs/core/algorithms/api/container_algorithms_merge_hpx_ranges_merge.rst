@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::inplace_merge <modules_container_algorithms_merge_hpx_ranges_inplace_merge_api>`
 
-.. doxygenfunction:: hpx::ranges::merge(ExPolicy && policy, Rng1 && rng1, Rng2 && rng2, Iter3 dest, Comp && comp, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::merge(ExPolicy &&policy, Rng1 &&rng1, Rng2 &&rng2, Iter3 dest, Comp &&comp=Comp(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::merge(ExPolicy && policy, Iter1 first1, Sent1 last1, Iter2 first2, Sent2 last2, Iter3 dest, Comp && comp, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::merge(ExPolicy &&policy, Iter1 first1, Sent1 last1, Iter2 first2, Sent2 last2, Iter3 dest, Comp &&comp=Comp(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::merge(Rng1 && rng1, Rng2 && rng2, Iter3 dest, Comp && comp, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::merge(Rng1 &&rng1, Rng2 &&rng2, Iter3 dest, Comp &&comp=Comp(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::merge(Iter1 first1, Sent1 last1, Iter2 first2, Sent2 last2, Iter3 dest, Comp && comp, Proj1 && proj1, Proj2 && proj2)
+.. doxygenfunction:: hpx::ranges::merge(Iter1 first1, Sent1 last1, Iter2 first2, Sent2 last2, Iter3 dest, Comp &&comp=Comp(), Proj1 &&proj1=Proj1(), Proj2 &&proj2=Proj2())
    :project: hpx

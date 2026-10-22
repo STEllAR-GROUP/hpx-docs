@@ -24,5 +24,5 @@ See also:
    - :ref:`hpx::ref <modules_reference_wrapper_hpx_ref_api>`
    - :ref:`hpx::cref <modules_reference_wrapper_hpx_cref_api>`
 
-.. doxygenstruct:: hpx::reference_wrapper
+.. doxygenfunction:: hpx::reference_wrapper
    :project: hpx

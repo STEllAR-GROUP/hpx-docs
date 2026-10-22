@@ -19,39 +19,39 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, FwdIter first, FwdIter last, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, FwdIter first, FwdIter last, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(InIter first, InIter last, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(InIter first, InIter last, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, T init)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, T init)
    :project: hpx
 .. doxygenfunction:: hpx::transform_reduce(InIter1 first1, InIter1 last1, InIter2 first2, T init)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, InIter1 first1, InIter1 last1, InIter2 first2, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, InIter1 first1, InIter1 last1, InIter2 first2, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, Iter first, Sent last, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, Iter first, Sent last, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(Iter first, Sent last, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(Iter first, Sent last, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, Iter first, Sent last, Iter2 first2, T init)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, Iter first, Sent last, Iter2 first2, T init)
    :project: hpx
 .. doxygenfunction:: hpx::transform_reduce(Iter first, Sent last, Iter2 first2, T init)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, Iter first, Sent last, Iter2 first2, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, Iter first, Sent last, Iter2 first2, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(Iter first, Sent last, Iter2 first2, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(Iter first, Sent last, Iter2 first2, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, Rng && rng, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, Rng &&rng, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(Rng && rng, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(Rng &&rng, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, Rng && rng, Iter2 first2, T init)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, Rng &&rng, Iter2 first2, T init)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(Rng && rng, Iter2 first2, T init)
+.. doxygenfunction:: hpx::transform_reduce(Rng &&rng, Iter2 first2, T init)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(ExPolicy && policy, Rng && rng, Iter2 first2, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(ExPolicy &&policy, Rng &&rng, Iter2 first2, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_reduce(Rng && rng, Iter2 first2, T init, Reduce && red_op, Convert && conv_op)
+.. doxygenfunction:: hpx::transform_reduce(Rng &&rng, Iter2 first2, T init, Reduce &&red_op, Convert &&conv_op)
    :project: hpx

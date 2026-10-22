@@ -20,8 +20,9 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/futures/api/future_fwd.rst
    /libs/core/futures/api/promise_hpx_promise.rst
+   /libs/core/futures/api/future_fwd.rst
+   /libs/core/futures/api/packaged_task_hpx_packaged_task.rst
    /libs/core/futures/api/future_hpx_future.rst
    /libs/core/futures/api/future_hpx_shared_future.rst
    /libs/core/futures/api/future_hpx_make_future.rst
@@ -31,4 +32,3 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/futures/api/future_hpx_make_ready_future_at.rst
    /libs/core/futures/api/future_hpx_make_ready_future_after.rst
    /libs/core/futures/api/future_hpx_make_exceptional_future.rst
-   /libs/core/futures/api/packaged_task_hpx_packaged_task.rst

@@ -22,6 +22,6 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
    /libs/core/tracing/api/tracing.rst
    /libs/core/tracing/api/empty.rst
-   /libs/core/tracing/api/tracy.rst
-   /libs/core/tracing/api/apex.rst
    /libs/core/tracing/api/ittnotify.rst
+   /libs/core/tracing/api/apex.rst
+   /libs/core/tracing/api/tracy.rst

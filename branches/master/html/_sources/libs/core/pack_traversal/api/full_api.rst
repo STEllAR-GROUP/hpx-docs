@@ -21,6 +21,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    :maxdepth: 1
 
    /libs/core/pack_traversal/api/pack_traversal_async.rst
+   /libs/core/pack_traversal/api/pack_traversal.rst
    /libs/core/pack_traversal/api/unwrap_hpx_functional_unwrap.rst
    /libs/core/pack_traversal/api/unwrap_hpx_functional_unwrap_n.rst
    /libs/core/pack_traversal/api/unwrap_hpx_functional_unwrap_all.rst
@@ -30,4 +31,3 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/core/pack_traversal/api/unwrap_hpx_unwrapping.rst
    /libs/core/pack_traversal/api/unwrap_hpx_unwrapping_n.rst
    /libs/core/pack_traversal/api/unwrap_hpx_unwrapping_all.rst
-   /libs/core/pack_traversal/api/pack_traversal.rst

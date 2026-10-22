@@ -20,12 +20,12 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/full/init_runtime/api/hpx_init_params_hpx_init_params.rst
    /libs/full/init_runtime/api/hpx_start.rst
    /libs/full/init_runtime/api/hpx_init.rst
-   /libs/full/init_runtime/api/start_impl_hpx_start.rst
+   /libs/full/init_runtime/api/hpx_init_params_hpx_init_params.rst
    /libs/full/init_runtime/api/suspend_hpx_suspend.rst
    /libs/full/init_runtime/api/suspend_hpx_resume.rst
+   /libs/full/init_runtime/api/start_impl_hpx_start.rst
    /libs/full/init_runtime/api/init_impl_hpx_init.rst
    /libs/full/init_runtime/api/finalize_hpx_finalize.rst
    /libs/full/init_runtime/api/finalize_hpx_disconnect.rst

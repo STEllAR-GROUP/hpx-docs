@@ -1633,27 +1633,71 @@ the <code class="docutils literal notranslate"><span class="pre">ctest</span></c
 </section>
 <section id="running-performance-tests">
 <h2>Running performance tests<a class="headerlink" href="#running-performance-tests" title="Link to this heading">#</a></h2>
-<p>We run performance tests on Piz Daint for each pull request using Jenkins. To
-run those performance tests locally or on Piz Daint, a script is provided under
-<code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/local_run.sh</span></code> (to be run in the build directory specifying
-the <em>HPX</em> source directory as the argument to the script, default is
-<code class="docutils literal notranslate"><span class="pre">$HOME/projects/hpx_perftests_ci</span></code>.</p>
+<p>For each pull request, Jenkins runs the performance tests on Rostam (see
+<code class="docutils literal notranslate"><span class="pre">.jenkins/lsu-perftests</span></code>) and posts a comparison with the reference results
+on the pull request. To run a performance test yourself, configure <em>HPX</em> with
+<code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_TESTS_RUN_BENCHMARKS=ON</span></code> (and <code class="docutils literal notranslate"><span class="pre">-DHPX_WITH_NANOBENCH=ON</span></code>, as the
+CI does) and build the target <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;_perftest</span></code>, e.g.
+<code class="docutils literal notranslate"><span class="pre">benchmark_merge_perftest</span></code>. It runs the benchmark 30 times (or as often as
+the <code class="docutils literal notranslate"><span class="pre">N_EXECUTIONS</span></code> argument of <code class="docutils literal notranslate"><span class="pre">add_hpx_performance_report_test</span></code> says) and
+writes the results to <code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/results/&lt;name&gt;.json</span></code> in the build
+directory. Then build the target <code class="docutils literal notranslate"><span class="pre">perftests_plot</span></code>, which compares all results
+found there with the reference results, and writes the measurements and their
+plots to <code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/index.html</span></code>.</p>
 </section>
 <section id="adding-new-performance-tests">
 <h2>Adding new performance tests<a class="headerlink" href="#adding-new-performance-tests" title="Link to this heading">#</a></h2>
-<p>To add a new performance test, you need to wrap the portion of code to benchmark
-with <code class="docutils literal notranslate"><span class="pre">hpx::util::perftests_report</span></code>, passing the test name, the executor name
-and the function to time (can be a lambda). This facility is used to output the
-time results in a json format (format needed to compare the results and plot
-them).  To effectively print them at the end of your test, call
-<code class="docutils literal notranslate"><span class="pre">hpx::util::perftests_print_times</span></code>. To see an example of use, see
-<code class="docutils literal notranslate"><span class="pre">future_overhead_report.cpp</span></code>.  Finally, you can add the test to the CI report
-editing the <code class="docutils literal notranslate"><span class="pre">hpx_targets</span></code> variable for the executable name and the
-<code class="docutils literal notranslate"><span class="pre">hpx_test_options</span></code> variable for the corresponding options to use for the run
-in the performance test script <code class="docutils literal notranslate"><span class="pre">.jenkins/cscs-perftests/launch_perftests.sh</span></code>.
-And then run the <code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/local_run.sh</span></code> script to get a reference
-json run (use the name of the test) to be added in the
-<code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/perftest/references/daint_default</span></code> directory.</p>
+<p>To add a new performance test, wrap the portion of code to benchmark with
+<code class="docutils literal notranslate"><span class="pre">hpx::util::perftests_report</span></code>, passing the test name, the executor name, the
+number of repetitions and the function to time (can be a lambda). Add the
+command line options of this facility with <code class="docutils literal notranslate"><span class="pre">hpx::util::perftests_cfg</span></code> in
+<code class="docutils literal notranslate"><span class="pre">main</span></code>, call <code class="docutils literal notranslate"><span class="pre">hpx::util::perftests_init(vm,</span> <span class="pre">&quot;&lt;name&gt;&quot;)</span></code> at the beginning of
+<code class="docutils literal notranslate"><span class="pre">hpx_main</span></code>, using the name of the test, and call
+<code class="docutils literal notranslate"><span class="pre">hpx::util::perftests_print_times</span></code> at the end to print the results in the
+json format used for the comparison. See <code class="docutils literal notranslate"><span class="pre">future_overhead_report.cpp</span></code> for an
+example.</p>
+<p>To add the test to the CI report, register it with
+<code class="docutils literal notranslate"><span class="pre">add_hpx_performance_report_test</span></code> if <code class="docutils literal notranslate"><span class="pre">HPX_WITH_TESTS_RUN_BENCHMARKS</span></code> is
+enabled (see <code class="docutils literal notranslate"><span class="pre">libs/core/algorithms/tests/performance/CMakeLists.txt</span></code>); the CI
+builds and runs all registered performance tests.
+Finally, add the reference results. The timings differ between the nodes the
+CI may run on, so each node has its own reference results in
+<code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/perftest/references/&lt;node&gt;.tar.gz</span></code>, and the comparison
+uses the ones of the node the benchmarks ran on. If a benchmark has no
+reference on that node, because it is new or its measurements changed, the CI
+makes new references of all benchmarks of the node from the run, so that they
+are measured together, and always uploads them, packed, to
+<code class="docutils literal notranslate"><span class="pre">TheHPXProject/hpx-perftest-images</span></code> (<code class="docutils literal notranslate"><span class="pre">pr/&lt;pull</span> <span class="pre">request&gt;/&lt;build&gt;/references</span></code>
+or <code class="docutils literal notranslate"><span class="pre">branch/&lt;branch&gt;/&lt;build&gt;/references</span></code>); the report links to them. Copy the
+archive to <code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/perftest/references</span></code> to use them. To update
+a single reference by hand, build the <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;_perftest</span></code> target on that node,
+copy <code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/results/&lt;name&gt;.json</span></code> from the build directory to the
+unpacked reference results of the node, and pack them again with
+<code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/pack_references.sh</span></code> (see the comment at the top of the
+script).
+The CI comments on a pull request only about measurements that got more than
+5% faster or slower; the pull request comment <code class="docutils literal notranslate"><span class="pre">retest</span> <span class="pre">lsu</span> <span class="pre">perf</span> <span class="pre">full</span></code> starts a
+run that reports all measurements.
+Every CI run also keeps all of its results packed as references of its node
+(<code class="docutils literal notranslate"><span class="pre">perftests-reports/references/&lt;node&gt;.tar.gz</span></code> in the Jenkins artifacts).</p>
+<p>The performance tests also run for the commits of the master branch, always
+on the same node (<code class="docutils literal notranslate"><span class="pre">configuration_slurm_history_node</span></code> in
+<code class="docutils literal notranslate"><span class="pre">.jenkins/lsu-perftests/slurm-constraint-perftests.sh</span></code>, a node the build
+matrix doesn’t use) and always reporting all measurements. Each of these runs is
+added to the performance history in
+<a class="reference external" href="https://github.com/TheHPXProject/hpx-performance">hpx-performance</a>
+(<code class="docutils literal notranslate"><span class="pre">.jenkins/lsu-perftests/upload_history.sh</span></code>): a directory
+<code class="docutils literal notranslate"><span class="pre">&lt;year&gt;/&lt;node&gt;/&lt;commit</span> <span class="pre">date&gt;-&lt;commit&gt;-b&lt;build&gt;</span></code> with all results, their
+medians, the comparison with the references (without the plots, which
+<code class="docutils literal notranslate"><span class="pre">perftests_plot.py</span></code> can draw again from the results), and the commit (hash,
+dates, pull request), when the benchmarks ran, the Jenkins build and the
+configuration in <code class="docutils literal notranslate"><span class="pre">metadata.json</span></code>. <code class="docutils literal notranslate"><span class="pre">runs.tsv</span></code> lists all runs, and
+<code class="docutils literal notranslate"><span class="pre">timeline.csv</span></code> the medians of all measurements of all runs, which the
+README of the repository shows as a graph per benchmark over time (drawn by
+<code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/perftests_timeline.py</span></code> with every new run).
+<code class="docutils literal notranslate"><span class="pre">tools/perftests_ci/perftests_history.py</span></code> rebuilds <code class="docutils literal notranslate"><span class="pre">timeline.csv</span></code> from the
+run directories of a clone of the repository, optionally for one node, one
+benchmark or a range of dates.</p>
 </section>
 <section id="issue-tracker">
 <h2>Issue tracker<a class="headerlink" href="#issue-tracker" title="Link to this heading">#</a></h2>

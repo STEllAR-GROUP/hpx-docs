@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::nth_element(RandomIt first, RandomIt nth, Sent last, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::nth_element(RandomIt first, RandomIt nth, Sent last, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::nth_element(ExPolicy &&policy, RandomIt first, RandomIt nth, Sent last, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::nth_element(ExPolicy && policy, RandomIt first, RandomIt nth, Sent last, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::nth_element(Rng &&rng, std::ranges::iterator_t< Rng > nth, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::nth_element(Rng && rng, std::ranges::iterator_t< Rng > nth, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::nth_element(ExPolicy &&policy, Rng &&rng, std::ranges::iterator_t< Rng > nth, Pred &&pred=Pred(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::nth_element(ExPolicy && policy, Rng && rng, std::ranges::iterator_t< Rng > nth, Pred && pred, Proj && proj)
    :project: hpx

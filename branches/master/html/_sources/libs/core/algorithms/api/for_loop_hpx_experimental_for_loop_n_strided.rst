@@ -27,5 +27,5 @@ See also:
 
 .. doxygenfunction:: hpx::experimental::for_loop_n_strided(I first, Size size, S stride, Args &&... args)
    :project: hpx
-.. doxygenfunction:: hpx::experimental::for_loop_n_strided(ExPolicy &&policy, I first, Size size, S stride, Args &&... args)
+.. doxygenfunction:: hpx::experimental::for_loop_n_strided(ExPolicy && policy, I first, Size size, S stride, Args &&... args)
    :project: hpx

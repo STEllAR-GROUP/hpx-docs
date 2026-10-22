@@ -24,11 +24,11 @@ See also:
    - :ref:`hpx::ranges::min_element <modules_container_algorithms_minmax_hpx_ranges_min_element_api>`
    - :ref:`hpx::ranges::max_element <modules_container_algorithms_minmax_hpx_ranges_max_element_api>`
 
-.. doxygenfunction:: hpx::ranges::minmax_element(FwdIter first, Sent last, F &&f=F(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::minmax_element(FwdIter first, Sent last, F && f, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::minmax_element(Rng &&rng, F &&f=F(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::minmax_element(Rng && rng, F && f, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::minmax_element(ExPolicy &&policy, FwdIter first, Sent last, F &&f=F(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::minmax_element(ExPolicy && policy, FwdIter first, Sent last, F && f, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::minmax_element(ExPolicy &&policy, Rng &&rng, F &&f=F(), Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::minmax_element(ExPolicy && policy, Rng && rng, F && f, Proj && proj)
    :project: hpx

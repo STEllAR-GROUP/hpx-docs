@@ -24,7 +24,7 @@ See also:
    - :ref:`hpx::any_of <modules_all_any_none_hpx_any_of_api>`
    - :ref:`hpx::none_of <modules_all_any_none_hpx_none_of_api>`
 
-.. doxygenfunction:: hpx::all_of(ExPolicy &&policy, FwdIter first, FwdIter last, F &&f)
+.. doxygenfunction:: hpx::all_of(ExPolicy && policy, FwdIter first, FwdIter last, F && f)
    :project: hpx
-.. doxygenfunction:: hpx::all_of(InIter first, InIter last, F &&f)
+.. doxygenfunction:: hpx::all_of(InIter first, InIter last, F && f)
    :project: hpx

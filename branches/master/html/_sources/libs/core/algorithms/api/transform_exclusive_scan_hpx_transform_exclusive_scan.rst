@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::transform_exclusive_scan(InIter first, InIter last, OutIter dest, T init, BinOp &&binary_op, UnOp &&unary_op)
+.. doxygenfunction:: hpx::transform_exclusive_scan(InIter first, InIter last, OutIter dest, T init, BinOp && binary_op, UnOp && unary_op)
    :project: hpx
-.. doxygenfunction:: hpx::transform_exclusive_scan(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, T init, BinOp &&binary_op, UnOp &&unary_op)
+.. doxygenfunction:: hpx::transform_exclusive_scan(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, T init, BinOp && binary_op, UnOp && unary_op)
    :project: hpx

@@ -24,11 +24,11 @@ See also:
    - :ref:`hpx::ranges::partition <modules_container_algorithms_partition_hpx_ranges_partition_api>`
    - :ref:`hpx::ranges::stable_partition <modules_container_algorithms_partition_hpx_ranges_stable_partition_api>`
 
-.. doxygenfunction:: hpx::ranges::partition_copy(Rng &&rng, OutIter2 dest_true, OutIter3 dest_false, Pred &&pred, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::partition_copy(Rng && rng, OutIter2 dest_true, OutIter3 dest_false, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::partition_copy(ExPolicy &&policy, Rng &&rng, FwdIter2 dest_true, FwdIter3 dest_false, Pred &&pred, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::partition_copy(ExPolicy && policy, Rng && rng, FwdIter2 dest_true, FwdIter3 dest_false, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::partition_copy(InIter first, Sent last, OutIter2 dest_true, OutIter3 dest_false, Pred &&pred, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::partition_copy(InIter first, Sent last, OutIter2 dest_true, OutIter3 dest_false, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::partition_copy(ExPolicy &&policy, FwdIter first, Sent last, OutIter2 dest_true, OutIter3 dest_false, Pred &&pred, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::partition_copy(ExPolicy && policy, FwdIter first, Sent last, OutIter2 dest_true, OutIter3 dest_false, Pred && pred, Proj && proj)
    :project: hpx

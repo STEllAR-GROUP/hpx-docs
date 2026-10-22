@@ -23,7 +23,7 @@ See also:
 
    - :ref:`hpx::fill <modules_fill_hpx_fill_api>`
 
-.. doxygenfunction:: hpx::fill_n(ExPolicy &&policy, FwdIter first, Size count, T value)
+.. doxygenfunction:: hpx::fill_n(ExPolicy && policy, FwdIter first, Size count, T value)
    :project: hpx
 .. doxygenfunction:: hpx::fill_n(FwdIter first, Size count, T value)
    :project: hpx

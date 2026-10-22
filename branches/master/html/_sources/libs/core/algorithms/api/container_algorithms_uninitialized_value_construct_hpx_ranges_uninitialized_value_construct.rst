@@ -25,9 +25,9 @@ See also:
 
 .. doxygenfunction:: hpx::ranges::uninitialized_value_construct(FwdIter first, Sent last)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::uninitialized_value_construct(ExPolicy &&policy, FwdIter first, Sent last)
+.. doxygenfunction:: hpx::ranges::uninitialized_value_construct(ExPolicy && policy, FwdIter first, Sent last)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::uninitialized_value_construct(Rng &&rng)
+.. doxygenfunction:: hpx::ranges::uninitialized_value_construct(Rng && rng)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::uninitialized_value_construct(ExPolicy &&policy, Rng &&rng)
+.. doxygenfunction:: hpx::ranges::uninitialized_value_construct(ExPolicy && policy, Rng && rng)
    :project: hpx

@@ -21,5 +21,5 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
 .. doxygenfunction:: hpx::swap_ranges(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2)
    :project: hpx
-.. doxygenfunction:: hpx::swap_ranges(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2)
+.. doxygenfunction:: hpx::swap_ranges(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2)
    :project: hpx

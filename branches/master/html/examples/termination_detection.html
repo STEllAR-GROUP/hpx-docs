@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Termination detection &#8212; HPX 2.0.0 documentation</title>
+    <title>Termination detection &#8212; HPX 2.0.0-rc1 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=ce394494"></script>
+    <script src="../_static/documentation_options.js?v=7ec4965c"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0 documentation - Home"/>
-    <script>document.write(`<img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0 documentation - Home"/>`);</script>
+    <img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0-rc1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0-rc1 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -557,6 +557,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/components_fwd.html">hpx/runtime_components/components_fwd.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/reflect_client.html">hpx/runtime_components/reflect_client.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/new_hpx_new.html">hpx::new_</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/new_local_new.html">local_new</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/macros.html">hpx/runtime_components/macros.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/reflect_client_macros.html">hpx/runtime_components/reflect_client_macros.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/component_registry.html">hpx/runtime_components/component_registry.hpp</a></li>
@@ -1363,7 +1364,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../releases.html">Releases</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (TBD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (Oct 31, 2026)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_11_0.html"><em>HPX</em> V1.11.0 (Jun 30, 2025)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_10_0.html"><em>HPX</em> V1.10.0 (May 29, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_9_1.html"><em>HPX</em> V1.9.1 (August 4, 2023)</a></li>
@@ -1672,12 +1673,47 @@ detection API. Let’s examine each one:</p>
 <section id="basic-usage">
 <h3>Basic usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h3>
 <p>The simplest form waits indefinitely for all local threads to complete:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Example 1: Basic usage&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Starting async work...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Launch 100 asynchronous tasks</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">post</span><span class="p">([</span><span class="n">i</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Simulate some work</span>
+<span class="w">                </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Waiting for queries to pass...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">termination_detection</span><span class="p">();</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Basic wait completed.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+</div>
 <p>This is useful when you want to ensure all work is done before shutting down,
 and you don’t have time constraints.</p>
 </section>
 <section id="timeout-usage">
 <h3>Timeout usage<a class="headerlink" href="#timeout-usage" title="Link to this heading">#</a></h3>
 <p>You can specify a maximum duration to wait:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Example 2: Wait with timeout&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">post</span><span class="p">([]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+<span class="w">        </span><span class="p">});</span>
+
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">completed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">termination_detection</span><span class="p">(</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">steady_duration</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">)));</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">completed</span><span class="p">)</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Completed within timeout.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Timed out.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+</div>
 <p>The function returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if all threads completed within the timeout, or
 <code class="docutils literal notranslate"><span class="pre">false</span></code> if the timeout elapsed. This is useful when you want to give tasks a
 reasonable amount of time to complete but don’t want to wait indefinitely.</p>
@@ -1685,12 +1721,62 @@ reasonable amount of time to complete but don’t want to wait indefinitely.</p>
 <section id="deadline-usage">
 <h3>Deadline usage<a class="headerlink" href="#deadline-usage" title="Link to this heading">#</a></h3>
 <p>Similar to timeout, but you specify an absolute time point:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Example 3: Wait with deadline&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">post</span><span class="p">([]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+<span class="w">        </span><span class="p">});</span>
+
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">deadline</span><span class="w"> </span><span class="o">=</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">steady_clock</span><span class="o">::</span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Note: implicit conversion from steady_clock::time_point to steady_time_point</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">completed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">termination_detection</span><span class="p">(</span><span class="n">deadline</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">completed</span><span class="p">)</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Completed before deadline.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Deadline reached.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+</div>
 <p>This is useful when you have a specific deadline by which all work must be
 completed.</p>
 </section>
 <section id="cancellation-support">
 <h3>Cancellation support<a class="headerlink" href="#cancellation-support" title="Link to this heading">#</a></h3>
 <p>The most flexible form supports cancellation tokens:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Example 4: Wait with cancellation&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">stop_source</span><span class="w"> </span><span class="n">stop_src</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Launch a long running task</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">post</span><span class="p">([]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span><span class="w"> </span><span class="p">});</span>
+
+<span class="w">        </span><span class="c1">// Trigger cancellation after 100ms</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="kr">thread</span><span class="w"> </span><span class="nf">canceller</span><span class="p">([</span><span class="o">&amp;</span><span class="n">stop_src</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Requesting stop...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">            </span><span class="n">stop_src</span><span class="p">.</span><span class="n">request_stop</span><span class="p">();</span>
+<span class="w">        </span><span class="p">});</span>
+
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">completed</span><span class="w"> </span><span class="o">=</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">local</span><span class="o">::</span><span class="n">termination_detection</span><span class="p">(</span><span class="n">stop_src</span><span class="p">.</span><span class="n">get_token</span><span class="p">());</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">completed</span><span class="p">)</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Wait cancelled or timed out.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Wait completed successfully.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">canceller</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">All work completed. Shutting down.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">finalize</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>This allows external control over the wait operation. You can request
 cancellation from another thread, which is useful in scenarios like graceful
 shutdown with user interruption support.</p>

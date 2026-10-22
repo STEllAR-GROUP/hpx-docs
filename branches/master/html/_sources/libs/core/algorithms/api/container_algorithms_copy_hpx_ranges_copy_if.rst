@@ -24,11 +24,11 @@ See also:
    - :ref:`hpx::ranges::copy <modules_container_algorithms_copy_hpx_ranges_copy_api>`
    - :ref:`hpx::ranges::copy_n <modules_container_algorithms_copy_hpx_ranges_copy_n_api>`
 
-.. doxygenfunction:: hpx::ranges::copy_if(ExPolicy &&policy, FwdIter1 iter, Sent1 sent, FwdIter dest, Pred &&pred, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::copy_if(ExPolicy && policy, FwdIter1 iter, Sent1 sent, FwdIter dest, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::copy_if(ExPolicy &&policy, Rng &&rng, FwdIter dest, Pred &&pred, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::copy_if(ExPolicy && policy, Rng && rng, FwdIter dest, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::copy_if(FwdIter1 iter, Sent1 sent, FwdIter dest, Pred &&pred, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::copy_if(FwdIter1 iter, Sent1 sent, FwdIter dest, Pred && pred, Proj && proj)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::copy_if(Rng &&rng, FwdIter dest, Pred &&pred, Proj &&proj=Proj())
+.. doxygenfunction:: hpx::ranges::copy_if(Rng && rng, FwdIter dest, Pred && pred, Proj && proj)
    :project: hpx

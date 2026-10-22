@@ -27,11 +27,11 @@ See also:
 
 .. doxygenfunction:: hpx::wait_all(InputIter first, InputIter last)
    :project: hpx
-.. doxygenfunction:: hpx::wait_all(std::vector< future< R >> &&futures)
+.. doxygenfunction:: hpx::wait_all(std::vector< future< R >> && futures)
    :project: hpx
-.. doxygenfunction:: hpx::wait_all(std::array< future< R >, N > &&futures)
+.. doxygenfunction:: hpx::wait_all(std::array< future< R >, N > && futures)
    :project: hpx
-.. doxygenfunction:: hpx::wait_all(hpx::future< T > const &f)
+.. doxygenfunction:: hpx::wait_all(hpx::future< T > const & f)
    :project: hpx
 .. doxygenfunction:: hpx::wait_all(T &&... futures)
    :project: hpx

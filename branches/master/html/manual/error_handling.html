@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Error handling &#8212; HPX 2.0.0 documentation</title>
+    <title>Error handling &#8212; HPX 2.0.0-rc1 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=ce394494"></script>
+    <script src="../_static/documentation_options.js?v=7ec4965c"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0 documentation - Home"/>
-    <script>document.write(`<img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0 documentation - Home"/>`);</script>
+    <img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0-rc1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0-rc1 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -557,6 +557,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/components_fwd.html">hpx/runtime_components/components_fwd.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/reflect_client.html">hpx/runtime_components/reflect_client.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/new_hpx_new.html">hpx::new_</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/new_local_new.html">local_new</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/macros.html">hpx/runtime_components/macros.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/reflect_client_macros.html">hpx/runtime_components/reflect_client_macros.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../libs/full/runtime_components/api/component_registry.html">hpx/runtime_components/component_registry.hpp</a></li>
@@ -1363,7 +1364,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../releases.html">Releases</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (TBD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (Oct 31, 2026)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_11_0.html"><em>HPX</em> V1.11.0 (Jun 30, 2025)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_10_0.html"><em>HPX</em> V1.10.0 (May 29, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../releases/whats_new_1_9_1.html"><em>HPX</em> V1.9.1 (August 4, 2023)</a></li>
@@ -1644,6 +1645,26 @@ where the exception was thrown.</p>
 the (asynchronous) invocation site. It will be rethrown in this context when the
 calling thread tries to wait for the result of the action by invoking either
 <code class="docutils literal notranslate"><span class="pre">future&lt;&gt;::get()</span></code> or the synchronous action invocation wrapper as shown here:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">try</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// invoke raise_exception() which throws an exception</span>
+<span class="w">            </span><span class="n">raise_exception_action</span><span class="w"> </span><span class="n">do_it</span><span class="p">;</span>
+<span class="w">            </span><span class="n">do_it</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">exception</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Print just the essential error information.</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;caught exception: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Print all of the available diagnostic information as stored with</span>
+<span class="w">            </span><span class="c1">// the exception.</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;diagnostic information:&quot;</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">diagnostic_information</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The exception is transferred back to the invocation site even if it is
@@ -1660,6 +1681,39 @@ backtrace of the point where the original exception was thrown.</p>
 diagnostics, or to output those using different formatting. For this case, <em>HPX</em>
 exposes a set of lower-level functions as demonstrated in the following code
 snippet:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Detailed error reporting using exceptions</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">try</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Invoke raise_exception() which throws an exception.</span>
+<span class="w">            </span><span class="n">raise_exception_action</span><span class="w"> </span><span class="n">do_it</span><span class="p">;</span>
+<span class="w">            </span><span class="n">do_it</span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">find_here</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">hpx</span><span class="o">::</span><span class="n">exception</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Print the elements of the diagnostic information separately.</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{what}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_what</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{locality-id}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_locality_id</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{hostname}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_host_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{pid}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_process_id</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{function}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_function_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{file}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_file_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{line}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_line_number</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{os-thread}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_os_thread</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{thread-id}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">hex</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_id</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{thread-description}: &quot;</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_thread_description</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{state}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">hex</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_state</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{stack-trace}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_backtrace</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;{env}: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hpx</span><span class="o">::</span><span class="n">get_error_env</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">hpx</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+</pre></div>
+</div>
 </section>
 <section id="working-with-error-codes">
 <span id="error-code"></span><h2>Working with error codes<a class="headerlink" href="#working-with-error-codes" title="Link to this heading">#</a></h2>

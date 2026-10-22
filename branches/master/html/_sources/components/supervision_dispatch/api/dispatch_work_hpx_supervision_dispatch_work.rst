@@ -23,9 +23,9 @@ See also:
 
    - :ref:`hpx::supervision::invoke_fenced_action <modules_dispatch_work_hpx_supervision_invoke_fenced_action_api>`
 
-.. doxygenfunction:: hpx::supervision::dispatch_work(hpx::id_type const &target, std::uint64_t const epoch, Ts &&... ts)
+.. doxygenfunction:: hpx::supervision::dispatch_work(hpx::id_type const & target, std::uint64_t const epoch, Ts &&... ts)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::dispatch_work(Action, hpx::id_type const &target, std::uint64_t const epoch, Ts &&... ts)
+.. doxygenfunction:: hpx::supervision::dispatch_work(Action, hpx::id_type const & target, std::uint64_t const epoch, Ts &&... ts)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::dispatch_work(Action, discovered_peer const &peer, Ts &&... ts)
+.. doxygenfunction:: hpx::supervision::dispatch_work(Action, discovered_peer const & peer, Ts &&... ts)
    :project: hpx

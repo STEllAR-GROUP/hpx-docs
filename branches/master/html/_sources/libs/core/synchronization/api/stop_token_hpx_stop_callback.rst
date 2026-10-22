@@ -26,5 +26,5 @@ See also:
    - :ref:`hpx::stop_token <modules_stop_token_hpx_stop_token_api>`
    - :ref:`hpx::nostopstate_t <modules_stop_token_hpx_nostopstate_t_api>`
 
-.. doxygenclass:: hpx::stop_callback
+.. doxygenfunction:: hpx::stop_callback
    :project: hpx

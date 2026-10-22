@@ -22,7 +22,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
    /libs/core/assertion/api/source_location_HPX_CURRENT_SOURCE_LOCATION.rst
    /libs/core/assertion/api/source_location_hpx_source_location.rst
-   /libs/core/assertion/api/api.rst
    /libs/core/assertion/api/evaluate_assert.rst
+   /libs/core/assertion/api/api.rst
    /libs/core/assertion/api/macros_HPX_ASSERT.rst
    /libs/core/assertion/api/macros_HPX_ASSERT_MSG.rst

@@ -20,7 +20,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/full/naming_base/api/id_type_hpx_id_type.rst
-   /libs/full/naming_base/api/address_hpx_naming_address.rst
    /libs/full/naming_base/api/gid_type_hpx_naming_gid_type.rst
    /libs/full/naming_base/api/unmanaged.rst
+   /libs/full/naming_base/api/id_type_hpx_id_type.rst
+   /libs/full/naming_base/api/address_hpx_naming_address.rst

@@ -20,9 +20,9 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/core/runtime_configuration/api/runtime_configuration.rst
    /libs/core/runtime_configuration/api/component_commandline_base_hpx_components_component_commandline_base.rst
-   /libs/core/runtime_configuration/api/plugin_registry_base.rst
    /libs/core/runtime_configuration/api/runtime_mode_hpx_runtime_mode.rst
+   /libs/core/runtime_configuration/api/plugin_registry_base.rst
    /libs/core/runtime_configuration/api/macros_HPX_REGISTER_COMPONENT_MODULE.rst
+   /libs/core/runtime_configuration/api/runtime_configuration.rst
    /libs/core/runtime_configuration/api/component_registry_base.rst

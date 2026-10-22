@@ -27,5 +27,5 @@ See also:
 
 .. doxygenfunction:: hpx::experimental::for_loop(std::decay_t< I > first, I last, Args &&... args)
    :project: hpx
-.. doxygenfunction:: hpx::experimental::for_loop(ExPolicy && policy, std::decay_t< I > first, I last, Args &&... args)
+.. doxygenfunction:: hpx::experimental::for_loop(ExPolicy &&policy, std::decay_t< I > first, I last, Args &&... args)
    :project: hpx

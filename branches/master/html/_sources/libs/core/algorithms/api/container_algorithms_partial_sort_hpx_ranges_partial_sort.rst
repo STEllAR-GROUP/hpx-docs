@@ -19,11 +19,11 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::ranges::partial_sort(RandomIt first, RandomIt middle, Sent last, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::partial_sort(RandomIt first, RandomIt middle, Sent last, Comp &&comp=Comp(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::partial_sort(ExPolicy && policy, RandomIt first, RandomIt middle, Sent last, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::partial_sort(ExPolicy &&policy, RandomIt first, RandomIt middle, Sent last, Comp &&comp=Comp(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::partial_sort(Rng && rng, std::ranges::iterator_t< Rng > middle, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::partial_sort(Rng &&rng, std::ranges::iterator_t< Rng > middle, Comp &&comp=Comp(), Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::partial_sort(ExPolicy && policy, Rng && rng, std::ranges::iterator_t< Rng > middle, Comp && comp, Proj && proj)
+.. doxygenfunction:: hpx::ranges::partial_sort(ExPolicy &&policy, Rng &&rng, std::ranges::iterator_t< Rng > middle, Comp &&comp=Comp(), Proj &&proj=Proj())
    :project: hpx

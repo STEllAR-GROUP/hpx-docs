@@ -27,11 +27,11 @@ See also:
 
 .. doxygenfunction:: hpx::wait_all_nothrow(InputIter first, InputIter last)
    :project: hpx
-.. doxygenfunction:: hpx::wait_all_nothrow(std::vector< future< R >> && futures)
+.. doxygenfunction:: hpx::wait_all_nothrow(std::vector< future< R >> &&futures)
    :project: hpx
-.. doxygenfunction:: hpx::wait_all_nothrow(std::array< future< R >, N > && futures)
+.. doxygenfunction:: hpx::wait_all_nothrow(std::array< future< R >, N > &&futures)
    :project: hpx
-.. doxygenfunction:: hpx::wait_all_nothrow(hpx::future< T > const & f)
+.. doxygenfunction:: hpx::wait_all_nothrow(hpx::future< T > const &f)
    :project: hpx
 .. doxygenfunction:: hpx::wait_all_nothrow(T &&... futures)
    :project: hpx

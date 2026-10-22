@@ -26,11 +26,11 @@ See also:
    - :ref:`hpx::make_any_nonser <modules_any_hpx_make_any_nonser_api>`
    - :ref:`hpx::make_unique_any_nonser <modules_any_hpx_make_unique_any_nonser_api>`
 
-.. doxygenfunction:: hpx::any_cast(util::basic_any< IArch, OArch, Char, Copyable > * operand)
+.. doxygenfunction:: hpx::any_cast(util::basic_any< IArch, OArch, Char, Copyable > *operand) noexcept
    :project: hpx
-.. doxygenfunction:: hpx::any_cast(util::basic_any< IArch, OArch, Char, Copyable > const * operand)
+.. doxygenfunction:: hpx::any_cast(util::basic_any< IArch, OArch, Char, Copyable > const *operand) noexcept
    :project: hpx
-.. doxygenfunction:: hpx::any_cast(util::basic_any< IArch, OArch, Char, Copyable > & operand)
+.. doxygenfunction:: hpx::any_cast(util::basic_any< IArch, OArch, Char, Copyable > &operand)
    :project: hpx
-.. doxygenfunction:: hpx::any_cast(util::basic_any< IArch, OArch, Char, Copyable > const & operand)
+.. doxygenfunction:: hpx::any_cast(util::basic_any< IArch, OArch, Char, Copyable > const &operand)
    :project: hpx

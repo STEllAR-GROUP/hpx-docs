@@ -25,9 +25,9 @@ See also:
 
 .. doxygenfunction:: hpx::ranges::rotate(FwdIter first, FwdIter middle, Sent last)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::rotate(ExPolicy && policy, FwdIter first, FwdIter middle, Sent last)
+.. doxygenfunction:: hpx::ranges::rotate(ExPolicy &&policy, FwdIter first, FwdIter middle, Sent last)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::rotate(Rng && rng, std::ranges::iterator_t< Rng > middle)
+.. doxygenfunction:: hpx::ranges::rotate(Rng &&rng, std::ranges::iterator_t< Rng > middle)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::rotate(ExPolicy && policy, Rng && rng, std::ranges::iterator_t< Rng > middle)
+.. doxygenfunction:: hpx::ranges::rotate(ExPolicy &&policy, Rng &&rng, std::ranges::iterator_t< Rng > middle)
    :project: hpx

@@ -26,7 +26,7 @@ See also:
    - :ref:`... <modules_bind__api>`
    - :ref:`hpx::placeholders::_9 <modules_bind_hpx_placeholders__9_api>`
 
-.. doxygenfunction:: hpx::bind(F && f, Ts &&... vs)
+.. doxygenfunction:: hpx::bind(F &&f, Ts &&... vs)
    :project: hpx
 .. doxygenfunction:: hpx::bind(Ts &&... vs)
    :project: hpx

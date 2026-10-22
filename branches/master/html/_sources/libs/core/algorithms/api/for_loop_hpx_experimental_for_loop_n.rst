@@ -27,5 +27,5 @@ See also:
 
 .. doxygenfunction:: hpx::experimental::for_loop_n(I first, Size size, Args &&... args)
    :project: hpx
-.. doxygenfunction:: hpx::experimental::for_loop_n(ExPolicy && policy, I first, Size size, Args &&... args)
+.. doxygenfunction:: hpx::experimental::for_loop_n(ExPolicy &&policy, I first, Size size, Args &&... args)
    :project: hpx

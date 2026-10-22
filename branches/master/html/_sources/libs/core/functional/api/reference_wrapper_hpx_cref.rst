@@ -24,9 +24,9 @@ See also:
    - :ref:`hpx::reference_wrapper <modules_reference_wrapper_hpx_reference_wrapper_api>`
    - :ref:`hpx::ref <modules_reference_wrapper_hpx_ref_api>`
 
-.. doxygenfunction:: hpx::cref(T const & val)
+.. doxygenfunction:: hpx::cref(T const &val) noexcept
    :project: hpx
-.. doxygenfunction:: hpx::cref(T const &&)
+.. doxygenfunction:: hpx::cref(T const &&)=delete
    :project: hpx
-.. doxygenfunction:: hpx::cref(reference_wrapper< T > val)
+.. doxygenfunction:: hpx::cref(reference_wrapper< T > val) noexcept
    :project: hpx

@@ -25,5 +25,5 @@ See also:
 
 .. doxygenfunction:: hpx::reverse(BidirIter first, BidirIter last)
    :project: hpx
-.. doxygenfunction:: hpx::reverse(ExPolicy && policy, BidirIter first, BidirIter last)
+.. doxygenfunction:: hpx::reverse(ExPolicy &&policy, BidirIter first, BidirIter last)
    :project: hpx

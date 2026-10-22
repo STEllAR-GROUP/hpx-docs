@@ -31,13 +31,13 @@ See also:
    - :ref:`hpx::supervision::await_terminal <modules_supervision_api_hpx_supervision_await_terminal_api>`
    - :ref:`hpx::supervision::is_valid_transition <modules_supervision_api_hpx_supervision_is_valid_transition_api>`
 
-.. doxygenfunction:: hpx::supervision::publish_event(hpx::id_type const & locality, hpx::id_type const & target, hpx::supervision::event ev, std::uint64_t epoch)
+.. doxygenfunction:: hpx::supervision::publish_event(hpx::id_type const &locality, hpx::id_type const &target, hpx::supervision::event ev, std::uint64_t epoch=0)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::publish_event(hpx::launch::sync_policy, hpx::id_type const & locality, hpx::id_type const & target, hpx::supervision::event ev, std::uint64_t epoch, hpx::error_code & ec)
+.. doxygenfunction:: hpx::supervision::publish_event(hpx::launch::sync_policy, hpx::id_type const &locality, hpx::id_type const &target, hpx::supervision::event ev, std::uint64_t epoch=0, hpx::error_code &ec=hpx::throws)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::publish_event(hpx::id_type const & target, hpx::supervision::event ev, std::uint64_t epoch, hpx::error_code & ec)
+.. doxygenfunction:: hpx::supervision::publish_event(hpx::id_type const &target, hpx::supervision::event ev, std::uint64_t epoch=0, hpx::error_code &ec=throws)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::publish_event(registry const & handle, event ev, std::uint64_t epoch)
+.. doxygenfunction:: hpx::supervision::publish_event(registry const &handle, event ev, std::uint64_t epoch=0)
    :project: hpx
-.. doxygenfunction:: hpx::supervision::publish_event(hpx::launch::sync_policy policy, registry const & handle, event ev, std::uint64_t epoch, hpx::error_code & ec)
+.. doxygenfunction:: hpx::supervision::publish_event(hpx::launch::sync_policy policy, registry const &handle, event ev, std::uint64_t epoch=0, hpx::error_code &ec=hpx::throws)
    :project: hpx

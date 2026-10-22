@@ -25,9 +25,9 @@ See also:
    - :ref:`hpx::wait_each_n <modules_wait_each_hpx_wait_each_n_api>`
    - :ref:`hpx::wait_each_n_nothrow <modules_wait_each_hpx_wait_each_n_nothrow_api>`
 
-.. doxygenfunction:: hpx::wait_each(F && f, std::vector< Future > && futures)
+.. doxygenfunction:: hpx::wait_each(F &&f, std::vector< Future > &&futures)
    :project: hpx
-.. doxygenfunction:: hpx::wait_each(F && f, Iterator begin, Iterator end)
+.. doxygenfunction:: hpx::wait_each(F &&f, Iterator begin, Iterator end)
    :project: hpx
-.. doxygenfunction:: hpx::wait_each(F && f, T &&... futures)
+.. doxygenfunction:: hpx::wait_each(F &&f, T &&... futures)
    :project: hpx

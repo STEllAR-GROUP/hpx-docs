@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::experimental::induction(T && value, std::size_t stride)
+.. doxygenfunction:: hpx::experimental::induction(T &&value, std::size_t stride)
    :project: hpx
-.. doxygenfunction:: hpx::experimental::induction(T && value)
+.. doxygenfunction:: hpx::experimental::induction(T &&value)
    :project: hpx

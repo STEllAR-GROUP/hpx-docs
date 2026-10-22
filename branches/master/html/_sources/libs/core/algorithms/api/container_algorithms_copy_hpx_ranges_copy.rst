@@ -24,11 +24,11 @@ See also:
    - :ref:`hpx::ranges::copy_n <modules_container_algorithms_copy_hpx_ranges_copy_n_api>`
    - :ref:`hpx::ranges::copy_if <modules_container_algorithms_copy_hpx_ranges_copy_if_api>`
 
-.. doxygenfunction:: hpx::ranges::copy(ExPolicy && policy, FwdIter1 iter, Sent1 sent, FwdIter dest)
+.. doxygenfunction:: hpx::ranges::copy(ExPolicy &&policy, FwdIter1 iter, Sent1 sent, FwdIter dest)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::copy(ExPolicy && policy, Rng && rng, FwdIter dest)
+.. doxygenfunction:: hpx::ranges::copy(ExPolicy &&policy, Rng &&rng, FwdIter dest)
    :project: hpx
 .. doxygenfunction:: hpx::ranges::copy(FwdIter1 iter, Sent1 sent, FwdIter dest)
    :project: hpx
-.. doxygenfunction:: hpx::ranges::copy(Rng && rng, FwdIter dest)
+.. doxygenfunction:: hpx::ranges::copy(Rng &&rng, FwdIter dest)
    :project: hpx

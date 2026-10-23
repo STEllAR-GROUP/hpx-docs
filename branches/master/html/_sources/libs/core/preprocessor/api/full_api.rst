@@ -21,7 +21,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    :maxdepth: 1
 
    /libs/core/preprocessor/api/stringize.rst
-   /libs/core/preprocessor/api/expand.rst
-   /libs/core/preprocessor/api/nargs.rst
-   /libs/core/preprocessor/api/cat.rst
    /libs/core/preprocessor/api/strip_parens.rst
+   /libs/core/preprocessor/api/cat.rst
+   /libs/core/preprocessor/api/nargs.rst
+   /libs/core/preprocessor/api/expand.rst

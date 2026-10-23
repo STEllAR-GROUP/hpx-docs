@@ -20,8 +20,8 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/full/async_colocated/api/post_colocated_callback_fwd.rst
    /libs/full/async_colocated/api/async_colocated_fwd.rst
+   /libs/full/async_colocated/api/post_colocated_fwd.rst
    /libs/full/async_colocated/api/async_colocated_callback_fwd.rst
    /libs/full/async_colocated/api/get_colocation_id_hpx_get_colocation_id.rst
-   /libs/full/async_colocated/api/post_colocated_fwd.rst
+   /libs/full/async_colocated/api/post_colocated_callback_fwd.rst

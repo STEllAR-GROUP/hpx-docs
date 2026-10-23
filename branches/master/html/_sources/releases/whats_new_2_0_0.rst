@@ -856,9 +856,9 @@ Merged pull requests
 * :hpx-pr:`7727` - Use yield for HPX_SMT_PAUSE on AArch64
 * :hpx-pr:`7726` - Make the work-requesting schedulers actually steal
 * :hpx-pr:`7725` - Reduce cross-core contention in the scheduling loop and local_priority_queue_scheduler
-* :hpx-pr:`7723` - dont drop a yielded background thread at shutdown
+* :hpx-pr:`7723` - don't drop a yielded background thread at shutdown
 * :hpx-pr:`7722` - build(deps): bump github/codeql-action from 4.38.2 to 4.38.3
-* :hpx-pr:`7720` - dont crash the tcp sender when shutdown races its cleanup
+* :hpx-pr:`7720` - don't crash the tcp sender when shutdown races its cleanup
 * :hpx-pr:`7718` - futures: run stackless run_as_child children directly
 * :hpx-pr:`7717` - Fix networking requirements for segmented merge tests
 * :hpx-pr:`7714` - synchronization: keep waiting in timed_mutex::try_lock_until until timeout or lock

@@ -20,6 +20,8 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
+   /libs/full/supervision/api/supervision_manager_hpx_supervision_supervision_manager.rst
+   /libs/full/supervision/api/testing_hpx_supervision_testing_set_register_observer_snapshot_hook.rst
    /libs/full/supervision/api/supervision_api_hpx_supervision_publish_event.rst
    /libs/full/supervision/api/supervision_api_hpx_supervision_query_state.rst
    /libs/full/supervision/api/supervision_api_hpx_supervision_register_observer.rst
@@ -30,6 +32,4 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
    /libs/full/supervision/api/supervision_api_hpx_supervision_check_admission.rst
    /libs/full/supervision/api/supervision_api_hpx_supervision_await_terminal.rst
    /libs/full/supervision/api/supervision_api_hpx_supervision_is_valid_transition.rst
-   /libs/full/supervision/api/supervision_manager_hpx_supervision_supervision_manager.rst
-   /libs/full/supervision/api/testing_hpx_supervision_testing_set_register_observer_snapshot_hook.rst
    /libs/full/supervision/api/server_supervision_manager.rst

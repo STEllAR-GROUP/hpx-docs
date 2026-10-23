@@ -20,23 +20,23 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 .. toctree::
    :maxdepth: 1
 
-   /libs/full/async_distributed/api/async_continue_callback_fwd.rst
-   /libs/full/async_distributed/api/trigger_lco_fwd.rst
    /libs/full/async_distributed/api/promise.rst
-   /libs/full/async_distributed/api/continuation.rst
-   /libs/full/async_distributed/api/async_callback.rst
-   /libs/full/async_distributed/api/async_continue_callback.rst
-   /libs/full/async_distributed/api/dataflow_hpx_dataflow_distributed.rst
-   /libs/full/async_distributed/api/base_lco.rst
-   /libs/full/async_distributed/api/async_continue.rst
-   /libs/full/async_distributed/api/lcos_fwd_hpx_distributed_promise.rst
-   /libs/full/async_distributed/api/packaged_action.rst
    /libs/full/async_distributed/api/async_continue_fwd.rst
-   /libs/full/async_distributed/api/base_lco_with_value.rst
-   /libs/full/async_distributed/api/bind_action.rst
-   /libs/full/async_distributed/api/async_hpx_async_distributed.rst
-   /libs/full/async_distributed/api/trigger_lco.rst
-   /libs/full/async_distributed/api/post_hpx_post_distributed.rst
+   /libs/full/async_distributed/api/async_continue_callback_fwd.rst
    /libs/full/async_distributed/api/sync_hpx_sync_distributed.rst
-   /libs/full/async_distributed/api/transfer_continuation_action.rst
+   /libs/full/async_distributed/api/trigger_lco.rst
+   /libs/full/async_distributed/api/dataflow_hpx_dataflow_distributed.rst
+   /libs/full/async_distributed/api/bind_action.rst
+   /libs/full/async_distributed/api/lcos_fwd_hpx_distributed_promise.rst
+   /libs/full/async_distributed/api/continuation.rst
+   /libs/full/async_distributed/api/async_continue.rst
+   /libs/full/async_distributed/api/post_hpx_post_distributed.rst
+   /libs/full/async_distributed/api/base_lco_with_value.rst
+   /libs/full/async_distributed/api/base_lco.rst
+   /libs/full/async_distributed/api/async_continue_callback.rst
+   /libs/full/async_distributed/api/trigger_lco_fwd.rst
    /libs/full/async_distributed/api/trigger.rst
+   /libs/full/async_distributed/api/async_hpx_async_distributed.rst
+   /libs/full/async_distributed/api/async_callback.rst
+   /libs/full/async_distributed/api/packaged_action.rst
+   /libs/full/async_distributed/api/transfer_continuation_action.rst

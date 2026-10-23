@@ -203,6 +203,7 @@
 <li class="toctree-l2"><a class="reference internal" href="using_the_lci_parcelport.html">Using the LCI parcelport</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using_the_lcw_parcelport.html">Using the LCW parcelport</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpx_runtime_and_resources.html"><em>HPX</em> runtime and resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thread_scheduler_configuration.html">Configuring and tuning the thread schedulers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="executors.html">Executors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="error_handling.html">Error handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="iostreams.html">The <em>HPX</em> I/O-streams component</a></li>
@@ -1793,10 +1794,13 @@ loaded from.</p></td>
 <span class="na">minimal_deadlock_detection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;debug&gt;</span>
 <span class="na">spinlock_deadlock_detection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;debug&gt;</span>
 <span class="na">spinlock_deadlock_detection_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_SPINLOCK_DEADLOCK_DETECTION_LIMIT:1000000}</span>
+<span class="na">scheduler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">local-priority-fifo</span>
+<span class="na">numa_sensitive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
 <span class="na">max_background_threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_MAX_BACKGROUND_THREADS:$[hpx.os_threads]}</span>
 <span class="na">max_idle_loop_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_MAX_IDLE_LOOP_COUNT:&lt;hpx_idle_loop_count_max&gt;}</span>
 <span class="na">max_busy_loop_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_MAX_BUSY_LOOP_COUNT:&lt;hpx_busy_loop_count_max&gt;}</span>
 <span class="na">max_idle_backoff_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_MAX_IDLE_BACKOFF_TIME:&lt;hpx_idle_backoff_time_max&gt;}</span>
+<span class="na">default_scheduler_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_DEFAULT_SCHEDULER_MODE}</span>
 <span class="na">exception_verbosity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_EXCEPTION_VERBOSITY:2}</span>
 <span class="na">trace_depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_TRACE_DEPTH:20}</span>
 <span class="na">handle_signals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_HANDLE_SIGNALS:1}</span>
@@ -1888,32 +1892,56 @@ spinlocks are allowed to perform. This setting is applicable only if
 <code class="docutils literal notranslate"><span class="pre">HPX_WITH_SPINLOCK_DEADLOCK_DETECTION</span></code> is set during configuration in
 CMake. By default this is set to <code class="docutils literal notranslate"><span class="pre">1000000</span></code>.</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.scheduler</span></code></p></td>
+<td><p>This setting defines the thread scheduling policy of the default thread
+pool, see <a class="reference internal" href="hpx_runtime_and_resources.html#schedulers"><span class="std std-ref">HPX thread scheduling policies</span></a>. It is set by the command line option
+<a class="reference internal" href="#cmdoption-hpx-queuing"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:queuing</span></code></a>. Defaults to <code class="docutils literal notranslate"><span class="pre">local-priority-fifo</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.numa_sensitive</span></code></p></td>
+<td><p>This setting controls how idle worker threads steal work across NUMA
+domains: <code class="docutils literal notranslate"><span class="pre">0</span></code> all worker threads may steal from other NUMA domains,
+<code class="docutils literal notranslate"><span class="pre">1</span></code> only the first worker thread of each NUMA domain steals from the
+nearest other NUMA domains, <code class="docutils literal notranslate"><span class="pre">2</span></code> no stealing across NUMA domains, see
+<a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-numa"><span class="std std-ref">NUMA domains</span></a>. It is set by the command line option
+<a class="reference internal" href="#cmdoption-hpx-numa-sensitive"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hpx:numa-sensitive</span></code></a>. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></td>
+</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_background_threads</span></code></p></td>
-<td><p>This setting defines the number of threads in the scheduler, which are
-used to execute background work. By default this is the same as the
-number of cores used for the scheduler.</p></td>
+<td><p>This setting defines the number of worker threads in the scheduler that
+are used to execute background work (the worker threads with the
+smallest indices in each thread pool), see
+<a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-background-work"><span class="std std-ref">Background work</span></a>. By default this is the number
+of worker threads (<code class="docutils literal notranslate"><span class="pre">hpx.os_threads</span></code>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span></code></p></td>
-<td><p>By default this is defined by the preprocessor constant
-<code class="docutils literal notranslate"><span class="pre">HPX_IDLE_LOOP_COUNT_MAX</span></code>. This is an internal setting that you should
-change only if you know exactly what you are doing.</p></td>
+<td><p>This setting defines the number of consecutive scheduling loop
+iterations without work after which a worker thread goes to sleep (idle
+backoff). After half of it, idle worker threads steal staged tasks from
+any other worker thread. See <a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-configuration"><span class="std std-ref">Configuring and tuning the thread schedulers</span></a>. By
+default this is defined by the preprocessor constant
+<code class="docutils literal notranslate"><span class="pre">HPX_IDLE_LOOP_COUNT_MAX</span></code> (<code class="docutils literal notranslate"><span class="pre">200000</span></code>).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_busy_loop_count</span></code></p></td>
-<td><p>This setting defines the maximum value of the busy-loop counter in the
-scheduler. By default this is defined by the preprocessor constant
-<code class="docutils literal notranslate"><span class="pre">HPX_BUSY_LOOP_COUNT_MAX</span></code>. This is an internal setting that you should
-change only if you know exactly what you are doing.</p></td>
+<td><p>This setting defines the number of <em>HPX</em> threads a worker thread runs
+before it does background work in between, see
+<a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-background-work"><span class="std std-ref">Background work</span></a>. By default this is defined by
+the preprocessor constant <code class="docutils literal notranslate"><span class="pre">HPX_BUSY_LOOP_COUNT_MAX</span></code> (<code class="docutils literal notranslate"><span class="pre">2000</span></code>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.max_idle_backoff_time</span></code></p></td>
-<td><p>This setting defines the maximum time (in milliseconds) for the scheduler
-to sleep after being idle for <code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span></code> iterations.
-This setting is applicable only if
-<code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_MANAGER_IDLE_BACKOFF</span></code> is set during configuration in
-<a class="reference external" href="https://www.cmake.org">CMake</a>. By default this is defined by the preprocessor constant
-<code class="docutils literal notranslate"><span class="pre">HPX_IDLE_BACKOFF_TIME_MAX</span></code>. This is an internal setting that you
-should change only if you know exactly what you are doing.</p></td>
+<td><p>This setting defines the maximum time (in microseconds) for a worker
+thread to sleep after being idle for <code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span></code>
+iterations, see <a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-idle-backoff"><span class="std std-ref">Idle backoff</span></a>. This setting is
+applicable only if <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_MANAGER_IDLE_BACKOFF</span></code> is set
+during configuration in <a class="reference external" href="https://www.cmake.org">CMake</a>. By default this is defined by the
+preprocessor constant <code class="docutils literal notranslate"><span class="pre">HPX_IDLE_BACKOFF_TIME_MAX</span></code> (<code class="docutils literal notranslate"><span class="pre">1000</span></code>).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.exception_verbosity</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.default_scheduler_mode</span></code></p></td>
+<td><p>This setting defines the scheduler mode of the default thread pool as a
+number (the bitwise or of the values of
+<code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">hpx::threads::policies::scheduler_mode</span></code>), see
+<a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-modes"><span class="std std-ref">Scheduler modes</span></a>. If it is empty (the default),
+<code class="docutils literal notranslate"><span class="pre">scheduler_mode::default_</span></code> is used.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.exception_verbosity</span></code></p></td>
 <td><p>This setting defines the verbosity of exceptions. Valid values are
 integers. A setting of <code class="docutils literal notranslate"><span class="pre">2</span></code> or higher prints all available information.
 A setting of <code class="docutils literal notranslate"><span class="pre">1</span></code> leaves out the build configuration and environment
@@ -1922,19 +1950,19 @@ thrown exception and the file name, function, and line number where the
 exception was thrown. The default value is <code class="docutils literal notranslate"><span class="pre">2</span></code> or the value of the
 environment variable <code class="docutils literal notranslate"><span class="pre">HPX_EXCEPTION_VERBOSITY</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.trace_depth</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.trace_depth</span></code></p></td>
 <td><p>This setting defines the number of stack-levels printed in generated
 stack backtraces. This defaults to <code class="docutils literal notranslate"><span class="pre">20</span></code>, but can be changed using the
 cmake <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_BACKTRACE_DEPTH</span></code> configuration setting.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.handle_signals</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.handle_signals</span></code></p></td>
 <td><p>This setting defines whether HPX will register signal handlers that will
 print the configuration information (stack backtrace, system information,
 etc.) whenever a signal is raised. The default is <code class="docutils literal notranslate"><span class="pre">1</span></code>. Setting this
 value to <code class="docutils literal notranslate"><span class="pre">0</span></code> can be useful in cases when generating a core-dump on
 segmentation faults or similar signals is desired.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.handle_failed_new</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.handle_failed_new</span></code></p></td>
 <td><p>This setting defines whether HPX will register a handler for failed
 allocationsthat will print the configuration information
 (stack backtrace, system information, etc.) whenever an allocation fails.
@@ -1942,37 +1970,37 @@ The default is <code class="docutils literal notranslate"><span class="pre">1</s
 when generating a core-dump on segmentation faults or similar signals
 is desired.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.small_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.small_size</span></code></p></td>
 <td><p>This is initialized to the small stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_SMALL_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x8000</span></code>). This value is used for
 all <em>HPX</em> threads by default, except for the thread running <code class="docutils literal notranslate"><span class="pre">hpx_main</span></code>
 (which runs on a large stack).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.medium_size</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.medium_size</span></code></p></td>
 <td><p>This is initialized to the medium stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_MEDIUM_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x20000</span></code>).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.large_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.large_size</span></code></p></td>
 <td><p>This is initialized to the large stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_LARGE_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x200000</span></code>). This setting is used
 by default for the thread running <code class="docutils literal notranslate"><span class="pre">hpx_main</span></code> only.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.huge_size</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.huge_size</span></code></p></td>
 <td><p>This is initialized to the huge stack size to be used by <em>HPX</em> threads.
 Set by default to the value of the compile time preprocessor constant
 <code class="docutils literal notranslate"><span class="pre">HPX_HUGE_STACK_SIZE</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">0x2000000</span></code>).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.use_guard_pages</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.use_guard_pages</span></code></p></td>
 <td><p>This entry controls whether the coroutine library will generate stack
 guard pages or not. This entry is applicable on Linux only and only if
 the <code class="docutils literal notranslate"><span class="pre">HPX_USE_GENERIC_COROUTINE_CONTEXT</span></code> option is not enabled and the
 <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_GUARD_PAGE</span></code> is set to 1 while configuring the build
 system. It is set by default to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.unbind_on_reset</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.stacks.unbind_on_reset</span></code></p></td>
 <td><p>Controls how recycled mmap’d coroutine stacks are advised when an HPX
 thread terminates (Linux/FreeBSD with <code class="docutils literal notranslate"><span class="pre">HPX_WITH_THREAD_STACK_MMAP=ON</span></code>;
 not used on Apple Silicon, which allocates stacks via <code class="docutils literal notranslate"><span class="pre">calloc</span></code>).
@@ -2058,18 +2086,24 @@ the internal timer thread pool.</p></td>
 <h4>The <code class="docutils literal notranslate"><span class="pre">hpx.thread_queue</span></code> configuration section<a class="headerlink" href="#the-hpx-thread-queue-configuration-section" title="Link to this heading">#</a></h4>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>These are the setting control internal values used by the thread scheduling queues
+<p>These settings control internal values used by the thread scheduling queues
 in the <em>HPX</em> scheduler. You should not modify these settings unless you know
-exactly what you are doing.</p>
+exactly what you are doing. <a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-configuration"><span class="std std-ref">Configuring and tuning the thread schedulers</span></a> explains
+how they work together.</p>
 </div>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[hpx.thread_queue]</span>
+<span class="na">max_thread_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MAX_THREAD_COUNT:1000}</span>
 <span class="na">min_tasks_to_steal_pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MIN_TASKS_TO_STEAL_PENDING:0}</span>
 <span class="na">min_tasks_to_steal_staged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MIN_TASKS_TO_STEAL_STAGED:0}</span>
 <span class="na">min_tasks_to_steal_staged_early</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MIN_TASKS_TO_STEAL_STAGED_EARLY:10}</span>
 <span class="na">idle_loop_count_steal_staged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_IDLE_LOOP_COUNT_STEAL_STAGED:30}</span>
 <span class="na">min_add_new_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MIN_ADD_NEW_COUNT:10}</span>
 <span class="na">max_add_new_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MAX_ADD_NEW_COUNT:10}</span>
+<span class="na">min_delete_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MIN_DELETE_COUNT:10}</span>
 <span class="na">max_delete_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MAX_DELETE_COUNT:1000}</span>
+<span class="na">max_terminated_threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_MAX_TERMINATED_THREADS:100}</span>
+<span class="na">init_threads_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_INIT_THREADS_COUNT:10}</span>
+<span class="na">cached_threads_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">${HPX_THREAD_QUEUE_CACHED_THREADS_COUNT:1000}</span>
 </pre></div>
 </div>
 <div class="pst-scrollable-table-container"><table class="table" id="ini-hpx-thread-queue">
@@ -2077,47 +2111,77 @@ exactly what you are doing.</p>
 <tr class="row-odd"><td><p>Property</p></td>
 <td><p>Description</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_pending</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.max_thread_count</span></code></p></td>
+<td><p>The value of this property limits the number of <em>HPX</em> threads a queue
+converts staged tasks into, see <a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-conversion"><span class="std std-ref">Converting staged tasks</span></a>. A
+queue without pending threads always converts at least
+<code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_add_new_count</span></code> tasks. <code class="docutils literal notranslate"><span class="pre">0</span></code> removes the limit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_pending</span></code></p></td>
 <td><p>The value of this property defines the number of pending <em>HPX</em> threads
-that have to be available before neighboring cores are allowed to steal
-work. The default is to allow stealing always.</p></td>
+that have to be available before other worker threads are allowed to
+steal them. The default is to allow stealing always. Values larger than
+<code class="docutils literal notranslate"><span class="pre">1</span></code> can leave threads queued behind a long running <em>HPX</em> thread
+indefinitely, see <a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-pending-steal"><span class="std std-ref">Stealing pending threads</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged</span></code></p></td>
 <td><p>The value of this property defines the number of staged <em>HPX</em> tasks that
-need to be available before neighboring cores are allowed to steal work.
-The default is to allow stealing always.</p></td>
+need to be available before other worker threads are allowed to steal
+them. The default is to allow stealing always. A worker thread always
+converts its own staged tasks.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.idle_loop_count_steal_staged</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.idle_loop_count_steal_staged</span></code></p></td>
 <td><p>The value of this property defines the number of consecutive empty
-scheduling loop iterations after which a core starts stealing staged
-<em>HPX</em> tasks from other cores (local priority queue scheduler only, other
-schedulers start after <code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span> <span class="pre">/</span> <span class="pre">2</span></code> iterations). It
-has no effect if fast idle mode is on, which steals staged tasks right
-away.</p></td>
+scheduling loop iterations after which a worker thread starts stealing
+staged <em>HPX</em> tasks from other worker threads (local priority queue
+scheduler only; values above <code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span> <span class="pre">/</span> <span class="pre">2</span></code> are limited
+to it. The local and shared priority schedulers steal staged tasks right
+away, the work-requesting schedulers do not steal staged tasks). It has
+no effect if fast idle mode is on, which steals staged tasks right away.
+See <a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-staged-steal"><span class="std std-ref">Stealing staged tasks</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged_early</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_tasks_to_steal_staged_early</span></code></p></td>
 <td><p>The value of this property defines the number of staged <em>HPX</em> tasks that
-need to be available before neighboring cores are allowed to steal work
-shortly after running out of work, i.e. after
+need to be available before other worker threads are allowed to steal
+them shortly after running out of work, i.e. after
 <code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.idle_loop_count_steal_staged</span></code> iterations (local
-priority queue scheduler only). Cores that have been idle for
+priority queue scheduler only). Worker threads that have been idle for
 <code class="docutils literal notranslate"><span class="pre">hpx.max_idle_loop_count</span> <span class="pre">/</span> <span class="pre">2</span></code> iterations steal staged tasks
-regardless. Leaving a few staged tasks to the core they were placed on
-keeps them close to the data in that core’s caches.</p></td>
+regardless. Leaving a few staged tasks to the worker thread they were
+placed on keeps them close to the data in that core’s caches.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_add_new_count</span></code></p></td>
-<td><p>The value of this property defines the minimal number of tasks to be
-converted into <em>HPX</em> threads whenever the thread queues for a core have
-run empty.</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_add_new_count</span></code></p></td>
+<td><p>The value of this property defines the minimal number of staged tasks
+converted into <em>HPX</em> threads at a time, see
+<a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-conversion"><span class="std std-ref">Converting staged tasks</span></a>. It is limited to
+<code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.max_add_new_count</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.max_add_new_count</span></code></p></td>
-<td><p>The value of this property defines the maximal number of tasks to be
-converted into <em>HPX</em> threads whenever the thread queues for a core have
-run empty.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.max_add_new_count</span></code></p></td>
+<td><p>The value of this property defines the maximal number of staged tasks
+converted into <em>HPX</em> threads at a time, both when a worker thread
+converts its own tasks and when it steals staged tasks.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.min_delete_count</span></code></p></td>
+<td><p>The value of this property defines the minimal number of terminated
+<em>HPX</em> threads to clean up at a time, see
+<a class="reference internal" href="thread_scheduler_configuration.html#thread-scheduler-recycling"><span class="std std-ref">Thread object management</span></a>. It is limited to
+<code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.max_delete_count</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.max_delete_count</span></code></p></td>
+<td><p>The value of this property defines the maximal number of terminated
+<em>HPX</em> threads to clean up at a time.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.max_terminated_threads</span></code></p></td>
 <td><p>The value of this property defines the number of terminated <em>HPX</em>
-threads to discard during each invocation of the corresponding function.</p></td>
+threads in a queue above which all of them are cleaned up.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.init_threads_count</span></code></p></td>
+<td><p>The value of this property defines the number of <em>HPX</em> thread objects
+each queue creates when its worker thread starts.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hpx.thread_queue.cached_threads_count</span></code></p></td>
+<td><p>The value of this property defines the maximal number of cleaned up
+<em>HPX</em> thread objects each queue keeps for reuse per stack size.</p></td>
 </tr>
 </tbody>
 </table>

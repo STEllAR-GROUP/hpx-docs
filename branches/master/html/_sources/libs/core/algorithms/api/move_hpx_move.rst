@@ -19,7 +19,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::move(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest)
+.. doxygenfunction:: hpx::move(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest)
    :project: hpx
 .. doxygenfunction:: hpx::move(FwdIter1 first, FwdIter1 last, FwdIter2 dest)
    :project: hpx

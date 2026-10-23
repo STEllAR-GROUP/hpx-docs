@@ -23,11 +23,11 @@ See also:
 
    - :ref:`hpx::ranges::remove_copy_if <modules_container_algorithms_remove_copy_hpx_ranges_remove_copy_if_api>`
 
-.. doxygenfunction:: hpx::ranges::remove_copy(I first, Sent last, O dest, T const & value, Proj && proj)
+.. doxygenfunction:: hpx::ranges::remove_copy(I first, Sent last, O dest, T const &value, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::remove_copy(Rng && rng, O dest, T const & val, Proj && proj)
+.. doxygenfunction:: hpx::ranges::remove_copy(Rng &&rng, O dest, T const &val, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::remove_copy(ExPolicy && policy, I first, Sent last, O dest, T const & value, Proj && proj)
+.. doxygenfunction:: hpx::ranges::remove_copy(ExPolicy &&policy, I first, Sent last, O dest, T const &value, Proj &&proj=Proj())
    :project: hpx
-.. doxygenfunction:: hpx::ranges::remove_copy(ExPolicy && policy, Rng && rng, O dest, T const & value, Proj && proj)
+.. doxygenfunction:: hpx::ranges::remove_copy(ExPolicy &&policy, Rng &&rng, O dest, T const &value, Proj &&proj=Proj())
    :project: hpx

@@ -21,7 +21,7 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
 .. doxygenfunction:: hpx::when_some(std::size_t n, Iterator first, Iterator last)
    :project: hpx
-.. doxygenfunction:: hpx::when_some(std::size_t n, Range && futures)
+.. doxygenfunction:: hpx::when_some(std::size_t n, Range &&futures)
    :project: hpx
 .. doxygenfunction:: hpx::when_some(std::size_t n, Ts &&... futures)
    :project: hpx

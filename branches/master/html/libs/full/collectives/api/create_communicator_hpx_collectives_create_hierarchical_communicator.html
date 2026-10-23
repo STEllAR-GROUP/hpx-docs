@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>hpx::collectives::create_hierarchical_communicator &#8212; HPX 2.0.0-rc1 documentation</title>
+    <title>hpx::collectives::create_hierarchical_communicator &#8212; HPX 2.0.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../../_static/documentation_options.js?v=7ec4965c"></script>
+    <script src="../../../../_static/documentation_options.js?v=ce394494"></script>
     <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -52,7 +52,7 @@
     <link rel="prev" title="hpx::collectives::create_local_communicator" href="create_communicator_hpx_collectives_create_local_communicator.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Oct 22, 2026"/>
+    <meta name="docbuild:last-update" content="Oct 23, 2026"/>
   </head>
   
   
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../../../../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0-rc1 documentation - Home"/>
-    <script>document.write(`<img src="../../../../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0-rc1 documentation - Home"/>`);</script>
+    <img src="../../../../_static/HPX_STELLAR_blue.png" class="logo__image only-light" alt="HPX 2.0.0 documentation - Home"/>
+    <script>document.write(`<img src="../../../../_static/HPX_STELLAR_blue.png" class="logo__image only-dark" alt="HPX 2.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -557,7 +557,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../runtime_components/api/components_fwd.html">hpx/runtime_components/components_fwd.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runtime_components/api/reflect_client.html">hpx/runtime_components/reflect_client.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runtime_components/api/new_hpx_new.html">hpx::new_</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../runtime_components/api/new_local_new.html">local_new</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runtime_components/api/macros.html">hpx/runtime_components/macros.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runtime_components/api/reflect_client_macros.html">hpx/runtime_components/reflect_client_macros.hpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runtime_components/api/component_registry.html">hpx/runtime_components/component_registry.hpp</a></li>
@@ -1364,7 +1363,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../releases.html">Releases</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (Oct 31, 2026)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../releases/whats_new_2_0_0.html"><em>HPX</em> V2.0.0 (TBD)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../releases/whats_new_1_11_0.html"><em>HPX</em> V1.11.0 (Jun 30, 2025)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../releases/whats_new_1_10_0.html"><em>HPX</em> V1.10.0 (May 29, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../releases/whats_new_1_9_1.html"><em>HPX</em> V1.9.1 (August 4, 2023)</a></li>
@@ -1649,12 +1648,12 @@ document.write(`
 <li><p><strong>this_site</strong> – The sequence number of this invocation (usually the locality id). This value is optional and defaults to whatever <a class="reference internal" href="../../../core/runtime_local/api/get_locality_id_hpx_get_locality_id.html#namespacehpx_1a158d7c54a657bb364c1704033010697b"><span class="std std-ref">hpx::get_locality_id()</span></a> returns. </p></li>
 <li><p><strong>arity</strong> – The arity of the hierarchical tree of communicators to create for the given endpoint. The default arity is 2 and the value must be at least 2. </p></li>
 <li><p><strong>generation</strong> – The generational counter identifying the sequence number of the collective operation performed on the given base name. This is optional and needs to be supplied only if the collective operation on the given base name has to be performed more than once. </p></li>
-<li><p><strong>root_site</strong> – The site that is responsible for creating the collective support object. Hierarchical communicators currently support only site 0 as the root, which is also the default. </p></li>
+<li><p><strong>root_site</strong> – The site at the root of the tree of communicators (default: 0). Any site may serve as the root. All sites must pass the same root site. The root site is the only site that may call the root-side operations (broadcast_to, gather_here, reduce_here, scatter_to). In the composite operations that take a <em>root_site</em> argument (all_gather, all_reduce, barrier, scans) it must be 0 (the default) or the root of the communicator; an explicit 0 is not checked. </p></li>
 <li><p><strong>threshold</strong> – The site-count threshold below which the communicator collapses to a single flat communicator spanning all sites (strict comparison: num_sites &lt; threshold). The default is 16; pass 0 to disable the fallback and always build a tree.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Throws<span class="colon">:</span></dt>
-<dd class="field-even"><p><span><span class="cpp-expr sig sig-inline cpp"><a class="reference internal" href="../../../../components/component_storage/api/migrate_from_storage.html#_CPPv43hpx" title="hpx"><span class="n">hpx</span></a><span class="p">::</span><a class="reference internal" href="../../../core/errors/api/exception_hpx_exception.html#_CPPv4N3hpx9exceptionE" title="hpx::exception"><span class="n">exception</span></a></span></span> – with hpx::error::bad_parameter if <em>basename</em> is null or empty, if the (resolved) <em>num_sites</em> is zero, if the (resolved) <em>this_site</em> is not smaller than <em>num_sites</em>, if the (resolved) <em>root_site</em> is not zero, or if <em>arity</em> is smaller than 2. </p>
+<dd class="field-even"><p><span><span class="cpp-expr sig sig-inline cpp"><a class="reference internal" href="../../../../components/component_storage/api/migrate_from_storage.html#_CPPv43hpx" title="hpx"><span class="n">hpx</span></a><span class="p">::</span><a class="reference internal" href="../../../core/errors/api/exception_hpx_exception.html#_CPPv4N3hpx9exceptionE" title="hpx::exception"><span class="n">exception</span></a></span></span> – with hpx::error::bad_parameter if <em>basename</em> is null or empty, if the (resolved) <em>num_sites</em> is zero, if the (resolved) <em>this_site</em> is not smaller than <em>num_sites</em>, if the (resolved) <em>root_site</em> is not smaller than <em>num_sites</em>, or if <em>arity</em> is smaller than 2. </p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This function returns a new communicator object usable with the collective operation.</p>
@@ -1743,7 +1742,7 @@ By The HPX project
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Oct 22, 2026.
+  Last updated on Oct 23, 2026.
   <br/>
 </p>
   </div>

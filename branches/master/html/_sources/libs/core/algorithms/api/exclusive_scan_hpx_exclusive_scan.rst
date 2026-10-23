@@ -21,9 +21,9 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 
 .. doxygenfunction:: hpx::exclusive_scan(InIter first, InIter last, OutIter dest, T init)
    :project: hpx
-.. doxygenfunction:: hpx::exclusive_scan(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, T init)
+.. doxygenfunction:: hpx::exclusive_scan(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, T init)
    :project: hpx
-.. doxygenfunction:: hpx::exclusive_scan(InIter first, InIter last, OutIter dest, T init, Op && op)
+.. doxygenfunction:: hpx::exclusive_scan(InIter first, InIter last, OutIter dest, T init, Op &&op)
    :project: hpx
-.. doxygenfunction:: hpx::exclusive_scan(ExPolicy && policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, T init, Op && op)
+.. doxygenfunction:: hpx::exclusive_scan(ExPolicy &&policy, FwdIter1 first, FwdIter1 last, FwdIter2 dest, T init, Op &&op)
    :project: hpx

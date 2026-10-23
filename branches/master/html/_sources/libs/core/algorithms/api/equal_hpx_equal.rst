@@ -19,17 +19,17 @@ See :ref:`public_api` for a list of names and headers that are part of the publi
 |hpx| API.
 
 
-.. doxygenfunction:: hpx::equal(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred && op)
+.. doxygenfunction:: hpx::equal(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred &&op=Pred())
    :project: hpx
-.. doxygenfunction:: hpx::equal(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2)
+.. doxygenfunction:: hpx::equal(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2)
    :project: hpx
-.. doxygenfunction:: hpx::equal(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, Pred && op)
+.. doxygenfunction:: hpx::equal(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, Pred &&op=Pred())
    :project: hpx
-.. doxygenfunction:: hpx::equal(ExPolicy && policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2)
+.. doxygenfunction:: hpx::equal(ExPolicy &&policy, FwdIter1 first1, FwdIter1 last1, FwdIter2 first2)
    :project: hpx
-.. doxygenfunction:: hpx::equal(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred && op)
+.. doxygenfunction:: hpx::equal(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2, Pred &&op=Pred())
    :project: hpx
 .. doxygenfunction:: hpx::equal(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, FwdIter2 last2)
    :project: hpx
-.. doxygenfunction:: hpx::equal(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, Pred && op)
+.. doxygenfunction:: hpx::equal(FwdIter1 first1, FwdIter1 last1, FwdIter2 first2, Pred &&op=Pred())
    :project: hpx
